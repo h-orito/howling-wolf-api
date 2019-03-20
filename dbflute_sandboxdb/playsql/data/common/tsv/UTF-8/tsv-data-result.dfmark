@@ -1,0 +1,19 @@
+
+* * * * * * * * * *
+*                 *
+* Tsv Data Result *
+*                 *
+* * * * * * * * * *
+data-directory: playsql/data/common/tsv/UTF-8
+
+01-AUTHORITY.tsv (2)
+02-CAMP.tsv (3)
+03-VILLAGE_STATUS.tsv (6)
+04-SKILL.tsv (20)
+05-MESSAGE_TYPE.tsv (15)
+06-DEAD_REASON.tsv (4)
+07-ABILITY_TYPE.tsv (4)
+08-DESIGNER.tsv (5)
+09-CHARA_GROUP.tsv (5)
+10-ALLOWED_SECRET_SAY.tsv (3)
+11-FACE_TYPE.tsv (6)

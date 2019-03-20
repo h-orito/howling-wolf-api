@@ -1,0 +1,7 @@
+face_type_code	face_type_name	disp_order
+NORMAL	通常	1
+WEREWOLF	囁き	2
+GRAVE	墓下	3
+MONOLOGUE	独り言	4
+MASON	共鳴	5
+SECRET	秘話	6

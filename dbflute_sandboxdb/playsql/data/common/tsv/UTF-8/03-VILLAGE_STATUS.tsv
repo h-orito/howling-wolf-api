@@ -1,0 +1,7 @@
+village_status_code	village_status_name
+IN_PREPARATION	募集中
+WAITING	開始待ち
+IN_PROGRESS	進行中
+EPILOGUE	エピローグ
+COMPLETED	終了
+CANCEL	廃村
