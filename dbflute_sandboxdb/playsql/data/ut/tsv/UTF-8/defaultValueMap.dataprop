@@ -1,0 +1,6 @@
+map:{
+    ; REGISTER_DATETIME = sysdate
+    ; REGISTER_TRACE    = dbflute
+    ; UPDATE_DATETIME   = sysdate
+    ; UPDATE_TRACE      = dbflute
+}
