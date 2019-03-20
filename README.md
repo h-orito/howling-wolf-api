@@ -55,9 +55,12 @@
 7. Create new Pull Request
 ```
 
+- ブランチ名は`feature/{変更内容}`でお願いします。
+  - Issue と紐づく場合は`#{Issue番号}`を含めてください。 e.g. `feature/valid_password#1`
+
 ## License
 
-- 今のところ MIT License です。
+- MIT License
 
 ## Author
 
