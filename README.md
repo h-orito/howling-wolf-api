@@ -1,5 +1,7 @@
 # Wolf for busy
 
+[![CircleCI](https://circleci.com/gh/h-orito/wolf4busy-api/tree/develop.svg?style=svg)](https://circleci.com/gh/h-orito/wolf4busy-api/tree/develop)
+
 ## Overview
 
 - 忙しい人のためのオプションルールを盛り込んだ人狼がプレイできるサイトです
