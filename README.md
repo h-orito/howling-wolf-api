@@ -1,5 +1,7 @@
 # Wolf for busy
 
+[![CircleCI](https://circleci.com/gh/h-orito/wolf4busy-api/tree/develop.svg?style=svg)](https://circleci.com/gh/h-orito/wolf4busy-api/tree/develop)
+
 ## Overview
 
 - 忙しい人のためのオプションルールを盛り込んだ人狼がプレイできるサイトです
@@ -55,9 +57,12 @@
 7. Create new Pull Request
 ```
 
+- ブランチ名は`feature/{変更内容}`でお願いします。
+  - Issue と紐づく場合は`#{Issue番号}`を含めてください。 e.g. `feature/valid_password#1`
+
 ## License
 
-- 今のところ MIT License です。
+- MIT License
 
 ## Author
 
