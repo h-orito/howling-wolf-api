@@ -27,6 +27,7 @@ jobs:
     branches:
       only:
         - develop
+        - master
 
     working_directory: ~/wolf4busy-api
 
@@ -57,7 +58,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # prepare database
-      - run: export answer=y;sh dbflute_sandboxdb/manage.sh 0
+      - run: export answer=y;sh dbflute_sandboxdb/manage.sh 0 > /dev/null
 
       # run tests!
       - run: mvn package # run the actual tests
@@ -73,4 +74,28 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+
+      - add_ssh_keys:
+          fingerprints:
+            - "${SSH_FINGERPRINTS}"
+
+      - run:
+          name: Start ssh-keyscan
+          command: |
+            ssh-keyscan -p ${SSH_PORT} ${SSH_IPADDRESS} >> ~/.ssh/known_hosts
+
+      - deploy:
+          name: Upload jar
+          command: |
+           if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            scp -P ${SSH_PORT} ./target/wolf4busy-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}wolf4busy.jar
+           fi
+
+      - run:
+          name: Deploy
+          command: |
+           if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_busy.sh"
+           fi
+
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
