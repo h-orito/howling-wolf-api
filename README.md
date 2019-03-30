@@ -6,7 +6,7 @@
 
 - 忙しい人のためのオプションルールを盛り込んだ人狼がプレイできるサイトです
 - Kotlin で REST API を提供します
-- 画面側は未作成です
+- 画面側は[wolf4busy-ui](https://github.com/h-orito/wolf4busy-ui)を参照
 
 ## Requirement for local development
 
