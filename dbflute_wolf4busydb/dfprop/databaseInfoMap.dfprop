@@ -16,10 +16,10 @@
 #
 map:{
     ; driver   = com.mysql.jdbc.Driver
-    ; url      = jdbc:mysql://localhost:3306/sandboxdb?characterEncoding=UTF-8
+    ; url      = jdbc:mysql://localhost:3306/wolf4busydb?characterEncoding=UTF-8
     ; schema   = 
-    ; user     = sandboxuser
-    ; password = sandboxpass
+    ; user     = wolf4busyuser
+    ; password = wolf4busypass
 
     # /- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # o propertiesMap: (NotRequired - Default map:{})

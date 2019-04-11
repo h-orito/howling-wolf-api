@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/sandboxdb?characterEncoding=UTF-8
-    username: sandboxuser # 本番は起動引数で与える
-    password: sandboxpass # 本番は起動引数で与える
+    url: jdbc:mysql://localhost:3306/wolf4busydb?characterEncoding=UTF-8
+    username: wolf4busyuser # 本番は起動引数で与える
+    password: wolf4busypass # 本番は起動引数で与える
     driverClassName: com.mysql.jdbc.Driver
   messages:
     basename: messages
