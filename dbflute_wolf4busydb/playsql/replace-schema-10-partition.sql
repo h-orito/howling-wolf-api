@@ -9,7 +9,7 @@ alter table MESSAGE drop foreign key FK_message_face_type;
 
 -- partition
 
--- sakuhin_platform_public_status
+-- message
 alter table MESSAGE partition by list (village_id) (
 	partition p0 values in (1),
 	partition p1 values in (2),
