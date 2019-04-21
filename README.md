@@ -16,8 +16,14 @@
   - ポートは 3306 を使用します
 
 - maven
+
   - インストールしておいてください
   - いくつ以上なら大丈夫かわかりませんが私は`3.5`を使っています
+
+- google cloud sdk
+
+  - インストールしておいてください
+  - see https://cloud.google.com/sdk/
 
 ## Setup for local development
 
@@ -40,8 +46,10 @@
 
 * 起動
 
-  - `Wolf4busyApplication#main` を実行
-  - http://localhost:8086/wolf4busy/ がベース URL になります
+  ```bash
+  mvn appengine:run
+  ```
+  - `http://localhost:8080/` がベース URL になります
 
 ## Contribution
 
