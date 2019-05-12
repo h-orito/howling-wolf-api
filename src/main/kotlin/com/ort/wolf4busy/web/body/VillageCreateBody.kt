@@ -101,6 +101,11 @@ data class VillageCreateBody(
 
 ) {
 
+    constructor() : this(
+        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+    ) {}
+
+
     inner class VillageSayRestrictDto(
         val skillName: String?,
         val skillCode: String?,

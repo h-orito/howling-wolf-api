@@ -8,8 +8,6 @@ spring:
     basename: messages
     cache-duration: -1
     encoding: UTF-8
-  jackson:
-    property-naming-strategy: SNAKE_CASE
 server:
   port: 8086
   servlet:
@@ -18,8 +16,7 @@ server:
       timeout: 86400
 logging:
   level:
-    org.springframework: INFO
+    org.springframework: DEBUG
     root: INFO
     org.seasar.dbflute: ERROR
-  file: /var/log/wolf4busy/tomcat.log
-  
+  file: /var/log/wolf4busy/zzzzztomcat.log
