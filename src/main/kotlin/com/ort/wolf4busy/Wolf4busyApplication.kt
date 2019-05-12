@@ -1,13 +1,14 @@
 package com.ort.wolf4busy
 
 import com.ort.dbflute.allcommon.DBFluteBeansJavaConfig
+import com.ort.wolf4busy.fw.Wolf4busyAppConfig
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Import
 
 
 @SpringBootApplication
-@Import(DBFluteBeansJavaConfig::class)
+@Import(DBFluteBeansJavaConfig::class, Wolf4busyAppConfig::class)
 class Wolf4busyApplication {
 
     // @JvmStatic
@@ -15,3 +16,4 @@ class Wolf4busyApplication {
         SpringApplication.run(Wolf4busyApplication::class.java, *args)
     }
 }
+
