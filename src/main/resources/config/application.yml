@@ -19,4 +19,4 @@ logging:
     org.springframework: DEBUG
     root: INFO
     org.seasar.dbflute: ERROR
-  file: /var/log/wolf4busy/zzzzztomcat.log
+  file: /var/log/wolf4busy/tomcat.log
