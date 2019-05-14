@@ -6,8 +6,8 @@ version: 2
 jobs:
   build:
     docker:
-      # 最初に指定したimageがPrimary containerとなる
-      - image: google/cloud-sdk:alpine
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
       - image: circleci/mysql:5.7.22
         environment:
           - MYSQL_ALLOW_EMPTY_PASSWORD: "true"
@@ -31,22 +31,12 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
 
     steps:
-      # google cloud sdk
-      - run:
-          name: Install
-          command: |
-            apk --update add openjdk8
-            gcloud components install app-engine-java
-
-      - run:
-          name: Dockerize install
-          command: |
-            apk add --no-cache openssl
-            wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-alpine-linux-amd64-v0.6.0.tar.gz
-            tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.6.0.tar.gz
-            rm dockerize-alpine-linux-amd64-v0.6.0.tar.gz
-
       - checkout
+
+      # DBが立ち上がるまで待つ
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
 
       # Download and cache dependencies
       - restore_cache:
@@ -55,12 +45,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: ./mvnw dependency:go-offline
-
-      # DBが立ち上がるまで待つ
-      - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run: mvn dependency:go-offline
 
       - save_cache:
           paths:
@@ -68,10 +53,10 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # prepare database
-      - run: export answer=y;sh dbflute_wolf4busydb/manage.sh 0 > /dev/null
+      - run: export answer=y;sh dbflute_sandboxdb/manage.sh 0 > /dev/null
 
       # run tests!
-      - run: ./mvnw package # run the actual tests
+      - run: mvn package # run the actual tests
 
       - run:
           name: Save test results
@@ -85,47 +70,25 @@ jobs:
       - store_artifacts:
           path: ~/test-results/junit
 
+      - add_ssh_keys:
+          fingerprints:
+            - "${SSH_FINGERPRINTS}"
+
       - run:
-          name: mod config
+          name: Start ssh-keyscan
           command: |
-            if [ "$CIRCLE_BRANCH" = "master" ]; then
-              sed -i -e "s/localhost/${WOLF4BUSY_DBHOST}/" src/main/resources/config/application.yml
-              sed -i -e "s/wolf4busyuser/${WOLF4BUSY_DBUSER}/" src/main/resources/config/application.yml
-              sed -i -e "s/wolf4busypass/${WOLF4BUSY_DBPASS}/" src/main/resources/config/application.yml
-            fi
+            ssh-keyscan -p ${SSH_PORT} ${SSH_IPADDRESS} >> ~/.ssh/known_hosts
 
       - deploy:
-          name: Deploy
+          name: Upload jar
           command: |
-            if [ "$CIRCLE_BRANCH" = "master" ]; then
-              echo "${GCP_SERVICE_ACCOUNT_KEY}" | base64 -d > "$HOME/gcp-service-account-key.json"
-              gcloud auth activate-service-account --key-file "$HOME/gcp-service-account-key.json"
-              gcloud config set project ${GCP_WOLF4BUSY_PROJECT_ID}
-              ./mvnw appengine:deploy -DskipTests
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+             scp -P ${SSH_PORT} ./target/wolf4busy-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}wolf4busy.jar
             fi
 
-      # deploy to vps
-      # - add_ssh_keys:
-      #     fingerprints:
-      #       - "${SSH_FINGERPRINTS}"
-
-      # - run:
-      #     name: Start ssh-keyscan
-      #     command: |
-      #       ssh-keyscan -p ${SSH_PORT} ${SSH_IPADDRESS} >> ~/.ssh/known_hosts
-
-#      - deploy:
-#          name: Upload jar
-#          command: |
-#           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-#            scp -P ${SSH_PORT} ./target/wolf4busy-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}wolf4busy.jar
-#           fi
-#
-#      - run:
-#          name: Deploy
-#          command: |
-#           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-#            ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_busy.sh"
-#           fi
-
-# See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+      - run:
+          name: Deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+             ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_busy.sh"
+            fi
