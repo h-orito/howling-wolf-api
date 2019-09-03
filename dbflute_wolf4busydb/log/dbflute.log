@@ -10256,3 +10256,940 @@ _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
  {Take Finally}: success=0 failure=0 (in 1 files)
   o take-finally.sql
 _/_/_/_/_/_/_/_/_/_/ {ReplaceSchema}
+2019-09-03 19:18:26,156 [main] INFO  (DfReplaceSchemaTask#begin():92) - +------------------------------------------+
+2019-09-03 19:18:26,160 [main] INFO  (DfReplaceSchemaTask#begin():93) - |                                          |
+2019-09-03 19:18:26,160 [main] INFO  (DfReplaceSchemaTask#begin():94) - |              ReplaceSchema               |
+2019-09-03 19:18:26,165 [main] INFO  (DfReplaceSchemaTask#begin():102) - |                                          |
+2019-09-03 19:18:26,165 [main] INFO  (DfReplaceSchemaTask#begin():103) - +------------------------------------------+
+2019-09-03 19:18:26,166 [main] INFO  (DfReplaceSchemaTask#waitBeforeReps():360) - ...Waiting for your GO SIGN from stdin before ReplaceSchema:
+2019-09-03 19:18:26,490 [main] INFO  (DfDataSourceHandler#prepare():78) - ...Preparing data source:
+2019-09-03 19:18:26,491 [main] INFO  (DfDataSourceHandler#prepare():79) -   driver = com.mysql.jdbc.Driver
+2019-09-03 19:18:26,491 [main] INFO  (DfDataSourceHandler#prepare():80) -   url    = jdbc:mysql://localhost:3306/wolf4busydb?characterEncoding=UTF-8
+2019-09-03 19:18:26,492 [main] INFO  (DfDataSourceHandler#prepare():81) -   user   = wolf4busyuser
+2019-09-03 19:18:26,498 [main] INFO  (DfDataSourceHandler#createConnection():166) - ...Connecting to database by data source:
+2019-09-03 19:18:26,721 [main] INFO  (DfReplaceSchemaTask#setupLazyConnection():144) - ...Being a lazy connection: Failed to connect: url=jdbc:mysql://localhost:3...
+2019-09-03 19:18:26,732 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():229) - 
+2019-09-03 19:18:26,732 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():230) - * * * * * * * * * * *
+2019-09-03 19:18:26,732 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():231) - *                   *
+2019-09-03 19:18:26,732 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():232) - * Initialize Schema *
+2019-09-03 19:18:26,734 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():233) - *                   *
+2019-09-03 19:18:26,734 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():234) - * * * * * * * * * * *
+2019-09-03 19:18:26,734 [main] INFO  (DfCreateSchemaProcess#initializeSchemaMainDrop():236) - *Passed because it's a lazy connection
+2019-09-03 19:18:26,735 [main] INFO  (DfCreateSchemaProcess#createSchema():266) - 
+2019-09-03 19:18:26,735 [main] INFO  (DfCreateSchemaProcess#createSchema():267) - * * * * * * * * *
+2019-09-03 19:18:26,735 [main] INFO  (DfCreateSchemaProcess#createSchema():268) - *               *
+2019-09-03 19:18:26,735 [main] INFO  (DfCreateSchemaProcess#createSchema():269) - * Create Schema *
+2019-09-03 19:18:26,735 [main] INFO  (DfCreateSchemaProcess#createSchema():270) - *               *
+2019-09-03 19:18:26,736 [main] INFO  (DfCreateSchemaProcess#createSchema():271) - * * * * * * * * *
+2019-09-03 19:18:26,738 [main] INFO  (DfSqlFileFireMan#fire():64) - ...Firing: replace-schema-00.sql
+2019-09-03 19:18:26,741 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:changeUser(system)#
+-- #df:checkUser(mainSchema)#
+create user wolf4busyuser@'127.0.0.1' identified by 'wolf4busypass'
+2019-09-03 19:18:26,742 [main] INFO  (DfCreateSchemaProcess$1#dispatch():295) - ...Creating a connection to system
+2019-09-03 19:18:26,743 [main] INFO  (DfReplaceSchemaProperties#createAdditionalUserConnection():527) - ...Creating a connection for additional user: root
+2019-09-03 19:18:26,789 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:checkUser(mainSchema)#
+create database wolf4busydb character set utf8mb4
+2019-09-03 19:18:26,797 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:reviveUser()#
+-- #df:checkUser(mainUser, grant)#
+grant all privileges on wolf4busydb.*
+  to wolf4busyuser@'127.0.0.1' identified by 'wolf4busypass'
+2019-09-03 19:18:26,799 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - flush privileges
+2019-09-03 19:18:26,800 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=4 failure=0
+2019-09-03 19:18:26,800 [main] INFO  (DfSqlFileFireMan#fire():64) - ...Firing: replace-schema-10-basic.sql
+2019-09-03 19:18:26,802 [main] INFO  (DfCreateSchemaProcess$DfSqlFileRunnerExecuteCreateSchema#restoreCurrentUser():381) - ...Coming back to the main user from the user 'system'
+2019-09-03 19:18:26,807 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+/* Create Tables */
+
+CREATE TABLE ABILITY
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	DAY INT UNSIGNED NOT NULL COMMENT '何日目か',
+	CHARA_ID INT UNSIGNED NOT NULL COMMENT 'キャラクターID',
+	TARGET_CHARA_ID INT UNSIGNED COMMENT '行使対象キャラID',
+	ABILITY_TYPE_CODE VARCHAR(20) NOT NULL COMMENT '能力種別コード',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID, DAY, CHARA_ID, ABILITY_TYPE_CODE)
+) COMMENT = '能力行使'
+2019-09-03 19:18:26,808 [main] INFO  (DfCreateSchemaProcess$DfSqlFileRunnerExecuteCreateSchema#lazyConnectIfNeeds():466) - ...Connecting by main user lazily
+2019-09-03 19:18:26,808 [main] INFO  (DfDataSourceHandler#prepare():78) - ...Preparing data source:
+2019-09-03 19:18:26,818 [main] INFO  (DfDataSourceHandler#prepare():79) -   driver = com.mysql.jdbc.Driver
+2019-09-03 19:18:26,818 [main] INFO  (DfDataSourceHandler#prepare():80) -   url    = jdbc:mysql://localhost:3306/wolf4busydb?characterEncoding=UTF-8
+2019-09-03 19:18:26,818 [main] INFO  (DfDataSourceHandler#prepare():81) -   user   = wolf4busyuser
+2019-09-03 19:18:26,818 [main] INFO  (DfDataSourceHandler#createConnection():166) - ...Connecting to database by data source:
+2019-09-03 19:18:26,837 [main] INFO  (DfDataSourceHandler#setupConnectionMetaInfo():233) -   product = MySQL 5.6.40
+2019-09-03 19:18:26,837 [main] INFO  (DfDataSourceHandler#setupConnectionMetaInfo():234) -   driver  = MySQL Connector Java mysql-connector-java-5.1.40 ( Revision: 402933ef52cad9aa82624e80acbea46e3a701ce6 ) for JDBC 4.0
+2019-09-03 19:18:26,862 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE ABILITY_TYPE
+(
+	ABILITY_TYPE_CODE VARCHAR(20) NOT NULL COMMENT '能力種別コード',
+	ABILITY_TYPE_NAME VARCHAR(20) NOT NULL COMMENT '能力種別',
+	PRIMARY KEY (ABILITY_TYPE_CODE)
+) COMMENT = '能力種別'
+2019-09-03 19:18:26,869 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE ALLOWED_SECRET_SAY
+(
+	ALLOWED_SECRET_SAY_CODE VARCHAR(20) NOT NULL COMMENT '秘話可能な範囲コード',
+	ALLOWED_SECRET_SAY_NAME VARCHAR(20) NOT NULL COMMENT '秘話可能範囲',
+	PRIMARY KEY (ALLOWED_SECRET_SAY_CODE)
+) COMMENT = '秘話可能な範囲'
+2019-09-03 19:18:26,876 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE AUTHORITY
+(
+	AUTHORITY_CODE VARCHAR(20) NOT NULL COMMENT '権限コード',
+	AUTHORITY_NAME VARCHAR(20) NOT NULL COMMENT '権限名',
+	PRIMARY KEY (AUTHORITY_CODE)
+) COMMENT = '権限'
+2019-09-03 19:18:26,885 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE CAMP
+(
+	CAMP_CODE VARCHAR(20) NOT NULL COMMENT '陣営コード',
+	CAMP_NAME VARCHAR(20) NOT NULL COMMENT '陣営名',
+	PRIMARY KEY (CAMP_CODE)
+) COMMENT = '陣営'
+2019-09-03 19:18:26,892 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE CHARA
+(
+	CHARA_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'キャラクターID',
+	CHARA_NAME VARCHAR(40) NOT NULL COMMENT 'キャラクター名',
+	CHARA_SHORT_NAME CHAR(1) NOT NULL COMMENT 'キャラクター略称',
+	CHARA_GROUP_ID INT UNSIGNED NOT NULL COMMENT 'キャラクターグループID',
+	DEFAULT_JOIN_MESSAGE VARCHAR(200) COMMENT '入村時デフォルト発言',
+	DEFAULT_FIRSTDAY_MESSAGE VARCHAR(200) COMMENT 'デフォルト1日目発言',
+	DISPLAY_WIDTH INT UNSIGNED NOT NULL COMMENT '表示時横幅',
+	DISPLAY_HEIGHT INT UNSIGNED NOT NULL COMMENT '表示時縦幅',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (CHARA_ID)
+) COMMENT = 'キャラクター'
+2019-09-03 19:18:26,902 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE CHARA_GROUP
+(
+	CHARA_GROUP_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'キャラクターグループID',
+	CHARA_GROUP_NAME VARCHAR(40) NOT NULL COMMENT 'キャラクターグループ名',
+	DESIGNER_ID INT UNSIGNED NOT NULL COMMENT 'デザイナーID',
+	DESCRIPTION_URL TEXT COMMENT 'キャラチップURL : キャラチップの利用規約や配布サイトのURL',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (CHARA_GROUP_ID)
+) COMMENT = 'キャラクターグループ'
+2019-09-03 19:18:26,912 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE CHARA_IMAGE
+(
+	CHARA_ID INT UNSIGNED NOT NULL COMMENT 'キャラクターID',
+	FACE_TYPE_CODE VARCHAR(20) NOT NULL COMMENT '表情種別コード',
+	CHARA_IMG_URL VARCHAR(100) NOT NULL COMMENT 'キャラクター画像URL',
+	PRIMARY KEY (CHARA_ID, FACE_TYPE_CODE)
+) COMMENT = 'キャラクター画像'
+2019-09-03 19:18:26,919 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE COMMIT
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	DAY INT UNSIGNED NOT NULL COMMENT '何日目か',
+	VILLAGE_PLAYER_ID INT UNSIGNED NOT NULL COMMENT '村参加者ID',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID, DAY, VILLAGE_PLAYER_ID)
+) COMMENT = 'コミット'
+2019-09-03 19:18:26,927 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE DEAD_REASON
+(
+	DEAD_REASON_CODE VARCHAR(20) NOT NULL COMMENT '死亡理由コード',
+	DEAD_REASON_NAME VARCHAR(20) NOT NULL COMMENT '死亡理由',
+	PRIMARY KEY (DEAD_REASON_CODE)
+) COMMENT = '死亡理由'
+2019-09-03 19:18:26,936 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE DESIGNER
+(
+	DESIGNER_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'デザイナーID',
+	DESIGNER_NAME VARCHAR(40) NOT NULL COMMENT 'デザイナー名',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (DESIGNER_ID)
+) COMMENT = 'デザイナー'
+2019-09-03 19:18:26,945 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE FACE_TYPE
+(
+	FACE_TYPE_CODE VARCHAR(20) NOT NULL COMMENT '表情種別コード',
+	FACE_TYPE_NAME VARCHAR(20) NOT NULL COMMENT '表情種別名',
+	DISP_ORDER INT UNSIGNED NOT NULL COMMENT '並び順',
+	PRIMARY KEY (FACE_TYPE_CODE)
+) COMMENT = '表情種別'
+2019-09-03 19:18:26,953 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE MESSAGE
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	MESSAGE_NUMBER INT UNSIGNED NOT NULL COMMENT 'メッセージ番号',
+	MESSAGE_TYPE_CODE VARCHAR(20) NOT NULL COMMENT 'メッセージ種別コード',
+	VILLAGE_PLAYER_ID INT UNSIGNED COMMENT '村参加者ID',
+	TO_VILLAGE_PLAYER_ID INT UNSIGNED COMMENT '秘話相手の村参加者ID',
+	PLAYER_ID INT UNSIGNED COMMENT 'プレイヤーID',
+	DAY INT UNSIGNED NOT NULL COMMENT '何日目か',
+	MESSAGE_CONTENT VARCHAR(10000) NOT NULL COMMENT 'メッセージ内容',
+	MESSAGE_DATETIME DATETIME NOT NULL COMMENT 'メッセージ日時',
+	IS_CONVERT_DISABLE BOOLEAN NOT NULL COMMENT '変換無効か',
+	FACE_TYPE_CODE VARCHAR(20) COMMENT '表情種別コード',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE),
+	CONSTRAINT UQ_message_number UNIQUE (VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER)
+) COMMENT = 'メッセージ'
+2019-09-03 19:18:26,973 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE MESSAGE_RESTRICTION
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	SKILL_CODE VARCHAR(20) NOT NULL COMMENT '役職コード',
+	MESSAGE_TYPE_CODE VARCHAR(20) NOT NULL COMMENT 'メッセージ種別コード',
+	MESSAGE_MAX_NUM INT UNSIGNED NOT NULL COMMENT '最大発言回数',
+	MESSAGE_MAX_LENGTH INT UNSIGNED NOT NULL COMMENT '最大文字数',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID, SKILL_CODE, MESSAGE_TYPE_CODE)
+) COMMENT = '発言制限 : レコードなしの場合は無制限'
+2019-09-03 19:18:26,986 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE MESSAGE_TYPE
+(
+	MESSAGE_TYPE_CODE VARCHAR(20) NOT NULL COMMENT 'メッセージ種別コード',
+	MESSAGE_TYPE_NAME VARCHAR(20) NOT NULL COMMENT 'メッセージ種別名',
+	PRIMARY KEY (MESSAGE_TYPE_CODE)
+) COMMENT = 'メッセージ種別'
+2019-09-03 19:18:26,993 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE PLAYER
+(
+	PLAYER_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'プレイヤーID',
+	PLAYER_NAME VARCHAR(12) NOT NULL UNIQUE COMMENT 'プレイヤー名',
+	PLAYER_PASSWORD CHAR(60) NOT NULL COMMENT 'プレイヤーパスワード',
+	AUTHORITY_CODE VARCHAR(20) NOT NULL COMMENT '権限コード',
+	IS_RESTRICTED_PARTICIPATION BOOLEAN NOT NULL COMMENT '入村制限されているか',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (PLAYER_ID)
+) COMMENT = 'プレイヤー'
+2019-09-03 19:18:27,000 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE RANDOM_CONTENT
+(
+	RANDOM_CONTENT_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ランダム変換内容ID',
+	RANDOM_KEYWORD_ID INT UNSIGNED NOT NULL COMMENT 'ランダムキーワードID',
+	RANDOM_MESSAGE VARCHAR(20) NOT NULL COMMENT 'ランダム変換内容文字列',
+	PRIMARY KEY (RANDOM_CONTENT_ID)
+) COMMENT = 'ランダム変換内容'
+2019-09-03 19:18:27,009 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE RANDOM_KEYWORD
+(
+	RANDOM_KEYWORD_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ランダムキーワードID',
+	KEYWORD VARCHAR(10) NOT NULL UNIQUE COMMENT 'キーワード',
+	PRIMARY KEY (RANDOM_KEYWORD_ID)
+) COMMENT = 'ランダムキーワード'
+2019-09-03 19:18:27,016 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE SKILL
+(
+	SKILL_CODE VARCHAR(20) NOT NULL COMMENT '役職コード',
+	SKILL_NAME VARCHAR(20) NOT NULL COMMENT '役職名',
+	 CAMP_CODE VARCHAR(20) NOT NULL COMMENT '陣営コード',
+	DISP_ORDER INT UNSIGNED NOT NULL COMMENT '並び順',
+	PRIMARY KEY (SKILL_CODE)
+) COMMENT = '役職'
+2019-09-03 19:18:27,024 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VILLAGE
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '村ID',
+	VILLAGE_DISPLAY_NAME VARCHAR(40) NOT NULL COMMENT '村表示名',
+	CREATE_PLAYER_NAME VARCHAR(12) NOT NULL COMMENT '村作成プレイヤー名',
+	VILLAGE_STATUS_CODE VARCHAR(20) NOT NULL COMMENT '村ステータスコード',
+	EPILOGUE_DAY INT UNSIGNED COMMENT 'エピローグ日',
+	WIN_CAMP_CODE VARCHAR(20) COMMENT '勝利陣営コード',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID)
+) COMMENT = '村'
+2019-09-03 19:18:27,037 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VILLAGE_DAY
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	DAY INT UNSIGNED NOT NULL COMMENT '何日目か',
+	DAYCHANGE_DATETIME DATETIME NOT NULL COMMENT '日付更新日時',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID, DAY)
+) COMMENT = '村日付'
+2019-09-03 19:18:27,044 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VILLAGE_PLAYER
+(
+	VILLAGE_PLAYER_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '村参加者ID',
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	PLAYER_ID INT UNSIGNED NOT NULL COMMENT 'プレイヤーID',
+	CHARA_ID INT UNSIGNED NOT NULL COMMENT 'キャラクターID',
+	SKILL_CODE VARCHAR(20) COMMENT '役職コード',
+	REQUEST_SKILL_CODE VARCHAR(20) COMMENT '希望役職コード',
+	SECOND_REQUEST_SKILL_CODE VARCHAR(20) COMMENT '第二希望役職コード',
+	IS_DEAD BOOLEAN NOT NULL COMMENT '死亡しているか',
+	IS_SPECTATOR BOOLEAN NOT NULL COMMENT '見学者か',
+	DEAD_REASON_CODE VARCHAR(20) COMMENT '死亡理由コード',
+	DEAD_DAY INT UNSIGNED COMMENT '何日目に死亡したか',
+	IS_GONE BOOLEAN NOT NULL COMMENT '退村済みか',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_PLAYER_ID)
+) COMMENT = '村参加者'
+2019-09-03 19:18:27,056 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VILLAGE_SETTINGS
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	DUMMY_CHARA_ID INT UNSIGNED NOT NULL COMMENT 'ダミーキャラID',
+	START_PERSON_MIN_NUM INT UNSIGNED COMMENT '最低開始人数',
+	PERSON_MAX_NUM INT UNSIGNED COMMENT '定員',
+	START_DATETIME DATETIME COMMENT '開始日時',
+	DAY_CHANGE_INTERVAL_SECONDS INT UNSIGNED NOT NULL COMMENT '更新間隔（秒）',
+	IS_OPEN_VOTE BOOLEAN NOT NULL COMMENT '記名投票か',
+	IS_POSSIBLE_SKILL_REQUEST BOOLEAN NOT NULL COMMENT '役職希望有効か',
+	IS_AVAILABLE_SPECTATE BOOLEAN NOT NULL COMMENT '見学可能か',
+	IS_AVAILABLE_SAME_WOLF_ATTACK BOOLEAN NOT NULL COMMENT '連続襲撃可能か',
+	IS_OPEN_SKILL_IN_GRAVE BOOLEAN NOT NULL COMMENT '墓下役職公開ありか',
+	IS_VISIBLE_GRAVE_SPECTATE_MESSAGE BOOLEAN NOT NULL COMMENT '墓下見学発言を生存者が見られるか',
+	IS_AVAILABLE_SUDDONLY_DEATH BOOLEAN NOT NULL COMMENT '突然死ありか',
+	IS_AVAILABLE_COMMIT BOOLEAN NOT NULL COMMENT 'コミット可能か',
+	IS_AVAILABLE_GUARD_SAME_TARGET BOOLEAN NOT NULL COMMENT '連続護衛可能か',
+	CHARACTER_GROUP_ID INT UNSIGNED NOT NULL COMMENT 'キャラクターグループID',
+	JOIN_PASSWORD VARCHAR(12) COMMENT '入村パスワード',
+	ORGANIZE VARCHAR(400) NOT NULL COMMENT '構成',
+	ALLOWED_SECRET_SAY_CODE VARCHAR(20) NOT NULL COMMENT '秘話可能な範囲コード',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID)
+) COMMENT = '村設定'
+2019-09-03 19:18:27,063 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VILLAGE_STATUS
+(
+	VILLAGE_STATUS_CODE VARCHAR(20) NOT NULL COMMENT '村ステータスコード',
+	VILLAGE_STATUS_NAME VARCHAR(20) NOT NULL COMMENT '村ステータス名',
+	PRIMARY KEY (VILLAGE_STATUS_CODE)
+) COMMENT = '村ステータス'
+2019-09-03 19:18:27,069 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VOTE
+(
+	VILLAGE_ID INT UNSIGNED NOT NULL COMMENT '村ID',
+	DAY INT UNSIGNED NOT NULL COMMENT '何日目か',
+	CHARA_ID INT UNSIGNED NOT NULL COMMENT 'キャラクターID',
+	VOTE_CHARA_ID INT UNSIGNED NOT NULL COMMENT '投票先キャラクターID',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (VILLAGE_ID, DAY, CHARA_ID)
+) COMMENT = '投票'
+2019-09-03 19:18:27,076 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+/* Create Foreign Keys */
+
+ALTER TABLE ABILITY
+	ADD CONSTRAINT FK_ABILITY_ABILITY_TYPE FOREIGN KEY (ABILITY_TYPE_CODE)
+	REFERENCES ABILITY_TYPE (ABILITY_TYPE_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,093 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_SETTINGS
+	ADD CONSTRAINT FK_VILLAGE_SETTINGS_ALLOWED_SECRET_SAY FOREIGN KEY (ALLOWED_SECRET_SAY_CODE)
+	REFERENCES ALLOWED_SECRET_SAY (ALLOWED_SECRET_SAY_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,105 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE PLAYER
+	ADD CONSTRAINT FK_PLAYER_AUTHORITY FOREIGN KEY (AUTHORITY_CODE)
+	REFERENCES AUTHORITY (AUTHORITY_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,118 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE SKILL
+	ADD CONSTRAINT FK_SKILL_CAMP FOREIGN KEY ( CAMP_CODE)
+	REFERENCES CAMP (CAMP_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,128 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE
+	ADD CONSTRAINT FK_VILLAGE_CAMP FOREIGN KEY (WIN_CAMP_CODE)
+	REFERENCES CAMP (CAMP_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,144 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE ABILITY
+	ADD CONSTRAINT FK_ABILITY_CHARA FOREIGN KEY (CHARA_ID)
+	REFERENCES CHARA (CHARA_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,156 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE ABILITY
+	ADD CONSTRAINT FK_ABILITY_CHARA_TARGET FOREIGN KEY (TARGET_CHARA_ID)
+	REFERENCES CHARA (CHARA_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,169 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE CHARA_IMAGE
+	ADD CONSTRAINT FK_CHARA_IMAGE_CHARA FOREIGN KEY (CHARA_ID)
+	REFERENCES CHARA (CHARA_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,181 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_CHARA FOREIGN KEY (CHARA_ID)
+	REFERENCES CHARA (CHARA_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,193 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VOTE
+	ADD CONSTRAINT FK_VOTE_CHARA FOREIGN KEY (CHARA_ID)
+	REFERENCES CHARA (CHARA_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,203 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VOTE
+	ADD CONSTRAINT FK_VOTE_CHARA_TO FOREIGN KEY (VOTE_CHARA_ID)
+	REFERENCES CHARA (CHARA_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,214 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE CHARA
+	ADD CONSTRAINT FK_CHARA_CHARA_GROUP FOREIGN KEY (CHARA_GROUP_ID)
+	REFERENCES CHARA_GROUP (CHARA_GROUP_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,225 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_SETTINGS
+	ADD CONSTRAINT FK_VILLAGE_SETTINGS_CHARA_GROUP FOREIGN KEY (CHARACTER_GROUP_ID)
+	REFERENCES CHARA_GROUP (CHARA_GROUP_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,234 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_DEAD_REASON FOREIGN KEY (DEAD_REASON_CODE)
+	REFERENCES DEAD_REASON (DEAD_REASON_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,243 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE CHARA_GROUP
+	ADD CONSTRAINT FK_CHARA_GROUP_DESIGNER FOREIGN KEY (DESIGNER_ID)
+	REFERENCES DESIGNER (DESIGNER_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,251 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE CHARA_IMAGE
+	ADD CONSTRAINT FK_CHARA_IMAGE_FACE_TYPE FOREIGN KEY (FACE_TYPE_CODE)
+	REFERENCES FACE_TYPE (FACE_TYPE_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,258 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE
+	ADD CONSTRAINT FK_MESSAGE_FACE_TYPE FOREIGN KEY (FACE_TYPE_CODE)
+	REFERENCES FACE_TYPE (FACE_TYPE_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,266 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE
+	ADD CONSTRAINT FK_MESSAGE_MESSAGE_TYPE FOREIGN KEY (MESSAGE_TYPE_CODE)
+	REFERENCES MESSAGE_TYPE (MESSAGE_TYPE_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,277 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE_RESTRICTION
+	ADD CONSTRAINT FK_MESSAGE_RESTRICTION_MESSAGE_TYPE FOREIGN KEY (MESSAGE_TYPE_CODE)
+	REFERENCES MESSAGE_TYPE (MESSAGE_TYPE_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,286 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE
+	ADD CONSTRAINT FK_MESSAGE_PLAYER FOREIGN KEY (PLAYER_ID)
+	REFERENCES PLAYER (PLAYER_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,298 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_PLAYER FOREIGN KEY (PLAYER_ID)
+	REFERENCES PLAYER (PLAYER_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,310 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE RANDOM_CONTENT
+	ADD CONSTRAINT FK_RANDOM_CONTENT_RANDOM_KEYWORD FOREIGN KEY (RANDOM_KEYWORD_ID)
+	REFERENCES RANDOM_KEYWORD (RANDOM_KEYWORD_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,325 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE_RESTRICTION
+	ADD CONSTRAINT FK_MESSAGE_RESTRICTION_SKILL FOREIGN KEY (SKILL_CODE)
+	REFERENCES SKILL (SKILL_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,341 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_SKILL FOREIGN KEY (SKILL_CODE)
+	REFERENCES SKILL (SKILL_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,354 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_SKILL_REQUEST FOREIGN KEY (REQUEST_SKILL_CODE)
+	REFERENCES SKILL (SKILL_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,370 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_SECOND_SKILL_REQ FOREIGN KEY (SECOND_REQUEST_SKILL_CODE)
+	REFERENCES SKILL (SKILL_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,386 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE_RESTRICTION
+	ADD CONSTRAINT FK_MESSAGE_RESTRICTION_VILLAGE FOREIGN KEY (VILLAGE_ID)
+	REFERENCES VILLAGE (VILLAGE_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,399 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_DAY
+	ADD CONSTRAINT FK_VILLAGE_DAY_VILLAGE FOREIGN KEY (VILLAGE_ID)
+	REFERENCES VILLAGE (VILLAGE_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,412 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_PLAYER
+	ADD CONSTRAINT FK_VILLAGE_PLAYER_VILLAGE FOREIGN KEY (VILLAGE_ID)
+	REFERENCES VILLAGE (VILLAGE_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,427 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE_SETTINGS
+	ADD CONSTRAINT FK_VILLAGE_SETTINGS_VILLAGE FOREIGN KEY (VILLAGE_ID)
+	REFERENCES VILLAGE (VILLAGE_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,440 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE ABILITY
+	ADD CONSTRAINT FK_ABILITY_VILLAGE_DAY FOREIGN KEY (VILLAGE_ID, DAY)
+	REFERENCES VILLAGE_DAY (VILLAGE_ID, DAY)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,456 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE COMMIT
+	ADD CONSTRAINT FK_COMMIT_VILLAGE_DAY FOREIGN KEY (VILLAGE_ID, DAY)
+	REFERENCES VILLAGE_DAY (VILLAGE_ID, DAY)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,472 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE
+	ADD CONSTRAINT FK_MESSAGE_VILLAGE_DAY FOREIGN KEY (VILLAGE_ID, DAY)
+	REFERENCES VILLAGE_DAY (VILLAGE_ID, DAY)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,490 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VOTE
+	ADD CONSTRAINT FK_VOTE_VILLAGE_DAY FOREIGN KEY (VILLAGE_ID, DAY)
+	REFERENCES VILLAGE_DAY (VILLAGE_ID, DAY)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,500 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE COMMIT
+	ADD CONSTRAINT FK_COMMIT_VILLAGE_PLAYER FOREIGN KEY (VILLAGE_PLAYER_ID)
+	REFERENCES VILLAGE_PLAYER (VILLAGE_PLAYER_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,509 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE
+	ADD CONSTRAINT FK_MESSAGE_VILLAGE_PLAYER FOREIGN KEY (VILLAGE_PLAYER_ID)
+	REFERENCES VILLAGE_PLAYER (VILLAGE_PLAYER_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,522 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE MESSAGE
+	ADD CONSTRAINT FK_MESSAGE_VILLAGE_PLAYER_TO FOREIGN KEY (TO_VILLAGE_PLAYER_ID)
+	REFERENCES VILLAGE_PLAYER (VILLAGE_PLAYER_ID)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,537 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VILLAGE
+	ADD CONSTRAINT FK_VILLAGE_VILLAGE_STATUS FOREIGN KEY (VILLAGE_STATUS_CODE)
+	REFERENCES VILLAGE_STATUS (VILLAGE_STATUS_CODE)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+2019-09-03 19:18:27,548 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=63 failure=0
+2019-09-03 19:18:27,549 [main] INFO  (DfSqlFileFireMan#fire():64) - ...Firing: replace-schema-10-partition.sql
+2019-09-03 19:18:27,550 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- partition table fk delete
+
+alter table MESSAGE drop foreign key FK_message_player
+2019-09-03 19:18:27,557 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - alter table MESSAGE drop foreign key FK_message_village_day
+2019-09-03 19:18:27,565 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - alter table MESSAGE drop foreign key FK_message_village_player
+2019-09-03 19:18:27,572 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - alter table MESSAGE drop foreign key FK_message_village_player_to
+2019-09-03 19:18:27,579 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - alter table MESSAGE drop foreign key FK_message_message_type
+2019-09-03 19:18:27,586 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - alter table MESSAGE drop foreign key FK_message_face_type
+2019-09-03 19:18:27,595 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- partition
+
+-- message
+alter table MESSAGE partition by list (village_id) (
+	partition p0 values in (1),
+	partition p1 values in (2),
+	partition p2 values in (3),
+	partition p3 values in (4),
+	partition p4 values in (5),
+	partition p5 values in (6),
+	partition p6 values in (7),
+	partition p7 values in (8),
+	partition p8 values in (9),
+	partition p9 values in (10),
+	partition p10 values in (11),
+	partition p11 values in (12),
+	partition p12 values in (13),
+	partition p13 values in (14),
+	partition p14 values in (15),
+	partition p15 values in (16),
+	partition p16 values in (17),
+	partition p17 values in (18),
+	partition p18 values in (19),
+	partition p19 values in (20),
+	partition p20 values in (21),
+	partition p21 values in (22),
+	partition p22 values in (23),
+	partition p23 values in (24),
+	partition p24 values in (25),
+	partition p25 values in (26),
+	partition p26 values in (27),
+	partition p27 values in (28),
+	partition p28 values in (29),
+	partition p29 values in (30),
+	partition p30 values in (31),
+	partition p31 values in (32),
+	partition p32 values in (33),
+	partition p33 values in (34),
+	partition p34 values in (35),
+	partition p35 values in (36),
+	partition p36 values in (37),
+	partition p37 values in (38),
+	partition p38 values in (39),
+	partition p39 values in (40),
+	partition p40 values in (41),
+	partition p41 values in (42),
+	partition p42 values in (43),
+	partition p43 values in (44),
+	partition p44 values in (45),
+	partition p45 values in (46),
+	partition p46 values in (47),
+	partition p47 values in (48),
+	partition p48 values in (49),
+	partition p49 values in (50),
+	partition p50 values in (51),
+	partition p51 values in (52),
+	partition p52 values in (53),
+	partition p53 values in (54),
+	partition p54 values in (55),
+	partition p55 values in (56),
+	partition p56 values in (57),
+	partition p57 values in (58),
+	partition p58 values in (59),
+	partition p59 values in (60),
+	partition p60 values in (61),
+	partition p61 values in (62),
+	partition p62 values in (63),
+	partition p63 values in (64),
+	partition p64 values in (65),
+	partition p65 values in (66),
+	partition p66 values in (67),
+	partition p67 values in (68),
+	partition p68 values in (69),
+	partition p69 values in (70),
+	partition p70 values in (71),
+	partition p71 values in (72),
+	partition p72 values in (73),
+	partition p73 values in (74),
+	partition p74 values in (75),
+	partition p75 values in (76),
+	partition p76 values in (77),
+	partition p77 values in (78),
+	partition p78 values in (79),
+	partition p79 values in (80),
+	partition p80 values in (81),
+	partition p81 values in (82),
+	partition p82 values in (83),
+	partition p83 values in (84),
+	partition p84 values in (85),
+	partition p85 values in (86),
+	partition p86 values in (87),
+	partition p87 values in (88),
+	partition p88 values in (89),
+	partition p89 values in (90),
+	partition p90 values in (91),
+	partition p91 values in (92),
+	partition p92 values in (93),
+	partition p93 values in (94),
+	partition p94 values in (95),
+	partition p95 values in (96),
+	partition p96 values in (97),
+	partition p97 values in (98),
+	partition p98 values in (99),
+	partition p99 values in (100)
+)
+2019-09-03 19:18:27,920 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=7 failure=0
+2019-09-03 19:18:27,920 [main] INFO  (DfSqlFileFireMan#fire():89) - {Create Schema}: success=74 failure=0 (in 3 files)
+2019-09-03 19:18:27,921 [main] INFO  (DfCreateSchemaProcess#destroyChangeUserConnection():564) - ...Closing connections to change-users: [system]
+2019-09-03 19:18:28,024 [main] INFO  (DfLoadDataProcess#execute():129) - 
+2019-09-03 19:18:28,024 [main] INFO  (DfLoadDataProcess#execute():130) - * * * * * * * * * * *
+2019-09-03 19:18:28,025 [main] INFO  (DfLoadDataProcess#execute():131) - *                   *
+2019-09-03 19:18:28,025 [main] INFO  (DfLoadDataProcess#execute():132) - * Load Data         *
+2019-09-03 19:18:28,025 [main] INFO  (DfLoadDataProcess#execute():133) - *                   *
+2019-09-03 19:18:28,025 [main] INFO  (DfLoadDataProcess#execute():134) - * * * * * * * * * * *
+2019-09-03 19:18:28,056 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,056 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/01-AUTHORITY.tsv)
+2019-09-03 19:18:28,056 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,058 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,058 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,058 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,094 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - AUTHORITY:{ROLE_PLAYER, プレイヤー}
+2019-09-03 19:18:28,108 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - AUTHORITY:{ROLE_ADMIN, 管理者}
+2019-09-03 19:18:28,113 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 2 rows are loaded to AUTHORITY
+2019-09-03 19:18:28,115 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,115 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/02-CAMP.tsv)
+2019-09-03 19:18:28,115 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,115 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,115 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,116 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,128 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CAMP:{VILLAGER, 村人陣営}
+2019-09-03 19:18:28,128 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CAMP:{WEREWOLF, 人狼陣営}
+2019-09-03 19:18:28,128 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CAMP:{FOX, 狐陣営}
+2019-09-03 19:18:28,129 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 3 rows are loaded to CAMP
+2019-09-03 19:18:28,130 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,130 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/03-VILLAGE_STATUS.tsv)
+2019-09-03 19:18:28,130 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,130 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,131 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,131 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,142 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - VILLAGE_STATUS:{IN_PREPARATION, 募集中}
+2019-09-03 19:18:28,142 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - VILLAGE_STATUS:{WAITING, 開始待ち}
+2019-09-03 19:18:28,143 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - VILLAGE_STATUS:{IN_PROGRESS, 進行中}
+2019-09-03 19:18:28,143 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - VILLAGE_STATUS:{EPILOGUE, エピローグ}
+2019-09-03 19:18:28,143 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - VILLAGE_STATUS:{COMPLETED, 終了}
+2019-09-03 19:18:28,144 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - VILLAGE_STATUS:{CANCEL, 廃村}
+2019-09-03 19:18:28,145 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 6 rows are loaded to VILLAGE_STATUS
+2019-09-03 19:18:28,146 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,146 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/04-SKILL.tsv)
+2019-09-03 19:18:28,146 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,146 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,146 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,146 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,158 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{VILLAGER, 村人, VILLAGER, 1}
+2019-09-03 19:18:28,180 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{WEREWOLF, 人狼, WEREWOLF, 2}
+2019-09-03 19:18:28,180 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{SEER, 占い師, VILLAGER, 3}
+2019-09-03 19:18:28,180 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{MEDIUM, 霊能者, VILLAGER, 4}
+2019-09-03 19:18:28,181 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{MADMAN, 狂人, WEREWOLF, 5}
+2019-09-03 19:18:28,181 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{HUNTER, 狩人, VILLAGER, 6}
+2019-09-03 19:18:28,181 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{MASON, 共鳴者, VILLAGER, 7}
+2019-09-03 19:18:28,182 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{WISE, 賢者, VILLAGER, 8}
+2019-09-03 19:18:28,182 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{GURU, 導師, VILLAGER, 9}
+2019-09-03 19:18:28,182 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{DETECTIVE, 探偵, VILLAGER, 10}
+2019-09-03 19:18:28,182 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{CMADMAN, C国狂人, WEREWOLF, 11}
+2019-09-03 19:18:28,183 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{EVILMEDIUM, 魔神官, WEREWOLF, 12}
+2019-09-03 19:18:28,183 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{FANATIC, 狂信者, WEREWOLF, 13}
+2019-09-03 19:18:28,183 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{FOX, 妖狐, FOX, 14}
+2019-09-03 19:18:28,183 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{LEFTOVER, おまかせ, VILLAGER, 15}
+2019-09-03 19:18:28,184 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{VILLAGERS, おまかせ（村人陣営）, VILLAGER, 16}
+2019-09-03 19:18:28,184 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{WEREWOLFS, おまかせ（人狼陣営）, VILLAGER, 17}
+2019-09-03 19:18:28,184 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{NOVILLAGERS, おまかせ（人外）, VILLAGER, 18}
+2019-09-03 19:18:28,185 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{FOOTSTEPS, おまかせ（足音職）, VILLAGER, 19}
+2019-09-03 19:18:28,185 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - SKILL:{FRIENDS, おまかせ（役職窓あり）, VILLAGER, 20}
+2019-09-03 19:18:28,189 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 20 rows are loaded to SKILL
+2019-09-03 19:18:28,190 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,190 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/05-MESSAGE_TYPE.tsv)
+2019-09-03 19:18:28,190 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,190 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,190 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,190 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,199 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PUBLIC_SYSTEM, 公開システムメッセージ}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PRIVATE_SYSTEM, 非公開システムメッセージ}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PRIVATE_SEER, 白黒占い結果}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PRIVATE_WISE, 役職占い結果}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PRIVATE_PSYCHIC, 白黒霊視結果}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PRIVATE_GURU, 役職霊視結果}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{PRIVATE_INVESTIGATE, 足音調査結果}
+2019-09-03 19:18:28,200 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{NORMAL_SAY, 通常発言}
+2019-09-03 19:18:28,216 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{MONOLOGUE_SAY, 独り言}
+2019-09-03 19:18:28,217 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{GRAVE_SAY, 死者の呻き}
+2019-09-03 19:18:28,217 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{WEREWOLF_SAY, 人狼の囁き}
+2019-09-03 19:18:28,217 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{MASON_SAY, 共鳴発言}
+2019-09-03 19:18:28,217 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{SPECTATE_SAY, 見学発言}
+2019-09-03 19:18:28,218 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{CREATOR_SAY, 村建て発言}
+2019-09-03 19:18:28,218 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - MESSAGE_TYPE:{SECRET_SAY, 秘話}
+2019-09-03 19:18:28,221 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 15 rows are loaded to MESSAGE_TYPE
+2019-09-03 19:18:28,222 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,222 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/06-DEAD_REASON.tsv)
+2019-09-03 19:18:28,223 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,223 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,223 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,224 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,232 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DEAD_REASON:{ATTACK, 襲撃}
+2019-09-03 19:18:28,233 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DEAD_REASON:{EXECUTE, 処刑}
+2019-09-03 19:18:28,233 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DEAD_REASON:{DIVINED, 呪殺}
+2019-09-03 19:18:28,233 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DEAD_REASON:{SUDDON, 突然}
+2019-09-03 19:18:28,234 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 4 rows are loaded to DEAD_REASON
+2019-09-03 19:18:28,235 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,235 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/07-ABILITY_TYPE.tsv)
+2019-09-03 19:18:28,235 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,236 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,236 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,236 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,244 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ABILITY_TYPE:{ATTACK, 襲撃}
+2019-09-03 19:18:28,244 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ABILITY_TYPE:{DIVINE, 占い}
+2019-09-03 19:18:28,245 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ABILITY_TYPE:{GUARD, 護衛}
+2019-09-03 19:18:28,245 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ABILITY_TYPE:{INVESTIGATE, 捜査}
+2019-09-03 19:18:28,247 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 4 rows are loaded to ABILITY_TYPE
+2019-09-03 19:18:28,248 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,248 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/08-DESIGNER.tsv)
+2019-09-03 19:18:28,248 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,249 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,249 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,249 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,260 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DESIGNER:{1, いらすとや, 2019-09-03 19:18:28.26, dbflute, 2019-09-03 19:18:28.26, dbflute}
+2019-09-03 19:18:28,262 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DESIGNER:{2, じっぷ, 2019-09-03 19:18:28.262, dbflute, 2019-09-03 19:18:28.262, dbflute}
+2019-09-03 19:18:28,263 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DESIGNER:{3, 小由流, 2019-09-03 19:18:28.263, dbflute, 2019-09-03 19:18:28.263, dbflute}
+2019-09-03 19:18:28,263 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DESIGNER:{4, めいあ, 2019-09-03 19:18:28.263, dbflute, 2019-09-03 19:18:28.263, dbflute}
+2019-09-03 19:18:28,263 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - DESIGNER:{5, may-co, 2019-09-03 19:18:28.263, dbflute, 2019-09-03 19:18:28.263, dbflute}
+2019-09-03 19:18:28,265 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 5 rows are loaded to DESIGNER
+2019-09-03 19:18:28,265 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,266 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/09-CHARA_GROUP.tsv)
+2019-09-03 19:18:28,266 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,266 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,266 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,266 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,277 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CHARA_GROUP:{1, 人狼BBS, 1, https://www.irasutoya.com/, 2019-09-03 19:18:28.277, dbflute, 2019-09-03 19:18:28.277, dbflute}
+2019-09-03 19:18:28,278 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CHARA_GROUP:{2, 大神学園, 2, http://electricbuster.jeez.jp/jnro/chipset/index2.html, 2019-09-03 19:18:28.278, dbflute, 2019-09-03 19:18:28.278, dbflute}
+2019-09-03 19:18:28,278 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CHARA_GROUP:{3, 歳時抄, 3, http://jsfun525.gamedb.info/wiki/?cmd=read&page=%BA%D0%BB%FE%BE%B6%B0%C6%C6%E2%A5%DA%A1%BC%A5%B8&word=%BA%D0%BB%FE%B5%AD, 2019-09-03 19:18:28.278, dbflute, 2019-09-03 19:18:28.278, dbflute}
+2019-09-03 19:18:28,279 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CHARA_GROUP:{4, H)SOCIUS(A, 4, http://hrihpadma.la.coocan.jp/chip/socius_set.html, 2019-09-03 19:18:28.278, dbflute, 2019-09-03 19:18:28.278, dbflute}
+2019-09-03 19:18:28,279 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - CHARA_GROUP:{5, ジランドール, 5, http://garulf.web.fc2.com/set.html, 2019-09-03 19:18:28.279, dbflute, 2019-09-03 19:18:28.279, dbflute}
+2019-09-03 19:18:28,282 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 5 rows are loaded to CHARA_GROUP
+2019-09-03 19:18:28,282 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,282 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/10-ALLOWED_SECRET_SAY.tsv)
+2019-09-03 19:18:28,282 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,282 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,283 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,283 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,292 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ALLOWED_SECRET_SAY:{NOTHING, なし}
+2019-09-03 19:18:28,293 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ALLOWED_SECRET_SAY:{ONLY_CREATOR, 村建てとのみ}
+2019-09-03 19:18:28,293 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - ALLOWED_SECRET_SAY:{EVERYTHING, 全員}
+2019-09-03 19:18:28,295 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 3 rows are loaded to ALLOWED_SECRET_SAY
+2019-09-03 19:18:28,295 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2019-09-03 19:18:28,295 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - writeData(playsql/data/common/tsv/UTF-8/11-FACE_TYPE.tsv)
+2019-09-03 19:18:28,295 [main] INFO  (DfDelimiterDataWriterImpl#writeData():89) - = = = = = = =/
+2019-09-03 19:18:28,296 [main] INFO  (DfTableExtractor#doGetTableList():66) - ...Getting tables:
+2019-09-03 19:18:28,296 [main] INFO  (DfTableExtractor#doGetTableList():67) -   schema = {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,296 [main] INFO  (DfTableExtractor#doGetTableList():68) -   types  = [TABLE, VIEW]
+2019-09-03 19:18:28,305 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - FACE_TYPE:{NORMAL, 通常, 1}
+2019-09-03 19:18:28,305 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - FACE_TYPE:{WEREWOLF, 囁き, 2}
+2019-09-03 19:18:28,305 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - FACE_TYPE:{GRAVE, 墓下, 3}
+2019-09-03 19:18:28,306 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - FACE_TYPE:{MONOLOGUE, 独り言, 4}
+2019-09-03 19:18:28,306 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - FACE_TYPE:{MASON, 共鳴, 5}
+2019-09-03 19:18:28,306 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1083) - FACE_TYPE:{SECRET, 秘話, 6}
+2019-09-03 19:18:28,308 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1099) -  -> 6 rows are loaded to FACE_TYPE
+2019-09-03 19:18:28,309 [main] INFO  (DfLoadDataProcess#lazyCheckLoadedClassifiaction():380) - ...Checking implicit set of classification
+2019-09-03 19:18:28,323 [main] INFO  (DfDatabaseProperties#createMainSchemaConnection():981) - ...Creating connection to main schema: {wolf4busydb.$$NoNameSchema$$ as main}
+2019-09-03 19:18:28,330 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for Authority classification
+select AUTHORITY_CODE as cls_code, AUTHORITY_NAME as cls_name
+     , AUTHORITY_NAME as cls_alias, null as cls_comment
+  from AUTHORITY
+2019-09-03 19:18:28,335 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for Camp classification
+select CAMP_CODE as cls_code, CAMP_NAME as cls_name
+     , CAMP_NAME as cls_alias, null as cls_comment
+  from CAMP
+2019-09-03 19:18:28,337 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for VillageStatus classification
+select VILLAGE_STATUS_CODE as cls_code, VILLAGE_STATUS_NAME as cls_name
+     , VILLAGE_STATUS_NAME as cls_alias, null as cls_comment
+  from VILLAGE_STATUS
+2019-09-03 19:18:28,340 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for Skill classification
+select SKILL_CODE as cls_code, SKILL_NAME as cls_name
+     , SKILL_NAME as cls_alias, null as cls_comment
+  from SKILL
+2019-09-03 19:18:28,348 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for MessageType classification
+select MESSAGE_TYPE_CODE as cls_code, MESSAGE_TYPE_NAME as cls_name
+     , MESSAGE_TYPE_NAME as cls_alias, null as cls_comment
+  from MESSAGE_TYPE
+2019-09-03 19:18:28,350 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for DeadReason classification
+select DEAD_REASON_CODE as cls_code, DEAD_REASON_NAME as cls_name
+     , DEAD_REASON_NAME as cls_alias, null as cls_comment
+  from DEAD_REASON
+2019-09-03 19:18:28,351 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for AbilityType classification
+select ABILITY_TYPE_CODE as cls_code, ABILITY_TYPE_NAME as cls_name
+     , ABILITY_TYPE_NAME as cls_alias, null as cls_comment
+  from ABILITY_TYPE
+2019-09-03 19:18:28,352 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for AllowedSecretSay classification
+select ALLOWED_SECRET_SAY_CODE as cls_code, ALLOWED_SECRET_SAY_NAME as cls_name
+     , ALLOWED_SECRET_SAY_NAME as cls_alias, null as cls_comment
+  from ALLOWED_SECRET_SAY
+2019-09-03 19:18:28,354 [main] INFO  (DfClassificationProperties#setupTableClassification():688) - ...Selecting for FaceType classification
+select FACE_TYPE_CODE as cls_code, FACE_TYPE_NAME as cls_name
+     , FACE_TYPE_NAME as cls_alias, null as cls_comment
+  from FACE_TYPE
+2019-09-03 19:18:28,361 [main] INFO  (DfTakeFinallyProcess#takeFinally():229) - 
+2019-09-03 19:18:28,361 [main] INFO  (DfTakeFinallyProcess#takeFinally():230) - * * * * * * * **
+2019-09-03 19:18:28,361 [main] INFO  (DfTakeFinallyProcess#takeFinally():231) - *              *
+2019-09-03 19:18:28,361 [main] INFO  (DfTakeFinallyProcess#takeFinally():232) - * Take Finally *
+2019-09-03 19:18:28,361 [main] INFO  (DfTakeFinallyProcess#takeFinally():233) - *              *
+2019-09-03 19:18:28,361 [main] INFO  (DfTakeFinallyProcess#takeFinally():234) - * * * * * * * **
+2019-09-03 19:18:28,365 [main] INFO  (DfSqlFileFireMan#fire():64) - ...Firing: take-finally.sql
+2019-09-03 19:18:28,366 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=0 failure=0
+2019-09-03 19:18:28,366 [main] INFO  (DfSqlFileFireMan#fire():89) - {Take Finally}: success=0 failure=0 (in 1 files)
+2019-09-03 19:18:28,367 [main] INFO  (DfDataSourceHandler#destroy():120) - ...closeReally()
+2019-09-03 19:18:28,369 [main] INFO  (DfDBFluteTaskUtil#logFinalMessage():139) - 
+_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+[Final Message]: 00m02s234ms
+
+  DBFLUTE_CLIENT: {sandboxdb}
+    database  = mysql (MySQL 5.6.40)
+    language  = java
+    container = spring
+    package   = com.ort.dbflute
+
+  DBFLUTE_ENVIRONMENT_TYPE: {}
+    driver = com.mysql.jdbc.Driver
+    url    = jdbc:mysql://localhost:3306/wolf4busydb?characterEncoding=UTF-8
+    schema = {wolf4busydb.$$NoNameSchema$$ as main}
+    user   = wolf4busyuser
+    props  = {user=wolf4busyuser, password=wolf4busypass}
+    additionalSchema = 
+    repsEnvType      = ut
+    refreshProject   = $$AutoDetect$$
+
+ {Create Schema}: success=74 failure=0 (in 3 files)
+  o replace-schema-00.sql
+  o replace-schema-10-basic.sql
+  o replace-schema-10-partition.sql
+
+ {Load Data}: loaded-files=11
+  (common)
+  o 01-AUTHORITY.tsv
+  o 02-CAMP.tsv
+  o 03-VILLAGE_STATUS.tsv
+  o (and other tsv files...)
+
+ {Take Finally}: success=0 failure=0 (in 1 files)
+  o take-finally.sql
+_/_/_/_/_/_/_/_/_/_/ {ReplaceSchema}
