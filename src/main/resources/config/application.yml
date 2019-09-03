@@ -8,6 +8,8 @@ spring:
     basename: messages
     cache-duration: -1
     encoding: UTF-8
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 server:
   port: 8086
   servlet:
