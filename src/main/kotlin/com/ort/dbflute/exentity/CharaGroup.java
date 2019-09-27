@@ -1,6 +1,9 @@
 package com.ort.dbflute.exentity;
 
 import com.ort.dbflute.bsentity.BsCharaGroup;
+import com.ort.wolf4busy.domain.model.charachip.Charachip;
+
+import java.util.stream.Collectors;
 
 /**
  * The entity of CHARA_GROUP.
