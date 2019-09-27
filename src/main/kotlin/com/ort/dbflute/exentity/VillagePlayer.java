@@ -14,4 +14,12 @@ public class VillagePlayer extends BsVillagePlayer {
 
     /** The serial version UID for object serialization. (Default) */
     private static final long serialVersionUID = 1L;
+
+    public boolean isParticipant() {
+        return !this.getIsSpectator() && !this.getIsGone();
+    }
+
+    public boolean isVisitor() {
+        return this.getIsSpectator() && !this.getIsGone();
+    }
 }

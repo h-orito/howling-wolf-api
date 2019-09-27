@@ -1,0 +1,12 @@
+VILLAGE_ID	VILLAGE_DISPLAY_NAME	CREATE_PLAYER_NAME	VILLAGE_STATUS_CODE	EPILOGUE_DAY	WIN_CAMP_CODE
+1	【テスト】お試し	master	COMPLETED	5	VILLAGER
+2	【サンプル】進行中	master	COMPLETED	10	FOX
+3	【テスト】村建ててみたぽよ	master	COMPLETED	10	WEREWOLF
+4	テスト村１	master	COMPLETED	3	VILLAGER
+5	ゲルトの独り言	master	COMPLETED	4	VILLAGER
+6	【祝】じっぷさんチップお披露目	master	CANCEL				
+7	【祝】じっぷさんチップお披露目	master	CANCEL				
+8	パメラ、上京やめるってよ	master	COMPLETED	9	WEREWOLF
+9	【テスト】ペロ...この足音は！	master	COMPLETED	5	VILLAGER
+10	狼と黄金色の村	master	COMPLETED	7	VILLAGER
+11	レタス村五次会　大神学園林間学校	lg21	COMPLETED	9	VILLAGER
