@@ -53,7 +53,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # prepare database
-      - run: export answer=y;sh dbflute_sandboxdb/manage.sh 0 > /dev/null
+      - run: export answer=y;sh dbflute_wolf4busydb/manage.sh 0 > /dev/null
 
       # run tests!
       - run: mvn package # run the actual tests
