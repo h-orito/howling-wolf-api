@@ -6,8 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 data class Wolf4busyUser(
-        val userName: String,
-        val pass: String,
+        val uid: String,
         val authority: CDef.Authority
 ) : UserDetails {
 
@@ -20,7 +19,7 @@ data class Wolf4busyUser(
     }
 
     override fun getUsername(): String {
-        return this.username
+        return this.uid
     }
 
     override fun isCredentialsNonExpired(): Boolean {
@@ -28,7 +27,7 @@ data class Wolf4busyUser(
     }
 
     override fun getPassword(): String {
-        return this.pass
+        return ""
     }
 
     override fun isAccountNonExpired(): Boolean {

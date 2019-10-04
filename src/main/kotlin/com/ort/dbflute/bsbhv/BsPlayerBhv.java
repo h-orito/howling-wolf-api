@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     PLAYER_ID
  *
  * [column]
- *     PLAYER_ID, PLAYER_NAME, PLAYER_PASSWORD, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -188,27 +188,27 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
 
     /**
      * Select the entity by the unique-key value.
-     * @param playerName : UQ, NotNull, VARCHAR(12). (NotNull)
+     * @param uid : UQ, NotNull, VARCHAR(100). (NotNull)
      * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Player> selectByUniqueOf(String playerName) {
-        return facadeSelectByUniqueOf(playerName);
+    public OptionalEntity<Player> selectByUniqueOf(String uid) {
+        return facadeSelectByUniqueOf(uid);
     }
 
-    protected OptionalEntity<Player> facadeSelectByUniqueOf(String playerName) {
-        return doSelectByUniqueOf(playerName, typeOfSelectedEntity());
+    protected OptionalEntity<Player> facadeSelectByUniqueOf(String uid) {
+        return doSelectByUniqueOf(uid, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Player> OptionalEntity<ENTITY> doSelectByUniqueOf(String playerName, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(playerName), tp), playerName);
+    protected <ENTITY extends Player> OptionalEntity<ENTITY> doSelectByUniqueOf(String uid, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(uid), tp), uid);
     }
 
-    protected PlayerCB xprepareCBAsUniqueOf(String playerName) {
-        assertObjectNotNull("playerName", playerName);
-        return newConditionBean().acceptUniqueOf(playerName);
+    protected PlayerCB xprepareCBAsUniqueOf(String uid) {
+        assertObjectNotNull("uid", uid);
+        return newConditionBean().acceptUniqueOf(uid);
     }
 
     // ===================================================================================
@@ -473,12 +473,12 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     { return helpExtractListInternally(playerList, "playerId"); }
 
     /**
-     * Extract the value list of (single) unique key playerName.
+     * Extract the value list of (single) unique key uid.
      * @param playerList The list of player. (NotNull, EmptyAllowed)
      * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<String> extractPlayerNameList(List<Player> playerList)
-    { return helpExtractListInternally(playerList, "playerName"); }
+    public List<String> extractUidList(List<Player> playerList)
+    { return helpExtractListInternally(playerList, "uid"); }
 
     // ===================================================================================
     //                                                                       Entity Update
