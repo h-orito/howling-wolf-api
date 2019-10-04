@@ -247,273 +247,273 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_Equal(String playerName) {
-        doSetPlayerName_Equal(fRES(playerName));
+    public void setUid_Equal(String uid) {
+        doSetUid_Equal(fRES(uid));
     }
 
-    protected void doSetPlayerName_Equal(String playerName) {
-        regPlayerName(CK_EQ, playerName);
+    protected void doSetUid_Equal(String uid) {
+        regUid(CK_EQ, uid);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_NotEqual(String playerName) {
-        doSetPlayerName_NotEqual(fRES(playerName));
+    public void setUid_NotEqual(String uid) {
+        doSetUid_NotEqual(fRES(uid));
     }
 
-    protected void doSetPlayerName_NotEqual(String playerName) {
-        regPlayerName(CK_NES, playerName);
+    protected void doSetUid_NotEqual(String uid) {
+        regUid(CK_NES, uid);
     }
 
     /**
      * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_GreaterThan(String playerName) {
-        regPlayerName(CK_GT, fRES(playerName));
+    public void setUid_GreaterThan(String uid) {
+        regUid(CK_GT, fRES(uid));
     }
 
     /**
      * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_LessThan(String playerName) {
-        regPlayerName(CK_LT, fRES(playerName));
+    public void setUid_LessThan(String uid) {
+        regUid(CK_LT, fRES(uid));
     }
 
     /**
      * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_GreaterEqual(String playerName) {
-        regPlayerName(CK_GE, fRES(playerName));
+    public void setUid_GreaterEqual(String uid) {
+        regUid(CK_GE, fRES(uid));
     }
 
     /**
      * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_LessEqual(String playerName) {
-        regPlayerName(CK_LE, fRES(playerName));
+    public void setUid_LessEqual(String uid) {
+        regUid(CK_LE, fRES(uid));
     }
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerNameList The collection of playerName as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uidList The collection of uid as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_InScope(Collection<String> playerNameList) {
-        doSetPlayerName_InScope(playerNameList);
+    public void setUid_InScope(Collection<String> uidList) {
+        doSetUid_InScope(uidList);
     }
 
-    protected void doSetPlayerName_InScope(Collection<String> playerNameList) {
-        regINS(CK_INS, cTL(playerNameList), xgetCValuePlayerName(), "PLAYER_NAME");
+    protected void doSetUid_InScope(Collection<String> uidList) {
+        regINS(CK_INS, cTL(uidList), xgetCValueUid(), "UID");
     }
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerNameList The collection of playerName as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uidList The collection of uid as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerName_NotInScope(Collection<String> playerNameList) {
-        doSetPlayerName_NotInScope(playerNameList);
+    public void setUid_NotInScope(Collection<String> uidList) {
+        doSetUid_NotInScope(uidList);
     }
 
-    protected void doSetPlayerName_NotInScope(Collection<String> playerNameList) {
-        regINS(CK_NINS, cTL(playerNameList), xgetCValuePlayerName(), "PLAYER_NAME");
+    protected void doSetUid_NotInScope(Collection<String> uidList) {
+        regINS(CK_NINS, cTL(uidList), xgetCValueUid(), "UID");
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)} <br>
-     * <pre>e.g. setPlayerName_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
-     * @param playerName The value of playerName as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)} <br>
+     * <pre>e.g. setUid_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param uid The value of uid as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setPlayerName_LikeSearch(String playerName, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setPlayerName_LikeSearch(playerName, xcLSOP(opLambda));
+    public void setUid_LikeSearch(String uid, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setUid_LikeSearch(uid, xcLSOP(opLambda));
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)} <br>
-     * <pre>e.g. setPlayerName_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
-     * @param playerName The value of playerName as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)} <br>
+     * <pre>e.g. setUid_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param uid The value of uid as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of like-search. (NotNull)
      */
-    protected void setPlayerName_LikeSearch(String playerName, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_LS, fRES(playerName), xgetCValuePlayerName(), "PLAYER_NAME", likeSearchOption);
+    protected void setUid_LikeSearch(String uid, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(uid), xgetCValueUid(), "UID", likeSearchOption);
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setPlayerName_NotLikeSearch(String playerName, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setPlayerName_NotLikeSearch(playerName, xcLSOP(opLambda));
+    public void setUid_NotLikeSearch(String uid, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setUid_NotLikeSearch(uid, xcLSOP(opLambda));
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
-     * @param playerName The value of playerName as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * UID: {UQ, NotNull, VARCHAR(100)}
+     * @param uid The value of uid as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of not-like-search. (NotNull)
      */
-    protected void setPlayerName_NotLikeSearch(String playerName, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_NLS, fRES(playerName), xgetCValuePlayerName(), "PLAYER_NAME", likeSearchOption);
+    protected void setUid_NotLikeSearch(String uid, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(uid), xgetCValueUid(), "UID", likeSearchOption);
     }
 
-    protected void regPlayerName(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValuePlayerName(), "PLAYER_NAME"); }
-    protected abstract ConditionValue xgetCValuePlayerName();
+    protected void regUid(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueUid(), "UID"); }
+    protected abstract ConditionValue xgetCValueUid();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_Equal(String playerPassword) {
-        doSetPlayerPassword_Equal(fRES(playerPassword));
+    public void setNickname_Equal(String nickname) {
+        doSetNickname_Equal(fRES(nickname));
     }
 
-    protected void doSetPlayerPassword_Equal(String playerPassword) {
-        regPlayerPassword(CK_EQ, playerPassword);
+    protected void doSetNickname_Equal(String nickname) {
+        regNickname(CK_EQ, nickname);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_NotEqual(String playerPassword) {
-        doSetPlayerPassword_NotEqual(fRES(playerPassword));
+    public void setNickname_NotEqual(String nickname) {
+        doSetNickname_NotEqual(fRES(nickname));
     }
 
-    protected void doSetPlayerPassword_NotEqual(String playerPassword) {
-        regPlayerPassword(CK_NES, playerPassword);
+    protected void doSetNickname_NotEqual(String nickname) {
+        regNickname(CK_NES, nickname);
     }
 
     /**
      * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_GreaterThan(String playerPassword) {
-        regPlayerPassword(CK_GT, fRES(playerPassword));
+    public void setNickname_GreaterThan(String nickname) {
+        regNickname(CK_GT, fRES(nickname));
     }
 
     /**
      * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_LessThan(String playerPassword) {
-        regPlayerPassword(CK_LT, fRES(playerPassword));
+    public void setNickname_LessThan(String nickname) {
+        regNickname(CK_LT, fRES(nickname));
     }
 
     /**
      * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_GreaterEqual(String playerPassword) {
-        regPlayerPassword(CK_GE, fRES(playerPassword));
+    public void setNickname_GreaterEqual(String nickname) {
+        regNickname(CK_GE, fRES(nickname));
     }
 
     /**
      * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_LessEqual(String playerPassword) {
-        regPlayerPassword(CK_LE, fRES(playerPassword));
+    public void setNickname_LessEqual(String nickname) {
+        regNickname(CK_LE, fRES(nickname));
     }
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPasswordList The collection of playerPassword as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nicknameList The collection of nickname as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_InScope(Collection<String> playerPasswordList) {
-        doSetPlayerPassword_InScope(playerPasswordList);
+    public void setNickname_InScope(Collection<String> nicknameList) {
+        doSetNickname_InScope(nicknameList);
     }
 
-    protected void doSetPlayerPassword_InScope(Collection<String> playerPasswordList) {
-        regINS(CK_INS, cTL(playerPasswordList), xgetCValuePlayerPassword(), "PLAYER_PASSWORD");
+    protected void doSetNickname_InScope(Collection<String> nicknameList) {
+        regINS(CK_INS, cTL(nicknameList), xgetCValueNickname(), "NICKNAME");
     }
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPasswordList The collection of playerPassword as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nicknameList The collection of nickname as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setPlayerPassword_NotInScope(Collection<String> playerPasswordList) {
-        doSetPlayerPassword_NotInScope(playerPasswordList);
+    public void setNickname_NotInScope(Collection<String> nicknameList) {
+        doSetNickname_NotInScope(nicknameList);
     }
 
-    protected void doSetPlayerPassword_NotInScope(Collection<String> playerPasswordList) {
-        regINS(CK_NINS, cTL(playerPasswordList), xgetCValuePlayerPassword(), "PLAYER_PASSWORD");
+    protected void doSetNickname_NotInScope(Collection<String> nicknameList) {
+        regINS(CK_NINS, cTL(nicknameList), xgetCValueNickname(), "NICKNAME");
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)} <br>
-     * <pre>e.g. setPlayerPassword_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
-     * @param playerPassword The value of playerPassword as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)} <br>
+     * <pre>e.g. setNickname_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param nickname The value of nickname as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setPlayerPassword_LikeSearch(String playerPassword, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setPlayerPassword_LikeSearch(playerPassword, xcLSOP(opLambda));
+    public void setNickname_LikeSearch(String nickname, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setNickname_LikeSearch(nickname, xcLSOP(opLambda));
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)} <br>
-     * <pre>e.g. setPlayerPassword_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
-     * @param playerPassword The value of playerPassword as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)} <br>
+     * <pre>e.g. setNickname_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param nickname The value of nickname as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of like-search. (NotNull)
      */
-    protected void setPlayerPassword_LikeSearch(String playerPassword, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_LS, fRES(playerPassword), xgetCValuePlayerPassword(), "PLAYER_PASSWORD", likeSearchOption);
+    protected void setNickname_LikeSearch(String nickname, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(nickname), xgetCValueNickname(), "NICKNAME", likeSearchOption);
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setPlayerPassword_NotLikeSearch(String playerPassword, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setPlayerPassword_NotLikeSearch(playerPassword, xcLSOP(opLambda));
+    public void setNickname_NotLikeSearch(String nickname, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setNickname_NotLikeSearch(nickname, xcLSOP(opLambda));
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
-     * @param playerPassword The value of playerPassword as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NICKNAME: {NotNull, VARCHAR(50)}
+     * @param nickname The value of nickname as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of not-like-search. (NotNull)
      */
-    protected void setPlayerPassword_NotLikeSearch(String playerPassword, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_NLS, fRES(playerPassword), xgetCValuePlayerPassword(), "PLAYER_PASSWORD", likeSearchOption);
+    protected void setNickname_NotLikeSearch(String nickname, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(nickname), xgetCValueNickname(), "NICKNAME", likeSearchOption);
     }
 
-    protected void regPlayerPassword(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValuePlayerPassword(), "PLAYER_PASSWORD"); }
-    protected abstract ConditionValue xgetCValuePlayerPassword();
+    protected void regNickname(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueNickname(), "NICKNAME"); }
+    protected abstract ConditionValue xgetCValueNickname();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>

@@ -107,45 +107,45 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
      */
     public BsPlayerCQ addOrderBy_PlayerId_Desc() { regOBD("PLAYER_ID"); return this; }
 
-    protected ConditionValue _playerName;
-    public ConditionValue xdfgetPlayerName()
-    { if (_playerName == null) { _playerName = nCV(); }
-      return _playerName; }
-    protected ConditionValue xgetCValuePlayerName() { return xdfgetPlayerName(); }
+    protected ConditionValue _uid;
+    public ConditionValue xdfgetUid()
+    { if (_uid == null) { _uid = nCV(); }
+      return _uid; }
+    protected ConditionValue xgetCValueUid() { return xdfgetUid(); }
 
     /** 
      * Add order-by as ascend. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
+     * UID: {UQ, NotNull, VARCHAR(100)}
      * @return this. (NotNull)
      */
-    public BsPlayerCQ addOrderBy_PlayerName_Asc() { regOBA("PLAYER_NAME"); return this; }
+    public BsPlayerCQ addOrderBy_Uid_Asc() { regOBA("UID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
+     * UID: {UQ, NotNull, VARCHAR(100)}
      * @return this. (NotNull)
      */
-    public BsPlayerCQ addOrderBy_PlayerName_Desc() { regOBD("PLAYER_NAME"); return this; }
+    public BsPlayerCQ addOrderBy_Uid_Desc() { regOBD("UID"); return this; }
 
-    protected ConditionValue _playerPassword;
-    public ConditionValue xdfgetPlayerPassword()
-    { if (_playerPassword == null) { _playerPassword = nCV(); }
-      return _playerPassword; }
-    protected ConditionValue xgetCValuePlayerPassword() { return xdfgetPlayerPassword(); }
+    protected ConditionValue _nickname;
+    public ConditionValue xdfgetNickname()
+    { if (_nickname == null) { _nickname = nCV(); }
+      return _nickname; }
+    protected ConditionValue xgetCValueNickname() { return xdfgetNickname(); }
 
     /** 
      * Add order-by as ascend. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
+     * NICKNAME: {NotNull, VARCHAR(50)}
      * @return this. (NotNull)
      */
-    public BsPlayerCQ addOrderBy_PlayerPassword_Asc() { regOBA("PLAYER_PASSWORD"); return this; }
+    public BsPlayerCQ addOrderBy_Nickname_Asc() { regOBA("NICKNAME"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
+     * NICKNAME: {NotNull, VARCHAR(50)}
      * @return this. (NotNull)
      */
-    public BsPlayerCQ addOrderBy_PlayerPassword_Desc() { regOBD("PLAYER_PASSWORD"); return this; }
+    public BsPlayerCQ addOrderBy_Nickname_Desc() { regOBD("NICKNAME"); return this; }
 
     protected ConditionValue _authorityCode;
     public ConditionValue xdfgetAuthorityCode()

@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/wolf-kotlin-sandbox/dbflute_sandboxdb/playsql/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -1339,18 +1339,18 @@
 					<auto_increment>true</auto_increment>
 				</normal_column>
 				<normal_column>
-					<physical_name>player_name</physical_name>
-					<logical_name>プレイヤー名</logical_name>
+					<physical_name>uid</physical_name>
+					<logical_name>ユーザID</logical_name>
 					<type>varchar(n)</type>
-					<length>12</length>
+					<length>100</length>
 					<not_null>true</not_null>
 					<unique_key>true</unique_key>
 				</normal_column>
 				<normal_column>
-					<physical_name>player_password</physical_name>
-					<logical_name>プレイヤーパスワード</logical_name>
-					<type>character(n)</type>
-					<length>60</length>
+					<physical_name>nickname</physical_name>
+					<logical_name>ニックネーム</logical_name>
+					<type>varchar(n)</type>
+					<length>50</length>
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>

@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     PLAYER_ID
  *
  * [column]
- *     PLAYER_ID, PLAYER_NAME, PLAYER_PASSWORD, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -47,8 +47,8 @@ import com.ort.dbflute.exentity.*;
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * Integer playerId = entity.getPlayerId();
- * String playerName = entity.getPlayerName();
- * String playerPassword = entity.getPlayerPassword();
+ * String uid = entity.getUid();
+ * String nickname = entity.getNickname();
  * String authorityCode = entity.getAuthorityCode();
  * Boolean isRestrictedParticipation = entity.getIsRestrictedParticipation();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
@@ -56,8 +56,8 @@ import com.ort.dbflute.exentity.*;
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * String updateTrace = entity.getUpdateTrace();
  * entity.setPlayerId(playerId);
- * entity.setPlayerName(playerName);
- * entity.setPlayerPassword(playerPassword);
+ * entity.setUid(uid);
+ * entity.setNickname(nickname);
  * entity.setAuthorityCode(authorityCode);
  * entity.setIsRestrictedParticipation(isRestrictedParticipation);
  * entity.setRegisterDatetime(registerDatetime);
@@ -82,11 +82,11 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     /** PLAYER_ID: {PK, ID, NotNull, INT UNSIGNED(10)} */
     protected Integer _playerId;
 
-    /** PLAYER_NAME: {UQ, NotNull, VARCHAR(12)} */
-    protected String _playerName;
+    /** UID: {UQ, NotNull, VARCHAR(100)} */
+    protected String _uid;
 
-    /** PLAYER_PASSWORD: {NotNull, CHAR(60)} */
-    protected String _playerPassword;
+    /** NICKNAME: {NotNull, VARCHAR(50)} */
+    protected String _nickname;
 
     /** AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} */
     protected String _authorityCode;
@@ -131,12 +131,12 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     /**
      * To be unique by the unique column. <br>
      * You can update the entity by the key when entity update (NOT batch update).
-     * @param playerName : UQ, NotNull, VARCHAR(12). (NotNull)
+     * @param uid : UQ, NotNull, VARCHAR(100). (NotNull)
      */
-    public void uniqueBy(String playerName) {
+    public void uniqueBy(String uid) {
         __uniqueDrivenProperties.clear();
-        __uniqueDrivenProperties.addPropertyName("playerName");
-        setPlayerName(playerName);
+        __uniqueDrivenProperties.addPropertyName("uid");
+        setUid(uid);
     }
 
     // ===================================================================================
@@ -297,8 +297,8 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_playerId));
-        sb.append(dm).append(xfND(_playerName));
-        sb.append(dm).append(xfND(_playerPassword));
+        sb.append(dm).append(xfND(_uid));
+        sb.append(dm).append(xfND(_nickname));
         sb.append(dm).append(xfND(_authorityCode));
         sb.append(dm).append(xfND(_isRestrictedParticipation));
         sb.append(dm).append(xfND(_registerDatetime));
@@ -354,43 +354,43 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     }
 
     /**
-     * [get] PLAYER_NAME: {UQ, NotNull, VARCHAR(12)} <br>
-     * プレイヤー名
-     * @return The value of the column 'PLAYER_NAME'. (basically NotNull if selected: for the constraint)
+     * [get] UID: {UQ, NotNull, VARCHAR(100)} <br>
+     * ユーザID
+     * @return The value of the column 'UID'. (basically NotNull if selected: for the constraint)
      */
-    public String getPlayerName() {
-        checkSpecifiedProperty("playerName");
-        return convertEmptyToNull(_playerName);
+    public String getUid() {
+        checkSpecifiedProperty("uid");
+        return convertEmptyToNull(_uid);
     }
 
     /**
-     * [set] PLAYER_NAME: {UQ, NotNull, VARCHAR(12)} <br>
-     * プレイヤー名
-     * @param playerName The value of the column 'PLAYER_NAME'. (basically NotNull if update: for the constraint)
+     * [set] UID: {UQ, NotNull, VARCHAR(100)} <br>
+     * ユーザID
+     * @param uid The value of the column 'UID'. (basically NotNull if update: for the constraint)
      */
-    public void setPlayerName(String playerName) {
-        registerModifiedProperty("playerName");
-        _playerName = playerName;
+    public void setUid(String uid) {
+        registerModifiedProperty("uid");
+        _uid = uid;
     }
 
     /**
-     * [get] PLAYER_PASSWORD: {NotNull, CHAR(60)} <br>
-     * プレイヤーパスワード
-     * @return The value of the column 'PLAYER_PASSWORD'. (basically NotNull if selected: for the constraint)
+     * [get] NICKNAME: {NotNull, VARCHAR(50)} <br>
+     * ニックネーム
+     * @return The value of the column 'NICKNAME'. (basically NotNull if selected: for the constraint)
      */
-    public String getPlayerPassword() {
-        checkSpecifiedProperty("playerPassword");
-        return convertEmptyToNull(_playerPassword);
+    public String getNickname() {
+        checkSpecifiedProperty("nickname");
+        return convertEmptyToNull(_nickname);
     }
 
     /**
-     * [set] PLAYER_PASSWORD: {NotNull, CHAR(60)} <br>
-     * プレイヤーパスワード
-     * @param playerPassword The value of the column 'PLAYER_PASSWORD'. (basically NotNull if update: for the constraint)
+     * [set] NICKNAME: {NotNull, VARCHAR(50)} <br>
+     * ニックネーム
+     * @param nickname The value of the column 'NICKNAME'. (basically NotNull if update: for the constraint)
      */
-    public void setPlayerPassword(String playerPassword) {
-        registerModifiedProperty("playerPassword");
-        _playerPassword = playerPassword;
+    public void setNickname(String nickname) {
+        registerModifiedProperty("nickname");
+        _nickname = nickname;
     }
 
     /**
