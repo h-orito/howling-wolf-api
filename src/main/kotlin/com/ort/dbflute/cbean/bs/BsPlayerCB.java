@@ -92,13 +92,13 @@ public class BsPlayerCB extends AbstractConditionBean {
 
     /**
      * Accept the query condition of unique key as equal.
-     * @param playerName : UQ, NotNull, VARCHAR(12). (NotNull)
+     * @param uid : UQ, NotNull, VARCHAR(100). (NotNull)
      * @return this. (NotNull)
      */
-    public PlayerCB acceptUniqueOf(String playerName) {
-        assertObjectNotNull("playerName", playerName);
+    public PlayerCB acceptUniqueOf(String uid) {
+        assertObjectNotNull("uid", uid);
         BsPlayerCB cb = this;
-        cb.query().setPlayerName_Equal(playerName);
+        cb.query().setUid_Equal(uid);
         return (PlayerCB)this;
     }
 
@@ -321,15 +321,15 @@ public class BsPlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnPlayerId() { return doColumn("PLAYER_ID"); }
         /**
-         * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
+         * UID: {UQ, NotNull, VARCHAR(100)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnPlayerName() { return doColumn("PLAYER_NAME"); }
+        public SpecifiedColumn columnUid() { return doColumn("UID"); }
         /**
-         * PLAYER_PASSWORD: {NotNull, CHAR(60)}
+         * NICKNAME: {NotNull, VARCHAR(50)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnPlayerPassword() { return doColumn("PLAYER_PASSWORD"); }
+        public SpecifiedColumn columnNickname() { return doColumn("NICKNAME"); }
         /**
          * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
          * @return The information object of specified column. (NotNull)
