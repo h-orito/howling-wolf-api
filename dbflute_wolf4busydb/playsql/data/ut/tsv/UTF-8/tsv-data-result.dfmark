@@ -6,7 +6,7 @@
 * * * * * * * * * *
 data-directory: playsql/data/ut/tsv/UTF-8
 
-00-PLAYER.tsv (84)
+00-PLAYER.tsv (100)
 01-VILLAGE.tsv (11)
 02-VILLAGE_DAY.tsv (82)
 03-VILLAGE_SETTINGS.tsv (11)
