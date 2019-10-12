@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     PLAYER_ID
  *
  * [column]
- *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     PLAYER_ID, UID, NICKNAME, TWITTER_USER_NAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -49,6 +49,7 @@ import com.ort.dbflute.exentity.*;
  * Integer playerId = entity.getPlayerId();
  * String uid = entity.getUid();
  * String nickname = entity.getNickname();
+ * String twitterUserName = entity.getTwitterUserName();
  * String authorityCode = entity.getAuthorityCode();
  * Boolean isRestrictedParticipation = entity.getIsRestrictedParticipation();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
@@ -58,6 +59,7 @@ import com.ort.dbflute.exentity.*;
  * entity.setPlayerId(playerId);
  * entity.setUid(uid);
  * entity.setNickname(nickname);
+ * entity.setTwitterUserName(twitterUserName);
  * entity.setAuthorityCode(authorityCode);
  * entity.setIsRestrictedParticipation(isRestrictedParticipation);
  * entity.setRegisterDatetime(registerDatetime);
@@ -87,6 +89,9 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
 
     /** NICKNAME: {NotNull, VARCHAR(50)} */
     protected String _nickname;
+
+    /** TWITTER_USER_NAME: {NotNull, VARCHAR(15)} */
+    protected String _twitterUserName;
 
     /** AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} */
     protected String _authorityCode;
@@ -299,6 +304,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         sb.append(dm).append(xfND(_playerId));
         sb.append(dm).append(xfND(_uid));
         sb.append(dm).append(xfND(_nickname));
+        sb.append(dm).append(xfND(_twitterUserName));
         sb.append(dm).append(xfND(_authorityCode));
         sb.append(dm).append(xfND(_isRestrictedParticipation));
         sb.append(dm).append(xfND(_registerDatetime));
@@ -391,6 +397,26 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     public void setNickname(String nickname) {
         registerModifiedProperty("nickname");
         _nickname = nickname;
+    }
+
+    /**
+     * [get] TWITTER_USER_NAME: {NotNull, VARCHAR(15)} <br>
+     * twitterのusername
+     * @return The value of the column 'TWITTER_USER_NAME'. (basically NotNull if selected: for the constraint)
+     */
+    public String getTwitterUserName() {
+        checkSpecifiedProperty("twitterUserName");
+        return convertEmptyToNull(_twitterUserName);
+    }
+
+    /**
+     * [set] TWITTER_USER_NAME: {NotNull, VARCHAR(15)} <br>
+     * twitterのusername
+     * @param twitterUserName The value of the column 'TWITTER_USER_NAME'. (basically NotNull if update: for the constraint)
+     */
+    public void setTwitterUserName(String twitterUserName) {
+        registerModifiedProperty("twitterUserName");
+        _twitterUserName = twitterUserName;
     }
 
     /**
