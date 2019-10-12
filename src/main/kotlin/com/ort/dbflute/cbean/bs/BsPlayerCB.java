@@ -331,6 +331,11 @@ public class BsPlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnNickname() { return doColumn("NICKNAME"); }
         /**
+         * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnTwitterUserName() { return doColumn("TWITTER_USER_NAME"); }
+        /**
          * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
          * @return The information object of specified column. (NotNull)
          */

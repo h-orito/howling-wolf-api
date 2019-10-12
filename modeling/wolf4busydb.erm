@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -1351,6 +1351,13 @@
 					<logical_name>ニックネーム</logical_name>
 					<type>varchar(n)</type>
 					<length>50</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>twitter_user_name</physical_name>
+					<logical_name>twitterのusername</logical_name>
+					<type>varchar(n)</type>
+					<length>15</length>
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>

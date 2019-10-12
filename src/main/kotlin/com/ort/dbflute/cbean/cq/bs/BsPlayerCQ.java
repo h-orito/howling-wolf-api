@@ -147,6 +147,26 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
      */
     public BsPlayerCQ addOrderBy_Nickname_Desc() { regOBD("NICKNAME"); return this; }
 
+    protected ConditionValue _twitterUserName;
+    public ConditionValue xdfgetTwitterUserName()
+    { if (_twitterUserName == null) { _twitterUserName = nCV(); }
+      return _twitterUserName; }
+    protected ConditionValue xgetCValueTwitterUserName() { return xdfgetTwitterUserName(); }
+
+    /** 
+     * Add order-by as ascend. <br>
+     * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
+     * @return this. (NotNull)
+     */
+    public BsPlayerCQ addOrderBy_TwitterUserName_Asc() { regOBA("TWITTER_USER_NAME"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
+     * @return this. (NotNull)
+     */
+    public BsPlayerCQ addOrderBy_TwitterUserName_Desc() { regOBD("TWITTER_USER_NAME"); return this; }
+
     protected ConditionValue _authorityCode;
     public ConditionValue xdfgetAuthorityCode()
     { if (_authorityCode == null) { _authorityCode = nCV(); }
