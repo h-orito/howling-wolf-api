@@ -2,7 +2,7 @@ package com.ort.wolf4busy.application.service
 
 import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
-import com.ort.wolf4busy.infrastructure.datasource.charachip.PlayerDataSource
+import com.ort.wolf4busy.infrastructure.datasource.player.PlayerDataSource
 import org.springframework.stereotype.Service
 
 @Service

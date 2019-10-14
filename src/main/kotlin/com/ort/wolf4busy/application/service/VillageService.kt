@@ -2,7 +2,7 @@ package com.ort.wolf4busy.application.service
 
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
-import com.ort.wolf4busy.infrastructure.datasource.charachip.VillageDataSource
+import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
 import org.springframework.stereotype.Service
 
 @Service

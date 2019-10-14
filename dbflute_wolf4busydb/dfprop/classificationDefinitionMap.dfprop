@@ -86,19 +86,26 @@ map:{
             ; code=ABILITY_TYPE_CODE; name=ABILITY_TYPE_NAME
         }
     }
-    ; AllowedSecretSay = list:{
-        ; map:{topComment=秘話可能範囲; codeType=String}
-        ; map:{
-            ; table=ALLOWED_SECRET_SAY
-            ; code=ALLOWED_SECRET_SAY_CODE; name=ALLOWED_SECRET_SAY_NAME
-        }
-    }
     ; FaceType = list:{
         ; map:{topComment=表情種別; codeType=String}
         ; map:{
             ; table=FACE_TYPE
             ; code=FACE_TYPE_CODE; name=FACE_TYPE_NAME
         }
+    }
+    ; VillageSettingItem = list:{
+        ; map:{topComment=村設定項目; codeType=String}
+        ; map:{
+            ; table=VILLAGE_SETTING_ITEM
+            ; code=VILLAGE_SETTING_ITEM_CODE; name=VILLAGE_SETTING_ITEM_NAME
+        }
+    }
+
+	# アプリ定義
+    ; Term = list:{
+        ; map:{topComment=期間; codeType=String}
+        ; map:{code=LONG; name=長期; comment=長期人狼}
+        ; map:{code=SHORT; name=短期; comment=短期人狼}
     }
 }
 # ----------------/

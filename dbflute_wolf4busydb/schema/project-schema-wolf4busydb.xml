@@ -63,14 +63,6 @@
         <column comment="能力種別" dbType="VARCHAR" javaType="String"
             name="ABILITY_TYPE_NAME" required="true" size="20" type="VARCHAR"/>
     </table>
-    <table comment="秘話可能な範囲" name="allowed_secret_say"
-        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column comment="秘話可能な範囲コード" dbType="VARCHAR" javaType="String"
-            name="ALLOWED_SECRET_SAY_CODE" pkName="PRIMARY"
-            pkPosition="1" primaryKey="true" required="true" size="20" type="VARCHAR"/>
-        <column comment="秘話可能範囲" dbType="VARCHAR" javaType="String"
-            name="ALLOWED_SECRET_SAY_NAME" required="true" size="20" type="VARCHAR"/>
-    </table>
     <table comment="権限" name="authority"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
         <column comment="権限コード" dbType="VARCHAR" javaType="String"
@@ -610,52 +602,16 @@
             <index-column name="VILLAGE_ID" position="1"/>
         </index>
     </table>
-    <table comment="村設定" name="village_settings"
+    <table comment="村設定" name="village_setting"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
         <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
             name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="ダミーキャラID" dbType="INT UNSIGNED"
-            javaType="Integer" name="DUMMY_CHARA_ID" required="true"
-            size="10" type="INTEGER"/>
-        <column comment="最低開始人数" dbType="INT UNSIGNED"
-            javaType="Integer" name="START_PERSON_MIN_NUM" size="10" type="INTEGER"/>
-        <column comment="定員" dbType="INT UNSIGNED" javaType="Integer"
-            name="PERSON_MAX_NUM" size="10" type="INTEGER"/>
-        <column comment="開始日時" dbType="DATETIME"
-            javaType="java.time.LocalDateTime" name="START_DATETIME"
-            size="19" type="TIMESTAMP"/>
-        <column comment="更新間隔（秒）" dbType="INT UNSIGNED"
-            javaType="Integer" name="DAY_CHANGE_INTERVAL_SECONDS"
-            required="true" size="10" type="INTEGER"/>
-        <column comment="記名投票か" dbType="BIT" javaType="Boolean"
-            name="IS_OPEN_VOTE" required="true" type="BIT"/>
-        <column comment="役職希望有効か" dbType="BIT" javaType="Boolean"
-            name="IS_POSSIBLE_SKILL_REQUEST" required="true" type="BIT"/>
-        <column comment="見学可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_SPECTATE" required="true" type="BIT"/>
-        <column comment="連続襲撃可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_SAME_WOLF_ATTACK" required="true" type="BIT"/>
-        <column comment="墓下役職公開ありか" dbType="BIT" javaType="Boolean"
-            name="IS_OPEN_SKILL_IN_GRAVE" required="true" type="BIT"/>
-        <column comment="墓下見学発言を生存者が見られるか" dbType="BIT"
-            javaType="Boolean" name="IS_VISIBLE_GRAVE_SPECTATE_MESSAGE"
-            required="true" type="BIT"/>
-        <column comment="突然死ありか" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_SUDDONLY_DEATH" required="true" type="BIT"/>
-        <column comment="コミット可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_COMMIT" required="true" type="BIT"/>
-        <column comment="連続護衛可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_GUARD_SAME_TARGET" required="true" type="BIT"/>
-        <column comment="キャラクターグループID" dbType="INT UNSIGNED"
-            javaType="Integer" name="CHARACTER_GROUP_ID" required="true"
-            size="10" type="INTEGER"/>
-        <column comment="入村パスワード" dbType="VARCHAR" javaType="String"
-            name="JOIN_PASSWORD" size="12" type="VARCHAR"/>
-        <column comment="構成" dbType="VARCHAR" javaType="String"
-            name="ORGANIZE" required="true" size="400" type="VARCHAR"/>
-        <column comment="秘話可能な範囲コード" dbType="VARCHAR" javaType="String"
-            name="ALLOWED_SECRET_SAY_CODE" required="true" size="20" type="VARCHAR"/>
+        <column comment="村設定項目コード" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_ITEM_CODE" pkName="PRIMARY"
+            pkPosition="2" primaryKey="true" required="true" size="100" type="VARCHAR"/>
+        <column comment="村設定項目内容" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_TEXT" size="1000" type="VARCHAR"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -667,23 +623,26 @@
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="allowed_secret_say" name="FK_VILLAGE_SETTINGS_ALLOWED_SECRET_SAY">
-            <reference foreign="ALLOWED_SECRET_SAY_CODE" local="ALLOWED_SECRET_SAY_CODE"/>
-        </foreign-key>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="chara_group" name="FK_VILLAGE_SETTINGS_CHARA_GROUP">
-            <reference foreign="CHARA_GROUP_ID" local="CHARACTER_GROUP_ID"/>
-        </foreign-key>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village" name="FK_VILLAGE_SETTINGS_VILLAGE">
             <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
         </foreign-key>
-        <index name="FK_VILLAGE_SETTINGS_ALLOWED_SECRET_SAY">
-            <index-column name="ALLOWED_SECRET_SAY_CODE" position="1"/>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="village_setting_item" name="FK_VILLAGE_SETTING_VILLAGE_SETTING_ITEM">
+            <reference foreign="VILLAGE_SETTING_ITEM_CODE" local="VILLAGE_SETTING_ITEM_CODE"/>
+        </foreign-key>
+        <index name="FK_VILLAGE_SETTING_VILLAGE_SETTING_ITEM">
+            <index-column name="VILLAGE_SETTING_ITEM_CODE" position="1"/>
         </index>
-        <index name="FK_VILLAGE_SETTINGS_CHARA_GROUP">
-            <index-column name="CHARACTER_GROUP_ID" position="1"/>
-        </index>
+    </table>
+    <table comment="村設定項目" name="village_setting_item"
+        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
+        <column comment="村設定項目コード" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_ITEM_CODE" pkName="PRIMARY"
+            pkPosition="1" primaryKey="true" required="true" size="100" type="VARCHAR"/>
+        <column comment="村設定項目名" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_ITEM_NAME" required="true" size="20" type="VARCHAR"/>
+        <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"
+            name="DISP_ORDER" required="true" size="10" type="INTEGER"/>
     </table>
     <table comment="村ステータス" name="village_status"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">

@@ -33,7 +33,6 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
         final Map<String, String> tmpMap = newHashMap();
         tmpMap.put("ability", "com.ort.dbflute.bsentity.dbmeta.AbilityDbm");
         tmpMap.put("ability_type", "com.ort.dbflute.bsentity.dbmeta.AbilityTypeDbm");
-        tmpMap.put("allowed_secret_say", "com.ort.dbflute.bsentity.dbmeta.AllowedSecretSayDbm");
         tmpMap.put("authority", "com.ort.dbflute.bsentity.dbmeta.AuthorityDbm");
         tmpMap.put("camp", "com.ort.dbflute.bsentity.dbmeta.CampDbm");
         tmpMap.put("chara", "com.ort.dbflute.bsentity.dbmeta.CharaDbm");
@@ -53,7 +52,8 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
         tmpMap.put("village", "com.ort.dbflute.bsentity.dbmeta.VillageDbm");
         tmpMap.put("village_day", "com.ort.dbflute.bsentity.dbmeta.VillageDayDbm");
         tmpMap.put("village_player", "com.ort.dbflute.bsentity.dbmeta.VillagePlayerDbm");
-        tmpMap.put("village_settings", "com.ort.dbflute.bsentity.dbmeta.VillageSettingsDbm");
+        tmpMap.put("village_setting", "com.ort.dbflute.bsentity.dbmeta.VillageSettingDbm");
+        tmpMap.put("village_setting_item", "com.ort.dbflute.bsentity.dbmeta.VillageSettingItemDbm");
         tmpMap.put("village_status", "com.ort.dbflute.bsentity.dbmeta.VillageStatusDbm");
         tmpMap.put("vote", "com.ort.dbflute.bsentity.dbmeta.VoteDbm");
         _tableDbNameClassNameMap = Collections.unmodifiableMap(tmpMap);

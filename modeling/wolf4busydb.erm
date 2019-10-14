@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -616,45 +616,6 @@
 				<normal_column>
 					<physical_name>ability_type_name</physical_name>
 					<logical_name>能力種別</logical_name>
-					<type>varchar(n)</type>
-					<length>20</length>
-					<not_null>true</not_null>
-				</normal_column>
-			</columns>
-			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-			</compound_unique_key_list>
-			<table_properties>
-			</table_properties>
-		</table>
-		<table>
-			<physical_name>allowed_secret_say</physical_name>
-			<logical_name>秘話可能な範囲</logical_name>
-			<description></description>
-			<font_name>.AppleSystemUIFont</font_name>
-			<font_size>9</font_size>
-			<x>1753</x>
-			<y>1233</y>
-			<color>
-				<r>254</r>
-				<g>251</g>
-				<b>0</b>
-			</color>
-			<connections>
-			</connections>
-			<columns>
-				<normal_column>
-					<physical_name>allowed_secret_say_code</physical_name>
-					<logical_name>秘話可能な範囲コード</logical_name>
-					<type>varchar(n)</type>
-					<length>20</length>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>allowed_secret_say_name</physical_name>
-					<logical_name>秘話可能範囲</logical_name>
 					<type>varchar(n)</type>
 					<length>20</length>
 					<not_null>true</not_null>
@@ -1815,7 +1776,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<physical_name>village_settings</physical_name>
+			<physical_name>village_setting</physical_name>
 			<logical_name>村設定</logical_name>
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
@@ -1831,7 +1792,7 @@
 				<relationship>
 					<name>FK_village_settings_village</name>
 					<source>table.village</source>
-					<target>table.village_settings</target>
+					<target>table.village_setting</target>
 					<fk_columns>
 						<fk_column>
 							<fk_column_name>village_id</fk_column_name>
@@ -1844,27 +1805,12 @@
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
 				<relationship>
-					<name>FK_village_settings_CHARA_group</name>
-					<source>table.CHARA_group</source>
-					<target>table.village_settings</target>
+					<name>FK_village_setting_village_setting_item</name>
+					<source>table.village_setting_item</source>
+					<target>table.village_setting</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>character_group_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-				</relationship>
-				<relationship>
-					<name>FK_village_settings_allowed_secret_say</name>
-					<source>table.allowed_secret_say</source>
-					<target>table.village_settings</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>allowed_secret_say_code</fk_column_name>
+							<fk_column_name>village_setting_item_code</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1883,116 +1829,65 @@
 					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
-					<physical_name>dummy_chara_id</physical_name>
-					<logical_name>ダミーキャラID</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
+					<physical_name>village_setting_item_code</physical_name>
+					<referred_column>table.village_setting_item.village_setting_item_code</referred_column>
+					<relationship>FK_village_setting_village_setting_item</relationship>
 					<not_null>true</not_null>
+					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
-					<physical_name>start_person_min_num</physical_name>
-					<logical_name>最低開始人数</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-				</normal_column>
-				<normal_column>
-					<physical_name>person_max_num</physical_name>
-					<logical_name>定員</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-				</normal_column>
-				<normal_column>
-					<physical_name>start_datetime</physical_name>
-					<logical_name>開始日時</logical_name>
-					<type>datetime</type>
-				</normal_column>
-				<normal_column>
-					<physical_name>day_change_interval_seconds</physical_name>
-					<logical_name>更新間隔（秒）</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_open_vote</physical_name>
-					<logical_name>記名投票か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_possible_skill_request</physical_name>
-					<logical_name>役職希望有効か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_spectate</physical_name>
-					<logical_name>見学可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_same_wolf_attack</physical_name>
-					<logical_name>連続襲撃可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_open_skill_in_grave</physical_name>
-					<logical_name>墓下役職公開ありか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_visible_grave_spectate_message</physical_name>
-					<logical_name>墓下見学発言を生存者が見られるか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_suddonly_death</physical_name>
-					<logical_name>突然死ありか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_commit</physical_name>
-					<logical_name>コミット可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_guard_same_target</physical_name>
-					<logical_name>連続護衛可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>character_group_id</physical_name>
-					<referred_column>table.CHARA_group.chara_group_id</referred_column>
-					<relationship>FK_village_settings_CHARA_group</relationship>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>join_password</physical_name>
-					<logical_name>入村パスワード</logical_name>
+					<physical_name>village_setting_text</physical_name>
+					<logical_name>村設定項目内容</logical_name>
 					<type>varchar(n)</type>
-					<length>12</length>
-				</normal_column>
-				<normal_column>
-					<physical_name>organize</physical_name>
-					<logical_name>構成</logical_name>
-					<type>varchar(n)</type>
-					<length>400</length>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>allowed_secret_say_code</physical_name>
-					<referred_column>table.allowed_secret_say.allowed_secret_say_code</referred_column>
-					<relationship>FK_village_settings_allowed_secret_say</relationship>
-					<not_null>true</not_null>
+					<length>1000</length>
 				</normal_column>
 				<column_group>共通カラム</column_group>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
+			<physical_name>village_setting_item</physical_name>
+			<logical_name>村設定項目</logical_name>
+			<description></description>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1754</x>
+			<y>1312</y>
+			<color>
+				<r>254</r>
+				<g>251</g>
+				<b>0</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>village_setting_item_code</physical_name>
+					<logical_name>村設定項目コード</logical_name>
+					<type>varchar(n)</type>
+					<length>100</length>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_setting_item_name</physical_name>
+					<logical_name>村設定項目名</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>disp_order</physical_name>
+					<logical_name>並び順</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
 			</columns>
 			<indexes>
 			</indexes>

@@ -82,30 +82,16 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
     public Map<String, CharaCQ> xdfgetCharaGroupId_ExistsReferrer_CharaList() { return xgetSQueMap("charaGroupId_ExistsReferrer_CharaList"); }
     public String keepCharaGroupId_ExistsReferrer_CharaList(CharaCQ sq) { return xkeepSQue("charaGroupId_ExistsReferrer_CharaList", sq); }
 
-    public Map<String, VillageSettingsCQ> xdfgetCharaGroupId_ExistsReferrer_VillageSettingsList() { return xgetSQueMap("charaGroupId_ExistsReferrer_VillageSettingsList"); }
-    public String keepCharaGroupId_ExistsReferrer_VillageSettingsList(VillageSettingsCQ sq) { return xkeepSQue("charaGroupId_ExistsReferrer_VillageSettingsList", sq); }
-
     public Map<String, CharaCQ> xdfgetCharaGroupId_NotExistsReferrer_CharaList() { return xgetSQueMap("charaGroupId_NotExistsReferrer_CharaList"); }
     public String keepCharaGroupId_NotExistsReferrer_CharaList(CharaCQ sq) { return xkeepSQue("charaGroupId_NotExistsReferrer_CharaList", sq); }
 
-    public Map<String, VillageSettingsCQ> xdfgetCharaGroupId_NotExistsReferrer_VillageSettingsList() { return xgetSQueMap("charaGroupId_NotExistsReferrer_VillageSettingsList"); }
-    public String keepCharaGroupId_NotExistsReferrer_VillageSettingsList(VillageSettingsCQ sq) { return xkeepSQue("charaGroupId_NotExistsReferrer_VillageSettingsList", sq); }
-
     public Map<String, CharaCQ> xdfgetCharaGroupId_SpecifyDerivedReferrer_CharaList() { return xgetSQueMap("charaGroupId_SpecifyDerivedReferrer_CharaList"); }
     public String keepCharaGroupId_SpecifyDerivedReferrer_CharaList(CharaCQ sq) { return xkeepSQue("charaGroupId_SpecifyDerivedReferrer_CharaList", sq); }
-
-    public Map<String, VillageSettingsCQ> xdfgetCharaGroupId_SpecifyDerivedReferrer_VillageSettingsList() { return xgetSQueMap("charaGroupId_SpecifyDerivedReferrer_VillageSettingsList"); }
-    public String keepCharaGroupId_SpecifyDerivedReferrer_VillageSettingsList(VillageSettingsCQ sq) { return xkeepSQue("charaGroupId_SpecifyDerivedReferrer_VillageSettingsList", sq); }
 
     public Map<String, CharaCQ> xdfgetCharaGroupId_QueryDerivedReferrer_CharaList() { return xgetSQueMap("charaGroupId_QueryDerivedReferrer_CharaList"); }
     public String keepCharaGroupId_QueryDerivedReferrer_CharaList(CharaCQ sq) { return xkeepSQue("charaGroupId_QueryDerivedReferrer_CharaList", sq); }
     public Map<String, Object> xdfgetCharaGroupId_QueryDerivedReferrer_CharaListParameter() { return xgetSQuePmMap("charaGroupId_QueryDerivedReferrer_CharaList"); }
     public String keepCharaGroupId_QueryDerivedReferrer_CharaListParameter(Object pm) { return xkeepSQuePm("charaGroupId_QueryDerivedReferrer_CharaList", pm); }
-
-    public Map<String, VillageSettingsCQ> xdfgetCharaGroupId_QueryDerivedReferrer_VillageSettingsList() { return xgetSQueMap("charaGroupId_QueryDerivedReferrer_VillageSettingsList"); }
-    public String keepCharaGroupId_QueryDerivedReferrer_VillageSettingsList(VillageSettingsCQ sq) { return xkeepSQue("charaGroupId_QueryDerivedReferrer_VillageSettingsList", sq); }
-    public Map<String, Object> xdfgetCharaGroupId_QueryDerivedReferrer_VillageSettingsListParameter() { return xgetSQuePmMap("charaGroupId_QueryDerivedReferrer_VillageSettingsList"); }
-    public String keepCharaGroupId_QueryDerivedReferrer_VillageSettingsListParameter(Object pm) { return xkeepSQuePm("charaGroupId_QueryDerivedReferrer_VillageSettingsList", pm); }
 
     /** 
      * Add order-by as ascend. <br>
