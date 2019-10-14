@@ -1,4 +1,25 @@
 map:{
+    ; 2019/10/15 14:32:49 = map:{
+        ; diffDate = 2019/10/15 14:32:49
+        ; tableDiff = map:{
+            ; village_setting = map:{
+                ; tableName = village_setting
+                ; diffType = ADD
+            }
+            ; village_setting_item = map:{
+                ; tableName = village_setting_item
+                ; diffType = ADD
+            }
+            ; allowed_secret_say = map:{
+                ; tableName = allowed_secret_say
+                ; diffType = DELETE
+            }
+            ; village_settings = map:{
+                ; tableName = village_settings
+                ; diffType = DELETE
+            }
+        }
+    }
     ; 2019/10/12 23:01:50 = map:{
         ; diffDate = 2019/10/12 23:01:50
         ; tableDiff = map:{

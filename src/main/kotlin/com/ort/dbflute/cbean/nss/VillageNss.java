@@ -32,13 +32,4 @@ public class VillageNss {
     public void withCamp() {
         _query.xdoNss(() -> _query.queryCamp());
     }
-    /**
-     * With nested relation columns to select clause. <br>
-     * village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-     * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
-     */
-    public VillageSettingsNss withVillageSettingsAsOne() {
-        _query.xdoNss(() -> _query.queryVillageSettingsAsOne());
-        return new VillageSettingsNss(_query.queryVillageSettingsAsOne());
-    }
 }

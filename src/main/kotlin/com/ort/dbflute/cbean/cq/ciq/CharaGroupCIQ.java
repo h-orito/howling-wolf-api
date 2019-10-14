@@ -64,23 +64,13 @@ public class CharaGroupCIQ extends AbstractBsCharaGroupCQ {
     protected ConditionValue xgetCValueCharaGroupId() { return _myCQ.xdfgetCharaGroupId(); }
     public String keepCharaGroupId_ExistsReferrer_CharaList(CharaCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
-    public String keepCharaGroupId_ExistsReferrer_VillageSettingsList(VillageSettingsCQ sq)
-    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepCharaGroupId_NotExistsReferrer_CharaList(CharaCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
-    public String keepCharaGroupId_NotExistsReferrer_VillageSettingsList(VillageSettingsCQ sq)
-    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepCharaGroupId_SpecifyDerivedReferrer_CharaList(CharaCQ sq)
-    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
-    public String keepCharaGroupId_SpecifyDerivedReferrer_VillageSettingsList(VillageSettingsCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepCharaGroupId_QueryDerivedReferrer_CharaList(CharaCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepCharaGroupId_QueryDerivedReferrer_CharaListParameter(Object vl)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaGroupId_QueryDerivedReferrer_VillageSettingsList(VillageSettingsCQ sq)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaGroupId_QueryDerivedReferrer_VillageSettingsListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueCharaGroupName() { return _myCQ.xdfgetCharaGroupName(); }
     protected ConditionValue xgetCValueDesignerId() { return _myCQ.xdfgetDesignerId(); }
