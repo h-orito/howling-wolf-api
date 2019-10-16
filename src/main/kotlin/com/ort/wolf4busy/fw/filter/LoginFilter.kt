@@ -1,8 +1,11 @@
 package com.ort.wolf4busy.fw.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.firebase.auth.FirebaseAuth
 import com.ort.wolf4busy.fw.security.Wolf4busyUserDetailService
-import io.jsonwebtoken.*
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.JwsHeader
+import io.jsonwebtoken.SigningKeyResolverAdapter
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -48,17 +51,11 @@ class LoginFilter(
         token ?: return null
 
         try {
-            // JWTを検証、クレーム取得
-            // 検証に失敗したら、例外がスローされる。
-            val claim: Jws<Claims> = Jwts.parser()
-                    .setSigningKeyResolver(GoogleSigningKeyResolver(objectMapper))
-                    .parseClaimsJws(token)
-
-            // クレームのボディ部分からuidを取得
-            val uid: String? = claim.body["user_id"] as String?
+            // JWTを検証、uid取得
+            val uid: String? = FirebaseAuth.getInstance().verifyIdToken(token)?.uid
             uid ?: throw BadCredentialsException("改竄リクエスト")
 
-            // uidを取得し、ユーザ情報を検索
+            // ユーザ情報を検索
             return try {
                 userService.loadUserByUsername(uid)
             } catch (e: UsernameNotFoundException) {

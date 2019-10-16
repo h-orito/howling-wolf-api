@@ -82,6 +82,11 @@
             <version>0.10.7</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>6.8.1</version>
+        </dependency>
         <!-- commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
