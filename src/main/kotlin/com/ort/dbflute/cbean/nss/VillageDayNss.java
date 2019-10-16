@@ -20,6 +20,13 @@ public class VillageDayNss {
     //                                                                     ===============
     /**
      * With nested relation columns to select clause. <br>
+     * NOONNIGHT by my NOONNIGHT_CODE, named 'noonnight'.
+     */
+    public void withNoonnight() {
+        _query.xdoNss(() -> _query.queryNoonnight());
+    }
+    /**
+     * With nested relation columns to select clause. <br>
      * VILLAGE by my VILLAGE_ID, named 'village'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */

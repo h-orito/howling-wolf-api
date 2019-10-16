@@ -25,10 +25,10 @@ import com.ort.dbflute.cbean.*;
  * The behavior of VOTE as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, CHARA_ID
+ *     CHARA_ID, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, CHARA_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     CHARA_ID, VILLAGE_DAY_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -159,33 +159,32 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
 
     /**
      * Select the entity by the primary-key value.
-     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param day : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param charaId : PK, IX, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Vote> selectByPK(Integer villageId, Integer day, Integer charaId) {
-        return facadeSelectByPK(villageId, day, charaId);
+    public OptionalEntity<Vote> selectByPK(Integer charaId, Integer villageDayId) {
+        return facadeSelectByPK(charaId, villageDayId);
     }
 
-    protected OptionalEntity<Vote> facadeSelectByPK(Integer villageId, Integer day, Integer charaId) {
-        return doSelectOptionalByPK(villageId, day, charaId, typeOfSelectedEntity());
+    protected OptionalEntity<Vote> facadeSelectByPK(Integer charaId, Integer villageDayId) {
+        return doSelectOptionalByPK(charaId, villageDayId, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Vote> ENTITY doSelectByPK(Integer villageId, Integer day, Integer charaId, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(villageId, day, charaId), tp);
+    protected <ENTITY extends Vote> ENTITY doSelectByPK(Integer charaId, Integer villageDayId, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(charaId, villageDayId), tp);
     }
 
-    protected <ENTITY extends Vote> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageId, Integer day, Integer charaId, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(villageId, day, charaId, tp), villageId, day, charaId);
+    protected <ENTITY extends Vote> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer charaId, Integer villageDayId, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(charaId, villageDayId, tp), charaId, villageDayId);
     }
 
-    protected VoteCB xprepareCBAsPK(Integer villageId, Integer day, Integer charaId) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("charaId", charaId);
-        return newConditionBean().acceptPK(villageId, day, charaId);
+    protected VoteCB xprepareCBAsPK(Integer charaId, Integer villageDayId) {
+        assertObjectNotNull("charaId", charaId);assertObjectNotNull("villageDayId", villageDayId);
+        return newConditionBean().acceptPK(charaId, villageDayId);
     }
 
     // ===================================================================================

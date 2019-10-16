@@ -43,9 +43,8 @@ public class AbilityDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
-        setupEpg(_epgMap, et -> ((Ability)et).getVillageId(), (et, vl) -> ((Ability)et).setVillageId(cti(vl)), "villageId");
-        setupEpg(_epgMap, et -> ((Ability)et).getDay(), (et, vl) -> ((Ability)et).setDay(cti(vl)), "day");
         setupEpg(_epgMap, et -> ((Ability)et).getCharaId(), (et, vl) -> ((Ability)et).setCharaId(cti(vl)), "charaId");
+        setupEpg(_epgMap, et -> ((Ability)et).getVillageDayId(), (et, vl) -> ((Ability)et).setVillageDayId(cti(vl)), "villageDayId");
         setupEpg(_epgMap, et -> ((Ability)et).getTargetCharaId(), (et, vl) -> ((Ability)et).setTargetCharaId(cti(vl)), "targetCharaId");
         setupEpg(_epgMap, et -> ((Ability)et).getAbilityTypeCode(), (et, vl) -> {
             CDef.AbilityType cls = (CDef.AbilityType)gcls(et, columnAbilityTypeCode(), vl);
@@ -94,9 +93,8 @@ public class AbilityDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
-    protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
     protected final ColumnInfo _columnCharaId = cci("CHARA_ID", "CHARA_ID", null, null, Integer.class, "charaId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "charaByCharaId", null, null, false);
+    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
     protected final ColumnInfo _columnTargetCharaId = cci("TARGET_CHARA_ID", "TARGET_CHARA_ID", null, null, Integer.class, "targetCharaId", null, false, false, false, "INT UNSIGNED", 10, 0, null, null, false, null, null, "charaByTargetCharaId", null, null, false);
     protected final ColumnInfo _columnAbilityTypeCode = cci("ABILITY_TYPE_CODE", "ABILITY_TYPE_CODE", null, null, String.class, "abilityTypeCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "abilityType", null, CDef.DefMeta.AbilityType, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -105,20 +103,15 @@ public class AbilityDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnVillageId() { return _columnVillageId; }
-    /**
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnDay() { return _columnDay; }
-    /**
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCharaId() { return _columnCharaId; }
+    /**
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
     /**
      * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
      * @return The information object of specified column. (NotNull)
@@ -152,9 +145,8 @@ public class AbilityDbm extends AbstractDBMeta {
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
-        ls.add(columnVillageId());
-        ls.add(columnDay());
         ls.add(columnCharaId());
+        ls.add(columnVillageDayId());
         ls.add(columnTargetCharaId());
         ls.add(columnAbilityTypeCode());
         ls.add(columnRegisterDatetime());
@@ -174,9 +166,8 @@ public class AbilityDbm extends AbstractDBMeta {
     //                                       ---------------
     protected UniqueInfo cpui() {
         List<ColumnInfo> ls = newArrayListSized(4);
-        ls.add(columnVillageId());
-        ls.add(columnDay());
         ls.add(columnCharaId());
+        ls.add(columnVillageDayId());
         ls.add(columnAbilityTypeCode());
         return hpcpui(ls);
     }
@@ -216,13 +207,11 @@ public class AbilityDbm extends AbstractDBMeta {
         return cfi("FK_ABILITY_CHARA_TARGET", "charaByTargetCharaId", this, CharaDbm.getInstance(), mp, 2, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "abilityByTargetCharaIdList", false);
     }
     /**
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The information object of foreign property. (NotNull)
      */
     public ForeignInfo foreignVillageDay() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
-        mp.put(columnVillageId(), VillageDayDbm.getInstance().columnVillageId());
-        mp.put(columnDay(), VillageDayDbm.getInstance().columnDay());
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VillageDayDbm.getInstance().columnVillageDayId());
         return cfi("FK_ABILITY_VILLAGE_DAY", "villageDay", this, VillageDayDbm.getInstance(), mp, 3, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "abilityList", false);
     }
 

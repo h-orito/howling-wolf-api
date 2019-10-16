@@ -45,7 +45,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageId The value of villageId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_Equal(Integer villageId) {
@@ -58,7 +58,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageId The value of villageId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_NotEqual(Integer villageId) {
@@ -71,7 +71,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageId The value of villageId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_GreaterThan(Integer villageId) {
@@ -80,7 +80,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageId The value of villageId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_LessThan(Integer villageId) {
@@ -89,7 +89,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageId The value of villageId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_GreaterEqual(Integer villageId) {
@@ -98,7 +98,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageId The value of villageId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_LessEqual(Integer villageId) {
@@ -109,7 +109,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -122,7 +122,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -133,7 +133,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageIdList The collection of villageId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageId_InScope(Collection<Integer> villageIdList) {
@@ -146,7 +146,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @param villageIdList The collection of villageId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageId_NotInScope(Collection<Integer> villageIdList) {
@@ -159,13 +159,13 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      */
     public void setVillageId_IsNull() { regVillageId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      */
     public void setVillageId_IsNotNull() { regVillageId(CK_ISNN, DOBJ); }
 
@@ -174,7 +174,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumber The value of messageNumber as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setMessageNumber_Equal(Integer messageNumber) {
@@ -187,7 +187,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumber The value of messageNumber as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setMessageNumber_NotEqual(Integer messageNumber) {
@@ -200,7 +200,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumber The value of messageNumber as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setMessageNumber_GreaterThan(Integer messageNumber) {
@@ -209,7 +209,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumber The value of messageNumber as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setMessageNumber_LessThan(Integer messageNumber) {
@@ -218,7 +218,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumber The value of messageNumber as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setMessageNumber_GreaterEqual(Integer messageNumber) {
@@ -227,7 +227,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumber The value of messageNumber as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setMessageNumber_LessEqual(Integer messageNumber) {
@@ -238,7 +238,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param minNumber The min number of messageNumber. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of messageNumber. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -251,7 +251,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param minNumber The min number of messageNumber. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of messageNumber. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -262,7 +262,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumberList The collection of messageNumber as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageNumber_InScope(Collection<Integer> messageNumberList) {
@@ -275,7 +275,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @param messageNumberList The collection of messageNumber as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageNumber_NotInScope(Collection<Integer> messageNumberList) {
@@ -288,13 +288,13 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      */
     public void setMessageNumber_IsNull() { regMessageNumber(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+     * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      */
     public void setMessageNumber_IsNotNull() { regMessageNumber(CK_ISNN, DOBJ); }
 
@@ -303,7 +303,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_Equal(String messageTypeCode) {
@@ -316,7 +316,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_NotEqual(String messageTypeCode) {
@@ -329,7 +329,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_GreaterThan(String messageTypeCode) {
@@ -338,7 +338,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_LessThan(String messageTypeCode) {
@@ -347,7 +347,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_GreaterEqual(String messageTypeCode) {
@@ -356,7 +356,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_LessEqual(String messageTypeCode) {
@@ -365,7 +365,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCodeList The collection of messageTypeCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_InScope(Collection<String> messageTypeCodeList) {
@@ -378,7 +378,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCodeList The collection of messageTypeCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setMessageTypeCode_NotInScope(Collection<String> messageTypeCodeList) {
@@ -391,7 +391,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)} <br>
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)} <br>
      * <pre>e.g. setMessageTypeCode_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
      * @param messageTypeCode The value of messageTypeCode as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
@@ -402,7 +402,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)} <br>
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)} <br>
      * <pre>e.g. setMessageTypeCode_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
      * @param messageTypeCode The value of messageTypeCode as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of like-search. (NotNull)
@@ -414,7 +414,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
@@ -425,7 +425,7 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @param messageTypeCode The value of messageTypeCode as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of not-like-search. (NotNull)
      */
@@ -435,18 +435,252 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      */
     public void setMessageTypeCode_IsNull() { regMessageTypeCode(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      */
     public void setMessageTypeCode_IsNotNull() { regMessageTypeCode(CK_ISNN, DOBJ); }
 
     protected void regMessageTypeCode(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueMessageTypeCode(), "MESSAGE_TYPE_CODE"); }
     protected abstract ConditionValue xgetCValueMessageTypeCode();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilli The value of messageUnixtimestampMilli as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_Equal(Long messageUnixtimestampMilli) {
+        doSetMessageUnixtimestampMilli_Equal(messageUnixtimestampMilli);
+    }
+
+    protected void doSetMessageUnixtimestampMilli_Equal(Long messageUnixtimestampMilli) {
+        regMessageUnixtimestampMilli(CK_EQ, messageUnixtimestampMilli);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilli The value of messageUnixtimestampMilli as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_NotEqual(Long messageUnixtimestampMilli) {
+        doSetMessageUnixtimestampMilli_NotEqual(messageUnixtimestampMilli);
+    }
+
+    protected void doSetMessageUnixtimestampMilli_NotEqual(Long messageUnixtimestampMilli) {
+        regMessageUnixtimestampMilli(CK_NES, messageUnixtimestampMilli);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilli The value of messageUnixtimestampMilli as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_GreaterThan(Long messageUnixtimestampMilli) {
+        regMessageUnixtimestampMilli(CK_GT, messageUnixtimestampMilli);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilli The value of messageUnixtimestampMilli as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_LessThan(Long messageUnixtimestampMilli) {
+        regMessageUnixtimestampMilli(CK_LT, messageUnixtimestampMilli);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilli The value of messageUnixtimestampMilli as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_GreaterEqual(Long messageUnixtimestampMilli) {
+        regMessageUnixtimestampMilli(CK_GE, messageUnixtimestampMilli);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilli The value of messageUnixtimestampMilli as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_LessEqual(Long messageUnixtimestampMilli) {
+        regMessageUnixtimestampMilli(CK_LE, messageUnixtimestampMilli);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param minNumber The min number of messageUnixtimestampMilli. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of messageUnixtimestampMilli. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setMessageUnixtimestampMilli_RangeOf(Long minNumber, Long maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setMessageUnixtimestampMilli_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param minNumber The min number of messageUnixtimestampMilli. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of messageUnixtimestampMilli. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setMessageUnixtimestampMilli_RangeOf(Long minNumber, Long maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueMessageUnixtimestampMilli(), "MESSAGE_UNIXTIMESTAMP_MILLI", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilliList The collection of messageUnixtimestampMilli as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_InScope(Collection<Long> messageUnixtimestampMilliList) {
+        doSetMessageUnixtimestampMilli_InScope(messageUnixtimestampMilliList);
+    }
+
+    protected void doSetMessageUnixtimestampMilli_InScope(Collection<Long> messageUnixtimestampMilliList) {
+        regINS(CK_INS, cTL(messageUnixtimestampMilliList), xgetCValueMessageUnixtimestampMilli(), "MESSAGE_UNIXTIMESTAMP_MILLI");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+     * @param messageUnixtimestampMilliList The collection of messageUnixtimestampMilli as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setMessageUnixtimestampMilli_NotInScope(Collection<Long> messageUnixtimestampMilliList) {
+        doSetMessageUnixtimestampMilli_NotInScope(messageUnixtimestampMilliList);
+    }
+
+    protected void doSetMessageUnixtimestampMilli_NotInScope(Collection<Long> messageUnixtimestampMilliList) {
+        regINS(CK_NINS, cTL(messageUnixtimestampMilliList), xgetCValueMessageUnixtimestampMilli(), "MESSAGE_UNIXTIMESTAMP_MILLI");
+    }
+
+    protected void regMessageUnixtimestampMilli(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueMessageUnixtimestampMilli(), "MESSAGE_UNIXTIMESTAMP_MILLI"); }
+    protected abstract ConditionValue xgetCValueMessageUnixtimestampMilli();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayId The value of villageDayId as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillageDayId_Equal(Integer villageDayId) {
+        doSetVillageDayId_Equal(villageDayId);
+    }
+
+    protected void doSetVillageDayId_Equal(Integer villageDayId) {
+        regVillageDayId(CK_EQ, villageDayId);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayId The value of villageDayId as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillageDayId_NotEqual(Integer villageDayId) {
+        doSetVillageDayId_NotEqual(villageDayId);
+    }
+
+    protected void doSetVillageDayId_NotEqual(Integer villageDayId) {
+        regVillageDayId(CK_NES, villageDayId);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayId The value of villageDayId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillageDayId_GreaterThan(Integer villageDayId) {
+        regVillageDayId(CK_GT, villageDayId);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayId The value of villageDayId as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillageDayId_LessThan(Integer villageDayId) {
+        regVillageDayId(CK_LT, villageDayId);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayId The value of villageDayId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillageDayId_GreaterEqual(Integer villageDayId) {
+        regVillageDayId(CK_GE, villageDayId);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayId The value of villageDayId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillageDayId_LessEqual(Integer villageDayId) {
+        regVillageDayId(CK_LE, villageDayId);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setVillageDayId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueVillageDayId(), "VILLAGE_DAY_ID", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayIdList The collection of villageDayId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setVillageDayId_InScope(Collection<Integer> villageDayIdList) {
+        doSetVillageDayId_InScope(villageDayIdList);
+    }
+
+    protected void doSetVillageDayId_InScope(Collection<Integer> villageDayIdList) {
+        regINS(CK_INS, cTL(villageDayIdList), xgetCValueVillageDayId(), "VILLAGE_DAY_ID");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+     * @param villageDayIdList The collection of villageDayId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setVillageDayId_NotInScope(Collection<Integer> villageDayIdList) {
+        doSetVillageDayId_NotInScope(villageDayIdList);
+    }
+
+    protected void doSetVillageDayId_NotInScope(Collection<Integer> villageDayIdList) {
+        regINS(CK_NINS, cTL(villageDayIdList), xgetCValueVillageDayId(), "VILLAGE_DAY_ID");
+    }
+
+    protected void regVillageDayId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageDayId(), "VILLAGE_DAY_ID"); }
+    protected abstract ConditionValue xgetCValueVillageDayId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -834,123 +1068,6 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     protected void regPlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValuePlayerId(), "PLAYER_ID"); }
     protected abstract ConditionValue xgetCValuePlayerId();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param day The value of day as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setDay_Equal(Integer day) {
-        doSetDay_Equal(day);
-    }
-
-    protected void doSetDay_Equal(Integer day) {
-        regDay(CK_EQ, day);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param day The value of day as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setDay_NotEqual(Integer day) {
-        doSetDay_NotEqual(day);
-    }
-
-    protected void doSetDay_NotEqual(Integer day) {
-        regDay(CK_NES, day);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param day The value of day as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setDay_GreaterThan(Integer day) {
-        regDay(CK_GT, day);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param day The value of day as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setDay_LessThan(Integer day) {
-        regDay(CK_LT, day);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param day The value of day as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setDay_GreaterEqual(Integer day) {
-        regDay(CK_GE, day);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param day The value of day as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setDay_LessEqual(Integer day) {
-        regDay(CK_LE, day);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param minNumber The min number of day. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of day. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setDay_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setDay_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param minNumber The min number of day. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of day. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setDay_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueDay(), "DAY", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param dayList The collection of day as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setDay_InScope(Collection<Integer> dayList) {
-        doSetDay_InScope(dayList);
-    }
-
-    protected void doSetDay_InScope(Collection<Integer> dayList) {
-        regINS(CK_INS, cTL(dayList), xgetCValueDay(), "DAY");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
-     * @param dayList The collection of day as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setDay_NotInScope(Collection<Integer> dayList) {
-        doSetDay_NotInScope(dayList);
-    }
-
-    protected void doSetDay_NotInScope(Collection<Integer> dayList) {
-        regINS(CK_NINS, cTL(dayList), xgetCValueDay(), "DAY");
-    }
-
-    protected void regDay(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDay(), "DAY"); }
-    protected abstract ConditionValue xgetCValueDay();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>

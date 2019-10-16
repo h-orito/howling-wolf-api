@@ -82,31 +82,28 @@ public class BsAbilityCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param day : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param charaId : PK, IX, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
      * @param abilityTypeCode : PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
      * @return this. (NotNull)
      */
-    public AbilityCB acceptPK(Integer villageId, Integer day, Integer charaId, CDef.AbilityType abilityTypeCode) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("charaId", charaId);assertObjectNotNull("abilityTypeCode", abilityTypeCode);
+    public AbilityCB acceptPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode) {
+        assertObjectNotNull("charaId", charaId);assertObjectNotNull("villageDayId", villageDayId);assertObjectNotNull("abilityTypeCode", abilityTypeCode);
         BsAbilityCB cb = this;
-        cb.query().setVillageId_Equal(villageId);cb.query().setDay_Equal(day);cb.query().setCharaId_Equal(charaId);cb.query().setAbilityTypeCode_Equal_AsAbilityType(abilityTypeCode);
+        cb.query().setCharaId_Equal(charaId);cb.query().setVillageDayId_Equal(villageDayId);cb.query().setAbilityTypeCode_Equal_AsAbilityType(abilityTypeCode);
         return (AbilityCB)this;
     }
 
     public ConditionBean addOrderBy_PK_Asc() {
-        query().addOrderBy_VillageId_Asc();
-        query().addOrderBy_Day_Asc();
         query().addOrderBy_CharaId_Asc();
+        query().addOrderBy_VillageDayId_Asc();
         query().addOrderBy_AbilityTypeCode_Asc();
         return this;
     }
 
     public ConditionBean addOrderBy_PK_Desc() {
-        query().addOrderBy_VillageId_Desc();
-        query().addOrderBy_Day_Desc();
         query().addOrderBy_CharaId_Desc();
+        query().addOrderBy_VillageDayId_Desc();
         query().addOrderBy_AbilityTypeCode_Desc();
         return this;
     }
@@ -327,7 +324,7 @@ public class BsAbilityCB extends AbstractConditionBean {
     }
     /**
      * Set up relation columns to select clause. <br>
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * <pre>
      * <span style="color: #0000C0">abilityBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_VillageDay()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
@@ -396,20 +393,15 @@ public class BsAbilityCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
-        /**
-         * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnDay() { return doColumn("DAY"); }
-        /**
-         * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+         * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCharaId() { return doColumn("CHARA_ID"); }
+        /**
+         * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
          * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
          * @return The information object of specified column. (NotNull)
@@ -444,9 +436,8 @@ public class BsAbilityCB extends AbstractConditionBean {
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override
         protected void doSpecifyRequiredColumn() {
-            columnVillageId(); // PK
-            columnDay(); // PK
             columnCharaId(); // PK
+            columnVillageDayId(); // PK
             columnAbilityTypeCode(); // PK
             if (qyCall().qy().hasConditionQueryCharaByTargetCharaId()
                     || qyCall().qy().xgetReferrerQuery() instanceof CharaCQ) {
@@ -517,7 +508,7 @@ public class BsAbilityCB extends AbstractConditionBean {
         }
         /**
          * Prepare to specify functions about relation table. <br>
-         * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+         * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
          * @return The instance for specification for relation table to specify. (NotNull)
          */
         public VillageDayCB.HpSpecification specifyVillageDay() {
