@@ -80,29 +80,15 @@ public class BsMessageCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
+     * @param villageId : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageNumber : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageTypeCode : PK, IX, NotNull, VARCHAR(20). (NotNull)
      * @return this. (NotNull)
      */
     public MessageCB acceptPK(Integer villageId, Integer messageNumber, String messageTypeCode) {
         assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageNumber", messageNumber);assertObjectNotNull("messageTypeCode", messageTypeCode);
         BsMessageCB cb = this;
         cb.query().setVillageId_Equal(villageId);cb.query().setMessageNumber_Equal(messageNumber);cb.query().setMessageTypeCode_Equal(messageTypeCode);
-        return (MessageCB)this;
-    }
-
-    /**
-     * Accept the query condition of unique key as equal.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @return this. (NotNull)
-     */
-    public MessageCB acceptUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageTypeCode", messageTypeCode);assertObjectNotNull("messageNumber", messageNumber);
-        BsMessageCB cb = this;
-        cb.query().setVillageId_Equal(villageId);cb.query().setMessageTypeCode_Equal(messageTypeCode);cb.query().setMessageNumber_Equal(messageNumber);
         return (MessageCB)this;
     }
 
@@ -303,20 +289,30 @@ public class BsMessageCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+         * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
         /**
-         * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+         * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnMessageNumber() { return doColumn("MESSAGE_NUMBER"); }
         /**
-         * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+         * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnMessageTypeCode() { return doColumn("MESSAGE_TYPE_CODE"); }
+        /**
+         * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnMessageUnixtimestampMilli() { return doColumn("MESSAGE_UNIXTIMESTAMP_MILLI"); }
+        /**
+         * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
          * VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
@@ -332,11 +328,6 @@ public class BsMessageCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnPlayerId() { return doColumn("PLAYER_ID"); }
-        /**
-         * DAY: {NotNull, INT UNSIGNED(10)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnDay() { return doColumn("DAY"); }
         /**
          * MESSAGE_CONTENT: {NotNull, VARCHAR(10000)}
          * @return The information object of specified column. (NotNull)

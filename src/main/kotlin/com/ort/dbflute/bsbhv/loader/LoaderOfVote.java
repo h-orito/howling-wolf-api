@@ -10,10 +10,10 @@ import com.ort.dbflute.exentity.*;
  * The referrer loader of VOTE as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, CHARA_ID
+ *     CHARA_ID, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, CHARA_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     CHARA_ID, VILLAGE_DAY_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     

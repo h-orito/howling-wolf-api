@@ -20,7 +20,7 @@ public class CommitNss {
     //                                                                     ===============
     /**
      * With nested relation columns to select clause. <br>
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */
     public VillageDayNss withVillageDay() {

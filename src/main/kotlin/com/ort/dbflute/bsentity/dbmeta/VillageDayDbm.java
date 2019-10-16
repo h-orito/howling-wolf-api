@@ -43,9 +43,12 @@ public class VillageDayDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
+        setupEpg(_epgMap, et -> ((VillageDay)et).getVillageDayId(), (et, vl) -> ((VillageDay)et).setVillageDayId(cti(vl)), "villageDayId");
         setupEpg(_epgMap, et -> ((VillageDay)et).getVillageId(), (et, vl) -> ((VillageDay)et).setVillageId(cti(vl)), "villageId");
         setupEpg(_epgMap, et -> ((VillageDay)et).getDay(), (et, vl) -> ((VillageDay)et).setDay(cti(vl)), "day");
+        setupEpg(_epgMap, et -> ((VillageDay)et).getNoonnightCode(), (et, vl) -> ((VillageDay)et).setNoonnightCode((String)vl), "noonnightCode");
         setupEpg(_epgMap, et -> ((VillageDay)et).getDaychangeDatetime(), (et, vl) -> ((VillageDay)et).setDaychangeDatetime(ctldt(vl)), "daychangeDatetime");
+        setupEpg(_epgMap, et -> ((VillageDay)et).getIsUpdating(), (et, vl) -> ((VillageDay)et).setIsUpdating((Boolean)vl), "isUpdating");
         setupEpg(_epgMap, et -> ((VillageDay)et).getRegisterDatetime(), (et, vl) -> ((VillageDay)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((VillageDay)et).getRegisterTrace(), (et, vl) -> ((VillageDay)et).setRegisterTrace((String)vl), "registerTrace");
         setupEpg(_epgMap, et -> ((VillageDay)et).getUpdateDatetime(), (et, vl) -> ((VillageDay)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -61,6 +64,7 @@ public class VillageDayDbm extends AbstractDBMeta {
     { xsetupEfpg(); }
     @SuppressWarnings("unchecked")
     protected void xsetupEfpg() {
+        setupEfpg(_efpgMap, et -> ((VillageDay)et).getNoonnight(), (et, vl) -> ((VillageDay)et).setNoonnight((OptionalEntity<Noonnight>)vl), "noonnight");
         setupEfpg(_efpgMap, et -> ((VillageDay)et).getVillage(), (et, vl) -> ((VillageDay)et).setVillage((OptionalEntity<Village>)vl), "village");
     }
     public PropertyGateway findForeignPropertyGateway(String prop)
@@ -82,29 +86,47 @@ public class VillageDayDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", "abilityList,commitList,voteList", null, false);
-    protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList,voteList", null, false);
+    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList,voteList", null, false);
+    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", null, null, false);
+    protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "noonnight", null, null, false);
     protected final ColumnInfo _columnDaychangeDatetime = cci("DAYCHANGE_DATETIME", "DAYCHANGE_DATETIME", null, null, java.time.LocalDateTime.class, "daychangeDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnIsUpdating = cci("IS_UPDATING", "IS_UPDATING", null, null, Boolean.class, "isUpdating", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_DAY_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
+    /**
+     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageId() { return _columnVillageId; }
     /**
-     * DAY: {PK, NotNull, INT UNSIGNED(10)}
+     * DAY: {NotNull, INT UNSIGNED(10)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnDay() { return _columnDay; }
+    /**
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnNoonnightCode() { return _columnNoonnightCode; }
     /**
      * DAYCHANGE_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnDaychangeDatetime() { return _columnDaychangeDatetime; }
+    /**
+     * IS_UPDATING: {NotNull, BIT}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnIsUpdating() { return _columnIsUpdating; }
     /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
@@ -128,9 +150,12 @@ public class VillageDayDbm extends AbstractDBMeta {
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
+        ls.add(columnVillageDayId());
         ls.add(columnVillageId());
         ls.add(columnDay());
+        ls.add(columnNoonnightCode());
         ls.add(columnDaychangeDatetime());
+        ls.add(columnIsUpdating());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());
@@ -146,14 +171,9 @@ public class VillageDayDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                       Primary Element
     //                                       ---------------
-    protected UniqueInfo cpui() {
-        List<ColumnInfo> ls = newArrayListSized(4);
-        ls.add(columnVillageId());
-        ls.add(columnDay());
-        return hpcpui(ls);
-    }
+    protected UniqueInfo cpui() { return hpcpui(columnVillageDayId()); }
     public boolean hasPrimaryKey() { return true; }
-    public boolean hasCompoundPrimaryKey() { return true; }
+    public boolean hasCompoundPrimaryKey() { return false; }
 
     // ===================================================================================
     //                                                                       Relation Info
@@ -164,51 +184,54 @@ public class VillageDayDbm extends AbstractDBMeta {
     //                                      Foreign Property
     //                                      ----------------
     /**
+     * NOONNIGHT by my NOONNIGHT_CODE, named 'noonnight'.
+     * @return The information object of foreign property. (NotNull)
+     */
+    public ForeignInfo foreignNoonnight() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnNoonnightCode(), NoonnightDbm.getInstance().columnNoonnightCode());
+        return cfi("FK_VILLAGE_DAY_NOONNIGHT", "noonnight", this, NoonnightDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageDayList", false);
+    }
+    /**
      * VILLAGE by my VILLAGE_ID, named 'village'.
      * @return The information object of foreign property. (NotNull)
      */
     public ForeignInfo foreignVillage() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageId(), VillageDbm.getInstance().columnVillageId());
-        return cfi("FK_VILLAGE_DAY_VILLAGE", "village", this, VillageDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageDayList", false);
+        return cfi("FK_VILLAGE_DAY_VILLAGE", "village", this, VillageDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageDayList", false);
     }
 
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
     /**
-     * ABILITY by VILLAGE_ID, DAY, named 'abilityList'.
+     * ABILITY by VILLAGE_DAY_ID, named 'abilityList'.
      * @return The information object of referrer property. (NotNull)
      */
     public ReferrerInfo referrerAbilityList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
-        mp.put(columnVillageId(), AbilityDbm.getInstance().columnVillageId());
-        mp.put(columnDay(), AbilityDbm.getInstance().columnDay());
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), AbilityDbm.getInstance().columnVillageDayId());
         return cri("FK_ABILITY_VILLAGE_DAY", "abilityList", this, AbilityDbm.getInstance(), mp, false, "villageDay");
     }
     /**
-     * COMMIT by VILLAGE_ID, DAY, named 'commitList'.
+     * COMMIT by VILLAGE_DAY_ID, named 'commitList'.
      * @return The information object of referrer property. (NotNull)
      */
     public ReferrerInfo referrerCommitList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
-        mp.put(columnVillageId(), CommitDbm.getInstance().columnVillageId());
-        mp.put(columnDay(), CommitDbm.getInstance().columnDay());
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), CommitDbm.getInstance().columnVillageDayId());
         return cri("FK_COMMIT_VILLAGE_DAY", "commitList", this, CommitDbm.getInstance(), mp, false, "villageDay");
     }
     /**
-     * VOTE by VILLAGE_ID, DAY, named 'voteList'.
+     * VOTE by VILLAGE_DAY_ID, named 'voteList'.
      * @return The information object of referrer property. (NotNull)
      */
     public ReferrerInfo referrerVoteList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
-        mp.put(columnVillageId(), VoteDbm.getInstance().columnVillageId());
-        mp.put(columnDay(), VoteDbm.getInstance().columnDay());
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VoteDbm.getInstance().columnVillageDayId());
         return cri("FK_VOTE_VILLAGE_DAY", "voteList", this, VoteDbm.getInstance(), mp, false, "villageDay");
     }
 
     // ===================================================================================
     //                                                                        Various Info
     //                                                                        ============
+    public boolean hasIdentity() { return true; }
     public boolean hasCommonColumn() { return true; }
     public List<ColumnInfo> getCommonColumnInfoList()
     { return newArrayList(columnRegisterDatetime(), columnRegisterTrace(), columnUpdateDatetime(), columnUpdateTrace()); }

@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -290,10 +290,7 @@
 					<target>table.COMMIT</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -322,23 +319,16 @@
 			</connections>
 			<columns>
 				<normal_column>
-					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_COMMIT_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_COMMIT_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
 					<physical_name>village_player_id</physical_name>
 					<referred_column>table.village_player.village_player_id</referred_column>
 					<relationship>FK_COMMIT_village_player</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_COMMIT_village_day</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
@@ -477,10 +467,7 @@
 					<target>table.ability</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -547,23 +534,16 @@
 			</connections>
 			<columns>
 				<normal_column>
-					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_ability_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_ability_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
 					<physical_name>chara_id</physical_name>
 					<referred_column>table.CHARA.chara_id</referred_column>
 					<relationship>FK_ability_CHARA</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_ability_village_day</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
@@ -915,8 +895,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>929</x>
-			<y>884</y>
+			<x>850</x>
+			<y>846</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -978,10 +958,7 @@
 					<target>table.message</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1020,12 +997,27 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_message_village</name>
+					<source>table.village</source>
+					<target>table.message</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>village_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
 			</connections>
 			<columns>
 				<normal_column>
 					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_message_village_day</relationship>
+					<referred_column>table.village.village_id</referred_column>
+					<relationship>FK_message_village</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
@@ -1045,6 +1037,19 @@
 					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
+					<physical_name>message_unixtimestamp_milli</physical_name>
+					<logical_name>メッセージUNIXタイムスタンプミリ秒</logical_name>
+					<type>bigint</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_message_village_day</relationship>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
 					<physical_name>village_player_id</physical_name>
 					<referred_column>table.village_player.village_player_id</referred_column>
 					<relationship>FK_message_village_player</relationship>
@@ -1059,12 +1064,6 @@
 					<physical_name>player_id</physical_name>
 					<referred_column>table.player.player_id</referred_column>
 					<relationship>FK_message_player</relationship>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_message_village_day</relationship>
-					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
 					<physical_name>message_content</physical_name>
@@ -1093,22 +1092,19 @@
 				<column_group>共通カラム</column_group>
 			</columns>
 			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-				<compound_unique_key>
-					<name>UQ_message_number</name>
+				<index>
+					<name>IX_message_unixtimestamp</name>
+					<type>BTREE</type>
+					<non_unique>true</non_unique>
 					<columns>
 						<column>
-							<column_id>table.message.village_id</column_id>
-						</column>
-						<column>
-							<column_id>table.message.message_type_code</column_id>
-						</column>
-						<column>
-							<column_id>table.message.message_number</column_id>
+							<column_id>table.message.message_unixtimestamp_milli</column_id>
+							<desc>true</desc>
 						</column>
 					</columns>
-				</compound_unique_key>
+				</index>
+			</indexes>
+			<compound_unique_key_list>
 			</compound_unique_key_list>
 			<table_properties>
 			</table_properties>
@@ -1249,6 +1245,54 @@
 					<logical_name>メッセージ種別名</logical_name>
 					<type>varchar(n)</type>
 					<length>20</length>
+					<not_null>true</not_null>
+				</normal_column>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
+			<physical_name>noonnight</physical_name>
+			<logical_name>昼夜</logical_name>
+			<description></description>
+			<height>89</height>
+			<width>238</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1052</x>
+			<y>651</y>
+			<color>
+				<r>254</r>
+				<g>251</g>
+				<b>0</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>noonnight_code</physical_name>
+					<logical_name>昼夜コード</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>noonnight_name</physical_name>
+					<logical_name>昼夜名</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>disp_order</physical_name>
+					<logical_name>並び順</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
 					<not_null>true</not_null>
 				</normal_column>
 			</columns>
@@ -1511,8 +1555,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>852</x>
-			<y>712</y>
+			<x>769</x>
+			<y>640</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -1534,14 +1578,37 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_village_day_noonnight</name>
+					<source>table.noonnight</source>
+					<target>table.village_day</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>noonnight_code</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
 			</connections>
 			<columns>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<logical_name>村日付ID</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+					<auto_increment>true</auto_increment>
+				</normal_column>
 				<normal_column>
 					<physical_name>village_id</physical_name>
 					<referred_column>table.village.village_id</referred_column>
 					<relationship>FK_village_day_village</relationship>
 					<not_null>true</not_null>
-					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
 					<physical_name>day</physical_name>
@@ -1549,12 +1616,23 @@
 					<type>integer</type>
 					<unsigned>true</unsigned>
 					<not_null>true</not_null>
-					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>noonnight_code</physical_name>
+					<referred_column>table.noonnight.noonnight_code</referred_column>
+					<relationship>FK_village_day_noonnight</relationship>
+					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
 					<physical_name>daychange_datetime</physical_name>
 					<logical_name>日付更新日時</logical_name>
 					<type>datetime</type>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>is_updating</physical_name>
+					<logical_name>更新中か</logical_name>
+					<type>boolean</type>
 					<not_null>true</not_null>
 				</normal_column>
 				<column_group>共通カラム</column_group>
@@ -1993,10 +2071,7 @@
 					<target>table.vote</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -2008,23 +2083,16 @@
 			</connections>
 			<columns>
 				<normal_column>
-					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_vote_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_vote_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
 					<physical_name>chara_id</physical_name>
 					<referred_column>table.CHARA.chara_id</referred_column>
 					<relationship>FK_vote_CHARA</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_vote_village_day</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>

@@ -73,46 +73,6 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
-    protected ConditionValue _villageId;
-    public ConditionValue xdfgetVillageId()
-    { if (_villageId == null) { _villageId = nCV(); }
-      return _villageId; }
-    protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
-
-    protected ConditionValue _day;
-    public ConditionValue xdfgetDay()
-    { if (_day == null) { _day = nCV(); }
-      return _day; }
-    protected ConditionValue xgetCValueDay() { return xdfgetDay(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_Day_Asc() { regOBA("DAY"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_Day_Desc() { regOBD("DAY"); return this; }
-
     protected ConditionValue _charaId;
     public ConditionValue xdfgetCharaId()
     { if (_charaId == null) { _charaId = nCV(); }
@@ -121,17 +81,37 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /** 
      * Add order-by as ascend. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_CharaId_Asc() { regOBA("CHARA_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_CharaId_Desc() { regOBD("CHARA_ID"); return this; }
+
+    protected ConditionValue _villageDayId;
+    public ConditionValue xdfgetVillageDayId()
+    { if (_villageDayId == null) { _villageDayId = nCV(); }
+      return _villageDayId; }
+    protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
+
+    /** 
+     * Add order-by as ascend. <br>
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
 
     protected ConditionValue _voteCharaId;
     public ConditionValue xdfgetVoteCharaId()
@@ -310,7 +290,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /**
      * Get the condition-query for relation table. <br>
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The instance of condition-query. (NotNull)
      */
     public VillageDayCQ queryVillageDay() {

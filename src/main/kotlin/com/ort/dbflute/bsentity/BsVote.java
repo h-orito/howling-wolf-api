@@ -17,10 +17,10 @@ import com.ort.dbflute.exentity.*;
  * 投票
  * <pre>
  * [primary-key]
- *     VILLAGE_ID, DAY, CHARA_ID
+ *     CHARA_ID, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, CHARA_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     CHARA_ID, VILLAGE_DAY_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -45,17 +45,15 @@ import com.ort.dbflute.exentity.*;
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villageId = entity.getVillageId();
- * Integer day = entity.getDay();
  * Integer charaId = entity.getCharaId();
+ * Integer villageDayId = entity.getVillageDayId();
  * Integer voteCharaId = entity.getVoteCharaId();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * String updateTrace = entity.getUpdateTrace();
- * entity.setVillageId(villageId);
- * entity.setDay(day);
  * entity.setCharaId(charaId);
+ * entity.setVillageDayId(villageDayId);
  * entity.setVoteCharaId(voteCharaId);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
@@ -76,14 +74,11 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} */
-    protected Integer _villageId;
-
-    /** DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day} */
-    protected Integer _day;
-
-    /** CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara} */
+    /** CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} */
     protected Integer _charaId;
+
+    /** VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} */
+    protected Integer _villageDayId;
 
     /** VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara} */
     protected Integer _voteCharaId;
@@ -118,9 +113,8 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     //                                                                        ============
     /** {@inheritDoc} */
     public boolean hasPrimaryKeyValue() {
-        if (_villageId == null) { return false; }
-        if (_day == null) { return false; }
         if (_charaId == null) { return false; }
+        if (_villageDayId == null) { return false; }
         return true;
     }
 
@@ -148,11 +142,11 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
         _charaByCharaId = charaByCharaId;
     }
 
-    /** VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'. */
+    /** VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'. */
     protected OptionalEntity<VillageDay> _villageDay;
 
     /**
-     * [get] VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'. <br>
+     * [get] VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'. <br>
      * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
      * @return The entity of foreign property 'villageDay'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
      */
@@ -162,7 +156,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [set] VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * [set] VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @param villageDay The entity of foreign property 'villageDay'. (NullAllowed)
      */
     public void setVillageDay(OptionalEntity<VillageDay> villageDay) {
@@ -204,9 +198,8 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     protected boolean doEquals(Object obj) {
         if (obj instanceof BsVote) {
             BsVote other = (BsVote)obj;
-            if (!xSV(_villageId, other._villageId)) { return false; }
-            if (!xSV(_day, other._day)) { return false; }
             if (!xSV(_charaId, other._charaId)) { return false; }
+            if (!xSV(_villageDayId, other._villageDayId)) { return false; }
             return true;
         } else {
             return false;
@@ -217,9 +210,8 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     protected int doHashCode(int initial) {
         int hs = initial;
         hs = xCH(hs, asTableDbName());
-        hs = xCH(hs, _villageId);
-        hs = xCH(hs, _day);
         hs = xCH(hs, _charaId);
+        hs = xCH(hs, _villageDayId);
         return hs;
     }
 
@@ -241,9 +233,8 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     @Override
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
-        sb.append(dm).append(xfND(_villageId));
-        sb.append(dm).append(xfND(_day));
         sb.append(dm).append(xfND(_charaId));
+        sb.append(dm).append(xfND(_villageDayId));
         sb.append(dm).append(xfND(_voteCharaId));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
@@ -280,47 +271,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
-     * 村ID
-     * @return The value of the column 'VILLAGE_ID'. (basically NotNull if selected: for the constraint)
-     */
-    public Integer getVillageId() {
-        checkSpecifiedProperty("villageId");
-        return _villageId;
-    }
-
-    /**
-     * [set] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
-     * 村ID
-     * @param villageId The value of the column 'VILLAGE_ID'. (basically NotNull if update: for the constraint)
-     */
-    public void setVillageId(Integer villageId) {
-        registerModifiedProperty("villageId");
-        _villageId = villageId;
-    }
-
-    /**
-     * [get] DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
-     * 何日目か
-     * @return The value of the column 'DAY'. (basically NotNull if selected: for the constraint)
-     */
-    public Integer getDay() {
-        checkSpecifiedProperty("day");
-        return _day;
-    }
-
-    /**
-     * [set] DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
-     * 何日目か
-     * @param day The value of the column 'DAY'. (basically NotNull if update: for the constraint)
-     */
-    public void setDay(Integer day) {
-        registerModifiedProperty("day");
-        _day = day;
-    }
-
-    /**
-     * [get] CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara} <br>
+     * [get] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
      * キャラクターID
      * @return The value of the column 'CHARA_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -330,13 +281,33 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [set] CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara} <br>
+     * [set] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
      * キャラクターID
      * @param charaId The value of the column 'CHARA_ID'. (basically NotNull if update: for the constraint)
      */
     public void setCharaId(Integer charaId) {
         registerModifiedProperty("charaId");
         _charaId = charaId;
+    }
+
+    /**
+     * [get] VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} <br>
+     * 村日付ID
+     * @return The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getVillageDayId() {
+        checkSpecifiedProperty("villageDayId");
+        return _villageDayId;
+    }
+
+    /**
+     * [set] VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} <br>
+     * 村日付ID
+     * @param villageDayId The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if update: for the constraint)
+     */
+    public void setVillageDayId(Integer villageDayId) {
+        registerModifiedProperty("villageDayId");
+        _villageDayId = villageDayId;
     }
 
     /**

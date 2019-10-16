@@ -64,10 +64,11 @@ public class MessageCIQ extends AbstractBsMessageCQ {
     protected ConditionValue xgetCValueVillageId() { return _myCQ.xdfgetVillageId(); }
     protected ConditionValue xgetCValueMessageNumber() { return _myCQ.xdfgetMessageNumber(); }
     protected ConditionValue xgetCValueMessageTypeCode() { return _myCQ.xdfgetMessageTypeCode(); }
+    protected ConditionValue xgetCValueMessageUnixtimestampMilli() { return _myCQ.xdfgetMessageUnixtimestampMilli(); }
+    protected ConditionValue xgetCValueVillageDayId() { return _myCQ.xdfgetVillageDayId(); }
     protected ConditionValue xgetCValueVillagePlayerId() { return _myCQ.xdfgetVillagePlayerId(); }
     protected ConditionValue xgetCValueToVillagePlayerId() { return _myCQ.xdfgetToVillagePlayerId(); }
     protected ConditionValue xgetCValuePlayerId() { return _myCQ.xdfgetPlayerId(); }
-    protected ConditionValue xgetCValueDay() { return _myCQ.xdfgetDay(); }
     protected ConditionValue xgetCValueMessageContent() { return _myCQ.xdfgetMessageContent(); }
     protected ConditionValue xgetCValueMessageDatetime() { return _myCQ.xdfgetMessageDatetime(); }
     protected ConditionValue xgetCValueIsConvertDisable() { return _myCQ.xdfgetIsConvertDisable(); }

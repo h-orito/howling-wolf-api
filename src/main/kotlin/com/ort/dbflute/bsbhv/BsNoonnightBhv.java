@@ -15,7 +15,6 @@ import org.dbflute.exception.*;
 import org.dbflute.hook.CommonColumnAutoSetupper;
 import org.dbflute.optional.OptionalEntity;
 import org.dbflute.outsidesql.executor.*;
-import com.ort.dbflute.allcommon.CDef;
 import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.bsbhv.loader.*;
 import com.ort.dbflute.exentity.*;
@@ -23,13 +22,13 @@ import com.ort.dbflute.bsentity.dbmeta.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The behavior of ABILITY as TABLE. <br>
+ * The behavior of NOONNIGHT as TABLE. <br>
  * <pre>
  * [primary key]
- *     CHARA_ID, VILLAGE_DAY_ID, ABILITY_TYPE_CODE
+ *     NOONNIGHT_CODE
  *
  * [column]
- *     CHARA_ID, VILLAGE_DAY_ID, TARGET_CHARA_ID, ABILITY_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     NOONNIGHT_CODE, NOONNIGHT_NAME, DISP_ORDER
  *
  * [sequence]
  *     
@@ -41,20 +40,20 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     ABILITY_TYPE, CHARA, VILLAGE_DAY
+ *     
  *
  * [referrer table]
- *     
+ *     VILLAGE_DAY
  *
  * [foreign property]
- *     abilityType, charaByCharaId, charaByTargetCharaId, villageDay
+ *     
  *
  * [referrer property]
- *     
+ *     villageDayList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
-public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, AbilityCB> {
+public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight, NoonnightCB> {
 
     // ===================================================================================
     //                                                                          Definition
@@ -66,15 +65,15 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     //                                                                             DB Meta
     //                                                                             =======
     /** {@inheritDoc} */
-    public AbilityDbm asDBMeta() { return AbilityDbm.getInstance(); }
+    public NoonnightDbm asDBMeta() { return NoonnightDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "ability"; }
+    public String asTableDbName() { return "noonnight"; }
 
     // ===================================================================================
     //                                                                        New Instance
     //                                                                        ============
     /** {@inheritDoc} */
-    public AbilityCB newConditionBean() { return new AbilityCB(); }
+    public NoonnightCB newConditionBean() { return new NoonnightCB(); }
 
     // ===================================================================================
     //                                                                        Count Select
@@ -83,14 +82,14 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * Select the count of uniquely-selected records by the condition-bean. {IgnorePagingCondition, IgnoreSpecifyColumn}<br>
      * SpecifyColumn is ignored but you can use it only to remove text type column for union's distinct.
      * <pre>
-     * <span style="color: #70226C">int</span> count = <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectCount</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #70226C">int</span> count = <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectCount</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The count for the condition. (NotMinus)
      */
-    public int selectCount(CBCall<AbilityCB> cbLambda) {
+    public int selectCount(CBCall<NoonnightCB> cbLambda) {
         return facadeSelectCount(createCB(cbLambda));
     }
 
@@ -104,38 +103,38 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * <span style="color: #AD4747; font-size: 120%">If it might be no data, isPresent() and orElse(), ...</span>
      * <pre>
      * <span style="color: #3F7E5E">// if the data always exists as your business rule</span>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
-     * }).<span style="color: #CC4747">alwaysPresent</span>(<span style="color: #553000">ability</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * }).<span style="color: #CC4747">alwaysPresent</span>(<span style="color: #553000">noonnight</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
-     *     ... = <span style="color: #553000">ability</span>.get...
+     *     ... = <span style="color: #553000">noonnight</span>.get...
      * });
      * 
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
-     * }).<span style="color: #CC4747">ifPresent</span>(<span style="color: #553000">ability</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * }).<span style="color: #CC4747">ifPresent</span>(<span style="color: #553000">noonnight</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if present</span>
-     *     ... = <span style="color: #553000">ability</span>.get...
+     *     ... = <span style="color: #553000">noonnight</span>.get...
      * }).<span style="color: #994747">orElse</span>(() <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if not present</span>
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The optional entity selected by the condition. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Ability> selectEntity(CBCall<AbilityCB> cbLambda) {
+    public OptionalEntity<Noonnight> selectEntity(CBCall<NoonnightCB> cbLambda) {
         return facadeSelectEntity(createCB(cbLambda));
     }
 
-    protected OptionalEntity<Ability> facadeSelectEntity(AbilityCB cb) {
+    protected OptionalEntity<Noonnight> facadeSelectEntity(NoonnightCB cb) {
         return doSelectOptionalEntity(cb, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Ability> OptionalEntity<ENTITY> doSelectOptionalEntity(AbilityCB cb, Class<? extends ENTITY> tp) {
+    protected <ENTITY extends Noonnight> OptionalEntity<ENTITY> doSelectOptionalEntity(NoonnightCB cb, Class<? extends ENTITY> tp) {
         return createOptionalEntity(doSelectEntity(cb, tp), cb);
     }
 
@@ -145,48 +144,46 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * Select the entity by the condition-bean with deleted check. <br>
      * <span style="color: #AD4747; font-size: 120%">If the data is always present as your business rule, this method is good.</span>
      * <pre>
-     * Ability <span style="color: #553000">ability</span> = <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectEntityWithDeletedCheck</span>(cb <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> cb.acceptPK(1));
-     * ... = <span style="color: #553000">ability</span>.get...(); <span style="color: #3F7E5E">// the entity always be not null</span>
+     * Noonnight <span style="color: #553000">noonnight</span> = <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectEntityWithDeletedCheck</span>(cb <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> cb.acceptPK(1));
+     * ... = <span style="color: #553000">noonnight</span>.get...(); <span style="color: #3F7E5E">// the entity always be not null</span>
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The entity selected by the condition. (NotNull: if no data, throws exception)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public Ability selectEntityWithDeletedCheck(CBCall<AbilityCB> cbLambda) {
+    public Noonnight selectEntityWithDeletedCheck(CBCall<NoonnightCB> cbLambda) {
         return facadeSelectEntityWithDeletedCheck(createCB(cbLambda));
     }
 
     /**
      * Select the entity by the primary-key value.
-     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
-     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param abilityTypeCode : PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
+     * @param noonnightCode : PK, NotNull, VARCHAR(20). (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Ability> selectByPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode) {
-        return facadeSelectByPK(charaId, villageDayId, abilityTypeCode);
+    public OptionalEntity<Noonnight> selectByPK(String noonnightCode) {
+        return facadeSelectByPK(noonnightCode);
     }
 
-    protected OptionalEntity<Ability> facadeSelectByPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode) {
-        return doSelectOptionalByPK(charaId, villageDayId, abilityTypeCode, typeOfSelectedEntity());
+    protected OptionalEntity<Noonnight> facadeSelectByPK(String noonnightCode) {
+        return doSelectOptionalByPK(noonnightCode, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Ability> ENTITY doSelectByPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(charaId, villageDayId, abilityTypeCode), tp);
+    protected <ENTITY extends Noonnight> ENTITY doSelectByPK(String noonnightCode, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(noonnightCode), tp);
     }
 
-    protected <ENTITY extends Ability> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(charaId, villageDayId, abilityTypeCode, tp), charaId, villageDayId, abilityTypeCode);
+    protected <ENTITY extends Noonnight> OptionalEntity<ENTITY> doSelectOptionalByPK(String noonnightCode, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(noonnightCode, tp), noonnightCode);
     }
 
-    protected AbilityCB xprepareCBAsPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode) {
-        assertObjectNotNull("charaId", charaId);assertObjectNotNull("villageDayId", villageDayId);assertObjectNotNull("abilityTypeCode", abilityTypeCode);
-        return newConditionBean().acceptPK(charaId, villageDayId, abilityTypeCode);
+    protected NoonnightCB xprepareCBAsPK(String noonnightCode) {
+        assertObjectNotNull("noonnightCode", noonnightCode);
+        return newConditionBean().acceptPK(noonnightCode);
     }
 
     // ===================================================================================
@@ -195,19 +192,19 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     /**
      * Select the list as result bean.
      * <pre>
-     * ListResultBean&lt;Ability&gt; <span style="color: #553000">abilityList</span> = <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectList</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * ListResultBean&lt;Noonnight&gt; <span style="color: #553000">noonnightList</span> = <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectList</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...;
      *     <span style="color: #553000">cb</span>.query().addOrderBy...;
      * });
-     * <span style="color: #70226C">for</span> (Ability <span style="color: #553000">ability</span> : <span style="color: #553000">abilityList</span>) {
-     *     ... = <span style="color: #553000">ability</span>.get...;
+     * <span style="color: #70226C">for</span> (Noonnight <span style="color: #553000">noonnight</span> : <span style="color: #553000">noonnightList</span>) {
+     *     ... = <span style="color: #553000">noonnight</span>.get...;
      * }
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The result bean of selected list. (NotNull: if no data, returns empty list)
      * @throws DangerousResultSizeException When the result size is over the specified safety size.
      */
-    public ListResultBean<Ability> selectList(CBCall<AbilityCB> cbLambda) {
+    public ListResultBean<Noonnight> selectList(CBCall<NoonnightCB> cbLambda) {
         return facadeSelectList(createCB(cbLambda));
     }
 
@@ -221,7 +218,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * Select the page as result bean. <br>
      * (both count-select and paging-select are executed)
      * <pre>
-     * PagingResultBean&lt;Ability&gt; <span style="color: #553000">page</span> = <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectPage</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * PagingResultBean&lt;Noonnight&gt; <span style="color: #553000">page</span> = <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectPage</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      *     <span style="color: #553000">cb</span>.query().addOrderBy...
      *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">paging</span>(20, 3); <span style="color: #3F7E5E">// 20 records per a page and current page number is 3</span>
@@ -231,15 +228,15 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * <span style="color: #70226C">boolean</span> isExistPrePage = <span style="color: #553000">page</span>.isExistPrePage();
      * <span style="color: #70226C">boolean</span> isExistNextPage = <span style="color: #553000">page</span>.isExistNextPage();
      * ...
-     * <span style="color: #70226C">for</span> (Ability ability : <span style="color: #553000">page</span>) {
-     *     ... = ability.get...;
+     * <span style="color: #70226C">for</span> (Noonnight noonnight : <span style="color: #553000">page</span>) {
+     *     ... = noonnight.get...;
      * }
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The result bean of selected page. (NotNull: if no data, returns bean as empty list)
      * @throws DangerousResultSizeException When the result size is over the specified safety size.
      */
-    public PagingResultBean<Ability> selectPage(CBCall<AbilityCB> cbLambda) {
+    public PagingResultBean<Noonnight> selectPage(CBCall<NoonnightCB> cbLambda) {
         return facadeSelectPage(createCB(cbLambda));
     }
 
@@ -249,16 +246,16 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     /**
      * Select the cursor by the condition-bean.
      * <pre>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectCursor</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectCursor</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      * }, <span style="color: #553000">member</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     ... = <span style="color: #553000">member</span>.getMemberName();
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
-     * @param entityLambda The handler of entity row of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
+     * @param entityLambda The handler of entity row of Noonnight. (NotNull)
      */
-    public void selectCursor(CBCall<AbilityCB> cbLambda, EntityRowHandler<Ability> entityLambda) {
+    public void selectCursor(CBCall<NoonnightCB> cbLambda, EntityRowHandler<Noonnight> entityLambda) {
         facadeSelectCursor(createCB(cbLambda), entityLambda);
     }
 
@@ -269,7 +266,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * Select the scalar value derived by a function from uniquely-selected records. <br>
      * You should call a function method after this method called like as follows:
      * <pre>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectScalar</span>(Date.class).max(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectScalar</span>(Date.class).max(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.specify().<span style="color: #CC4747">column...</span>; <span style="color: #3F7E5E">// required for the function</span>
      *     <span style="color: #553000">cb</span>.query().set...
      * });
@@ -278,7 +275,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * @param resultType The type of result. (NotNull)
      * @return The scalar function object to specify function for scalar value. (NotNull)
      */
-    public <RESULT> HpSLSFunction<AbilityCB, RESULT> selectScalar(Class<RESULT> resultType) {
+    public <RESULT> HpSLSFunction<NoonnightCB, RESULT> selectScalar(Class<RESULT> resultType) {
         return facadeScalarSelect(resultType);
     }
 
@@ -323,12 +320,12 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has order by FK before callback.
-     * @param abilityList The entity list of ability. (NotNull)
+     * @param noonnightList The entity list of noonnight. (NotNull)
      * @param loaderLambda The callback to handle the referrer loader for actually loading referrer. (NotNull)
      */
-    public void load(List<Ability> abilityList, ReferrerLoaderHandler<LoaderOfAbility> loaderLambda) {
-        xassLRArg(abilityList, loaderLambda);
-        loaderLambda.handle(new LoaderOfAbility().ready(abilityList, _behaviorSelector));
+    public void load(List<Noonnight> noonnightList, ReferrerLoaderHandler<LoaderOfNoonnight> loaderLambda) {
+        xassLRArg(noonnightList, loaderLambda);
+        loaderLambda.handle(new LoaderOfNoonnight().ready(noonnightList, _behaviorSelector));
     }
 
     /**
@@ -356,132 +353,172 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has order by FK before callback.
-     * @param ability The entity of ability. (NotNull)
+     * @param noonnight The entity of noonnight. (NotNull)
      * @param loaderLambda The callback to handle the referrer loader for actually loading referrer. (NotNull)
      */
-    public void load(Ability ability, ReferrerLoaderHandler<LoaderOfAbility> loaderLambda) {
-        xassLRArg(ability, loaderLambda);
-        loaderLambda.handle(new LoaderOfAbility().ready(xnewLRAryLs(ability), _behaviorSelector));
+    public void load(Noonnight noonnight, ReferrerLoaderHandler<LoaderOfNoonnight> loaderLambda) {
+        xassLRArg(noonnight, loaderLambda);
+        loaderLambda.handle(new LoaderOfNoonnight().ready(xnewLRAryLs(noonnight), _behaviorSelector));
+    }
+
+    /**
+     * Load referrer of villageDayList by the set-upper of referrer. <br>
+     * VILLAGE_DAY by NOONNIGHT_CODE, named 'villageDayList'.
+     * <pre>
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">loadVillageDay</span>(<span style="color: #553000">noonnightList</span>, <span style="color: #553000">dayCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">dayCB</span>.setupSelect...
+     *     <span style="color: #553000">dayCB</span>.query().set...
+     *     <span style="color: #553000">dayCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Noonnight noonnight : <span style="color: #553000">noonnightList</span>) {
+     *     ... = noonnight.<span style="color: #CC4747">getVillageDayList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setNoonnightCode_InScope(pkList);
+     * cb.query().addOrderBy_NoonnightCode_Asc();
+     * </pre>
+     * @param noonnightList The entity list of noonnight. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<VillageDay> loadVillageDay(List<Noonnight> noonnightList, ReferrerConditionSetupper<VillageDayCB> refCBLambda) {
+        xassLRArg(noonnightList, refCBLambda);
+        return doLoadVillageDay(noonnightList, new LoadReferrerOption<VillageDayCB, VillageDay>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of villageDayList by the set-upper of referrer. <br>
+     * VILLAGE_DAY by NOONNIGHT_CODE, named 'villageDayList'.
+     * <pre>
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">loadVillageDay</span>(<span style="color: #553000">noonnight</span>, <span style="color: #553000">dayCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">dayCB</span>.setupSelect...
+     *     <span style="color: #553000">dayCB</span>.query().set...
+     *     <span style="color: #553000">dayCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">noonnight</span>.<span style="color: #CC4747">getVillageDayList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setNoonnightCode_InScope(pkList);
+     * cb.query().addOrderBy_NoonnightCode_Asc();
+     * </pre>
+     * @param noonnight The entity of noonnight. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<VillageDay> loadVillageDay(Noonnight noonnight, ReferrerConditionSetupper<VillageDayCB> refCBLambda) {
+        xassLRArg(noonnight, refCBLambda);
+        return doLoadVillageDay(xnewLRLs(noonnight), new LoadReferrerOption<VillageDayCB, VillageDay>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<VillageDay> doLoadVillageDay(List<Noonnight> noonnightList, LoadReferrerOption<VillageDayCB, VillageDay> option) {
+        return helpLoadReferrerInternally(noonnightList, option, "villageDayList");
     }
 
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
-    /**
-     * Pull out the list of foreign table 'AbilityType'.
-     * @param abilityList The list of ability. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<AbilityType> pulloutAbilityType(List<Ability> abilityList)
-    { return helpPulloutInternally(abilityList, "abilityType"); }
-
-    /**
-     * Pull out the list of foreign table 'Chara'.
-     * @param abilityList The list of ability. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Chara> pulloutCharaByCharaId(List<Ability> abilityList)
-    { return helpPulloutInternally(abilityList, "charaByCharaId"); }
-
-    /**
-     * Pull out the list of foreign table 'Chara'.
-     * @param abilityList The list of ability. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Chara> pulloutCharaByTargetCharaId(List<Ability> abilityList)
-    { return helpPulloutInternally(abilityList, "charaByTargetCharaId"); }
-
-    /**
-     * Pull out the list of foreign table 'VillageDay'.
-     * @param abilityList The list of ability. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<VillageDay> pulloutVillageDay(List<Ability> abilityList)
-    { return helpPulloutInternally(abilityList, "villageDay"); }
-
     // ===================================================================================
     //                                                                      Extract Column
     //                                                                      ==============
+    /**
+     * Extract the value list of (single) primary key noonnightCode.
+     * @param noonnightList The list of noonnight. (NotNull, EmptyAllowed)
+     * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
+     */
+    public List<String> extractNoonnightCodeList(List<Noonnight> noonnightList)
+    { return helpExtractListInternally(noonnightList, "noonnightCode"); }
+
     // ===================================================================================
     //                                                                       Entity Update
     //                                                                       =============
     /**
      * Insert the entity modified-only. (DefaultConstraintsEnabled)
      * <pre>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
      * <span style="color: #3F7E5E">// if auto-increment, you don't need to set the PK value</span>
-     * ability.setFoo...(value);
-     * ability.setBar...(value);
+     * noonnight.setFoo...(value);
+     * noonnight.setBar...(value);
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//ability.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//ability.set...;</span>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">insert</span>(ability);
-     * ... = ability.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
+     * <span style="color: #3F7E5E">//noonnight.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//noonnight.set...;</span>
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">insert</span>(noonnight);
+     * ... = noonnight.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
      * </pre>
      * <p>While, when the entity is created by select, all columns are registered.</p>
-     * @param ability The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
+     * @param noonnight The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void insert(Ability ability) {
-        doInsert(ability, null);
+    public void insert(Noonnight noonnight) {
+        doInsert(noonnight, null);
     }
 
     /**
      * Update the entity modified-only. (ZeroUpdateException, NonExclusiveControl) <br>
      * By PK as default, and also you can update by unique keys using entity's uniqueOf().
      * <pre>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
-     * ability.setPK...(value); <span style="color: #3F7E5E">// required</span>
-     * ability.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
+     * noonnight.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * noonnight.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//ability.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//ability.set...;</span>
+     * <span style="color: #3F7E5E">//noonnight.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//noonnight.set...;</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * ability.<span style="color: #CC4747">setVersionNo</span>(value);
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">update</span>(ability);
+     * noonnight.<span style="color: #CC4747">setVersionNo</span>(value);
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">update</span>(noonnight);
      * </pre>
-     * @param ability The entity of update. (NotNull, PrimaryKeyNotNull)
+     * @param noonnight The entity of update. (NotNull, PrimaryKeyNotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void update(Ability ability) {
-        doUpdate(ability, null);
+    public void update(Noonnight noonnight) {
+        doUpdate(noonnight, null);
     }
 
     /**
      * Insert or update the entity modified-only. (DefaultConstraintsEnabled, NonExclusiveControl) <br>
      * if (the entity has no PK) { insert() } else { update(), but no data, insert() } <br>
      * <p><span style="color: #994747; font-size: 120%">Also you can update by unique keys using entity's uniqueOf().</span></p>
-     * @param ability The entity of insert or update. (NotNull, ...depends on insert or update)
+     * @param noonnight The entity of insert or update. (NotNull, ...depends on insert or update)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void insertOrUpdate(Ability ability) {
-        doInsertOrUpdate(ability, null, null);
+    public void insertOrUpdate(Noonnight noonnight) {
+        doInsertOrUpdate(noonnight, null, null);
     }
 
     /**
      * Delete the entity. (ZeroUpdateException, NonExclusiveControl) <br>
      * By PK as default, and also you can delete by unique keys using entity's uniqueOf().
      * <pre>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
-     * ability.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
+     * noonnight.setPK...(value); <span style="color: #3F7E5E">// required</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * ability.<span style="color: #CC4747">setVersionNo</span>(value);
+     * noonnight.<span style="color: #CC4747">setVersionNo</span>(value);
      * <span style="color: #70226C">try</span> {
-     *     <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">delete</span>(ability);
+     *     <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">delete</span>(noonnight);
      * } <span style="color: #70226C">catch</span> (EntityAlreadyUpdatedException e) { <span style="color: #3F7E5E">// if concurrent update</span>
      *     ...
      * }
      * </pre>
-     * @param ability The entity of delete. (NotNull, PrimaryKeyNotNull)
+     * @param noonnight The entity of delete. (NotNull, PrimaryKeyNotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      */
-    public void delete(Ability ability) {
-        doDelete(ability, null);
+    public void delete(Noonnight noonnight) {
+        doDelete(noonnight, null);
     }
 
     // ===================================================================================
@@ -493,26 +530,26 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * <p><span style="color: #CC4747; font-size: 120%">The columns of least common multiple are registered like this:</span></p>
      * <pre>
      * <span style="color: #70226C">for</span> (... : ...) {
-     *     Ability ability = <span style="color: #70226C">new</span> Ability();
-     *     ability.setFooName("foo");
+     *     Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
+     *     noonnight.setFooName("foo");
      *     <span style="color: #70226C">if</span> (...) {
-     *         ability.setFooPrice(123);
+     *         noonnight.setFooPrice(123);
      *     }
      *     <span style="color: #3F7E5E">// FOO_NAME and FOO_PRICE (and record meta columns) are registered</span>
      *     <span style="color: #3F7E5E">// FOO_PRICE not-called in any entities are registered as null without default value</span>
      *     <span style="color: #3F7E5E">// columns not-called in all entities are registered as null or default value</span>
-     *     abilityList.add(ability);
+     *     noonnightList.add(noonnight);
      * }
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">batchInsert</span>(abilityList);
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">batchInsert</span>(noonnightList);
      * </pre>
      * <p>While, when the entities are created by select, all columns are registered.</p>
      * <p>And if the table has an identity, entities after the process don't have incremented values.
      * (When you use the (normal) insert(), you can get the incremented value from your entity)</p>
-     * @param abilityList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNullAllowed: when auto-increment)
+     * @param noonnightList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNullAllowed: when auto-increment)
      * @return The array of inserted count. (NotNull, EmptyAllowed)
      */
-    public int[] batchInsert(List<Ability> abilityList) {
-        return doBatchInsert(abilityList, null);
+    public int[] batchInsert(List<Noonnight> noonnightList) {
+        return doBatchInsert(noonnightList, null);
     }
 
     /**
@@ -521,37 +558,37 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * <span style="color: #CC4747; font-size: 120%">You should specify same-set columns to all entities like this:</span>
      * <pre>
      * for (... : ...) {
-     *     Ability ability = <span style="color: #70226C">new</span> Ability();
-     *     ability.setFooName("foo");
+     *     Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
+     *     noonnight.setFooName("foo");
      *     <span style="color: #70226C">if</span> (...) {
-     *         ability.setFooPrice(123);
+     *         noonnight.setFooPrice(123);
      *     } <span style="color: #70226C">else</span> {
-     *         ability.setFooPrice(null); <span style="color: #3F7E5E">// updated as null</span>
-     *         <span style="color: #3F7E5E">//ability.setFooDate(...); // *not allowed, fragmented</span>
+     *         noonnight.setFooPrice(null); <span style="color: #3F7E5E">// updated as null</span>
+     *         <span style="color: #3F7E5E">//noonnight.setFooDate(...); // *not allowed, fragmented</span>
      *     }
      *     <span style="color: #3F7E5E">// FOO_NAME and FOO_PRICE (and record meta columns) are updated</span>
      *     <span style="color: #3F7E5E">// (others are not updated: their values are kept)</span>
-     *     abilityList.add(ability);
+     *     noonnightList.add(noonnight);
      * }
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">batchUpdate</span>(abilityList);
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">batchUpdate</span>(noonnightList);
      * </pre>
-     * @param abilityList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param noonnightList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      */
-    public int[] batchUpdate(List<Ability> abilityList) {
-        return doBatchUpdate(abilityList, null);
+    public int[] batchUpdate(List<Noonnight> noonnightList) {
+        return doBatchUpdate(noonnightList, null);
     }
 
     /**
      * Batch-delete the entity list. (NonExclusiveControl) <br>
      * This method uses executeBatch() of java.sql.PreparedStatement.
-     * @param abilityList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param noonnightList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @return The array of deleted count. (NotNull, EmptyAllowed)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      */
-    public int[] batchDelete(List<Ability> abilityList) {
-        return doBatchDelete(abilityList, null);
+    public int[] batchDelete(List<Noonnight> noonnightList) {
+        return doBatchDelete(noonnightList, null);
     }
 
     // ===================================================================================
@@ -560,8 +597,8 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     /**
      * Insert the several entities by query (modified-only for fixed value).
      * <pre>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">queryInsert</span>(new QueryInsertSetupper&lt;Ability, AbilityCB&gt;() {
-     *     public ConditionBean setup(Ability entity, AbilityCB intoCB) {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">queryInsert</span>(new QueryInsertSetupper&lt;Noonnight, NoonnightCB&gt;() {
+     *     public ConditionBean setup(Noonnight entity, NoonnightCB intoCB) {
      *         FooCB cb = FooCB();
      *         cb.setupSelect_Bar();
      *
@@ -583,48 +620,48 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * @param manyArgLambda The callback to set up query-insert. (NotNull)
      * @return The inserted count.
      */
-    public int queryInsert(QueryInsertSetupper<Ability, AbilityCB> manyArgLambda) {
+    public int queryInsert(QueryInsertSetupper<Noonnight, NoonnightCB> manyArgLambda) {
         return doQueryInsert(manyArgLambda, null);
     }
 
     /**
      * Update the several entities by query non-strictly modified-only. (NonExclusiveControl)
      * <pre>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
      * <span style="color: #3F7E5E">// you don't need to set PK value</span>
-     * <span style="color: #3F7E5E">//ability.setPK...(value);</span>
-     * ability.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * <span style="color: #3F7E5E">//noonnight.setPK...(value);</span>
+     * noonnight.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//ability.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//ability.set...;</span>
+     * <span style="color: #3F7E5E">//noonnight.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//noonnight.set...;</span>
      * <span style="color: #3F7E5E">// you don't need to set a value of concurrency column</span>
      * <span style="color: #3F7E5E">// (auto-increment for version number is valid though non-exclusive control)</span>
-     * <span style="color: #3F7E5E">//ability.setVersionNo(value);</span>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">queryUpdate</span>(ability, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #3F7E5E">//noonnight.setVersionNo(value);</span>
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">queryUpdate</span>(noonnight, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
-     * @param ability The entity that contains update values. (NotNull, PrimaryKeyNullAllowed)
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param noonnight The entity that contains update values. (NotNull, PrimaryKeyNullAllowed)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The updated count.
      * @throws NonQueryUpdateNotAllowedException When the query has no condition.
      */
-    public int queryUpdate(Ability ability, CBCall<AbilityCB> cbLambda) {
-        return doQueryUpdate(ability, createCB(cbLambda), null);
+    public int queryUpdate(Noonnight noonnight, CBCall<NoonnightCB> cbLambda) {
+        return doQueryUpdate(noonnight, createCB(cbLambda), null);
     }
 
     /**
      * Delete the several entities by query. (NonExclusiveControl)
      * <pre>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">queryDelete</span>(ability, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">queryDelete</span>(noonnight, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @return The deleted count.
      * @throws NonQueryDeleteNotAllowedException When the query has no condition.
      */
-    public int queryDelete(CBCall<AbilityCB> cbLambda) {
+    public int queryDelete(CBCall<NoonnightCB> cbLambda) {
         return doQueryDelete(createCB(cbLambda), null);
     }
 
@@ -639,22 +676,22 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * For example, disableCommonColumnAutoSetup(), disablePrimaryKeyIdentity(). <br>
      * Other specifications are same as insert(entity).
      * <pre>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
      * <span style="color: #3F7E5E">// if auto-increment, you don't need to set the PK value</span>
-     * ability.setFoo...(value);
-     * ability.setBar...(value);
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">varyingInsert</span>(ability, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * noonnight.setFoo...(value);
+     * noonnight.setBar...(value);
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">varyingInsert</span>(noonnight, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// you can insert by your values for common columns</span>
      *     <span style="color: #553000">op</span>.disableCommonColumnAutoSetup();
      * });
-     * ... = ability.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
+     * ... = noonnight.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
      * </pre>
-     * @param ability The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
+     * @param noonnight The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingInsert(Ability ability, WritableOptionCall<AbilityCB, InsertOption<AbilityCB>> opLambda) {
-        doInsert(ability, createInsertOption(opLambda));
+    public void varyingInsert(Noonnight noonnight, WritableOptionCall<NoonnightCB, InsertOption<NoonnightCB>> opLambda) {
+        doInsert(noonnight, createInsertOption(opLambda));
     }
 
     /**
@@ -662,53 +699,53 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * For example, self(selfCalculationSpecification), specify(updateColumnSpecification), disableCommonColumnAutoSetup(). <br>
      * Other specifications are same as update(entity).
      * <pre>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
-     * ability.setPK...(value); <span style="color: #3F7E5E">// required</span>
-     * ability.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
+     * noonnight.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * noonnight.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * ability.<span style="color: #CC4747">setVersionNo</span>(value);
+     * noonnight.<span style="color: #CC4747">setVersionNo</span>(value);
      * <span style="color: #3F7E5E">// you can update by self calculation values</span>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">varyingUpdate</span>(ability, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">varyingUpdate</span>(noonnight, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>.self(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *         <span style="color: #553000">cb</span>.specify().<span style="color: #CC4747">columnXxxCount()</span>;
      *     }).plus(1); <span style="color: #3F7E5E">// XXX_COUNT = XXX_COUNT + 1</span>
      * });
      * </pre>
-     * @param ability The entity of update. (NotNull, PrimaryKeyNotNull)
+     * @param noonnight The entity of update. (NotNull, PrimaryKeyNotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingUpdate(Ability ability, WritableOptionCall<AbilityCB, UpdateOption<AbilityCB>> opLambda) {
-        doUpdate(ability, createUpdateOption(opLambda));
+    public void varyingUpdate(Noonnight noonnight, WritableOptionCall<NoonnightCB, UpdateOption<NoonnightCB>> opLambda) {
+        doUpdate(noonnight, createUpdateOption(opLambda));
     }
 
     /**
      * Insert or update the entity with varying requests. (ExclusiveControl: when update) <br>
      * Other specifications are same as insertOrUpdate(entity).
-     * @param ability The entity of insert or update. (NotNull)
+     * @param noonnight The entity of insert or update. (NotNull)
      * @param insertOpLambda The callback for option of insert for varying requests. (NotNull)
      * @param updateOpLambda The callback for option of update for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingInsertOrUpdate(Ability ability, WritableOptionCall<AbilityCB, InsertOption<AbilityCB>> insertOpLambda, WritableOptionCall<AbilityCB, UpdateOption<AbilityCB>> updateOpLambda) {
-        doInsertOrUpdate(ability, createInsertOption(insertOpLambda), createUpdateOption(updateOpLambda));
+    public void varyingInsertOrUpdate(Noonnight noonnight, WritableOptionCall<NoonnightCB, InsertOption<NoonnightCB>> insertOpLambda, WritableOptionCall<NoonnightCB, UpdateOption<NoonnightCB>> updateOpLambda) {
+        doInsertOrUpdate(noonnight, createInsertOption(insertOpLambda), createUpdateOption(updateOpLambda));
     }
 
     /**
      * Delete the entity with varying requests. (ZeroUpdateException, NonExclusiveControl) <br>
      * Now a valid option does not exist. <br>
      * Other specifications are same as delete(entity).
-     * @param ability The entity of delete. (NotNull, PrimaryKeyNotNull, ConcurrencyColumnNotNull)
+     * @param noonnight The entity of delete. (NotNull, PrimaryKeyNotNull, ConcurrencyColumnNotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      */
-    public void varyingDelete(Ability ability, WritableOptionCall<AbilityCB, DeleteOption<AbilityCB>> opLambda) {
-        doDelete(ability, createDeleteOption(opLambda));
+    public void varyingDelete(Noonnight noonnight, WritableOptionCall<NoonnightCB, DeleteOption<NoonnightCB>> opLambda) {
+        doDelete(noonnight, createDeleteOption(opLambda));
     }
 
     // -----------------------------------------------------
@@ -719,12 +756,12 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * For example, disableCommonColumnAutoSetup()
      * , disablePrimaryKeyIdentity(), limitBatchInsertLogging(). <br>
      * Other specifications are same as batchInsert(entityList).
-     * @param abilityList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param noonnightList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchInsert(List<Ability> abilityList, WritableOptionCall<AbilityCB, InsertOption<AbilityCB>> opLambda) {
-        return doBatchInsert(abilityList, createInsertOption(opLambda));
+    public int[] varyingBatchInsert(List<Noonnight> noonnightList, WritableOptionCall<NoonnightCB, InsertOption<NoonnightCB>> opLambda) {
+        return doBatchInsert(noonnightList, createInsertOption(opLambda));
     }
 
     /**
@@ -732,24 +769,24 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * For example, self(selfCalculationSpecification), specify(updateColumnSpecification)
      * , disableCommonColumnAutoSetup(), limitBatchUpdateLogging(). <br>
      * Other specifications are same as batchUpdate(entityList).
-     * @param abilityList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param noonnightList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchUpdate(List<Ability> abilityList, WritableOptionCall<AbilityCB, UpdateOption<AbilityCB>> opLambda) {
-        return doBatchUpdate(abilityList, createUpdateOption(opLambda));
+    public int[] varyingBatchUpdate(List<Noonnight> noonnightList, WritableOptionCall<NoonnightCB, UpdateOption<NoonnightCB>> opLambda) {
+        return doBatchUpdate(noonnightList, createUpdateOption(opLambda));
     }
 
     /**
      * Batch-delete the list with varying requests. <br>
      * For example, limitBatchDeleteLogging(). <br>
      * Other specifications are same as batchDelete(entityList).
-     * @param abilityList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param noonnightList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @return The array of deleted count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchDelete(List<Ability> abilityList, WritableOptionCall<AbilityCB, DeleteOption<AbilityCB>> opLambda) {
-        return doBatchDelete(abilityList, createDeleteOption(opLambda));
+    public int[] varyingBatchDelete(List<Noonnight> noonnightList, WritableOptionCall<NoonnightCB, DeleteOption<NoonnightCB>> opLambda) {
+        return doBatchDelete(noonnightList, createDeleteOption(opLambda));
     }
 
     // -----------------------------------------------------
@@ -763,7 +800,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @return The inserted count.
      */
-    public int varyingQueryInsert(QueryInsertSetupper<Ability, AbilityCB> manyArgLambda, WritableOptionCall<AbilityCB, InsertOption<AbilityCB>> opLambda) {
+    public int varyingQueryInsert(QueryInsertSetupper<Noonnight, NoonnightCB> manyArgLambda, WritableOptionCall<NoonnightCB, InsertOption<NoonnightCB>> opLambda) {
         return doQueryInsert(manyArgLambda, createInsertOption(opLambda));
     }
 
@@ -774,14 +811,14 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * Other specifications are same as queryUpdate(entity, cb).
      * <pre>
      * <span style="color: #3F7E5E">// ex) you can update by self calculation values</span>
-     * Ability ability = <span style="color: #70226C">new</span> Ability();
+     * Noonnight noonnight = <span style="color: #70226C">new</span> Noonnight();
      * <span style="color: #3F7E5E">// you don't need to set PK value</span>
-     * <span style="color: #3F7E5E">//ability.setPK...(value);</span>
-     * ability.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * <span style="color: #3F7E5E">//noonnight.setPK...(value);</span>
+     * noonnight.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set a value of concurrency column</span>
      * <span style="color: #3F7E5E">// (auto-increment for version number is valid though non-exclusive control)</span>
-     * <span style="color: #3F7E5E">//ability.setVersionNo(value);</span>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">varyingQueryUpdate</span>(ability, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #3F7E5E">//noonnight.setVersionNo(value);</span>
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">varyingQueryUpdate</span>(noonnight, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * }, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>.self(<span style="color: #553000">colCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -789,14 +826,14 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      *     }).plus(1); <span style="color: #3F7E5E">// FOO_COUNT = FOO_COUNT + 1</span>
      * });
      * </pre>
-     * @param ability The entity that contains update values. (NotNull) {PrimaryKeyNotRequired}
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param noonnight The entity that contains update values. (NotNull) {PrimaryKeyNotRequired}
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @return The updated count.
      * @throws NonQueryUpdateNotAllowedException When the query has no condition (if not allowed).
      */
-    public int varyingQueryUpdate(Ability ability, CBCall<AbilityCB> cbLambda, WritableOptionCall<AbilityCB, UpdateOption<AbilityCB>> opLambda) {
-        return doQueryUpdate(ability, createCB(cbLambda), createUpdateOption(opLambda));
+    public int varyingQueryUpdate(Noonnight noonnight, CBCall<NoonnightCB> cbLambda, WritableOptionCall<NoonnightCB, UpdateOption<NoonnightCB>> opLambda) {
+        return doQueryUpdate(noonnight, createCB(cbLambda), createUpdateOption(opLambda));
     }
 
     /**
@@ -804,18 +841,18 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * For example, allowNonQueryDelete(). <br>
      * Other specifications are same as queryDelete(cb).
      * <pre>
-     * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">queryDelete</span>(ability, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">queryDelete</span>(noonnight, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * }, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Ability. (NotNull)
+     * @param cbLambda The callback for condition-bean of Noonnight. (NotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @return The deleted count.
      * @throws NonQueryDeleteNotAllowedException When the query has no condition (if not allowed).
      */
-    public int varyingQueryDelete(CBCall<AbilityCB> cbLambda, WritableOptionCall<AbilityCB, DeleteOption<AbilityCB>> opLambda) {
+    public int varyingQueryDelete(CBCall<NoonnightCB> cbLambda, WritableOptionCall<NoonnightCB, DeleteOption<NoonnightCB>> opLambda) {
         return doQueryDelete(createCB(cbLambda), createDeleteOption(opLambda));
     }
 
@@ -826,40 +863,40 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
      * <span style="color: #3F7E5E">// main style</span> 
-     * abilityBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
-     * abilityBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
-     * abilityBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
-     * abilityBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
-     * abilityBhv.outideSql().selectCursor(pmb, handler); <span style="color: #3F7E5E">// (by handler)</span>
-     * abilityBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
-     * abilityBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
+     * noonnightBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * noonnightBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
+     * noonnightBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
+     * noonnightBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
+     * noonnightBhv.outideSql().selectCursor(pmb, handler); <span style="color: #3F7E5E">// (by handler)</span>
+     * noonnightBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
+     * noonnightBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
      * <span style="color: #3F7E5E">// traditional style</span> 
-     * abilityBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
-     * abilityBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
-     * abilityBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
-     * abilityBhv.outideSql().traditionalStyle().selectPagedListOnly(path, pmb, entityType);
-     * abilityBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
-     * abilityBhv.outideSql().traditionalStyle().execute(path, pmb);
+     * noonnightBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
+     * noonnightBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
+     * noonnightBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
+     * noonnightBhv.outideSql().traditionalStyle().selectPagedListOnly(path, pmb, entityType);
+     * noonnightBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
+     * noonnightBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
      * <span style="color: #3F7E5E">// options</span> 
-     * abilityBhv.outideSql().removeBlockComment().selectList()
-     * abilityBhv.outideSql().removeLineComment().selectList()
-     * abilityBhv.outideSql().formatSql().selectList()
+     * noonnightBhv.outideSql().removeBlockComment().selectList()
+     * noonnightBhv.outideSql().removeLineComment().selectList()
+     * noonnightBhv.outideSql().formatSql().selectList()
      * </pre>
      * <p>The invoker of behavior command should be not null when you call this method.</p>
      * @return The new-created all facade executor of outside-SQL. (NotNull)
      */
-    public OutsideSqlAllFacadeExecutor<AbilityBhv> outsideSql() {
+    public OutsideSqlAllFacadeExecutor<NoonnightBhv> outsideSql() {
         return doOutsideSql();
     }
 
     // ===================================================================================
     //                                                                         Type Helper
     //                                                                         ===========
-    protected Class<? extends Ability> typeOfSelectedEntity() { return Ability.class; }
-    protected Class<Ability> typeOfHandlingEntity() { return Ability.class; }
-    protected Class<AbilityCB> typeOfHandlingConditionBean() { return AbilityCB.class; }
+    protected Class<? extends Noonnight> typeOfSelectedEntity() { return Noonnight.class; }
+    protected Class<Noonnight> typeOfHandlingEntity() { return Noonnight.class; }
+    protected Class<NoonnightCB> typeOfHandlingConditionBean() { return NoonnightCB.class; }
 
     // ===================================================================================
     //                                                                            Accessor

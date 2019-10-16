@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE
  *
  * [column]
- *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, DAY, MESSAGE_CONTENT, MESSAGE_DATETIME, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, MESSAGE_UNIXTIMESTAMP_MILLI, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, MESSAGE_CONTENT, MESSAGE_DATETIME, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -159,9 +159,9 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
 
     /**
      * Select the entity by the primary-key value.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
+     * @param villageId : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageNumber : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageTypeCode : PK, IX, NotNull, VARCHAR(20). (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
@@ -186,33 +186,6 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
     protected MessageCB xprepareCBAsPK(Integer villageId, Integer messageNumber, String messageTypeCode) {
         assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageNumber", messageNumber);assertObjectNotNull("messageTypeCode", messageTypeCode);
         return newConditionBean().acceptPK(villageId, messageNumber, messageTypeCode);
-    }
-
-    /**
-     * Select the entity by the unique-key value.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
-     * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
-     * @throws EntityDuplicatedException When the entity has been duplicated.
-     * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
-     */
-    public OptionalEntity<Message> selectByUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        return facadeSelectByUniqueOf(villageId, messageTypeCode, messageNumber);
-    }
-
-    protected OptionalEntity<Message> facadeSelectByUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        return doSelectByUniqueOf(villageId, messageTypeCode, messageNumber, typeOfSelectedEntity());
-    }
-
-    protected <ENTITY extends Message> OptionalEntity<ENTITY> doSelectByUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(villageId, messageTypeCode, messageNumber), tp), villageId, messageTypeCode, messageNumber);
-    }
-
-    protected MessageCB xprepareCBAsUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageTypeCode", messageTypeCode);assertObjectNotNull("messageNumber", messageNumber);
-        return newConditionBean().acceptUniqueOf(villageId, messageTypeCode, messageNumber);
     }
 
     // ===================================================================================

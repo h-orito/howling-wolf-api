@@ -12,21 +12,21 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of ability.
+ * The condition-query for in-line of noonnight.
  * @author DBFlute(AutoGenerator)
  */
-public class AbilityCIQ extends AbstractBsAbilityCQ {
+public class NoonnightCIQ extends AbstractBsNoonnightCQ {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected BsAbilityCQ _myCQ;
+    protected BsNoonnightCQ _myCQ;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public AbilityCIQ(ConditionQuery referrerQuery, SqlClause sqlClause
-                        , String aliasName, int nestLevel, BsAbilityCQ myCQ) {
+    public NoonnightCIQ(ConditionQuery referrerQuery, SqlClause sqlClause
+                        , String aliasName, int nestLevel, BsNoonnightCQ myCQ) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
         _myCQ = myCQ;
         _foreignPropertyName = _myCQ.xgetForeignPropertyName(); // accept foreign property name
@@ -61,17 +61,30 @@ public class AbilityCIQ extends AbstractBsAbilityCQ {
     // ===================================================================================
     //                                                                Override about Query
     //                                                                ====================
-    protected ConditionValue xgetCValueCharaId() { return _myCQ.xdfgetCharaId(); }
-    protected ConditionValue xgetCValueVillageDayId() { return _myCQ.xdfgetVillageDayId(); }
-    protected ConditionValue xgetCValueTargetCharaId() { return _myCQ.xdfgetTargetCharaId(); }
-    protected ConditionValue xgetCValueAbilityTypeCode() { return _myCQ.xdfgetAbilityTypeCode(); }
-    protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
-    protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
-    protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }
-    protected ConditionValue xgetCValueUpdateTrace() { return _myCQ.xdfgetUpdateTrace(); }
+    protected ConditionValue xgetCValueNoonnightCode() { return _myCQ.xdfgetNoonnightCode(); }
+    public String keepNoonnightCode_ExistsReferrer_VillageDayList(VillageDayCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepNoonnightCode_NotExistsReferrer_VillageDayList(VillageDayCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepNoonnightCode_SpecifyDerivedReferrer_VillageDayList(VillageDayCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepNoonnightCode_QueryDerivedReferrer_VillageDayList(VillageDayCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepNoonnightCode_QueryDerivedReferrer_VillageDayListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    protected ConditionValue xgetCValueNoonnightName() { return _myCQ.xdfgetNoonnightName(); }
+    protected ConditionValue xgetCValueDispOrder() { return _myCQ.xdfgetDispOrder(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
-    public String keepScalarCondition(AbilityCQ sq)
+    public String keepScalarCondition(NoonnightCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }
+    public String keepSpecifyMyselfDerived(NoonnightCQ sq)
+    { throwIICBOE("(Specify)MyselfDerived"); return null;}
+    public String keepQueryMyselfDerived(NoonnightCQ sq)
+    { throwIICBOE("(Query)MyselfDerived"); return null;}
+    public String keepQueryMyselfDerivedParameter(Object vl)
+    { throwIICBOE("(Query)MyselfDerived"); return null;}
+    public String keepMyselfExists(NoonnightCQ sq)
+    { throwIICBOE("MyselfExists"); return null;}
 
     protected void throwIICBOE(String name)
     { throw new IllegalConditionBeanOperationException(name + " at InlineView is unsupported."); }
@@ -80,6 +93,6 @@ public class AbilityCIQ extends AbstractBsAbilityCQ {
     //                                                                       Very Internal
     //                                                                       =============
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xinCB() { return AbilityCB.class.getName(); }
-    protected String xinCQ() { return AbilityCQ.class.getName(); }
+    protected String xinCB() { return NoonnightCB.class.getName(); }
+    protected String xinCQ() { return NoonnightCQ.class.getName(); }
 }
