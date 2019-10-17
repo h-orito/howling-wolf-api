@@ -627,11 +627,37 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCode The value of noonnightCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setNoonnightCode_Equal(String noonnightCode) {
+    protected void setNoonnightCode_Equal(String noonnightCode) {
         doSetNoonnightCode_Equal(fRES(noonnightCode));
+    }
+
+    /**
+     * Equal(=). As Noonnight. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * 昼夜
+     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
+     */
+    public void setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight cdef) {
+        doSetNoonnightCode_Equal(cdef != null ? cdef.code() : null);
+    }
+
+    /**
+     * Equal(=). As 夜 (NIGHT). And OnlyOnceRegistered. <br>
+     * 夜
+     */
+    public void setNoonnightCode_Equal_夜() {
+        setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.夜);
+    }
+
+    /**
+     * Equal(=). As 昼 (NOON). And OnlyOnceRegistered. <br>
+     * 昼
+     */
+    public void setNoonnightCode_Equal_昼() {
+        setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.昼);
     }
 
     protected void doSetNoonnightCode_Equal(String noonnightCode) {
@@ -640,11 +666,37 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCode The value of noonnightCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setNoonnightCode_NotEqual(String noonnightCode) {
+    protected void setNoonnightCode_NotEqual(String noonnightCode) {
         doSetNoonnightCode_NotEqual(fRES(noonnightCode));
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As Noonnight. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * 昼夜
+     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
+     */
+    public void setNoonnightCode_NotEqual_AsNoonnight(CDef.Noonnight cdef) {
+        doSetNoonnightCode_NotEqual(cdef != null ? cdef.code() : null);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 夜 (NIGHT). And OnlyOnceRegistered. <br>
+     * 夜
+     */
+    public void setNoonnightCode_NotEqual_夜() {
+        setNoonnightCode_NotEqual_AsNoonnight(CDef.Noonnight.夜);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 昼 (NOON). And OnlyOnceRegistered. <br>
+     * 昼
+     */
+    public void setNoonnightCode_NotEqual_昼() {
+        setNoonnightCode_NotEqual_AsNoonnight(CDef.Noonnight.昼);
     }
 
     protected void doSetNoonnightCode_NotEqual(String noonnightCode) {
@@ -652,48 +704,22 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
     }
 
     /**
-     * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
-     * @param noonnightCode The value of noonnightCode as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setNoonnightCode_GreaterThan(String noonnightCode) {
-        regNoonnightCode(CK_GT, fRES(noonnightCode));
-    }
-
-    /**
-     * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
-     * @param noonnightCode The value of noonnightCode as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setNoonnightCode_LessThan(String noonnightCode) {
-        regNoonnightCode(CK_LT, fRES(noonnightCode));
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
-     * @param noonnightCode The value of noonnightCode as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setNoonnightCode_GreaterEqual(String noonnightCode) {
-        regNoonnightCode(CK_GE, fRES(noonnightCode));
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
-     * @param noonnightCode The value of noonnightCode as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setNoonnightCode_LessEqual(String noonnightCode) {
-        regNoonnightCode(CK_LE, fRES(noonnightCode));
-    }
-
-    /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCodeList The collection of noonnightCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setNoonnightCode_InScope(Collection<String> noonnightCodeList) {
+    protected void setNoonnightCode_InScope(Collection<String> noonnightCodeList) {
         doSetNoonnightCode_InScope(noonnightCodeList);
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Noonnight. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * 昼夜
+     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setNoonnightCode_InScope_AsNoonnight(Collection<CDef.Noonnight> cdefList) {
+        doSetNoonnightCode_InScope(cTStrL(cdefList));
     }
 
     protected void doSetNoonnightCode_InScope(Collection<String> noonnightCodeList) {
@@ -702,59 +728,25 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCodeList The collection of noonnightCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setNoonnightCode_NotInScope(Collection<String> noonnightCodeList) {
+    protected void setNoonnightCode_NotInScope(Collection<String> noonnightCodeList) {
         doSetNoonnightCode_NotInScope(noonnightCodeList);
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. As Noonnight. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * 昼夜
+     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setNoonnightCode_NotInScope_AsNoonnight(Collection<CDef.Noonnight> cdefList) {
+        doSetNoonnightCode_NotInScope(cTStrL(cdefList));
     }
 
     protected void doSetNoonnightCode_NotInScope(Collection<String> noonnightCodeList) {
         regINS(CK_NINS, cTL(noonnightCodeList), xgetCValueNoonnightCode(), "NOONNIGHT_CODE");
-    }
-
-    /**
-     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight} <br>
-     * <pre>e.g. setNoonnightCode_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
-     * @param noonnightCode The value of noonnightCode as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param opLambda The callback for option of like-search. (NotNull)
-     */
-    public void setNoonnightCode_LikeSearch(String noonnightCode, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setNoonnightCode_LikeSearch(noonnightCode, xcLSOP(opLambda));
-    }
-
-    /**
-     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight} <br>
-     * <pre>e.g. setNoonnightCode_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
-     * @param noonnightCode The value of noonnightCode as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param likeSearchOption The option of like-search. (NotNull)
-     */
-    protected void setNoonnightCode_LikeSearch(String noonnightCode, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_LS, fRES(noonnightCode), xgetCValueNoonnightCode(), "NOONNIGHT_CODE", likeSearchOption);
-    }
-
-    /**
-     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
-     * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
-     * @param noonnightCode The value of noonnightCode as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param opLambda The callback for option of like-search. (NotNull)
-     */
-    public void setNoonnightCode_NotLikeSearch(String noonnightCode, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setNoonnightCode_NotLikeSearch(noonnightCode, xcLSOP(opLambda));
-    }
-
-    /**
-     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
-     * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
-     * @param noonnightCode The value of noonnightCode as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param likeSearchOption The option of not-like-search. (NotNull)
-     */
-    protected void setNoonnightCode_NotLikeSearch(String noonnightCode, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_NLS, fRES(noonnightCode), xgetCValueNoonnightCode(), "NOONNIGHT_CODE", likeSearchOption);
     }
 
     protected void regNoonnightCode(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueNoonnightCode(), "NOONNIGHT_CODE"); }

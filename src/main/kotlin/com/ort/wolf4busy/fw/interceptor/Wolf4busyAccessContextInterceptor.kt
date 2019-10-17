@@ -3,6 +3,7 @@ package com.ort.wolf4busy.fw.interceptor
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.Wolf4busyUserInfoUtil
 import org.dbflute.hook.AccessContext
+import org.springframework.lang.Nullable
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -31,5 +32,10 @@ class Wolf4busyAccessContextInterceptor : HandlerInterceptorAdapter() {
 
         // Handlerメソッドを呼び出す場合はtrueを返却する
         return true
+    }
+
+    @Throws(Exception::class)
+    override fun afterCompletion(request: HttpServletRequest, response: HttpServletResponse, handler: Any, @Nullable ex: java.lang.Exception?) {
+        AccessContext.clearAccessContextOnThread()
     }
 }

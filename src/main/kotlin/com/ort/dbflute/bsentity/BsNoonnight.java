@@ -7,6 +7,7 @@ import org.dbflute.dbmeta.DBMeta;
 import org.dbflute.dbmeta.AbstractEntity;
 import org.dbflute.dbmeta.accessory.DomainEntity;
 import com.ort.dbflute.allcommon.DBMetaInstanceHandler;
+import com.ort.dbflute.allcommon.CDef;
 import com.ort.dbflute.exentity.*;
 
 /**
@@ -63,7 +64,7 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20)} */
+    /** NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight} */
     protected String _noonnightCode;
 
     /** NOONNIGHT_NAME: {NotNull, VARCHAR(20)} */
@@ -92,6 +93,74 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
     public boolean hasPrimaryKeyValue() {
         if (_noonnightCode == null) { return false; }
         return true;
+    }
+
+    // ===================================================================================
+    //                                                             Classification Property
+    //                                                             =======================
+    /**
+     * Get the value of noonnightCode as the classification of Noonnight. <br>
+     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight} <br>
+     * 昼夜
+     * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
+     * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
+     */
+    public CDef.Noonnight getNoonnightCodeAsNoonnight() {
+        return CDef.Noonnight.codeOf(getNoonnightCode());
+    }
+
+    /**
+     * Set the value of noonnightCode as the classification of Noonnight. <br>
+     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight} <br>
+     * 昼夜
+     * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
+     */
+    public void setNoonnightCodeAsNoonnight(CDef.Noonnight cdef) {
+        setNoonnightCode(cdef != null ? cdef.code() : null);
+    }
+
+    // ===================================================================================
+    //                                                              Classification Setting
+    //                                                              ======================
+    /**
+     * Set the value of noonnightCode as 夜 (NIGHT). <br>
+     * 夜
+     */
+    public void setNoonnightCode_夜() {
+        setNoonnightCodeAsNoonnight(CDef.Noonnight.夜);
+    }
+
+    /**
+     * Set the value of noonnightCode as 昼 (NOON). <br>
+     * 昼
+     */
+    public void setNoonnightCode_昼() {
+        setNoonnightCodeAsNoonnight(CDef.Noonnight.昼);
+    }
+
+    // ===================================================================================
+    //                                                        Classification Determination
+    //                                                        ============================
+    /**
+     * Is the value of noonnightCode 夜? <br>
+     * 夜
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isNoonnightCode夜() {
+        CDef.Noonnight cdef = getNoonnightCodeAsNoonnight();
+        return cdef != null ? cdef.equals(CDef.Noonnight.夜) : false;
+    }
+
+    /**
+     * Is the value of noonnightCode 昼? <br>
+     * 昼
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isNoonnightCode昼() {
+        CDef.Noonnight cdef = getNoonnightCodeAsNoonnight();
+        return cdef != null ? cdef.equals(CDef.Noonnight.昼) : false;
     }
 
     // ===================================================================================
@@ -187,7 +256,7 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20)} <br>
+     * [get] NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight} <br>
      * 昼夜コード
      * @return The value of the column 'NOONNIGHT_CODE'. (basically NotNull if selected: for the constraint)
      */
@@ -197,11 +266,12 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
     }
 
     /**
-     * [set] NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20)} <br>
+     * [set] NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight} <br>
      * 昼夜コード
      * @param noonnightCode The value of the column 'NOONNIGHT_CODE'. (basically NotNull if update: for the constraint)
      */
-    public void setNoonnightCode(String noonnightCode) {
+    protected void setNoonnightCode(String noonnightCode) {
+        checkClassificationCode("NOONNIGHT_CODE", CDef.DefMeta.Noonnight, noonnightCode);
         registerModifiedProperty("noonnightCode");
         _noonnightCode = noonnightCode;
     }
@@ -244,5 +314,13 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
     public void setDispOrder(Integer dispOrder) {
         registerModifiedProperty("dispOrder");
         _dispOrder = dispOrder;
+    }
+
+    /**
+     * For framework so basically DON'T use this method.
+     * @param noonnightCode The value of the column 'NOONNIGHT_CODE'. (basically NotNull if update: for the constraint)
+     */
+    public void mynativeMappingNoonnightCode(String noonnightCode) {
+        setNoonnightCode(noonnightCode);
     }
 }

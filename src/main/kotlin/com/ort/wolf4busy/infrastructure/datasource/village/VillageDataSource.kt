@@ -2,32 +2,29 @@ package com.ort.wolf4busy.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.VillageBhv
+import com.ort.dbflute.exbhv.VillageDayBhv
+import com.ort.dbflute.exbhv.VillagePlayerBhv
+import com.ort.dbflute.exbhv.VillageSettingBhv
 import com.ort.dbflute.exentity.Village
+import com.ort.dbflute.exentity.VillageDay
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.dbflute.exentity.VillageSetting
-import com.ort.wolf4busy.domain.model.dead.Dead
-import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.Villages
-import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
-import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
-import com.ort.wolf4busy.domain.model.village.participant.VillageVisitor
-import com.ort.wolf4busy.domain.model.village.participant.VillageVisitors
-import com.ort.wolf4busy.domain.model.village.setting.*
-import org.dbflute.cbean.result.ListResultBean
+import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
+import com.ort.wolf4busy.infrastructure.datasource.village.converter.VillageDataConverter
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Repository
 class VillageDataSource(
-        val villageBhv: VillageBhv
+    val villageBhv: VillageBhv,
+    val villageSettingBhv: VillageSettingBhv,
+    val villageDayBhv: VillageDayBhv,
+    val villagePlayerBhv: VillagePlayerBhv
 ) {
 
-    companion object {
-        private const val FLG_TRUE = "1"
-        private val DATETIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
-    }
-
+    /**
+     * 村一覧取得
+     */
     fun selectVillages(): Villages {
         val villageList = villageBhv.selectList {
             it.specify().derivedVillagePlayer().count({ vpCB ->
@@ -45,9 +42,13 @@ class VillageDataSource(
         villageBhv.load(villageList) { loader ->
             loader.loadVillageSetting { }
         }
-        return convertVillageListToVillages(villageList)
+        return VillageDataConverter.convertVillageListToVillages(villageList)
     }
 
+    /**
+     * 村情報取得
+     * @param villageId villageId
+     */
     fun selectVillage(villageId: Int): com.ort.wolf4busy.domain.model.village.Village {
         val village = villageBhv.selectEntityWithDeletedCheck {
             it.query().setVillageId_Equal(villageId)
@@ -59,122 +60,150 @@ class VillageDataSource(
             loader.loadVillageSetting { }
         }
 
-        return convertVillageToVillage(village)
+        return VillageDataConverter.convertVillageToVillage(village)
+    }
+
+    /**
+     * 村登録
+     */
+    fun insertVillage(v: com.ort.wolf4busy.domain.model.village.Village): Int {
+        val village = Village()
+        village.villageDisplayName = v.name
+        village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(v.status.code)
+        village.createPlayerName = v.creatorPlayerName
+        villageBhv.insert(village)
+        return village.villageId
+    }
+
+
+    /**
+     * 村設定登録
+     * @param villageId villageId
+     * @param settings model settings
+     * @param password password
+     */
+    fun insertVillageSettings(villageId: Int, settings: VillageSettings, password: String?) {
+        insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
+        insertVillageSetting(villageId, CDef.VillageSettingItem.開始予定日時, settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, settings.time.dayChangeIntervalSeconds.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.ダミーキャラid, settings.charachip.dummyCharaId.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.キャラクターグループid, settings.charachip.charachipId.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.構成, settings.organizations.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, password ?: "")
+    }
+
+    /**
+     * 村日付取得
+     * @param villageId villageId
+     * @param day 何日目か
+     * @param noonnightCode 昼夜
+     */
+    fun selectVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay {
+        val villageDay: VillageDay = villageDayBhv.selectEntityWithDeletedCheck {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setDay_Equal(day)
+            it.query().setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.codeOf(noonnightCode))
+        }
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
+    }
+
+    /**
+     * 村日付登録
+     * @param villageId villageId
+     * @param day 村日付
+     * @return 村日付id
+     */
+    fun insertVillageDay(villageId: Int, day: com.ort.wolf4busy.domain.model.village.VillageDay): Int {
+        val villageDay = VillageDay()
+        villageDay.villageId = villageId
+        villageDay.day = day.day
+        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
+        villageDay.daychangeDatetime = day.startDatetime
+        villageDay.isUpdating = true
+        villageDayBhv.insert(villageDay)
+        return villageDay.villageDayId
+    }
+
+    /**
+     * 村日付を更新完了にする
+     * @param villageDayId 村日付ID
+     */
+    fun updateVillageDayUpdateComplete(villageDayId: Int) {
+        val villageDay = VillageDay()
+        villageDay.villageDayId = villageDayId
+        villageDay.isUpdating = false
+        villageDayBhv.update(villageDay)
+    }
+
+    /**
+     * 村参加者人数取得
+     * @param villageId villageId
+     * @param isSpectate 見学か
+     * @return 参加人数
+     */
+    fun selectVillagePlayerCount(villageId: Int, isSpectate: Boolean): Int {
+        return villagePlayerBhv.selectCount {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setIsGone_Equal(false)
+            it.query().setIsSpectator_Equal(isSpectate)
+        }
+    }
+
+    /**
+     * 村参加者登録
+     * @param villageId villageId
+     * @param playerId playerId
+     * @param charaId charaId
+     * @param firstRequestSkill 役職第1希望
+     * @param secondRequestSkill 役職第2希望
+     * @param message 入村時発言
+     * @param isSpectate 見学か
+     */
+    fun insertVillagePlayer(
+        villageId: Int,
+        playerId: Int,
+        charaId: Int,
+        firstRequestSkill: CDef.Skill,
+        secondRequestSkill: CDef.Skill,
+        message: String,
+        isSpectate: Boolean
+    ): Int {
+        val vp = VillagePlayer()
+        vp.villageId = villageId
+        vp.playerId = playerId
+        vp.charaId = charaId
+        vp.isDead = false
+        vp.isSpectator = isSpectate
+        vp.isGone = false
+        vp.requestSkillCodeAsSkill = firstRequestSkill
+        vp.secondRequestSkillCodeAsSkill = secondRequestSkill
+        villagePlayerBhv.insert(vp)
+        return vp.villagePlayerId
     }
 
     // ===================================================================================
-    //                                                                             Convert
-    //                                                                           =========
-    private fun convertVillageListToVillages(villageList: ListResultBean<Village>): Villages {
-        return Villages(
-                villageList = villageList.map { convertVillageToSimpleVillage(it) }
-        )
+    //                                                                              Update
+    //                                                                              ======
+    private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
+        val setting = VillageSetting()
+        setting.villageId = villageId
+        setting.villageSettingItemCodeAsVillageSettingItem = item
+        setting.villageSettingText = value
+        villageSettingBhv.insert(setting)
     }
 
-    private fun convertVillageToSimpleVillage(village: Village): com.ort.wolf4busy.domain.model.village.Village {
-        return com.ort.wolf4busy.domain.model.village.Village(
-                id = village.villageId,
-                name = village.villageDisplayName,
-                creatorPlayerName = village.createPlayerName,
-                status = VillageStatus(
-                        code = village.villageStatusCodeAsVillageStatus.code(),
-                        name = village.villageStatusCodeAsVillageStatus.alias()
-                ),
-                setting = village.villageSettingList.convertVillageSettingListToVillageSetting(),
-                participant = VillageParticipants(
-                        count = village.participantCount
-                ),
-                visitor = VillageVisitors(
-                        count = village.visitorCount
-                )
-        )
-    }
-
-    private fun convertVillageToVillage(village: Village): com.ort.wolf4busy.domain.model.village.Village {
-        val participantList = village.villagePlayerList.filter { vp -> vp.isParticipant }
-        val visitorList = village.villagePlayerList.filter { vp -> vp.isVisitor }
-        return com.ort.wolf4busy.domain.model.village.Village(
-                id = village.villageId,
-                name = village.villageDisplayName,
-                creatorPlayerName = village.createPlayerName,
-                status = VillageStatus(
-                        code = village.villageStatusCodeAsVillageStatus.code(),
-                        name = village.villageStatusCodeAsVillageStatus.alias()
-                ),
-                setting = village.villageSettingList.convertVillageSettingListToVillageSetting(),
-                participant = VillageParticipants(
-                        count = participantList.size,
-                        memberList = participantList.map { convertVillagePlayerToParticipant(it) }
-                ),
-                visitor = VillageVisitors(
-                        count = visitorList.size,
-                        memberList = visitorList.map { convertVillagePlayerToVisitor(it) }
-                )
-        )
-    }
-
-    private fun List<VillageSetting>.convertVillageSettingListToVillageSetting(): VillageSettings {
-        return VillageSettings(
-                capacity = PersonCapacity.invoke(
-                        min = detectItemText(this, CDef.VillageSettingItem.最低人数)?.toInt(),
-                        max = detectItemText(this, CDef.VillageSettingItem.最大人数)?.toInt()
-                ),
-                time = VillageTime.invoke(
-                        termType = detectItemText(this, CDef.VillageSettingItem.期間形式),
-                        startDatetime = detectItemText(this, CDef.VillageSettingItem.開始予定日時)?.let { LocalDateTime.parse(it, DATETIME_FORMATTER) },
-                        dayChangeIntervalSeconds = detectItemText(this, CDef.VillageSettingItem.更新間隔秒)?.toInt()
-                ),
-                charachip = VillageCharachip.invoke(
-                        dummyCharaId = detectItemText(this, CDef.VillageSettingItem.ダミーキャラid)?.toInt(),
-                        charachipId = detectItemText(this, CDef.VillageSettingItem.キャラクターグループid)?.toInt()
-                ),
-                organizations = VillageOrganizations(
-                        organization = detectItemText(this, CDef.VillageSettingItem.構成)?.let { convertOrganizeToOrganizationMap(it) }
-                ),
-                rules = VillageRules.invoke(
-                    openVote = detectItemText(this, CDef.VillageSettingItem.記名投票か)?.let { it == FLG_TRUE },
-                    availableSkillRequest = detectItemText(this, CDef.VillageSettingItem.役職希望可能か)?.let { it == FLG_TRUE },
-                    availableSpectate = detectItemText(this, CDef.VillageSettingItem.見学可能か)?.let { it == FLG_TRUE },
-                    openSkillInGrave = detectItemText(this, CDef.VillageSettingItem.墓下役職公開ありか)?.let { it == FLG_TRUE },
-                    visibleGraveMessage = detectItemText(this, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか)?.let { it == FLG_TRUE },
-                    availableSuddenlyDeath = detectItemText(this, CDef.VillageSettingItem.突然死ありか)?.let { it == FLG_TRUE },
-                    availableCommit = detectItemText(this, CDef.VillageSettingItem.コミット可能か)?.let { it == FLG_TRUE }
-                ),
-                password = VillagePassword(
-                    joinPassword = detectItemText(this, CDef.VillageSettingItem.入村パスワード)
-                )
-        )
-    }
-
-    private fun convertVillagePlayerToParticipant(vp: VillagePlayer): VillageParticipant {
-        return VillageParticipant(
-                id = vp.villagePlayerId,
-                charaId = vp.charaId,
-                dead = if (vp.isDead) convertToDeadReasonToDead(vp) else null
-        )
-    }
-
-    private fun convertVillagePlayerToVisitor(vp: VillagePlayer): VillageVisitor {
-        return VillageVisitor(
-                id = vp.villagePlayerId,
-                charaId = vp.charaId
-        )
-    }
-
-    private fun convertToDeadReasonToDead(vp: VillagePlayer): Dead {
-        val deadReason = vp.deadReasonCodeAsDeadReason
-        return Dead(
-                code = deadReason.code(),
-                reason = deadReason.alias(),
-                day = vp.deadDay
-        )
-    }
-
-    private fun detectItemText(settingList: List<VillageSetting>, item: CDef.VillageSettingItem): String? {
-        return settingList.find { setting -> setting.villageSettingItemCodeAsVillageSettingItem == item }?.villageSettingText
-    }
-
-    private fun convertOrganizeToOrganizationMap(organize: String): Map<Int, String> {
-        return organize.replace("\r\n", "\n").split("\n").map { it.length to it }.toMap()
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun toFlg(bool: Boolean): String {
+        return if (bool) VillageDataConverter.FLG_TRUE else VillageDataConverter.FLG_FALSE
     }
 }

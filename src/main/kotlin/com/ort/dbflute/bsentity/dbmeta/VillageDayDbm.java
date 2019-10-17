@@ -46,7 +46,14 @@ public class VillageDayDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((VillageDay)et).getVillageDayId(), (et, vl) -> ((VillageDay)et).setVillageDayId(cti(vl)), "villageDayId");
         setupEpg(_epgMap, et -> ((VillageDay)et).getVillageId(), (et, vl) -> ((VillageDay)et).setVillageId(cti(vl)), "villageId");
         setupEpg(_epgMap, et -> ((VillageDay)et).getDay(), (et, vl) -> ((VillageDay)et).setDay(cti(vl)), "day");
-        setupEpg(_epgMap, et -> ((VillageDay)et).getNoonnightCode(), (et, vl) -> ((VillageDay)et).setNoonnightCode((String)vl), "noonnightCode");
+        setupEpg(_epgMap, et -> ((VillageDay)et).getNoonnightCode(), (et, vl) -> {
+            CDef.Noonnight cls = (CDef.Noonnight)gcls(et, columnNoonnightCode(), vl);
+            if (cls != null) {
+                ((VillageDay)et).setNoonnightCodeAsNoonnight(cls);
+            } else {
+                ((VillageDay)et).mynativeMappingNoonnightCode((String)vl);
+            }
+        }, "noonnightCode");
         setupEpg(_epgMap, et -> ((VillageDay)et).getDaychangeDatetime(), (et, vl) -> ((VillageDay)et).setDaychangeDatetime(ctldt(vl)), "daychangeDatetime");
         setupEpg(_epgMap, et -> ((VillageDay)et).getIsUpdating(), (et, vl) -> ((VillageDay)et).setIsUpdating((Boolean)vl), "isUpdating");
         setupEpg(_epgMap, et -> ((VillageDay)et).getRegisterDatetime(), (et, vl) -> ((VillageDay)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
@@ -89,7 +96,7 @@ public class VillageDayDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList,voteList", null, false);
     protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", null, null, false);
     protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "noonnight", null, null, false);
+    protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "noonnight", null, CDef.DefMeta.Noonnight, false);
     protected final ColumnInfo _columnDaychangeDatetime = cci("DAYCHANGE_DATETIME", "DAYCHANGE_DATETIME", null, null, java.time.LocalDateTime.class, "daychangeDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnIsUpdating = cci("IS_UPDATING", "IS_UPDATING", null, null, Boolean.class, "isUpdating", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -113,7 +120,7 @@ public class VillageDayDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnDay() { return _columnDay; }
     /**
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnNoonnightCode() { return _columnNoonnightCode; }

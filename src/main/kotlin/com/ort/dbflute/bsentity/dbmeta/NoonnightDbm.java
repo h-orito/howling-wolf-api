@@ -42,7 +42,14 @@ public class NoonnightDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
-        setupEpg(_epgMap, et -> ((Noonnight)et).getNoonnightCode(), (et, vl) -> ((Noonnight)et).setNoonnightCode((String)vl), "noonnightCode");
+        setupEpg(_epgMap, et -> ((Noonnight)et).getNoonnightCode(), (et, vl) -> {
+            CDef.Noonnight cls = (CDef.Noonnight)gcls(et, columnNoonnightCode(), vl);
+            if (cls != null) {
+                ((Noonnight)et).setNoonnightCodeAsNoonnight(cls);
+            } else {
+                ((Noonnight)et).mynativeMappingNoonnightCode((String)vl);
+            }
+        }, "noonnightCode");
         setupEpg(_epgMap, et -> ((Noonnight)et).getNoonnightName(), (et, vl) -> ((Noonnight)et).setNoonnightName((String)vl), "noonnightName");
         setupEpg(_epgMap, et -> ((Noonnight)et).getDispOrder(), (et, vl) -> ((Noonnight)et).setDispOrder(cti(vl)), "dispOrder");
     }
@@ -65,12 +72,12 @@ public class NoonnightDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "villageDayList", null, false);
+    protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "villageDayList", CDef.DefMeta.Noonnight, false);
     protected final ColumnInfo _columnNoonnightName = cci("NOONNIGHT_NAME", "NOONNIGHT_NAME", null, null, String.class, "noonnightName", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDispOrder = cci("DISP_ORDER", "DISP_ORDER", null, null, Integer.class, "dispOrder", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
 
     /**
-     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20)}
+     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnNoonnightCode() { return _columnNoonnightCode; }

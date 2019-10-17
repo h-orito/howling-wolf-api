@@ -95,14 +95,14 @@ public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
 
     /** 
      * Add order-by as ascend. <br>
-     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20)}
+     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight}
      * @return this. (NotNull)
      */
     public BsNoonnightCQ addOrderBy_NoonnightCode_Asc() { regOBA("NOONNIGHT_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20)}
+     * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight}
      * @return this. (NotNull)
      */
     public BsNoonnightCQ addOrderBy_NoonnightCode_Desc() { regOBD("NOONNIGHT_CODE"); return this; }
