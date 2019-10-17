@@ -1289,6 +1289,128 @@ public interface CDef extends Classification {
     }
 
     /**
+     * 昼夜
+     */
+    public enum Noonnight implements CDef {
+        /** 夜 */
+        夜("NIGHT", "夜", emptyStrings())
+        ,
+        /** 昼 */
+        昼("NOON", "昼", emptyStrings())
+        ;
+        private static final Map<String, Noonnight> _codeClsMap = new HashMap<String, Noonnight>();
+        private static final Map<String, Noonnight> _nameClsMap = new HashMap<String, Noonnight>();
+        static {
+            for (Noonnight value : values()) {
+                _codeClsMap.put(value.code().toLowerCase(), value);
+                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
+                _nameClsMap.put(value.name().toLowerCase(), value);
+            }
+        }
+        private String _code; private String _alias; private Set<String> _sisterSet;
+        private Noonnight(String code, String alias, String[] sisters)
+        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        public String code() { return _code; } public String alias() { return _alias; }
+        public Set<String> sisterSet() { return _sisterSet; }
+        public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
+        public ClassificationMeta meta() { return CDef.DefMeta.Noonnight; }
+
+        public boolean inGroup(String groupName) {
+            return false;
+        }
+
+        /**
+         * Get the classification of the code. (CaseInsensitive)
+         * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
+         * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
+         */
+        public static OptionalThing<Noonnight> of(Object code) {
+            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
+            if (code instanceof Noonnight) { return OptionalThing.of((Noonnight)code); }
+            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
+            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
+                throw new ClassificationNotFoundException("Unknown classification code: " + code);
+            });
+        }
+
+        /**
+         * Find the classification by the name. (CaseInsensitive)
+         * @param name The string of name, which is case-insensitive. (NotNull)
+         * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
+         */
+        public static OptionalThing<Noonnight> byName(String name) {
+            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
+            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
+                throw new ClassificationNotFoundException("Unknown classification name: " + name);
+            });
+        }
+
+        /**
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
+         * Get the classification by the code. (CaseInsensitive)
+         * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
+         * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
+         */
+        public static Noonnight codeOf(Object code) {
+            if (code == null) { return null; }
+            if (code instanceof Noonnight) { return (Noonnight)code; }
+            return _codeClsMap.get(code.toString().toLowerCase());
+        }
+
+        /**
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
+         * Get the classification by the name (also called 'value' in ENUM world).
+         * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
+         * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         */
+        public static Noonnight nameOf(String name) {
+            if (name == null) { return null; }
+            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
+        }
+
+        /**
+         * Get the list of all classification elements. (returns new copied list)
+         * @return The snapshot list of all classification elements. (NotNull)
+         */
+        public static List<Noonnight> listAll() {
+            return new ArrayList<Noonnight>(Arrays.asList(values()));
+        }
+
+        /**
+         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * @param groupName The string of group name, which is case-insensitive. (NotNull)
+         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         */
+        public static List<Noonnight> listByGroup(String groupName) {
+            if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
+            throw new ClassificationNotFoundException("Unknown classification group: Noonnight." + groupName);
+        }
+
+        /**
+         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * @param codeList The list of plain code, which is case-insensitive. (NotNull)
+         * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         */
+        public static List<Noonnight> listOf(Collection<String> codeList) {
+            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
+            List<Noonnight> clsList = new ArrayList<Noonnight>(codeList.size());
+            for (String code : codeList) { clsList.add(of(code).get()); }
+            return clsList;
+        }
+
+        /**
+         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
+         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         */
+        public static List<Noonnight> groupOf(String groupName) {
+            return new ArrayList<Noonnight>(4);
+        }
+
+        @Override public String toString() { return code(); }
+    }
+
+    /**
      * 期間
      */
     public enum Term implements CDef {
@@ -1438,6 +1560,9 @@ public interface CDef extends Classification {
         /** 村設定項目 */
         VillageSettingItem
         ,
+        /** 昼夜 */
+        Noonnight
+        ,
         /** 期間 */
         Term
         ;
@@ -1455,6 +1580,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return CDef.AbilityType.of(code); }
             if (FaceType.name().equals(name())) { return CDef.FaceType.of(code); }
             if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.of(code); }
+            if (Noonnight.name().equals(name())) { return CDef.Noonnight.of(code); }
             if (Term.name().equals(name())) { return CDef.Term.of(code); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1469,6 +1595,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return CDef.AbilityType.byName(name); }
             if (FaceType.name().equals(name())) { return CDef.FaceType.byName(name); }
             if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.byName(name); }
+            if (Noonnight.name().equals(name())) { return CDef.Noonnight.byName(name); }
             if (Term.name().equals(name())) { return CDef.Term.byName(name); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1483,6 +1610,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return CDef.AbilityType.codeOf(code); }
             if (FaceType.name().equals(name())) { return CDef.FaceType.codeOf(code); }
             if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.codeOf(code); }
+            if (Noonnight.name().equals(name())) { return CDef.Noonnight.codeOf(code); }
             if (Term.name().equals(name())) { return CDef.Term.codeOf(code); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1497,6 +1625,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return CDef.AbilityType.valueOf(name); }
             if (FaceType.name().equals(name())) { return CDef.FaceType.valueOf(name); }
             if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.valueOf(name); }
+            if (Noonnight.name().equals(name())) { return CDef.Noonnight.valueOf(name); }
             if (Term.name().equals(name())) { return CDef.Term.valueOf(name); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1511,6 +1640,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.listAll()); }
             if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.listAll()); }
             if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.listAll()); }
+            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.listAll()); }
             if (Term.name().equals(name())) { return toClsList(CDef.Term.listAll()); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1525,6 +1655,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.listByGroup(groupName)); }
             if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.listByGroup(groupName)); }
             if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.listByGroup(groupName)); }
+            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.listByGroup(groupName)); }
             if (Term.name().equals(name())) { return toClsList(CDef.Term.listByGroup(groupName)); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1539,6 +1670,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.listOf(codeList)); }
             if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.listOf(codeList)); }
             if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.listOf(codeList)); }
+            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.listOf(codeList)); }
             if (Term.name().equals(name())) { return toClsList(CDef.Term.listOf(codeList)); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1553,6 +1685,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.groupOf(groupName)); }
             if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.groupOf(groupName)); }
             if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.groupOf(groupName)); }
+            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.groupOf(groupName)); }
             if (Term.name().equals(name())) { return toClsList(CDef.Term.groupOf(groupName)); }
             throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
         }
@@ -1572,6 +1705,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return ClassificationCodeType.String; }
             if (FaceType.name().equals(name())) { return ClassificationCodeType.String; }
             if (VillageSettingItem.name().equals(name())) { return ClassificationCodeType.String; }
+            if (Noonnight.name().equals(name())) { return ClassificationCodeType.String; }
             if (Term.name().equals(name())) { return ClassificationCodeType.String; }
             return ClassificationCodeType.String; // as default
         }
@@ -1586,6 +1720,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
             if (FaceType.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
             if (VillageSettingItem.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
+            if (Noonnight.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
             if (Term.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
             return ClassificationUndefinedHandlingType.LOGGING; // as default
         }
@@ -1601,6 +1736,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.AbilityType); }
             if (FaceType.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.FaceType); }
             if (VillageSettingItem.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.VillageSettingItem); }
+            if (Noonnight.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Noonnight); }
             if (Term.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Term); }
             return OptionalThing.ofNullable(null, () -> {
                 throw new ClassificationNotFoundException("Unknown classification: " + classificationName);
@@ -1618,6 +1754,7 @@ public interface CDef extends Classification {
             if (AbilityType.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.AbilityType; }
             if (FaceType.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.FaceType; }
             if (VillageSettingItem.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.VillageSettingItem; }
+            if (Noonnight.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Noonnight; }
             if (Term.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Term; }
             throw new IllegalStateException("Unknown classification: " + classificationName);
         }

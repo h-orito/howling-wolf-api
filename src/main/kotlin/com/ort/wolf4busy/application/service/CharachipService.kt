@@ -19,8 +19,8 @@ class CharachipService(
         return charachipDataSource.selectCharachip(charaChipId)
     }
 
-    fun findChara(charaChipId: Int, charaId: Int): Chara {
-        return charachipDataSource.selectChara(charaChipId, charaId)
+    fun findChara(charaId: Int): Chara {
+        return charachipDataSource.selectChara(charaId)
     }
 
     fun findDummyChara(charaChipId: Int): Chara {

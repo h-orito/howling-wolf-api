@@ -1,32 +1,33 @@
 package com.ort.wolf4busy.domain.model.village.setting
 
 data class VillageRules(
-    val openVote: Boolean,
-    val availableSkillRequest: Boolean,
-    val availableSpectate: Boolean,
-    val openSkillInGrave: Boolean,
-    val visibleGraveMessage: Boolean,
-    val availableSuddenlyDeath: Boolean,
-    val availableCommit: Boolean
+        val openVote: Boolean = false,
+        val availableSkillRequest: Boolean = true,
+        val availableSpectate: Boolean = false,
+        val openSkillInGrave: Boolean = false,
+        val visibleGraveMessage: Boolean = false,
+        val availableSuddenlyDeath: Boolean = true,
+        val availableCommit: Boolean = false
 ) {
     companion object {
         operator fun invoke(
-            openVote: Boolean?,
-            availableSkillRequest: Boolean?,
-            availableSpectate: Boolean?,
-            openSkillInGrave: Boolean?,
-            visibleGraveMessage: Boolean?,
-            availableSuddenlyDeath: Boolean?,
-            availableCommit: Boolean?
+                openVote: Boolean?,
+                availableSkillRequest: Boolean?,
+                availableSpectate: Boolean?,
+                openSkillInGrave: Boolean?,
+                visibleGraveMessage: Boolean?,
+                availableSuddenlyDeath: Boolean?,
+                availableCommit: Boolean?
         ): VillageRules {
+            val defaultRules: VillageRules = VillageRules()
             return VillageRules(
-                openVote = openVote ?: false,
-                availableSkillRequest = availableSkillRequest ?: true,
-                availableSpectate = availableSpectate ?: false,
-                openSkillInGrave = openSkillInGrave ?: false,
-                visibleGraveMessage = visibleGraveMessage ?: false,
-                availableSuddenlyDeath = availableSuddenlyDeath ?: true,
-                availableCommit = availableCommit ?: false
+                    openVote = openVote ?: defaultRules.openVote,
+                    availableSkillRequest = availableSkillRequest ?: defaultRules.availableSkillRequest,
+                    availableSpectate = availableSpectate ?: defaultRules.availableSpectate,
+                    openSkillInGrave = openSkillInGrave ?: defaultRules.openSkillInGrave,
+                    visibleGraveMessage = visibleGraveMessage ?: defaultRules.visibleGraveMessage,
+                    availableSuddenlyDeath = availableSuddenlyDeath ?: defaultRules.availableSuddenlyDeath,
+                    availableCommit = availableCommit ?: defaultRules.availableCommit
             )
         }
     }

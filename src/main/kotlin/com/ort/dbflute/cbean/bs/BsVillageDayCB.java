@@ -350,7 +350,7 @@ public class BsVillageDayCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnDay() { return doColumn("DAY"); }
         /**
-         * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight}
+         * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnNoonnightCode() { return doColumn("NOONNIGHT_CODE"); }

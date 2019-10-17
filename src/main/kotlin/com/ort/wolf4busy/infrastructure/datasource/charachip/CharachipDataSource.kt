@@ -6,12 +6,11 @@ import com.ort.dbflute.exentity.Chara
 import com.ort.dbflute.exentity.CharaGroup
 import com.ort.wolf4busy.domain.model.charachip.*
 import org.springframework.stereotype.Repository
-import java.util.stream.Collectors
 
 @Repository
 class CharachipDataSource(
-        val charaGroupBhv: CharaGroupBhv,
-        val charaBhv: CharaBhv
+    val charaGroupBhv: CharaGroupBhv,
+    val charaBhv: CharaBhv
 ) {
 
     fun selectCharachips(): Charachips {
@@ -47,10 +46,9 @@ class CharachipDataSource(
         return convertCharaGroupToCharaChip(charaGroup)
     }
 
-    fun selectChara(charaChipId: Int, charaId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
+    fun selectChara(charaId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
         val chara = charaBhv.selectEntityWithDeletedCheck {
             it.query().setCharaId_Equal(charaId)
-            it.query().setCharaGroupId_Equal(charaChipId)
         }
         charaBhv.loadCharaImage(chara) {
             it.query().queryFaceType().addOrderBy_DispOrder_Asc()
@@ -76,42 +74,42 @@ class CharachipDataSource(
     //                                                                           =========
     private fun convertCharaGroupListToCharaChips(charaGroupList: List<CharaGroup>): Charachips {
         return Charachips(
-                charachipList = charaGroupList.map { convertCharaGroupToCharaChip(it) }
+            charachipList = charaGroupList.map { convertCharaGroupToCharaChip(it) }
         )
     }
 
     private fun convertCharaGroupToCharaChip(charaGroup: CharaGroup): Charachip {
         return Charachip(
-                id = charaGroup.charaGroupId,
-                name = charaGroup.charaGroupName,
-                designerId = charaGroup.designerId,
-                descriptionUtl = charaGroup.descriptionUrl,
-                charaList = charaGroup.charaList.map { convertCharaToChara(it) }
+            id = charaGroup.charaGroupId,
+            name = charaGroup.charaGroupName,
+            designerId = charaGroup.designerId,
+            descriptionUtl = charaGroup.descriptionUrl,
+            charaList = charaGroup.charaList.map { convertCharaToChara(it) }
         )
     }
 
     private fun convertCharaToChara(chara: Chara): com.ort.wolf4busy.domain.model.charachip.Chara {
         return com.ort.wolf4busy.domain.model.charachip.Chara(
-                id = chara.charaId,
-                charaName = CharaName(
-                        name = chara.charaName,
-                        shortName = chara.charaShortName
-                ),
-                charachipId = chara.charaGroupId,
-                defaultMessage = CharaDefaultMessage(
-                        joinMessage = chara.defaultJoinMessage,
-                        firstDayMessage = chara.defaultFirstdayMessage
-                ),
-                display = CharaSize(
-                        width = chara.displayWidth,
-                        height = chara.displayHeight
-                ),
-                faceList = chara.charaImageList.map { image ->
-                    CharaFace(
-                            type = image.faceTypeCode,
-                            imageUrl = image.charaImgUrl
-                    )
-                }
+            id = chara.charaId,
+            charaName = CharaName(
+                name = chara.charaName,
+                shortName = chara.charaShortName
+            ),
+            charachipId = chara.charaGroupId,
+            defaultMessage = CharaDefaultMessage(
+                joinMessage = chara.defaultJoinMessage,
+                firstDayMessage = chara.defaultFirstdayMessage
+            ),
+            display = CharaSize(
+                width = chara.displayWidth,
+                height = chara.displayHeight
+            ),
+            faceList = chara.charaImageList.map { image ->
+                CharaFace(
+                    type = image.faceTypeCode,
+                    imageUrl = image.charaImgUrl
+                )
+            }
         )
     }
 }

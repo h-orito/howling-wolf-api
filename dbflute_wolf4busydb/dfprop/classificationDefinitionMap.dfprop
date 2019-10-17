@@ -100,6 +100,14 @@ map:{
             ; code=VILLAGE_SETTING_ITEM_CODE; name=VILLAGE_SETTING_ITEM_NAME
         }
     }
+    ; Noonnight = list:{
+        ; map:{topComment=昼夜; codeType=String}
+        ; map:{
+            ; table=NOONNIGHT
+            ; code=NOONNIGHT_CODE; name=NOONNIGHT_NAME
+        }
+    }
+
 
 	# アプリ定義
     ; Term = list:{

@@ -15,6 +15,7 @@ import org.dbflute.exception.*;
 import org.dbflute.hook.CommonColumnAutoSetupper;
 import org.dbflute.optional.OptionalEntity;
 import org.dbflute.outsidesql.executor.*;
+import com.ort.dbflute.allcommon.CDef;
 import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.bsbhv.loader.*;
 import com.ort.dbflute.exentity.*;
@@ -159,29 +160,29 @@ public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight,
 
     /**
      * Select the entity by the primary-key value.
-     * @param noonnightCode : PK, NotNull, VARCHAR(20). (NotNull)
+     * @param noonnightCode : PK, NotNull, VARCHAR(20), classification=Noonnight. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Noonnight> selectByPK(String noonnightCode) {
+    public OptionalEntity<Noonnight> selectByPK(CDef.Noonnight noonnightCode) {
         return facadeSelectByPK(noonnightCode);
     }
 
-    protected OptionalEntity<Noonnight> facadeSelectByPK(String noonnightCode) {
+    protected OptionalEntity<Noonnight> facadeSelectByPK(CDef.Noonnight noonnightCode) {
         return doSelectOptionalByPK(noonnightCode, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Noonnight> ENTITY doSelectByPK(String noonnightCode, Class<? extends ENTITY> tp) {
+    protected <ENTITY extends Noonnight> ENTITY doSelectByPK(CDef.Noonnight noonnightCode, Class<? extends ENTITY> tp) {
         return doSelectEntity(xprepareCBAsPK(noonnightCode), tp);
     }
 
-    protected <ENTITY extends Noonnight> OptionalEntity<ENTITY> doSelectOptionalByPK(String noonnightCode, Class<? extends ENTITY> tp) {
+    protected <ENTITY extends Noonnight> OptionalEntity<ENTITY> doSelectOptionalByPK(CDef.Noonnight noonnightCode, Class<? extends ENTITY> tp) {
         return createOptionalEntity(doSelectByPK(noonnightCode, tp), noonnightCode);
     }
 
-    protected NoonnightCB xprepareCBAsPK(String noonnightCode) {
+    protected NoonnightCB xprepareCBAsPK(CDef.Noonnight noonnightCode) {
         assertObjectNotNull("noonnightCode", noonnightCode);
         return newConditionBean().acceptPK(noonnightCode);
     }
