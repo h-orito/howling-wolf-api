@@ -10,7 +10,12 @@ import org.springframework.context.annotation.Import
 
 
 @SpringBootApplication
-@Import(DBFluteBeansJavaConfig::class, Wolf4busyAppConfig::class, Wolf4busyWebMvcConfigurer::class, FirebaseConfig::class)
+@Import(
+    DBFluteBeansJavaConfig::class,
+    Wolf4busyAppConfig::class,
+    Wolf4busyWebMvcConfigurer::class,
+    FirebaseConfig::class
+)
 class Wolf4busyApplication
 
 fun main(args: Array<String>) {

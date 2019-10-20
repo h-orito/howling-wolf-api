@@ -323,6 +323,16 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
+     * 決着がついた村 <br>
+     * The group elements:[エピローグ, 廃村, 終了]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_FinishedVillage() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isFinishedVillage();
+    }
+
+    /**
      * Is the value of winCampCode 狐陣営? <br>
      * 狐陣営
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>

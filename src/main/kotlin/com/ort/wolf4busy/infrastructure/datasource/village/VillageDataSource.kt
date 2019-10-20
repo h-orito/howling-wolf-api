@@ -10,6 +10,7 @@ import com.ort.dbflute.exentity.VillageDay
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.dbflute.exentity.VillageSetting
 import com.ort.wolf4busy.domain.model.village.Villages
+import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
 import com.ort.wolf4busy.infrastructure.datasource.village.converter.VillageDataConverter
 import org.springframework.stereotype.Repository
@@ -41,6 +42,10 @@ class VillageDataSource(
         }
         villageBhv.load(villageList) { loader ->
             loader.loadVillageSetting { }
+            loader.loadVillageDay {
+                it.query().addOrderBy_Day_Desc()
+                it.query().queryNoonnight().addOrderBy_DispOrder_Desc()
+            }
         }
         return VillageDataConverter.convertVillageListToVillages(villageList)
     }
@@ -56,8 +61,15 @@ class VillageDataSource(
         villageBhv.load(village) { loader ->
             loader.loadVillagePlayer { vpCB ->
                 vpCB.setupSelect_Player()
+                vpCB.setupSelect_Chara()
+            }.withNestedReferrer {
+                it.pulloutChara().loadCharaImage { }
             }
             loader.loadVillageSetting { }
+            loader.loadVillageDay {
+                it.query().addOrderBy_Day_Asc()
+                it.query().queryNoonnight().addOrderBy_DispOrder_Asc()
+            }
         }
 
         return VillageDataConverter.convertVillageToVillage(village)
@@ -86,7 +98,11 @@ class VillageDataSource(
         insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
         insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
         insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
-        insertVillageSetting(villageId, CDef.VillageSettingItem.開始予定日時, settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER))
+        insertVillageSetting(
+            villageId,
+            CDef.VillageSettingItem.開始予定日時,
+            settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
+        )
         insertVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, settings.time.dayChangeIntervalSeconds.toString())
         insertVillageSetting(villageId, CDef.VillageSettingItem.ダミーキャラid, settings.charachip.dummyCharaId.toString())
         insertVillageSetting(villageId, CDef.VillageSettingItem.キャラクターグループid, settings.charachip.charachipId.toString())
@@ -105,6 +121,7 @@ class VillageDataSource(
      * @param villageId villageId
      * @param day 何日目か
      * @param noonnightCode 昼夜
+     * @return 村日付
      */
     fun selectVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay {
         val villageDay: VillageDay = villageDayBhv.selectEntityWithDeletedCheck {
@@ -112,7 +129,8 @@ class VillageDataSource(
             it.query().setDay_Equal(day)
             it.query().setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.codeOf(noonnightCode))
         }
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
+        val village: Village = villageBhv.selectByPK(villageId).get()
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay, village.epilogueDay)
     }
 
     /**
@@ -141,6 +159,21 @@ class VillageDataSource(
         villageDay.villageDayId = villageDayId
         villageDay.isUpdating = false
         villageDayBhv.update(villageDay)
+    }
+
+    /**
+     * 村参加者取得
+     * @param villageId villageId
+     * @param uid uid
+     * @return 村参加者
+     */
+    fun selectVillagePlayer(villageId: Int, uid: String): VillageParticipant? {
+        return villagePlayerBhv.selectEntity {
+            it.setupSelect_Chara()
+            it.setupSelect_Player()
+            it.query().setVillageId_Equal(villageId)
+            it.query().queryPlayer().setUid_Equal(uid)
+        }.map { VillageDataConverter.convertVillagePlayerToParticipant(it, true) }.orElse(null)
     }
 
     /**

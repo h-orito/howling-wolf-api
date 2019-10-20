@@ -5,7 +5,11 @@ import com.ort.dbflute.exentity.Village
 import com.ort.dbflute.exentity.VillageDay
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.dbflute.exentity.VillageSetting
+import com.ort.wolf4busy.domain.model.charachip.*
 import com.ort.wolf4busy.domain.model.dead.Dead
+import com.ort.wolf4busy.domain.model.player.Player
+import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -30,6 +34,7 @@ object VillageDataConverter {
     fun convertVillageToVillage(village: Village): com.ort.wolf4busy.domain.model.village.Village {
         val participantList = village.villagePlayerList.filter { vp -> vp.isParticipant }
         val visitorList = village.villagePlayerList.filter { vp -> vp.isVisitor }
+        val hasEpilogue: Boolean = hasEpilogue(village.epilogueDay, village.villageDayList)
         return com.ort.wolf4busy.domain.model.village.Village(
             id = village.villageId,
             name = village.villageDisplayName,
@@ -41,22 +46,28 @@ object VillageDataConverter {
             setting = village.villageSettingList.convertVillageSettingListToVillageSetting(),
             participant = VillageParticipants(
                 count = participantList.size,
-                memberList = participantList.map { convertVillagePlayerToParticipant(it) }
+                memberList = participantList.map { convertVillagePlayerToParticipant(it, hasEpilogue) }
             ),
             spectator = VillageParticipants(
                 count = visitorList.size,
-                memberList = visitorList.map { convertVillagePlayerToParticipant(it) }
+                memberList = visitorList.map { convertVillagePlayerToParticipant(it, hasEpilogue) }
+            ),
+            day = VillageDays(
+                dayList = village.villageDayList.map { convertVillageDayToVillageDay(it, village.epilogueDay) }
             )
         )
     }
 
-    fun convertVillageDayToVillageDay(villageDay: VillageDay): com.ort.wolf4busy.domain.model.village.VillageDay {
+    fun convertVillageDayToVillageDay(villageDay: VillageDay, epilogueDay: Int?): com.ort.wolf4busy.domain.model.village.VillageDay {
+        val day: Int = villageDay.day
         return com.ort.wolf4busy.domain.model.village.VillageDay(
             id = villageDay.villageDayId,
-            day = villageDay.day,
+            day = day,
             noonnight = villageDay.noonnightCode,
             startDatetime = villageDay.daychangeDatetime,
-            isUpdating = villageDay.isUpdating
+            isUpdating = villageDay.isUpdating,
+            isPrologue = day === 0,
+            isEpilogue = epilogueDay != null && epilogueDay === day
         )
     }
 
@@ -78,6 +89,16 @@ object VillageDataConverter {
             ),
             spectator = VillageParticipants(
                 count = village.visitorCount
+            ),
+            day = VillageDays( // 最新の1日だけ
+                dayList = village.villageDayList.firstOrNull()?.let {
+                    listOf(
+                        convertVillageDayToVillageDay(
+                            it,
+                            village.epilogueDay
+                        )
+                    )
+                }.orEmpty()
             )
         )
     }
@@ -115,11 +136,43 @@ object VillageDataConverter {
         )
     }
 
-    private fun convertVillagePlayerToParticipant(vp: VillagePlayer): VillageParticipant {
+    fun convertVillagePlayerToParticipant(vp: VillagePlayer, hasEpilogue: Boolean): VillageParticipant {
+        val chara: com.ort.dbflute.exentity.Chara = vp.chara.get()
         return VillageParticipant(
             id = vp.villagePlayerId,
-            charaId = vp.charaId,
-            dead = if (vp.isDead) convertToDeadReasonToDead(vp) else null
+            chara = Chara(
+                id = chara.charaId,
+                charaName = CharaName(
+                    name = chara.charaName,
+                    shortName = chara.charaShortName
+                ),
+                charachipId = chara.charaGroupId,
+                defaultMessage = CharaDefaultMessage(
+                    joinMessage = chara.defaultJoinMessage,
+                    firstDayMessage = chara.defaultFirstdayMessage
+                ),
+                display = CharaSize(
+                    width = chara.displayWidth,
+                    height = chara.displayHeight
+                ),
+                faceList = chara.charaImageList.map {
+                    CharaFace(
+                        type = it.faceTypeCode,
+                        imageUrl = it.charaImgUrl
+                    )
+                }
+            ),
+            player = if (!hasEpilogue) null else Player(
+                id = vp.player.get().playerId,
+                nickname = vp.player.get().nickname,
+                twitterUserName = vp.player.get().twitterUserName
+            ),
+            dead = if (vp.isDead) convertToDeadReasonToDead(vp) else null,
+            isSpectator = vp.isSpectator,
+            skill = if (!hasEpilogue || vp.skillCodeAsSkill == null) null else Skill(
+                code = vp.skillCodeAsSkill.code(),
+                name = vp.skillCodeAsSkill.alias()
+            )
         )
     }
 
@@ -138,5 +191,10 @@ object VillageDataConverter {
 
     private fun convertOrganizeToOrganizationMap(organize: String): Map<Int, String> {
         return organize.replace("\r\n", "\n").split("\n").map { it.length to it }.toMap()
+    }
+
+    private fun hasEpilogue(epilogueDay: Int?, villageDayList: List<VillageDay>): Boolean {
+        epilogueDay ?: return false
+        return villageDayList.any { it.day === epilogueDay }
     }
 }

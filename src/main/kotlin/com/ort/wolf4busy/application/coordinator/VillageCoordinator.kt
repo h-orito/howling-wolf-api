@@ -10,12 +10,14 @@ import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import org.springframework.stereotype.Service
 
+
 @Service
 class VillageCoordinator(
     val villageService: VillageService,
     val messageService: MessageService,
     val charachipService: CharachipService
 ) {
+
     /**
      * 村登録
      * @param village village
@@ -87,7 +89,7 @@ class VillageCoordinator(
             firstRequestSkillName = firstRequestSkill.alias(),
             secondRequestSkillName = secondRequestSkill.alias(),
             message = message,
-            participateNumber = participateCount + 1, // 何人目か
+            participateNumber = participateCount, // 何人目か
             isSpectate = isSpectate
         )
 

@@ -3,6 +3,7 @@ package com.ort.wolf4busy.application.service
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
+import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
 import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
 import org.springframework.stereotype.Service
@@ -68,13 +69,15 @@ class VillageService(
      * @return 村日付ID
      */
     fun registerVillageDay(villageId: Int, day: Int, noonnight: CDef.Noonnight, dayChangeDatetime: LocalDateTime): Int {
-        return villageDataSource.insertVillageDay(villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
-            id = 1, // dummy
-            day = day,
-            noonnight = noonnight.code(),
-            startDatetime = dayChangeDatetime,
-            isUpdating = true // dummy
-        ))
+        return villageDataSource.insertVillageDay(
+            villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
+                id = 1, // dummy
+                day = day,
+                noonnight = noonnight.code(),
+                startDatetime = dayChangeDatetime,
+                isUpdating = true // dummy
+            )
+        )
     }
 
     /**
@@ -83,6 +86,11 @@ class VillageService(
      */
     fun updateVillageDayUpdateComplete(villageDayId: Int) {
         villageDataSource.updateVillageDayUpdateComplete(villageDayId)
+    }
+
+    fun findParticipantByUid(villageId: Int, uid: String?): VillageParticipant? {
+        uid ?: return null
+        return villageDataSource.selectVillagePlayer(villageId, uid)
     }
 
     /**
@@ -102,7 +110,7 @@ class VillageService(
      * @param message 参加時発言
      * @param firstRequestSkill 役職第1希望
      * @param secondRequestSkill 役職第2希望
-     * @param isSpectator 見学か
+     * @param isSpectate 見学か
      * @return 村参加者ID
      */
     fun registerVillagePlayer(
@@ -114,6 +122,14 @@ class VillageService(
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         isSpectate: Boolean = false
     ): Int {
-        return villageDataSource.insertVillagePlayer(villageId, playerId, charaId, firstRequestSkill, secondRequestSkill, message, isSpectate)
+        return villageDataSource.insertVillagePlayer(
+            villageId,
+            playerId,
+            charaId,
+            firstRequestSkill,
+            secondRequestSkill,
+            message,
+            isSpectate
+        )
     }
 }

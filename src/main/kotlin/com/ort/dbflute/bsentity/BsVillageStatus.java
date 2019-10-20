@@ -234,6 +234,16 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
         return cdef != null ? cdef.equals(CDef.VillageStatus.開始待ち) : false;
     }
 
+    /**
+     * 決着がついた村 <br>
+     * The group elements:[エピローグ, 廃村, 終了]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_FinishedVillage() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isFinishedVillage();
+    }
+
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================

@@ -1,6 +1,8 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
 import org.springframework.context.MessageSource
 import org.springframework.stereotype.Service
@@ -11,6 +13,25 @@ class MessageService(
     val messageSource: MessageSource,
     val messageDataSource: MessageDataSource
 ) {
+    /**
+     * 発言取得
+     *
+     * @param villageId villageId
+     * @param villageDayId 村日付ID
+     * @param messageTypeList 発言種別
+     * @param participant 参加情報
+     * @param from これ以降の発言を取得する unixtimemilli
+     */
+    fun findMessageList(
+        villageId: Int,
+        villageDayId: Int,
+        messageTypeList: List<CDef.MessageType>,
+        participant: VillageParticipant?,
+        from: Long?
+    ): List<Message> {
+        return messageDataSource.selectMessageList(villageId, villageDayId, messageTypeList, participant, from)
+    }
+
     /**
      * 村作成時のシステムメッセージ登録
      * @param villageId villageId
@@ -30,6 +51,19 @@ class MessageService(
         )
     }
 
+    /**
+     * 村に参加する際の発言を登録
+     *
+     * @param villageId villageId
+     * @param villageDayId 村日付ID
+     * @param villagePlayerId 村参加者ID
+     * @param charaName 自分のキャラ名
+     * @param firstRequestSkillName 役職第1希望
+     * @param secondRequestSkillName 役職第2希望
+     * @param message 入村時発言
+     * @param participateNumber 何人目の入村か
+     * @param isSpectate 見学か
+     */
     fun registerParticipateMessage(
         villageId: Int,
         villageDayId: Int,
@@ -46,7 +80,7 @@ class MessageService(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.公開システムメッセージ.code(),
-            text = (if (isSpectate) "（見学） " else "") + "${participateNumber}人目、$charaName"
+            text = (if (isSpectate) "（見学） " else "") + "${participateNumber}人目、$charaName。"
         )
         // 参加発言
         messageDataSource.insertMessage(
