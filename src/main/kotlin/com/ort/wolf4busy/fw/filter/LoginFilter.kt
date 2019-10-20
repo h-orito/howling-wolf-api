@@ -30,15 +30,18 @@ import kotlin.collections.HashMap
  */
 @Component
 class LoginFilter(
-        val objectMapper: ObjectMapper,
-        val userService: Wolf4busyUserDetailService
+    val objectMapper: ObjectMapper,
+    val userService: Wolf4busyUserDetailService
 ) : OncePerRequestFilter() {
 
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse,
-                                  filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest, response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
         // コンテキストにログインユーザ情報をセット
         SecurityContextHolder.getContext().authentication = PreAuthenticatedAuthenticationToken(
-                auth(request), null)
+            auth(request), null
+        )
 
         filterChain.doFilter(request, response)
     }
@@ -53,7 +56,7 @@ class LoginFilter(
         try {
             // JWTを検証、uid取得
             val uid: String? = FirebaseAuth.getInstance().verifyIdToken(token)?.uid
-            uid ?: throw BadCredentialsException("改竄リクエスト")
+            uid ?: throw BadCredentialsException("改竄リクエストまたはトークン有効期限切れです")
 
             // ユーザ情報を検索
             return try {
@@ -63,7 +66,7 @@ class LoginFilter(
                 userService.insertUser(uid)
             }
         } catch (e: Exception) {
-            throw BadCredentialsException("トークンが無効です", e)
+            throw BadCredentialsException(e.message, e)
         }
     }
 
@@ -80,7 +83,7 @@ class LoginFilter(
      * 署名に利用する公開鍵を返却
      */
     open class GoogleSigningKeyResolver(
-            private val objectMapper: ObjectMapper
+        private val objectMapper: ObjectMapper
     ) : SigningKeyResolverAdapter() {
 
         private val TOKEN_URL: String = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
@@ -99,12 +102,12 @@ class LoginFilter(
 
                 // 開始（BEGIN）と終了（END）のラベルを除去する。
                 keyValue = keyValue
-                        .replace("-----BEGIN CERTIFICATE-----\n", "")
-                        .replace("-----END CERTIFICATE-----\n", "")
-                        .replace("\n", "")
+                    .replace("-----BEGIN CERTIFICATE-----\n", "")
+                    .replace("-----END CERTIFICATE-----\n", "")
+                    .replace("\n", "")
                 val inputStream: InputStream = ByteArrayInputStream(Base64.getDecoder().decode(keyValue.toByteArray()))
                 val certificate = CertificateFactory.getInstance("X.509")
-                        .generateCertificate(inputStream)
+                    .generateCertificate(inputStream)
                 return certificate.publicKey
             } catch (e: Exception) {
                 throw RuntimeException(e)

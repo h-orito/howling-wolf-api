@@ -2,6 +2,7 @@ package com.ort.wolf4busy.api.controller
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.api.body.VillageRegisterBody
+import com.ort.wolf4busy.api.form.VillageMessageForm
 import com.ort.wolf4busy.api.view.village.VillageListView
 import com.ort.wolf4busy.api.view.village.VillageMessageView
 import com.ort.wolf4busy.api.view.village.VillageRegisterView
@@ -11,8 +12,8 @@ import com.ort.wolf4busy.application.coordinator.VillageCoordinator
 import com.ort.wolf4busy.application.service.VillageService
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
-import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
@@ -29,9 +30,14 @@ class VillageController(
     val villageCoordinator: VillageCoordinator,
     val messageCoordinator: MessageCoordinator
 ) {
-
+    // ===================================================================================
+    //                                                                          Definition
+    //                                                                          ==========
     private val logger = LoggerFactory.getLogger(VillageController::class.java)
 
+    // ===================================================================================
+    //                                                                             Execute
+    //                                                                           =========
     /**
      * 村一覧取得
      * @param user user
@@ -64,14 +70,15 @@ class VillageController(
      * @param time 昼夜
      * @param user user
      */
-    @GetMapping("/village/{villageId}/day/{day}/time/{time}/message-list")
+    @GetMapping("/village/{villageId}/day/{day}/time/{noonnight}/message-list")
     fun message(
         @PathVariable("villageId") villageId: Int,
         @PathVariable("day") day: Int,
-        @PathVariable("time") time: String,
-        @AuthenticationPrincipal user: Wolf4busyUser?
+        @PathVariable("noonnight") noonnight: String,
+        @AuthenticationPrincipal user: Wolf4busyUser?,
+        @RequestBody @Validated form: VillageMessageForm?
     ): VillageMessageView {
-        val messages: Messages = messageCoordinator.findMessageList(villageId, day, time, user)
+        val messages: Messages = messageCoordinator.findMessageList(villageId, day, noonnight, user, form?.from)
         return VillageMessageView(
             messageList = messages.messageList
         )
@@ -109,17 +116,14 @@ class VillageController(
             setting = convertRegisterBodyToVillageSettings(body),
             participant = VillageParticipants(
                 count = 1, // dummy
-                memberList = listOf(
-                    VillageParticipant(
-                        id = 1, // dummy
-                        charaId = 1, // TODO
-                        dead = null // dummy
-                    )
-                )
+                memberList = listOf()
             ),
             spectator = VillageParticipants(
                 count = 0, // dummy
                 memberList = listOf() // dummy
+            ),
+            day = VillageDays(
+                dayList = listOf() // dummy
             )
         )
     }
@@ -136,8 +140,8 @@ class VillageController(
                 dayChangeIntervalSeconds = 86400 // TODO
             ),
             charachip = VillageCharachip(
-                dummyCharaId = 1, // TODO
-                charachipId = 1 // TODO
+                dummyCharaId = 22, // TODO
+                charachipId = 2 // TODO
             ),
             organizations = VillageOrganizations(), // TODO
             rules = VillageRules(), // TODO

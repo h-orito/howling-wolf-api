@@ -52,7 +52,15 @@ map:{
         }
     }
     ; VillageStatus = list:{
-        ; map:{topComment=村ステータス; codeType=String}
+        ; map:{
+        	; topComment=村ステータス; codeType=String
+        	; groupingMap = map:{
+        		; finishedVillage = map:{
+        			; groupComment=決着がついた村
+        			; elementList= list:{エピローグ;廃村;終了}
+        		}
+        	}
+        }
         ; map:{
             ; table=VILLAGE_STATUS
             ; code=VILLAGE_STATUS_CODE; name=VILLAGE_STATUS_NAME

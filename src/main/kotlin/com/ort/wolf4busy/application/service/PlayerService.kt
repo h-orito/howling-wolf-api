@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PlayerService(
-        private val playerDataSource: PlayerDataSource
+    private val playerDataSource: PlayerDataSource
 ) {
 
     fun findPlayer(user: Wolf4busyUser): Player {
