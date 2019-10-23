@@ -107,6 +107,7 @@ class CharachipDataSource(
             faceList = chara.charaImageList.map { image ->
                 CharaFace(
                     type = image.faceTypeCode,
+                    name = image.faceTypeCodeAsFaceType.alias(),
                     imageUrl = image.charaImgUrl
                 )
             }
