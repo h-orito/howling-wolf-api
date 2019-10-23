@@ -32,6 +32,10 @@ class MessageService(
         return messageDataSource.selectMessageList(villageId, villageDayId, messageTypeList, participant, from)
     }
 
+    fun findMessage(villageId: Int, participant: VillageParticipant?, messageType: CDef.MessageType, messageNumber: Int): Message? {
+        return messageDataSource.selectMessage(villageId, messageType, messageNumber)
+    }
+
     /**
      * 村作成時のシステムメッセージ登録
      * @param villageId villageId

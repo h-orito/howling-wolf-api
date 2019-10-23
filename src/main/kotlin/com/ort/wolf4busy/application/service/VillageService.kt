@@ -132,4 +132,15 @@ class VillageService(
             isSpectate
         )
     }
+
+    /**
+     * パスワードが正しいか
+     *
+     * @param villageId villageId
+     * @param password 入村パスワード
+     */
+    fun isCollectPassword(villageId: Int, password: String): Boolean {
+        val villagePassword: String = villageDataSource.selectVillagePassword(villageId)
+        return villagePassword == password
+    }
 }
