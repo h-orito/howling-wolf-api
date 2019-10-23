@@ -158,6 +158,7 @@ object VillageDataConverter {
                 faceList = chara.charaImageList.map {
                     CharaFace(
                         type = it.faceTypeCode,
+                        name = it.faceTypeCodeAsFaceType.alias(),
                         imageUrl = it.charaImgUrl
                     )
                 }

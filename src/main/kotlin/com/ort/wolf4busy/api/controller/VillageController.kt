@@ -1,9 +1,7 @@
 package com.ort.wolf4busy.api.controller
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.api.body.VillageChangeSkillBody
-import com.ort.wolf4busy.api.body.VillageParticipateBody
-import com.ort.wolf4busy.api.body.VillageRegisterBody
+import com.ort.wolf4busy.api.body.*
 import com.ort.wolf4busy.api.form.VillageMessageForm
 import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
@@ -174,6 +172,82 @@ class VillageController(
     fun leave(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: Wolf4busyUser
+    ) {
+        // TODO 実装
+    }
+
+    /**
+     * 発言
+     * @param villageId villageId
+     * @param user user
+     * @param body 発言内容
+     */
+    @PostMapping("/village/{villageId}/say")
+    fun say(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageSayBody
+    ) {
+        // TODO 実装
+    }
+
+    /**
+     * 能力セット
+     *
+     * @param villageId villageId
+     * @param user user
+     * @param body 能力セット内容
+     */
+    @PostMapping("/village/{villageId}/ability")
+    fun ability(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageAbilityBody
+    ) {
+        // TODO 実装
+    }
+
+    /**
+     * 投票セット
+     * @param villageId villageId
+     * @param user user
+     * @param body 投票内容
+     */
+    @PostMapping("/village/{villageId}/vote")
+    fun vote(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageVoteBody
+    ) {
+        // TODO 実装
+    }
+
+    /**
+     * コミットセット
+     * @param villageId villageId
+     * @param user user
+     * @param body コミット/取り消し
+     */
+    @PostMapping("/village/{villageId}/commit")
+    fun commit(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageCommitBody
+    ) {
+        // TODO 実装
+    }
+
+    /**
+     * 村設定変更
+     * @param villageId villageId
+     * @param user user
+     * @param body 村設定内容
+     */
+    @PostMapping("/village/{villageId}/setting")
+    fun setting(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageSettingBody
     ) {
         // TODO 実装
     }
