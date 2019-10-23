@@ -81,6 +81,16 @@ object MessageAuthorizationUtil {
         return isParticipateSkilAs(participant, CDef.Skill.導師)
     }
 
+    fun isViewableMonologueMessage(village: Village): Boolean {
+        // 終了していたら全て見られる
+        return village.isCompleted()
+    }
+
+    fun isViewableSecretMessage(village: Village): Boolean {
+        // 終了していたら全て見られる
+        return village.isCompleted()
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============

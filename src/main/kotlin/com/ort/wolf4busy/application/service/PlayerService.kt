@@ -17,4 +17,8 @@ class PlayerService(
     fun updateNickname(user: Wolf4busyUser, nickname: String, twitterUserName: String) {
         playerDataSource.updateNickname(user.uid, nickname, twitterUserName)
     }
+
+    fun isRestrictedParticipatePlayer(user: Wolf4busyUser): Boolean {
+        return playerDataSource.isRestrictedParticipatePlayer(user.uid)
+    }
 }

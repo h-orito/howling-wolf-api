@@ -61,8 +61,14 @@ class VillageCoordinator(
         message: String,
         isSpectate: Boolean,
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
-        secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ
+        secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
+        password: String?
     ) {
+        val village: Village = villageService.findVillage(villageId)
+        // 参加できない状況ならエラー
+        assertParticipate(village, charaId, firstRequestSkill, secondRequestSkill, isSpectate)
+        // パスワードが正しくないとエラー
+        assertPassword(village, password, playerId)
         // 村参加者登録
         val villagePlayerId: Int = villageService.registerVillagePlayer(
             villageId = villageId,
@@ -108,13 +114,46 @@ class VillageCoordinator(
 
     private fun participateDummyChara(villageId: Int, village: Village) {
         val dummyPlayerId = 1 // 固定
-        val message: String = "人狼なんているわけないじゃん。みんな大げさだなあ" // TODO
+        val message: String = "人狼なんているわけないじゃん。みんな大げさだなあ\n>>1>>*1>>+1>>=1>>#1aaa>>-1>>@1" // TODO
         this.participate(
             villageId = villageId,
             playerId = dummyPlayerId,
             charaId = village.setting.charachip.dummyCharaId,
             message = message,
-            isSpectate = false
+            isSpectate = false,
+            password = ""
         )
+    }
+
+    private fun assertParticipate(village: Village, charaId: Int, firstRequestSkill: CDef.Skill, secondRequestSkill: CDef.Skill, isSpectate: Boolean) {
+        // 既に参加しているキャラはNG
+        if (isAlreadyParticipateCharacter(village, charaId)) throw Wolf4busyBusinessException("既に参加されているキャラクターです")
+
+        if (isSpectate) {
+            // [キャラチップの人数 - 定員] 人を超えて見学はできない
+            val charachipCharaNum = charachipService.findCharaChip(village.setting.charachip.charachipId).charaList.size
+            if (charachipCharaNum - village.setting.capacity.max <= village.spectator.count) throw Wolf4busyBusinessException("既に上限人数まで見学者がいるため見学者として参加できません。")
+        } else {
+            if (village.setting.capacity.max <= village.participant.count) throw Wolf4busyBusinessException("既に上限人数までプレイヤーが参加しているため参加できません。")
+            if (!village.setting.rules.availableSkillRequest &&
+                (firstRequestSkill != CDef.Skill.おまかせ || secondRequestSkill != CDef.Skill.おまかせ)) {
+                throw Wolf4busyBusinessException("希望役職が不正です")
+            }
+        }
+    }
+
+    private fun isAlreadyParticipateCharacter(village: Village, charaId: Int): Boolean {
+        return village.participant.memberList.any { it.chara.id == charaId }
+            || village.spectator.memberList.any { it.chara.id == charaId }
+    }
+
+    private fun assertPassword(village: Village, password: String?, playerId: Int) {
+        // ダミーはパスワードなしでOK
+        if (playerId == 1 || !village.setting.password.joinPasswordRequired) return
+
+        password ?: throw Wolf4busyBusinessException("入村パスワードが誤っています")
+        if (!villageService.isCollectPassword(village.id, password)) {
+            throw Wolf4busyBusinessException("入村パスワードが誤っています")
+        }
     }
 }

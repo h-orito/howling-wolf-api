@@ -1,21 +1,23 @@
 package com.ort.wolf4busy.api.controller
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.api.body.VillageChangeSkillBody
+import com.ort.wolf4busy.api.body.VillageParticipateBody
 import com.ort.wolf4busy.api.body.VillageRegisterBody
 import com.ort.wolf4busy.api.form.VillageMessageForm
-import com.ort.wolf4busy.api.view.village.VillageListView
-import com.ort.wolf4busy.api.view.village.VillageMessageView
-import com.ort.wolf4busy.api.view.village.VillageRegisterView
-import com.ort.wolf4busy.api.view.village.VillageView
+import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
+import com.ort.wolf4busy.application.service.PlayerService
 import com.ort.wolf4busy.application.service.VillageService
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -28,7 +30,8 @@ import java.time.LocalDateTime
 class VillageController(
     val villageService: VillageService,
     val villageCoordinator: VillageCoordinator,
-    val messageCoordinator: MessageCoordinator
+    val messageCoordinator: MessageCoordinator,
+    val playerService: PlayerService
 ) {
     // ===================================================================================
     //                                                                          Definition
@@ -60,6 +63,26 @@ class VillageController(
         val village = villageService.findVillage(villageId)
         return VillageView(
             village = village
+        )
+    }
+
+    /**
+     * アンカー発言取得
+     * @param villageId villageId
+     * @param day 日付
+     * @param time 昼夜
+     * @param user user
+     */
+    @GetMapping("/village/{villageId}/message/type/{messageType}/number/{messageNumber}")
+    fun anchorMessage(
+        @PathVariable("villageId") villageId: Int,
+        @PathVariable("messageType") messageType: String,
+        @PathVariable("messageNumber") messageNumber: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser?
+    ): VillageAnchorMessageView {
+        val message: Message? = messageCoordinator.findMessage(villageId, messageType, messageNumber, user)
+        return VillageAnchorMessageView(
+            message = message
         )
     }
 
@@ -99,6 +122,62 @@ class VillageController(
         val villageId: Int = villageCoordinator.registerVillage(village, password)
         return VillageRegisterView(villageId = villageId)
     }
+
+    /**
+     * 村に参加
+     * @param villageId villageId
+     * @param user user
+     * @param body 村設定
+     */
+    @PostMapping("/village/{villageId}/participate")
+    fun participateVillage(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageParticipateBody
+    ) {
+        val player = playerService.findPlayer(user)
+        if (playerService.isRestrictedParticipatePlayer(user)) throw Wolf4busyBusinessException("参加を制限されています")
+
+        villageCoordinator.participate(
+            villageId = villageId,
+            playerId = player.id,
+            charaId = body.charaId!!,
+            message = body.joinMessage!!,
+            isSpectate = body.spectator ?: false,
+            firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
+            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
+            password = body.joinPassword
+        )
+    }
+
+    /**
+     * 希望役職変更
+     * @param villageId villageId
+     * @param user user
+     * @param body 役職
+     */
+    @PostMapping("/village/{villageId}/change-skill")
+    fun changeSkill(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageChangeSkillBody
+    ) {
+        // TODO 実装
+    }
+
+    /**
+     * 退村
+     * @param villageId villageId
+     * @param user user
+     */
+    @PostMapping("/village/{villageId}/leave")
+    fun leave(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser
+    ) {
+        // TODO 実装
+    }
+
 
     // ===================================================================================
     //                                                                        Assist Logic

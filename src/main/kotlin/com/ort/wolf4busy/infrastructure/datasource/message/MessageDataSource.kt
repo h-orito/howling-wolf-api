@@ -70,6 +70,23 @@ class MessageDataSource(
         return messageList.map { convertMessageToMessage(it) }
     }
 
+    /**
+     * アンカー発言取得
+     *
+     * @param villageId villageId
+     * @param messageType 発言種別
+     * @param messageNumber 発言番号
+     * @return 発言
+     */
+    fun selectMessage(villageId: Int, messageType: CDef.MessageType, messageNumber: Int): com.ort.wolf4busy.domain.model.message.Message? {
+        val optMessage = messageBhv.selectEntity {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setMessageNumber_Equal(messageNumber)
+            it.query().setMessageTypeCode_Equal(messageType.code())
+        }
+        return optMessage.map { convertMessageToMessage(it) }.orElse(null)
+    }
+
     fun insertMessage(
         villageId: Int,
         dayId: Int,
@@ -178,6 +195,7 @@ class MessageDataSource(
                     code = message.messageTypeCode,
                     name = CDef.MessageType.codeOf(message.messageTypeCode).alias()
                 ),
+                num = message.messageNumber,
                 text = message.messageContent,
                 faceCode = message.faceTypeCode
             )

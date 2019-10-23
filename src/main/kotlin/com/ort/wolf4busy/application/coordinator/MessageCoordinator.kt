@@ -35,8 +35,21 @@ class MessageCoordinator(
         val villageDayId = villageService.findVillageDay(villageId, day, noonnight).id
         val messageList: List<Message> = messageService.findMessageList(villageId, villageDayId, messageTypeList, participant, from)
         return Messages(
-            messageList = complementMessageList(messageList, village, day)
+            messageList = messageList.map { complementMessage(it, village, day) }
         )
+    }
+
+    fun findMessage(villageId: Int, messageType: String, messageNumber: Int, user: Wolf4busyUser?): Message? {
+        val participant: VillageParticipant? = villageService.findParticipantByUid(
+            villageId, user?.uid
+        )
+        val village = villageService.findVillage(villageId)
+        if (!isViewAllowed(village, participant, messageType)) {
+            return null
+        }
+        val message: Message =
+            messageService.findMessage(villageId, participant, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
+        return complementMessage(message, village, message.time.day)
     }
 
     // ===================================================================================
@@ -68,13 +81,23 @@ class MessageCoordinator(
     }
 
 
-    private fun complementMessageList(messageList: List<Message>, village: Village, day: Int): List<Message> {
-        return messageList.map { message ->
-            message.copy(
-                from = if (message.from == null) null else village.participant.memberList.find { participant -> participant.id == message.from.id },
-                to = if (message.to == null) null else village.participant.memberList.find { participant -> participant.id == message.to.id },
-                time = message.time.copy(day = day)
-            )
-        }
+    private fun isViewAllowed(village: Village, participant: VillageParticipant?, messageType: String): Boolean {
+        val type: CDef.MessageType = CDef.MessageType.codeOf(messageType) ?: return false
+        if (type == CDef.MessageType.通常発言 || type == CDef.MessageType.村建て発言) return true
+        if (type == CDef.MessageType.人狼の囁き) return MessageAuthorizationUtil.isViewableWolfMessage(village, participant)
+        if (type == CDef.MessageType.共鳴発言) return MessageAuthorizationUtil.isViewableMasonMessage(village, participant)
+        if (type == CDef.MessageType.死者の呻き) return MessageAuthorizationUtil.isViewableGraveMessage(village, participant)
+        if (type == CDef.MessageType.見学発言) return MessageAuthorizationUtil.isViewableSpectateMessage(village, participant, 1)
+        if (type == CDef.MessageType.独り言) return MessageAuthorizationUtil.isViewableMonologueMessage(village)
+        if (type == CDef.MessageType.秘話) return MessageAuthorizationUtil.isViewableSecretMessage(village)
+        return false
+    }
+
+    private fun complementMessage(message: Message, village: Village, day: Int): Message {
+        return message.copy(
+            from = if (message.from == null) null else village.participant.memberList.find { participant -> participant.id == message.from.id },
+            to = if (message.to == null) null else village.participant.memberList.find { participant -> participant.id == message.to.id },
+            time = message.time.copy(day = day)
+        )
     }
 }
