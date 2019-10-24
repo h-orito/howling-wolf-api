@@ -333,6 +333,16 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
+     * プロローグ中 <br>
+     * The group elements:[募集中, 開始待ち]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_Prologue() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isPrologue();
+    }
+
+    /**
      * Is the value of winCampCode 狐陣営? <br>
      * 狐陣営
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>

@@ -59,6 +59,10 @@ map:{
         			; groupComment=決着がついた村
         			; elementList= list:{エピローグ;廃村;終了}
         		}
+        		; prologue = map:{
+					; groupComment=プロローグ中
+        			; elementList= list:{募集中;開始待ち}
+				}
         	}
         }
         ; map:{
@@ -67,11 +71,23 @@ map:{
         }
     }
     ; Skill = list:{
-        ; map:{topComment=役職; codeType=String}
+        ; map:{
+        	; topComment=役職; codeType=String
+        	; groupingMap = map:{
+        		; availableWerewolfSay = map:{
+        			; groupComment=囁き可能
+        			; elementList= list:{人狼;C国狂人}
+        		}
+        	}
+        }
         ; map:{
             ; table=SKILL
             ; code=SKILL_CODE; name=SKILL_NAME
-        }
+            ; subItemMap=map:{
+            	; shortName=SKILL_SHORT_NAME
+            	; order=DISP_ORDER
+			}
+		}
     }
     ; MessageType = list:{
         ; map:{topComment=メッセージ種別; codeType=String}

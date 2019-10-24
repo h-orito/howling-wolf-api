@@ -315,6 +315,11 @@ public class BsSkillCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnSkillName() { return doColumn("SKILL_NAME"); }
         /**
+         * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnSkillShortName() { return doColumn("SKILL_SHORT_NAME"); }
+        /**
          * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp}
          * @return The information object of specified column. (NotNull)
          */

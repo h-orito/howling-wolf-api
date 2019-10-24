@@ -1,14 +1,14 @@
 package com.ort.wolf4busy.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exbhv.VillageBhv
-import com.ort.dbflute.exbhv.VillageDayBhv
-import com.ort.dbflute.exbhv.VillagePlayerBhv
-import com.ort.dbflute.exbhv.VillageSettingBhv
+import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.Village
 import com.ort.dbflute.exentity.VillageDay
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.dbflute.exentity.VillageSetting
+import com.ort.wolf4busy.domain.model.commit.Commit
+import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -20,11 +20,13 @@ class VillageDataSource(
     val villageBhv: VillageBhv,
     val villageSettingBhv: VillageSettingBhv,
     val villageDayBhv: VillageDayBhv,
-    val villagePlayerBhv: VillagePlayerBhv
+    val villagePlayerBhv: VillagePlayerBhv,
+    val commitBhv: CommitBhv
 ) {
 
     /**
      * 村一覧取得
+     * @return 村一覧
      */
     fun selectVillages(): Villages {
         val villageList = villageBhv.selectList {
@@ -53,6 +55,7 @@ class VillageDataSource(
     /**
      * 村情報取得
      * @param villageId villageId
+     * @return 村情報
      */
     fun selectVillage(villageId: Int): com.ort.wolf4busy.domain.model.village.Village {
         val village = villageBhv.selectEntityWithDeletedCheck {
@@ -77,16 +80,17 @@ class VillageDataSource(
 
     /**
      * 村登録
+     * @param villageModel 村
+     * @return 村ID
      */
-    fun insertVillage(v: com.ort.wolf4busy.domain.model.village.Village): Int {
+    fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): Int {
         val village = Village()
-        village.villageDisplayName = v.name
-        village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(v.status.code)
-        village.createPlayerName = v.creatorPlayerName
+        village.villageDisplayName = villageModel.name
+        village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(villageModel.status.code)
+        village.createPlayerName = villageModel.creatorPlayerName
         villageBhv.insert(village)
         return village.villageId
     }
-
 
     /**
      * 村設定登録
@@ -199,6 +203,7 @@ class VillageDataSource(
      * @param secondRequestSkill 役職第2希望
      * @param message 入村時発言
      * @param isSpectate 見学か
+     * @return 村参加ID
      */
     fun insertVillagePlayer(
         villageId: Int,
@@ -227,9 +232,61 @@ class VillageDataSource(
      * 大文字小文字も一致しなければいけないので取得してから比較する
      *
      * @param villageId villageId
+     * @return 村パスワード
      */
     fun selectVillagePassword(villageId: Int): String {
         return villageSettingBhv.selectByPK(villageId, CDef.VillageSettingItem.入村パスワード).get().villageSettingText
+    }
+
+    /**
+     * いずれかの進行中の村に参加しているか
+     * @param uid uid
+     * @return いずれかの進行中の村に参加しているか
+     */
+    fun isParticipatingAnyProgressVillage(uid: String): Boolean {
+        return villagePlayerBhv.selectCount {
+            it.query().queryPlayer().setUid_Equal(uid)
+            it.query().queryVillage().setVillageStatusCode_InScope_AsVillageStatus(
+                listOf(CDef.VillageStatus.募集中, CDef.VillageStatus.開始待ち, CDef.VillageStatus.進行中)
+            )
+            it.query().setIsGone_Equal(false)
+        } > 0
+    }
+
+    /**
+     * 役職希望を取得
+     * @param participant 参加情報
+     * @return 役職希望
+     */
+    fun selectSkillRequest(participant: VillageParticipant): SkillRequest? {
+        val villagePlayer = villagePlayerBhv.selectEntityWithDeletedCheck {
+            it.query().setVillagePlayerId_Equal(participant.id)
+        }
+
+        return SkillRequest(
+            first = villagePlayer.requestSkillCodeAsSkill.let { Skill(it.code(), it.name) },
+            second = villagePlayer.secondRequestSkillCodeAsSkill.let { Skill(it.code(), it.name) }
+        )
+    }
+
+    /**
+     * コミットを取得
+     * @param village village
+     * @param participant 村参加情報
+     * @return コミット
+     */
+    fun selectCommit(village: com.ort.wolf4busy.domain.model.village.Village, participant: VillageParticipant): Commit? {
+        val latestDay: com.ort.wolf4busy.domain.model.village.VillageDay = village.day.latestDay()
+
+        val optCommit = commitBhv.selectEntity {
+            it.query().setVillageDayId_Equal(latestDay.id)
+            it.query().setVillagePlayerId_Equal(participant.id)
+        }
+        return optCommit.map {
+            Commit(
+                isCommiting = true
+            )
+        }.orElse(null)
     }
 
     // ===================================================================================

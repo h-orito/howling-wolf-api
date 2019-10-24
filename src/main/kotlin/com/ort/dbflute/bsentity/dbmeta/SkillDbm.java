@@ -52,6 +52,7 @@ public class SkillDbm extends AbstractDBMeta {
             }
         }, "skillCode");
         setupEpg(_epgMap, et -> ((Skill)et).getSkillName(), (et, vl) -> ((Skill)et).setSkillName((String)vl), "skillName");
+        setupEpg(_epgMap, et -> ((Skill)et).getSkillShortName(), (et, vl) -> ((Skill)et).setSkillShortName((String)vl), "skillShortName");
         setupEpg(_epgMap, et -> ((Skill)et).getCampCode(), (et, vl) -> {
             CDef.Camp cls = (CDef.Camp)gcls(et, columnCampCode(), vl);
             if (cls != null) {
@@ -95,6 +96,7 @@ public class SkillDbm extends AbstractDBMeta {
     //                                                                         ===========
     protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "messageRestrictionList,villagePlayerByRequestSkillCodeList,villagePlayerBySecondRequestSkillCodeList,villagePlayerBySkillCodeList", CDef.DefMeta.Skill, false);
     protected final ColumnInfo _columnSkillName = cci("SKILL_NAME", "SKILL_NAME", null, null, String.class, "skillName", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnSkillShortName = cci("SKILL_SHORT_NAME", "SKILL_SHORT_NAME", null, null, String.class, "skillShortName", null, false, false, true, "CHAR", 1, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCampCode = cci("CAMP_CODE", "CAMP_CODE", null, null, String.class, "campCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "camp", null, CDef.DefMeta.Camp, false);
     protected final ColumnInfo _columnDispOrder = cci("DISP_ORDER", "DISP_ORDER", null, null, Integer.class, "dispOrder", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
 
@@ -108,6 +110,11 @@ public class SkillDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnSkillName() { return _columnSkillName; }
+    /**
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnSkillShortName() { return _columnSkillShortName; }
     /**
      * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp}
      * @return The information object of specified column. (NotNull)
@@ -123,6 +130,7 @@ public class SkillDbm extends AbstractDBMeta {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnSkillCode());
         ls.add(columnSkillName());
+        ls.add(columnSkillShortName());
         ls.add(columnCampCode());
         ls.add(columnDispOrder());
         return ls;

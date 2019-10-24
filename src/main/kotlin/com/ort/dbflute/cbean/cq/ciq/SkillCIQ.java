@@ -103,6 +103,7 @@ public class SkillCIQ extends AbstractBsSkillCQ {
     public String keepSkillCode_QueryDerivedReferrer_VillagePlayerBySkillCodeListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueSkillName() { return _myCQ.xdfgetSkillName(); }
+    protected ConditionValue xgetCValueSkillShortName() { return _myCQ.xdfgetSkillShortName(); }
     protected ConditionValue xgetCValueCampCode() { return _myCQ.xdfgetCampCode(); }
     protected ConditionValue xgetCValueDispOrder() { return _myCQ.xdfgetDispOrder(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
