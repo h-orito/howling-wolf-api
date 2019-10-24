@@ -187,14 +187,6 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     }
 
     /**
-     * Set the value of skillCode as 探偵 (DETECTIVE). <br>
-     * 探偵
-     */
-    public void setSkillCode_探偵() {
-        setSkillCodeAsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * Set the value of skillCode as 魔神官 (EVILMEDIUM). <br>
      * 魔神官
      */
@@ -208,14 +200,6 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
      */
     public void setSkillCode_狂信者() {
         setSkillCodeAsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Set the value of skillCode as おまかせ足音職 (FOOTSTEPS). <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_おまかせ足音職() {
-        setSkillCodeAsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -473,17 +457,6 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     }
 
     /**
-     * Is the value of skillCode 探偵? <br>
-     * 探偵
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode探偵() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.探偵) : false;
-    }
-
-    /**
      * Is the value of skillCode 魔神官? <br>
      * 魔神官
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -503,17 +476,6 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     public boolean isSkillCode狂信者() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狂信者) : false;
-    }
-
-    /**
-     * Is the value of skillCode おまかせ足音職? <br>
-     * おまかせ（足音職）
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCodeおまかせ足音職() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.おまかせ足音職) : false;
     }
 
     /**
@@ -679,6 +641,16 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     public boolean isSkillCode賢者() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.賢者) : false;
+    }
+
+    /**
+     * 囁き可能 <br>
+     * The group elements:[人狼, C国狂人]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_AvailableWerewolfSay() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isAvailableWerewolfSay();
     }
 
     /**

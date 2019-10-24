@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -1406,7 +1406,7 @@
 					<target>table.skill</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name> camp_code</fk_column_name>
+							<fk_column_name>camp_code</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1433,7 +1433,14 @@
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
-					<physical_name> camp_code</physical_name>
+					<physical_name>skill_short_name</physical_name>
+					<logical_name>役職略称</logical_name>
+					<type>character(n)</type>
+					<length>1</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>camp_code</physical_name>
 					<referred_column>table.camp.camp_code</referred_column>
 					<relationship>FK_skill_camp</relationship>
 					<not_null>true</not_null>

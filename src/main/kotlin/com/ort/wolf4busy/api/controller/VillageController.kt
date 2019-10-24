@@ -3,8 +3,10 @@ package com.ort.wolf4busy.api.controller
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.api.body.*
 import com.ort.wolf4busy.api.form.VillageMessageForm
+import com.ort.wolf4busy.api.view.VillageParticipateSituationView
 import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
+import com.ort.wolf4busy.application.coordinator.ParticipateSituationCoordinator
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
 import com.ort.wolf4busy.application.service.PlayerService
 import com.ort.wolf4busy.application.service.VillageService
@@ -26,9 +28,11 @@ import java.time.LocalDateTime
 @CrossOrigin
 @RestController
 class VillageController(
-    val villageService: VillageService,
     val villageCoordinator: VillageCoordinator,
+    val participateSituationCoordinator: ParticipateSituationCoordinator,
     val messageCoordinator: MessageCoordinator,
+
+    val villageService: VillageService,
     val playerService: PlayerService
 ) {
     // ===================================================================================
@@ -119,6 +123,23 @@ class VillageController(
         val village: Village = convertRegisterBodyToVillage(body, user)
         val villageId: Int = villageCoordinator.registerVillage(village, password)
         return VillageRegisterView(villageId = villageId)
+    }
+
+
+    /**
+     * 村参加状況取得
+     * @param villageId villageId
+     * @param user user
+     * @return 参加状況
+     */
+    @GetMapping("/village/{villageId}/participate")
+    fun getParticipateSituation(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser?
+    ): VillageParticipateSituationView {
+        return VillageParticipateSituationView(
+            situation = participateSituationCoordinator.findParticipateSituation(villageId, user)
+        )
     }
 
     /**

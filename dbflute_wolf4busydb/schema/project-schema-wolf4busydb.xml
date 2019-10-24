@@ -437,6 +437,8 @@
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="役職名" dbType="VARCHAR" javaType="String"
             name="SKILL_NAME" required="true" size="20" type="VARCHAR"/>
+        <column comment="役職略称" dbType="CHAR" javaType="String"
+            name="SKILL_SHORT_NAME" required="true" size="1" type="CHAR"/>
         <column comment="陣営コード" dbType="VARCHAR" javaType="String"
             name="CAMP_CODE" required="true" size="20" type="VARCHAR"/>
         <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"

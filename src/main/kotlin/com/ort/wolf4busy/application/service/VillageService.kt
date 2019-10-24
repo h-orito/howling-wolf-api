@@ -1,6 +1,8 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.commit.Commit
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -71,12 +73,12 @@ class VillageService(
     fun registerVillageDay(villageId: Int, day: Int, noonnight: CDef.Noonnight, dayChangeDatetime: LocalDateTime): Int {
         return villageDataSource.insertVillageDay(
             villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
-                id = 1, // dummy
-                day = day,
-                noonnight = noonnight.code(),
-                startDatetime = dayChangeDatetime,
-                isUpdating = true // dummy
-            )
+            id = 1, // dummy
+            day = day,
+            noonnight = noonnight.code(),
+            startDatetime = dayChangeDatetime,
+            isUpdating = true // dummy
+        )
         )
     }
 
@@ -142,5 +144,29 @@ class VillageService(
     fun isCollectPassword(villageId: Int, password: String): Boolean {
         val villagePassword: String = villageDataSource.selectVillagePassword(villageId)
         return villagePassword == password
+    }
+
+    /**
+     * どこかの村に参加しているか
+     *
+     * @param uid
+     */
+    fun isParticipatingAnyProgressVillage(uid: String): Boolean {
+        return villageDataSource.isParticipatingAnyProgressVillage(uid)
+    }
+
+    /**
+     * 役職希望を取得
+     * @param
+     * @return
+     */
+    fun findSkillRequest(participant: VillageParticipant?): SkillRequest? {
+        participant?: return null
+        return villageDataSource.selectSkillRequest(participant)
+    }
+
+    fun findCommit(village: Village, participant: VillageParticipant?): Commit? {
+        participant ?: return null
+        return villageDataSource.selectCommit(village, participant)
     }
 }

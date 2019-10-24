@@ -3,7 +3,6 @@ package com.ort.wolf4busy.application.coordinator
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.application.service.MessageService
 import com.ort.wolf4busy.application.service.VillageService
-import com.ort.wolf4busy.application.util.MessageAuthorizationUtil
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
@@ -69,14 +68,14 @@ class MessageCoordinator(
         val allowedTypeList: MutableList<CDef.MessageType> = mutableListOf()
         allowedTypeList.addAll(everyoneAllowedMessageTypeList)
         // 権限に応じて追加していく（独り言と秘話はここでは追加しない）
-        if (MessageAuthorizationUtil.isViewableGraveMessage(village, participant)) allowedTypeList.add(CDef.MessageType.死者の呻き)
-        if (MessageAuthorizationUtil.isViewableSpectateMessage(village, participant, day)) allowedTypeList.add(CDef.MessageType.見学発言)
-        if (MessageAuthorizationUtil.isViewableMasonMessage(village, participant)) allowedTypeList.add(CDef.MessageType.共鳴発言)
-        if (MessageAuthorizationUtil.isViewableWolfMessage(village, participant)) allowedTypeList.add(CDef.MessageType.人狼の囁き)
-        if (MessageAuthorizationUtil.isViewableSeerMessage(village, participant)) allowedTypeList.add(CDef.MessageType.白黒占い結果)
-        if (MessageAuthorizationUtil.isViewableWiseMessage(village, participant)) allowedTypeList.add(CDef.MessageType.役職占い結果)
-        if (MessageAuthorizationUtil.isViewablePsychicMessage(village, participant)) allowedTypeList.add(CDef.MessageType.白黒霊視結果)
-        if (MessageAuthorizationUtil.isViewableGuruMessage(village, participant)) allowedTypeList.add(CDef.MessageType.役職霊視結果)
+        if (village.isViewableGraveMessage(participant)) allowedTypeList.add(CDef.MessageType.死者の呻き)
+        if (village.isViewableSpectateMessage(participant, day)) allowedTypeList.add(CDef.MessageType.見学発言)
+        if (village.isViewableMasonMessage(participant)) allowedTypeList.add(CDef.MessageType.共鳴発言)
+        if (village.isViewableWerewolfMessage(participant)) allowedTypeList.add(CDef.MessageType.人狼の囁き)
+        if (village.isViewableSeerMessage(participant)) allowedTypeList.add(CDef.MessageType.白黒占い結果)
+        if (village.isViewableWiseMessage(participant)) allowedTypeList.add(CDef.MessageType.役職占い結果)
+        if (village.isViewablePsychicMessage(participant)) allowedTypeList.add(CDef.MessageType.白黒霊視結果)
+        if (village.isViewableGuruMessage(participant)) allowedTypeList.add(CDef.MessageType.役職霊視結果)
         return allowedTypeList
     }
 
@@ -84,12 +83,12 @@ class MessageCoordinator(
     private fun isViewAllowed(village: Village, participant: VillageParticipant?, messageType: String): Boolean {
         val type: CDef.MessageType = CDef.MessageType.codeOf(messageType) ?: return false
         if (type == CDef.MessageType.通常発言 || type == CDef.MessageType.村建て発言) return true
-        if (type == CDef.MessageType.人狼の囁き) return MessageAuthorizationUtil.isViewableWolfMessage(village, participant)
-        if (type == CDef.MessageType.共鳴発言) return MessageAuthorizationUtil.isViewableMasonMessage(village, participant)
-        if (type == CDef.MessageType.死者の呻き) return MessageAuthorizationUtil.isViewableGraveMessage(village, participant)
-        if (type == CDef.MessageType.見学発言) return MessageAuthorizationUtil.isViewableSpectateMessage(village, participant, 1)
-        if (type == CDef.MessageType.独り言) return MessageAuthorizationUtil.isViewableMonologueMessage(village)
-        if (type == CDef.MessageType.秘話) return MessageAuthorizationUtil.isViewableSecretMessage(village)
+        if (type == CDef.MessageType.人狼の囁き) return village.isViewableWerewolfMessage(participant)
+        if (type == CDef.MessageType.共鳴発言) return village.isViewableMasonMessage(participant)
+        if (type == CDef.MessageType.死者の呻き) return village.isViewableGraveMessage(participant)
+        if (type == CDef.MessageType.見学発言) return village.isViewableSpectateMessage(participant, 1)
+        if (type == CDef.MessageType.独り言) return village.isViewableMonologueMessage()
+        if (type == CDef.MessageType.秘話) return village.isViewableSecretMessage()
         return false
     }
 

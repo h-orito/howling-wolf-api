@@ -169,6 +169,26 @@ public class BsSkillCQ extends AbstractBsSkillCQ {
      */
     public BsSkillCQ addOrderBy_SkillName_Desc() { regOBD("SKILL_NAME"); return this; }
 
+    protected ConditionValue _skillShortName;
+    public ConditionValue xdfgetSkillShortName()
+    { if (_skillShortName == null) { _skillShortName = nCV(); }
+      return _skillShortName; }
+    protected ConditionValue xgetCValueSkillShortName() { return xdfgetSkillShortName(); }
+
+    /** 
+     * Add order-by as ascend. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @return this. (NotNull)
+     */
+    public BsSkillCQ addOrderBy_SkillShortName_Asc() { regOBA("SKILL_SHORT_NAME"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @return this. (NotNull)
+     */
+    public BsSkillCQ addOrderBy_SkillShortName_Desc() { regOBD("SKILL_SHORT_NAME"); return this; }
+
     protected ConditionValue _campCode;
     public ConditionValue xdfgetCampCode()
     { if (_campCode == null) { _campCode = nCV(); }

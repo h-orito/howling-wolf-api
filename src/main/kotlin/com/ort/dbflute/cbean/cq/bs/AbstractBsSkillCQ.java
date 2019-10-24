@@ -71,14 +71,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSkillCode_Equal_探偵() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -92,14 +84,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_Equal_狂信者() {
         setSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_Equal_おまかせ足音職() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -254,14 +238,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSkillCode_NotEqual_探偵() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -275,14 +251,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_NotEqual_狂信者() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_NotEqual_おまかせ足音職() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -426,6 +394,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_AsSkill(Collection<CDef.Skill> cdefList) {
         doSetSkillCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼, C国狂人]
+     */
+    public void setSkillCode_InScope_AvailableWerewolfSay() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
@@ -896,6 +874,141 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
 
     protected void regSkillName(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueSkillName(), "SKILL_NAME"); }
     protected abstract ConditionValue xgetCValueSkillName();
+
+    /**
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_Equal(String skillShortName) {
+        doSetSkillShortName_Equal(fRES(skillShortName));
+    }
+
+    protected void doSetSkillShortName_Equal(String skillShortName) {
+        regSkillShortName(CK_EQ, skillShortName);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_NotEqual(String skillShortName) {
+        doSetSkillShortName_NotEqual(fRES(skillShortName));
+    }
+
+    protected void doSetSkillShortName_NotEqual(String skillShortName) {
+        regSkillShortName(CK_NES, skillShortName);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_GreaterThan(String skillShortName) {
+        regSkillShortName(CK_GT, fRES(skillShortName));
+    }
+
+    /**
+     * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_LessThan(String skillShortName) {
+        regSkillShortName(CK_LT, fRES(skillShortName));
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_GreaterEqual(String skillShortName) {
+        regSkillShortName(CK_GE, fRES(skillShortName));
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_LessEqual(String skillShortName) {
+        regSkillShortName(CK_LE, fRES(skillShortName));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortNameList The collection of skillShortName as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_InScope(Collection<String> skillShortNameList) {
+        doSetSkillShortName_InScope(skillShortNameList);
+    }
+
+    protected void doSetSkillShortName_InScope(Collection<String> skillShortNameList) {
+        regINS(CK_INS, cTL(skillShortNameList), xgetCValueSkillShortName(), "SKILL_SHORT_NAME");
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortNameList The collection of skillShortName as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSkillShortName_NotInScope(Collection<String> skillShortNameList) {
+        doSetSkillShortName_NotInScope(skillShortNameList);
+    }
+
+    protected void doSetSkillShortName_NotInScope(Collection<String> skillShortNameList) {
+        regINS(CK_NINS, cTL(skillShortNameList), xgetCValueSkillShortName(), "SKILL_SHORT_NAME");
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)} <br>
+     * <pre>e.g. setSkillShortName_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param skillShortName The value of skillShortName as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setSkillShortName_LikeSearch(String skillShortName, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setSkillShortName_LikeSearch(skillShortName, xcLSOP(opLambda));
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)} <br>
+     * <pre>e.g. setSkillShortName_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param skillShortName The value of skillShortName as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of like-search. (NotNull)
+     */
+    protected void setSkillShortName_LikeSearch(String skillShortName, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(skillShortName), xgetCValueSkillShortName(), "SKILL_SHORT_NAME", likeSearchOption);
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setSkillShortName_NotLikeSearch(String skillShortName, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setSkillShortName_NotLikeSearch(skillShortName, xcLSOP(opLambda));
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @param skillShortName The value of skillShortName as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of not-like-search. (NotNull)
+     */
+    protected void setSkillShortName_NotLikeSearch(String skillShortName, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(skillShortName), xgetCValueSkillShortName(), "SKILL_SHORT_NAME", likeSearchOption);
+    }
+
+    protected void regSkillShortName(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueSkillShortName(), "SKILL_SHORT_NAME"); }
+    protected abstract ConditionValue xgetCValueSkillShortName();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>

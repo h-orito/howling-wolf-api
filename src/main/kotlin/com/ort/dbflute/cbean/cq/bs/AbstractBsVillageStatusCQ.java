@@ -214,6 +214,16 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
         setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfFinishedVillage());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As VillageStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 村ステータス <br>
+     * プロローグ中 <br>
+     * The group elements:[募集中, 開始待ち]
+     */
+    public void setVillageStatusCode_InScope_Prologue() {
+        setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfPrologue());
+    }
+
     protected void doSetVillageStatusCode_InScope(Collection<String> villageStatusCodeList) {
         regINS(CK_INS, cTL(villageStatusCodeList), xgetCValueVillageStatusCode(), "VILLAGE_STATUS_CODE");
     }

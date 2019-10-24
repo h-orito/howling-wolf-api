@@ -624,14 +624,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSkillCode_Equal_探偵() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -645,14 +637,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_Equal_狂信者() {
         setSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_Equal_おまかせ足音職() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -807,14 +791,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSkillCode_NotEqual_探偵() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -828,14 +804,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_NotEqual_狂信者() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_NotEqual_おまかせ足音職() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -981,6 +949,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         doSetSkillCode_InScope(cTStrL(cdefList));
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼, C国狂人]
+     */
+    public void setSkillCode_InScope_AvailableWerewolfSay() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
+    }
+
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
         regINS(CK_INS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
     }
@@ -1057,14 +1035,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setRequestSkillCode_Equal_探偵() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -1078,14 +1048,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setRequestSkillCode_Equal_狂信者() {
         setRequestSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setRequestSkillCode_Equal_おまかせ足音職() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -1240,14 +1202,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setRequestSkillCode_NotEqual_探偵() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -1261,14 +1215,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setRequestSkillCode_NotEqual_狂信者() {
         setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setRequestSkillCode_NotEqual_おまかせ足音職() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -1414,6 +1360,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         doSetRequestSkillCode_InScope(cTStrL(cdefList));
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼, C国狂人]
+     */
+    public void setRequestSkillCode_InScope_AvailableWerewolfSay() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
+    }
+
     protected void doSetRequestSkillCode_InScope(Collection<String> requestSkillCodeList) {
         regINS(CK_INS, cTL(requestSkillCodeList), xgetCValueRequestSkillCode(), "REQUEST_SKILL_CODE");
     }
@@ -1490,14 +1446,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSecondRequestSkillCode_Equal_探偵() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -1511,14 +1459,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_Equal_狂信者() {
         setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSecondRequestSkillCode_Equal_おまかせ足音職() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -1673,14 +1613,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSecondRequestSkillCode_NotEqual_探偵() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
      * 魔神官
      */
@@ -1694,14 +1626,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_NotEqual_狂信者() {
         setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSecondRequestSkillCode_NotEqual_おまかせ足音職() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
     }
 
     /**
@@ -1845,6 +1769,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_InScope_AsSkill(Collection<CDef.Skill> cdefList) {
         doSetSecondRequestSkillCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼, C国狂人]
+     */
+    public void setSecondRequestSkillCode_InScope_AvailableWerewolfSay() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
     }
 
     protected void doSetSecondRequestSkillCode_InScope(Collection<String> secondRequestSkillCodeList) {
