@@ -79,7 +79,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _villageId; }
     protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -99,7 +99,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _messageNumber; }
     protected ConditionValue xgetCValueMessageNumber() { return xdfgetMessageNumber(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -119,7 +119,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _messageTypeCode; }
     protected ConditionValue xgetCValueMessageTypeCode() { return xdfgetMessageTypeCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
      * @return this. (NotNull)
@@ -139,7 +139,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _messageUnixtimestampMilli; }
     protected ConditionValue xgetCValueMessageUnixtimestampMilli() { return xdfgetMessageUnixtimestampMilli(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
      * @return this. (NotNull)
@@ -159,7 +159,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _villageDayId; }
     protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -179,7 +179,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _villagePlayerId; }
     protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -199,7 +199,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _toVillagePlayerId; }
     protected ConditionValue xgetCValueToVillagePlayerId() { return xdfgetToVillagePlayerId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * TO_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -219,7 +219,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _playerId; }
     protected ConditionValue xgetCValuePlayerId() { return xdfgetPlayerId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * PLAYER_ID: {IX, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -239,7 +239,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _messageContent; }
     protected ConditionValue xgetCValueMessageContent() { return xdfgetMessageContent(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_CONTENT: {NotNull, VARCHAR(10000)}
      * @return this. (NotNull)
@@ -259,7 +259,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _messageDatetime; }
     protected ConditionValue xgetCValueMessageDatetime() { return xdfgetMessageDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -279,7 +279,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _isConvertDisable; }
     protected ConditionValue xgetCValueIsConvertDisable() { return xdfgetIsConvertDisable(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * IS_CONVERT_DISABLE: {NotNull, BIT}
      * @return this. (NotNull)
@@ -299,7 +299,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _faceTypeCode; }
     protected ConditionValue xgetCValueFaceTypeCode() { return xdfgetFaceTypeCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * FACE_TYPE_CODE: {IX, VARCHAR(20)}
      * @return this. (NotNull)
@@ -319,7 +319,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -339,7 +339,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -359,7 +359,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -379,7 +379,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

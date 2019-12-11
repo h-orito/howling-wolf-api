@@ -8,10 +8,14 @@ import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
 import com.ort.wolf4busy.application.coordinator.ParticipateSituationCoordinator
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
+import com.ort.wolf4busy.application.service.CharachipService
 import com.ort.wolf4busy.application.service.PlayerService
 import com.ort.wolf4busy.application.service.VillageService
+import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
@@ -33,7 +37,8 @@ class VillageController(
     val messageCoordinator: MessageCoordinator,
 
     val villageService: VillageService,
-    val playerService: PlayerService
+    val playerService: PlayerService,
+    val charachipService: CharachipService
 ) {
     // ===================================================================================
     //                                                                          Definition
@@ -82,9 +87,14 @@ class VillageController(
         @PathVariable("messageNumber") messageNumber: Int,
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageAnchorMessageView {
-        val message: Message? = messageCoordinator.findMessage(villageId, messageType, messageNumber, user)
+        val village = villageService.findVillage(villageId)
+        val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
+        val playerList: List<Player> = playerService.findPlayerList(villageId)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         return VillageAnchorMessageView(
-            message = message
+            message = message,
+            playerList = playerList,
+            charas = charas
         )
     }
 
@@ -103,9 +113,14 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?,
         @RequestBody @Validated form: VillageMessageForm?
     ): VillageMessageView {
-        val messages: Messages = messageCoordinator.findMessageList(villageId, day, noonnight, user, form?.from)
+        val village = villageService.findVillage(villageId)
+        val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
+        val playerList: List<Player> = playerService.findPlayerList(villageId)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         return VillageMessageView(
-            messageList = messages.messageList
+            messageList = messages.messageList,
+            playerList = playerList,
+            charas = charas
         )
     }
 
@@ -314,11 +329,40 @@ class VillageController(
                 dayChangeIntervalSeconds = 86400 // TODO
             ),
             charachip = VillageCharachip(
-                dummyCharaId = 22, // TODO
-                charachipId = 2 // TODO
+                dummyCharaId = 1, // TODO
+                charachipId = 1 // TODO
             ),
             organizations = VillageOrganizations(), // TODO
-            rules = VillageRules(), // TODO
+            rules = VillageRules( // TODO
+                openVote = false,
+                availableSkillRequest = true,
+                availableSpectate = false,
+                openSkillInGrave = false,
+                visibleGraveMessage = false,
+                availableSuddenlyDeath = true,
+                availableCommit = false,
+                messageRestrict = VillageMessageRestricts(
+                    existRestricts = true,
+                    restrictList = listOf(
+                        VillageMessageRestrict(
+                            type = MessageType(
+                                code = CDef.MessageType.通常発言.code(),
+                                name = CDef.MessageType.通常発言.alias()
+                            ),
+                            count = 20,
+                            length = 200
+                        ),
+                        VillageMessageRestrict(
+                            type = MessageType(
+                                code = CDef.MessageType.人狼の囁き.code(),
+                                name = CDef.MessageType.人狼の囁き.alias()
+                            ),
+                            count = 40,
+                            length = 200
+                        )
+                    )
+                )
+            ),
             password = VillagePassword(
                 joinPasswordRequired = false // TODO
             )

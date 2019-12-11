@@ -110,7 +110,7 @@ public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight,
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">noonnight</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">noonnightBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -863,8 +863,8 @@ public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight,
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * noonnightBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * noonnightBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * noonnightBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * noonnightBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * noonnightBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -872,7 +872,7 @@ public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight,
      * noonnightBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * noonnightBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * noonnightBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * noonnightBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * noonnightBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -880,7 +880,7 @@ public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight,
      * noonnightBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * noonnightBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * noonnightBhv.outideSql().removeBlockComment().selectList()
      * noonnightBhv.outideSql().removeLineComment().selectList()
      * noonnightBhv.outideSql().formatSql().selectList()

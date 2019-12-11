@@ -79,7 +79,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _villageId; }
     protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
@@ -99,7 +99,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _villageSettingItemCode; }
     protected ConditionValue xgetCValueVillageSettingItemCode() { return xdfgetVillageSettingItemCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
      * @return this. (NotNull)
@@ -119,7 +119,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _villageSettingText; }
     protected ConditionValue xgetCValueVillageSettingText() { return xdfgetVillageSettingText(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
      * @return this. (NotNull)
@@ -139,7 +139,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -159,7 +159,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -179,7 +179,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -199,7 +199,7 @@ public class BsVillageSettingCQ extends AbstractBsVillageSettingCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

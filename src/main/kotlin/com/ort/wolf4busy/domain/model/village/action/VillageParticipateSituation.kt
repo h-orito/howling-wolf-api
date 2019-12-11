@@ -55,7 +55,7 @@ data class VillageParticipateSituation(
             // 既に参加している
             if (participant != null) return false
             // プロローグでない
-            if (!village.isPrologue()) return false
+            if (!village.status.isPrologue()) return false
             // 既に最大人数まで参加している
             if (village.participant.count >= village.setting.capacity.max) return false
             // 決着のついていない村に参加している
@@ -79,7 +79,7 @@ data class VillageParticipateSituation(
             // 既に参加している
             if (participant != null) return false
             // プロローグでない
-            if (!village.isPrologue()) return false
+            if (!village.status.isPrologue()) return false
             // 既に最大人数まで参加している
             if (charachipCharaNum - village.setting.capacity.max <= village.spectator.count) return false
             // 決着のついていない村に参加している

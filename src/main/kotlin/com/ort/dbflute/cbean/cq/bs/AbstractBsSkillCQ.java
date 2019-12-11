@@ -63,54 +63,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSkillCode_Equal_C国狂人() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSkillCode_Equal_魔神官() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * Equal(=). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSkillCode_Equal_狂信者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSkillCode_Equal_妖狐() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * Equal(=). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_Equal_おまかせ役職窓あり() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * Equal(=). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSkillCode_Equal_導師() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.導師);
-    }
-
-    /**
      * Equal(=). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
      * 狩人
      */
@@ -135,27 +87,11 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSkillCode_Equal_共鳴者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * Equal(=). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setSkillCode_Equal_霊能者() {
         setSkillCode_Equal_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * Equal(=). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_Equal_おまかせ人外() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -175,35 +111,11 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSkillCode_Equal_おまかせ村人陣営() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_Equal_人狼() {
         setSkillCode_Equal_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSkillCode_Equal_おまかせ人狼陣営() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * Equal(=). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSkillCode_Equal_賢者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetSkillCode_Equal(String skillCode) {
@@ -227,54 +139,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_NotEqual_AsSkill(CDef.Skill cdef) {
         doSetSkillCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSkillCode_NotEqual_C国狂人() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSkillCode_NotEqual_魔神官() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSkillCode_NotEqual_狂信者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSkillCode_NotEqual_妖狐() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_NotEqual_おまかせ役職窓あり() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSkillCode_NotEqual_導師() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.導師);
     }
 
     /**
@@ -302,27 +166,11 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSkillCode_NotEqual_共鳴者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setSkillCode_NotEqual_霊能者() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_NotEqual_おまかせ人外() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -342,35 +190,11 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSkillCode_NotEqual_おまかせ村人陣営() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_NotEqual_人狼() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSkillCode_NotEqual_おまかせ人狼陣営() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSkillCode_NotEqual_賢者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetSkillCode_NotEqual(String skillCode) {
@@ -400,10 +224,30 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
      * 囁き可能 <br>
-     * The group elements:[人狼, C国狂人]
+     * The group elements:[人狼]
      */
     public void setSkillCode_InScope_AvailableWerewolfSay() {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃対象に選べない <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_NotSelectableAttack() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfNotSelectableAttack());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃能力を持つ <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_HasAttackAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
@@ -432,25 +276,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     protected void doSetSkillCode_NotInScope(Collection<String> skillCodeList) {
         regINS(CK_NINS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
     }
-
-    /**
-     * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select SKILL_CODE from message_restriction where ...)} <br>
-     * message_restriction by SKILL_CODE, named 'messageRestrictionAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">existsMessageRestriction</span>(restrictionCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     restrictionCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of MessageRestrictionList for 'exists'. (NotNull)
-     */
-    public void existsMessageRestriction(SubQuery<MessageRestrictionCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepSkillCode_ExistsReferrer_MessageRestrictionList(cb.query());
-        registerExistsReferrer(cb.query(), "SKILL_CODE", "SKILL_CODE", pp, "messageRestrictionList");
-    }
-    public abstract String keepSkillCode_ExistsReferrer_MessageRestrictionList(MessageRestrictionCQ sq);
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
@@ -511,25 +336,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select SKILL_CODE from message_restriction where ...)} <br>
-     * message_restriction by SKILL_CODE, named 'messageRestrictionAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">notExistsMessageRestriction</span>(restrictionCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     restrictionCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of SkillCode_NotExistsReferrer_MessageRestrictionList for 'not exists'. (NotNull)
-     */
-    public void notExistsMessageRestriction(SubQuery<MessageRestrictionCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepSkillCode_NotExistsReferrer_MessageRestrictionList(cb.query());
-        registerNotExistsReferrer(cb.query(), "SKILL_CODE", "SKILL_CODE", pp, "messageRestrictionList");
-    }
-    public abstract String keepSkillCode_NotExistsReferrer_MessageRestrictionList(MessageRestrictionCQ sq);
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query). <br>
      * {not exists (select REQUEST_SKILL_CODE from village_player where ...)} <br>
      * village_player by REQUEST_SKILL_CODE, named 'villagePlayerByRequestSkillCodeAsOne'.
      * <pre>
@@ -585,14 +391,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
     public abstract String keepSkillCode_NotExistsReferrer_VillagePlayerBySkillCodeList(VillagePlayerCQ sq);
 
-    public void xsderiveMessageRestrictionList(String fn, SubQuery<MessageRestrictionCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepSkillCode_SpecifyDerivedReferrer_MessageRestrictionList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "SKILL_CODE", "SKILL_CODE", pp, "messageRestrictionList", al, op);
-    }
-    public abstract String keepSkillCode_SpecifyDerivedReferrer_MessageRestrictionList(MessageRestrictionCQ sq);
-
     public void xsderiveVillagePlayerByRequestSkillCodeList(String fn, SubQuery<VillagePlayerCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         VillagePlayerCB cb = new VillagePlayerCB(); cb.xsetupForDerivedReferrer(this);
@@ -616,33 +414,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "SKILL_CODE", "SKILL_CODE", pp, "villagePlayerBySkillCodeList", al, op);
     }
     public abstract String keepSkillCode_SpecifyDerivedReferrer_VillagePlayerBySkillCodeList(VillagePlayerCQ sq);
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from message_restriction where ...)} <br>
-     * message_restriction by SKILL_CODE, named 'messageRestrictionAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedMessageRestriction()</span>.<span style="color: #CC4747">max</span>(restrictionCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     restrictionCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *     restrictionCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<MessageRestrictionCB> derivedMessageRestriction() {
-        return xcreateQDRFunctionMessageRestrictionList();
-    }
-    protected HpQDRFunction<MessageRestrictionCB> xcreateQDRFunctionMessageRestrictionList() {
-        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveMessageRestrictionList(fn, sq, rd, vl, op));
-    }
-    public void xqderiveMessageRestrictionList(String fn, SubQuery<MessageRestrictionCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String sqpp = keepSkillCode_QueryDerivedReferrer_MessageRestrictionList(cb.query()); String prpp = keepSkillCode_QueryDerivedReferrer_MessageRestrictionListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "SKILL_CODE", "SKILL_CODE", sqpp, "messageRestrictionList", rd, vl, prpp, op);
-    }
-    public abstract String keepSkillCode_QueryDerivedReferrer_MessageRestrictionList(MessageRestrictionCQ sq);
-    public abstract String keepSkillCode_QueryDerivedReferrer_MessageRestrictionListParameter(Object vl);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
@@ -1281,7 +1052,7 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<SkillCB> scalar_Equal() {
@@ -1296,7 +1067,7 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<SkillCB> scalar_NotEqual() {
@@ -1311,7 +1082,7 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<SkillCB> scalar_GreaterThan() {
@@ -1326,7 +1097,7 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<SkillCB> scalar_LessThan() {
@@ -1341,7 +1112,7 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<SkillCB> scalar_GreaterEqual() {
@@ -1444,7 +1215,6 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

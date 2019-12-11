@@ -2,7 +2,7 @@
 
 export ANT_OPTS=-Xmx512m
 
-export DBFLUTE_HOME=../mydbflute/dbflute-1.1.4
+export DBFLUTE_HOME=../mydbflute/dbflute-1.2.1
 
 export MY_PROPERTIES_PATH=build.properties
 

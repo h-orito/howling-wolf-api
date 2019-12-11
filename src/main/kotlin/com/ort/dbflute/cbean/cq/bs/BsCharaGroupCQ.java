@@ -93,7 +93,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
     public Map<String, Object> xdfgetCharaGroupId_QueryDerivedReferrer_CharaListParameter() { return xgetSQuePmMap("charaGroupId_QueryDerivedReferrer_CharaList"); }
     public String keepCharaGroupId_QueryDerivedReferrer_CharaListParameter(Object pm) { return xkeepSQuePm("charaGroupId_QueryDerivedReferrer_CharaList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CHARA_GROUP_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _charaGroupName; }
     protected ConditionValue xgetCValueCharaGroupName() { return xdfgetCharaGroupName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CHARA_GROUP_NAME: {NotNull, VARCHAR(40)}
      * @return this. (NotNull)
@@ -133,7 +133,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _designerId; }
     protected ConditionValue xgetCValueDesignerId() { return xdfgetDesignerId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
      * @return this. (NotNull)
@@ -153,7 +153,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _descriptionUrl; }
     protected ConditionValue xgetCValueDescriptionUrl() { return xdfgetDescriptionUrl(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DESCRIPTION_URL: {TEXT(65535)}
      * @return this. (NotNull)
@@ -173,7 +173,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -193,7 +193,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -213,7 +213,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -233,7 +233,7 @@ public class BsCharaGroupCQ extends AbstractBsCharaGroupCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

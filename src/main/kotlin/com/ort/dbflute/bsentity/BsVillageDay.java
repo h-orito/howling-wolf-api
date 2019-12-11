@@ -33,16 +33,16 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     NOONNIGHT, VILLAGE
+ *     NOONNIGHT, VILLAGE, VOTE(AsOne)
  *
  * [referrer table]
  *     ABILITY, COMMIT, VOTE
  *
  * [foreign property]
- *     noonnight, village
+ *     noonnight, village, voteAsOne
  *
  * [referrer property]
- *     abilityList, commitList, voteList
+ *     abilityList, commitList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -246,6 +246,27 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         _village = village;
     }
 
+    /** vote by VILLAGE_DAY_ID, named 'voteAsOne'. */
+    protected OptionalEntity<Vote> _voteAsOne;
+
+    /**
+     * [get] vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return the entity of foreign property(referrer-as-one) 'voteAsOne'. (NotNull, EmptyAllowed: when e.g. no data, no setupSelect)
+     */
+    public OptionalEntity<Vote> getVoteAsOne() {
+        if (_voteAsOne == null) { _voteAsOne = OptionalEntity.relationEmpty(this, "voteAsOne"); }
+        return _voteAsOne;
+    }
+
+    /**
+     * [set] vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * @param voteAsOne The entity of foreign property(referrer-as-one) 'voteAsOne'. (NullAllowed)
+     */
+    public void setVoteAsOne(OptionalEntity<Vote> voteAsOne) {
+        _voteAsOne = voteAsOne;
+    }
+
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
@@ -289,26 +310,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         _commitList = commitList;
     }
 
-    /** VOTE by VILLAGE_DAY_ID, named 'voteList'. */
-    protected List<Vote> _voteList;
-
-    /**
-     * [get] VOTE by VILLAGE_DAY_ID, named 'voteList'.
-     * @return The entity list of referrer property 'voteList'. (NotNull: even if no loading, returns empty list)
-     */
-    public List<Vote> getVoteList() {
-        if (_voteList == null) { _voteList = newReferrerList(); }
-        return _voteList;
-    }
-
-    /**
-     * [set] VOTE by VILLAGE_DAY_ID, named 'voteList'.
-     * @param voteList The entity list of referrer property 'voteList'. (NullAllowed)
-     */
-    public void setVoteList(List<Vote> voteList) {
-        _voteList = voteList;
-    }
-
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -342,12 +343,12 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         { sb.append(li).append(xbRDS(_noonnight, "noonnight")); }
         if (_village != null && _village.isPresent())
         { sb.append(li).append(xbRDS(_village, "village")); }
+        if (_voteAsOne != null && _voteAsOne.isPresent())
+        { sb.append(li).append(xbRDS(_voteAsOne, "voteAsOne")); }
         if (_abilityList != null) { for (Ability et : _abilityList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "abilityList")); } } }
         if (_commitList != null) { for (Commit et : _commitList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "commitList")); } } }
-        if (_voteList != null) { for (Vote et : _voteList)
-        { if (et != null) { sb.append(li).append(xbRDS(et, "voteList")); } } }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -381,12 +382,12 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         { sb.append(dm).append("noonnight"); }
         if (_village != null && _village.isPresent())
         { sb.append(dm).append("village"); }
+        if (_voteAsOne != null && _voteAsOne.isPresent())
+        { sb.append(dm).append("voteAsOne"); }
         if (_abilityList != null && !_abilityList.isEmpty())
         { sb.append(dm).append("abilityList"); }
         if (_commitList != null && !_commitList.isEmpty())
         { sb.append(dm).append("commitList"); }
-        if (_voteList != null && !_voteList.isEmpty())
-        { sb.append(dm).append("voteList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }

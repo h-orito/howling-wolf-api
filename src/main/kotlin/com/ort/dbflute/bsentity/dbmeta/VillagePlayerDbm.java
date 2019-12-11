@@ -125,7 +125,7 @@ public class VillagePlayerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillagePlayerId = cci("VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", null, null, Integer.class, "villagePlayerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "commitList", null, false);
+    protected final ColumnInfo _columnVillagePlayerId = cci("VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", null, null, Integer.class, "villagePlayerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityByTargetVillagePlayerIdList,abilityByVillagePlayerIdList,commitList,voteByTargetVillagePlayerIdList,voteByVillagePlayerIdList", null, false);
     protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", null, null, false);
     protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "player", null, null, false);
     protected final ColumnInfo _columnCharaId = cci("CHARA_ID", "CHARA_ID", null, null, Integer.class, "charaId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "chara", null, null, false);
@@ -325,12 +325,44 @@ public class VillagePlayerDbm extends AbstractDBMeta {
     //                                     Referrer Property
     //                                     -----------------
     /**
+     * ABILITY by TARGET_VILLAGE_PLAYER_ID, named 'abilityByTargetVillagePlayerIdList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerAbilityByTargetVillagePlayerIdList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillagePlayerId(), AbilityDbm.getInstance().columnTargetVillagePlayerId());
+        return cri("FK_ABILITY_TARGET_VILLAGE_PLAYER", "abilityByTargetVillagePlayerIdList", this, AbilityDbm.getInstance(), mp, false, "villagePlayerByTargetVillagePlayerId");
+    }
+    /**
+     * ABILITY by VILLAGE_PLAYER_ID, named 'abilityByVillagePlayerIdList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerAbilityByVillagePlayerIdList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillagePlayerId(), AbilityDbm.getInstance().columnVillagePlayerId());
+        return cri("FK_ABILITY_VILLAGE_PLAYER", "abilityByVillagePlayerIdList", this, AbilityDbm.getInstance(), mp, false, "villagePlayerByVillagePlayerId");
+    }
+    /**
      * COMMIT by VILLAGE_PLAYER_ID, named 'commitList'.
      * @return The information object of referrer property. (NotNull)
      */
     public ReferrerInfo referrerCommitList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillagePlayerId(), CommitDbm.getInstance().columnVillagePlayerId());
         return cri("FK_COMMIT_VILLAGE_PLAYER", "commitList", this, CommitDbm.getInstance(), mp, false, "villagePlayer");
+    }
+    /**
+     * VOTE by TARGET_VILLAGE_PLAYER_ID, named 'voteByTargetVillagePlayerIdList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerVoteByTargetVillagePlayerIdList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillagePlayerId(), VoteDbm.getInstance().columnTargetVillagePlayerId());
+        return cri("FK_VOTE_TARGET_VILLAGE_PLAYER", "voteByTargetVillagePlayerIdList", this, VoteDbm.getInstance(), mp, false, "villagePlayerByTargetVillagePlayerId");
+    }
+    /**
+     * VOTE by VILLAGE_PLAYER_ID, named 'voteByVillagePlayerIdList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerVoteByVillagePlayerIdList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillagePlayerId(), VoteDbm.getInstance().columnVillagePlayerId());
+        return cri("FK_VOTE_VILLAGE_PLAYER", "voteByVillagePlayerIdList", this, VoteDbm.getInstance(), mp, false, "villagePlayerByVillagePlayerId");
     }
 
     // ===================================================================================

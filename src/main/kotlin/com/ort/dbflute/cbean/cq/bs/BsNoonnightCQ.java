@@ -93,7 +93,7 @@ public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
     public Map<String, Object> xdfgetNoonnightCode_QueryDerivedReferrer_VillageDayListParameter() { return xgetSQuePmMap("noonnightCode_QueryDerivedReferrer_VillageDayList"); }
     public String keepNoonnightCode_QueryDerivedReferrer_VillageDayListParameter(Object pm) { return xkeepSQuePm("noonnightCode_QueryDerivedReferrer_VillageDayList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * NOONNIGHT_CODE: {PK, NotNull, VARCHAR(20), classification=Noonnight}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
       return _noonnightName; }
     protected ConditionValue xgetCValueNoonnightName() { return xdfgetNoonnightName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * NOONNIGHT_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)
@@ -133,7 +133,7 @@ public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
       return _dispOrder; }
     protected ConditionValue xgetCValueDispOrder() { return xdfgetDispOrder(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)

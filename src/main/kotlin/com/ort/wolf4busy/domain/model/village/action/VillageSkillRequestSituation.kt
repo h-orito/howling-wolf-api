@@ -30,7 +30,7 @@ data class VillageSkillRequestSituation(
             // 参加していない
             participant ?: return false
             // プロローグでない
-            if (!village.isPrologue()) return false
+            if (!village.status.isPrologue()) return false
             // 役職希望設定
             return village.setting.rules.availableSkillRequest
         }

@@ -53,6 +53,16 @@ class VillageService(
     }
 
     /**
+     * 発言制限登録
+     * @param villageId villageId
+     * @param setting 村設定
+     */
+    fun registerMessageRestriction(villageId: Int, setting: VillageSettings) {
+        villageDataSource.insertMessageRestrictionList(villageId, setting)
+
+    }
+
+    /**
      * 村日付取得
      * @param villageId villageId
      * @param day 日付

@@ -66,19 +66,13 @@ public class VillageDayCIQ extends AbstractBsVillageDayCQ {
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillageDayId_ExistsReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
-    public String keepVillageDayId_ExistsReferrer_VoteList(VoteCQ sq)
-    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageDayId_NotExistsReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
-    public String keepVillageDayId_NotExistsReferrer_VoteList(VoteCQ sq)
-    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageDayId_SpecifyDerivedReferrer_CommitList(CommitCQ sq)
-    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
-    public String keepVillageDayId_SpecifyDerivedReferrer_VoteList(VoteCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
@@ -87,10 +81,6 @@ public class VillageDayCIQ extends AbstractBsVillageDayCQ {
     public String keepVillageDayId_QueryDerivedReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepVillageDayId_QueryDerivedReferrer_CommitListParameter(Object vl)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepVillageDayId_QueryDerivedReferrer_VoteList(VoteCQ sq)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepVillageDayId_QueryDerivedReferrer_VoteListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueVillageId() { return _myCQ.xdfgetVillageId(); }
     protected ConditionValue xgetCValueDay() { return _myCQ.xdfgetDay(); }

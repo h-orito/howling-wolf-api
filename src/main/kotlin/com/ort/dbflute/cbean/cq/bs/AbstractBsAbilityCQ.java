@@ -44,133 +44,159 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
     //                                                                               Query
     //                                                                               =====
     /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as equal. (basically NotNull: error as default, or no condition as option)
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * @param abilityTypeCode The value of abilityTypeCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setCharaId_Equal(Integer charaId) {
-        doSetCharaId_Equal(charaId);
-    }
-
-    protected void doSetCharaId_Equal(Integer charaId) {
-        regCharaId(CK_EQ, charaId);
+    protected void setAbilityTypeCode_Equal(String abilityTypeCode) {
+        doSetAbilityTypeCode_Equal(fRES(abilityTypeCode));
     }
 
     /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as notEqual. (basically NotNull: error as default, or no condition as option)
+     * Equal(=). As AbilityType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * 能力種別
+     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_NotEqual(Integer charaId) {
-        doSetCharaId_NotEqual(charaId);
-    }
-
-    protected void doSetCharaId_NotEqual(Integer charaId) {
-        regCharaId(CK_NES, charaId);
+    public void setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType cdef) {
+        doSetAbilityTypeCode_Equal(cdef != null ? cdef.code() : null);
     }
 
     /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * Equal(=). As 襲撃 (ATTACK). And OnlyOnceRegistered. <br>
+     * 襲撃
      */
-    public void setCharaId_GreaterThan(Integer charaId) {
-        regCharaId(CK_GT, charaId);
+    public void setAbilityTypeCode_Equal_襲撃() {
+        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.襲撃);
     }
 
     /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as lessThan. (basically NotNull: error as default, or no condition as option)
+     * Equal(=). As 占い (DIVINE). And OnlyOnceRegistered. <br>
+     * 占い
      */
-    public void setCharaId_LessThan(Integer charaId) {
-        regCharaId(CK_LT, charaId);
+    public void setAbilityTypeCode_Equal_占い() {
+        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.占い);
     }
 
     /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * Equal(=). As 護衛 (GUARD). And OnlyOnceRegistered. <br>
+     * 護衛
      */
-    public void setCharaId_GreaterEqual(Integer charaId) {
-        regCharaId(CK_GE, charaId);
+    public void setAbilityTypeCode_Equal_護衛() {
+        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.護衛);
+    }
+
+    protected void doSetAbilityTypeCode_Equal(String abilityTypeCode) {
+        regAbilityTypeCode(CK_EQ, abilityTypeCode);
     }
 
     /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * @param abilityTypeCode The value of abilityTypeCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setCharaId_LessEqual(Integer charaId) {
-        regCharaId(CK_LE, charaId);
+    protected void setAbilityTypeCode_NotEqual(String abilityTypeCode) {
+        doSetAbilityTypeCode_NotEqual(fRES(abilityTypeCode));
     }
 
     /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
+     * NotEqual(&lt;&gt;). As AbilityType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * 能力種別
+     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setCharaId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType cdef) {
+        doSetAbilityTypeCode_NotEqual(cdef != null ? cdef.code() : null);
     }
 
     /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
+     * NotEqual(&lt;&gt;). As 襲撃 (ATTACK). And OnlyOnceRegistered. <br>
+     * 襲撃
      */
-    protected void setCharaId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueCharaId(), "CHARA_ID", rangeOfOption);
+    public void setAbilityTypeCode_NotEqual_襲撃() {
+        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.襲撃);
     }
 
     /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaIdList The collection of charaId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NotEqual(&lt;&gt;). As 占い (DIVINE). And OnlyOnceRegistered. <br>
+     * 占い
      */
-    public void setCharaId_InScope(Collection<Integer> charaIdList) {
-        doSetCharaId_InScope(charaIdList);
-    }
-
-    protected void doSetCharaId_InScope(Collection<Integer> charaIdList) {
-        regINS(CK_INS, cTL(charaIdList), xgetCValueCharaId(), "CHARA_ID");
+    public void setAbilityTypeCode_NotEqual_占い() {
+        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.占い);
     }
 
     /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaIdList The collection of charaId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NotEqual(&lt;&gt;). As 護衛 (GUARD). And OnlyOnceRegistered. <br>
+     * 護衛
      */
-    public void setCharaId_NotInScope(Collection<Integer> charaIdList) {
-        doSetCharaId_NotInScope(charaIdList);
+    public void setAbilityTypeCode_NotEqual_護衛() {
+        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.護衛);
     }
 
-    protected void doSetCharaId_NotInScope(Collection<Integer> charaIdList) {
-        regINS(CK_NINS, cTL(charaIdList), xgetCValueCharaId(), "CHARA_ID");
+    protected void doSetAbilityTypeCode_NotEqual(String abilityTypeCode) {
+        regAbilityTypeCode(CK_NES, abilityTypeCode);
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * @param abilityTypeCodeList The collection of abilityTypeCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    protected void setAbilityTypeCode_InScope(Collection<String> abilityTypeCodeList) {
+        doSetAbilityTypeCode_InScope(abilityTypeCodeList);
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As AbilityType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * 能力種別
+     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setAbilityTypeCode_InScope_AsAbilityType(Collection<CDef.AbilityType> cdefList) {
+        doSetAbilityTypeCode_InScope(cTStrL(cdefList));
+    }
+
+    protected void doSetAbilityTypeCode_InScope(Collection<String> abilityTypeCodeList) {
+        regINS(CK_INS, cTL(abilityTypeCodeList), xgetCValueAbilityTypeCode(), "ABILITY_TYPE_CODE");
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * @param abilityTypeCodeList The collection of abilityTypeCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    protected void setAbilityTypeCode_NotInScope(Collection<String> abilityTypeCodeList) {
+        doSetAbilityTypeCode_NotInScope(abilityTypeCodeList);
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. As AbilityType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * 能力種別
+     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setAbilityTypeCode_NotInScope_AsAbilityType(Collection<CDef.AbilityType> cdefList) {
+        doSetAbilityTypeCode_NotInScope(cTStrL(cdefList));
+    }
+
+    protected void doSetAbilityTypeCode_NotInScope(Collection<String> abilityTypeCodeList) {
+        regINS(CK_NINS, cTL(abilityTypeCodeList), xgetCValueAbilityTypeCode(), "ABILITY_TYPE_CODE");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      */
-    public void setCharaId_IsNull() { regCharaId(CK_ISN, DOBJ); }
+    public void setAbilityTypeCode_IsNull() { regAbilityTypeCode(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      */
-    public void setCharaId_IsNotNull() { regCharaId(CK_ISNN, DOBJ); }
+    public void setAbilityTypeCode_IsNotNull() { regAbilityTypeCode(CK_ISNN, DOBJ); }
 
-    protected void regCharaId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCharaId(), "CHARA_ID"); }
-    protected abstract ConditionValue xgetCValueCharaId();
+    protected void regAbilityTypeCode(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueAbilityTypeCode(), "ABILITY_TYPE_CODE"); }
+    protected abstract ConditionValue xgetCValueAbilityTypeCode();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -303,303 +329,249 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaId The value of targetCharaId as equal. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setTargetCharaId_Equal(Integer targetCharaId) {
-        doSetTargetCharaId_Equal(targetCharaId);
+    public void setVillagePlayerId_Equal(Integer villagePlayerId) {
+        doSetVillagePlayerId_Equal(villagePlayerId);
     }
 
-    protected void doSetTargetCharaId_Equal(Integer targetCharaId) {
-        regTargetCharaId(CK_EQ, targetCharaId);
+    protected void doSetVillagePlayerId_Equal(Integer villagePlayerId) {
+        regVillagePlayerId(CK_EQ, villagePlayerId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaId The value of targetCharaId as notEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setTargetCharaId_NotEqual(Integer targetCharaId) {
-        doSetTargetCharaId_NotEqual(targetCharaId);
+    public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
+        doSetVillagePlayerId_NotEqual(villagePlayerId);
     }
 
-    protected void doSetTargetCharaId_NotEqual(Integer targetCharaId) {
-        regTargetCharaId(CK_NES, targetCharaId);
+    protected void doSetVillagePlayerId_NotEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_NES, villagePlayerId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaId The value of targetCharaId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setTargetCharaId_GreaterThan(Integer targetCharaId) {
-        regTargetCharaId(CK_GT, targetCharaId);
+    public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
+        regVillagePlayerId(CK_GT, villagePlayerId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaId The value of targetCharaId as lessThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setTargetCharaId_LessThan(Integer targetCharaId) {
-        regTargetCharaId(CK_LT, targetCharaId);
+    public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
+        regVillagePlayerId(CK_LT, villagePlayerId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaId The value of targetCharaId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setTargetCharaId_GreaterEqual(Integer targetCharaId) {
-        regTargetCharaId(CK_GE, targetCharaId);
+    public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_GE, villagePlayerId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaId The value of targetCharaId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setTargetCharaId_LessEqual(Integer targetCharaId) {
-        regTargetCharaId(CK_LE, targetCharaId);
+    public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_LE, villagePlayerId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of targetCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of targetCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setTargetCharaId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setTargetCharaId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of targetCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of targetCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setTargetCharaId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueTargetCharaId(), "TARGET_CHARA_ID", rangeOfOption);
+    protected void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaIdList The collection of targetCharaId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setTargetCharaId_InScope(Collection<Integer> targetCharaIdList) {
-        doSetTargetCharaId_InScope(targetCharaIdList);
+    public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
+        doSetVillagePlayerId_InScope(villagePlayerIdList);
     }
 
-    protected void doSetTargetCharaId_InScope(Collection<Integer> targetCharaIdList) {
-        regINS(CK_INS, cTL(targetCharaIdList), xgetCValueTargetCharaId(), "TARGET_CHARA_ID");
+    protected void doSetVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
+        regINS(CK_INS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @param targetCharaIdList The collection of targetCharaId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setTargetCharaId_NotInScope(Collection<Integer> targetCharaIdList) {
-        doSetTargetCharaId_NotInScope(targetCharaIdList);
+    public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
+        doSetVillagePlayerId_NotInScope(villagePlayerIdList);
     }
 
-    protected void doSetTargetCharaId_NotInScope(Collection<Integer> targetCharaIdList) {
-        regINS(CK_NINS, cTL(targetCharaIdList), xgetCValueTargetCharaId(), "TARGET_CHARA_ID");
+    protected void doSetVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
+        regINS(CK_NINS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
+    }
+
+    protected void regVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueVillagePlayerId();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
+        doSetTargetVillagePlayerId_Equal(targetVillagePlayerId);
+    }
+
+    protected void doSetTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_EQ, targetVillagePlayerId);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
+        doSetTargetVillagePlayerId_NotEqual(targetVillagePlayerId);
+    }
+
+    protected void doSetTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_NES, targetVillagePlayerId);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_GreaterThan(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_GT, targetVillagePlayerId);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_LessThan(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_LT, targetVillagePlayerId);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_GreaterEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_GE, targetVillagePlayerId);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_LessEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_LE, targetVillagePlayerId);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setTargetVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
+        doSetTargetVillagePlayerId_InScope(targetVillagePlayerIdList);
+    }
+
+    protected void doSetTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
+        regINS(CK_INS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
+        doSetTargetVillagePlayerId_NotInScope(targetVillagePlayerIdList);
+    }
+
+    protected void doSetTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
+        regINS(CK_NINS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      */
-    public void setTargetCharaId_IsNull() { regTargetCharaId(CK_ISN, DOBJ); }
+    public void setTargetVillagePlayerId_IsNull() { regTargetVillagePlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      */
-    public void setTargetCharaId_IsNotNull() { regTargetCharaId(CK_ISNN, DOBJ); }
+    public void setTargetVillagePlayerId_IsNotNull() { regTargetVillagePlayerId(CK_ISNN, DOBJ); }
 
-    protected void regTargetCharaId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueTargetCharaId(), "TARGET_CHARA_ID"); }
-    protected abstract ConditionValue xgetCValueTargetCharaId();
-
-    /**
-     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
-     * @param abilityTypeCode The value of abilityTypeCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setAbilityTypeCode_Equal(String abilityTypeCode) {
-        doSetAbilityTypeCode_Equal(fRES(abilityTypeCode));
-    }
-
-    /**
-     * Equal(=). As AbilityType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
-     * 能力種別
-     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType cdef) {
-        doSetAbilityTypeCode_Equal(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * Equal(=). As 襲撃 (ATTACK). And OnlyOnceRegistered. <br>
-     * 襲撃
-     */
-    public void setAbilityTypeCode_Equal_襲撃() {
-        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.襲撃);
-    }
-
-    /**
-     * Equal(=). As 占い (DIVINE). And OnlyOnceRegistered. <br>
-     * 占い
-     */
-    public void setAbilityTypeCode_Equal_占い() {
-        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.占い);
-    }
-
-    /**
-     * Equal(=). As 護衛 (GUARD). And OnlyOnceRegistered. <br>
-     * 護衛
-     */
-    public void setAbilityTypeCode_Equal_護衛() {
-        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.護衛);
-    }
-
-    /**
-     * Equal(=). As 捜査 (INVESTIGATE). And OnlyOnceRegistered. <br>
-     * 捜査
-     */
-    public void setAbilityTypeCode_Equal_捜査() {
-        setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.捜査);
-    }
-
-    protected void doSetAbilityTypeCode_Equal(String abilityTypeCode) {
-        regAbilityTypeCode(CK_EQ, abilityTypeCode);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
-     * @param abilityTypeCode The value of abilityTypeCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setAbilityTypeCode_NotEqual(String abilityTypeCode) {
-        doSetAbilityTypeCode_NotEqual(fRES(abilityTypeCode));
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As AbilityType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
-     * 能力種別
-     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType cdef) {
-        doSetAbilityTypeCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 襲撃 (ATTACK). And OnlyOnceRegistered. <br>
-     * 襲撃
-     */
-    public void setAbilityTypeCode_NotEqual_襲撃() {
-        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.襲撃);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 占い (DIVINE). And OnlyOnceRegistered. <br>
-     * 占い
-     */
-    public void setAbilityTypeCode_NotEqual_占い() {
-        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.占い);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 護衛 (GUARD). And OnlyOnceRegistered. <br>
-     * 護衛
-     */
-    public void setAbilityTypeCode_NotEqual_護衛() {
-        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.護衛);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 捜査 (INVESTIGATE). And OnlyOnceRegistered. <br>
-     * 捜査
-     */
-    public void setAbilityTypeCode_NotEqual_捜査() {
-        setAbilityTypeCode_NotEqual_AsAbilityType(CDef.AbilityType.捜査);
-    }
-
-    protected void doSetAbilityTypeCode_NotEqual(String abilityTypeCode) {
-        regAbilityTypeCode(CK_NES, abilityTypeCode);
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
-     * @param abilityTypeCodeList The collection of abilityTypeCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setAbilityTypeCode_InScope(Collection<String> abilityTypeCodeList) {
-        doSetAbilityTypeCode_InScope(abilityTypeCodeList);
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. As AbilityType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
-     * 能力種別
-     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setAbilityTypeCode_InScope_AsAbilityType(Collection<CDef.AbilityType> cdefList) {
-        doSetAbilityTypeCode_InScope(cTStrL(cdefList));
-    }
-
-    protected void doSetAbilityTypeCode_InScope(Collection<String> abilityTypeCodeList) {
-        regINS(CK_INS, cTL(abilityTypeCodeList), xgetCValueAbilityTypeCode(), "ABILITY_TYPE_CODE");
-    }
-
-    /**
-     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
-     * @param abilityTypeCodeList The collection of abilityTypeCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setAbilityTypeCode_NotInScope(Collection<String> abilityTypeCodeList) {
-        doSetAbilityTypeCode_NotInScope(abilityTypeCodeList);
-    }
-
-    /**
-     * NotInScope {not in ('a', 'b')}. As AbilityType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
-     * 能力種別
-     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setAbilityTypeCode_NotInScope_AsAbilityType(Collection<CDef.AbilityType> cdefList) {
-        doSetAbilityTypeCode_NotInScope(cTStrL(cdefList));
-    }
-
-    protected void doSetAbilityTypeCode_NotInScope(Collection<String> abilityTypeCodeList) {
-        regINS(CK_NINS, cTL(abilityTypeCodeList), xgetCValueAbilityTypeCode(), "ABILITY_TYPE_CODE");
-    }
-
-    /**
-     * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
-     */
-    public void setAbilityTypeCode_IsNull() { regAbilityTypeCode(CK_ISN, DOBJ); }
-
-    /**
-     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
-     */
-    public void setAbilityTypeCode_IsNotNull() { regAbilityTypeCode(CK_ISNN, DOBJ); }
-
-    protected void regAbilityTypeCode(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueAbilityTypeCode(), "ABILITY_TYPE_CODE"); }
-    protected abstract ConditionValue xgetCValueAbilityTypeCode();
+    protected void regTargetVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueTargetVillagePlayerId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -1032,7 +1004,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<AbilityCB> scalar_Equal() {
@@ -1047,7 +1019,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<AbilityCB> scalar_NotEqual() {
@@ -1062,7 +1034,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<AbilityCB> scalar_GreaterThan() {
@@ -1077,7 +1049,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<AbilityCB> scalar_LessThan() {
@@ -1092,7 +1064,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<AbilityCB> scalar_GreaterEqual() {
@@ -1150,7 +1122,6 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

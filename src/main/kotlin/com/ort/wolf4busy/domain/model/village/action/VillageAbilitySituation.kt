@@ -1,6 +1,8 @@
 package com.ort.wolf4busy.domain.model.village.action
 
 import com.ort.wolf4busy.domain.model.ability.Ability
+import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 data class VillageAbilitySituation(
@@ -8,4 +10,14 @@ data class VillageAbilitySituation(
     val targetList: List<VillageParticipant>,
     val target: VillageParticipant?
 ) {
+    constructor(
+        village: Village,
+        participant: VillageParticipant?,
+        ability: Ability,
+        villageAbilities: VillageAbilities
+    ) : this(
+        type = ability,
+        targetList = ability.getSelectableTargetList(village, participant),
+        target = ability.getSelectingTarget(village, participant, villageAbilities)
+    )
 }

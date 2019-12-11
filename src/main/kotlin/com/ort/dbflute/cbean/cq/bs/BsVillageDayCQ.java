@@ -85,26 +85,17 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public Map<String, CommitCQ> xdfgetVillageDayId_ExistsReferrer_CommitList() { return xgetSQueMap("villageDayId_ExistsReferrer_CommitList"); }
     public String keepVillageDayId_ExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_CommitList", sq); }
 
-    public Map<String, VoteCQ> xdfgetVillageDayId_ExistsReferrer_VoteList() { return xgetSQueMap("villageDayId_ExistsReferrer_VoteList"); }
-    public String keepVillageDayId_ExistsReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_VoteList", sq); }
-
     public Map<String, AbilityCQ> xdfgetVillageDayId_NotExistsReferrer_AbilityList() { return xgetSQueMap("villageDayId_NotExistsReferrer_AbilityList"); }
     public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_AbilityList", sq); }
 
     public Map<String, CommitCQ> xdfgetVillageDayId_NotExistsReferrer_CommitList() { return xgetSQueMap("villageDayId_NotExistsReferrer_CommitList"); }
     public String keepVillageDayId_NotExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_CommitList", sq); }
 
-    public Map<String, VoteCQ> xdfgetVillageDayId_NotExistsReferrer_VoteList() { return xgetSQueMap("villageDayId_NotExistsReferrer_VoteList"); }
-    public String keepVillageDayId_NotExistsReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_VoteList", sq); }
-
     public Map<String, AbilityCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_AbilityList"); }
     public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_AbilityList", sq); }
 
     public Map<String, CommitCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_CommitList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_CommitList"); }
     public String keepVillageDayId_SpecifyDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_CommitList", sq); }
-
-    public Map<String, VoteCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_VoteList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_VoteList"); }
-    public String keepVillageDayId_SpecifyDerivedReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_VoteList", sq); }
 
     public Map<String, AbilityCQ> xdfgetVillageDayId_QueryDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_AbilityList"); }
     public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_AbilityList", sq); }
@@ -116,12 +107,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_CommitListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_CommitList"); }
     public String keepVillageDayId_QueryDerivedReferrer_CommitListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_CommitList", pm); }
 
-    public Map<String, VoteCQ> xdfgetVillageDayId_QueryDerivedReferrer_VoteList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_VoteList"); }
-    public String keepVillageDayId_QueryDerivedReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_VoteList", sq); }
-    public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_VoteListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_VoteList"); }
-    public String keepVillageDayId_QueryDerivedReferrer_VoteListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_VoteList", pm); }
-
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_DAY_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -141,7 +127,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _villageId; }
     protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
@@ -161,7 +147,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _day; }
     protected ConditionValue xgetCValueDay() { return xdfgetDay(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DAY: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -181,7 +167,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _noonnightCode; }
     protected ConditionValue xgetCValueNoonnightCode() { return xdfgetNoonnightCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return this. (NotNull)
@@ -201,7 +187,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _daychangeDatetime; }
     protected ConditionValue xgetCValueDaychangeDatetime() { return xdfgetDaychangeDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DAYCHANGE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -221,7 +207,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _isUpdating; }
     protected ConditionValue xgetCValueIsUpdating() { return xdfgetIsUpdating(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * IS_UPDATING: {NotNull, BIT}
      * @return this. (NotNull)
@@ -241,7 +227,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -261,7 +247,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -281,7 +267,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -301,7 +287,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -362,6 +348,9 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
         if (bq.hasConditionQueryVillage()) {
             uq.queryVillage().reflectRelationOnUnionQuery(bq.queryVillage(), uq.queryVillage());
         }
+        if (bq.hasConditionQueryVoteAsOne()) {
+            uq.queryVoteAsOne().reflectRelationOnUnionQuery(bq.queryVoteAsOne(), uq.queryVoteAsOne());
+        }
     }
 
     // ===================================================================================
@@ -406,6 +395,24 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     }
     protected void xsetupOuterJoinVillage() { xregOutJo("village"); }
     public boolean hasConditionQueryVillage() { return xhasQueRlMap("village"); }
+
+    /**
+     * Get the condition-query for relation table. <br>
+     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public VoteCQ queryVoteAsOne() { return xdfgetConditionQueryVoteAsOne(); }
+    public VoteCQ xdfgetConditionQueryVoteAsOne() {
+        String prop = "voteAsOne";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVoteAsOne()); xsetupOuterJoinVoteAsOne(); }
+        return xgetQueRlMap(prop);
+    }
+    protected VoteCQ xcreateQueryVoteAsOne() {
+        String nrp = xresolveNRP("village_day", "voteAsOne"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VoteCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "voteAsOne", nrp);
+    }
+    protected void xsetupOuterJoinVoteAsOne() { xregOutJo("voteAsOne"); }
+    public boolean hasConditionQueryVoteAsOne() { return xhasQueRlMap("voteAsOne"); }
 
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;

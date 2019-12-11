@@ -4,4 +4,6 @@ data class VillageParticipants(
         val count: Int,
         val memberList: List<VillageParticipant> = listOf()
 ) {
+
+
 }

@@ -110,7 +110,7 @@ public abstract class BsCharaImageBhv extends AbstractBehaviorWritable<CharaImag
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">charaImage</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">charaImageBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -808,8 +808,8 @@ public abstract class BsCharaImageBhv extends AbstractBehaviorWritable<CharaImag
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * charaImageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * charaImageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * charaImageBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * charaImageBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * charaImageBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -817,7 +817,7 @@ public abstract class BsCharaImageBhv extends AbstractBehaviorWritable<CharaImag
      * charaImageBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * charaImageBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * charaImageBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * charaImageBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * charaImageBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -825,7 +825,7 @@ public abstract class BsCharaImageBhv extends AbstractBehaviorWritable<CharaImag
      * charaImageBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * charaImageBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * charaImageBhv.outideSql().removeBlockComment().selectList()
      * charaImageBhv.outideSql().removeLineComment().selectList()
      * charaImageBhv.outideSql().formatSql().selectList()

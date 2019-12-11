@@ -16,12 +16,12 @@ data class Village(
     val day: VillageDays
 ) {
 
-    fun isCompleted(): Boolean {
-        return CDef.VillageStatus.codeOf(this.status.code).isFinishedVillage
-    }
 
-    fun isPrologue(): Boolean {
-        return CDef.VillageStatus.codeOf(this.status.code).isPrologue
+    // ===================================================================================
+    //                                                                         participant
+    //                                                                           =========
+    fun dummyChara(): VillageParticipant {
+        return participant.memberList.find { it.charaId == setting.charachip.dummyCharaId }!!
     }
 
     // ===================================================================================
@@ -33,7 +33,7 @@ data class Village(
 
     fun isViewableGraveMessage(participant: VillageParticipant?): Boolean {
         // 終了していたら全て見られる
-        if (this.isCompleted()) return true
+        if (this.status.isCompleted()) return true
         // 見られる設定なら開放
         if (this.setting.rules.visibleGraveMessage) return true
         // 参加していなければNG
@@ -46,7 +46,7 @@ data class Village(
 
     fun isViewableSpectateMessage(participant: VillageParticipant?, day: Int): Boolean {
         // 終了していたら全て見られる
-        if (this.isCompleted()) return true
+        if (this.status.isCompleted()) return true
         // 進行中以外は開放
         if (CDef.VillageStatus.進行中.code() != this.status.code) return true
         // 見られる設定なら開放
@@ -61,56 +61,35 @@ data class Village(
         return participant?.dead != null && CDef.DeadReason.突然.code() != participant.dead.code
     }
 
-    fun isViewableMasonMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.isCompleted()) return true
-        // 参加していて共鳴者なら開放
-        return isParticipateSkillAs(participant, CDef.Skill.共鳴者)
-    }
-
     fun isViewableWerewolfMessage(participant: VillageParticipant?): Boolean {
         // 終了していたら全て見られる
-        if (this.isCompleted()) return true
+        if (this.status.isCompleted()) return true
         // 参加していて人狼なら開放
         return isParticipateSkillAs(participant, CDef.Skill.人狼)
     }
 
     fun isViewableSeerMessage(participant: VillageParticipant?): Boolean {
         // 終了していたら全て見られる
-        if (this.isCompleted()) return true
+        if (this.status.isCompleted()) return true
         // 参加していて占い師なら開放
         return isParticipateSkillAs(participant, CDef.Skill.占い師)
     }
 
-    fun isViewableWiseMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.isCompleted()) return true
-        // 参加していて賢者なら開放
-        return isParticipateSkillAs(participant, CDef.Skill.賢者)
-    }
-
     fun isViewablePsychicMessage(participant: VillageParticipant?): Boolean {
         // 終了していたら全て見られる
-        if (this.isCompleted()) return true
+        if (this.status.isCompleted()) return true
         // 参加していて霊能者なら開放
         return isParticipateSkillAs(participant, CDef.Skill.霊能者)
     }
 
-    fun isViewableGuruMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.isCompleted()) return true
-        // 参加していて導師なら開放
-        return isParticipateSkillAs(participant, CDef.Skill.導師)
-    }
-
     fun isViewableMonologueMessage(): Boolean {
         // 終了していたら全て見られる
-        return this.isCompleted()
+        return this.status.isCompleted()
     }
 
     fun isViewableSecretMessage(): Boolean {
         // 終了していたら全て見られる
-        return this.isCompleted()
+        return this.status.isCompleted()
     }
 
     // ===================================================================================

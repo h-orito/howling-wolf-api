@@ -30,6 +30,8 @@ class VillageCoordinator(
         val villageId: Int = villageService.registerVillage(village)
         // 村設定を登録
         villageService.registerVillageSettings(villageId, village.setting, villagePassword)
+        // 発言制限を登録
+        villageService.registerMessageRestriction(villageId, village.setting)
         // 村日付を登録
         val villageDayId = villageService.registerVillageDay(villageId, 0, CDef.Noonnight.昼, village.setting.time.startDatetime)
         // 村作成時のシステムメッセージを登録
@@ -125,26 +127,33 @@ class VillageCoordinator(
         )
     }
 
-    private fun assertParticipate(village: Village, charaId: Int, firstRequestSkill: CDef.Skill, secondRequestSkill: CDef.Skill, isSpectate: Boolean) {
+    private fun assertParticipate(
+        village: Village,
+        charaId: Int,
+        firstRequestSkill: CDef.Skill,
+        secondRequestSkill: CDef.Skill,
+        isSpectate: Boolean
+    ) {
         // 既に参加しているキャラはNG
         if (isAlreadyParticipateCharacter(village, charaId)) throw Wolf4busyBusinessException("既に参加されているキャラクターです")
 
         if (isSpectate) {
             // [キャラチップの人数 - 定員] 人を超えて見学はできない
-            val charachipCharaNum = charachipService.findCharaChip(village.setting.charachip.charachipId).charaList.size
+            val charachipCharaNum = charachipService.findCharaChip(village.setting.charachip.charachipId).charaIdList.size
             if (charachipCharaNum - village.setting.capacity.max <= village.spectator.count) throw Wolf4busyBusinessException("既に上限人数まで見学者がいるため見学者として参加できません。")
         } else {
             if (village.setting.capacity.max <= village.participant.count) throw Wolf4busyBusinessException("既に上限人数までプレイヤーが参加しているため参加できません。")
             if (!village.setting.rules.availableSkillRequest &&
-                (firstRequestSkill != CDef.Skill.おまかせ || secondRequestSkill != CDef.Skill.おまかせ)) {
+                (firstRequestSkill != CDef.Skill.おまかせ || secondRequestSkill != CDef.Skill.おまかせ)
+            ) {
                 throw Wolf4busyBusinessException("希望役職が不正です")
             }
         }
     }
 
     private fun isAlreadyParticipateCharacter(village: Village, charaId: Int): Boolean {
-        return village.participant.memberList.any { it.chara.id == charaId }
-            || village.spectator.memberList.any { it.chara.id == charaId }
+        return village.participant.memberList.any { it.charaId == charaId }
+                || village.spectator.memberList.any { it.charaId == charaId }
     }
 
     private fun assertPassword(village: Village, password: String?, playerId: Int) {

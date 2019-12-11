@@ -94,7 +94,7 @@ public class SkillDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "messageRestrictionList,villagePlayerByRequestSkillCodeList,villagePlayerBySecondRequestSkillCodeList,villagePlayerBySkillCodeList", CDef.DefMeta.Skill, false);
+    protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "villagePlayerByRequestSkillCodeList,villagePlayerBySecondRequestSkillCodeList,villagePlayerBySkillCodeList", CDef.DefMeta.Skill, false);
     protected final ColumnInfo _columnSkillName = cci("SKILL_NAME", "SKILL_NAME", null, null, String.class, "skillName", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnSkillShortName = cci("SKILL_SHORT_NAME", "SKILL_SHORT_NAME", null, null, String.class, "skillShortName", null, false, false, true, "CHAR", 1, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCampCode = cci("CAMP_CODE", "CAMP_CODE", null, null, String.class, "campCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "camp", null, CDef.DefMeta.Camp, false);
@@ -168,14 +168,6 @@ public class SkillDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
-    /**
-     * MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerMessageRestrictionList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnSkillCode(), MessageRestrictionDbm.getInstance().columnSkillCode());
-        return cri("FK_MESSAGE_RESTRICTION_SKILL", "messageRestrictionList", this, MessageRestrictionDbm.getInstance(), mp, false, "skill");
-    }
     /**
      * VILLAGE_PLAYER by REQUEST_SKILL_CODE, named 'villagePlayerByRequestSkillCodeList'.
      * @return The information object of referrer property. (NotNull)

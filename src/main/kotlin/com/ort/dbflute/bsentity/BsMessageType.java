@@ -158,22 +158,6 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
-     * Set the value of messageTypeCode as 役職霊視結果 (PRIVATE_GURU). <br>
-     * 役職霊視結果
-     */
-    public void setMessageTypeCode_役職霊視結果() {
-        setMessageTypeCodeAsMessageType(CDef.MessageType.役職霊視結果);
-    }
-
-    /**
-     * Set the value of messageTypeCode as 足音調査結果 (PRIVATE_INVESTIGATE). <br>
-     * 足音調査結果
-     */
-    public void setMessageTypeCode_足音調査結果() {
-        setMessageTypeCodeAsMessageType(CDef.MessageType.足音調査結果);
-    }
-
-    /**
      * Set the value of messageTypeCode as 白黒霊視結果 (PRIVATE_PSYCHIC). <br>
      * 白黒霊視結果
      */
@@ -195,14 +179,6 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
      */
     public void setMessageTypeCode_非公開システムメッセージ() {
         setMessageTypeCodeAsMessageType(CDef.MessageType.非公開システムメッセージ);
-    }
-
-    /**
-     * Set the value of messageTypeCode as 役職占い結果 (PRIVATE_WISE). <br>
-     * 役職占い結果
-     */
-    public void setMessageTypeCode_役職占い結果() {
-        setMessageTypeCodeAsMessageType(CDef.MessageType.役職占い結果);
     }
 
     /**
@@ -296,28 +272,6 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
-     * Is the value of messageTypeCode 役職霊視結果? <br>
-     * 役職霊視結果
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isMessageTypeCode役職霊視結果() {
-        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
-        return cdef != null ? cdef.equals(CDef.MessageType.役職霊視結果) : false;
-    }
-
-    /**
-     * Is the value of messageTypeCode 足音調査結果? <br>
-     * 足音調査結果
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isMessageTypeCode足音調査結果() {
-        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
-        return cdef != null ? cdef.equals(CDef.MessageType.足音調査結果) : false;
-    }
-
-    /**
      * Is the value of messageTypeCode 白黒霊視結果? <br>
      * 白黒霊視結果
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -348,17 +302,6 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     public boolean isMessageTypeCode非公開システムメッセージ() {
         CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
         return cdef != null ? cdef.equals(CDef.MessageType.非公開システムメッセージ) : false;
-    }
-
-    /**
-     * Is the value of messageTypeCode 役職占い結果? <br>
-     * 役職占い結果
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isMessageTypeCode役職占い結果() {
-        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
-        return cdef != null ? cdef.equals(CDef.MessageType.役職占い結果) : false;
     }
 
     /**

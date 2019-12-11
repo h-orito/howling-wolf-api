@@ -14,6 +14,10 @@ class PlayerService(
         return playerDataSource.selectPlayer(user.uid)
     }
 
+    fun findPlayerList(villageId: Int): List<Player> {
+        return playerDataSource.selectPlayerList(villageId)
+    }
+
     fun updateNickname(user: Wolf4busyUser, nickname: String, twitterUserName: String) {
         playerDataSource.updateNickname(user.uid, nickname, twitterUserName)
     }
