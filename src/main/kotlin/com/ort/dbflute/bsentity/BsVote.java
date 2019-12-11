@@ -17,10 +17,10 @@ import com.ort.dbflute.exentity.*;
  * 投票
  * <pre>
  * [primary-key]
- *     CHARA_ID, VILLAGE_DAY_ID
+ *     VILLAGE_DAY_ID
  *
  * [column]
- *     CHARA_ID, VILLAGE_DAY_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID
  *
  * [sequence]
  *     
@@ -32,33 +32,33 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     CHARA, VILLAGE_DAY
+ *     VILLAGE_PLAYER, VILLAGE_DAY
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     charaByCharaId, villageDay, charaByVoteCharaId
+ *     villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
  *
  * [referrer property]
  *     
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer charaId = entity.getCharaId();
  * Integer villageDayId = entity.getVillageDayId();
- * Integer voteCharaId = entity.getVoteCharaId();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * String updateTrace = entity.getUpdateTrace();
- * entity.setCharaId(charaId);
+ * Integer villagePlayerId = entity.getVillagePlayerId();
+ * Integer targetVillagePlayerId = entity.getTargetVillagePlayerId();
  * entity.setVillageDayId(villageDayId);
- * entity.setVoteCharaId(voteCharaId);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
  * entity.setUpdateTrace(updateTrace);
+ * entity.setVillagePlayerId(villagePlayerId);
+ * entity.setTargetVillagePlayerId(targetVillagePlayerId);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
@@ -74,14 +74,8 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} */
-    protected Integer _charaId;
-
-    /** VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} */
+    /** VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} */
     protected Integer _villageDayId;
-
-    /** VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara} */
-    protected Integer _voteCharaId;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -94,6 +88,12 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
 
     /** UPDATE_TRACE: {NotNull, VARCHAR(64)} */
     protected String _updateTrace;
+
+    /** VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} */
+    protected Integer _villagePlayerId;
+
+    /** TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} */
+    protected Integer _targetVillagePlayerId;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -113,7 +113,6 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     //                                                                        ============
     /** {@inheritDoc} */
     public boolean hasPrimaryKeyValue() {
-        if (_charaId == null) { return false; }
         if (_villageDayId == null) { return false; }
         return true;
     }
@@ -121,25 +120,25 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
-    /** CHARA by my CHARA_ID, named 'charaByCharaId'. */
-    protected OptionalEntity<Chara> _charaByCharaId;
+    /** VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'. */
+    protected OptionalEntity<VillagePlayer> _villagePlayerByTargetVillagePlayerId;
 
     /**
-     * [get] CHARA by my CHARA_ID, named 'charaByCharaId'. <br>
+     * [get] VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'. <br>
      * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return The entity of foreign property 'charaByCharaId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     * @return The entity of foreign property 'villagePlayerByTargetVillagePlayerId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
      */
-    public OptionalEntity<Chara> getCharaByCharaId() {
-        if (_charaByCharaId == null) { _charaByCharaId = OptionalEntity.relationEmpty(this, "charaByCharaId"); }
-        return _charaByCharaId;
+    public OptionalEntity<VillagePlayer> getVillagePlayerByTargetVillagePlayerId() {
+        if (_villagePlayerByTargetVillagePlayerId == null) { _villagePlayerByTargetVillagePlayerId = OptionalEntity.relationEmpty(this, "villagePlayerByTargetVillagePlayerId"); }
+        return _villagePlayerByTargetVillagePlayerId;
     }
 
     /**
-     * [set] CHARA by my CHARA_ID, named 'charaByCharaId'.
-     * @param charaByCharaId The entity of foreign property 'charaByCharaId'. (NullAllowed)
+     * [set] VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
+     * @param villagePlayerByTargetVillagePlayerId The entity of foreign property 'villagePlayerByTargetVillagePlayerId'. (NullAllowed)
      */
-    public void setCharaByCharaId(OptionalEntity<Chara> charaByCharaId) {
-        _charaByCharaId = charaByCharaId;
+    public void setVillagePlayerByTargetVillagePlayerId(OptionalEntity<VillagePlayer> villagePlayerByTargetVillagePlayerId) {
+        _villagePlayerByTargetVillagePlayerId = villagePlayerByTargetVillagePlayerId;
     }
 
     /** VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'. */
@@ -163,25 +162,25 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
         _villageDay = villageDay;
     }
 
-    /** CHARA by my VOTE_CHARA_ID, named 'charaByVoteCharaId'. */
-    protected OptionalEntity<Chara> _charaByVoteCharaId;
+    /** VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'. */
+    protected OptionalEntity<VillagePlayer> _villagePlayerByVillagePlayerId;
 
     /**
-     * [get] CHARA by my VOTE_CHARA_ID, named 'charaByVoteCharaId'. <br>
+     * [get] VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'. <br>
      * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return The entity of foreign property 'charaByVoteCharaId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     * @return The entity of foreign property 'villagePlayerByVillagePlayerId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
      */
-    public OptionalEntity<Chara> getCharaByVoteCharaId() {
-        if (_charaByVoteCharaId == null) { _charaByVoteCharaId = OptionalEntity.relationEmpty(this, "charaByVoteCharaId"); }
-        return _charaByVoteCharaId;
+    public OptionalEntity<VillagePlayer> getVillagePlayerByVillagePlayerId() {
+        if (_villagePlayerByVillagePlayerId == null) { _villagePlayerByVillagePlayerId = OptionalEntity.relationEmpty(this, "villagePlayerByVillagePlayerId"); }
+        return _villagePlayerByVillagePlayerId;
     }
 
     /**
-     * [set] CHARA by my VOTE_CHARA_ID, named 'charaByVoteCharaId'.
-     * @param charaByVoteCharaId The entity of foreign property 'charaByVoteCharaId'. (NullAllowed)
+     * [set] VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
+     * @param villagePlayerByVillagePlayerId The entity of foreign property 'villagePlayerByVillagePlayerId'. (NullAllowed)
      */
-    public void setCharaByVoteCharaId(OptionalEntity<Chara> charaByVoteCharaId) {
-        _charaByVoteCharaId = charaByVoteCharaId;
+    public void setVillagePlayerByVillagePlayerId(OptionalEntity<VillagePlayer> villagePlayerByVillagePlayerId) {
+        _villagePlayerByVillagePlayerId = villagePlayerByVillagePlayerId;
     }
 
     // ===================================================================================
@@ -198,7 +197,6 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     protected boolean doEquals(Object obj) {
         if (obj instanceof BsVote) {
             BsVote other = (BsVote)obj;
-            if (!xSV(_charaId, other._charaId)) { return false; }
             if (!xSV(_villageDayId, other._villageDayId)) { return false; }
             return true;
         } else {
@@ -210,7 +208,6 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     protected int doHashCode(int initial) {
         int hs = initial;
         hs = xCH(hs, asTableDbName());
-        hs = xCH(hs, _charaId);
         hs = xCH(hs, _villageDayId);
         return hs;
     }
@@ -218,12 +215,12 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     @Override
     protected String doBuildStringWithRelation(String li) {
         StringBuilder sb = new StringBuilder();
-        if (_charaByCharaId != null && _charaByCharaId.isPresent())
-        { sb.append(li).append(xbRDS(_charaByCharaId, "charaByCharaId")); }
+        if (_villagePlayerByTargetVillagePlayerId != null && _villagePlayerByTargetVillagePlayerId.isPresent())
+        { sb.append(li).append(xbRDS(_villagePlayerByTargetVillagePlayerId, "villagePlayerByTargetVillagePlayerId")); }
         if (_villageDay != null && _villageDay.isPresent())
         { sb.append(li).append(xbRDS(_villageDay, "villageDay")); }
-        if (_charaByVoteCharaId != null && _charaByVoteCharaId.isPresent())
-        { sb.append(li).append(xbRDS(_charaByVoteCharaId, "charaByVoteCharaId")); }
+        if (_villagePlayerByVillagePlayerId != null && _villagePlayerByVillagePlayerId.isPresent())
+        { sb.append(li).append(xbRDS(_villagePlayerByVillagePlayerId, "villagePlayerByVillagePlayerId")); }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -233,13 +230,13 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     @Override
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
-        sb.append(dm).append(xfND(_charaId));
         sb.append(dm).append(xfND(_villageDayId));
-        sb.append(dm).append(xfND(_voteCharaId));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
         sb.append(dm).append(xfND(_updateTrace));
+        sb.append(dm).append(xfND(_villagePlayerId));
+        sb.append(dm).append(xfND(_targetVillagePlayerId));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -250,12 +247,12 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     @Override
     protected String doBuildRelationString(String dm) {
         StringBuilder sb = new StringBuilder();
-        if (_charaByCharaId != null && _charaByCharaId.isPresent())
-        { sb.append(dm).append("charaByCharaId"); }
+        if (_villagePlayerByTargetVillagePlayerId != null && _villagePlayerByTargetVillagePlayerId.isPresent())
+        { sb.append(dm).append("villagePlayerByTargetVillagePlayerId"); }
         if (_villageDay != null && _villageDay.isPresent())
         { sb.append(dm).append("villageDay"); }
-        if (_charaByVoteCharaId != null && _charaByVoteCharaId.isPresent())
-        { sb.append(dm).append("charaByVoteCharaId"); }
+        if (_villagePlayerByVillagePlayerId != null && _villagePlayerByVillagePlayerId.isPresent())
+        { sb.append(dm).append("villagePlayerByVillagePlayerId"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }
@@ -271,27 +268,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
-     * キャラクターID
-     * @return The value of the column 'CHARA_ID'. (basically NotNull if selected: for the constraint)
-     */
-    public Integer getCharaId() {
-        checkSpecifiedProperty("charaId");
-        return _charaId;
-    }
-
-    /**
-     * [set] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
-     * キャラクターID
-     * @param charaId The value of the column 'CHARA_ID'. (basically NotNull if update: for the constraint)
-     */
-    public void setCharaId(Integer charaId) {
-        registerModifiedProperty("charaId");
-        _charaId = charaId;
-    }
-
-    /**
-     * [get] VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} <br>
+     * [get] VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
      * 村日付ID
      * @return The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -301,33 +278,13 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [set] VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} <br>
+     * [set] VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
      * 村日付ID
      * @param villageDayId The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if update: for the constraint)
      */
     public void setVillageDayId(Integer villageDayId) {
         registerModifiedProperty("villageDayId");
         _villageDayId = villageDayId;
-    }
-
-    /**
-     * [get] VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara} <br>
-     * 投票先キャラクターID
-     * @return The value of the column 'VOTE_CHARA_ID'. (basically NotNull if selected: for the constraint)
-     */
-    public Integer getVoteCharaId() {
-        checkSpecifiedProperty("voteCharaId");
-        return _voteCharaId;
-    }
-
-    /**
-     * [set] VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara} <br>
-     * 投票先キャラクターID
-     * @param voteCharaId The value of the column 'VOTE_CHARA_ID'. (basically NotNull if update: for the constraint)
-     */
-    public void setVoteCharaId(Integer voteCharaId) {
-        registerModifiedProperty("voteCharaId");
-        _voteCharaId = voteCharaId;
     }
 
     /**
@@ -408,5 +365,45 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     public void setUpdateTrace(String updateTrace) {
         registerModifiedProperty("updateTrace");
         _updateTrace = updateTrace;
+    }
+
+    /**
+     * [get] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票元村参加者ID
+     * @return The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getVillagePlayerId() {
+        checkSpecifiedProperty("villagePlayerId");
+        return _villagePlayerId;
+    }
+
+    /**
+     * [set] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票元村参加者ID
+     * @param villagePlayerId The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if update: for the constraint)
+     */
+    public void setVillagePlayerId(Integer villagePlayerId) {
+        registerModifiedProperty("villagePlayerId");
+        _villagePlayerId = villagePlayerId;
+    }
+
+    /**
+     * [get] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票先村参加者ID
+     * @return The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed even if selected: for no constraint)
+     */
+    public Integer getTargetVillagePlayerId() {
+        checkSpecifiedProperty("targetVillagePlayerId");
+        return _targetVillagePlayerId;
+    }
+
+    /**
+     * [set] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票先村参加者ID
+     * @param targetVillagePlayerId The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setTargetVillagePlayerId(Integer targetVillagePlayerId) {
+        registerModifiedProperty("targetVillagePlayerId");
+        _targetVillagePlayerId = targetVillagePlayerId;
     }
 }

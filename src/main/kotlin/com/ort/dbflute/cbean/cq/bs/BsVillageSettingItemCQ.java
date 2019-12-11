@@ -93,7 +93,7 @@ public class BsVillageSettingItemCQ extends AbstractBsVillageSettingItemCQ {
     public Map<String, Object> xdfgetVillageSettingItemCode_QueryDerivedReferrer_VillageSettingListParameter() { return xgetSQuePmMap("villageSettingItemCode_QueryDerivedReferrer_VillageSettingList"); }
     public String keepVillageSettingItemCode_QueryDerivedReferrer_VillageSettingListParameter(Object pm) { return xkeepSQuePm("villageSettingItemCode_QueryDerivedReferrer_VillageSettingList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_SETTING_ITEM_CODE: {PK, NotNull, VARCHAR(100), classification=VillageSettingItem}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsVillageSettingItemCQ extends AbstractBsVillageSettingItemCQ {
       return _villageSettingItemName; }
     protected ConditionValue xgetCValueVillageSettingItemName() { return xdfgetVillageSettingItemName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_SETTING_ITEM_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)
@@ -133,7 +133,7 @@ public class BsVillageSettingItemCQ extends AbstractBsVillageSettingItemCQ {
       return _dispOrder; }
     protected ConditionValue xgetCValueDispOrder() { return xdfgetDispOrder(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)

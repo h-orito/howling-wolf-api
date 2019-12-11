@@ -20,17 +20,21 @@ class CharachipController(
     //                                                                           =========
     @GetMapping("/charachip/list")
     fun charachipList(): CharachipListView {
-        val charaChips = charachipService.findCharaChipList()
+        val charachips = charachipService.findCharaChipList()
+        val charas = charachipService.findCharaList(charachips)
         return CharachipListView(
-            charachipList = charaChips.charachipList
+            charachips = charachips,
+            charas = charas
         )
     }
 
     @GetMapping("/charachip/{charaChipId}")
     fun charachip(@PathVariable("charaChipId") charaChipId: Int): CharachipView {
-        val charaChip = charachipService.findCharaChip(charaChipId)
+        val charachip = charachipService.findCharaChip(charaChipId)
+        val charas = charachipService.findCharaList(charachip.id)
         return CharachipView(
-            charachip = charaChip
+            charachip = charachip,
+            charas = charas
         )
     }
 

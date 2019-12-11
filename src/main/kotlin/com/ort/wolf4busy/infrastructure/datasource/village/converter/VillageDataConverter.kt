@@ -1,13 +1,8 @@
 package com.ort.wolf4busy.infrastructure.datasource.village.converter
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exentity.Village
-import com.ort.dbflute.exentity.VillageDay
-import com.ort.dbflute.exentity.VillagePlayer
-import com.ort.dbflute.exentity.VillageSetting
-import com.ort.wolf4busy.domain.model.charachip.*
+import com.ort.dbflute.exentity.*
 import com.ort.wolf4busy.domain.model.dead.Dead
-import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
@@ -43,7 +38,7 @@ object VillageDataConverter {
                 code = village.villageStatusCodeAsVillageStatus.code(),
                 name = village.villageStatusCodeAsVillageStatus.alias()
             ),
-            setting = village.villageSettingList.convertVillageSettingListToVillageSetting(),
+            setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(
                 count = participantList.size,
                 memberList = participantList.map { convertVillagePlayerToParticipant(it, hasEpilogue) }
@@ -66,8 +61,8 @@ object VillageDataConverter {
             noonnight = villageDay.noonnightCode,
             startDatetime = villageDay.daychangeDatetime,
             isUpdating = villageDay.isUpdating,
-            isPrologue = day === 0,
-            isEpilogue = epilogueDay != null && epilogueDay === day
+            isPrologue = day == 0,
+            isEpilogue = epilogueDay != null && epilogueDay == day
         )
     }
 
@@ -83,7 +78,7 @@ object VillageDataConverter {
                 code = village.villageStatusCodeAsVillageStatus.code(),
                 name = village.villageStatusCodeAsVillageStatus.alias()
             ),
-            setting = village.villageSettingList.convertVillageSettingListToVillageSetting(),
+            setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(
                 count = village.participantCount
             ),
@@ -103,71 +98,65 @@ object VillageDataConverter {
         )
     }
 
-    private fun List<VillageSetting>.convertVillageSettingListToVillageSetting(): VillageSettings {
+    private fun convertVillageSettingListToVillageSetting(
+        settingList: List<VillageSetting>,
+        restrictList: List<MessageRestriction>
+    ): VillageSettings {
         return VillageSettings(
             capacity = PersonCapacity.invoke(
-                min = detectItemText(this, CDef.VillageSettingItem.最低人数)?.toInt(),
-                max = detectItemText(this, CDef.VillageSettingItem.最大人数)?.toInt()
+                min = detectItemText(settingList, CDef.VillageSettingItem.最低人数)?.toInt(),
+                max = detectItemText(settingList, CDef.VillageSettingItem.最大人数)?.toInt()
             ),
             time = VillageTime.invoke(
-                termType = detectItemText(this, CDef.VillageSettingItem.期間形式),
-                startDatetime = detectItemText(this, CDef.VillageSettingItem.開始予定日時)?.let { LocalDateTime.parse(it, DATETIME_FORMATTER) },
-                dayChangeIntervalSeconds = detectItemText(this, CDef.VillageSettingItem.更新間隔秒)?.toInt()
+                termType = detectItemText(settingList, CDef.VillageSettingItem.期間形式),
+                startDatetime = detectItemText(settingList, CDef.VillageSettingItem.開始予定日時)?.let {
+                    LocalDateTime.parse(
+                        it,
+                        DATETIME_FORMATTER
+                    )
+                },
+                dayChangeIntervalSeconds = detectItemText(settingList, CDef.VillageSettingItem.更新間隔秒)?.toInt()
             ),
             charachip = VillageCharachip.invoke(
-                dummyCharaId = detectItemText(this, CDef.VillageSettingItem.ダミーキャラid)?.toInt(),
-                charachipId = detectItemText(this, CDef.VillageSettingItem.キャラクターグループid)?.toInt()
+                dummyCharaId = detectItemText(settingList, CDef.VillageSettingItem.ダミーキャラid)?.toInt(),
+                charachipId = detectItemText(settingList, CDef.VillageSettingItem.キャラクターグループid)?.toInt()
             ),
             organizations = VillageOrganizations(
-                organization = detectItemText(this, CDef.VillageSettingItem.構成)?.let { convertOrganizeToOrganizationMap(it) }
+                organization = detectItemText(settingList, CDef.VillageSettingItem.構成)?.let { convertOrganizeToOrganizationMap(it) }
             ),
             rules = VillageRules.invoke(
-                openVote = detectItemText(this, CDef.VillageSettingItem.記名投票か)?.let { it == FLG_TRUE },
-                availableSkillRequest = detectItemText(this, CDef.VillageSettingItem.役職希望可能か)?.let { it == FLG_TRUE },
-                availableSpectate = detectItemText(this, CDef.VillageSettingItem.見学可能か)?.let { it == FLG_TRUE },
-                openSkillInGrave = detectItemText(this, CDef.VillageSettingItem.墓下役職公開ありか)?.let { it == FLG_TRUE },
-                visibleGraveMessage = detectItemText(this, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか)?.let { it == FLG_TRUE },
-                availableSuddenlyDeath = detectItemText(this, CDef.VillageSettingItem.突然死ありか)?.let { it == FLG_TRUE },
-                availableCommit = detectItemText(this, CDef.VillageSettingItem.コミット可能か)?.let { it == FLG_TRUE }
+                openVote = detectItemText(settingList, CDef.VillageSettingItem.記名投票か)?.let { it == FLG_TRUE },
+                availableSkillRequest = detectItemText(settingList, CDef.VillageSettingItem.役職希望可能か)?.let { it == FLG_TRUE },
+                availableSpectate = detectItemText(settingList, CDef.VillageSettingItem.見学可能か)?.let { it == FLG_TRUE },
+                openSkillInGrave = detectItemText(settingList, CDef.VillageSettingItem.墓下役職公開ありか)?.let { it == FLG_TRUE },
+                visibleGraveMessage = detectItemText(settingList, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか)?.let { it == FLG_TRUE },
+                availableSuddenlyDeath = detectItemText(settingList, CDef.VillageSettingItem.突然死ありか)?.let { it == FLG_TRUE },
+                availableCommit = detectItemText(settingList, CDef.VillageSettingItem.コミット可能か)?.let { it == FLG_TRUE },
+                messageRestrict = VillageMessageRestricts(
+                    existRestricts = restrictList.isNotEmpty(),
+                    restrictList = restrictList.map {
+                        VillageMessageRestrict(
+                            type = com.ort.wolf4busy.domain.model.message.MessageType(
+                                code = it.messageTypeCode,
+                                name = CDef.MessageType.codeOf(it.messageTypeCode).alias()
+                            ),
+                            count = it.messageMaxNum,
+                            length = it.messageMaxLength
+                        )
+                    }
+                )
             ),
             password = VillagePassword(
-                joinPassword = detectItemText(this, CDef.VillageSettingItem.入村パスワード)
+                joinPassword = detectItemText(settingList, CDef.VillageSettingItem.入村パスワード)
             )
         )
     }
 
     fun convertVillagePlayerToParticipant(vp: VillagePlayer, hasEpilogue: Boolean): VillageParticipant {
-        val chara: com.ort.dbflute.exentity.Chara = vp.chara.get()
         return VillageParticipant(
             id = vp.villagePlayerId,
-            chara = Chara(
-                id = chara.charaId,
-                charaName = CharaName(
-                    name = chara.charaName,
-                    shortName = chara.charaShortName
-                ),
-                charachipId = chara.charaGroupId,
-                defaultMessage = CharaDefaultMessage(
-                    joinMessage = chara.defaultJoinMessage,
-                    firstDayMessage = chara.defaultFirstdayMessage
-                ),
-                display = CharaSize(
-                    width = chara.displayWidth,
-                    height = chara.displayHeight
-                ),
-                faceList = chara.charaImageList.map {
-                    CharaFace(
-                        type = it.faceTypeCode,
-                        name = it.faceTypeCodeAsFaceType.alias(),
-                        imageUrl = it.charaImgUrl
-                    )
-                }
-            ),
-            player = if (!hasEpilogue) null else Player(
-                id = vp.player.get().playerId,
-                nickname = vp.player.get().nickname,
-                twitterUserName = vp.player.get().twitterUserName
-            ),
+            charaId = vp.charaId,
+            playerId = if (!hasEpilogue) null else vp.playerId,
             dead = if (vp.isDead) convertToDeadReasonToDead(vp) else null,
             isSpectator = vp.isSpectator,
             skill = if (!hasEpilogue || vp.skillCodeAsSkill == null) null else Skill(
@@ -196,6 +185,6 @@ object VillageDataConverter {
 
     private fun hasEpilogue(epilogueDay: Int?, villageDayList: List<VillageDay>): Boolean {
         epilogueDay ?: return false
-        return villageDayList.any { it.day === epilogueDay }
+        return villageDayList.any { it.day == epilogueDay }
     }
 }

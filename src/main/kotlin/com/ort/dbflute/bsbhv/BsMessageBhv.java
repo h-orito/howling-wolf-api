@@ -109,7 +109,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">message</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">messageBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -792,8 +792,8 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * messageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * messageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * messageBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * messageBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * messageBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -801,7 +801,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
      * messageBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * messageBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * messageBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * messageBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * messageBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -809,7 +809,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
      * messageBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * messageBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * messageBhv.outideSql().removeBlockComment().selectList()
      * messageBhv.outideSql().removeLineComment().selectList()
      * messageBhv.outideSql().formatSql().selectList()

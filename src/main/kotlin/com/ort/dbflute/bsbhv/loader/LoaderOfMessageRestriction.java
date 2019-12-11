@@ -10,10 +10,10 @@ import com.ort.dbflute.exentity.*;
  * The referrer loader of MESSAGE_RESTRICTION as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, SKILL_CODE, MESSAGE_TYPE_CODE
+ *     VILLAGE_ID, MESSAGE_TYPE_CODE
  *
  * [column]
- *     VILLAGE_ID, SKILL_CODE, MESSAGE_TYPE_CODE, MESSAGE_MAX_NUM, MESSAGE_MAX_LENGTH, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_MAX_NUM, MESSAGE_MAX_LENGTH, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -25,13 +25,13 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     MESSAGE_TYPE, SKILL, VILLAGE
+ *     MESSAGE_TYPE, VILLAGE
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     messageType, skill, village
+ *     messageType, village
  *
  * [referrer property]
  *     
@@ -64,13 +64,6 @@ public class LoaderOfMessageRestriction {
         if (_foreignMessageTypeLoader == null)
         { _foreignMessageTypeLoader = new LoaderOfMessageType().ready(myBhv().pulloutMessageType(_selectedList), _selector); }
         return _foreignMessageTypeLoader;
-    }
-
-    protected LoaderOfSkill _foreignSkillLoader;
-    public LoaderOfSkill pulloutSkill() {
-        if (_foreignSkillLoader == null)
-        { _foreignSkillLoader = new LoaderOfSkill().ready(myBhv().pulloutSkill(_selectedList), _selector); }
-        return _foreignSkillLoader;
     }
 
     protected LoaderOfVillage _foreignVillageLoader;

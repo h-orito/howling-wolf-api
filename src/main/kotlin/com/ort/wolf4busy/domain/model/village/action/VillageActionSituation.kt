@@ -1,10 +1,13 @@
 package com.ort.wolf4busy.domain.model.village.action
 
-import com.ort.wolf4busy.domain.model.ability.Ability
+import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commit
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 
 data class VillageActionSituation(
@@ -13,7 +16,7 @@ data class VillageActionSituation(
     val isAvailableLeave: Boolean,
     val commit: VillageCommitSituation,
     val say: VillageSaySituation,
-    val ability: List<VillageAbilitySituation>,
+    val ability: VillageAbilitySituations, // TODO 役職仲間
     val vote: VillageVoteSituation
 ) {
     constructor(
@@ -22,9 +25,12 @@ data class VillageActionSituation(
         user: Wolf4busyUser?,
         isParticipatingProgressVillage: Boolean,
         isRestrictedParticipatePlayer: Boolean,
-        charachipCharaNum: Int,
+        charas: Charas,
         skillRequest: SkillRequest?,
-        commit: Commit?
+        abilities: VillageAbilities,
+        votes: VillageVotes,
+        commit: Commit?,
+        latestDayMessageList: List<Message>
     ) : this(
         participate = VillageParticipateSituation(
             village,
@@ -32,7 +38,7 @@ data class VillageActionSituation(
             user,
             isParticipatingProgressVillage,
             isRestrictedParticipatePlayer,
-            charachipCharaNum
+            charas.list.size
         ),
         skillRequest = VillageSkillRequestSituation(
             village,
@@ -47,22 +53,19 @@ data class VillageActionSituation(
         ),
         say = VillageSaySituation(
             village,
-            participant
+            participant,
+            charas,
+            latestDayMessageList
         ),
-        ability = listOf(
-            VillageAbilitySituation( // todo
-                type = Ability(
-                    code = "code", // todo
-                    name = "name" // todo
-                ),
-                targetList = listOf(), // todo
-                target = null // todo
-            )
+        ability = VillageAbilitySituations(
+            village,
+            participant,
+            abilities
         ),
         vote = VillageVoteSituation(
-            isAvailableVote = false, // todo
-            targetList = listOf(), // todo
-            target = null
+            village,
+            participant,
+            votes
         )
     )
 
@@ -75,7 +78,7 @@ data class VillageActionSituation(
             // 参加していない
             participant ?: return false
             // プロローグなら退村できる
-            return village.isPrologue()
+            return village.status.isPrologue()
         }
     }
 }

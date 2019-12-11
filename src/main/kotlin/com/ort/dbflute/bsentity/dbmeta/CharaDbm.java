@@ -87,7 +87,7 @@ public class CharaDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnCharaId = cci("CHARA_ID", "CHARA_ID", null, null, Integer.class, "charaId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityByCharaIdList,abilityByTargetCharaIdList,charaImageList,villagePlayerList,voteByCharaIdList,voteByVoteCharaIdList", null, false);
+    protected final ColumnInfo _columnCharaId = cci("CHARA_ID", "CHARA_ID", null, null, Integer.class, "charaId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "charaImageList,villagePlayerList", null, false);
     protected final ColumnInfo _columnCharaName = cci("CHARA_NAME", "CHARA_NAME", null, null, String.class, "charaName", null, false, false, true, "VARCHAR", 40, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCharaShortName = cci("CHARA_SHORT_NAME", "CHARA_SHORT_NAME", null, null, String.class, "charaShortName", null, false, false, true, "CHAR", 1, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCharaGroupId = cci("CHARA_GROUP_ID", "CHARA_GROUP_ID", null, null, Integer.class, "charaGroupId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "charaGroup", null, null, false);
@@ -211,22 +211,6 @@ public class CharaDbm extends AbstractDBMeta {
     //                                     Referrer Property
     //                                     -----------------
     /**
-     * ABILITY by CHARA_ID, named 'abilityByCharaIdList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerAbilityByCharaIdList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaId(), AbilityDbm.getInstance().columnCharaId());
-        return cri("FK_ABILITY_CHARA", "abilityByCharaIdList", this, AbilityDbm.getInstance(), mp, false, "charaByCharaId");
-    }
-    /**
-     * ABILITY by TARGET_CHARA_ID, named 'abilityByTargetCharaIdList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerAbilityByTargetCharaIdList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaId(), AbilityDbm.getInstance().columnTargetCharaId());
-        return cri("FK_ABILITY_CHARA_TARGET", "abilityByTargetCharaIdList", this, AbilityDbm.getInstance(), mp, false, "charaByTargetCharaId");
-    }
-    /**
      * CHARA_IMAGE by CHARA_ID, named 'charaImageList'.
      * @return The information object of referrer property. (NotNull)
      */
@@ -241,22 +225,6 @@ public class CharaDbm extends AbstractDBMeta {
     public ReferrerInfo referrerVillagePlayerList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaId(), VillagePlayerDbm.getInstance().columnCharaId());
         return cri("FK_VILLAGE_PLAYER_CHARA", "villagePlayerList", this, VillagePlayerDbm.getInstance(), mp, false, "chara");
-    }
-    /**
-     * VOTE by CHARA_ID, named 'voteByCharaIdList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerVoteByCharaIdList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaId(), VoteDbm.getInstance().columnCharaId());
-        return cri("FK_VOTE_CHARA", "voteByCharaIdList", this, VoteDbm.getInstance(), mp, false, "charaByCharaId");
-    }
-    /**
-     * VOTE by VOTE_CHARA_ID, named 'voteByVoteCharaIdList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerVoteByVoteCharaIdList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaId(), VoteDbm.getInstance().columnVoteCharaId());
-        return cri("FK_VOTE_CHARA_TO", "voteByVoteCharaIdList", this, VoteDbm.getInstance(), mp, false, "charaByVoteCharaId");
     }
 
     // ===================================================================================

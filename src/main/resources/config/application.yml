@@ -19,7 +19,7 @@ server:
       timeout: 86400
 logging:
   level:
-    org.springframework: DEBUG
+    org.springframework: INFO
     root: INFO
     org.seasar.dbflute: ERROR
   file: /var/log/wolf4busy/tomcat.log

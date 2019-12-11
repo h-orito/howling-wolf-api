@@ -48,6 +48,10 @@ public class BsAbilityCB extends AbstractConditionBean {
         if (DBFluteConfig.getInstance().isSpecifyColumnRequired()) {
             enableSpecifyColumnRequired();
         }
+        xsetSpecifyColumnRequiredExceptDeterminer(DBFluteConfig.getInstance().getSpecifyColumnRequiredExceptDeterminer());
+        if (DBFluteConfig.getInstance().isSpecifyColumnRequiredWarningOnly()) {
+            xenableSpecifyColumnRequiredWarningOnly();
+        }
         if (DBFluteConfig.getInstance().isQueryUpdateCountPreCheck()) {
             enableQueryUpdateCountPreCheck();
         }
@@ -82,29 +86,26 @@ public class BsAbilityCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param abilityTypeCode : PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
      * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param abilityTypeCode : PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
      * @return this. (NotNull)
      */
-    public AbilityCB acceptPK(Integer charaId, Integer villageDayId, CDef.AbilityType abilityTypeCode) {
-        assertObjectNotNull("charaId", charaId);assertObjectNotNull("villageDayId", villageDayId);assertObjectNotNull("abilityTypeCode", abilityTypeCode);
+    public AbilityCB acceptPK(CDef.AbilityType abilityTypeCode, Integer villageDayId) {
+        assertObjectNotNull("abilityTypeCode", abilityTypeCode);assertObjectNotNull("villageDayId", villageDayId);
         BsAbilityCB cb = this;
-        cb.query().setCharaId_Equal(charaId);cb.query().setVillageDayId_Equal(villageDayId);cb.query().setAbilityTypeCode_Equal_AsAbilityType(abilityTypeCode);
+        cb.query().setAbilityTypeCode_Equal_AsAbilityType(abilityTypeCode);cb.query().setVillageDayId_Equal(villageDayId);
         return (AbilityCB)this;
     }
 
     public ConditionBean addOrderBy_PK_Asc() {
-        query().addOrderBy_CharaId_Asc();
-        query().addOrderBy_VillageDayId_Asc();
         query().addOrderBy_AbilityTypeCode_Asc();
+        query().addOrderBy_VillageDayId_Asc();
         return this;
     }
 
     public ConditionBean addOrderBy_PK_Desc() {
-        query().addOrderBy_CharaId_Desc();
-        query().addOrderBy_VillageDayId_Desc();
         query().addOrderBy_AbilityTypeCode_Desc();
+        query().addOrderBy_VillageDayId_Desc();
         return this;
     }
 
@@ -135,33 +136,33 @@ public class BsAbilityCB extends AbstractConditionBean {
      * <span style="color: #3F7E5E">// {fromDate &lt;= BIRTHDATE &lt; toDate + 1 day}</span>
      * cb.query().setBirthdate_IsNull();    <span style="color: #3F7E5E">// is null</span>
      * cb.query().setBirthdate_IsNotNull(); <span style="color: #3F7E5E">// is not null</span>
-     * 
+     *
      * <span style="color: #3F7E5E">// ExistsReferrer: (correlated sub-query)</span>
      * <span style="color: #3F7E5E">// {where exists (select PURCHASE_ID from PURCHASE where ...)}</span>
      * cb.query().existsPurchase(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * });
      * cb.query().notExistsPurchase...
-     * 
+     *
      * <span style="color: #3F7E5E">// (Query)DerivedReferrer: (correlated sub-query)</span>
      * cb.query().derivedPurchaseList().max(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.specify().columnPurchasePrice(); <span style="color: #3F7E5E">// derived column for function</span>
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * }).greaterEqual(value);
-     * 
+     *
      * <span style="color: #3F7E5E">// ScalarCondition: (self-table sub-query)</span>
      * cb.query().scalar_Equal().max(scalarCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     scalarCB.specify().columnBirthdate(); <span style="color: #3F7E5E">// derived column for function</span>
      *     scalarCB.query().set... <span style="color: #3F7E5E">// scalar sub-query condition</span>
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// OrderBy</span>
      * cb.query().addOrderBy_MemberName_Asc();
      * cb.query().addOrderBy_MemberName_Desc().withManualOrder(option);
      * cb.query().addOrderBy_MemberName_Desc().withNullsFirst();
      * cb.query().addOrderBy_MemberName_Desc().withNullsLast();
      * cb.query().addSpecifiedDerivedOrderBy_Desc(aliasName);
-     * 
+     *
      * <span style="color: #3F7E5E">// Query(Relation)</span>
      * cb.query().queryMemberStatus()...;
      * cb.query().queryMemberAddressAsValid(targetDate)...;
@@ -169,7 +170,7 @@ public class BsAbilityCB extends AbstractConditionBean {
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
     public AbilityCQ query() {
-        assertQueryPurpose(); // assert only when user-public query 
+        assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
@@ -220,7 +221,7 @@ public class BsAbilityCB extends AbstractConditionBean {
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
     public void union(UnionQuery<AbilityCB> unionCBLambda) {
-        final AbilityCB cb = new AbilityCB(); cb.xsetupForUnion(this); xsyncUQ(cb); 
+        final AbilityCB cb = new AbilityCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
         final AbilityCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
@@ -262,59 +263,33 @@ public class BsAbilityCB extends AbstractConditionBean {
         doSetupSelect(() -> query().queryAbilityType());
     }
 
-    protected CharaNss _nssCharaByCharaId;
-    public CharaNss xdfgetNssCharaByCharaId() {
-        if (_nssCharaByCharaId == null) { _nssCharaByCharaId = new CharaNss(null); }
-        return _nssCharaByCharaId;
+    protected VillagePlayerNss _nssVillagePlayerByTargetVillagePlayerId;
+    public VillagePlayerNss xdfgetNssVillagePlayerByTargetVillagePlayerId() {
+        if (_nssVillagePlayerByTargetVillagePlayerId == null) { _nssVillagePlayerByTargetVillagePlayerId = new VillagePlayerNss(null); }
+        return _nssVillagePlayerByTargetVillagePlayerId;
     }
     /**
      * Set up relation columns to select clause. <br>
-     * CHARA by my CHARA_ID, named 'charaByCharaId'.
+     * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
      * <pre>
      * <span style="color: #0000C0">abilityBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_CharaByCharaId()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_VillagePlayerByTargetVillagePlayerId()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
      *     <span style="color: #553000">cb</span>.query().set...
      * }).alwaysPresent(<span style="color: #553000">ability</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     ... = <span style="color: #553000">ability</span>.<span style="color: #CC4747">getCharaByCharaId()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     *     ... = <span style="color: #553000">ability</span>.<span style="color: #CC4747">getVillagePlayerByTargetVillagePlayerId()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
      * });
      * </pre>
      * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
      */
-    public CharaNss setupSelect_CharaByCharaId() {
-        assertSetupSelectPurpose("charaByCharaId");
-        doSetupSelect(() -> query().queryCharaByCharaId());
-        if (_nssCharaByCharaId == null || !_nssCharaByCharaId.hasConditionQuery())
-        { _nssCharaByCharaId = new CharaNss(query().queryCharaByCharaId()); }
-        return _nssCharaByCharaId;
-    }
-
-    protected CharaNss _nssCharaByTargetCharaId;
-    public CharaNss xdfgetNssCharaByTargetCharaId() {
-        if (_nssCharaByTargetCharaId == null) { _nssCharaByTargetCharaId = new CharaNss(null); }
-        return _nssCharaByTargetCharaId;
-    }
-    /**
-     * Set up relation columns to select clause. <br>
-     * CHARA by my TARGET_CHARA_ID, named 'charaByTargetCharaId'.
-     * <pre>
-     * <span style="color: #0000C0">abilityBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_CharaByTargetCharaId()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
-     *     <span style="color: #553000">cb</span>.query().set...
-     * }).alwaysPresent(<span style="color: #553000">ability</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     ... = <span style="color: #553000">ability</span>.<span style="color: #CC4747">getCharaByTargetCharaId()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
-     * });
-     * </pre>
-     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
-     */
-    public CharaNss setupSelect_CharaByTargetCharaId() {
-        assertSetupSelectPurpose("charaByTargetCharaId");
+    public VillagePlayerNss setupSelect_VillagePlayerByTargetVillagePlayerId() {
+        assertSetupSelectPurpose("villagePlayerByTargetVillagePlayerId");
         if (hasSpecifiedLocalColumn()) {
-            specify().columnTargetCharaId();
+            specify().columnTargetVillagePlayerId();
         }
-        doSetupSelect(() -> query().queryCharaByTargetCharaId());
-        if (_nssCharaByTargetCharaId == null || !_nssCharaByTargetCharaId.hasConditionQuery())
-        { _nssCharaByTargetCharaId = new CharaNss(query().queryCharaByTargetCharaId()); }
-        return _nssCharaByTargetCharaId;
+        doSetupSelect(() -> query().queryVillagePlayerByTargetVillagePlayerId());
+        if (_nssVillagePlayerByTargetVillagePlayerId == null || !_nssVillagePlayerByTargetVillagePlayerId.hasConditionQuery())
+        { _nssVillagePlayerByTargetVillagePlayerId = new VillagePlayerNss(query().queryVillagePlayerByTargetVillagePlayerId()); }
+        return _nssVillagePlayerByTargetVillagePlayerId;
     }
 
     protected VillageDayNss _nssVillageDay;
@@ -341,6 +316,35 @@ public class BsAbilityCB extends AbstractConditionBean {
         if (_nssVillageDay == null || !_nssVillageDay.hasConditionQuery())
         { _nssVillageDay = new VillageDayNss(query().queryVillageDay()); }
         return _nssVillageDay;
+    }
+
+    protected VillagePlayerNss _nssVillagePlayerByVillagePlayerId;
+    public VillagePlayerNss xdfgetNssVillagePlayerByVillagePlayerId() {
+        if (_nssVillagePlayerByVillagePlayerId == null) { _nssVillagePlayerByVillagePlayerId = new VillagePlayerNss(null); }
+        return _nssVillagePlayerByVillagePlayerId;
+    }
+    /**
+     * Set up relation columns to select clause. <br>
+     * VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
+     * <pre>
+     * <span style="color: #0000C0">abilityBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_VillagePlayerByVillagePlayerId()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">ability</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">ability</span>.<span style="color: #CC4747">getVillagePlayerByVillagePlayerId()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
+     */
+    public VillagePlayerNss setupSelect_VillagePlayerByVillagePlayerId() {
+        assertSetupSelectPurpose("villagePlayerByVillagePlayerId");
+        if (hasSpecifiedLocalColumn()) {
+            specify().columnVillagePlayerId();
+        }
+        doSetupSelect(() -> query().queryVillagePlayerByVillagePlayerId());
+        if (_nssVillagePlayerByVillagePlayerId == null || !_nssVillagePlayerByVillagePlayerId.hasConditionQuery())
+        { _nssVillagePlayerByVillagePlayerId = new VillagePlayerNss(query().queryVillagePlayerByVillagePlayerId()); }
+        return _nssVillagePlayerByVillagePlayerId;
     }
 
     // [DBFlute-0.7.4]
@@ -385,33 +389,33 @@ public class BsAbilityCB extends AbstractConditionBean {
 
     public static class HpSpecification extends HpAbstractSpecification<AbilityCQ> {
         protected AbilityTypeCB.HpSpecification _abilityType;
-        protected CharaCB.HpSpecification _charaByCharaId;
-        protected CharaCB.HpSpecification _charaByTargetCharaId;
+        protected VillagePlayerCB.HpSpecification _villagePlayerByTargetVillagePlayerId;
         protected VillageDayCB.HpSpecification _villageDay;
+        protected VillagePlayerCB.HpSpecification _villagePlayerByVillagePlayerId;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<AbilityCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+         * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnCharaId() { return doColumn("CHARA_ID"); }
+        public SpecifiedColumn columnAbilityTypeCode() { return doColumn("ABILITY_TYPE_CODE"); }
         /**
          * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
-         * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
+         * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnTargetCharaId() { return doColumn("TARGET_CHARA_ID"); }
+        public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnAbilityTypeCode() { return doColumn("ABILITY_TYPE_CODE"); }
+        public SpecifiedColumn columnTargetVillagePlayerId() { return doColumn("TARGET_VILLAGE_PLAYER_ID"); }
         /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)
@@ -436,12 +440,15 @@ public class BsAbilityCB extends AbstractConditionBean {
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override
         protected void doSpecifyRequiredColumn() {
-            columnCharaId(); // PK
-            columnVillageDayId(); // PK
             columnAbilityTypeCode(); // PK
-            if (qyCall().qy().hasConditionQueryCharaByTargetCharaId()
-                    || qyCall().qy().xgetReferrerQuery() instanceof CharaCQ) {
-                columnTargetCharaId(); // FK or one-to-one referrer
+            columnVillageDayId(); // PK
+            if (qyCall().qy().hasConditionQueryVillagePlayerByTargetVillagePlayerId()
+                    || qyCall().qy().xgetReferrerQuery() instanceof VillagePlayerCQ) {
+                columnTargetVillagePlayerId(); // FK or one-to-one referrer
+            }
+            if (qyCall().qy().hasConditionQueryVillagePlayerByVillagePlayerId()
+                    || qyCall().qy().xgetReferrerQuery() instanceof VillagePlayerCQ) {
+                columnVillagePlayerId(); // FK or one-to-one referrer
             }
         }
         @Override
@@ -468,43 +475,23 @@ public class BsAbilityCB extends AbstractConditionBean {
         }
         /**
          * Prepare to specify functions about relation table. <br>
-         * CHARA by my CHARA_ID, named 'charaByCharaId'.
+         * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
          * @return The instance for specification for relation table to specify. (NotNull)
          */
-        public CharaCB.HpSpecification specifyCharaByCharaId() {
-            assertRelation("charaByCharaId");
-            if (_charaByCharaId == null) {
-                _charaByCharaId = new CharaCB.HpSpecification(_baseCB
-                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryCharaByCharaId()
-                                    , () -> _qyCall.qy().queryCharaByCharaId())
+        public VillagePlayerCB.HpSpecification specifyVillagePlayerByTargetVillagePlayerId() {
+            assertRelation("villagePlayerByTargetVillagePlayerId");
+            if (_villagePlayerByTargetVillagePlayerId == null) {
+                _villagePlayerByTargetVillagePlayerId = new VillagePlayerCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryVillagePlayerByTargetVillagePlayerId()
+                                    , () -> _qyCall.qy().queryVillagePlayerByTargetVillagePlayerId())
                     , _purpose, _dbmetaProvider, xgetSDRFnFc());
                 if (xhasSyncQyCall()) { // inherits it
-                    _charaByCharaId.xsetSyncQyCall(xcreateSpQyCall(
-                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryCharaByCharaId()
-                      , () -> xsyncQyCall().qy().queryCharaByCharaId()));
+                    _villagePlayerByTargetVillagePlayerId.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryVillagePlayerByTargetVillagePlayerId()
+                      , () -> xsyncQyCall().qy().queryVillagePlayerByTargetVillagePlayerId()));
                 }
             }
-            return _charaByCharaId;
-        }
-        /**
-         * Prepare to specify functions about relation table. <br>
-         * CHARA by my TARGET_CHARA_ID, named 'charaByTargetCharaId'.
-         * @return The instance for specification for relation table to specify. (NotNull)
-         */
-        public CharaCB.HpSpecification specifyCharaByTargetCharaId() {
-            assertRelation("charaByTargetCharaId");
-            if (_charaByTargetCharaId == null) {
-                _charaByTargetCharaId = new CharaCB.HpSpecification(_baseCB
-                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryCharaByTargetCharaId()
-                                    , () -> _qyCall.qy().queryCharaByTargetCharaId())
-                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
-                if (xhasSyncQyCall()) { // inherits it
-                    _charaByTargetCharaId.xsetSyncQyCall(xcreateSpQyCall(
-                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryCharaByTargetCharaId()
-                      , () -> xsyncQyCall().qy().queryCharaByTargetCharaId()));
-                }
-            }
-            return _charaByTargetCharaId;
+            return _villagePlayerByTargetVillagePlayerId;
         }
         /**
          * Prepare to specify functions about relation table. <br>
@@ -525,6 +512,26 @@ public class BsAbilityCB extends AbstractConditionBean {
                 }
             }
             return _villageDay;
+        }
+        /**
+         * Prepare to specify functions about relation table. <br>
+         * VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public VillagePlayerCB.HpSpecification specifyVillagePlayerByVillagePlayerId() {
+            assertRelation("villagePlayerByVillagePlayerId");
+            if (_villagePlayerByVillagePlayerId == null) {
+                _villagePlayerByVillagePlayerId = new VillagePlayerCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryVillagePlayerByVillagePlayerId()
+                                    , () -> _qyCall.qy().queryVillagePlayerByVillagePlayerId())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _villagePlayerByVillagePlayerId.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryVillagePlayerByVillagePlayerId()
+                      , () -> xsyncQyCall().qy().queryVillagePlayerByVillagePlayerId()));
+                }
+            }
+            return _villagePlayerByVillagePlayerId;
         }
     }
 

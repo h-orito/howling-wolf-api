@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.domain.model.village.action
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -15,6 +16,7 @@ data class VillageSayMessageTypeSituation(
     constructor(
         village: Village,
         participant: VillageParticipant?,
+        latestDayMessageList: List<Message>,
         messageType: CDef.MessageType
     ) : this(
         messageType = MessageType(
@@ -22,9 +24,8 @@ data class VillageSayMessageTypeSituation(
             name = messageType.name
         ),
         restrict = VillageSayRestrictSituation(
-            maxCount = 99, // todo
-            remainingCount = 99, // todo
-            maxLength = 200 // todo
+            village.setting.rules.messageRestrict.restrictList.find { it.type.code == messageType.code() },
+            latestDayMessageList.filter { it.content.type.code == messageType.code() }
         ),
         isDefault = false, // todo
         targetList = listOf() // todo

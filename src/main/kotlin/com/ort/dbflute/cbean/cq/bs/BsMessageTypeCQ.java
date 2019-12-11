@@ -93,7 +93,7 @@ public class BsMessageTypeCQ extends AbstractBsMessageTypeCQ {
     public Map<String, Object> xdfgetMessageTypeCode_QueryDerivedReferrer_MessageRestrictionListParameter() { return xgetSQuePmMap("messageTypeCode_QueryDerivedReferrer_MessageRestrictionList"); }
     public String keepMessageTypeCode_QueryDerivedReferrer_MessageRestrictionListParameter(Object pm) { return xkeepSQuePm("messageTypeCode_QueryDerivedReferrer_MessageRestrictionList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_TYPE_CODE: {PK, NotNull, VARCHAR(20), classification=MessageType}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsMessageTypeCQ extends AbstractBsMessageTypeCQ {
       return _messageTypeName; }
     protected ConditionValue xgetCValueMessageTypeName() { return xdfgetMessageTypeName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_TYPE_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)

@@ -10,10 +10,10 @@ import com.ort.dbflute.exentity.*;
  * The referrer loader of VOTE as TABLE. <br>
  * <pre>
  * [primary key]
- *     CHARA_ID, VILLAGE_DAY_ID
+ *     VILLAGE_DAY_ID
  *
  * [column]
- *     CHARA_ID, VILLAGE_DAY_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID
  *
  * [sequence]
  *     
@@ -25,13 +25,13 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     CHARA, VILLAGE_DAY
+ *     VILLAGE_PLAYER, VILLAGE_DAY
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     charaByCharaId, villageDay, charaByVoteCharaId
+ *     villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
  *
  * [referrer property]
  *     
@@ -59,11 +59,11 @@ public class LoaderOfVote {
     // ===================================================================================
     //                                                                    Pull out Foreign
     //                                                                    ================
-    protected LoaderOfChara _foreignCharaByCharaIdLoader;
-    public LoaderOfChara pulloutCharaByCharaId() {
-        if (_foreignCharaByCharaIdLoader == null)
-        { _foreignCharaByCharaIdLoader = new LoaderOfChara().ready(myBhv().pulloutCharaByCharaId(_selectedList), _selector); }
-        return _foreignCharaByCharaIdLoader;
+    protected LoaderOfVillagePlayer _foreignVillagePlayerByTargetVillagePlayerIdLoader;
+    public LoaderOfVillagePlayer pulloutVillagePlayerByTargetVillagePlayerId() {
+        if (_foreignVillagePlayerByTargetVillagePlayerIdLoader == null)
+        { _foreignVillagePlayerByTargetVillagePlayerIdLoader = new LoaderOfVillagePlayer().ready(myBhv().pulloutVillagePlayerByTargetVillagePlayerId(_selectedList), _selector); }
+        return _foreignVillagePlayerByTargetVillagePlayerIdLoader;
     }
 
     protected LoaderOfVillageDay _foreignVillageDayLoader;
@@ -73,11 +73,11 @@ public class LoaderOfVote {
         return _foreignVillageDayLoader;
     }
 
-    protected LoaderOfChara _foreignCharaByVoteCharaIdLoader;
-    public LoaderOfChara pulloutCharaByVoteCharaId() {
-        if (_foreignCharaByVoteCharaIdLoader == null)
-        { _foreignCharaByVoteCharaIdLoader = new LoaderOfChara().ready(myBhv().pulloutCharaByVoteCharaId(_selectedList), _selector); }
-        return _foreignCharaByVoteCharaIdLoader;
+    protected LoaderOfVillagePlayer _foreignVillagePlayerByVillagePlayerIdLoader;
+    public LoaderOfVillagePlayer pulloutVillagePlayerByVillagePlayerId() {
+        if (_foreignVillagePlayerByVillagePlayerIdLoader == null)
+        { _foreignVillagePlayerByVillagePlayerIdLoader = new LoaderOfVillagePlayer().ready(myBhv().pulloutVillagePlayerByVillagePlayerId(_selectedList), _selector); }
+        return _foreignVillagePlayerByVillagePlayerIdLoader;
     }
 
     // ===================================================================================

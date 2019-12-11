@@ -44,13 +44,13 @@ import com.ort.dbflute.cbean.*;
  *     CAMP
  *
  * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_PLAYER
+ *     VILLAGE_PLAYER
  *
  * [foreign property]
  *     camp
  *
  * [referrer property]
- *     messageRestrictionList, villagePlayerByRequestSkillCodeList, villagePlayerBySecondRequestSkillCodeList, villagePlayerBySkillCodeList
+ *     villagePlayerByRequestSkillCodeList, villagePlayerBySecondRequestSkillCodeList, villagePlayerBySkillCodeList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -110,7 +110,7 @@ public abstract class BsSkillBhv extends AbstractBehaviorWritable<Skill, SkillCB
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">skill</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">skillBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -360,70 +360,6 @@ public abstract class BsSkillBhv extends AbstractBehaviorWritable<Skill, SkillCB
     public void load(Skill skill, ReferrerLoaderHandler<LoaderOfSkill> loaderLambda) {
         xassLRArg(skill, loaderLambda);
         loaderLambda.handle(new LoaderOfSkill().ready(xnewLRAryLs(skill), _behaviorSelector));
-    }
-
-    /**
-     * Load referrer of messageRestrictionList by the set-upper of referrer. <br>
-     * MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'.
-     * <pre>
-     * <span style="color: #0000C0">skillBhv</span>.<span style="color: #CC4747">loadMessageRestriction</span>(<span style="color: #553000">skillList</span>, <span style="color: #553000">restrictionCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">restrictionCB</span>.setupSelect...
-     *     <span style="color: #553000">restrictionCB</span>.query().set...
-     *     <span style="color: #553000">restrictionCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * <span style="color: #70226C">for</span> (Skill skill : <span style="color: #553000">skillList</span>) {
-     *     ... = skill.<span style="color: #CC4747">getMessageRestrictionList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setSkillCode_InScope(pkList);
-     * cb.query().addOrderBy_SkillCode_Asc();
-     * </pre>
-     * @param skillList The entity list of skill. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<MessageRestriction> loadMessageRestriction(List<Skill> skillList, ReferrerConditionSetupper<MessageRestrictionCB> refCBLambda) {
-        xassLRArg(skillList, refCBLambda);
-        return doLoadMessageRestriction(skillList, new LoadReferrerOption<MessageRestrictionCB, MessageRestriction>().xinit(refCBLambda));
-    }
-
-    /**
-     * Load referrer of messageRestrictionList by the set-upper of referrer. <br>
-     * MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'.
-     * <pre>
-     * <span style="color: #0000C0">skillBhv</span>.<span style="color: #CC4747">loadMessageRestriction</span>(<span style="color: #553000">skill</span>, <span style="color: #553000">restrictionCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">restrictionCB</span>.setupSelect...
-     *     <span style="color: #553000">restrictionCB</span>.query().set...
-     *     <span style="color: #553000">restrictionCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * ... = <span style="color: #553000">skill</span>.<span style="color: #CC4747">getMessageRestrictionList()</span>;
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setSkillCode_InScope(pkList);
-     * cb.query().addOrderBy_SkillCode_Asc();
-     * </pre>
-     * @param skill The entity of skill. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<MessageRestriction> loadMessageRestriction(Skill skill, ReferrerConditionSetupper<MessageRestrictionCB> refCBLambda) {
-        xassLRArg(skill, refCBLambda);
-        return doLoadMessageRestriction(xnewLRLs(skill), new LoadReferrerOption<MessageRestrictionCB, MessageRestriction>().xinit(refCBLambda));
-    }
-
-    protected NestedReferrerListGateway<MessageRestriction> doLoadMessageRestriction(List<Skill> skillList, LoadReferrerOption<MessageRestrictionCB, MessageRestriction> option) {
-        return helpLoadReferrerInternally(skillList, option, "messageRestrictionList");
     }
 
     /**
@@ -1063,8 +999,8 @@ public abstract class BsSkillBhv extends AbstractBehaviorWritable<Skill, SkillCB
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * skillBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * skillBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * skillBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * skillBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * skillBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -1072,7 +1008,7 @@ public abstract class BsSkillBhv extends AbstractBehaviorWritable<Skill, SkillCB
      * skillBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * skillBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * skillBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * skillBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * skillBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -1080,7 +1016,7 @@ public abstract class BsSkillBhv extends AbstractBehaviorWritable<Skill, SkillCB
      * skillBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * skillBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * skillBhv.outideSql().removeBlockComment().selectList()
      * skillBhv.outideSql().removeLineComment().selectList()
      * skillBhv.outideSql().formatSql().selectList()

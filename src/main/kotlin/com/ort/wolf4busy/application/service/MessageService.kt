@@ -21,6 +21,7 @@ class MessageService(
      * @param messageTypeList 発言種別
      * @param participant 参加情報
      * @param from これ以降の発言を取得する unixtimemilli
+     * @return 発言
      */
     fun findMessageList(
         villageId: Int,
@@ -32,8 +33,34 @@ class MessageService(
         return messageDataSource.selectMessageList(villageId, villageDayId, messageTypeList, participant, from)
     }
 
-    fun findMessage(villageId: Int, participant: VillageParticipant?, messageType: CDef.MessageType, messageNumber: Int): Message? {
+    /**
+     * アンカー発言取得
+     *
+     * @param villageId villageId
+     * @param messageType 発言種別
+     * @param messageNumber 発言番号
+     * @return 発言
+     */
+    fun findMessage(villageId: Int, messageType: CDef.MessageType, messageNumber: Int): Message? {
         return messageDataSource.selectMessage(villageId, messageType, messageNumber)
+    }
+
+
+    /**
+     * 参加者のその日の発言を取得
+     *
+     * @param villageId villageId
+     * @param villageDay 村日付
+     * @param participant 参加情報
+     * @return 発言
+     */
+    fun findParticipateDayMessageList(
+        villageId: Int,
+        villageDay: com.ort.wolf4busy.domain.model.village.VillageDay,
+        participant: VillageParticipant?
+    ): List<Message> {
+        participant ?: return listOf()
+        return messageDataSource.selectParticipateDayMessageList(villageId, villageDay.id, participant)
     }
 
     /**

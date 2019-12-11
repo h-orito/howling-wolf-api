@@ -2,6 +2,8 @@ package com.ort.wolf4busy.domain.model.village.action
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.CharaFace
+import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
@@ -12,11 +14,13 @@ data class VillageSaySituation(
 ) {
     constructor(
         village: Village,
-        participant: VillageParticipant?
+        participant: VillageParticipant?,
+        charas: Charas,
+        latestDayMessageList: List<Message>
     ) : this(
         isAvailableSay = isAvailableSay(village, participant),
-        selectableMessageTypeList = getSelectableMessageTypeList(village, participant),
-        selectableFaceTypeList = getSelectableFaceTypeList(village, participant)
+        selectableMessageTypeList = getSelectableMessageTypeList(village, participant, latestDayMessageList),
+        selectableFaceTypeList = getSelectableFaceTypeList(village, participant, charas)
     )
 
     companion object {
@@ -28,7 +32,8 @@ data class VillageSaySituation(
             // 参加していない場合はNG
             participant ?: return false
             // 突然死した場合はエピローグ以外NG
-            if (participant.dead != null && CDef.DeadReason.codeOf(participant.dead.code) == CDef.DeadReason.突然
+            if (participant.dead != null //
+                && CDef.DeadReason.codeOf(participant.dead.code) == CDef.DeadReason.突然 //
                 && CDef.VillageStatus.codeOf(village.status.code) != CDef.VillageStatus.エピローグ
             ) {
                 return false
@@ -37,39 +42,77 @@ data class VillageSaySituation(
             return true
         }
 
-        private fun getSelectableMessageTypeList(village: Village, participant: VillageParticipant?): List<VillageSayMessageTypeSituation> {
+        private fun getSelectableMessageTypeList(
+            village: Village,
+            participant: VillageParticipant?,
+            latestDayMessageList: List<Message>
+        ): List<VillageSayMessageTypeSituation> {
             if (participant == null || isAvailableSay(village, participant)) return listOf()
 
             val selectableMessageTypeList: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
             if (participant.isAvailableNormalSay(village)) {
-                selectableMessageTypeList.add(VillageSayMessageTypeSituation(village, participant, CDef.MessageType.通常発言))
+                selectableMessageTypeList.add(
+                    VillageSayMessageTypeSituation(
+                        village,
+                        participant,
+                        latestDayMessageList,
+                        CDef.MessageType.通常発言
+                    )
+                )
             }
             if (participant.isAvailableWerewolfSay(village)) {
-                selectableMessageTypeList.add(VillageSayMessageTypeSituation(village, participant, CDef.MessageType.人狼の囁き))
-            }
-            if (participant.isAvailableMasonSay(village)) {
-                selectableMessageTypeList.add(VillageSayMessageTypeSituation(village, participant, CDef.MessageType.共鳴発言))
+                selectableMessageTypeList.add(
+                    VillageSayMessageTypeSituation(
+                        village,
+                        participant,
+                        latestDayMessageList,
+                        CDef.MessageType.人狼の囁き
+                    )
+                )
             }
             if (participant.isAvailableGraveSay(village)) {
-                selectableMessageTypeList.add(VillageSayMessageTypeSituation(village, participant, CDef.MessageType.死者の呻き))
+                selectableMessageTypeList.add(
+                    VillageSayMessageTypeSituation(
+                        village,
+                        participant,
+                        latestDayMessageList,
+                        CDef.MessageType.死者の呻き
+                    )
+                )
             }
             if (participant.isAvailableMonologueSay(village)) {
-                selectableMessageTypeList.add(VillageSayMessageTypeSituation(village, participant, CDef.MessageType.独り言))
+                selectableMessageTypeList.add(
+                    VillageSayMessageTypeSituation(
+                        village,
+                        participant,
+                        latestDayMessageList,
+                        CDef.MessageType.独り言
+                    )
+                )
             }
             if (participant.isAvailableSpectateSay(village)) {
-                selectableMessageTypeList.add(VillageSayMessageTypeSituation(village, participant, CDef.MessageType.見学発言))
+                selectableMessageTypeList.add(
+                    VillageSayMessageTypeSituation(
+                        village,
+                        participant,
+                        latestDayMessageList,
+                        CDef.MessageType.見学発言
+                    )
+                )
             }
 
             return selectableMessageTypeList
         }
 
-        private fun getSelectableFaceTypeList(village: Village, participant: VillageParticipant?): List<CharaFace> {
+        private fun getSelectableFaceTypeList(village: Village, participant: VillageParticipant?, charas: Charas): List<CharaFace> {
             if (participant == null) return listOf()
-            return if (participant.isSpectator) {
-                village.participant.memberList.find { it.id == participant.id }!!.chara!!.faceList
+
+            val charaId: Int = if (participant.isSpectator) {
+                village.spectator.memberList.find { it.id == participant.id }!!.charaId
             } else {
-                village.spectator.memberList.find { it.id == participant.id }!!.chara!!.faceList
+                village.participant.memberList.find { it.id == participant.id }!!.charaId
             }
+            return charas.list.find { it.id == charaId }!!.faceList
         }
     }
 }

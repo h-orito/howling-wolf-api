@@ -174,411 +174,6 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @param skillCode The value of skillCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setSkillCode_Equal(String skillCode) {
-        doSetSkillCode_Equal(fRES(skillCode));
-    }
-
-    /**
-     * Equal(=). As Skill. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill} <br>
-     * 役職
-     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSkillCode_Equal_AsSkill(CDef.Skill cdef) {
-        doSetSkillCode_Equal(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * Equal(=). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSkillCode_Equal_C国狂人() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSkillCode_Equal_魔神官() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * Equal(=). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSkillCode_Equal_狂信者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSkillCode_Equal_妖狐() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * Equal(=). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_Equal_おまかせ役職窓あり() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * Equal(=). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSkillCode_Equal_導師() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.導師);
-    }
-
-    /**
-     * Equal(=). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
-     * 狩人
-     */
-    public void setSkillCode_Equal_狩人() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.狩人);
-    }
-
-    /**
-     * Equal(=). As おまかせ (LEFTOVER). And OnlyOnceRegistered. <br>
-     * おまかせ
-     */
-    public void setSkillCode_Equal_おまかせ() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ);
-    }
-
-    /**
-     * Equal(=). As 狂人 (MADMAN). And OnlyOnceRegistered. <br>
-     * 狂人
-     */
-    public void setSkillCode_Equal_狂人() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.狂人);
-    }
-
-    /**
-     * Equal(=). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSkillCode_Equal_共鳴者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
-     * Equal(=). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
-     * 霊能者
-     */
-    public void setSkillCode_Equal_霊能者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * Equal(=). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_Equal_おまかせ人外() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人外);
-    }
-
-    /**
-     * Equal(=). As 占い師 (SEER). And OnlyOnceRegistered. <br>
-     * 占い師
-     */
-    public void setSkillCode_Equal_占い師() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.占い師);
-    }
-
-    /**
-     * Equal(=). As 村人 (VILLAGER). And OnlyOnceRegistered. <br>
-     * 村人
-     */
-    public void setSkillCode_Equal_村人() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.村人);
-    }
-
-    /**
-     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSkillCode_Equal_おまかせ村人陣営() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
-     * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
-     * 人狼
-     */
-    public void setSkillCode_Equal_人狼() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSkillCode_Equal_おまかせ人狼陣営() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * Equal(=). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSkillCode_Equal_賢者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.賢者);
-    }
-
-    protected void doSetSkillCode_Equal(String skillCode) {
-        regSkillCode(CK_EQ, skillCode);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @param skillCode The value of skillCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setSkillCode_NotEqual(String skillCode) {
-        doSetSkillCode_NotEqual(fRES(skillCode));
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As Skill. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill} <br>
-     * 役職
-     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSkillCode_NotEqual_AsSkill(CDef.Skill cdef) {
-        doSetSkillCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSkillCode_NotEqual_C国狂人() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSkillCode_NotEqual_魔神官() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSkillCode_NotEqual_狂信者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSkillCode_NotEqual_妖狐() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_NotEqual_おまかせ役職窓あり() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSkillCode_NotEqual_導師() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.導師);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
-     * 狩人
-     */
-    public void setSkillCode_NotEqual_狩人() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.狩人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ (LEFTOVER). And OnlyOnceRegistered. <br>
-     * おまかせ
-     */
-    public void setSkillCode_NotEqual_おまかせ() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狂人 (MADMAN). And OnlyOnceRegistered. <br>
-     * 狂人
-     */
-    public void setSkillCode_NotEqual_狂人() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.狂人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSkillCode_NotEqual_共鳴者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
-     * 霊能者
-     */
-    public void setSkillCode_NotEqual_霊能者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_NotEqual_おまかせ人外() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人外);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 占い師 (SEER). And OnlyOnceRegistered. <br>
-     * 占い師
-     */
-    public void setSkillCode_NotEqual_占い師() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.占い師);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 村人 (VILLAGER). And OnlyOnceRegistered. <br>
-     * 村人
-     */
-    public void setSkillCode_NotEqual_村人() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.村人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSkillCode_NotEqual_おまかせ村人陣営() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
-     * 人狼
-     */
-    public void setSkillCode_NotEqual_人狼() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSkillCode_NotEqual_おまかせ人狼陣営() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSkillCode_NotEqual_賢者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.賢者);
-    }
-
-    protected void doSetSkillCode_NotEqual(String skillCode) {
-        regSkillCode(CK_NES, skillCode);
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @param skillCodeList The collection of skillCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setSkillCode_InScope(Collection<String> skillCodeList) {
-        doSetSkillCode_InScope(skillCodeList);
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill} <br>
-     * 役職
-     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setSkillCode_InScope_AsSkill(Collection<CDef.Skill> cdefList) {
-        doSetSkillCode_InScope(cTStrL(cdefList));
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * 役職 <br>
-     * 囁き可能 <br>
-     * The group elements:[人狼, C国狂人]
-     */
-    public void setSkillCode_InScope_AvailableWerewolfSay() {
-        setSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
-    }
-
-    protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
-        regINS(CK_INS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
-    }
-
-    /**
-     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @param skillCodeList The collection of skillCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setSkillCode_NotInScope(Collection<String> skillCodeList) {
-        doSetSkillCode_NotInScope(skillCodeList);
-    }
-
-    /**
-     * NotInScope {not in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill} <br>
-     * 役職
-     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setSkillCode_NotInScope_AsSkill(Collection<CDef.Skill> cdefList) {
-        doSetSkillCode_NotInScope(cTStrL(cdefList));
-    }
-
-    protected void doSetSkillCode_NotInScope(Collection<String> skillCodeList) {
-        regINS(CK_NINS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
-    }
-
-    /**
-     * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     */
-    public void setSkillCode_IsNull() { regSkillCode(CK_ISN, DOBJ); }
-
-    /**
-     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     */
-    public void setSkillCode_IsNotNull() { regSkillCode(CK_ISNN, DOBJ); }
-
-    protected void regSkillCode(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueSkillCode(), "SKILL_CODE"); }
-    protected abstract ConditionValue xgetCValueSkillCode();
-
-    /**
-     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
      * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType}
      * @param messageTypeCode The value of messageTypeCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
@@ -637,22 +232,6 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
     }
 
     /**
-     * Equal(=). As 役職霊視結果 (PRIVATE_GURU). And OnlyOnceRegistered. <br>
-     * 役職霊視結果
-     */
-    public void setMessageTypeCode_Equal_役職霊視結果() {
-        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.役職霊視結果);
-    }
-
-    /**
-     * Equal(=). As 足音調査結果 (PRIVATE_INVESTIGATE). And OnlyOnceRegistered. <br>
-     * 足音調査結果
-     */
-    public void setMessageTypeCode_Equal_足音調査結果() {
-        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.足音調査結果);
-    }
-
-    /**
      * Equal(=). As 白黒霊視結果 (PRIVATE_PSYCHIC). And OnlyOnceRegistered. <br>
      * 白黒霊視結果
      */
@@ -674,14 +253,6 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      */
     public void setMessageTypeCode_Equal_非公開システムメッセージ() {
         setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.非公開システムメッセージ);
-    }
-
-    /**
-     * Equal(=). As 役職占い結果 (PRIVATE_WISE). And OnlyOnceRegistered. <br>
-     * 役職占い結果
-     */
-    public void setMessageTypeCode_Equal_役職占い結果() {
-        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.役職占い結果);
     }
 
     /**
@@ -780,22 +351,6 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 役職霊視結果 (PRIVATE_GURU). And OnlyOnceRegistered. <br>
-     * 役職霊視結果
-     */
-    public void setMessageTypeCode_NotEqual_役職霊視結果() {
-        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.役職霊視結果);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 足音調査結果 (PRIVATE_INVESTIGATE). And OnlyOnceRegistered. <br>
-     * 足音調査結果
-     */
-    public void setMessageTypeCode_NotEqual_足音調査結果() {
-        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.足音調査結果);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 白黒霊視結果 (PRIVATE_PSYCHIC). And OnlyOnceRegistered. <br>
      * 白黒霊視結果
      */
@@ -817,14 +372,6 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      */
     public void setMessageTypeCode_NotEqual_非公開システムメッセージ() {
         setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.非公開システムメッセージ);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 役職占い結果 (PRIVATE_WISE). And OnlyOnceRegistered. <br>
-     * 役職占い結果
-     */
-    public void setMessageTypeCode_NotEqual_役職占い結果() {
-        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.役職占い結果);
     }
 
     /**
@@ -1589,7 +1136,7 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageRestrictionCB> scalar_Equal() {
@@ -1604,7 +1151,7 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageRestrictionCB> scalar_NotEqual() {
@@ -1619,7 +1166,7 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageRestrictionCB> scalar_GreaterThan() {
@@ -1634,7 +1181,7 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageRestrictionCB> scalar_LessThan() {
@@ -1649,7 +1196,7 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageRestrictionCB> scalar_GreaterEqual() {
@@ -1707,7 +1254,6 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

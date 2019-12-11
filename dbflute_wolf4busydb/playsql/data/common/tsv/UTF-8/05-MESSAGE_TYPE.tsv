@@ -2,10 +2,7 @@ message_type_code	message_type_name
 PUBLIC_SYSTEM	公開システムメッセージ
 PRIVATE_SYSTEM	非公開システムメッセージ
 PRIVATE_SEER	白黒占い結果
-PRIVATE_WISE	役職占い結果
 PRIVATE_PSYCHIC	白黒霊視結果
-PRIVATE_GURU	役職霊視結果
-PRIVATE_INVESTIGATE	足音調査結果
 NORMAL_SAY	通常発言
 MONOLOGUE_SAY	独り言
 GRAVE_SAY	死者の呻き

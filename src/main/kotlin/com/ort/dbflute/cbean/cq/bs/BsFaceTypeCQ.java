@@ -93,7 +93,7 @@ public class BsFaceTypeCQ extends AbstractBsFaceTypeCQ {
     public Map<String, Object> xdfgetFaceTypeCode_QueryDerivedReferrer_CharaImageListParameter() { return xgetSQuePmMap("faceTypeCode_QueryDerivedReferrer_CharaImageList"); }
     public String keepFaceTypeCode_QueryDerivedReferrer_CharaImageListParameter(Object pm) { return xkeepSQuePm("faceTypeCode_QueryDerivedReferrer_CharaImageList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * FACE_TYPE_CODE: {PK, NotNull, VARCHAR(20), classification=FaceType}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsFaceTypeCQ extends AbstractBsFaceTypeCQ {
       return _faceTypeName; }
     protected ConditionValue xgetCValueFaceTypeName() { return xdfgetFaceTypeName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * FACE_TYPE_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)
@@ -133,7 +133,7 @@ public class BsFaceTypeCQ extends AbstractBsFaceTypeCQ {
       return _dispOrder; }
     protected ConditionValue xgetCValueDispOrder() { return xdfgetDispOrder(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)

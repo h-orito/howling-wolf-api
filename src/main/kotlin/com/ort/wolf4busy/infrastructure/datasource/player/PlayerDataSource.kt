@@ -16,6 +16,15 @@ class PlayerDataSource(
         return convertPlayerToPlayer(player)
     }
 
+    fun selectPlayerList(villageId: Int): List<com.ort.wolf4busy.domain.model.player.Player> {
+        val playerList = playerBhv.selectList {
+            it.query().existsVillagePlayer {
+                it.query().setVillageId_Equal(villageId)
+            }
+        }
+        return playerList.map { convertPlayerToPlayer(it) }
+    }
+
     fun updateNickname(uid: String, nickname: String, twitterUserName: String) {
         val player = Player()
         player.uniqueBy(uid)

@@ -48,6 +48,10 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
         if (DBFluteConfig.getInstance().isSpecifyColumnRequired()) {
             enableSpecifyColumnRequired();
         }
+        xsetSpecifyColumnRequiredExceptDeterminer(DBFluteConfig.getInstance().getSpecifyColumnRequiredExceptDeterminer());
+        if (DBFluteConfig.getInstance().isSpecifyColumnRequiredWarningOnly()) {
+            xenableSpecifyColumnRequiredWarningOnly();
+        }
         if (DBFluteConfig.getInstance().isQueryUpdateCountPreCheck()) {
             enableQueryUpdateCountPreCheck();
         }
@@ -83,27 +87,24 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
     /**
      * Accept the query condition of primary key as equal.
      * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village. (NotNull)
-     * @param skillCode : PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill. (NotNull)
      * @param messageTypeCode : PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType. (NotNull)
      * @return this. (NotNull)
      */
-    public MessageRestrictionCB acceptPK(Integer villageId, CDef.Skill skillCode, CDef.MessageType messageTypeCode) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("skillCode", skillCode);assertObjectNotNull("messageTypeCode", messageTypeCode);
+    public MessageRestrictionCB acceptPK(Integer villageId, CDef.MessageType messageTypeCode) {
+        assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageTypeCode", messageTypeCode);
         BsMessageRestrictionCB cb = this;
-        cb.query().setVillageId_Equal(villageId);cb.query().setSkillCode_Equal_AsSkill(skillCode);cb.query().setMessageTypeCode_Equal_AsMessageType(messageTypeCode);
+        cb.query().setVillageId_Equal(villageId);cb.query().setMessageTypeCode_Equal_AsMessageType(messageTypeCode);
         return (MessageRestrictionCB)this;
     }
 
     public ConditionBean addOrderBy_PK_Asc() {
         query().addOrderBy_VillageId_Asc();
-        query().addOrderBy_SkillCode_Asc();
         query().addOrderBy_MessageTypeCode_Asc();
         return this;
     }
 
     public ConditionBean addOrderBy_PK_Desc() {
         query().addOrderBy_VillageId_Desc();
-        query().addOrderBy_SkillCode_Desc();
         query().addOrderBy_MessageTypeCode_Desc();
         return this;
     }
@@ -135,33 +136,33 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
      * <span style="color: #3F7E5E">// {fromDate &lt;= BIRTHDATE &lt; toDate + 1 day}</span>
      * cb.query().setBirthdate_IsNull();    <span style="color: #3F7E5E">// is null</span>
      * cb.query().setBirthdate_IsNotNull(); <span style="color: #3F7E5E">// is not null</span>
-     * 
+     *
      * <span style="color: #3F7E5E">// ExistsReferrer: (correlated sub-query)</span>
      * <span style="color: #3F7E5E">// {where exists (select PURCHASE_ID from PURCHASE where ...)}</span>
      * cb.query().existsPurchase(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * });
      * cb.query().notExistsPurchase...
-     * 
+     *
      * <span style="color: #3F7E5E">// (Query)DerivedReferrer: (correlated sub-query)</span>
      * cb.query().derivedPurchaseList().max(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.specify().columnPurchasePrice(); <span style="color: #3F7E5E">// derived column for function</span>
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * }).greaterEqual(value);
-     * 
+     *
      * <span style="color: #3F7E5E">// ScalarCondition: (self-table sub-query)</span>
      * cb.query().scalar_Equal().max(scalarCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     scalarCB.specify().columnBirthdate(); <span style="color: #3F7E5E">// derived column for function</span>
      *     scalarCB.query().set... <span style="color: #3F7E5E">// scalar sub-query condition</span>
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// OrderBy</span>
      * cb.query().addOrderBy_MemberName_Asc();
      * cb.query().addOrderBy_MemberName_Desc().withManualOrder(option);
      * cb.query().addOrderBy_MemberName_Desc().withNullsFirst();
      * cb.query().addOrderBy_MemberName_Desc().withNullsLast();
      * cb.query().addSpecifiedDerivedOrderBy_Desc(aliasName);
-     * 
+     *
      * <span style="color: #3F7E5E">// Query(Relation)</span>
      * cb.query().queryMemberStatus()...;
      * cb.query().queryMemberAddressAsValid(targetDate)...;
@@ -169,7 +170,7 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
     public MessageRestrictionCQ query() {
-        assertQueryPurpose(); // assert only when user-public query 
+        assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
@@ -220,7 +221,7 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
     public void union(UnionQuery<MessageRestrictionCB> unionCBLambda) {
-        final MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForUnion(this); xsyncUQ(cb); 
+        final MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
         final MessageRestrictionCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
@@ -260,32 +261,6 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
     public void setupSelect_MessageType() {
         assertSetupSelectPurpose("messageType");
         doSetupSelect(() -> query().queryMessageType());
-    }
-
-    protected SkillNss _nssSkill;
-    public SkillNss xdfgetNssSkill() {
-        if (_nssSkill == null) { _nssSkill = new SkillNss(null); }
-        return _nssSkill;
-    }
-    /**
-     * Set up relation columns to select clause. <br>
-     * SKILL by my SKILL_CODE, named 'skill'.
-     * <pre>
-     * <span style="color: #0000C0">messageRestrictionBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_Skill()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
-     *     <span style="color: #553000">cb</span>.query().set...
-     * }).alwaysPresent(<span style="color: #553000">messageRestriction</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     ... = <span style="color: #553000">messageRestriction</span>.<span style="color: #CC4747">getSkill()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
-     * });
-     * </pre>
-     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
-     */
-    public SkillNss setupSelect_Skill() {
-        assertSetupSelectPurpose("skill");
-        doSetupSelect(() -> query().querySkill());
-        if (_nssSkill == null || !_nssSkill.hasConditionQuery())
-        { _nssSkill = new SkillNss(query().querySkill()); }
-        return _nssSkill;
     }
 
     protected VillageNss _nssVillage;
@@ -356,7 +331,6 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
 
     public static class HpSpecification extends HpAbstractSpecification<MessageRestrictionCQ> {
         protected MessageTypeCB.HpSpecification _messageType;
-        protected SkillCB.HpSpecification _skill;
         protected VillageCB.HpSpecification _village;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<MessageRestrictionCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
@@ -367,11 +341,6 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
-        /**
-         * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnSkillCode() { return doColumn("SKILL_CODE"); }
         /**
          * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType}
          * @return The information object of specified column. (NotNull)
@@ -412,7 +381,6 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
         @Override
         protected void doSpecifyRequiredColumn() {
             columnVillageId(); // PK
-            columnSkillCode(); // PK
             columnMessageTypeCode(); // PK
         }
         @Override
@@ -436,26 +404,6 @@ public class BsMessageRestrictionCB extends AbstractConditionBean {
                 }
             }
             return _messageType;
-        }
-        /**
-         * Prepare to specify functions about relation table. <br>
-         * SKILL by my SKILL_CODE, named 'skill'.
-         * @return The instance for specification for relation table to specify. (NotNull)
-         */
-        public SkillCB.HpSpecification specifySkill() {
-            assertRelation("skill");
-            if (_skill == null) {
-                _skill = new SkillCB.HpSpecification(_baseCB
-                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQuerySkill()
-                                    , () -> _qyCall.qy().querySkill())
-                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
-                if (xhasSyncQyCall()) { // inherits it
-                    _skill.xsetSyncQyCall(xcreateSpQyCall(
-                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQuerySkill()
-                      , () -> xsyncQyCall().qy().querySkill()));
-                }
-            }
-            return _skill;
         }
         /**
          * Prepare to specify functions about relation table. <br>

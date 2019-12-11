@@ -159,44 +159,6 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select CHARA_ID from ability where ...)} <br>
-     * ability by CHARA_ID, named 'abilityByCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">existsAbilityByCharaId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     abilityCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of AbilityByCharaIdList for 'exists'. (NotNull)
-     */
-    public void existsAbilityByCharaId(SubQuery<AbilityCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_ExistsReferrer_AbilityByCharaIdList(cb.query());
-        registerExistsReferrer(cb.query(), "CHARA_ID", "CHARA_ID", pp, "abilityByCharaIdList");
-    }
-    public abstract String keepCharaId_ExistsReferrer_AbilityByCharaIdList(AbilityCQ sq);
-
-    /**
-     * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select TARGET_CHARA_ID from ability where ...)} <br>
-     * ability by TARGET_CHARA_ID, named 'abilityByTargetCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">existsAbilityByTargetCharaId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     abilityCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of AbilityByTargetCharaIdList for 'exists'. (NotNull)
-     */
-    public void existsAbilityByTargetCharaId(SubQuery<AbilityCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_ExistsReferrer_AbilityByTargetCharaIdList(cb.query());
-        registerExistsReferrer(cb.query(), "CHARA_ID", "TARGET_CHARA_ID", pp, "abilityByTargetCharaIdList");
-    }
-    public abstract String keepCharaId_ExistsReferrer_AbilityByTargetCharaIdList(AbilityCQ sq);
-
-    /**
-     * Set up ExistsReferrer (correlated sub-query). <br>
      * {exists (select CHARA_ID from chara_image where ...)} <br>
      * chara_image by CHARA_ID, named 'charaImageAsOne'.
      * <pre>
@@ -232,82 +194,6 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
         registerExistsReferrer(cb.query(), "CHARA_ID", "CHARA_ID", pp, "villagePlayerList");
     }
     public abstract String keepCharaId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
-
-    /**
-     * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select CHARA_ID from vote where ...)} <br>
-     * vote by CHARA_ID, named 'voteByCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">existsVoteByCharaId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     voteCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of VoteByCharaIdList for 'exists'. (NotNull)
-     */
-    public void existsVoteByCharaId(SubQuery<VoteCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_ExistsReferrer_VoteByCharaIdList(cb.query());
-        registerExistsReferrer(cb.query(), "CHARA_ID", "CHARA_ID", pp, "voteByCharaIdList");
-    }
-    public abstract String keepCharaId_ExistsReferrer_VoteByCharaIdList(VoteCQ sq);
-
-    /**
-     * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select VOTE_CHARA_ID from vote where ...)} <br>
-     * vote by VOTE_CHARA_ID, named 'voteByVoteCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">existsVoteByVoteCharaId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     voteCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of VoteByVoteCharaIdList for 'exists'. (NotNull)
-     */
-    public void existsVoteByVoteCharaId(SubQuery<VoteCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_ExistsReferrer_VoteByVoteCharaIdList(cb.query());
-        registerExistsReferrer(cb.query(), "CHARA_ID", "VOTE_CHARA_ID", pp, "voteByVoteCharaIdList");
-    }
-    public abstract String keepCharaId_ExistsReferrer_VoteByVoteCharaIdList(VoteCQ sq);
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select CHARA_ID from ability where ...)} <br>
-     * ability by CHARA_ID, named 'abilityByCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">notExistsAbilityByCharaId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     abilityCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of CharaId_NotExistsReferrer_AbilityByCharaIdList for 'not exists'. (NotNull)
-     */
-    public void notExistsAbilityByCharaId(SubQuery<AbilityCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_NotExistsReferrer_AbilityByCharaIdList(cb.query());
-        registerNotExistsReferrer(cb.query(), "CHARA_ID", "CHARA_ID", pp, "abilityByCharaIdList");
-    }
-    public abstract String keepCharaId_NotExistsReferrer_AbilityByCharaIdList(AbilityCQ sq);
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select TARGET_CHARA_ID from ability where ...)} <br>
-     * ability by TARGET_CHARA_ID, named 'abilityByTargetCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">notExistsAbilityByTargetCharaId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     abilityCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of CharaId_NotExistsReferrer_AbilityByTargetCharaIdList for 'not exists'. (NotNull)
-     */
-    public void notExistsAbilityByTargetCharaId(SubQuery<AbilityCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_NotExistsReferrer_AbilityByTargetCharaIdList(cb.query());
-        registerNotExistsReferrer(cb.query(), "CHARA_ID", "TARGET_CHARA_ID", pp, "abilityByTargetCharaIdList");
-    }
-    public abstract String keepCharaId_NotExistsReferrer_AbilityByTargetCharaIdList(AbilityCQ sq);
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
@@ -347,60 +233,6 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
     }
     public abstract String keepCharaId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
 
-    /**
-     * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select CHARA_ID from vote where ...)} <br>
-     * vote by CHARA_ID, named 'voteByCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">notExistsVoteByCharaId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     voteCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of CharaId_NotExistsReferrer_VoteByCharaIdList for 'not exists'. (NotNull)
-     */
-    public void notExistsVoteByCharaId(SubQuery<VoteCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_NotExistsReferrer_VoteByCharaIdList(cb.query());
-        registerNotExistsReferrer(cb.query(), "CHARA_ID", "CHARA_ID", pp, "voteByCharaIdList");
-    }
-    public abstract String keepCharaId_NotExistsReferrer_VoteByCharaIdList(VoteCQ sq);
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select VOTE_CHARA_ID from vote where ...)} <br>
-     * vote by VOTE_CHARA_ID, named 'voteByVoteCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">notExistsVoteByVoteCharaId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     voteCB.query().set...
-     * });
-     * </pre>
-     * @param subCBLambda The callback for sub-query of CharaId_NotExistsReferrer_VoteByVoteCharaIdList for 'not exists'. (NotNull)
-     */
-    public void notExistsVoteByVoteCharaId(SubQuery<VoteCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepCharaId_NotExistsReferrer_VoteByVoteCharaIdList(cb.query());
-        registerNotExistsReferrer(cb.query(), "CHARA_ID", "VOTE_CHARA_ID", pp, "voteByVoteCharaIdList");
-    }
-    public abstract String keepCharaId_NotExistsReferrer_VoteByVoteCharaIdList(VoteCQ sq);
-
-    public void xsderiveAbilityByCharaIdList(String fn, SubQuery<AbilityCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepCharaId_SpecifyDerivedReferrer_AbilityByCharaIdList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "CHARA_ID", "CHARA_ID", pp, "abilityByCharaIdList", al, op);
-    }
-    public abstract String keepCharaId_SpecifyDerivedReferrer_AbilityByCharaIdList(AbilityCQ sq);
-
-    public void xsderiveAbilityByTargetCharaIdList(String fn, SubQuery<AbilityCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepCharaId_SpecifyDerivedReferrer_AbilityByTargetCharaIdList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "CHARA_ID", "TARGET_CHARA_ID", pp, "abilityByTargetCharaIdList", al, op);
-    }
-    public abstract String keepCharaId_SpecifyDerivedReferrer_AbilityByTargetCharaIdList(AbilityCQ sq);
-
     public void xsderiveCharaImageList(String fn, SubQuery<CharaImageCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         CharaImageCB cb = new CharaImageCB(); cb.xsetupForDerivedReferrer(this);
@@ -416,76 +248,6 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "CHARA_ID", "CHARA_ID", pp, "villagePlayerList", al, op);
     }
     public abstract String keepCharaId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
-
-    public void xsderiveVoteByCharaIdList(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepCharaId_SpecifyDerivedReferrer_VoteByCharaIdList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "CHARA_ID", "CHARA_ID", pp, "voteByCharaIdList", al, op);
-    }
-    public abstract String keepCharaId_SpecifyDerivedReferrer_VoteByCharaIdList(VoteCQ sq);
-
-    public void xsderiveVoteByVoteCharaIdList(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepCharaId_SpecifyDerivedReferrer_VoteByVoteCharaIdList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "CHARA_ID", "VOTE_CHARA_ID", pp, "voteByVoteCharaIdList", al, op);
-    }
-    public abstract String keepCharaId_SpecifyDerivedReferrer_VoteByVoteCharaIdList(VoteCQ sq);
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from ability where ...)} <br>
-     * ability by CHARA_ID, named 'abilityByCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedAbilityByCharaId()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     abilityCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *     abilityCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<AbilityCB> derivedAbilityByCharaId() {
-        return xcreateQDRFunctionAbilityByCharaIdList();
-    }
-    protected HpQDRFunction<AbilityCB> xcreateQDRFunctionAbilityByCharaIdList() {
-        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveAbilityByCharaIdList(fn, sq, rd, vl, op));
-    }
-    public void xqderiveAbilityByCharaIdList(String fn, SubQuery<AbilityCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String sqpp = keepCharaId_QueryDerivedReferrer_AbilityByCharaIdList(cb.query()); String prpp = keepCharaId_QueryDerivedReferrer_AbilityByCharaIdListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "CHARA_ID", "CHARA_ID", sqpp, "abilityByCharaIdList", rd, vl, prpp, op);
-    }
-    public abstract String keepCharaId_QueryDerivedReferrer_AbilityByCharaIdList(AbilityCQ sq);
-    public abstract String keepCharaId_QueryDerivedReferrer_AbilityByCharaIdListParameter(Object vl);
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from ability where ...)} <br>
-     * ability by TARGET_CHARA_ID, named 'abilityByTargetCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedAbilityByTargetCharaId()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     abilityCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *     abilityCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<AbilityCB> derivedAbilityByTargetCharaId() {
-        return xcreateQDRFunctionAbilityByTargetCharaIdList();
-    }
-    protected HpQDRFunction<AbilityCB> xcreateQDRFunctionAbilityByTargetCharaIdList() {
-        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveAbilityByTargetCharaIdList(fn, sq, rd, vl, op));
-    }
-    public void xqderiveAbilityByTargetCharaIdList(String fn, SubQuery<AbilityCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String sqpp = keepCharaId_QueryDerivedReferrer_AbilityByTargetCharaIdList(cb.query()); String prpp = keepCharaId_QueryDerivedReferrer_AbilityByTargetCharaIdListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "CHARA_ID", "TARGET_CHARA_ID", sqpp, "abilityByTargetCharaIdList", rd, vl, prpp, op);
-    }
-    public abstract String keepCharaId_QueryDerivedReferrer_AbilityByTargetCharaIdList(AbilityCQ sq);
-    public abstract String keepCharaId_QueryDerivedReferrer_AbilityByTargetCharaIdListParameter(Object vl);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
@@ -540,60 +302,6 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
     }
     public abstract String keepCharaId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
     public abstract String keepCharaId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl);
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from vote where ...)} <br>
-     * vote by CHARA_ID, named 'voteByCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedVoteByCharaId()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     voteCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *     voteCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<VoteCB> derivedVoteByCharaId() {
-        return xcreateQDRFunctionVoteByCharaIdList();
-    }
-    protected HpQDRFunction<VoteCB> xcreateQDRFunctionVoteByCharaIdList() {
-        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveVoteByCharaIdList(fn, sq, rd, vl, op));
-    }
-    public void xqderiveVoteByCharaIdList(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String sqpp = keepCharaId_QueryDerivedReferrer_VoteByCharaIdList(cb.query()); String prpp = keepCharaId_QueryDerivedReferrer_VoteByCharaIdListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "CHARA_ID", "CHARA_ID", sqpp, "voteByCharaIdList", rd, vl, prpp, op);
-    }
-    public abstract String keepCharaId_QueryDerivedReferrer_VoteByCharaIdList(VoteCQ sq);
-    public abstract String keepCharaId_QueryDerivedReferrer_VoteByCharaIdListParameter(Object vl);
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from vote where ...)} <br>
-     * vote by VOTE_CHARA_ID, named 'voteByVoteCharaIdAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedVoteByVoteCharaId()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     voteCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *     voteCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<VoteCB> derivedVoteByVoteCharaId() {
-        return xcreateQDRFunctionVoteByVoteCharaIdList();
-    }
-    protected HpQDRFunction<VoteCB> xcreateQDRFunctionVoteByVoteCharaIdList() {
-        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveVoteByVoteCharaIdList(fn, sq, rd, vl, op));
-    }
-    public void xqderiveVoteByVoteCharaIdList(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String sqpp = keepCharaId_QueryDerivedReferrer_VoteByVoteCharaIdList(cb.query()); String prpp = keepCharaId_QueryDerivedReferrer_VoteByVoteCharaIdListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "CHARA_ID", "VOTE_CHARA_ID", sqpp, "voteByVoteCharaIdList", rd, vl, prpp, op);
-    }
-    public abstract String keepCharaId_QueryDerivedReferrer_VoteByVoteCharaIdList(VoteCQ sq);
-    public abstract String keepCharaId_QueryDerivedReferrer_VoteByVoteCharaIdListParameter(Object vl);
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
@@ -1968,7 +1676,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CharaCB> scalar_Equal() {
@@ -1983,7 +1691,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CharaCB> scalar_NotEqual() {
@@ -1998,7 +1706,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CharaCB> scalar_GreaterThan() {
@@ -2013,7 +1721,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CharaCB> scalar_LessThan() {
@@ -2028,7 +1736,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CharaCB> scalar_GreaterEqual() {
@@ -2131,7 +1839,6 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

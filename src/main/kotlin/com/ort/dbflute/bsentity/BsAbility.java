@@ -18,10 +18,10 @@ import com.ort.dbflute.exentity.*;
  * 能力行使
  * <pre>
  * [primary-key]
- *     CHARA_ID, VILLAGE_DAY_ID, ABILITY_TYPE_CODE
+ *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID
  *
  * [column]
- *     CHARA_ID, VILLAGE_DAY_ID, TARGET_CHARA_ID, ABILITY_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -33,31 +33,31 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     ABILITY_TYPE, CHARA, VILLAGE_DAY
+ *     ABILITY_TYPE, VILLAGE_PLAYER, VILLAGE_DAY
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     abilityType, charaByCharaId, charaByTargetCharaId, villageDay
+ *     abilityType, villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
  *
  * [referrer property]
  *     
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer charaId = entity.getCharaId();
- * Integer villageDayId = entity.getVillageDayId();
- * Integer targetCharaId = entity.getTargetCharaId();
  * String abilityTypeCode = entity.getAbilityTypeCode();
+ * Integer villageDayId = entity.getVillageDayId();
+ * Integer villagePlayerId = entity.getVillagePlayerId();
+ * Integer targetVillagePlayerId = entity.getTargetVillagePlayerId();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * String updateTrace = entity.getUpdateTrace();
- * entity.setCharaId(charaId);
- * entity.setVillageDayId(villageDayId);
- * entity.setTargetCharaId(targetCharaId);
  * entity.setAbilityTypeCode(abilityTypeCode);
+ * entity.setVillageDayId(villageDayId);
+ * entity.setVillagePlayerId(villagePlayerId);
+ * entity.setTargetVillagePlayerId(targetVillagePlayerId);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -77,17 +77,17 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} */
-    protected Integer _charaId;
+    /** ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} */
+    protected String _abilityTypeCode;
 
     /** VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day} */
     protected Integer _villageDayId;
 
-    /** TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara} */
-    protected Integer _targetCharaId;
+    /** VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} */
+    protected Integer _villagePlayerId;
 
-    /** ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} */
-    protected String _abilityTypeCode;
+    /** TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} */
+    protected Integer _targetVillagePlayerId;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -119,9 +119,8 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     //                                                                        ============
     /** {@inheritDoc} */
     public boolean hasPrimaryKeyValue() {
-        if (_charaId == null) { return false; }
-        if (_villageDayId == null) { return false; }
         if (_abilityTypeCode == null) { return false; }
+        if (_villageDayId == null) { return false; }
         return true;
     }
 
@@ -130,7 +129,7 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     //                                                             =======================
     /**
      * Get the value of abilityTypeCode as the classification of AbilityType. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
      * 能力種別
      * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
@@ -141,7 +140,7 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
 
     /**
      * Set the value of abilityTypeCode as the classification of AbilityType. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
      * 能力種別
      * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
      */
@@ -174,14 +173,6 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
      */
     public void setAbilityTypeCode_護衛() {
         setAbilityTypeCodeAsAbilityType(CDef.AbilityType.護衛);
-    }
-
-    /**
-     * Set the value of abilityTypeCode as 捜査 (INVESTIGATE). <br>
-     * 捜査
-     */
-    public void setAbilityTypeCode_捜査() {
-        setAbilityTypeCodeAsAbilityType(CDef.AbilityType.捜査);
     }
 
     // ===================================================================================
@@ -220,17 +211,6 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
         return cdef != null ? cdef.equals(CDef.AbilityType.護衛) : false;
     }
 
-    /**
-     * Is the value of abilityTypeCode 捜査? <br>
-     * 捜査
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isAbilityTypeCode捜査() {
-        CDef.AbilityType cdef = getAbilityTypeCodeAsAbilityType();
-        return cdef != null ? cdef.equals(CDef.AbilityType.捜査) : false;
-    }
-
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
@@ -255,46 +235,25 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
         _abilityType = abilityType;
     }
 
-    /** CHARA by my CHARA_ID, named 'charaByCharaId'. */
-    protected OptionalEntity<Chara> _charaByCharaId;
+    /** VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'. */
+    protected OptionalEntity<VillagePlayer> _villagePlayerByTargetVillagePlayerId;
 
     /**
-     * [get] CHARA by my CHARA_ID, named 'charaByCharaId'. <br>
+     * [get] VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'. <br>
      * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return The entity of foreign property 'charaByCharaId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     * @return The entity of foreign property 'villagePlayerByTargetVillagePlayerId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
      */
-    public OptionalEntity<Chara> getCharaByCharaId() {
-        if (_charaByCharaId == null) { _charaByCharaId = OptionalEntity.relationEmpty(this, "charaByCharaId"); }
-        return _charaByCharaId;
+    public OptionalEntity<VillagePlayer> getVillagePlayerByTargetVillagePlayerId() {
+        if (_villagePlayerByTargetVillagePlayerId == null) { _villagePlayerByTargetVillagePlayerId = OptionalEntity.relationEmpty(this, "villagePlayerByTargetVillagePlayerId"); }
+        return _villagePlayerByTargetVillagePlayerId;
     }
 
     /**
-     * [set] CHARA by my CHARA_ID, named 'charaByCharaId'.
-     * @param charaByCharaId The entity of foreign property 'charaByCharaId'. (NullAllowed)
+     * [set] VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
+     * @param villagePlayerByTargetVillagePlayerId The entity of foreign property 'villagePlayerByTargetVillagePlayerId'. (NullAllowed)
      */
-    public void setCharaByCharaId(OptionalEntity<Chara> charaByCharaId) {
-        _charaByCharaId = charaByCharaId;
-    }
-
-    /** CHARA by my TARGET_CHARA_ID, named 'charaByTargetCharaId'. */
-    protected OptionalEntity<Chara> _charaByTargetCharaId;
-
-    /**
-     * [get] CHARA by my TARGET_CHARA_ID, named 'charaByTargetCharaId'. <br>
-     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return The entity of foreign property 'charaByTargetCharaId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
-     */
-    public OptionalEntity<Chara> getCharaByTargetCharaId() {
-        if (_charaByTargetCharaId == null) { _charaByTargetCharaId = OptionalEntity.relationEmpty(this, "charaByTargetCharaId"); }
-        return _charaByTargetCharaId;
-    }
-
-    /**
-     * [set] CHARA by my TARGET_CHARA_ID, named 'charaByTargetCharaId'.
-     * @param charaByTargetCharaId The entity of foreign property 'charaByTargetCharaId'. (NullAllowed)
-     */
-    public void setCharaByTargetCharaId(OptionalEntity<Chara> charaByTargetCharaId) {
-        _charaByTargetCharaId = charaByTargetCharaId;
+    public void setVillagePlayerByTargetVillagePlayerId(OptionalEntity<VillagePlayer> villagePlayerByTargetVillagePlayerId) {
+        _villagePlayerByTargetVillagePlayerId = villagePlayerByTargetVillagePlayerId;
     }
 
     /** VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'. */
@@ -318,6 +277,27 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
         _villageDay = villageDay;
     }
 
+    /** VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'. */
+    protected OptionalEntity<VillagePlayer> _villagePlayerByVillagePlayerId;
+
+    /**
+     * [get] VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'. <br>
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return The entity of foreign property 'villagePlayerByVillagePlayerId'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     */
+    public OptionalEntity<VillagePlayer> getVillagePlayerByVillagePlayerId() {
+        if (_villagePlayerByVillagePlayerId == null) { _villagePlayerByVillagePlayerId = OptionalEntity.relationEmpty(this, "villagePlayerByVillagePlayerId"); }
+        return _villagePlayerByVillagePlayerId;
+    }
+
+    /**
+     * [set] VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
+     * @param villagePlayerByVillagePlayerId The entity of foreign property 'villagePlayerByVillagePlayerId'. (NullAllowed)
+     */
+    public void setVillagePlayerByVillagePlayerId(OptionalEntity<VillagePlayer> villagePlayerByVillagePlayerId) {
+        _villagePlayerByVillagePlayerId = villagePlayerByVillagePlayerId;
+    }
+
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
@@ -332,9 +312,8 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     protected boolean doEquals(Object obj) {
         if (obj instanceof BsAbility) {
             BsAbility other = (BsAbility)obj;
-            if (!xSV(_charaId, other._charaId)) { return false; }
-            if (!xSV(_villageDayId, other._villageDayId)) { return false; }
             if (!xSV(_abilityTypeCode, other._abilityTypeCode)) { return false; }
+            if (!xSV(_villageDayId, other._villageDayId)) { return false; }
             return true;
         } else {
             return false;
@@ -345,9 +324,8 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     protected int doHashCode(int initial) {
         int hs = initial;
         hs = xCH(hs, asTableDbName());
-        hs = xCH(hs, _charaId);
-        hs = xCH(hs, _villageDayId);
         hs = xCH(hs, _abilityTypeCode);
+        hs = xCH(hs, _villageDayId);
         return hs;
     }
 
@@ -356,12 +334,12 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
         StringBuilder sb = new StringBuilder();
         if (_abilityType != null && _abilityType.isPresent())
         { sb.append(li).append(xbRDS(_abilityType, "abilityType")); }
-        if (_charaByCharaId != null && _charaByCharaId.isPresent())
-        { sb.append(li).append(xbRDS(_charaByCharaId, "charaByCharaId")); }
-        if (_charaByTargetCharaId != null && _charaByTargetCharaId.isPresent())
-        { sb.append(li).append(xbRDS(_charaByTargetCharaId, "charaByTargetCharaId")); }
+        if (_villagePlayerByTargetVillagePlayerId != null && _villagePlayerByTargetVillagePlayerId.isPresent())
+        { sb.append(li).append(xbRDS(_villagePlayerByTargetVillagePlayerId, "villagePlayerByTargetVillagePlayerId")); }
         if (_villageDay != null && _villageDay.isPresent())
         { sb.append(li).append(xbRDS(_villageDay, "villageDay")); }
+        if (_villagePlayerByVillagePlayerId != null && _villagePlayerByVillagePlayerId.isPresent())
+        { sb.append(li).append(xbRDS(_villagePlayerByVillagePlayerId, "villagePlayerByVillagePlayerId")); }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -371,10 +349,10 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     @Override
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
-        sb.append(dm).append(xfND(_charaId));
-        sb.append(dm).append(xfND(_villageDayId));
-        sb.append(dm).append(xfND(_targetCharaId));
         sb.append(dm).append(xfND(_abilityTypeCode));
+        sb.append(dm).append(xfND(_villageDayId));
+        sb.append(dm).append(xfND(_villagePlayerId));
+        sb.append(dm).append(xfND(_targetVillagePlayerId));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -391,12 +369,12 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
         StringBuilder sb = new StringBuilder();
         if (_abilityType != null && _abilityType.isPresent())
         { sb.append(dm).append("abilityType"); }
-        if (_charaByCharaId != null && _charaByCharaId.isPresent())
-        { sb.append(dm).append("charaByCharaId"); }
-        if (_charaByTargetCharaId != null && _charaByTargetCharaId.isPresent())
-        { sb.append(dm).append("charaByTargetCharaId"); }
+        if (_villagePlayerByTargetVillagePlayerId != null && _villagePlayerByTargetVillagePlayerId.isPresent())
+        { sb.append(dm).append("villagePlayerByTargetVillagePlayerId"); }
         if (_villageDay != null && _villageDay.isPresent())
         { sb.append(dm).append("villageDay"); }
+        if (_villagePlayerByVillagePlayerId != null && _villagePlayerByVillagePlayerId.isPresent())
+        { sb.append(dm).append("villagePlayerByVillagePlayerId"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }
@@ -412,23 +390,24 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
-     * キャラクターID
-     * @return The value of the column 'CHARA_ID'. (basically NotNull if selected: for the constraint)
+     * [get] ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * 能力種別コード
+     * @return The value of the column 'ABILITY_TYPE_CODE'. (basically NotNull if selected: for the constraint)
      */
-    public Integer getCharaId() {
-        checkSpecifiedProperty("charaId");
-        return _charaId;
+    public String getAbilityTypeCode() {
+        checkSpecifiedProperty("abilityTypeCode");
+        return convertEmptyToNull(_abilityTypeCode);
     }
 
     /**
-     * [set] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
-     * キャラクターID
-     * @param charaId The value of the column 'CHARA_ID'. (basically NotNull if update: for the constraint)
+     * [set] ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
+     * 能力種別コード
+     * @param abilityTypeCode The value of the column 'ABILITY_TYPE_CODE'. (basically NotNull if update: for the constraint)
      */
-    public void setCharaId(Integer charaId) {
-        registerModifiedProperty("charaId");
-        _charaId = charaId;
+    protected void setAbilityTypeCode(String abilityTypeCode) {
+        checkClassificationCode("ABILITY_TYPE_CODE", CDef.DefMeta.AbilityType, abilityTypeCode);
+        registerModifiedProperty("abilityTypeCode");
+        _abilityTypeCode = abilityTypeCode;
     }
 
     /**
@@ -452,44 +431,43 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [get] TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara} <br>
-     * 行使対象キャラID
-     * @return The value of the column 'TARGET_CHARA_ID'. (NullAllowed even if selected: for no constraint)
+     * [get] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * 行使元村参加者ID
+     * @return The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
-    public Integer getTargetCharaId() {
-        checkSpecifiedProperty("targetCharaId");
-        return _targetCharaId;
+    public Integer getVillagePlayerId() {
+        checkSpecifiedProperty("villagePlayerId");
+        return _villagePlayerId;
     }
 
     /**
-     * [set] TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara} <br>
-     * 行使対象キャラID
-     * @param targetCharaId The value of the column 'TARGET_CHARA_ID'. (NullAllowed: null update allowed for no constraint)
+     * [set] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * 行使元村参加者ID
+     * @param villagePlayerId The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */
-    public void setTargetCharaId(Integer targetCharaId) {
-        registerModifiedProperty("targetCharaId");
-        _targetCharaId = targetCharaId;
+    public void setVillagePlayerId(Integer villagePlayerId) {
+        registerModifiedProperty("villagePlayerId");
+        _villagePlayerId = villagePlayerId;
     }
 
     /**
-     * [get] ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
-     * 能力種別コード
-     * @return The value of the column 'ABILITY_TYPE_CODE'. (basically NotNull if selected: for the constraint)
+     * [get] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * 行使対象村参加者ID
+     * @return The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed even if selected: for no constraint)
      */
-    public String getAbilityTypeCode() {
-        checkSpecifiedProperty("abilityTypeCode");
-        return convertEmptyToNull(_abilityTypeCode);
+    public Integer getTargetVillagePlayerId() {
+        checkSpecifiedProperty("targetVillagePlayerId");
+        return _targetVillagePlayerId;
     }
 
     /**
-     * [set] ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
-     * 能力種別コード
-     * @param abilityTypeCode The value of the column 'ABILITY_TYPE_CODE'. (basically NotNull if update: for the constraint)
+     * [set] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * 行使対象村参加者ID
+     * @param targetVillagePlayerId The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed: null update allowed for no constraint)
      */
-    protected void setAbilityTypeCode(String abilityTypeCode) {
-        checkClassificationCode("ABILITY_TYPE_CODE", CDef.DefMeta.AbilityType, abilityTypeCode);
-        registerModifiedProperty("abilityTypeCode");
-        _abilityTypeCode = abilityTypeCode;
+    public void setTargetVillagePlayerId(Integer targetVillagePlayerId) {
+        registerModifiedProperty("targetVillagePlayerId");
+        _targetVillagePlayerId = targetVillagePlayerId;
     }
 
     /**

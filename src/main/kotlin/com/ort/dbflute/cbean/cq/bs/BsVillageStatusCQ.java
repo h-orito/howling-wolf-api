@@ -93,7 +93,7 @@ public class BsVillageStatusCQ extends AbstractBsVillageStatusCQ {
     public Map<String, Object> xdfgetVillageStatusCode_QueryDerivedReferrer_VillageListParameter() { return xgetSQuePmMap("villageStatusCode_QueryDerivedReferrer_VillageList"); }
     public String keepVillageStatusCode_QueryDerivedReferrer_VillageListParameter(Object pm) { return xkeepSQuePm("villageStatusCode_QueryDerivedReferrer_VillageList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_STATUS_CODE: {PK, NotNull, VARCHAR(20), classification=VillageStatus}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsVillageStatusCQ extends AbstractBsVillageStatusCQ {
       return _villageStatusName; }
     protected ConditionValue xgetCValueVillageStatusName() { return xdfgetVillageStatusName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_STATUS_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)

@@ -79,7 +79,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _villagePlayerId; }
     protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
@@ -99,7 +99,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _villageDayId; }
     protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
@@ -119,7 +119,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -139,7 +139,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -159,7 +159,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -179,7 +179,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

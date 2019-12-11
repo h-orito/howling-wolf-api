@@ -79,7 +79,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _villageId; }
     protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
@@ -93,33 +93,13 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
      */
     public BsMessageRestrictionCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
 
-    protected ConditionValue _skillCode;
-    public ConditionValue xdfgetSkillCode()
-    { if (_skillCode == null) { _skillCode = nCV(); }
-      return _skillCode; }
-    protected ConditionValue xgetCValueSkillCode() { return xdfgetSkillCode(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @return this. (NotNull)
-     */
-    public BsMessageRestrictionCQ addOrderBy_SkillCode_Asc() { regOBA("SKILL_CODE"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @return this. (NotNull)
-     */
-    public BsMessageRestrictionCQ addOrderBy_SkillCode_Desc() { regOBD("SKILL_CODE"); return this; }
-
     protected ConditionValue _messageTypeCode;
     public ConditionValue xdfgetMessageTypeCode()
     { if (_messageTypeCode == null) { _messageTypeCode = nCV(); }
       return _messageTypeCode; }
     protected ConditionValue xgetCValueMessageTypeCode() { return xdfgetMessageTypeCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType}
      * @return this. (NotNull)
@@ -139,7 +119,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _messageMaxNum; }
     protected ConditionValue xgetCValueMessageMaxNum() { return xdfgetMessageMaxNum(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_MAX_NUM: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -159,7 +139,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _messageMaxLength; }
     protected ConditionValue xgetCValueMessageMaxLength() { return xdfgetMessageMaxLength(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * MESSAGE_MAX_LENGTH: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -179,7 +159,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -199,7 +179,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -219,7 +199,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -239,7 +219,7 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -297,9 +277,6 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
         if (bq.hasConditionQueryMessageType()) {
             uq.queryMessageType().reflectRelationOnUnionQuery(bq.queryMessageType(), uq.queryMessageType());
         }
-        if (bq.hasConditionQuerySkill()) {
-            uq.querySkill().reflectRelationOnUnionQuery(bq.querySkill(), uq.querySkill());
-        }
         if (bq.hasConditionQueryVillage()) {
             uq.queryVillage().reflectRelationOnUnionQuery(bq.queryVillage(), uq.queryVillage());
         }
@@ -327,26 +304,6 @@ public class BsMessageRestrictionCQ extends AbstractBsMessageRestrictionCQ {
     }
     protected void xsetupOuterJoinMessageType() { xregOutJo("messageType"); }
     public boolean hasConditionQueryMessageType() { return xhasQueRlMap("messageType"); }
-
-    /**
-     * Get the condition-query for relation table. <br>
-     * SKILL by my SKILL_CODE, named 'skill'.
-     * @return The instance of condition-query. (NotNull)
-     */
-    public SkillCQ querySkill() {
-        return xdfgetConditionQuerySkill();
-    }
-    public SkillCQ xdfgetConditionQuerySkill() {
-        String prop = "skill";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQuerySkill()); xsetupOuterJoinSkill(); }
-        return xgetQueRlMap(prop);
-    }
-    protected SkillCQ xcreateQuerySkill() {
-        String nrp = xresolveNRP("message_restriction", "skill"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new SkillCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "skill", nrp);
-    }
-    protected void xsetupOuterJoinSkill() { xregOutJo("skill"); }
-    public boolean hasConditionQuerySkill() { return xhasQueRlMap("skill"); }
 
     /**
      * Get the condition-query for relation table. <br>

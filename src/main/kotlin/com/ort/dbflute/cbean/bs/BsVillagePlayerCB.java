@@ -47,6 +47,10 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         if (DBFluteConfig.getInstance().isSpecifyColumnRequired()) {
             enableSpecifyColumnRequired();
         }
+        xsetSpecifyColumnRequiredExceptDeterminer(DBFluteConfig.getInstance().getSpecifyColumnRequiredExceptDeterminer());
+        if (DBFluteConfig.getInstance().isSpecifyColumnRequiredWarningOnly()) {
+            xenableSpecifyColumnRequiredWarningOnly();
+        }
         if (DBFluteConfig.getInstance().isQueryUpdateCountPreCheck()) {
             enableQueryUpdateCountPreCheck();
         }
@@ -128,33 +132,33 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
      * <span style="color: #3F7E5E">// {fromDate &lt;= BIRTHDATE &lt; toDate + 1 day}</span>
      * cb.query().setBirthdate_IsNull();    <span style="color: #3F7E5E">// is null</span>
      * cb.query().setBirthdate_IsNotNull(); <span style="color: #3F7E5E">// is not null</span>
-     * 
+     *
      * <span style="color: #3F7E5E">// ExistsReferrer: (correlated sub-query)</span>
      * <span style="color: #3F7E5E">// {where exists (select PURCHASE_ID from PURCHASE where ...)}</span>
      * cb.query().existsPurchase(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * });
      * cb.query().notExistsPurchase...
-     * 
+     *
      * <span style="color: #3F7E5E">// (Query)DerivedReferrer: (correlated sub-query)</span>
      * cb.query().derivedPurchaseList().max(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.specify().columnPurchasePrice(); <span style="color: #3F7E5E">// derived column for function</span>
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * }).greaterEqual(value);
-     * 
+     *
      * <span style="color: #3F7E5E">// ScalarCondition: (self-table sub-query)</span>
      * cb.query().scalar_Equal().max(scalarCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     scalarCB.specify().columnBirthdate(); <span style="color: #3F7E5E">// derived column for function</span>
      *     scalarCB.query().set... <span style="color: #3F7E5E">// scalar sub-query condition</span>
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// OrderBy</span>
      * cb.query().addOrderBy_MemberName_Asc();
      * cb.query().addOrderBy_MemberName_Desc().withManualOrder(option);
      * cb.query().addOrderBy_MemberName_Desc().withNullsFirst();
      * cb.query().addOrderBy_MemberName_Desc().withNullsLast();
      * cb.query().addSpecifiedDerivedOrderBy_Desc(aliasName);
-     * 
+     *
      * <span style="color: #3F7E5E">// Query(Relation)</span>
      * cb.query().queryMemberStatus()...;
      * cb.query().queryMemberAddressAsValid(targetDate)...;
@@ -162,7 +166,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
     public VillagePlayerCQ query() {
-        assertQueryPurpose(); // assert only when user-public query 
+        assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
@@ -213,7 +217,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
     public void union(UnionQuery<VillagePlayerCB> unionCBLambda) {
-        final VillagePlayerCB cb = new VillagePlayerCB(); cb.xsetupForUnion(this); xsyncUQ(cb); 
+        final VillagePlayerCB cb = new VillagePlayerCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
         final VillagePlayerCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
@@ -742,6 +746,40 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from ability where ...) as FOO_MAX} <br>
+         * ABILITY by TARGET_VILLAGE_PLAYER_ID, named 'abilityByTargetVillagePlayerIdList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     abilityCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     abilityCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Ability.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<AbilityCB, VillagePlayerCQ> derivedAbilityByTargetVillagePlayerId() {
+            assertDerived("abilityByTargetVillagePlayerIdList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<AbilityCB> sq, VillagePlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveAbilityByTargetVillagePlayerIdList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from ability where ...) as FOO_MAX} <br>
+         * ABILITY by VILLAGE_PLAYER_ID, named 'abilityByVillagePlayerIdList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     abilityCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     abilityCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Ability.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<AbilityCB, VillagePlayerCQ> derivedAbilityByVillagePlayerId() {
+            assertDerived("abilityByVillagePlayerIdList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<AbilityCB> sq, VillagePlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveAbilityByVillagePlayerIdList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
          * {select max(FOO) from commit where ...) as FOO_MAX} <br>
          * COMMIT by VILLAGE_PLAYER_ID, named 'commitList'.
          * <pre>
@@ -756,6 +794,40 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
             assertDerived("commitList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
             return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<CommitCB> sq, VillagePlayerCQ cq, String al, DerivedReferrerOption op)
                     -> cq.xsderiveCommitList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from vote where ...) as FOO_MAX} <br>
+         * VOTE by TARGET_VILLAGE_PLAYER_ID, named 'voteByTargetVillagePlayerIdList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     voteCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     voteCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Vote.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<VoteCB, VillagePlayerCQ> derivedVoteByTargetVillagePlayerId() {
+            assertDerived("voteByTargetVillagePlayerIdList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VoteCB> sq, VillagePlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveVoteByTargetVillagePlayerIdList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from vote where ...) as FOO_MAX} <br>
+         * VOTE by VILLAGE_PLAYER_ID, named 'voteByVillagePlayerIdList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     voteCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     voteCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Vote.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<VoteCB, VillagePlayerCQ> derivedVoteByVillagePlayerId() {
+            assertDerived("voteByVillagePlayerIdList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VoteCB> sq, VillagePlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveVoteByVillagePlayerIdList(fn, sq, al, op), _dbmetaProvider);
         }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).

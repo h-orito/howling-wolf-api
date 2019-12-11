@@ -20,12 +20,12 @@ public class VoteNss {
     //                                                                     ===============
     /**
      * With nested relation columns to select clause. <br>
-     * CHARA by my CHARA_ID, named 'charaByCharaId'.
+     * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */
-    public CharaNss withCharaByCharaId() {
-        _query.xdoNss(() -> _query.queryCharaByCharaId());
-        return new CharaNss(_query.queryCharaByCharaId());
+    public VillagePlayerNss withVillagePlayerByTargetVillagePlayerId() {
+        _query.xdoNss(() -> _query.queryVillagePlayerByTargetVillagePlayerId());
+        return new VillagePlayerNss(_query.queryVillagePlayerByTargetVillagePlayerId());
     }
     /**
      * With nested relation columns to select clause. <br>
@@ -38,11 +38,11 @@ public class VoteNss {
     }
     /**
      * With nested relation columns to select clause. <br>
-     * CHARA by my VOTE_CHARA_ID, named 'charaByVoteCharaId'.
+     * VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */
-    public CharaNss withCharaByVoteCharaId() {
-        _query.xdoNss(() -> _query.queryCharaByVoteCharaId());
-        return new CharaNss(_query.queryCharaByVoteCharaId());
+    public VillagePlayerNss withVillagePlayerByVillagePlayerId() {
+        _query.xdoNss(() -> _query.queryVillagePlayerByVillagePlayerId());
+        return new VillagePlayerNss(_query.queryVillagePlayerByVillagePlayerId());
     }
 }

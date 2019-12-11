@@ -1,6 +1,8 @@
 package com.ort.wolf4busy.domain.model.skill
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.ability.Abilities
+import com.ort.wolf4busy.domain.model.ability.Ability
 
 data class Skill(
     val code: String,
@@ -8,11 +10,15 @@ data class Skill(
 ) {
     companion object {
 
-        val skillRequestSomeoneList =
-            listOf(CDef.Skill.おまかせ, CDef.Skill.おまかせ村人陣営, CDef.Skill.おまかせ人狼陣営, CDef.Skill.おまかせ人外, CDef.Skill.おまかせ役職窓あり)
+        val skillRequestSomeoneList = listOf(CDef.Skill.おまかせ)
+        private val skillAbilityTypeListMap = mapOf(
+            CDef.Skill.人狼 to listOf(CDef.AbilityType.襲撃),
+            CDef.Skill.占い師 to listOf(CDef.AbilityType.占い),
+            CDef.Skill.狩人 to listOf(CDef.AbilityType.護衛)
+        )
 
         fun skillByShortName(shortName: String): Skill? {
-            val cdefSkill: CDef.Skill? = CDef.Skill.listAll().first {
+            val cdefSkill: CDef.Skill? = CDef.Skill.listAll().firstOrNull() {
                 it.shortName() == shortName
             }
             cdefSkill ?: return null
@@ -21,5 +27,23 @@ data class Skill(
                 name = cdefSkill.name
             )
         }
+
+
+    }
+
+    fun getAbilities(): Abilities {
+        val cdefSkill = CDef.Skill.codeOf(code)
+        cdefSkill ?: return Abilities(listOf())
+        val cdefAbilityList = skillAbilityTypeListMap.get(cdefSkill)
+        cdefAbilityList ?: return Abilities(listOf())
+        return Abilities(
+            list = cdefAbilityList.map {
+                Ability(
+                    code = it.code(),
+                    name = it.alias()
+                )
+            }
+        )
+
     }
 }

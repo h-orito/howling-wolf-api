@@ -135,7 +135,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
     public Map<String, Object> xdfgetVillageId_QueryDerivedReferrer_VillageSettingListParameter() { return xgetSQuePmMap("villageId_QueryDerivedReferrer_VillageSettingList"); }
     public String keepVillageId_QueryDerivedReferrer_VillageSettingListParameter(Object pm) { return xkeepSQuePm("villageId_QueryDerivedReferrer_VillageSettingList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -155,7 +155,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _villageDisplayName; }
     protected ConditionValue xgetCValueVillageDisplayName() { return xdfgetVillageDisplayName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_DISPLAY_NAME: {NotNull, VARCHAR(40)}
      * @return this. (NotNull)
@@ -175,7 +175,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _createPlayerName; }
     protected ConditionValue xgetCValueCreatePlayerName() { return xdfgetCreatePlayerName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
      * @return this. (NotNull)
@@ -195,7 +195,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _villageStatusCode; }
     protected ConditionValue xgetCValueVillageStatusCode() { return xdfgetVillageStatusCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
      * @return this. (NotNull)
@@ -215,7 +215,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _epilogueDay; }
     protected ConditionValue xgetCValueEpilogueDay() { return xdfgetEpilogueDay(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * EPILOGUE_DAY: {INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -235,7 +235,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _winCampCode; }
     protected ConditionValue xgetCValueWinCampCode() { return xdfgetWinCampCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to camp, classification=Camp}
      * @return this. (NotNull)
@@ -255,7 +255,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -275,7 +275,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -295,7 +295,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -315,7 +315,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

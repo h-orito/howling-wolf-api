@@ -2,10 +2,7 @@ package com.ort.wolf4busy.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
-import com.ort.dbflute.exentity.Village
-import com.ort.dbflute.exentity.VillageDay
-import com.ort.dbflute.exentity.VillagePlayer
-import com.ort.dbflute.exentity.VillageSetting
+import com.ort.dbflute.exentity.*
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
@@ -21,7 +18,8 @@ class VillageDataSource(
     val villageSettingBhv: VillageSettingBhv,
     val villageDayBhv: VillageDayBhv,
     val villagePlayerBhv: VillagePlayerBhv,
-    val commitBhv: CommitBhv
+    val commitBhv: CommitBhv,
+    val messageRestrictionBhv: MessageRestrictionBhv
 ) {
 
     /**
@@ -48,6 +46,7 @@ class VillageDataSource(
                 it.query().addOrderBy_Day_Desc()
                 it.query().queryNoonnight().addOrderBy_DispOrder_Desc()
             }
+            loader.loadMessageRestriction { }
         }
         return VillageDataConverter.convertVillageListToVillages(villageList)
     }
@@ -57,14 +56,15 @@ class VillageDataSource(
      * @param villageId villageId
      * @return 村情報
      */
-    fun selectVillage(villageId: Int): com.ort.wolf4busy.domain.model.village.Village {
+    fun selectVillage(villageId: Int, excludeGonePlayer: Boolean = true): com.ort.wolf4busy.domain.model.village.Village {
         val village = villageBhv.selectEntityWithDeletedCheck {
             it.query().setVillageId_Equal(villageId)
         }
         villageBhv.load(village) { loader ->
             loader.loadVillagePlayer { vpCB ->
-                vpCB.setupSelect_Player()
-                vpCB.setupSelect_Chara()
+                if (excludeGonePlayer) {
+                    vpCB.query().setIsGone_Equal(false)
+                }
             }.withNestedReferrer {
                 it.pulloutChara().loadCharaImage { }
             }
@@ -73,6 +73,7 @@ class VillageDataSource(
                 it.query().addOrderBy_Day_Asc()
                 it.query().queryNoonnight().addOrderBy_DispOrder_Asc()
             }
+            loader.loadMessageRestriction { }
         }
 
         return VillageDataConverter.convertVillageToVillage(village)
@@ -118,6 +119,17 @@ class VillageDataSource(
         insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
         insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
         insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, password ?: "")
+    }
+
+    /**
+     * 発言制限登録
+     * @param villageId villageId
+     * @param setting 村設定
+     */
+    fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
+        setting.rules.messageRestrict.restrictList.forEach {
+            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
+        }
     }
 
     /**
@@ -298,6 +310,15 @@ class VillageDataSource(
         setting.villageSettingItemCodeAsVillageSettingItem = item
         setting.villageSettingText = value
         villageSettingBhv.insert(setting)
+    }
+
+    private fun insertMessageRestriction(villageId: Int, messageTypeCode: String, count: Int, length: Int) {
+        val restrict = MessageRestriction()
+        restrict.villageId = villageId
+        restrict.messageTypeCodeAsMessageType = CDef.MessageType.codeOf(messageTypeCode)
+        restrict.messageMaxNum = count
+        restrict.messageMaxLength = length
+        messageRestrictionBhv.insert(restrict)
     }
 
     // ===================================================================================

@@ -3,14 +3,9 @@ package com.ort.wolf4busy.infrastructure.datasource.message
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.MessageBhv
 import com.ort.dbflute.exentity.Message
-import com.ort.wolf4busy.domain.model.charachip.Chara
-import com.ort.wolf4busy.domain.model.charachip.CharaDefaultMessage
-import com.ort.wolf4busy.domain.model.charachip.CharaName
-import com.ort.wolf4busy.domain.model.charachip.CharaSize
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
-import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -87,6 +82,27 @@ class MessageDataSource(
         return optMessage.map { convertMessageToMessage(it) }.orElse(null)
     }
 
+    /**
+     * 参加者のその日の発言を取得
+     *
+     * @param villageId villageId
+     * @param villageDayId 村日付ID
+     * @param participant 参加情報
+     * @return 発言
+     */
+    fun selectParticipateDayMessageList(
+        villageId: Int,
+        villageDayId: Int,
+        participant: VillageParticipant
+    ): List<com.ort.wolf4busy.domain.model.message.Message> {
+        val messageList = messageBhv.selectList {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setVillagePlayerId_Equal(participant.id)
+            it.query().setVillageDayId_Equal(villageDayId)
+        }
+        return messageList.map { convertMessageToMessage(it) }
+    }
+
     fun insertMessage(
         villageId: Int,
         dayId: Int,
@@ -141,48 +157,18 @@ class MessageDataSource(
         return com.ort.wolf4busy.domain.model.message.Message(
             from = if (message.villagePlayerId == null) null else VillageParticipant(
                 id = message.villagePlayerId,
-                chara = Chara(
-                    id = 1, // dummy
-                    charaName = CharaName(
-                        name = "", // dummy
-                        shortName = "" // dummy
-                    ),
-                    charachipId = 1, // dummy
-                    defaultMessage = CharaDefaultMessage(null, null), // dummy
-                    display = CharaSize(
-                        width = 0, // dummy
-                        height = 0 // dummy
-                    ),
-                    faceList = listOf() // dummy
-                ),
+                charaId = 1, // dummy
                 dead = null, // dummy
                 isSpectator = false, // dummy
-                player = if (message.playerId == null) null else Player(
-                    id = message.playerId,
-                    nickname = "", // dummy
-                    twitterUserName = "" // dummy
-                ),
+                playerId = message.playerId,
                 skill = null // dummy
             ),
             to = if (message.toVillagePlayerId == null) null else VillageParticipant(
                 id = message.toVillagePlayerId,
-                chara = Chara(
-                    id = 1, // dummy
-                    charaName = CharaName(
-                        name = "", // dummy
-                        shortName = "" // dummy
-                    ),
-                    charachipId = 1, // dummy
-                    defaultMessage = CharaDefaultMessage(null, null), // dummy
-                    display = CharaSize(
-                        width = 0, // dummy
-                        height = 0 // dummy
-                    ),
-                    faceList = listOf() // dummy
-                ),
+                charaId = 1, // dummy
                 dead = null, // dummy
                 isSpectator = false, // dummy
-                player = null,
+                playerId = null,
                 skill = null // dummy
             ),
             time = MessageTime(

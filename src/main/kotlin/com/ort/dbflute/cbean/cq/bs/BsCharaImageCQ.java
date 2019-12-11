@@ -79,7 +79,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
       return _charaId; }
     protected ConditionValue xgetCValueCharaId() { return xdfgetCharaId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
      * @return this. (NotNull)
@@ -99,7 +99,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
       return _faceTypeCode; }
     protected ConditionValue xgetCValueFaceTypeCode() { return xdfgetFaceTypeCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
      * @return this. (NotNull)
@@ -119,7 +119,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
       return _charaImgUrl; }
     protected ConditionValue xgetCValueCharaImgUrl() { return xdfgetCharaImgUrl(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CHARA_IMG_URL: {NotNull, VARCHAR(100)}
      * @return this. (NotNull)
