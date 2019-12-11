@@ -4,6 +4,7 @@ spring:
     username: wolf4busyuser # 本番は起動引数で与える
     password: wolf4busypass # 本番は起動引数で与える
     driverClassName: com.mysql.jdbc.Driver
+    type: org.apache.tomcat.jdbc.pool.DataSource
   messages:
     basename: messages
     cache-duration: -1
