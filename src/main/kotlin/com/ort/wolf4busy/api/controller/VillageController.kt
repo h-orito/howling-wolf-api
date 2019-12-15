@@ -196,7 +196,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageChangeSkillBody
     ) {
-        // TODO 実装
+        villageService.changeSkillRequest(villageId, user, body.firstRequestSkill!!, body.secondRequestSkill!!)
     }
 
     /**

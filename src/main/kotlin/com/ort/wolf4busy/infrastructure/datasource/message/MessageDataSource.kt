@@ -3,12 +3,14 @@ package com.ort.wolf4busy.infrastructure.datasource.message
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.MessageBhv
 import com.ort.dbflute.exentity.Message
+import com.ort.wolf4busy.api.controller.VillageController
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import java.time.ZoneOffset
 
@@ -17,6 +19,14 @@ class MessageDataSource(
     val messageBhv: MessageBhv
 ) {
 
+    // ===================================================================================
+    //                                                                          Definition
+    //                                                                          ==========
+    private val logger = LoggerFactory.getLogger(VillageController::class.java)
+
+    // ===================================================================================
+    //                                                                             Execute
+    //                                                                           =========
     /**
      * 発言取得
      * partitionを切っているので関連テーブルの情報は別途取得して埋めること
@@ -134,8 +144,7 @@ class MessageDataSource(
                 messageBhv.insert(mes)
                 return
             } catch (e: RuntimeException) {
-                e.printStackTrace()
-                // 握りつぶす
+                logger.error(e.message, e)
             }
         }
         throw Wolf4busyBusinessException("混み合っているため発言に失敗しました。再度発言してください。")
