@@ -2,11 +2,13 @@ package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.commit.Commit
+import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
+import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -83,12 +85,12 @@ class VillageService(
     fun registerVillageDay(villageId: Int, day: Int, noonnight: CDef.Noonnight, dayChangeDatetime: LocalDateTime): Int {
         return villageDataSource.insertVillageDay(
             villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
-            id = 1, // dummy
-            day = day,
-            noonnight = noonnight.code(),
-            startDatetime = dayChangeDatetime,
-            isUpdating = true // dummy
-        )
+                id = 1, // dummy
+                day = day,
+                noonnight = noonnight.code(),
+                startDatetime = dayChangeDatetime,
+                isUpdating = true // dummy
+            )
         )
     }
 
@@ -171,12 +173,29 @@ class VillageService(
      * @return
      */
     fun findSkillRequest(participant: VillageParticipant?): SkillRequest? {
-        participant?: return null
+        participant ?: return null
         return villageDataSource.selectSkillRequest(participant)
     }
 
     fun findCommit(village: Village, participant: VillageParticipant?): Commit? {
         participant ?: return null
         return villageDataSource.selectCommit(village, participant)
+    }
+
+    /**
+     * 役職希望変更
+     * @param villageId villageId
+     * @param user user
+     * @param firstRequestSkill 第1希望
+     * @param secondRequestSkill 第2希望
+     */
+    fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
+        val participantId = this.findParticipantByUid(villageId, user.uid)?.id
+        participantId ?: throw IllegalStateException("セッション切れ？")
+        val village = villageDataSource.selectVillage(villageId)
+        if (!village.status.isPrologue()) return // 開始直前に変更しようとして間に合わなかった
+        CDef.Skill.codeOf(firstRequestSkill) ?: IllegalStateException("改竄")
+        CDef.Skill.codeOf(secondRequestSkill) ?: IllegalStateException("改竄")
+        villageDataSource.updateSkillRequest(participantId, Skill(firstRequestSkill, ""), Skill(secondRequestSkill, ""))
     }
 }
