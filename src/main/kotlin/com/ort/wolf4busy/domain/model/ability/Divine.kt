@@ -30,4 +30,9 @@ object Divine {
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
     }
+
+    fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
+        return "" // TODO
+
+    }
 }

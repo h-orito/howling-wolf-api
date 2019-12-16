@@ -534,6 +534,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_ViewableWerewolfSay() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isViewableWerewolfSay();
+    }
+
+    /**
      * 囁き可能 <br>
      * The group elements:[人狼]
      * @return The determination, true or false.
@@ -641,6 +651,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_ViewableWerewolfSay() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isViewableWerewolfSay();
+    }
+
+    /**
      * 囁き可能 <br>
      * The group elements:[人狼]
      * @return The determination, true or false.
@@ -745,6 +765,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode人狼() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.人狼) : false;
+    }
+
+    /**
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_ViewableWerewolfSay() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isViewableWerewolfSay();
     }
 
     /**

@@ -223,6 +223,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     /**
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_ViewableWerewolfSay() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfViewableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
      * 囁き可能 <br>
      * The group elements:[人狼]
      */

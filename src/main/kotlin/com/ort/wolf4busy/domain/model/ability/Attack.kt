@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.domain.model.ability
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -42,5 +43,9 @@ object Attack {
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
+    }
+
+    fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
+        return "" // TODO
     }
 }

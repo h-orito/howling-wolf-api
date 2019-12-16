@@ -17,6 +17,7 @@ data class VillageAbilitySituations(
     )
 
     companion object {
+
         private fun convertToAbilityList(
             village: Village,
             participant: VillageParticipant?,
@@ -30,5 +31,11 @@ data class VillageAbilitySituations(
                 )
             }
         }
+    }
+
+    fun isSettableAbility(targetId: Int?, abilityType: String): Boolean {
+        val situation = list.find { it.type.code == abilityType } ?: return false
+        // TODO 全部対象なしを許可するか？は今は考えない
+        return targetId == null || situation.targetList.any { it.id == targetId }
     }
 }

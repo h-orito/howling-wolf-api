@@ -1,7 +1,9 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.Chara
+import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
@@ -74,7 +76,14 @@ class MessageService(
      * @param messageType 発言種別
      * @param faceType 表情種別
      */
-    fun registerSayMessage(villageId: Int, villageDayId: Int, participant: VillageParticipant, message: String, messageType: String, faceType: String) {
+    fun registerSayMessage(
+        villageId: Int,
+        villageDayId: Int,
+        participant: VillageParticipant,
+        message: String,
+        messageType: String,
+        faceType: String
+    ) {
         messageDataSource.insertMessage(
             villageId = villageId,
             dayId = villageDayId,
@@ -164,5 +173,23 @@ class MessageService(
             messageType = CDef.MessageType.公開システムメッセージ.code(),
             text = leaveMessage
         )
+    }
+
+    /**
+     * 能力セットする際のシステムメッセージを登録
+     * @param villageId villageId
+     * @param participant 村参加者
+     * @param targetId 対象の村参加者ID
+     * @param abilityType 能力種別
+     * @param charas キャラ
+     */
+    fun registerAbilitySetMessage(villageId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String, charas: Charas) {
+        // 自分のキャラ
+        val myChara = charas.list.find { it.id == participant.charaId }!!
+        // 相手のキャラ
+        val targetChara = charas.list.find { it.id == targetId }
+        // 登録メッセージ
+        Ability(abilityType, "").getAbilitySetMessage(myChara, targetChara)
+
     }
 }

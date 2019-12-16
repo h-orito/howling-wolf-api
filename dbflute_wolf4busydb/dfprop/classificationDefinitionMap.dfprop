@@ -74,6 +74,10 @@ map:{
         ; map:{
         	; topComment=役職; codeType=String
         	; groupingMap = map:{
+        		; viewableWerewolfSay = map:{
+        			; groupComment=囁きを見られる
+        			; elementList= list:{人狼}
+        		}
         		; availableWerewolfSay = map:{
         			; groupComment=囁き可能
         			; elementList= list:{人狼}

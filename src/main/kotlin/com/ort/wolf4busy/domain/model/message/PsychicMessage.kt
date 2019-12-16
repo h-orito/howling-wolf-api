@@ -4,15 +4,12 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
-object NormalSay {
+object PsychicMessage {
 
     fun isViewable(village: Village, participant: VillageParticipant?): Boolean {
-        return true
+        // 終了していたら全て見られる
+        if (village.status.isCompleted()) return true
+        // 参加していて霊能者なら開放
+        return participant?.skill?.code == CDef.Skill.霊能者.code()
     }
-
-    fun isSayable(village: Village, participant: VillageParticipant): Boolean {
-        // エピローグ以外で死亡している場合は不可
-        return participant.alive() || village.status.code == CDef.VillageStatus.エピローグ.code()
-    }
-
 }
