@@ -8,6 +8,7 @@ import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
+import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.springframework.stereotype.Service
 
 
@@ -103,6 +104,23 @@ class VillageCoordinator(
 
     }
 
+    /**
+     * 退村
+     * @param villageId villageId
+     * @param user user
+     */
+    fun leaveVillage(villageId: Int, user: Wolf4busyUser) {
+        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        participant ?: throw IllegalStateException("セッション切れ？")
+        val village = villageService.findVillage(villageId)
+        if (!village.status.isPrologue()) return // 開始直前に変更しようとして間に合わなかった
+        // 退村
+        villageService.leaveVillage(participant)
+        // 退村メッセージ
+        val chara = charachipService.findChara(participant.charaId)
+        messageService.registerLeaveMessage(village.id, chara, village.day.prologue().id)
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
@@ -153,7 +171,7 @@ class VillageCoordinator(
 
     private fun isAlreadyParticipateCharacter(village: Village, charaId: Int): Boolean {
         return village.participant.memberList.any { it.charaId == charaId }
-                || village.spectator.memberList.any { it.charaId == charaId }
+            || village.spectator.memberList.any { it.charaId == charaId }
     }
 
     private fun assertPassword(village: Village, password: String?, playerId: Int) {

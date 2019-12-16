@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
@@ -121,6 +122,26 @@ class MessageService(
             text = message,
             villagePlayerId = villagePlayerId,
             faceType = CDef.FaceType.通常.code()
+        )
+    }
+
+    /**
+     * 退村する際のシステムメッセージを登録
+     * @param villageId villageId
+     * @param chara chara
+     * @param villageDayId 村日付ID
+     */
+    fun registerLeaveMessage(villageId: Int, chara: Chara, villageDayId: Int) {
+        val leaveMessage: String = messageSource.getMessage(
+            "village.leave.message",
+            arrayOf(chara.charaName),
+            Locale.JAPANESE
+        )
+        messageDataSource.insertMessage(
+            villageId = villageId,
+            dayId = villageDayId,
+            messageType = CDef.MessageType.公開システムメッセージ.code(),
+            text = leaveMessage
         )
     }
 }
