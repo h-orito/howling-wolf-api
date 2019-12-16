@@ -213,6 +213,22 @@ class VillageController(
     }
 
     /**
+     * 発言確認
+     * @param villageId villageId
+     * @param user user
+     * @param body 発言内容
+     */
+    @PostMapping("/village/{villageId}/say-confirm")
+    fun sayConfirm(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser,
+        @RequestBody @Validated body: VillageSayBody
+    ) {
+        // TODO パラメータ多数の場合にどう受け渡すか考える
+        villageCoordinator.confirmToSay(villageId, user, body.message!!, body.messageType!!, body.faceType!!)
+    }
+
+    /**
      * 発言
      * @param villageId villageId
      * @param user user
@@ -224,7 +240,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageSayBody
     ) {
-        // TODO 実装
+        villageCoordinator.say(villageId, user, body.message!!, body.messageType!!, body.faceType!!)
     }
 
     /**

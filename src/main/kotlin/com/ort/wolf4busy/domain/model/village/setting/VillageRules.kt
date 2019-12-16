@@ -1,5 +1,7 @@
 package com.ort.wolf4busy.domain.model.village.setting
 
+import com.ort.dbflute.allcommon.CDef
+
 data class VillageRules(
     val openVote: Boolean = false,
     val availableSkillRequest: Boolean = true,
@@ -33,5 +35,10 @@ data class VillageRules(
                 messageRestrict = messageRestrict ?: defaultRules.messageRestrict
             )
         }
+    }
+
+    fun isValidSkillRequest(firstRequest: CDef.Skill, secondRequest: CDef.Skill): Boolean {
+        if (availableSkillRequest) return true
+        return firstRequest == CDef.Skill.おまかせ && secondRequest == CDef.Skill.おまかせ
     }
 }

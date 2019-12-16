@@ -65,6 +65,27 @@ class MessageService(
     }
 
     /**
+     * 発言登録
+     *
+     * @param villageId villageId
+     * @param villageDayId 村日付id
+     * @param participant 参加情報
+     * @param message 発言内容
+     * @param messageType 発言種別
+     * @param faceType 表情種別
+     */
+    fun registerSayMessage(villageId: Int, villageDayId: Int, participant: VillageParticipant, message: String, messageType: String, faceType: String) {
+        messageDataSource.insertMessage(
+            villageId = villageId,
+            dayId = villageDayId,
+            messageType = messageType,
+            text = message,
+            villagePlayerId = participant.id,
+            faceType = faceType
+        )
+    }
+
+    /**
      * 村作成時のシステムメッセージ登録
      * @param villageId villageId
      * @param villageDayId 村日付id

@@ -153,7 +153,8 @@ class VillageService(
      * @param villageId villageId
      * @param password 入村パスワード
      */
-    fun isCollectPassword(villageId: Int, password: String): Boolean {
+    fun isCollectPassword(villageId: Int, password: String?): Boolean {
+        password ?: return false
         val villagePassword: String = villageDataSource.selectVillagePassword(villageId)
         return villagePassword == password
     }
