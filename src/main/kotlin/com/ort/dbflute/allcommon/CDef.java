@@ -540,6 +540,16 @@ public interface CDef extends Classification {
 
         /**
          * Is the classification in the group? <br>
+         * 囁きを見られる <br>
+         * The group elements:[人狼]
+         * @return The determination, true or false.
+         */
+        public boolean isViewableWerewolfSay() {
+            return 人狼.equals(this);
+        }
+
+        /**
+         * Is the classification in the group? <br>
          * 囁き可能 <br>
          * The group elements:[人狼]
          * @return The determination, true or false.
@@ -569,6 +579,7 @@ public interface CDef extends Classification {
         }
 
         public boolean inGroup(String groupName) {
+            if ("viewableWerewolfSay".equals(groupName)) { return isViewableWerewolfSay(); }
             if ("availableWerewolfSay".equals(groupName)) { return isAvailableWerewolfSay(); }
             if ("notSelectableAttack".equals(groupName)) { return isNotSelectableAttack(); }
             if ("hasAttackAbility".equals(groupName)) { return isHasAttackAbility(); }
@@ -639,6 +650,7 @@ public interface CDef extends Classification {
          */
         public static List<Skill> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
+            if ("viewableWerewolfSay".equalsIgnoreCase(groupName)) { return listOfViewableWerewolfSay(); }
             if ("availableWerewolfSay".equalsIgnoreCase(groupName)) { return listOfAvailableWerewolfSay(); }
             if ("notSelectableAttack".equalsIgnoreCase(groupName)) { return listOfNotSelectableAttack(); }
             if ("hasAttackAbility".equalsIgnoreCase(groupName)) { return listOfHasAttackAbility(); }
@@ -655,6 +667,16 @@ public interface CDef extends Classification {
             List<Skill> clsList = new ArrayList<Skill>(codeList.size());
             for (String code : codeList) { clsList.add(of(code).get()); }
             return clsList;
+        }
+
+        /**
+         * Get the list of group classification elements. (returns new copied list) <br>
+         * 囁きを見られる <br>
+         * The group elements:[人狼]
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         */
+        public static List<Skill> listOfViewableWerewolfSay() {
+            return new ArrayList<Skill>(Arrays.asList(人狼));
         }
 
         /**
@@ -693,6 +715,7 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
          */
         public static List<Skill> groupOf(String groupName) {
+            if ("viewableWerewolfSay".equals(groupName)) { return listOfViewableWerewolfSay(); }
             if ("availableWerewolfSay".equals(groupName)) { return listOfAvailableWerewolfSay(); }
             if ("notSelectableAttack".equals(groupName)) { return listOfNotSelectableAttack(); }
             if ("hasAttackAbility".equals(groupName)) { return listOfHasAttackAbility(); }

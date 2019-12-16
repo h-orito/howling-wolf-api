@@ -22,6 +22,11 @@ data class Village(
 ) {
 
     // ===================================================================================
+    //                                                                          Definition
+    //                                                                          ==========
+    private val everyoneAllowedMessageTypeList = listOf(CDef.MessageType.公開システムメッセージ, CDef.MessageType.通常発言, CDef.MessageType.村建て発言)
+
+    // ===================================================================================
     //                                                                         participant
     //                                                                           =========
     fun dummyChara(): VillageParticipant {
@@ -59,74 +64,57 @@ data class Village(
     // ===================================================================================
     //                                                                                View
     //                                                                           =========
-    fun isViewableNormalMessage(): Boolean {
-        return true
+    /**
+     * 閲覧できる発言種別リスト
+     *
+     * @param participant 参加情報
+     * @param day 何日目か
+     * @param authority ユーザの権限
+     * @return 閲覧できる発言種別
+     */
+    fun viewableMessageTypeList(
+        participant: VillageParticipant?,
+        day: Int,
+        authority: CDef.Authority?
+    ): List<CDef.MessageType> {
+        // 管理者は全て見られる
+        if (authority == CDef.Authority.管理者) return CDef.MessageType.listAll()
+        // 村が終了していたら全て見られる
+        if (status.isCompleted()) return CDef.MessageType.listAll()
+
+        val allowedTypeList: MutableList<CDef.MessageType> = mutableListOf()
+        allowedTypeList.addAll(everyoneAllowedMessageTypeList)
+        // 権限に応じて追加していく（独り言と秘話はここでは追加しない）
+        if (isViewableMessage(participant, CDef.MessageType.死者の呻き.code())) allowedTypeList.add(CDef.MessageType.死者の呻き)
+        if (isViewableMessage(participant, CDef.MessageType.見学発言.code(), day)) allowedTypeList.add(CDef.MessageType.見学発言)
+        if (isViewableMessage(participant, CDef.MessageType.人狼の囁き.code())) allowedTypeList.add(CDef.MessageType.人狼の囁き)
+        if (isViewableMessage(participant, CDef.MessageType.白黒霊視結果.code())) allowedTypeList.add(CDef.MessageType.白黒霊視結果)
+        return allowedTypeList
     }
 
-    fun isViewableGraveMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.status.isCompleted()) return true
-        // 見られる設定なら開放
-        if (this.setting.rules.visibleGraveMessage) return true
-        // 参加していなければNG
-        if (participant == null) return false
-        // 見学は開放
-        if (participant.isSpectator) return true
-        // 突然死以外で死亡している
-        return participant?.dead != null && CDef.DeadReason.突然.code() != participant.dead.code
+    /**
+     * 閲覧できるか
+     *
+     * @param participant 参加情報
+     * @param messageType 発言種別
+     * @param day 何日目か
+     * @return 閲覧できるか
+     */
+    fun isViewableMessage(participant: VillageParticipant?, messageType: String, day: Int = 1): Boolean {
+        return when (CDef.MessageType.codeOf(messageType) ?: return false) {
+            CDef.MessageType.通常発言 -> NormalSay.isViewable(this, participant)
+            CDef.MessageType.人狼の囁き -> WerewolfSay.isViewable(this, participant)
+            CDef.MessageType.死者の呻き -> GraveSay.isViewable(this, participant)
+            CDef.MessageType.見学発言 -> SpectateSay.isViewable(this, participant, day)
+            CDef.MessageType.独り言 -> MonologueSay.isViewable(this)
+            CDef.MessageType.秘話 -> SecretSay.isViewable(this)
+            CDef.MessageType.白黒霊視結果 -> PsychicMessage.isViewable(this, participant)
+            else -> return false
+        }
     }
-
-    fun isViewableSpectateMessage(participant: VillageParticipant?, day: Int): Boolean {
-        // 終了していたら全て見られる
-        if (this.status.isCompleted()) return true
-        // 進行中以外は開放
-        if (CDef.VillageStatus.進行中.code() != this.status.code) return true
-        // 見られる設定なら開放
-        if (this.setting.rules.visibleGraveMessage) return true
-        // 進行中でも0日目なら開放
-        if (CDef.VillageStatus.進行中.code() == this.status.code && day == 0) return true
-        // 参加していなければNG
-        if (participant == null) return false
-        // 見学は開放
-        if (participant.isSpectator) return true
-        // 突然死以外で死亡している
-        return participant?.dead != null && CDef.DeadReason.突然.code() != participant.dead.code
-    }
-
-    fun isViewableWerewolfMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.status.isCompleted()) return true
-        // 参加していて人狼なら開放
-        return isParticipateSkillAs(participant, CDef.Skill.人狼)
-    }
-
-    fun isViewableSeerMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.status.isCompleted()) return true
-        // 参加していて占い師なら開放
-        return isParticipateSkillAs(participant, CDef.Skill.占い師)
-    }
-
-    fun isViewablePsychicMessage(participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (this.status.isCompleted()) return true
-        // 参加していて霊能者なら開放
-        return isParticipateSkillAs(participant, CDef.Skill.霊能者)
-    }
-
-    fun isViewableMonologueMessage(): Boolean {
-        // 終了していたら全て見られる
-        return this.status.isCompleted()
-    }
-
-    fun isViewableSecretMessage(): Boolean {
-        // 終了していたら全て見られる
-        return this.status.isCompleted()
-    }
-
 
     // ===================================================================================
-    //                                                                        Assist Logic
+    //                                                                                 say
     //                                                                        ============
     /**
      * 発言できるか
@@ -137,8 +125,10 @@ data class Village(
      * @param messageType 発言種別
      * @param faceType 表情種別
      */
-    fun isAvailableSay(user: Wolf4busyUser, participant: VillageParticipant, message: String, messageType: String, faceType: String?,
-                       latestDayMessageList: List<Message>, charas: Charas): Boolean {
+    fun isAvailableSay(
+        user: Wolf4busyUser, participant: VillageParticipant, message: String, messageType: String, faceType: String?,
+        latestDayMessageList: List<Message>, charas: Charas
+    ): Boolean {
         val cdefMessageType = CDef.MessageType.codeOf(messageType)
         cdefMessageType ?: throw IllegalStateException("発言種別改竄")
 
@@ -165,20 +155,21 @@ data class Village(
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun isParticipateSkillAs(participant: VillageParticipant?, skill: CDef.Skill): Boolean {
-        return skill.code() == participant?.skill?.code
-    }
-
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
         return participant.memberList.any { it.charaId == charaId }
-            || spectator.memberList.any { it.charaId == charaId }
+                || spectator.memberList.any { it.charaId == charaId }
     }
 
-    private fun isRestricted(village: Village, participant: VillageParticipant, latestDayMessageList: List<Message>, charas: Charas, messageType: String): Boolean {
+    private fun isRestricted(
+        village: Village,
+        participant: VillageParticipant,
+        latestDayMessageList: List<Message>,
+        charas: Charas,
+        messageType: String
+    ): Boolean {
         val saySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
         val restrict = saySituation.selectableMessageTypeList.find { it.messageType.code == messageType }
         restrict ?: return false
         return restrict.restrict.isRestricted && restrict.restrict.remainingCount != null && restrict.restrict.remainingCount <= 0
-
     }
 }

@@ -23,7 +23,6 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -41,11 +40,6 @@ class VillageController(
     val charachipService: CharachipService
 ) {
     // ===================================================================================
-    //                                                                          Definition
-    //                                                                          ==========
-    private val logger = LoggerFactory.getLogger(VillageController::class.java)
-
-    // ===================================================================================
     //                                                                             Execute
     //                                                                           =========
     /**
@@ -55,7 +49,6 @@ class VillageController(
     @GetMapping("/village/list")
     fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillageListView {
         val villages = villageService.findVillageList()
-        logger.info(user.toString())
         return VillageListView(
             villageList = villages.villageList
         )
@@ -256,7 +249,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageAbilityBody
     ) {
-        // TODO 実装
+        villageCoordinator.setAbility(villageId, user, body.targetId, body.abilityType!!)
     }
 
     /**
