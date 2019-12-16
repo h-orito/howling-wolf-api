@@ -209,7 +209,7 @@ class VillageController(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: Wolf4busyUser
     ) {
-        // TODO 実装
+        villageCoordinator.leaveVillage(villageId, user)
     }
 
     /**

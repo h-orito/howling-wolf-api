@@ -283,15 +283,26 @@ class VillageDataSource(
 
     /**
      * 希望役職を更新
-     * @param participantId 村参加者id
+     * @param participant 村参加者
      * @param firstRequest 第1希望
      * @param secondRequest 第2希望
      */
-    fun updateSkillRequest(participantId: Int, firstRequest: Skill, secondRequest: Skill) {
+    fun updateSkillRequest(participant: VillageParticipant, firstRequest: Skill, secondRequest: Skill) {
         val villagePlayer = VillagePlayer()
-        villagePlayer.villagePlayerId = participantId
+        villagePlayer.villagePlayerId = participant.id
         villagePlayer.requestSkillCodeAsSkill = CDef.Skill.codeOf(firstRequest.code)
         villagePlayer.secondRequestSkillCodeAsSkill = CDef.Skill.codeOf(secondRequest.code)
+        villagePlayerBhv.update(villagePlayer)
+    }
+
+    /**
+     * 退村
+     * @param participant 村参加者
+     */
+    fun updateVillagePlayerLeave(participant: VillageParticipant) {
+        val villagePlayer = VillagePlayer()
+        villagePlayer.villagePlayerId = participant.id
+        villagePlayer.isGone = true
         villagePlayerBhv.update(villagePlayer)
     }
 

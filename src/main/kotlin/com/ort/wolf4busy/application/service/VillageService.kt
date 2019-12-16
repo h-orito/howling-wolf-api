@@ -85,12 +85,12 @@ class VillageService(
     fun registerVillageDay(villageId: Int, day: Int, noonnight: CDef.Noonnight, dayChangeDatetime: LocalDateTime): Int {
         return villageDataSource.insertVillageDay(
             villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
-                id = 1, // dummy
-                day = day,
-                noonnight = noonnight.code(),
-                startDatetime = dayChangeDatetime,
-                isUpdating = true // dummy
-            )
+            id = 1, // dummy
+            day = day,
+            noonnight = noonnight.code(),
+            startDatetime = dayChangeDatetime,
+            isUpdating = true // dummy
+        )
         )
     }
 
@@ -190,12 +190,20 @@ class VillageService(
      * @param secondRequestSkill 第2希望
      */
     fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
-        val participantId = this.findParticipantByUid(villageId, user.uid)?.id
-        participantId ?: throw IllegalStateException("セッション切れ？")
+        val participant = this.findParticipantByUid(villageId, user.uid)
+        participant ?: throw IllegalStateException("セッション切れ？")
         val village = villageDataSource.selectVillage(villageId)
         if (!village.status.isPrologue()) return // 開始直前に変更しようとして間に合わなかった
         CDef.Skill.codeOf(firstRequestSkill) ?: IllegalStateException("改竄")
         CDef.Skill.codeOf(secondRequestSkill) ?: IllegalStateException("改竄")
-        villageDataSource.updateSkillRequest(participantId, Skill(firstRequestSkill, ""), Skill(secondRequestSkill, ""))
+        villageDataSource.updateSkillRequest(participant, Skill(firstRequestSkill, ""), Skill(secondRequestSkill, ""))
+    }
+
+    /**
+     * 退村
+     * @param participant 村参加者
+     */
+    fun leaveVillage(participant: VillageParticipant) {
+        villageDataSource.updateVillagePlayerLeave(participant)
     }
 }
