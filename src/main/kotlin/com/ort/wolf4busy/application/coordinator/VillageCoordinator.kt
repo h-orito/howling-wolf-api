@@ -5,6 +5,8 @@ import com.ort.wolf4busy.application.service.CharachipService
 import com.ort.wolf4busy.application.service.MessageService
 import com.ort.wolf4busy.application.service.VillageService
 import com.ort.wolf4busy.domain.model.charachip.Chara
+import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -69,9 +71,10 @@ class VillageCoordinator(
     ) {
         val village: Village = villageService.findVillage(villageId)
         // 参加できない状況ならエラー
-        assertParticipate(village, charaId, firstRequestSkill, secondRequestSkill, isSpectate)
-        // パスワードが正しくないとエラー
-        assertPassword(village, password, playerId)
+        val charachipCharaNum = if (!isSpectate) 0 else charachipService.findCharaChip(village.setting.charachip.charachipId).charaIdList.size
+        val isCollectPassword = if (!village.setting.password.joinPasswordRequired) true else villageService.isCollectPassword(village.id, password)
+        village.assertParticipate(playerId, charaId, firstRequestSkill, secondRequestSkill, isSpectate, charachipCharaNum, isCollectPassword)
+
         // 村参加者登録
         val villagePlayerId: Int = villageService.registerVillagePlayer(
             villageId = villageId,
@@ -121,6 +124,53 @@ class VillageCoordinator(
         messageService.registerLeaveMessage(village.id, chara, village.day.prologue().id)
     }
 
+    /**
+     * 発言できるか確認
+     *
+     * @param villageId villageId
+     * @param user user
+     * @param message 発言内容
+     * @param messageType 発言種別
+     * @param faceType 表情種別
+     */
+    fun confirmToSay(villageId: Int, user: Wolf4busyUser, message: String, messageType: String, faceType: String) {
+        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        participant ?: throw IllegalStateException("セッション切れ？")
+        CDef.FaceType.codeOf(faceType) ?: throw IllegalStateException("改竄")
+        val village = villageService.findVillage(villageId)
+        val latestDayMessageList: List<Message> =
+            messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        // 発言できるか
+        val isAvailableSay = village.isAvailableSay(user, participant, message, messageType, faceType, latestDayMessageList, charas)
+        if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
+    }
+
+    /**
+     * 発言
+     *
+     * @param villageId villageId
+     * @param user user
+     * @param message 発言内容
+     * @param messageType 発言種別
+     * @param faceType 表情種別
+     */
+    fun say(villageId: Int, user: Wolf4busyUser, message: String, messageType: String, faceType: String) {
+        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        participant ?: throw IllegalStateException("セッション切れ？")
+        CDef.FaceType.codeOf(faceType) ?: throw IllegalStateException("改竄")
+        val village = villageService.findVillage(villageId)
+        val latestDayMessageList: List<Message> =
+            messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        // 発言できるか
+        val isAvailableSay = village.isAvailableSay(user, participant, message, messageType, faceType, latestDayMessageList, charas)
+        if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
+
+        // 発言
+        messageService.registerSayMessage(villageId, village.day.latestDay().id, participant, message, messageType, faceType)
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
@@ -143,44 +193,5 @@ class VillageCoordinator(
             isSpectate = false,
             password = ""
         )
-    }
-
-    private fun assertParticipate(
-        village: Village,
-        charaId: Int,
-        firstRequestSkill: CDef.Skill,
-        secondRequestSkill: CDef.Skill,
-        isSpectate: Boolean
-    ) {
-        // 既に参加しているキャラはNG
-        if (isAlreadyParticipateCharacter(village, charaId)) throw Wolf4busyBusinessException("既に参加されているキャラクターです")
-
-        if (isSpectate) {
-            // [キャラチップの人数 - 定員] 人を超えて見学はできない
-            val charachipCharaNum = charachipService.findCharaChip(village.setting.charachip.charachipId).charaIdList.size
-            if (charachipCharaNum - village.setting.capacity.max <= village.spectator.count) throw Wolf4busyBusinessException("既に上限人数まで見学者がいるため見学者として参加できません。")
-        } else {
-            if (village.setting.capacity.max <= village.participant.count) throw Wolf4busyBusinessException("既に上限人数までプレイヤーが参加しているため参加できません。")
-            if (!village.setting.rules.availableSkillRequest &&
-                (firstRequestSkill != CDef.Skill.おまかせ || secondRequestSkill != CDef.Skill.おまかせ)
-            ) {
-                throw Wolf4busyBusinessException("希望役職が不正です")
-            }
-        }
-    }
-
-    private fun isAlreadyParticipateCharacter(village: Village, charaId: Int): Boolean {
-        return village.participant.memberList.any { it.charaId == charaId }
-            || village.spectator.memberList.any { it.charaId == charaId }
-    }
-
-    private fun assertPassword(village: Village, password: String?, playerId: Int) {
-        // ダミーはパスワードなしでOK
-        if (playerId == 1 || !village.setting.password.joinPasswordRequired) return
-
-        password ?: throw Wolf4busyBusinessException("入村パスワードが誤っています")
-        if (!villageService.isCollectPassword(village.id, password)) {
-            throw Wolf4busyBusinessException("入村パスワードが誤っています")
-        }
     }
 }
