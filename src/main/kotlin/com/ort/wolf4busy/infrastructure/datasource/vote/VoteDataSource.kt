@@ -11,11 +11,37 @@ class VoteDataSource(
     val voteBhv: VoteBhv
 ) {
 
+    // ===================================================================================
+    //                                                                              Select
+    //                                                                              ======
     fun selectVotes(villageId: Int): VillageVotes {
         val voteList = voteBhv.selectList {
             it.query().queryVillageDay().setVillageId_Equal(villageId)
         }
         return VillageVotes(voteList.map { convertToVoteToVillageVote(it) })
+    }
+
+    // ===================================================================================
+    //                                                                              Update
+    //                                                                              ======
+    fun updateVote(villageDayId: Int, myselfId: Int, targetId: Int) {
+        deleteVote(villageDayId, myselfId)
+        insertVote(villageDayId, myselfId, targetId)
+    }
+
+    private fun deleteVote(villageDayId: Int, myselfId: Int) {
+        voteBhv.queryDelete {
+            it.query().setVillageDayId_Equal(villageDayId)
+            it.query().setVillagePlayerId_Equal(myselfId)
+        }
+    }
+
+    private fun insertVote(villageDayId: Int, myselfId: Int, targetId: Int) {
+        val vote = Vote()
+        vote.villageDayId = villageDayId
+        vote.villagePlayerId = myselfId
+        vote.targetVillagePlayerId = targetId
+        voteBhv.insert(vote)
     }
 
     // ===================================================================================

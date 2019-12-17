@@ -39,10 +39,15 @@ data class VillageVoteSituation(
             if (!isAvailableVote(village, participant)) return null
             val voteTargetParticipantId = votes.list.find {
                 it.villageDayId == village.day.latestDay().id
-                        && it.myselfId == participant!!.id
+                    && it.myselfId == participant!!.id
             }?.targetId
             voteTargetParticipantId ?: return null
             return village.participant.memberList.find { it.id == voteTargetParticipantId }
         }
+
+    }
+
+    fun isSettableVote(targetId: Int): Boolean {
+        return isAvailableVote && targetList.any { it.id == targetId }
     }
 }

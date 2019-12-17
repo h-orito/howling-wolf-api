@@ -38,14 +38,14 @@ object Attack {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                    && it.ability.code == CDef.AbilityType.占い.code()
-                    && attackableParticipantIdList.contains(it.myselfId)
+                && it.ability.code == CDef.AbilityType.占い.code()
+                && attackableParticipantIdList.contains(it.myselfId)
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
     }
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
-        return "" // TODO
+        return "${myChara.charaName}が襲撃対象を${targetChara?.charaName ?: "なし"}に設定しました。"
     }
 }

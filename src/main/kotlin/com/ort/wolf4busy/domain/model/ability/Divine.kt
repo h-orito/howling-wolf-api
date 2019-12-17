@@ -1,9 +1,11 @@
 package com.ort.wolf4busy.domain.model.ability
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+
 
 object Divine {
 
@@ -24,15 +26,14 @@ object Divine {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                    && it.ability.code == CDef.AbilityType.占い.code()
-                    && it.myselfId == participant.id
+                && it.ability.code == CDef.AbilityType.占い.code()
+                && it.myselfId == participant.id
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
     }
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
-        return "" // TODO
-
+        return "${myChara.charaName}が占い対象を${targetChara?.charaName ?: "なし"}に設定しました。"
     }
 }

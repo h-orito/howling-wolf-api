@@ -264,7 +264,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageVoteBody
     ) {
-        // TODO 実装
+        villageCoordinator.setVote(villageId, user, body.targetId!!)
     }
 
     /**

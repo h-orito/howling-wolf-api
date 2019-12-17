@@ -25,7 +25,7 @@ class AbilityDataSource(
     // ===================================================================================
     //                                                                              Update
     //                                                                              ======
-    fun updateAbility(villageId: Int, villageDayId: Int, myselfId: Int, targetId: Int?, abilityType: String) {
+    fun updateAbility(villageDayId: Int, myselfId: Int, targetId: Int?, abilityType: String) {
         deleteAbility(villageDayId, myselfId, targetId, abilityType)
         insertAbility(villageDayId, myselfId, targetId, abilityType)
     }
