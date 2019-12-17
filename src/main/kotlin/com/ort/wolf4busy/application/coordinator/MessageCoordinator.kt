@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class MessageCoordinator(
+    val dayChangeCoordinator: DayChangeCoordinator,
+
     val messageService: MessageService,
     val villageService: VillageService
 ) {
@@ -24,6 +26,7 @@ class MessageCoordinator(
         val messageTypeList = village.viewableMessageTypeList(participant, day, user?.authority)
         val villageDayId = villageService.findVillageDay(village.id, day, noonnight).id
         val messageList: List<Message> = messageService.findMessageList(village.id, villageDayId, messageTypeList, participant, from)
+        dayChangeCoordinator.dayChangeIfNeeded(village)
         return Messages(
             messageList = messageList.map { complementMessage(it, village, day) }
         )

@@ -153,6 +153,21 @@ data class Village(
     }
 
     // ===================================================================================
+    //                                                                           daychange
+    //                                                                        ============
+    /**
+     * 日付更新
+     *
+     * @param messageList 最新日の通常発言
+     * @return
+     */
+    fun dayChangeIfNeeded(messageList: List<Message>): Pair<Village, Messages> {
+        // TODO
+
+        return this to Messages(listOf())
+    }
+
+    // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
