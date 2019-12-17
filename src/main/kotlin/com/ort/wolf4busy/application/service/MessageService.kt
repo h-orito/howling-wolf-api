@@ -164,7 +164,7 @@ class MessageService(
     fun registerLeaveMessage(villageId: Int, chara: Chara, villageDayId: Int) {
         val leaveMessage: String = messageSource.getMessage(
             "village.leave.message",
-            arrayOf(chara.charaName),
+            arrayOf(chara.charaName.name),
             Locale.JAPANESE
         )
         messageDataSource.insertMessage(
@@ -192,6 +192,28 @@ class MessageService(
         // 登録メッセージ
         val message = Ability(abilityType, "").getAbilitySetMessage(myChara, targetChara)
 
+        messageDataSource.insertMessage(
+            villageId = villageId,
+            dayId = villageDayId,
+            messageType = CDef.MessageType.非公開システムメッセージ.code(),
+            text = message
+        )
+    }
+
+    /**
+     * コミットする際のシステムメッセージを登録
+     *
+     * @param villageId villageId
+     * @param villageDayId villageDayId
+     * @param participant 村参加者
+     * @param charas キャラ
+     * @param doCommit コミット/取り消し
+     */
+    fun registerCommitMessage(villageId: Int, villageDayId: Int, participant: VillageParticipant, charas: Charas, doCommit: Boolean) {
+        // 自分のキャラ
+        val charaName = charas.list.find { it.id == participant.charaId }!!.charaName.name
+
+        val message = if (doCommit) "${charaName}がコミットしました。" else "${charaName}がコミットを取り消しました。"
         messageDataSource.insertMessage(
             villageId = villageId,
             dayId = villageDayId,

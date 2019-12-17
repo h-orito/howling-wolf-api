@@ -3,7 +3,6 @@ package com.ort.wolf4busy.infrastructure.datasource.village
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.*
-import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Villages
@@ -18,7 +17,6 @@ class VillageDataSource(
     val villageSettingBhv: VillageSettingBhv,
     val villageDayBhv: VillageDayBhv,
     val villagePlayerBhv: VillagePlayerBhv,
-    val commitBhv: CommitBhv,
     val messageRestrictionBhv: MessageRestrictionBhv
 ) {
 
@@ -304,26 +302,6 @@ class VillageDataSource(
         villagePlayer.villagePlayerId = participant.id
         villagePlayer.isGone = true
         villagePlayerBhv.update(villagePlayer)
-    }
-
-    /**
-     * コミットを取得
-     * @param village village
-     * @param participant 村参加情報
-     * @return コミット
-     */
-    fun selectCommit(village: com.ort.wolf4busy.domain.model.village.Village, participant: VillageParticipant): Commit? {
-        val latestDay: com.ort.wolf4busy.domain.model.village.VillageDay = village.day.latestDay()
-
-        val optCommit = commitBhv.selectEntity {
-            it.query().setVillageDayId_Equal(latestDay.id)
-            it.query().setVillagePlayerId_Equal(participant.id)
-        }
-        return optCommit.map {
-            Commit(
-                isCommiting = true
-            )
-        }.orElse(null)
     }
 
     // ===================================================================================

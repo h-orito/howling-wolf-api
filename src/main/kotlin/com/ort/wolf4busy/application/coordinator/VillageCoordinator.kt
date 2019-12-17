@@ -4,11 +4,13 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.application.service.*
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.action.VillageAbilitySituations
+import com.ort.wolf4busy.domain.model.village.action.VillageCommitSituation
 import com.ort.wolf4busy.domain.model.village.action.VillageVoteSituation
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -22,7 +24,8 @@ class VillageCoordinator(
     val messageService: MessageService,
     val charachipService: CharachipService,
     val abilityService: AbilityService,
-    val voteService: VoteService
+    val voteService: VoteService,
+    val commitService: CommitService
 ) {
 
     /**
@@ -216,6 +219,26 @@ class VillageCoordinator(
         val isSettable = villageVoteSituation.isSettableVote(targetId)
         if (!isSettable) throw Wolf4busyBusinessException("投票セットできません")
         voteService.updateVote(village.day.latestDay().id, participant, targetId)
+    }
+
+    /**
+     * コミットセット
+     *
+     * @param villageId villageId
+     * @param user user
+     * @param doCommit コミットするか
+     */
+    fun setCommit(villageId: Int, user: Wolf4busyUser, doCommit: Boolean) {
+        val participant = villageService.findParticipantByUid(villageId, user.uid) ?: throw IllegalStateException("セッション切れ？")
+        val village = villageService.findVillage(villageId)
+        val commit: Commit? = commitService.findCommit(village, participant)
+        val commitSituation = VillageCommitSituation(village, participant, commit)
+        val isSettable = commitSituation.isSettable(commit)
+        if (!isSettable) throw Wolf4busyBusinessException("コミットセットできません")
+        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        commitService.updateCommit(village.day.latestDay().id, participant, doCommit)
+        messageService.registerCommitMessage(villageId, village.day.latestDay().id, participant, charas, doCommit)
+        // TODO コミットならdayChangeIfNeeded
     }
 
     // ===================================================================================
