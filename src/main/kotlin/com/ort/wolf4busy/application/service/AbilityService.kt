@@ -17,13 +17,12 @@ class AbilityService(
     /**
      * 能力セット
      *
-     * @param villageId villageId
      * @param villageDayId 村日付id
      * @param participant 村参加者
      * @param targetId 対象村参加者id
      * @param abilityType 能力種別
      */
-    fun updateAbility(villageId: Int, villageDayId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String) {
-        abilityDataSource.updateAbility(villageId, villageDayId, participant.id, targetId, abilityType)
+    fun updateAbility(villageDayId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String) {
+        abilityDataSource.updateAbility(villageDayId, participant.id, targetId, abilityType)
     }
 }

@@ -1,10 +1,7 @@
 package com.ort.wolf4busy.application.coordinator
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.application.service.AbilityService
-import com.ort.wolf4busy.application.service.CharachipService
-import com.ort.wolf4busy.application.service.MessageService
-import com.ort.wolf4busy.application.service.VillageService
+import com.ort.wolf4busy.application.service.*
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
@@ -12,6 +9,8 @@ import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.action.VillageAbilitySituations
+import com.ort.wolf4busy.domain.model.village.action.VillageVoteSituation
+import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.springframework.stereotype.Service
@@ -22,7 +21,8 @@ class VillageCoordinator(
     val villageService: VillageService,
     val messageService: MessageService,
     val charachipService: CharachipService,
-    val abilityService: AbilityService
+    val abilityService: AbilityService,
+    val voteService: VoteService
 ) {
 
     /**
@@ -196,10 +196,26 @@ class VillageCoordinator(
         val villageAbilitySituations = VillageAbilitySituations(village, participant, abilities)
         val isSettable = villageAbilitySituations.isSettableAbility(targetId, abilityType)
         if (!isSettable) throw Wolf4busyBusinessException("能力セットできません")
-        abilityService.updateAbility(villageId, village.day.latestDay().id, participant, targetId, abilityType)
+        abilityService.updateAbility(village.day.latestDay().id, participant, targetId, abilityType)
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-        messageService.registerAbilitySetMessage(villageId, participant, targetId, abilityType, charas)
+        messageService.registerAbilitySetMessage(villageId, participant, targetId, abilityType, village.day.latestDay().id, charas)
+    }
 
+    /**
+     * 投票セット
+     *
+     * @param villageId villageId
+     * @param user user
+     * @param targetId 対象村参加者ID
+     */
+    fun setVote(villageId: Int, user: Wolf4busyUser, targetId: Int) {
+        val participant = villageService.findParticipantByUid(villageId, user.uid) ?: throw IllegalStateException("セッション切れ？")
+        val village = villageService.findVillage(villageId)
+        val votes: VillageVotes = voteService.findVillageVotes(villageId)
+        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isSettable = villageVoteSituation.isSettableVote(targetId)
+        if (!isSettable) throw Wolf4busyBusinessException("投票セットできません")
+        voteService.updateVote(village.day.latestDay().id, participant, targetId)
     }
 
     // ===================================================================================

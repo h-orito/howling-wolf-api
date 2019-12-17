@@ -181,15 +181,22 @@ class MessageService(
      * @param participant 村参加者
      * @param targetId 対象の村参加者ID
      * @param abilityType 能力種別
+     * @param villageDayId 村日付ID
      * @param charas キャラ
      */
-    fun registerAbilitySetMessage(villageId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String, charas: Charas) {
+    fun registerAbilitySetMessage(villageId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String, villageDayId: Int, charas: Charas) {
         // 自分のキャラ
         val myChara = charas.list.find { it.id == participant.charaId }!!
         // 相手のキャラ
         val targetChara = charas.list.find { it.id == targetId }
         // 登録メッセージ
-        Ability(abilityType, "").getAbilitySetMessage(myChara, targetChara)
+        val message = Ability(abilityType, "").getAbilitySetMessage(myChara, targetChara)
 
+        messageDataSource.insertMessage(
+            villageId = villageId,
+            dayId = villageDayId,
+            messageType = CDef.MessageType.非公開システムメッセージ.code(),
+            text = message
+        )
     }
 }

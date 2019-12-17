@@ -29,14 +29,14 @@ object Guard {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                    && it.ability.code == CDef.AbilityType.護衛.code()
-                    && it.myselfId == participant.id
+                && it.ability.code == CDef.AbilityType.護衛.code()
+                && it.myselfId == participant.id
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
     }
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
-        TODO("not implemented")
+        return "${myChara.charaName}が護衛対象を${targetChara?.charaName ?: "なし"}に設定しました。"
     }
 }
