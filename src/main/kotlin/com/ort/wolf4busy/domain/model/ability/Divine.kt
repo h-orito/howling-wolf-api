@@ -34,6 +34,6 @@ object Divine {
     }
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
-        return "${myChara.charaName}が占い対象を${targetChara?.charaName ?: "なし"}に設定しました。"
+        return "${myChara.charaName.name}が占い対象を${targetChara?.charaName?.name ?: "なし"}に設定しました。"
     }
 }

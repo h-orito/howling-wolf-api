@@ -23,7 +23,8 @@ class ParticipateSituationCoordinator(
     val charachipService: CharachipService,
     val messageService: MessageService,
     val abilityService: AbilityService,
-    val voteService: VoteService
+    val voteService: VoteService,
+    val commitService: CommitService
 ) {
     /**
      * 参加状況や可能なアクションを取得
@@ -39,7 +40,7 @@ class ParticipateSituationCoordinator(
         val skillRequest: SkillRequest? = villageService.findSkillRequest(participant)
         val abilities: VillageAbilities = abilityService.findVillageAbilities(villageId)
         val votes: VillageVotes = voteService.findVillageVotes(villageId)
-        val commit: Commit? = villageService.findCommit(village, participant)
+        val commit: Commit? = commitService.findCommit(village, participant)
         val latestDayMessageList: List<Message> =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
 

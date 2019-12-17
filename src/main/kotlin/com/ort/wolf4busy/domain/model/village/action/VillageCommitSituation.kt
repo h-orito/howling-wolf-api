@@ -19,6 +19,7 @@ data class VillageCommitSituation(
     )
 
     companion object {
+
         private fun isAvailableCommit(village: Village, participant: VillageParticipant?): Boolean {
             // コミットできない設定ならNG
             if (!village.setting.rules.availableCommit) return false
@@ -28,8 +29,14 @@ data class VillageCommitSituation(
             if (participant.dead != null) return false
             // 進行中以外はNG
             if (CDef.VillageStatus.codeOf(village.status.code) != CDef.VillageStatus.進行中) return false
+            // ダミーはコミットできない
+            if (village.dummyChara().id == participant.id) return false
 
             return true
         }
+    }
+
+    fun isSettable(commit: Commit?): Boolean {
+        return isAvailableCommit
     }
 }

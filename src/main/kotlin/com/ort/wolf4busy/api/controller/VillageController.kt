@@ -279,7 +279,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageCommitBody
     ) {
-        // TODO 実装
+        villageCoordinator.setCommit(villageId, user, body.commit!!)
     }
 
     /**

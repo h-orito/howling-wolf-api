@@ -1,7 +1,6 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
@@ -176,11 +175,6 @@ class VillageService(
     fun findSkillRequest(participant: VillageParticipant?): SkillRequest? {
         participant ?: return null
         return villageDataSource.selectSkillRequest(participant)
-    }
-
-    fun findCommit(village: Village, participant: VillageParticipant?): Commit? {
-        participant ?: return null
-        return villageDataSource.selectCommit(village, participant)
     }
 
     /**
