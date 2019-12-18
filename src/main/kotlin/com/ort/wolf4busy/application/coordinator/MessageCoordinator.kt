@@ -25,10 +25,10 @@ class MessageCoordinator(
         val participant: VillageParticipant? = villageService.findParticipantByUid(village.id, user?.uid)
         val messageTypeList = village.viewableMessageTypeList(participant, day, user?.authority)
         val villageDayId = villageService.findVillageDay(village.id, day, noonnight).id
-        val messageList: List<Message> = messageService.findMessageList(village.id, villageDayId, messageTypeList, participant, from)
+        val messages = messageService.findMessageList(village.id, villageDayId, messageTypeList, participant, from)
         dayChangeCoordinator.dayChangeIfNeeded(village)
         return Messages(
-            messageList = messageList.map { complementMessage(it, village, day) }
+            messageList = messages.messageList.map { complementMessage(it, village, day) }
         )
     }
 

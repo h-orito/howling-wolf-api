@@ -7,6 +7,7 @@ import com.ort.wolf4busy.api.controller.VillageController
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
+import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -44,7 +45,7 @@ class MessageDataSource(
         messageTypeList: List<CDef.MessageType>,
         participant: VillageParticipant?,
         from: Long?
-    ): List<com.ort.wolf4busy.domain.model.message.Message> {
+    ): Messages {
         val messageList = messageBhv.selectList {
             it.query().setVillageId_Equal(villageId)
             it.query().setVillageDayId_Equal(villageDayId)
@@ -72,7 +73,7 @@ class MessageDataSource(
             }
             it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
         }
-        return messageList.map { convertMessageToMessage(it) }
+        return Messages(messageList.map { convertMessageToMessage(it) })
     }
 
     /**
@@ -169,6 +170,7 @@ class MessageDataSource(
                 charaId = 1, // dummy
                 dead = null, // dummy
                 isSpectator = false, // dummy
+                isGone = false, // dummy
                 playerId = message.playerId,
                 skill = null // dummy
             ),
@@ -177,6 +179,7 @@ class MessageDataSource(
                 charaId = 1, // dummy
                 dead = null, // dummy
                 isSpectator = false, // dummy
+                isGone = false, // dummy
                 playerId = null,
                 skill = null // dummy
             ),

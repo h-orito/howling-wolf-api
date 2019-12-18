@@ -11,6 +11,7 @@ data class VillageParticipant(
     val playerId: Int?,
     val dead: Dead?,
     val isSpectator: Boolean,
+    val isGone: Boolean,
     val skill: Skill?
 ) {
 

@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
 import org.springframework.context.MessageSource
@@ -32,7 +33,7 @@ class MessageService(
         messageTypeList: List<CDef.MessageType>,
         participant: VillageParticipant?,
         from: Long?
-    ): List<Message> {
+    ): Messages {
         return messageDataSource.selectMessageList(villageId, villageDayId, messageTypeList, participant, from)
     }
 
