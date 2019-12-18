@@ -17,7 +17,7 @@ object Divine {
 
         // 自分以外の生存者全員
         return village.participant.memberList.filter {
-            it.id != participant.id && it.alive()
+            it.id != participant.id && it.isAlive()
         }
     }
 

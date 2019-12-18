@@ -3,7 +3,7 @@ package com.ort.wolf4busy.domain.model.village.action
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.CharaFace
 import com.ort.wolf4busy.domain.model.charachip.Charas
-import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
@@ -50,7 +50,7 @@ data class VillageSaySituation(
             if (participant == null || isAvailableSay(village, participant)) return listOf()
 
             val selectableMessageTypeList: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
-            if (participant.isAvailableNormalSay(village)) {
+            if (NormalSay.isSayable(village, participant)) {
                 selectableMessageTypeList.add(
                     VillageSayMessageTypeSituation(
                         village,
@@ -60,7 +60,7 @@ data class VillageSaySituation(
                     )
                 )
             }
-            if (participant.isAvailableWerewolfSay(village)) {
+            if (WerewolfSay.isSayable(village, participant)) {
                 selectableMessageTypeList.add(
                     VillageSayMessageTypeSituation(
                         village,
@@ -70,7 +70,7 @@ data class VillageSaySituation(
                     )
                 )
             }
-            if (participant.isAvailableGraveSay(village)) {
+            if (GraveSay.isSayable(village, participant)) {
                 selectableMessageTypeList.add(
                     VillageSayMessageTypeSituation(
                         village,
@@ -80,7 +80,7 @@ data class VillageSaySituation(
                     )
                 )
             }
-            if (participant.isAvailableMonologueSay(village)) {
+            if (MonologueSay.isSayable(village, participant)) {
                 selectableMessageTypeList.add(
                     VillageSayMessageTypeSituation(
                         village,
@@ -90,7 +90,7 @@ data class VillageSaySituation(
                     )
                 )
             }
-            if (participant.isAvailableSpectateSay(village)) {
+            if (SpectateSay.isSayable(village, participant)) {
                 selectableMessageTypeList.add(
                     VillageSayMessageTypeSituation(
                         village,

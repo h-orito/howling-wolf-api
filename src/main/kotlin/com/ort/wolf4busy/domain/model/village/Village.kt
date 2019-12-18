@@ -3,6 +3,7 @@ package com.ort.wolf4busy.domain.model.village
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.Prologue
+import com.ort.wolf4busy.domain.model.daychange.SkillAssign
 import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.village.action.VillageSaySituation
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -176,6 +177,29 @@ data class Village(
         }
     }
 
+    // 最新の村日付を追加
+    fun addNewDay(): Village {
+        val dayList = mutableListOf<VillageDay>()
+        dayList.addAll(day.dayList)
+        val newDay = VillageDay(
+            id = 0, // dummy
+            day = day.latestDay().day + 1, // 一旦長期だけを考えるので常に昼
+            noonnight = CDef.Noonnight.昼.code(),
+            dayChangeDatetime = day.latestDay().dayChangeDatetime.plusSeconds(setting.time.dayChangeIntervalSeconds.toLong()),
+            isUpdating = true,
+            isPrologue = false, // dummy
+            isEpilogue = false // dummy
+        )
+        dayList.add(newDay)
+        return this.copy(day = this.day.copy(dayList = dayList))
+    }
+
+    // 役職割り当て
+    fun assignSkill(): Village {
+        val assignedParticipants = SkillAssign.assign(participant, setting.organizations.mapToSkillCount(participant.count), dummyChara())
+
+        return this
+    }
 
     // ===================================================================================
     //                                                                        Assist Logic

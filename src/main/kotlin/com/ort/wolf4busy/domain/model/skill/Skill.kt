@@ -8,6 +8,14 @@ data class Skill(
     val code: String,
     val name: String
 ) {
+
+    constructor(
+        cdefSkill: CDef.Skill
+    ) : this(
+        code = cdefSkill.code(),
+        name = cdefSkill.alias()
+    )
+
     companion object {
 
         val skillRequestSomeoneList = listOf(CDef.Skill.おまかせ)
@@ -44,6 +52,5 @@ data class Skill(
                 )
             }
         )
-
     }
 }

@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exentity.*
 import com.ort.wolf4busy.domain.model.dead.Dead
 import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.Villages
@@ -163,6 +164,16 @@ object VillageDataConverter {
             skill = if (!hasEpilogue || vp.skillCodeAsSkill == null) null else Skill(
                 code = vp.skillCodeAsSkill.code(),
                 name = vp.skillCodeAsSkill.alias()
+            ),
+            skillRequest = SkillRequest(
+                first = Skill(
+                    code = vp.requestSkillCodeAsSkill.code(),
+                    name = vp.requestSkillCodeAsSkill.alias()
+                ),
+                second = Skill(
+                    code = vp.secondRequestSkillCodeAsSkill.code(),
+                    name = vp.secondRequestSkillCodeAsSkill.alias()
+                )
             )
         )
     }

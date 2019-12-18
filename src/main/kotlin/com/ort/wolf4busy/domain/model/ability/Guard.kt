@@ -20,7 +20,7 @@ object Guard {
         // 連続護衛可能なら自分以外の生存者全員
         // TODO 連続護衛なし
         return village.participant.memberList.filter {
-            it.id != participant.id && it.alive()
+            it.id != participant.id && it.isAlive()
         }
     }
 
