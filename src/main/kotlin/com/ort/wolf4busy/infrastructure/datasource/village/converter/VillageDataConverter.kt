@@ -59,7 +59,7 @@ object VillageDataConverter {
             id = villageDay.villageDayId,
             day = day,
             noonnight = villageDay.noonnightCode,
-            startDatetime = villageDay.daychangeDatetime,
+            dayChangeDatetime = villageDay.daychangeDatetime,
             isUpdating = villageDay.isUpdating,
             isPrologue = day == 0,
             isEpilogue = epilogueDay != null && epilogueDay == day
@@ -159,6 +159,7 @@ object VillageDataConverter {
             playerId = if (!hasEpilogue) null else vp.playerId,
             dead = if (vp.isDead) convertToDeadReasonToDead(vp) else null,
             isSpectator = vp.isSpectator,
+            isGone = vp.isGone,
             skill = if (!hasEpilogue || vp.skillCodeAsSkill == null) null else Skill(
                 code = vp.skillCodeAsSkill.code(),
                 name = vp.skillCodeAsSkill.alias()

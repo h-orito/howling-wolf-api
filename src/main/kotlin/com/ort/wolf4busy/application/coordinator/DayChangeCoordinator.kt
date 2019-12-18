@@ -1,13 +1,15 @@
 package com.ort.wolf4busy.application.coordinator
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.application.service.CharachipService
 import com.ort.wolf4busy.application.service.MessageService
 import com.ort.wolf4busy.domain.model.village.Village
 import org.springframework.stereotype.Service
 
 @Service
 class DayChangeCoordinator(
-    val messageService: MessageService
+    val messageService: MessageService,
+    val charachipService: CharachipService
 ) {
 
     /**
@@ -17,10 +19,11 @@ class DayChangeCoordinator(
      */
     fun dayChangeIfNeeded(village: Village) {
         // 最新日の通常発言
-        val messageList = messageService.findMessageList(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言), null, null)
+        val todayMessages = messageService.findMessageList(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言), null, null)
+        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
 
         // 必要があれば日付更新
-        val (changedVillage, changedMessages) = village.dayChangeIfNeeded(messageList)
+        val (changedVillages, messages) = village.dayChangeIfNeeded(todayMessages, charas)
 
         // 更新があれば更新
         // TODO

@@ -2,6 +2,7 @@ package com.ort.wolf4busy.domain.model.village
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.daychange.Prologue
 import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.village.action.VillageSaySituation
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -149,30 +150,39 @@ data class Village(
 
         // 発言制限
         return !isRestricted(this, participant, latestDayMessageList, charas, messageType)
-
     }
 
     // ===================================================================================
-    //                                                                           daychange
+    //                                                                          day change
     //                                                                        ============
     /**
-     * 日付更新
+     * 必要あれば日付更新
      *
-     * @param messageList 最新日の通常発言
-     * @return
+     * @param todayMessages 最新日の通常発言
+     * @param charas キャラ
+     * @return 更新後の村と更新に際してのメッセージ
      */
-    fun dayChangeIfNeeded(messageList: List<Message>): Pair<Village, Messages> {
-        // TODO
-
-        return this to Messages(listOf())
+    fun dayChangeIfNeeded(todayMessages: Messages, charas: Charas): Pair<Village, Messages> {
+        return if (status.isPrologue()) { // プロローグ
+            Prologue.dayChange(this, todayMessages, charas)
+        } else if (status.isProgress() && day.latestDay().day == 1) { // 進行中で1日目
+            this to Messages(listOf())
+        } else if (status.isProgress()) { // 進行中で2日目以降
+            this to Messages(listOf())
+        } else if (status.code == CDef.VillageStatus.エピローグ.code()) {
+            this to Messages(listOf())
+        } else {
+            this to Messages(listOf())
+        }
     }
+
 
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
         return participant.memberList.any { it.charaId == charaId }
-                || spectator.memberList.any { it.charaId == charaId }
+            || spectator.memberList.any { it.charaId == charaId }
     }
 
     private fun isRestricted(

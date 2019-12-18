@@ -87,7 +87,7 @@ class VillageService(
             id = 1, // dummy
             day = day,
             noonnight = noonnight.code(),
-            startDatetime = dayChangeDatetime,
+            dayChangeDatetime = dayChangeDatetime,
             isUpdating = true // dummy
         )
         )
