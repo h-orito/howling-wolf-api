@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
@@ -38,22 +39,23 @@ object Prologue {
         // 24時間以内の発言
         val recentMessageList = todayMessages.messageList.filter { it.time.datetime.isAfter(Wolf4busyDateUtil.currentLocalDateTime().minusDays(1L)) }
         // 24時間以内に発言していなかったら退村
+        var changedMessages = messages
         val memberList = village.participant.memberList.map { member ->
             if (recentMessageList.none { message -> message.from!!.id == member.id }) {
-                messages.add(createLeaveMessage(member, charas))
-                member.copy(isGone = true)
+                changedMessages = changedMessages.add(createLeaveMessage(member, charas, village.day.latestDay()))
+                member.gone()
             } else {
                 member.copy()
             }
         }
-        val changedVillage = village.copy(participant = village.participant.copy(memberList = memberList))
-        return changedVillage to Messages(listOf())
+        val changedVillage = village.copy(participant = village.participant.copy(memberList = memberList, count = memberList.count { !it.isGone }))
+        return changedVillage to changedMessages
     }
 
-    private fun createLeaveMessage(participant: VillageParticipant, charas: Charas): Message {
+    private fun createLeaveMessage(participant: VillageParticipant, charas: Charas, day: VillageDay): Message {
         val chara = charas.list.find { it.id == participant.charaId }!!
         val message = "${chara.charaName.name}は村を去った。"
-        return DayChange.createOpenSystemMessage(message)
+        return DayChange.createOpenSystemMessage(message, day.day)
     }
 
     // 日付を進める必要があるか
@@ -67,7 +69,7 @@ object Prologue {
             code = CDef.VillageStatus.廃村.code(),
             name = CDef.VillageStatus.廃村.alias()
         ))
-        messages.add(DayChange.createOpenSystemMessage("人数が不足しているため廃村しました。"))
+        messages.add(DayChange.createOpenSystemMessage("人数が不足しているため廃村しました。", village.day.latestDay().day))
         return changedVillage to messages
     }
 
@@ -75,7 +77,22 @@ object Prologue {
         village.participant.memberList.count { !it.isGone } < village.setting.capacity.min
 
     private fun startVillage(village: Village, messages: Messages): Pair<Village, Messages> {
-        // TODO
+        // 新しい日付追加
+        var changedVillage = village.addNewDay()
+        // 開始メッセージ追加
+        var changedMessages = messages.add(createProgressStartMessage(village.day.latestDay().day))
+        // 役職割り当て
+        changedVillage = village.assignSkill()
+
+
+
         return village to messages
+    }
+
+    private fun createProgressStartMessage(day: Int): Message {
+        return DayChange.createOpenSystemMessage(
+            text = "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\n例え人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。",
+            day = day
+        )
     }
 }

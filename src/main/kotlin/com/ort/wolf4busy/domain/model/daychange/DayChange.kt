@@ -5,6 +5,8 @@ import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
+import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 
@@ -15,7 +17,7 @@ object DayChange {
      *
      * @param text メッセージ内容
      */
-    fun createOpenSystemMessage(text: String): Message {
+    fun createOpenSystemMessage(text: String, day: Int): Message {
         return Message(
             from = VillageParticipant(
                 id = 1, // dummy
@@ -24,11 +26,21 @@ object DayChange {
                 dead = null, // dummy
                 isSpectator = false, // dummy
                 isGone = false, // dummy
-                skill = null // dummy
+                skill = null, // dummy
+                skillRequest = SkillRequest(
+                    first = Skill(
+                        code = "", // dummy
+                        name = "" // dummy
+                    ),
+                    second = Skill(
+                        code = "", // dummy
+                        name = "" // dummy
+                    )
+                )
             ), // dummy
             to = null, // dummy
             time = MessageTime(
-                day = 1, // dummy
+                day = day,
                 datetime = Wolf4busyDateUtil.currentLocalDateTime(), // dummy
                 unixTimeMilli = 1L // dummy
             ),

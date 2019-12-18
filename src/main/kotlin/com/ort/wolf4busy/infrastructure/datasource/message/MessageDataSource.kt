@@ -8,6 +8,8 @@ import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
+import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -172,7 +174,17 @@ class MessageDataSource(
                 isSpectator = false, // dummy
                 isGone = false, // dummy
                 playerId = message.playerId,
-                skill = null // dummy
+                skill = null, // dummy
+                skillRequest = SkillRequest(
+                    first = Skill(
+                        code = "", // dummy
+                        name = "" // dummy
+                    ),
+                    second = Skill(
+                        code = "", // dummy
+                        name = "" // dummy
+                    )
+                )
             ),
             to = if (message.toVillagePlayerId == null) null else VillageParticipant(
                 id = message.toVillagePlayerId,
@@ -181,7 +193,17 @@ class MessageDataSource(
                 isSpectator = false, // dummy
                 isGone = false, // dummy
                 playerId = null,
-                skill = null // dummy
+                skill = null, // dummy
+                skillRequest = SkillRequest(
+                    first = Skill(
+                        code = "", // dummy
+                        name = "" // dummy
+                    ),
+                    second = Skill(
+                        code = "", // dummy
+                        name = "" // dummy
+                    )
+                )
             ),
             time = MessageTime(
                 day = 1, // dummy

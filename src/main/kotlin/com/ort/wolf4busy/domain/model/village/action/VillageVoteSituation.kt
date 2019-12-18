@@ -24,7 +24,7 @@ data class VillageVoteSituation(
 
         private fun isAvailableVote(village: Village, participant: VillageParticipant?): Boolean {
             participant ?: return false
-            if (!participant.alive()) return false
+            if (!participant.isAlive()) return false
             if (participant.isSpectator) return false
             if (!village.status.isProgress()) return false
             return village.day.latestDay().day > 1
@@ -32,7 +32,7 @@ data class VillageVoteSituation(
 
         private fun getSelectableTargetList(village: Village, participant: VillageParticipant?): List<VillageParticipant> {
             if (!isAvailableVote(village, participant)) return listOf()
-            return village.participant.memberList.filter { it.alive() }
+            return village.participant.memberList.filter { it.isAlive() }
         }
 
         private fun getTarget(village: Village, participant: VillageParticipant?, votes: VillageVotes): VillageParticipant? {

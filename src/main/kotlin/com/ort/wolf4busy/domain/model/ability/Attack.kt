@@ -20,7 +20,7 @@ object Attack {
         } else {
             // 襲撃対象に選べる & 生存している
             village.participant.memberList.filter {
-                !CDef.Skill.codeOf(it.skill!!.code).isNotSelectableAttack && it.alive()
+                !CDef.Skill.codeOf(it.skill!!.code).isNotSelectableAttack && it.isAlive()
             }
         }
     }
