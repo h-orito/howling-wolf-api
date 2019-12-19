@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
+import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 object Attack {
@@ -38,8 +39,8 @@ object Attack {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                && it.ability.code == CDef.AbilityType.占い.code()
-                && attackableParticipantIdList.contains(it.myselfId)
+                    && it.ability.code == CDef.AbilityType.占い.code()
+                    && attackableParticipantIdList.contains(it.myselfId)
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
@@ -47,5 +48,33 @@ object Attack {
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
         return "${myChara.charaName.name}が襲撃対象を${targetChara?.charaName?.name ?: "なし"}に設定しました。"
+    }
+
+    fun getDefaultAbility(village: Village): VillageAbility? {
+        // 最新日id
+        val latestVillageDay = village.day.latestDay()
+        // 襲撃者は生存している人狼からランダムに
+        val wolf = village.participant.aliveMemberList().findRandom {
+            CDef.Skill.codeOf(it.skill!!.code)!!.isHasAttackAbility
+        } ?: return null // 生存している人狼がいないので襲撃なし
+
+        if (latestVillageDay.day == 1) { // 1日目はダミー固定
+            return VillageAbility(
+                villageDayId = latestVillageDay.id,
+                myselfId = wolf.id,
+                targetId = village.dummyChara().id,
+                ability = Ability(CDef.AbilityType.襲撃)
+            )
+        } else { // 2日目以降は生存者からランダム
+            val target = village.participant.aliveMemberList().findRandom {
+                !CDef.Skill.codeOf(it.skill!!.code)!!.isHasAttackAbility
+            } ?: return null // 生存している対象がいないので襲撃なし
+            return VillageAbility(
+                villageDayId = latestVillageDay.id,
+                myselfId = wolf.id,
+                targetId = target.id,
+                ability = Ability(CDef.AbilityType.襲撃)
+            )
+        }
     }
 }

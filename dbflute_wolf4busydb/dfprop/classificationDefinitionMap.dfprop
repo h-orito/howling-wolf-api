@@ -90,6 +90,14 @@ map:{
 					; groupComment=襲撃能力を持つ
 					; elementList= list:{人狼}
 				}
+				; hasDivineAbility = map:{
+					; groupComment=占い能力を持つ
+					; elementList= list:{占い師}
+				}
+				; hasGuardAbility = map:{
+					; groupComment=護衛能力を持つ
+					; elementList= list:{狩人}
+				}
         	}
         }
         ; map:{

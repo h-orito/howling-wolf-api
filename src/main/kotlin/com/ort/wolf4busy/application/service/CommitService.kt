@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.wolf4busy.domain.model.commit.Commit
+import com.ort.wolf4busy.domain.model.commit.Commits
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.commit.CommitDataSource
@@ -24,5 +25,9 @@ class CommitService(
      */
     fun updateCommit(villageDayId: Int, participant: VillageParticipant, commit: Boolean) {
         commitDataSource.updateCommit(villageDayId, participant.id, commit)
+    }
+
+    fun findCommits(villageId: Int): Commits {
+        return commitDataSource.selectCommitList(villageId)
     }
 }
