@@ -2,6 +2,7 @@ package com.ort.wolf4busy.infrastructure.datasource.commit
 
 import com.ort.dbflute.exbhv.CommitBhv
 import com.ort.dbflute.exentity.Commit
+import com.ort.wolf4busy.domain.model.commit.Commits
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import org.springframework.stereotype.Repository
 
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Repository
 class CommitDataSource(
     val commitBhv: CommitBhv
 ) {
+
     // ===================================================================================
-    //                                                                              Select
-    //                                                                              ======
+//                                                                              Select
+//                                                                              ======
+
     /**
      * コミットを取得
      * @param village village
@@ -19,18 +22,33 @@ class CommitDataSource(
      * @return コミット
      */
     fun selectCommit(village: com.ort.wolf4busy.domain.model.village.Village, participant: VillageParticipant)
-        : com.ort.wolf4busy.domain.model.commit.Commit? {
+            : com.ort.wolf4busy.domain.model.commit.Commit? {
         val latestDay: com.ort.wolf4busy.domain.model.village.VillageDay = village.day.latestDay()
 
         val optCommit = commitBhv.selectEntity {
             it.query().setVillageDayId_Equal(latestDay.id)
             it.query().setVillagePlayerId_Equal(participant.id)
         }
-        return optCommit.map {
+        return optCommit.map { c ->
             com.ort.wolf4busy.domain.model.commit.Commit(
+                villageDayId = c.villageDayId,
                 isCommiting = true
             )
         }.orElse(null)
+    }
+
+    fun selectCommitList(villageId: Int): Commits {
+        val commitList = commitBhv.selectList {
+            it.query().queryVillageDay().setVillageId_Equal(villageId)
+        }
+        return Commits(
+            list = commitList.map { c ->
+                com.ort.wolf4busy.domain.model.commit.Commit(
+                    villageDayId = c.villageDayId,
+                    isCommiting = true
+                )
+            }
+        )
     }
 
     // ===================================================================================

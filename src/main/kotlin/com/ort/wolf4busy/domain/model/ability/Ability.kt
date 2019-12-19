@@ -10,6 +10,14 @@ class Ability(
     val code: String,
     val name: String
 ) {
+
+    constructor(
+        cdefAbilityType: CDef.AbilityType
+    ) : this(
+        code = cdefAbilityType.code(),
+        name = cdefAbilityType.alias()
+    )
+
     // 選択可能な対象
     fun getSelectableTargetList(village: Village, participant: VillageParticipant?): List<VillageParticipant> {
         if (!canUseAbility(village, participant)) return listOf()

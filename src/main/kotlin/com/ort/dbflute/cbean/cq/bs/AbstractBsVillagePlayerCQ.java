@@ -1105,6 +1105,26 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     */
+    public void setSkillCode_InScope_HasDivineAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasDivineAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     */
+    public void setSkillCode_InScope_HasGuardAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
         regINS(CK_INS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
     }
@@ -1370,6 +1390,26 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     */
+    public void setRequestSkillCode_InScope_HasDivineAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasDivineAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     */
+    public void setRequestSkillCode_InScope_HasGuardAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
     protected void doSetRequestSkillCode_InScope(Collection<String> requestSkillCodeList) {
         regINS(CK_INS, cTL(requestSkillCodeList), xgetCValueRequestSkillCode(), "REQUEST_SKILL_CODE");
     }
@@ -1633,6 +1673,26 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_InScope_HasAttackAbility() {
         setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     */
+    public void setSecondRequestSkillCode_InScope_HasDivineAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasDivineAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     */
+    public void setSecondRequestSkillCode_InScope_HasGuardAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
     }
 
     protected void doSetSecondRequestSkillCode_InScope(Collection<String> secondRequestSkillCodeList) {

@@ -356,6 +356,26 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasDivineAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasDivineAbility();
+    }
+
+    /**
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasGuardAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
      * Is the value of campCode 狐陣営? <br>
      * 狐陣営
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>

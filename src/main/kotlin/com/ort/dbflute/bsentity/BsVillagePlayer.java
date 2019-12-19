@@ -574,6 +574,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasDivineAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasDivineAbility();
+    }
+
+    /**
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasGuardAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
      * Is the value of requestSkillCode 狩人? <br>
      * 狩人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -691,6 +711,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_HasDivineAbility() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isHasDivineAbility();
+    }
+
+    /**
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_HasGuardAbility() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
      * Is the value of secondRequestSkillCode 狩人? <br>
      * 狩人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -805,6 +845,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode_HasAttackAbility() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null && cdef.isHasAttackAbility();
+    }
+
+    /**
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_HasDivineAbility() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isHasDivineAbility();
+    }
+
+    /**
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_HasGuardAbility() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isHasGuardAbility();
     }
 
     /**

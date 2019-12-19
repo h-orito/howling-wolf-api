@@ -7,6 +7,13 @@ data class VillageStatus(
     val name: String
 ) {
 
+    constructor(
+        cdefStatus: CDef.VillageStatus
+    ) : this(
+        code = cdefStatus.code(),
+        name = cdefStatus.name
+    )
+
     // ===================================================================================
     //                                                                              status
     //                                                                           =========

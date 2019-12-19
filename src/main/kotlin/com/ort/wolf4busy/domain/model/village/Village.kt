@@ -2,7 +2,6 @@ package com.ort.wolf4busy.domain.model.village
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
-import com.ort.wolf4busy.domain.model.daychange.Prologue
 import com.ort.wolf4busy.domain.model.daychange.SkillAssign
 import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.village.action.VillageSaySituation
@@ -156,27 +155,6 @@ data class Village(
     // ===================================================================================
     //                                                                          day change
     //                                                                        ============
-    /**
-     * 必要あれば日付更新
-     *
-     * @param todayMessages 最新日の通常発言
-     * @param charas キャラ
-     * @return 更新後の村と更新に際してのメッセージ
-     */
-    fun dayChangeIfNeeded(todayMessages: Messages, charas: Charas): Pair<Village, Messages> {
-        return if (status.isPrologue()) { // プロローグ
-            Prologue.dayChange(this, todayMessages, charas)
-        } else if (status.isProgress() && day.latestDay().day == 1) { // 進行中で1日目
-            this to Messages(listOf())
-        } else if (status.isProgress()) { // 進行中で2日目以降
-            this to Messages(listOf())
-        } else if (status.code == CDef.VillageStatus.エピローグ.code()) {
-            this to Messages(listOf())
-        } else {
-            this to Messages(listOf())
-        }
-    }
-
     // 最新の村日付を追加
     fun addNewDay(): Village {
         val dayList = mutableListOf<VillageDay>()
@@ -194,11 +172,22 @@ data class Village(
         return this.copy(day = this.day.copy(dayList = dayList))
     }
 
+    // 退村
+    fun leaveParticipant(participantId: Int): Village {
+        return this.copy(
+            participant = this.participant.leave(participantId)
+        )
+    }
+
     // 役職割り当て
     fun assignSkill(): Village {
         val assignedParticipants = SkillAssign.assign(participant, setting.organizations.mapToSkillCount(participant.count), dummyChara())
+        return this.copy(participant = assignedParticipants)
+    }
 
-        return this
+    // ステータス変更
+    fun changeStatus(cdefVillageStatus: CDef.VillageStatus): Village {
+        return this.copy(status = VillageStatus(cdefVillageStatus))
     }
 
     // ===================================================================================
@@ -206,7 +195,7 @@ data class Village(
     //                                                                        ============
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
         return participant.memberList.any { it.charaId == charaId }
-            || spectator.memberList.any { it.charaId == charaId }
+                || spectator.memberList.any { it.charaId == charaId }
     }
 
     private fun isRestricted(
