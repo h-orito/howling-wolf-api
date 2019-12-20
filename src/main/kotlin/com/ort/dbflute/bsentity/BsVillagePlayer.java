@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_PLAYER_ID
  *
  * [column]
- *     VILLAGE_PLAYER_ID, VILLAGE_ID, PLAYER_ID, CHARA_ID, SKILL_CODE, REQUEST_SKILL_CODE, SECOND_REQUEST_SKILL_CODE, IS_DEAD, IS_SPECTATOR, DEAD_REASON_CODE, DEAD_DAY, IS_GONE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_PLAYER_ID, VILLAGE_ID, PLAYER_ID, CHARA_ID, SKILL_CODE, REQUEST_SKILL_CODE, SECOND_REQUEST_SKILL_CODE, IS_DEAD, IS_SPECTATOR, DEAD_REASON_CODE, DEAD_VILLAGE_DAY_ID, IS_GONE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -33,13 +33,13 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     CHARA, DEAD_REASON, PLAYER, SKILL, VILLAGE
+ *     CHARA, DEAD_REASON, VILLAGE_DAY, PLAYER, SKILL, VILLAGE
  *
  * [referrer table]
  *     ABILITY, COMMIT, VOTE
  *
  * [foreign property]
- *     chara, deadReason, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
+ *     chara, deadReason, villageDay, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
  *
  * [referrer property]
  *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, commitList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
@@ -56,7 +56,7 @@ import com.ort.dbflute.exentity.*;
  * Boolean isDead = entity.getIsDead();
  * Boolean isSpectator = entity.getIsSpectator();
  * String deadReasonCode = entity.getDeadReasonCode();
- * Integer deadDay = entity.getDeadDay();
+ * Integer deadVillageDayId = entity.getDeadVillageDayId();
  * Boolean isGone = entity.getIsGone();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
@@ -72,7 +72,7 @@ import com.ort.dbflute.exentity.*;
  * entity.setIsDead(isDead);
  * entity.setIsSpectator(isSpectator);
  * entity.setDeadReasonCode(deadReasonCode);
- * entity.setDeadDay(deadDay);
+ * entity.setDeadVillageDayId(deadVillageDayId);
  * entity.setIsGone(isGone);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
@@ -123,8 +123,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     /** DEAD_REASON_CODE: {IX, VARCHAR(20), FK to dead_reason, classification=DeadReason} */
     protected String _deadReasonCode;
 
-    /** DEAD_DAY: {INT UNSIGNED(10)} */
-    protected Integer _deadDay;
+    /** DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day} */
+    protected Integer _deadVillageDayId;
 
     /** IS_GONE: {NotNull, BIT} */
     protected Boolean _isGone;
@@ -446,7 +446,7 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
-     * Set the value of deadReasonCode as 突然 (SUDDON). <br>
+     * Set the value of deadReasonCode as 突然 (SUDDEN). <br>
      * 突然
      */
     public void setDeadReasonCode_突然() {
@@ -564,6 +564,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_DivineResultWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isDivineResultWolf();
+    }
+
+    /**
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_PsychicResultWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isPsychicResultWolf();
+    }
+
+    /**
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      * @return The determination, true or false.
@@ -591,6 +611,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSkillCode_HasGuardAbility() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasPsychicAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasPsychicAbility();
     }
 
     /**
@@ -701,6 +731,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_DivineResultWolf() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isDivineResultWolf();
+    }
+
+    /**
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_PsychicResultWolf() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isPsychicResultWolf();
+    }
+
+    /**
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      * @return The determination, true or false.
@@ -728,6 +778,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCode_HasGuardAbility() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_HasPsychicAbility() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isHasPsychicAbility();
     }
 
     /**
@@ -838,6 +898,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_DivineResultWolf() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isDivineResultWolf();
+    }
+
+    /**
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_PsychicResultWolf() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isPsychicResultWolf();
+    }
+
+    /**
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      * @return The determination, true or false.
@@ -865,6 +945,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode_HasGuardAbility() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_HasPsychicAbility() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isHasPsychicAbility();
     }
 
     /**
@@ -954,6 +1044,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
      */
     public void setDeadReason(OptionalEntity<DeadReason> deadReason) {
         _deadReason = deadReason;
+    }
+
+    /** VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'. */
+    protected OptionalEntity<VillageDay> _villageDay;
+
+    /**
+     * [get] VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'. <br>
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return The entity of foreign property 'villageDay'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     */
+    public OptionalEntity<VillageDay> getVillageDay() {
+        if (_villageDay == null) { _villageDay = OptionalEntity.relationEmpty(this, "villageDay"); }
+        return _villageDay;
+    }
+
+    /**
+     * [set] VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'.
+     * @param villageDay The entity of foreign property 'villageDay'. (NullAllowed)
+     */
+    public void setVillageDay(OptionalEntity<VillageDay> villageDay) {
+        _villageDay = villageDay;
     }
 
     /** PLAYER by my PLAYER_ID, named 'player'. */
@@ -1197,6 +1308,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         { sb.append(li).append(xbRDS(_chara, "chara")); }
         if (_deadReason != null && _deadReason.isPresent())
         { sb.append(li).append(xbRDS(_deadReason, "deadReason")); }
+        if (_villageDay != null && _villageDay.isPresent())
+        { sb.append(li).append(xbRDS(_villageDay, "villageDay")); }
         if (_player != null && _player.isPresent())
         { sb.append(li).append(xbRDS(_player, "player")); }
         if (_skillByRequestSkillCode != null && _skillByRequestSkillCode.isPresent())
@@ -1236,7 +1349,7 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         sb.append(dm).append(xfND(_isDead));
         sb.append(dm).append(xfND(_isSpectator));
         sb.append(dm).append(xfND(_deadReasonCode));
-        sb.append(dm).append(xfND(_deadDay));
+        sb.append(dm).append(xfND(_deadVillageDayId));
         sb.append(dm).append(xfND(_isGone));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
@@ -1256,6 +1369,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         { sb.append(dm).append("chara"); }
         if (_deadReason != null && _deadReason.isPresent())
         { sb.append(dm).append("deadReason"); }
+        if (_villageDay != null && _villageDay.isPresent())
+        { sb.append(dm).append("villageDay"); }
         if (_player != null && _player.isPresent())
         { sb.append(dm).append("player"); }
         if (_skillByRequestSkillCode != null && _skillByRequestSkillCode.isPresent())
@@ -1495,23 +1610,23 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
-     * [get] DEAD_DAY: {INT UNSIGNED(10)} <br>
+     * [get] DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day} <br>
      * 何日目に死亡したか
-     * @return The value of the column 'DEAD_DAY'. (NullAllowed even if selected: for no constraint)
+     * @return The value of the column 'DEAD_VILLAGE_DAY_ID'. (NullAllowed even if selected: for no constraint)
      */
-    public Integer getDeadDay() {
-        checkSpecifiedProperty("deadDay");
-        return _deadDay;
+    public Integer getDeadVillageDayId() {
+        checkSpecifiedProperty("deadVillageDayId");
+        return _deadVillageDayId;
     }
 
     /**
-     * [set] DEAD_DAY: {INT UNSIGNED(10)} <br>
+     * [set] DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day} <br>
      * 何日目に死亡したか
-     * @param deadDay The value of the column 'DEAD_DAY'. (NullAllowed: null update allowed for no constraint)
+     * @param deadVillageDayId The value of the column 'DEAD_VILLAGE_DAY_ID'. (NullAllowed: null update allowed for no constraint)
      */
-    public void setDeadDay(Integer deadDay) {
-        registerModifiedProperty("deadDay");
-        _deadDay = deadDay;
+    public void setDeadVillageDayId(Integer deadVillageDayId) {
+        registerModifiedProperty("deadVillageDayId");
+        _deadVillageDayId = deadVillageDayId;
     }
 
     /**

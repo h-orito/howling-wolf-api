@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_PLAYER_ID
  *
  * [column]
- *     VILLAGE_PLAYER_ID, VILLAGE_ID, PLAYER_ID, CHARA_ID, SKILL_CODE, REQUEST_SKILL_CODE, SECOND_REQUEST_SKILL_CODE, IS_DEAD, IS_SPECTATOR, DEAD_REASON_CODE, DEAD_DAY, IS_GONE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_PLAYER_ID, VILLAGE_ID, PLAYER_ID, CHARA_ID, SKILL_CODE, REQUEST_SKILL_CODE, SECOND_REQUEST_SKILL_CODE, IS_DEAD, IS_SPECTATOR, DEAD_REASON_CODE, DEAD_VILLAGE_DAY_ID, IS_GONE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -40,13 +40,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     CHARA, DEAD_REASON, PLAYER, SKILL, VILLAGE
+ *     CHARA, DEAD_REASON, VILLAGE_DAY, PLAYER, SKILL, VILLAGE
  *
  * [referrer table]
  *     ABILITY, COMMIT, VOTE
  *
  * [foreign property]
- *     chara, deadReason, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
+ *     chara, deadReason, villageDay, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
  *
  * [referrer property]
  *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, commitList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
@@ -699,6 +699,14 @@ public abstract class BsVillagePlayerBhv extends AbstractBehaviorWritable<Villag
      */
     public List<DeadReason> pulloutDeadReason(List<VillagePlayer> villagePlayerList)
     { return helpPulloutInternally(villagePlayerList, "deadReason"); }
+
+    /**
+     * Pull out the list of foreign table 'VillageDay'.
+     * @param villagePlayerList The list of villagePlayer. (NotNull, EmptyAllowed)
+     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
+     */
+    public List<VillageDay> pulloutVillageDay(List<VillagePlayer> villagePlayerList)
+    { return helpPulloutInternally(villagePlayerList, "villageDay"); }
 
     /**
      * Pull out the list of foreign table 'Player'.

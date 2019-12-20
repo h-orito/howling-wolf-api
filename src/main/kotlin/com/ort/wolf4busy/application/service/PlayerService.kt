@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.wolf4busy.domain.model.player.Player
+import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.player.PlayerDataSource
 import org.springframework.stereotype.Service
@@ -14,7 +15,7 @@ class PlayerService(
         return playerDataSource.selectPlayer(user.uid)
     }
 
-    fun findPlayerList(villageId: Int): List<Player> {
+    fun findPlayers(villageId: Int): Players {
         return playerDataSource.selectPlayerList(villageId)
     }
 

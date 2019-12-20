@@ -15,7 +15,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
-import com.ort.wolf4busy.domain.model.player.Player
+import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
@@ -61,8 +61,12 @@ class VillageController(
     @GetMapping("/village/{villageId}")
     fun village(@PathVariable("villageId") villageId: Int): VillageView {
         val village = villageService.findVillage(villageId)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val players: Players = playerService.findPlayers(villageId)
         return VillageView(
-            village = village
+            village = village,
+            charas = charas,
+            players = players
         )
     }
 
@@ -82,11 +86,12 @@ class VillageController(
     ): VillageAnchorMessageView {
         val village = villageService.findVillage(villageId)
         val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
-        val playerList: List<Player> = playerService.findPlayerList(villageId)
+        val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         return VillageAnchorMessageView(
             message = message,
-            playerList = playerList,
+            village = village,
+            players = players,
             charas = charas
         )
     }
@@ -108,11 +113,12 @@ class VillageController(
     ): VillageMessageView {
         val village = villageService.findVillage(villageId)
         val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
-        val playerList: List<Player> = playerService.findPlayerList(villageId)
+        val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         return VillageMessageView(
             messageList = messages.messageList,
-            playerList = playerList,
+            village = village,
+            players = players,
             charas = charas
         )
     }

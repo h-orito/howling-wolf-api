@@ -10,7 +10,7 @@ data class VillageVotes(
         // 最新日
         val latestVillageDayId = village.day.latestDay().id
         // 生存している人だけ自分に投票
-        val newVoteList = village.participant.aliveMemberList().memberList.map { member ->
+        val newVoteList = village.participant.filterAlive().memberList.map { member ->
             VillageVote(
                 villageDayId = latestVillageDayId,
                 myselfId = member.id,
@@ -23,5 +23,9 @@ data class VillageVotes(
         return VillageVotes(
             list = voteList
         )
+    }
+
+    fun existsDifference(votes: VillageVotes): Boolean {
+        return list.size != votes.list.size
     }
 }

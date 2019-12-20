@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.domain.model.village.participant
 
 import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.village.VillageDay
 
 data class VillageParticipants(
     val count: Int, // 退村した人は含まない
@@ -15,16 +16,35 @@ data class VillageParticipants(
         )
     }
 
+    // 退村
     fun leave(participantId: Int): VillageParticipants {
         return this.copy(
             count = this.count - 1,
             memberList = this.memberList.map {
-                if (it.id == participantId) it.copy(isGone = true) else it.copy()
+                if (it.id == participantId) it.gone() else it.copy()
             }
         )
     }
 
-    fun aliveMemberList(): VillageParticipants {
+    // 突然死
+    fun suddenlyDeath(participantId: Int, villageDay: VillageDay): VillageParticipants {
+        return this.copy(
+            memberList = this.memberList.map {
+                if (it.id == participantId) it.suddenlyDeath(villageDay) else it.copy()
+            }
+        )
+    }
+
+    // 処刑
+    fun execute(participantId: Int, villageDay: VillageDay): VillageParticipants {
+        return this.copy(
+            memberList = this.memberList.map {
+                if (it.id == participantId) it.execute(villageDay) else it.copy()
+            }
+        )
+    }
+
+    fun filterAlive(): VillageParticipants {
         val aliveMembers = memberList.filter { it.isAlive() }
         return VillageParticipants(
             count = aliveMembers.size,
@@ -34,5 +54,13 @@ data class VillageParticipants(
 
     fun findRandom(predicate: (VillageParticipant) -> Boolean): VillageParticipant? {
         return memberList.filter { predicate(it) }.shuffled().firstOrNull()
+    }
+
+    fun existsDifference(participant: VillageParticipants): Boolean {
+        if (count != participant.count) return true
+        if (memberList.size != participant.memberList.size) return true
+        return memberList.any { member1 ->
+            participant.memberList.none { member2 -> !member1.existsDifference(member2) }
+        }
     }
 }

@@ -142,7 +142,7 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * Set the value of deadReasonCode as 突然 (SUDDON). <br>
+     * Set the value of deadReasonCode as 突然 (SUDDEN). <br>
      * 突然
      */
     public void setDeadReasonCode_突然() {

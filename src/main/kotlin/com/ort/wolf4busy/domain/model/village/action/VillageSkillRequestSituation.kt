@@ -1,6 +1,5 @@
 package com.ort.wolf4busy.domain.model.village.action
 
-import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
@@ -42,7 +41,7 @@ data class VillageSkillRequestSituation(
                 .mapNotNull { orgChar -> Skill.skillByShortName(orgChar) } // 略称から役職を取得して
                 .distinct().toMutableList() // 重複削除
             skillList.addAll(Skill.skillRequestSomeoneList.map { Skill(it.code(), it.name) })
-            return skillList.sortedBy { CDef.Skill.codeOf(it.code).order() }
+            return skillList.sortedBy { it.toCdef().order() }
         }
     }
 }

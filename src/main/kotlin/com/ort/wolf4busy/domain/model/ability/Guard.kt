@@ -2,6 +2,8 @@ package com.ort.wolf4busy.domain.model.ability
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
+import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.daychange.DayChange
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
@@ -30,8 +32,8 @@ object Guard {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                    && it.ability.code == CDef.AbilityType.護衛.code()
-                    && it.myselfId == participant.id
+                && it.ability.code == CDef.AbilityType.護衛.code()
+                && it.myselfId == participant.id
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
@@ -42,15 +44,20 @@ object Guard {
     }
 
     fun getDefaultAbilityList(village: Village): List<VillageAbility> {
+        // 1日目は護衛できない
+        if (village.day.latestDay().day == 1) {
+            return listOf()
+        }
+
         // 最新日id
         val latestVillageDay = village.day.latestDay()
         // 生存している護衛能力持ちごとに
-        return village.participant.aliveMemberList().memberList.filter {
-            CDef.Skill.codeOf(it.skill!!.code)!!.isHasGuardAbility
+        return village.participant.filterAlive().memberList.filter {
+            it.skill!!.toCdef().isHasGuardAbility
         }.mapNotNull { seer ->
             // 対象は自分以外の生存者からランダム
             // TODO 連続護衛なし
-            village.participant.aliveMemberList()
+            village.participant.filterAlive()
                 .findRandom { it.id != seer.id }?.let {
                     VillageAbility(
                         villageDayId = latestVillageDay.id,
@@ -60,5 +67,25 @@ object Guard {
                     )
                 } ?: null // 自分しかいない場合
         }
+    }
+
+    fun process(dayChange: DayChange, charas: Charas): DayChange {
+        val latestDay = dayChange.village.day.latestDay()
+        var messages = dayChange.messages.copy()
+
+        dayChange.village.participant.memberList.filter {
+            it.isAlive() && it.skill!!.toCdef().isHasGuardAbility
+        }.forEach { hunter ->
+            dayChange.abilities.list.find { it.myselfId == hunter.id && it.villageDayId == latestDay.id }?.let { ability ->
+                val fromCharaName = charas.list.find { it.id == ability.myselfId }!!.charaName.name
+                val toCharaName = charas.list.find { it.id == ability.targetId }!!.charaName.name
+                val text = "${fromCharaName}は、${toCharaName}を護衛している。"
+                messages = messages.add(DayChange.createPrivateSystemMessage(text, latestDay.day))
+            }
+        }
+
+        return dayChange.copy(
+            messages = messages
+        )
     }
 }

@@ -10,4 +10,8 @@ data class Messages(
         list.add(message)
         return this.copy(messageList = list)
     }
+
+    fun existsDifference(messages: Messages): Boolean {
+        return messageList.size != messages.messageList.size
+    }
 }

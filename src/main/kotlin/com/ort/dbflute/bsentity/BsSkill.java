@@ -346,6 +346,26 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_DivineResultWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isDivineResultWolf();
+    }
+
+    /**
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_PsychicResultWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isPsychicResultWolf();
+    }
+
+    /**
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      * @return The determination, true or false.
@@ -373,6 +393,16 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode_HasGuardAbility() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasPsychicAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasPsychicAbility();
     }
 
     /**

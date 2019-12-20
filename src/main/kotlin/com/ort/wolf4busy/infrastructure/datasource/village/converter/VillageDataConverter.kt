@@ -30,7 +30,6 @@ object VillageDataConverter {
     fun convertVillageToVillage(village: Village): com.ort.wolf4busy.domain.model.village.Village {
         val participantList = village.villagePlayerList.filter { vp -> vp.isParticipant }
         val visitorList = village.villagePlayerList.filter { vp -> vp.isVisitor }
-        val hasEpilogue: Boolean = hasEpilogue(village.epilogueDay, village.villageDayList)
         return com.ort.wolf4busy.domain.model.village.Village(
             id = village.villageId,
             name = village.villageDisplayName,
@@ -42,28 +41,26 @@ object VillageDataConverter {
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(
                 count = participantList.size,
-                memberList = participantList.map { convertVillagePlayerToParticipant(it, hasEpilogue) }
+                memberList = participantList.map { convertVillagePlayerToParticipant(it) }
             ),
             spectator = VillageParticipants(
                 count = visitorList.size,
-                memberList = visitorList.map { convertVillagePlayerToParticipant(it, hasEpilogue) }
+                memberList = visitorList.map { convertVillagePlayerToParticipant(it) }
             ),
             day = VillageDays(
-                dayList = village.villageDayList.map { convertVillageDayToVillageDay(it, village.epilogueDay) }
+                dayList = village.villageDayList.map { convertVillageDayToVillageDay(it) }
             )
         )
     }
 
-    fun convertVillageDayToVillageDay(villageDay: VillageDay, epilogueDay: Int?): com.ort.wolf4busy.domain.model.village.VillageDay {
+    fun convertVillageDayToVillageDay(villageDay: VillageDay): com.ort.wolf4busy.domain.model.village.VillageDay {
         val day: Int = villageDay.day
         return com.ort.wolf4busy.domain.model.village.VillageDay(
             id = villageDay.villageDayId,
             day = day,
             noonnight = villageDay.noonnightCode,
             dayChangeDatetime = villageDay.daychangeDatetime,
-            isUpdating = villageDay.isUpdating,
-            isPrologue = day == 0,
-            isEpilogue = epilogueDay != null && epilogueDay == day
+            isUpdating = villageDay.isUpdating
         )
     }
 
@@ -88,12 +85,7 @@ object VillageDataConverter {
             ),
             day = VillageDays( // 最新の1日だけ
                 dayList = village.villageDayList.firstOrNull()?.let {
-                    listOf(
-                        convertVillageDayToVillageDay(
-                            it,
-                            village.epilogueDay
-                        )
-                    )
+                    listOf(convertVillageDayToVillageDay(it))
                 }.orEmpty()
             )
         )
@@ -137,10 +129,7 @@ object VillageDataConverter {
                     existRestricts = restrictList.isNotEmpty(),
                     restrictList = restrictList.map {
                         VillageMessageRestrict(
-                            type = com.ort.wolf4busy.domain.model.message.MessageType(
-                                code = it.messageTypeCode,
-                                name = CDef.MessageType.codeOf(it.messageTypeCode).alias()
-                            ),
+                            type = com.ort.wolf4busy.domain.model.message.MessageType(CDef.MessageType.codeOf(it.messageTypeCode)),
                             count = it.messageMaxNum,
                             length = it.messageMaxLength
                         )
@@ -153,38 +142,24 @@ object VillageDataConverter {
         )
     }
 
-    fun convertVillagePlayerToParticipant(vp: VillagePlayer, hasEpilogue: Boolean): VillageParticipant {
+    fun convertVillagePlayerToParticipant(vp: VillagePlayer): VillageParticipant {
         return VillageParticipant(
             id = vp.villagePlayerId,
             charaId = vp.charaId,
-            playerId = if (!hasEpilogue) null else vp.playerId,
+            playerId = vp.playerId,
             dead = if (vp.isDead) convertToDeadReasonToDead(vp) else null,
             isSpectator = vp.isSpectator,
             isGone = vp.isGone,
-            skill = if (!hasEpilogue || vp.skillCodeAsSkill == null) null else Skill(
-                code = vp.skillCodeAsSkill.code(),
-                name = vp.skillCodeAsSkill.alias()
-            ),
+            skill = if (vp.skillCodeAsSkill == null) null else Skill(vp.skillCodeAsSkill),
             skillRequest = SkillRequest(
-                first = Skill(
-                    code = vp.requestSkillCodeAsSkill.code(),
-                    name = vp.requestSkillCodeAsSkill.alias()
-                ),
-                second = Skill(
-                    code = vp.secondRequestSkillCodeAsSkill.code(),
-                    name = vp.secondRequestSkillCodeAsSkill.alias()
-                )
+                first = Skill(vp.requestSkillCodeAsSkill),
+                second = Skill(vp.secondRequestSkillCodeAsSkill)
             )
         )
     }
 
     private fun convertToDeadReasonToDead(vp: VillagePlayer): Dead {
-        val deadReason = vp.deadReasonCodeAsDeadReason
-        return Dead(
-            code = deadReason.code(),
-            reason = deadReason.alias(),
-            day = vp.deadDay
-        )
+        return Dead(vp.deadReasonCodeAsDeadReason, convertVillageDayToVillageDay(vp.villageDay.get()))
     }
 
     private fun detectItemText(settingList: List<VillageSetting>, item: CDef.VillageSettingItem): String? {
