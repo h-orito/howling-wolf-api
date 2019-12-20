@@ -34,6 +34,28 @@ data class Village(
         return participant.memberList.find { it.charaId == setting.charachip.dummyCharaId }!!
     }
 
+    fun notDummyParticipant(): VillageParticipants {
+        val notDummyMembers = participant.memberList.filter { it.charaId != setting.charachip.dummyCharaId }
+        return VillageParticipants(
+            count = notDummyMembers.size,
+            memberList = notDummyMembers
+        )
+    }
+
+    fun deadTodayParticipant(): VillageParticipants {
+        val deadTodayMemberList = participant.memberList.filter {
+            !it.isAlive() && it.dead!!.villageDay.id == day.latestDay().id
+        }
+        return VillageParticipants(
+            count = deadTodayMemberList.size,
+            memberList = deadTodayMemberList
+        )
+    }
+
+    // ===================================================================================
+    //                                                                              assert
+    //                                                                           =========
+
     fun assertParticipate(
         playerId: Int,
         charaId: Int,
@@ -164,9 +186,7 @@ data class Village(
             day = day.latestDay().day + 1, // 一旦長期だけを考えるので常に昼
             noonnight = CDef.Noonnight.昼.code(),
             dayChangeDatetime = day.latestDay().dayChangeDatetime.plusSeconds(setting.time.dayChangeIntervalSeconds.toLong()),
-            isUpdating = true,
-            isPrologue = false, // dummy
-            isEpilogue = false // dummy
+            isUpdating = true
         )
         dayList.add(newDay)
         return this.copy(day = this.day.copy(dayList = dayList))
@@ -177,6 +197,18 @@ data class Village(
         return this.copy(
             participant = this.participant.leave(participantId)
         )
+    }
+
+    // 突然死
+    fun suddenlyDeathParticipant(participantId: Int, latestDay: VillageDay): Village {
+        return this.copy(
+            participant = this.participant.suddenlyDeath(participantId, latestDay)
+        )
+    }
+
+    // 処刑
+    fun executeParticipant(participantId: Int, latestDay: VillageDay): Village {
+        return this.copy(participant = this.participant.execute(participantId, latestDay))
     }
 
     // 役職割り当て
@@ -190,12 +222,19 @@ data class Village(
         return this.copy(status = VillageStatus(cdefVillageStatus))
     }
 
+    // 差分があるか
+    fun existsDifference(village: Village): Boolean {
+        if (status.code != village.status.code) return true
+        if (participant.existsDifference(village.participant)) return true
+        return day.existsDifference(village.day)
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
         return participant.memberList.any { it.charaId == charaId }
-                || spectator.memberList.any { it.charaId == charaId }
+            || spectator.memberList.any { it.charaId == charaId }
     }
 
     private fun isRestricted(

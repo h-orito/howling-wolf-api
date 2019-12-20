@@ -25,4 +25,8 @@ data class VillageAbilities(
 
         return VillageAbilities(abilityList)
     }
+
+    fun existsDifference(abilities: VillageAbilities): Boolean {
+        return list.size != abilities.list.size
+    }
 }

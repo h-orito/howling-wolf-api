@@ -291,6 +291,35 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         doSetupSelect(() -> query().queryDeadReason());
     }
 
+    protected VillageDayNss _nssVillageDay;
+    public VillageDayNss xdfgetNssVillageDay() {
+        if (_nssVillageDay == null) { _nssVillageDay = new VillageDayNss(null); }
+        return _nssVillageDay;
+    }
+    /**
+     * Set up relation columns to select clause. <br>
+     * VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'.
+     * <pre>
+     * <span style="color: #0000C0">villagePlayerBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_VillageDay()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">villagePlayer</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">villagePlayer</span>.<span style="color: #CC4747">getVillageDay()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
+     */
+    public VillageDayNss setupSelect_VillageDay() {
+        assertSetupSelectPurpose("villageDay");
+        if (hasSpecifiedLocalColumn()) {
+            specify().columnDeadVillageDayId();
+        }
+        doSetupSelect(() -> query().queryVillageDay());
+        if (_nssVillageDay == null || !_nssVillageDay.hasConditionQuery())
+        { _nssVillageDay = new VillageDayNss(query().queryVillageDay()); }
+        return _nssVillageDay;
+    }
+
     protected PlayerNss _nssPlayer;
     public PlayerNss xdfgetNssPlayer() {
         if (_nssPlayer == null) { _nssPlayer = new PlayerNss(null); }
@@ -479,6 +508,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
     public static class HpSpecification extends HpAbstractSpecification<VillagePlayerCQ> {
         protected CharaCB.HpSpecification _chara;
         protected DeadReasonCB.HpSpecification _deadReason;
+        protected VillageDayCB.HpSpecification _villageDay;
         protected PlayerCB.HpSpecification _player;
         protected SkillCB.HpSpecification _skillByRequestSkillCode;
         protected SkillCB.HpSpecification _skillBySecondRequestSkillCode;
@@ -539,10 +569,10 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnDeadReasonCode() { return doColumn("DEAD_REASON_CODE"); }
         /**
-         * DEAD_DAY: {INT UNSIGNED(10)}
+         * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnDeadDay() { return doColumn("DEAD_DAY"); }
+        public SpecifiedColumn columnDeadVillageDayId() { return doColumn("DEAD_VILLAGE_DAY_ID"); }
         /**
          * IS_GONE: {NotNull, BIT}
          * @return The information object of specified column. (NotNull)
@@ -580,6 +610,10 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
             if (qyCall().qy().hasConditionQueryDeadReason()
                     || qyCall().qy().xgetReferrerQuery() instanceof DeadReasonCQ) {
                 columnDeadReasonCode(); // FK or one-to-one referrer
+            }
+            if (qyCall().qy().hasConditionQueryVillageDay()
+                    || qyCall().qy().xgetReferrerQuery() instanceof VillageDayCQ) {
+                columnDeadVillageDayId(); // FK or one-to-one referrer
             }
             if (qyCall().qy().hasConditionQueryPlayer()
                     || qyCall().qy().xgetReferrerQuery() instanceof PlayerCQ) {
@@ -643,6 +677,26 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
                 }
             }
             return _deadReason;
+        }
+        /**
+         * Prepare to specify functions about relation table. <br>
+         * VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public VillageDayCB.HpSpecification specifyVillageDay() {
+            assertRelation("villageDay");
+            if (_villageDay == null) {
+                _villageDay = new VillageDayCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryVillageDay()
+                                    , () -> _qyCall.qy().queryVillageDay())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _villageDay.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryVillageDay()
+                      , () -> xsyncQyCall().qy().queryVillageDay()));
+                }
+            }
+            return _villageDay;
         }
         /**
          * Prepare to specify functions about relation table. <br>

@@ -21,7 +21,7 @@ object Attack {
         } else {
             // 襲撃対象に選べる & 生存している
             village.participant.memberList.filter {
-                !CDef.Skill.codeOf(it.skill!!.code).isNotSelectableAttack && it.isAlive()
+                !it.skill!!.toCdef().isNotSelectableAttack && it.isAlive()
             }
         }
     }
@@ -35,12 +35,12 @@ object Attack {
 
         // 襲撃能力のある参加者のID
         val attackableParticipantIdList =
-            village.participant.memberList.filter { CDef.Skill.codeOf(it.skill!!.code)!!.isHasAttackAbility }.map { it.id }
+            village.participant.memberList.filter { it.skill!!.toCdef().isHasAttackAbility }.map { it.id }
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                    && it.ability.code == CDef.AbilityType.占い.code()
-                    && attackableParticipantIdList.contains(it.myselfId)
+                && it.ability.code == CDef.AbilityType.占い.code()
+                && attackableParticipantIdList.contains(it.myselfId)
         }?.targetId
         targetVillageParticipantId ?: return null
         return village.participant.memberList.find { it.id == targetVillageParticipantId }
@@ -54,20 +54,20 @@ object Attack {
         // 最新日id
         val latestVillageDay = village.day.latestDay()
         // 襲撃者は生存している人狼からランダムに
-        val wolf = village.participant.aliveMemberList().findRandom {
-            CDef.Skill.codeOf(it.skill!!.code)!!.isHasAttackAbility
+        val wolf = village.participant.filterAlive().findRandom {
+            it.skill!!.toCdef().isHasAttackAbility
         } ?: return null // 生存している人狼がいないので襲撃なし
 
-        if (latestVillageDay.day == 1) { // 1日目はダミー固定
-            return VillageAbility(
+        return if (latestVillageDay.day == 1) { // 1日目はダミー固定
+            VillageAbility(
                 villageDayId = latestVillageDay.id,
                 myselfId = wolf.id,
                 targetId = village.dummyChara().id,
                 ability = Ability(CDef.AbilityType.襲撃)
             )
         } else { // 2日目以降は生存者からランダム
-            val target = village.participant.aliveMemberList().findRandom {
-                !CDef.Skill.codeOf(it.skill!!.code)!!.isHasAttackAbility
+            val target = village.participant.filterAlive().findRandom {
+                !it.skill!!.toCdef().isHasAttackAbility
             } ?: return null // 生存している対象がいないので襲撃なし
             return VillageAbility(
                 villageDayId = latestVillageDay.id,

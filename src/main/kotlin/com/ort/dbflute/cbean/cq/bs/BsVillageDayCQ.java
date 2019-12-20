@@ -85,17 +85,26 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public Map<String, CommitCQ> xdfgetVillageDayId_ExistsReferrer_CommitList() { return xgetSQueMap("villageDayId_ExistsReferrer_CommitList"); }
     public String keepVillageDayId_ExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_CommitList", sq); }
 
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_ExistsReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_ExistsReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_VillagePlayerList", sq); }
+
     public Map<String, AbilityCQ> xdfgetVillageDayId_NotExistsReferrer_AbilityList() { return xgetSQueMap("villageDayId_NotExistsReferrer_AbilityList"); }
     public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_AbilityList", sq); }
 
     public Map<String, CommitCQ> xdfgetVillageDayId_NotExistsReferrer_CommitList() { return xgetSQueMap("villageDayId_NotExistsReferrer_CommitList"); }
     public String keepVillageDayId_NotExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_CommitList", sq); }
 
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_NotExistsReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_NotExistsReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_VillagePlayerList", sq); }
+
     public Map<String, AbilityCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_AbilityList"); }
     public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_AbilityList", sq); }
 
     public Map<String, CommitCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_CommitList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_CommitList"); }
     public String keepVillageDayId_SpecifyDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_CommitList", sq); }
+
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_VillagePlayerList", sq); }
 
     public Map<String, AbilityCQ> xdfgetVillageDayId_QueryDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_AbilityList"); }
     public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_AbilityList", sq); }
@@ -106,6 +115,11 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public String keepVillageDayId_QueryDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_CommitList", sq); }
     public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_CommitListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_CommitList"); }
     public String keepVillageDayId_QueryDerivedReferrer_CommitListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_CommitList", pm); }
+
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_QueryDerivedReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_VillagePlayerList", sq); }
+    public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_VillagePlayerList", pm); }
 
     /**
      * Add order-by as ascend. <br>

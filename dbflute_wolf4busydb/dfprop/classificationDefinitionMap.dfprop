@@ -86,6 +86,14 @@ map:{
 					; groupComment=襲撃対象に選べない
 					; elementList= list:{人狼}
 				}
+				; divineResultWolf = map:{
+					; groupComment=占い結果が人狼になる
+					; elementList= list:{人狼}
+				}
+				; psychicResultWolf = map:{
+					; groupComment=霊能結果が人狼になる
+					; elementList= list:{人狼}
+				}
 				; hasAttackAbility = map:{
 					; groupComment=襲撃能力を持つ
 					; elementList= list:{人狼}
@@ -97,6 +105,10 @@ map:{
 				; hasGuardAbility = map:{
 					; groupComment=護衛能力を持つ
 					; elementList= list:{狩人}
+				}
+				; hasPsychicAbility = map:{
+					; groupComment=霊能能力を持つ
+					; elementList= list:{霊能者}
 				}
         	}
         }

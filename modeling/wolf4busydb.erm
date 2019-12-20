@@ -1666,6 +1666,21 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_village_player_village_day</name>
+					<source>table.village_day</source>
+					<target>table.village_player</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>dead_village_day_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
 			</connections>
 			<columns>
 				<normal_column>
@@ -1730,10 +1745,10 @@
 					<relationship>FK_village_player_dead_reason</relationship>
 				</normal_column>
 				<normal_column>
-					<physical_name>dead_day</physical_name>
+					<physical_name>dead_village_day_id</physical_name>
 					<logical_name>何日目に死亡したか</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_village_player_village_day</relationship>
 				</normal_column>
 				<normal_column>
 					<physical_name>is_gone</physical_name>

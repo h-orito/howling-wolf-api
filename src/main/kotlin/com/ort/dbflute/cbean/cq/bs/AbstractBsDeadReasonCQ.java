@@ -87,7 +87,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * Equal(=). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_Equal_突然() {
@@ -142,7 +142,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * NotEqual(&lt;&gt;). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_NotEqual_突然() {

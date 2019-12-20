@@ -253,6 +253,26 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     /**
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_DivineResultWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_PsychicResultWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      */
@@ -278,6 +298,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_HasGuardAbility() {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setSkillCode_InScope_HasPsychicAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {

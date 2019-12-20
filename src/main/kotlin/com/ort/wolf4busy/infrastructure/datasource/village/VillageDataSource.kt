@@ -60,6 +60,7 @@ class VillageDataSource(
         }
         villageBhv.load(village) { loader ->
             loader.loadVillagePlayer { vpCB ->
+                vpCB.setupSelect_VillageDay()
                 if (excludeGonePlayer) {
                     vpCB.query().setIsGone_Equal(false)
                 }
@@ -144,7 +145,7 @@ class VillageDataSource(
             it.query().setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.codeOf(noonnightCode))
         }
         val village: Village = villageBhv.selectByPK(villageId).get()
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay, village.epilogueDay)
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
     }
 
     /**
@@ -187,7 +188,7 @@ class VillageDataSource(
             it.setupSelect_Player()
             it.query().setVillageId_Equal(villageId)
             it.query().queryPlayer().setUid_Equal(uid)
-        }.map { VillageDataConverter.convertVillagePlayerToParticipant(it, true) }.orElse(null)
+        }.map { VillageDataConverter.convertVillagePlayerToParticipant(it) }.orElse(null)
     }
 
     /**

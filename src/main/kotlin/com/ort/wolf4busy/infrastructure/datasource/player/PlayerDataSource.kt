@@ -2,6 +2,7 @@ package com.ort.wolf4busy.infrastructure.datasource.player
 
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.dbflute.exentity.Player
+import com.ort.wolf4busy.domain.model.player.Players
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -16,13 +17,13 @@ class PlayerDataSource(
         return convertPlayerToPlayer(player)
     }
 
-    fun selectPlayerList(villageId: Int): List<com.ort.wolf4busy.domain.model.player.Player> {
+    fun selectPlayerList(villageId: Int): Players {
         val playerList = playerBhv.selectList {
             it.query().existsVillagePlayer {
                 it.query().setVillageId_Equal(villageId)
             }
         }
-        return playerList.map { convertPlayerToPlayer(it) }
+        return Players(list = playerList.map { convertPlayerToPlayer(it) })
     }
 
     fun updateNickname(uid: String, nickname: String, twitterUserName: String) {
@@ -46,7 +47,8 @@ class PlayerDataSource(
         return com.ort.wolf4busy.domain.model.player.Player(
             id = player.playerId,
             nickname = player.nickname,
-            twitterUserName = player.twitterUserName
+            twitterUserName = player.twitterUserName,
+            isRestrictedParticipation = player.isRestrictedParticipation
         )
     }
 }

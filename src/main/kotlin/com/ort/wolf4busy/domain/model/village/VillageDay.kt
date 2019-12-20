@@ -7,8 +7,6 @@ data class VillageDay(
     val day: Int,
     val noonnight: String,
     val dayChangeDatetime: LocalDateTime,
-    val isUpdating: Boolean,
-    val isPrologue: Boolean = false,
-    val isEpilogue: Boolean = false
+    val isUpdating: Boolean
 ) {
 }

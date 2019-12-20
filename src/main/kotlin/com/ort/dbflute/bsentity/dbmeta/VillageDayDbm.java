@@ -94,7 +94,7 @@ public class VillageDayDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList", null, false);
+    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList,villagePlayerList", null, false);
     protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", null, null, false);
     protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "noonnight", null, CDef.DefMeta.Noonnight, false);
@@ -234,6 +234,14 @@ public class VillageDayDbm extends AbstractDBMeta {
     public ReferrerInfo referrerCommitList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), CommitDbm.getInstance().columnVillageDayId());
         return cri("FK_COMMIT_VILLAGE_DAY", "commitList", this, CommitDbm.getInstance(), mp, false, "villageDay");
+    }
+    /**
+     * VILLAGE_PLAYER by DEAD_VILLAGE_DAY_ID, named 'villagePlayerList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerVillagePlayerList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VillagePlayerDbm.getInstance().columnDeadVillageDayId());
+        return cri("FK_VILLAGE_PLAYER_VILLAGE_DAY", "villagePlayerList", this, VillagePlayerDbm.getInstance(), mp, false, "villageDay");
     }
 
     // ===================================================================================

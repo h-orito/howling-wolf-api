@@ -343,25 +343,25 @@ public class BsVillagePlayerCQ extends AbstractBsVillagePlayerCQ {
      */
     public BsVillagePlayerCQ addOrderBy_DeadReasonCode_Desc() { regOBD("DEAD_REASON_CODE"); return this; }
 
-    protected ConditionValue _deadDay;
-    public ConditionValue xdfgetDeadDay()
-    { if (_deadDay == null) { _deadDay = nCV(); }
-      return _deadDay; }
-    protected ConditionValue xgetCValueDeadDay() { return xdfgetDeadDay(); }
+    protected ConditionValue _deadVillageDayId;
+    public ConditionValue xdfgetDeadVillageDayId()
+    { if (_deadVillageDayId == null) { _deadVillageDayId = nCV(); }
+      return _deadVillageDayId; }
+    protected ConditionValue xgetCValueDeadVillageDayId() { return xdfgetDeadVillageDayId(); }
 
     /**
      * Add order-by as ascend. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
      */
-    public BsVillagePlayerCQ addOrderBy_DeadDay_Asc() { regOBA("DEAD_DAY"); return this; }
+    public BsVillagePlayerCQ addOrderBy_DeadVillageDayId_Asc() { regOBA("DEAD_VILLAGE_DAY_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
      */
-    public BsVillagePlayerCQ addOrderBy_DeadDay_Desc() { regOBD("DEAD_DAY"); return this; }
+    public BsVillagePlayerCQ addOrderBy_DeadVillageDayId_Desc() { regOBD("DEAD_VILLAGE_DAY_ID"); return this; }
 
     protected ConditionValue _isGone;
     public ConditionValue xdfgetIsGone()
@@ -510,6 +510,9 @@ public class BsVillagePlayerCQ extends AbstractBsVillagePlayerCQ {
         if (bq.hasConditionQueryDeadReason()) {
             uq.queryDeadReason().reflectRelationOnUnionQuery(bq.queryDeadReason(), uq.queryDeadReason());
         }
+        if (bq.hasConditionQueryVillageDay()) {
+            uq.queryVillageDay().reflectRelationOnUnionQuery(bq.queryVillageDay(), uq.queryVillageDay());
+        }
         if (bq.hasConditionQueryPlayer()) {
             uq.queryPlayer().reflectRelationOnUnionQuery(bq.queryPlayer(), uq.queryPlayer());
         }
@@ -569,6 +572,26 @@ public class BsVillagePlayerCQ extends AbstractBsVillagePlayerCQ {
     }
     protected void xsetupOuterJoinDeadReason() { xregOutJo("deadReason"); }
     public boolean hasConditionQueryDeadReason() { return xhasQueRlMap("deadReason"); }
+
+    /**
+     * Get the condition-query for relation table. <br>
+     * VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public VillageDayCQ queryVillageDay() {
+        return xdfgetConditionQueryVillageDay();
+    }
+    public VillageDayCQ xdfgetConditionQueryVillageDay() {
+        String prop = "villageDay";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVillageDay()); xsetupOuterJoinVillageDay(); }
+        return xgetQueRlMap(prop);
+    }
+    protected VillageDayCQ xcreateQueryVillageDay() {
+        String nrp = xresolveNRP("village_player", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VillageDayCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villageDay", nrp);
+    }
+    protected void xsetupOuterJoinVillageDay() { xregOutJo("villageDay"); }
+    public boolean hasConditionQueryVillageDay() { return xhasQueRlMap("villageDay"); }
 
     /**
      * Get the condition-query for relation table. <br>

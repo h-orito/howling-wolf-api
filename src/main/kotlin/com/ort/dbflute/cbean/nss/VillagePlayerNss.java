@@ -36,6 +36,15 @@ public class VillagePlayerNss {
     }
     /**
      * With nested relation columns to select clause. <br>
+     * VILLAGE_DAY by my DEAD_VILLAGE_DAY_ID, named 'villageDay'.
+     * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
+     */
+    public VillageDayNss withVillageDay() {
+        _query.xdoNss(() -> _query.queryVillageDay());
+        return new VillageDayNss(_query.queryVillageDay());
+    }
+    /**
+     * With nested relation columns to select clause. <br>
      * PLAYER by my PLAYER_ID, named 'player'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */

@@ -15,7 +15,8 @@ class DayChangeCoordinator(
     val abilityService: AbilityService,
     val commitService: CommitService,
     val messageService: MessageService,
-    val charachipService: CharachipService
+    val charachipService: CharachipService,
+    val playerService: PlayerService
 ) {
 
     /**
@@ -31,6 +32,7 @@ class DayChangeCoordinator(
         val todayMessages =
             messageService.findMessageList(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言), null, null)
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val players = playerService.findPlayers(village.id)
 
         // 必要があれば日付更新
         val dayChange = DayChange.invoke(
@@ -39,7 +41,8 @@ class DayChangeCoordinator(
             abilities = abilities,
             commits = commits,
             todayMessages = todayMessages,
-            charas = charas
+            charas = charas,
+            players = players
         )
 
         // 更新があれば更新

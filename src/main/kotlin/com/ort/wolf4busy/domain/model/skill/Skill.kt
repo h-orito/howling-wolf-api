@@ -35,22 +35,17 @@ data class Skill(
                 name = cdefSkill.name
             )
         }
-
-
     }
 
     fun getAbilities(): Abilities {
-        val cdefSkill = CDef.Skill.codeOf(code)
-        cdefSkill ?: return Abilities(listOf())
-        val cdefAbilityList = skillAbilityTypeListMap.get(cdefSkill)
-        cdefAbilityList ?: return Abilities(listOf())
+        val cdefSkill = CDef.Skill.codeOf(code) ?: return Abilities(listOf())
+        val cdefAbilityList = skillAbilityTypeListMap[cdefSkill] ?: return Abilities(listOf())
         return Abilities(
-            list = cdefAbilityList.map {
-                Ability(
-                    code = it.code(),
-                    name = it.alias()
-                )
-            }
+            list = cdefAbilityList.map { Ability(it) }
         )
+    }
+
+    fun toCdef(): CDef.Skill {
+        return CDef.Skill.codeOf(code)
     }
 }

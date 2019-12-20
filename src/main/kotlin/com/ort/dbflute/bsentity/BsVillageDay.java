@@ -36,13 +36,13 @@ import com.ort.dbflute.exentity.*;
  *     NOONNIGHT, VILLAGE, VOTE(AsOne)
  *
  * [referrer table]
- *     ABILITY, COMMIT, VOTE
+ *     ABILITY, COMMIT, VILLAGE_PLAYER, VOTE
  *
  * [foreign property]
  *     noonnight, village, voteAsOne
  *
  * [referrer property]
- *     abilityList, commitList
+ *     abilityList, commitList, villagePlayerList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -310,6 +310,26 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         _commitList = commitList;
     }
 
+    /** VILLAGE_PLAYER by DEAD_VILLAGE_DAY_ID, named 'villagePlayerList'. */
+    protected List<VillagePlayer> _villagePlayerList;
+
+    /**
+     * [get] VILLAGE_PLAYER by DEAD_VILLAGE_DAY_ID, named 'villagePlayerList'.
+     * @return The entity list of referrer property 'villagePlayerList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<VillagePlayer> getVillagePlayerList() {
+        if (_villagePlayerList == null) { _villagePlayerList = newReferrerList(); }
+        return _villagePlayerList;
+    }
+
+    /**
+     * [set] VILLAGE_PLAYER by DEAD_VILLAGE_DAY_ID, named 'villagePlayerList'.
+     * @param villagePlayerList The entity list of referrer property 'villagePlayerList'. (NullAllowed)
+     */
+    public void setVillagePlayerList(List<VillagePlayer> villagePlayerList) {
+        _villagePlayerList = villagePlayerList;
+    }
+
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -349,6 +369,8 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         { if (et != null) { sb.append(li).append(xbRDS(et, "abilityList")); } } }
         if (_commitList != null) { for (Commit et : _commitList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "commitList")); } } }
+        if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerList")); } } }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -388,6 +410,8 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         { sb.append(dm).append("abilityList"); }
         if (_commitList != null && !_commitList.isEmpty())
         { sb.append(dm).append("commitList"); }
+        if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
+        { sb.append(dm).append("villagePlayerList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }

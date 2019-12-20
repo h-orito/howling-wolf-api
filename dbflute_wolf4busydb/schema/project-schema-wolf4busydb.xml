@@ -518,7 +518,7 @@
         <column comment="死亡理由コード" dbType="VARCHAR" javaType="String"
             name="DEAD_REASON_CODE" size="20" type="VARCHAR"/>
         <column comment="何日目に死亡したか" dbType="INT UNSIGNED"
-            javaType="Integer" name="DEAD_DAY" size="10" type="INTEGER"/>
+            javaType="Integer" name="DEAD_VILLAGE_DAY_ID" size="10" type="INTEGER"/>
         <column comment="退村済みか" dbType="BIT" javaType="Boolean"
             name="IS_GONE" required="true" type="BIT"/>
         <column comment="登録日時" dbType="DATETIME"
@@ -538,6 +538,10 @@
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="dead_reason" name="FK_VILLAGE_PLAYER_DEAD_REASON">
             <reference foreign="DEAD_REASON_CODE" local="DEAD_REASON_CODE"/>
+        </foreign-key>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="village_day" name="FK_VILLAGE_PLAYER_VILLAGE_DAY">
+            <reference foreign="VILLAGE_DAY_ID" local="DEAD_VILLAGE_DAY_ID"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="player" name="FK_VILLAGE_PLAYER_PLAYER">
@@ -579,6 +583,9 @@
         </index>
         <index name="FK_VILLAGE_PLAYER_VILLAGE">
             <index-column name="VILLAGE_ID" position="1"/>
+        </index>
+        <index name="FK_VILLAGE_PLAYER_VILLAGE_DAY">
+            <index-column name="DEAD_VILLAGE_DAY_ID" position="1"/>
         </index>
     </table>
     <table comment="村設定" name="village_setting"

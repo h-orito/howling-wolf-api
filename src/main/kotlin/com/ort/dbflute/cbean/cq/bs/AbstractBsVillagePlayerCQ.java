@@ -1098,6 +1098,26 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     /**
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_DivineResultWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_PsychicResultWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      */
@@ -1123,6 +1143,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_HasGuardAbility() {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setSkillCode_InScope_HasPsychicAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
@@ -1383,6 +1413,26 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     /**
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_DivineResultWolf() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_PsychicResultWolf() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      */
@@ -1408,6 +1458,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setRequestSkillCode_InScope_HasGuardAbility() {
         setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setRequestSkillCode_InScope_HasPsychicAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
     protected void doSetRequestSkillCode_InScope(Collection<String> requestSkillCodeList) {
@@ -1668,6 +1728,26 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     /**
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_DivineResultWolf() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_PsychicResultWolf() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
      * 襲撃能力を持つ <br>
      * The group elements:[人狼]
      */
@@ -1693,6 +1773,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_InScope_HasGuardAbility() {
         setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setSecondRequestSkillCode_InScope_HasPsychicAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
     protected void doSetSecondRequestSkillCode_InScope(Collection<String> secondRequestSkillCodeList) {
@@ -1811,7 +1901,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * Equal(=). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_Equal_突然() {
@@ -1866,7 +1956,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * NotEqual(&lt;&gt;). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_NotEqual_突然() {
@@ -1946,132 +2036,132 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as equal. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_Equal(Integer deadDay) {
-        doSetDeadDay_Equal(deadDay);
+    public void setDeadVillageDayId_Equal(Integer deadVillageDayId) {
+        doSetDeadVillageDayId_Equal(deadVillageDayId);
     }
 
-    protected void doSetDeadDay_Equal(Integer deadDay) {
-        regDeadDay(CK_EQ, deadDay);
+    protected void doSetDeadVillageDayId_Equal(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_EQ, deadVillageDayId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as notEqual. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_NotEqual(Integer deadDay) {
-        doSetDeadDay_NotEqual(deadDay);
+    public void setDeadVillageDayId_NotEqual(Integer deadVillageDayId) {
+        doSetDeadVillageDayId_NotEqual(deadVillageDayId);
     }
 
-    protected void doSetDeadDay_NotEqual(Integer deadDay) {
-        regDeadDay(CK_NES, deadDay);
+    protected void doSetDeadVillageDayId_NotEqual(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_NES, deadVillageDayId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_GreaterThan(Integer deadDay) {
-        regDeadDay(CK_GT, deadDay);
+    public void setDeadVillageDayId_GreaterThan(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_GT, deadVillageDayId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as lessThan. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_LessThan(Integer deadDay) {
-        regDeadDay(CK_LT, deadDay);
+    public void setDeadVillageDayId_LessThan(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_LT, deadVillageDayId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_GreaterEqual(Integer deadDay) {
-        regDeadDay(CK_GE, deadDay);
+    public void setDeadVillageDayId_GreaterEqual(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_GE, deadVillageDayId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_LessEqual(Integer deadDay) {
-        regDeadDay(CK_LE, deadDay);
+    public void setDeadVillageDayId_LessEqual(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_LE, deadVillageDayId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param minNumber The min number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param minNumber The min number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setDeadDay_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setDeadDay_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setDeadVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setDeadVillageDayId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param minNumber The min number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param minNumber The min number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setDeadDay_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueDeadDay(), "DEAD_DAY", rangeOfOption);
+    protected void setDeadVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDayList The collection of deadDay as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayIdList The collection of deadVillageDayId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDeadDay_InScope(Collection<Integer> deadDayList) {
-        doSetDeadDay_InScope(deadDayList);
+    public void setDeadVillageDayId_InScope(Collection<Integer> deadVillageDayIdList) {
+        doSetDeadVillageDayId_InScope(deadVillageDayIdList);
     }
 
-    protected void doSetDeadDay_InScope(Collection<Integer> deadDayList) {
-        regINS(CK_INS, cTL(deadDayList), xgetCValueDeadDay(), "DEAD_DAY");
+    protected void doSetDeadVillageDayId_InScope(Collection<Integer> deadVillageDayIdList) {
+        regINS(CK_INS, cTL(deadVillageDayIdList), xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDayList The collection of deadDay as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayIdList The collection of deadVillageDayId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDeadDay_NotInScope(Collection<Integer> deadDayList) {
-        doSetDeadDay_NotInScope(deadDayList);
+    public void setDeadVillageDayId_NotInScope(Collection<Integer> deadVillageDayIdList) {
+        doSetDeadVillageDayId_NotInScope(deadVillageDayIdList);
     }
 
-    protected void doSetDeadDay_NotInScope(Collection<Integer> deadDayList) {
-        regINS(CK_NINS, cTL(deadDayList), xgetCValueDeadDay(), "DEAD_DAY");
+    protected void doSetDeadVillageDayId_NotInScope(Collection<Integer> deadVillageDayIdList) {
+        regINS(CK_NINS, cTL(deadVillageDayIdList), xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
      */
-    public void setDeadDay_IsNull() { regDeadDay(CK_ISN, DOBJ); }
+    public void setDeadVillageDayId_IsNull() { regDeadVillageDayId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
      */
-    public void setDeadDay_IsNotNull() { regDeadDay(CK_ISNN, DOBJ); }
+    public void setDeadVillageDayId_IsNotNull() { regDeadVillageDayId(CK_ISNN, DOBJ); }
 
-    protected void regDeadDay(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDeadDay(), "DEAD_DAY"); }
-    protected abstract ConditionValue xgetCValueDeadDay();
+    protected void regDeadVillageDayId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID"); }
+    protected abstract ConditionValue xgetCValueDeadVillageDayId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
