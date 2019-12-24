@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class DayChangeCoordinator(
+    val villageService: VillageService,
     val voteService: VoteService,
     val abilityService: AbilityService,
     val commitService: CommitService,
@@ -29,25 +30,35 @@ class DayChangeCoordinator(
         val votes: VillageVotes = voteService.findVillageVotes(village.id)
         val abilities: VillageAbilities = abilityService.findVillageAbilities(village.id)
         val commits: Commits = commitService.findCommits(village.id)
-        val todayMessages =
-            messageService.findMessageList(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言), null, null)
+        val todayMessages = messageService.findMessageList(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言))
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players = playerService.findPlayers(village.id)
 
-        // 必要があれば日付更新
-        val dayChange = DayChange.invoke(
-            village = village,
-            votes = votes,
-            abilities = abilities,
-            commits = commits,
-            todayMessages = todayMessages,
-            charas = charas,
-            players = players
-        )
+        var dayChange = DayChange(village, votes, abilities, players)
 
-        // 更新があれば更新
-        if (dayChange.isChange) {
-            // TODO
-        }
+        // プロローグで長時間発言していない人を退村させる
+        dayChange = dayChange.leaveParticipantIfNeeded(todayMessages, charas).also { if (it.isChange) update() }
+
+        // 必要あれば日付追加
+        dayChange = dayChange.addDayIfNeeded(commits)
+
+        if (!dayChange.isChange) return
+
+        // 日付追加
+        update()
+
+        // 登録後の村日付idが必要になるので取得し直す
+        // TODO 更新時にセットし直すほうが早いか？
+        dayChange = dayChange.copy(village = villageService.findVillage(village.id))
+
+        // 日付更新
+        dayChange.process(todayMessages, charas).let { if (it.isChange) update() }
+    }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    fun update() {
+        // TODO
     }
 }

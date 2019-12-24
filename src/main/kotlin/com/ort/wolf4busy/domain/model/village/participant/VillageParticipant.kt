@@ -14,32 +14,23 @@ data class VillageParticipant(
     val isSpectator: Boolean,
     val isGone: Boolean,
     val skill: Skill?,
-    val skillRequest: SkillRequest
+    val skillRequest: SkillRequest,
+    val isWin: Boolean?
 ) {
 
-    fun isAlive(): Boolean {
-        return dead == null
-    }
+    fun isAlive(): Boolean = dead == null
 
-    fun gone(): VillageParticipant {
-        return this.copy(isGone = true)
-    }
+    fun gone(): VillageParticipant = this.copy(isGone = true)
 
-    fun suddenlyDeath(villageDay: VillageDay): VillageParticipant {
-        return this.copy(
-            dead = Dead(CDef.DeadReason.突然, villageDay)
-        )
-    }
+    fun suddenlyDeath(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.突然, villageDay))
 
-    fun execute(villageDay: VillageDay): VillageParticipant {
-        return this.copy(
-            dead = Dead(CDef.DeadReason.処刑, villageDay)
-        )
-    }
+    fun execute(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.処刑, villageDay))
 
-    fun assignSkill(skill: Skill): VillageParticipant {
-        return this.copy(skill = skill)
-    }
+    fun attack(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.襲撃, villageDay))
+
+    fun assignSkill(skill: Skill): VillageParticipant = this.copy(skill = skill)
+
+    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill!!.toCdef().campCode() == cdefWinCamp.code())
 
     fun existsDifference(participant: VillageParticipant): Boolean {
         if (id != participant.id) return true

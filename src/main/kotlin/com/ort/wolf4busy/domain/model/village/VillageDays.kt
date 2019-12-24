@@ -5,8 +5,21 @@ import com.ort.dbflute.allcommon.CDef
 data class VillageDays(
     val dayList: List<VillageDay>
 ) {
+    // ===================================================================================
+    //                                                                          Definition
+    //                                                                          ==========
+    private val extendHours: Long = 24L
+
+    // ===================================================================================
+//                                                                             Execute
+//                                                                           =========
     fun latestDay(): VillageDay {
         return dayList.last()
+    }
+
+    fun yesterday(): VillageDay {
+        if (dayList.size < 2) throw IllegalStateException("no exists yesterday")
+        return dayList[dayList.size - 2]
     }
 
     fun prologue(): VillageDay {
@@ -22,5 +35,12 @@ data class VillageDays(
             }
         }
 
+    }
+
+    fun extendLatestDay(): VillageDays {
+        return this.copy(dayList = dayList.map {
+            if (it.id == latestDay().id) latestDay().copy(dayChangeDatetime = yesterday().dayChangeDatetime.plusHours(extendHours))
+            else it
+        })
     }
 }

@@ -17,4 +17,8 @@ data class Dead(
         reason = cdefDeadReason.alias(),
         villageDay = villageDay
     )
+
+    fun toCdef(): CDef.DeadReason {
+        return CDef.DeadReason.codeOf(code)
+    }
 }

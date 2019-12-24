@@ -4,53 +4,15 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
-import com.ort.wolf4busy.domain.model.player.Players
+import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDay
-import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
-import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 
 object Prologue {
 
-    fun dayChange(
-        village: Village,
-        todayMessages: Messages,
-        charas: Charas,
-        players: Players
-    ): DayChange {
-        var beforeDayChange = DayChange(
-            isChange = false, // あとで更新
-            village = village.copy(),
-            messages = Messages(listOf()),
-            votes = VillageVotes(listOf()),
-            abilities = VillageAbilities(listOf()),
-            players = players.copy()
-        )
-        // 長時間発言していない人を退村させる
-        var dayChange = leaveVillageIfNeeded(beforeDayChange, todayMessages, charas)
-        // 開始時刻になっていない場合は何もしない
-        if (!shouldForward(dayChange.village)) return dayChange
-        // 開始時刻になっているが参加者数が不足している場合は廃村にする
-        if (isNotEnoughMemberCount(village)) return cancelVillage(dayChange)
-        // 日付を切り替える
-        dayChange = startVillage(dayChange, charas)
-
-        return dayChange.setIsChange(beforeDayChange)
-    }
-
-    // ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-    /**
-     * 長時間発言していない人を退村させる
-     *
-     * @param dayChange 更新用情報
-     * @param todayMessages 当日の通常発言
-     * @param charas キャラ
-     */
-    private fun leaveVillageIfNeeded(
+    fun leaveParticipantIfNeeded(
         dayChange: DayChange,
         todayMessages: Messages,
         charas: Charas
@@ -70,9 +32,48 @@ object Prologue {
         return dayChange.copy(
             village = village,
             messages = messages
-        )
+        ).setIsChange(dayChange)
     }
 
+    fun addDayIfNeeded(
+        dayChange: DayChange
+    ): DayChange {
+        // 開始時刻になっていない場合は何もしない
+        if (!shouldForward(dayChange.village)) return dayChange
+        // 開始時刻になっているが参加者数が不足している場合は廃村にする
+        if (isNotEnoughMemberCount(dayChange.village)) return cancelVillage(dayChange).setIsChange(dayChange)
+        // 新しい日付追加
+        return dayChange.copy(village = dayChange.village.addNewDay()).setIsChange(dayChange)
+    }
+
+
+    fun dayChange(
+        dayChange: DayChange,
+        charas: Charas
+    ): DayChange {
+        // 開始メッセージ追加
+        var messages = dayChange.messages.add(createProgressStartMessage(dayChange.village.day.latestDay().day))
+        // 役職割り当て
+        var village = dayChange.village.assignSkill()
+        // 役職構成メッセージ追加
+        messages = messages.add(createOrganizationMessage(village))
+        // ステータス変更
+        village = village.changeStatus(CDef.VillageStatus.進行中)
+        // デフォルト能力行使指定
+        var abilities = dayChange.abilities.addDefaultAbilities(village)
+        // ダミーキャラ発言
+        createDummyCharaFirstDayMessage(village, charas)?.let { messages = messages.add(it) }
+
+        return dayChange.copy(
+            village = village,
+            messages = messages,
+            abilities = abilities
+        ).setIsChange(dayChange)
+    }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
     private fun createLeaveMessage(participant: VillageParticipant, charas: Charas, day: VillageDay): Message {
         val chara = charas.list.find { it.id == participant.charaId }!!
         val message = "${chara.charaName.name}は村を去った。"
@@ -99,27 +100,6 @@ object Prologue {
     private fun isNotEnoughMemberCount(village: Village) =
         village.participant.memberList.count { !it.isGone } < village.setting.capacity.min
 
-    private fun startVillage(dayChange: DayChange, charas: Charas): DayChange {
-        // 新しい日付追加
-        var village = dayChange.village.addNewDay()
-        // 開始メッセージ追加
-        var messages = dayChange.messages.add(createProgressStartMessage(dayChange.village.day.latestDay().day))
-        // 役職割り当て
-        village = village.assignSkill()
-        // ステータス変更
-        village = village.changeStatus(CDef.VillageStatus.進行中)
-        // デフォルト能力行使指定
-        var abilities = dayChange.abilities.addDefaultAbilities(village)
-        // ダミーキャラ発言
-        createDummyCharaFirstDayMessage(village, charas)?.let { messages = messages.add(it) }
-
-        return dayChange.copy(
-            village = village,
-            messages = messages,
-            abilities = abilities
-        )
-    }
-
     private fun createDummyCharaFirstDayMessage(village: Village, charas: Charas): Message? {
         val firstDayMessage = charas.list.find { it.id == village.dummyChara().id }!!.defaultMessage.firstDayMessage ?: return null
         return DayChange.createNormalSayMessage(
@@ -134,5 +114,19 @@ object Prologue {
             text = "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\n例え人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。",
             day = day
         )
+    }
+
+    private fun createOrganizationMessage(village: Village): Message {
+        val skillCountMap = village.setting.organizations.mapToSkillCount(village.participant.count)
+        val text = CDef.Skill.listAll().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
+            val skill = Skill(cdefSkill)
+            val count = skillCountMap[skill]
+            if (count == null || count == 0) null else "${skill.name}が${count}人"
+        }.joinToString(
+            separator = "、\n",
+            prefix = "この村には\n",
+            postfix = "いるようだ。"
+        )
+        return DayChange.createPublicSystemMessage(text, village.day.latestDay().day)
     }
 }

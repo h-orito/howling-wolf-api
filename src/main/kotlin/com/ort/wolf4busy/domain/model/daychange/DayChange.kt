@@ -22,45 +22,22 @@ data class DayChange(
     val abilities: VillageAbilities,
     val players: Players
 ) {
+
+    constructor(
+        village: Village,
+        votes: VillageVotes,
+        abilities: VillageAbilities,
+        players: Players
+    ) : this(
+        isChange = false,
+        village = village,
+        messages = Messages(listOf()),
+        votes = votes,
+        abilities = abilities,
+        players = players
+    )
+
     companion object {
-        operator fun invoke(
-            village: Village,
-            votes: VillageVotes,
-            abilities: VillageAbilities,
-            commits: Commits,
-            todayMessages: Messages,
-            charas: Charas,
-            players: Players
-        ): DayChange {
-            return when {
-                // プロローグ
-                village.status.isPrologue() -> Prologue.dayChange(village, todayMessages, charas, players)
-                // 進行中
-                village.status.isProgress() -> Progress.dayChange(village, votes, abilities, commits, todayMessages, charas, players)
-                // エピローグ
-                village.status.code == CDef.VillageStatus.エピローグ.code() -> {
-                    DayChange(
-                        isChange = false,
-                        village = village,
-                        messages = Messages(listOf()),
-                        votes = votes,
-                        abilities = abilities,
-                        players = players
-                    )
-                }
-                // 終了後
-                else -> {
-                    DayChange(
-                        isChange = false,
-                        village = village,
-                        messages = Messages(listOf()),
-                        votes = votes,
-                        abilities = abilities,
-                        players = players
-                    )
-                }
-            }
-        }
 
         /**
          * 更新時登録用の公開メッセージ
@@ -140,12 +117,68 @@ data class DayChange(
                 )
             )
         }
+
+        fun createAttackPrivateMessage(text: String, day: Int): Message {
+            val dummy = Message.createDummy()
+            return dummy.copy(
+                time = dummy.time.copy(
+                    day = day
+                ),
+                content = dummy.content.copy(
+                    type = MessageType(CDef.MessageType.襲撃結果),
+                    text = text
+                )
+            )
+        }
+
+        fun createParticipantsMessage(day: Int): Message {
+            val dummy = Message.createDummy()
+            return dummy.copy(
+                time = dummy.time.copy(
+                    day = day
+                ),
+                content = dummy.content.copy(
+                    type = MessageType(CDef.MessageType.参加者一覧),
+                    text = "読み込み中..."
+                )
+            )
+        }
     }
 
-    fun setIsChange(beforeDayChange: DayChange): DayChange {
-        return this.copy(isChange = existsDifference(beforeDayChange))
-
+    fun leaveParticipantIfNeeded(todayMessages: Messages, charas: Charas): DayChange {
+        if (!village.status.isPrologue()) this
+        return Prologue.leaveParticipantIfNeeded(this, todayMessages, charas)
     }
+
+    // コミットや時間経過で次の日に遷移させる場合は村日付を追加
+    fun addDayIfNeeded(commits: Commits): DayChange {
+        return when {
+            // プロローグ
+            village.status.isPrologue() -> Prologue.addDayIfNeeded(this)
+            // 進行中
+            village.status.isProgress() -> Progress.addDayIfNeeded(this, commits)
+            // エピローグ TODO
+            village.status.code == CDef.VillageStatus.エピローグ.code() -> this
+            // 終了後
+            else -> this
+        }
+    }
+
+    // 日付変更処理
+    fun process(todayMessages: Messages, charas: Charas): DayChange {
+        return when {
+            // プロローグ
+            village.status.isPrologue() -> Prologue.dayChange(this, charas)
+            // 進行中
+            village.status.isProgress() -> Progress.dayChange(this, todayMessages, charas)
+            // エピローグ
+            village.status.code == CDef.VillageStatus.エピローグ.code() -> this
+            // 終了後
+            else -> this
+        }
+    }
+
+    fun setIsChange(beforeDayChange: DayChange): DayChange = this.copy(isChange = existsDifference(beforeDayChange))
 
     // ===================================================================================
     //                                                                        Assist Logic

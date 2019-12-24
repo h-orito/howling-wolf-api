@@ -1155,6 +1155,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_CountWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
+    }
+
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
         regINS(CK_INS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
     }
@@ -1468,6 +1478,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setRequestSkillCode_InScope_HasPsychicAbility() {
         setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_CountWolf() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
     }
 
     protected void doSetRequestSkillCode_InScope(Collection<String> requestSkillCodeList) {
@@ -1785,6 +1805,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_CountWolf() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
+    }
+
     protected void doSetSecondRequestSkillCode_InScope(Collection<String> secondRequestSkillCodeList) {
         regINS(CK_INS, cTL(secondRequestSkillCodeList), xgetCValueSecondRequestSkillCode(), "SECOND_REQUEST_SKILL_CODE");
     }
@@ -1984,6 +2014,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setDeadReasonCode_InScope_AsDeadReason(Collection<CDef.DeadReason> cdefList) {
         doSetDeadReasonCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As DeadReason. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 死亡理由 <br>
+     * 無惨な死 <br>
+     * The group elements:[襲撃, 呪殺]
+     */
+    public void setDeadReasonCode_InScope_MiserableDeath() {
+        setDeadReasonCode_InScope_AsDeadReason(CDef.DeadReason.listOfMiserableDeath());
     }
 
     protected void doSetDeadReasonCode_InScope(Collection<String> deadReasonCodeList) {

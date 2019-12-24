@@ -184,7 +184,8 @@ class MessageDataSource(
                         code = "", // dummy
                         name = "" // dummy
                     )
-                )
+                ),
+                isWin = null
             ),
             to = if (message.toVillagePlayerId == null) null else VillageParticipant(
                 id = message.toVillagePlayerId,
@@ -203,7 +204,8 @@ class MessageDataSource(
                         code = "", // dummy
                         name = "" // dummy
                     )
-                )
+                ),
+                isWin = null
             ),
             time = MessageTime(
                 day = 1, // dummy

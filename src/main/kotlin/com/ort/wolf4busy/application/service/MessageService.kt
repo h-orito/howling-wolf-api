@@ -31,8 +31,8 @@ class MessageService(
         villageId: Int,
         villageDayId: Int,
         messageTypeList: List<CDef.MessageType>,
-        participant: VillageParticipant?,
-        from: Long?
+        participant: VillageParticipant? = null,
+        from: Long? = null
     ): Messages {
         return messageDataSource.selectMessageList(villageId, villageDayId, messageTypeList, participant, from)
     }

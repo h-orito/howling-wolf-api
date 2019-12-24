@@ -310,6 +310,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_CountWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
+    }
+
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
         regINS(CK_INS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
     }

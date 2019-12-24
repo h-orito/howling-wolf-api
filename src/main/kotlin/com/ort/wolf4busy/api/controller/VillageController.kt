@@ -328,7 +328,8 @@ class VillageController(
             ),
             day = VillageDays(
                 dayList = listOf() // dummy
-            )
+            ),
+            winCamp = null
         )
     }
 

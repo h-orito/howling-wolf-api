@@ -232,6 +232,14 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
     }
 
     /**
+     * Equal(=). As 参加者一覧 (PARTICIPANTS). And OnlyOnceRegistered. <br>
+     * 参加者一覧
+     */
+    public void setMessageTypeCode_Equal_参加者一覧() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.参加者一覧);
+    }
+
+    /**
      * Equal(=). As 白黒霊視結果 (PRIVATE_PSYCHIC). And OnlyOnceRegistered. <br>
      * 白黒霊視結果
      */
@@ -253,6 +261,14 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      */
     public void setMessageTypeCode_Equal_非公開システムメッセージ() {
         setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.非公開システムメッセージ);
+    }
+
+    /**
+     * Equal(=). As 襲撃結果 (PRIVATE_WEREWOLF). And OnlyOnceRegistered. <br>
+     * 襲撃結果
+     */
+    public void setMessageTypeCode_Equal_襲撃結果() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.襲撃結果);
     }
 
     /**
@@ -351,6 +367,14 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
     }
 
     /**
+     * NotEqual(&lt;&gt;). As 参加者一覧 (PARTICIPANTS). And OnlyOnceRegistered. <br>
+     * 参加者一覧
+     */
+    public void setMessageTypeCode_NotEqual_参加者一覧() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.参加者一覧);
+    }
+
+    /**
      * NotEqual(&lt;&gt;). As 白黒霊視結果 (PRIVATE_PSYCHIC). And OnlyOnceRegistered. <br>
      * 白黒霊視結果
      */
@@ -372,6 +396,14 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      */
     public void setMessageTypeCode_NotEqual_非公開システムメッセージ() {
         setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.非公開システムメッセージ);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 襲撃結果 (PRIVATE_WEREWOLF). And OnlyOnceRegistered. <br>
+     * 襲撃結果
+     */
+    public void setMessageTypeCode_NotEqual_襲撃結果() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.襲撃結果);
     }
 
     /**
