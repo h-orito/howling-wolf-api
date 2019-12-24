@@ -16,6 +16,7 @@ data class Village(
     val name: String,
     val creatorPlayerName: String,
     val status: VillageStatus,
+    val winCamp: VillageWinCamp?,
     val setting: VillageSettings,
     val participant: VillageParticipants,
     val spectator: VillageParticipants,
@@ -112,6 +113,7 @@ data class Village(
         if (isViewableMessage(participant, CDef.MessageType.見学発言.code(), day)) allowedTypeList.add(CDef.MessageType.見学発言)
         if (isViewableMessage(participant, CDef.MessageType.人狼の囁き.code())) allowedTypeList.add(CDef.MessageType.人狼の囁き)
         if (isViewableMessage(participant, CDef.MessageType.白黒霊視結果.code())) allowedTypeList.add(CDef.MessageType.白黒霊視結果)
+        if (isViewableMessage(participant, CDef.MessageType.襲撃結果.code())) allowedTypeList.add(CDef.MessageType.襲撃結果)
         return allowedTypeList
     }
 
@@ -132,6 +134,7 @@ data class Village(
             CDef.MessageType.独り言 -> MonologueSay.isViewable(this)
             CDef.MessageType.秘話 -> SecretSay.isViewable(this)
             CDef.MessageType.白黒霊視結果 -> PsychicMessage.isViewable(this, participant)
+            CDef.MessageType.襲撃結果 -> AttackMessage.isViewable(this, participant)
             else -> return false
         }
     }
@@ -211,6 +214,11 @@ data class Village(
         return this.copy(participant = this.participant.execute(participantId, latestDay))
     }
 
+    // 襲撃
+    fun attackParticipant(participantId: Int, latestDay: VillageDay): Village {
+        return this.copy(participant = this.participant.attack(participantId, latestDay))
+    }
+
     // 役職割り当て
     fun assignSkill(): Village {
         val assignedParticipants = SkillAssign.assign(participant, setting.organizations.mapToSkillCount(participant.count), dummyChara())
@@ -218,9 +226,18 @@ data class Village(
     }
 
     // ステータス変更
-    fun changeStatus(cdefVillageStatus: CDef.VillageStatus): Village {
-        return this.copy(status = VillageStatus(cdefVillageStatus))
+    fun changeStatus(cdefVillageStatus: CDef.VillageStatus): Village = this.copy(status = VillageStatus(cdefVillageStatus))
+
+    // 勝利陣営設定
+    fun win(winCamp: CDef.Camp): Village {
+        return this.copy(
+            winCamp = VillageWinCamp(winCamp), // 村自体の勝利陣営
+            participant = this.participant.winLose(winCamp) // 個人ごとの勝敗
+        )
     }
+
+    // 最新の日を24時間にする
+    fun extendLatestDay(): Village = this.copy(day = this.day.extendLatestDay())
 
     // 差分があるか
     fun existsDifference(village: Village): Boolean {

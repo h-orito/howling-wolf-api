@@ -158,6 +158,14 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
+     * Set the value of messageTypeCode as 参加者一覧 (PARTICIPANTS). <br>
+     * 参加者一覧
+     */
+    public void setMessageTypeCode_参加者一覧() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.参加者一覧);
+    }
+
+    /**
      * Set the value of messageTypeCode as 白黒霊視結果 (PRIVATE_PSYCHIC). <br>
      * 白黒霊視結果
      */
@@ -179,6 +187,14 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
      */
     public void setMessageTypeCode_非公開システムメッセージ() {
         setMessageTypeCodeAsMessageType(CDef.MessageType.非公開システムメッセージ);
+    }
+
+    /**
+     * Set the value of messageTypeCode as 襲撃結果 (PRIVATE_WEREWOLF). <br>
+     * 襲撃結果
+     */
+    public void setMessageTypeCode_襲撃結果() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.襲撃結果);
     }
 
     /**
@@ -272,6 +288,17 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
+     * Is the value of messageTypeCode 参加者一覧? <br>
+     * 参加者一覧
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isMessageTypeCode参加者一覧() {
+        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
+        return cdef != null ? cdef.equals(CDef.MessageType.参加者一覧) : false;
+    }
+
+    /**
      * Is the value of messageTypeCode 白黒霊視結果? <br>
      * 白黒霊視結果
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -302,6 +329,17 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     public boolean isMessageTypeCode非公開システムメッセージ() {
         CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
         return cdef != null ? cdef.equals(CDef.MessageType.非公開システムメッセージ) : false;
+    }
+
+    /**
+     * Is the value of messageTypeCode 襲撃結果? <br>
+     * 襲撃結果
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isMessageTypeCode襲撃結果() {
+        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
+        return cdef != null ? cdef.equals(CDef.MessageType.襲撃結果) : false;
     }
 
     /**

@@ -67,7 +67,9 @@ object Divine {
         dayChange.village.participant.memberList.filter {
             it.isAlive() && it.skill!!.toCdef().isHasDivineAbility
         }.forEach { seer ->
-            dayChange.abilities.list.find { it.myselfId == seer.id && it.villageDayId == latestDay.id }?.let { ability ->
+            dayChange.abilities.list.find {
+                it.myselfId == seer.id && it.villageDayId == dayChange.village.day.yesterday().id
+            }?.let { ability ->
                 val fromCharaName = charas.list.find { it.id == ability.myselfId }!!.charaName.name
                 val toCharaName = charas.list.find { it.id == ability.targetId }!!.charaName.name
                 val isWolf = dayChange.village.participant.memberList.find { it.id == ability.targetId }!!.skill!!.toCdef().isDivineResultWolf

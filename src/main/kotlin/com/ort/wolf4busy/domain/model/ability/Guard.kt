@@ -76,7 +76,9 @@ object Guard {
         dayChange.village.participant.memberList.filter {
             it.isAlive() && it.skill!!.toCdef().isHasGuardAbility
         }.forEach { hunter ->
-            dayChange.abilities.list.find { it.myselfId == hunter.id && it.villageDayId == latestDay.id }?.let { ability ->
+            dayChange.abilities.list.find {
+                it.myselfId == hunter.id && it.villageDayId == dayChange.village.day.yesterday().id
+            }?.let { ability ->
                 val fromCharaName = charas.list.find { it.id == ability.myselfId }!!.charaName.name
                 val toCharaName = charas.list.find { it.id == ability.targetId }!!.charaName.name
                 val text = "${fromCharaName}は、${toCharaName}を護衛している。"

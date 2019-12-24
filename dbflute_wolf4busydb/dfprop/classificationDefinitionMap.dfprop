@@ -110,6 +110,10 @@ map:{
 					; groupComment=霊能能力を持つ
 					; elementList= list:{霊能者}
 				}
+				; countWolf = map:{
+					; groupComment=勝敗判定時狼にカウントする
+					; elementList= list:{人狼}
+				}
         	}
         }
         ; map:{
@@ -118,6 +122,7 @@ map:{
             ; subItemMap=map:{
             	; shortName=SKILL_SHORT_NAME
             	; order=DISP_ORDER
+            	; campCode=CAMP_CODE
 			}
 		}
     }
@@ -129,7 +134,15 @@ map:{
         }
     }
     ; DeadReason = list:{
-        ; map:{topComment=死亡理由; codeType=String}
+        ; map:{
+        	; topComment=死亡理由; codeType=String
+        	; groupingMap = map:{
+				; miserableDeath = map:{
+					; groupComment=無惨な死
+					; elementList= list:{襲撃;呪殺}
+				}
+			}
+        }
         ; map:{
             ; table=DEAD_REASON
             ; code=DEAD_REASON_CODE; name=DEAD_REASON_NAME

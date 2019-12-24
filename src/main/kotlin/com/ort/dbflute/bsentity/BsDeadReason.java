@@ -196,6 +196,16 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
         return cdef != null ? cdef.equals(CDef.DeadReason.突然) : false;
     }
 
+    /**
+     * 無惨な死 <br>
+     * The group elements:[襲撃, 呪殺]
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode_MiserableDeath() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null && cdef.isMiserableDeath();
+    }
+
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================

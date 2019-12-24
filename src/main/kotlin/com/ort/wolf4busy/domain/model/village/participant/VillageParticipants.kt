@@ -1,5 +1,6 @@
 package com.ort.wolf4busy.domain.model.village.participant
 
+import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.village.VillageDay
 
@@ -43,6 +44,18 @@ data class VillageParticipants(
             }
         )
     }
+
+    // 襲撃
+    fun attack(participantId: Int, villageDay: VillageDay): VillageParticipants {
+        return this.copy(
+            memberList = this.memberList.map {
+                if (it.id == participantId) it.attack(villageDay) else it.copy()
+            }
+        )
+    }
+
+    // 勝敗設定
+    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipants = this.copy(memberList = this.memberList.map { it.winLose(cdefWinCamp) })
 
     fun filterAlive(): VillageParticipants {
         val aliveMembers = memberList.filter { it.isAlive() }

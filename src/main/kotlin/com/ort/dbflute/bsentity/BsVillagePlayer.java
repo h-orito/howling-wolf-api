@@ -624,6 +624,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_CountWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isCountWolf();
+    }
+
+    /**
      * Is the value of requestSkillCode 狩人? <br>
      * 狩人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -788,6 +798,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCode_HasPsychicAbility() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null && cdef.isHasPsychicAbility();
+    }
+
+    /**
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_CountWolf() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isCountWolf();
     }
 
     /**
@@ -958,6 +978,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_CountWolf() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isCountWolf();
+    }
+
+    /**
      * Is the value of deadReasonCode 襲撃? <br>
      * 襲撃
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -999,6 +1029,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isDeadReasonCode突然() {
         CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
         return cdef != null ? cdef.equals(CDef.DeadReason.突然) : false;
+    }
+
+    /**
+     * 無惨な死 <br>
+     * The group elements:[襲撃, 呪殺]
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode_MiserableDeath() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null && cdef.isMiserableDeath();
     }
 
     // ===================================================================================

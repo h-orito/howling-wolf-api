@@ -7,6 +7,7 @@ import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
+import com.ort.wolf4busy.domain.model.village.VillageWinCamp
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
@@ -34,14 +35,11 @@ object VillageDataConverter {
             id = village.villageId,
             name = village.villageDisplayName,
             creatorPlayerName = village.createPlayerName,
-            status = VillageStatus(
-                code = village.villageStatusCodeAsVillageStatus.code(),
-                name = village.villageStatusCodeAsVillageStatus.alias()
-            ),
+            status = VillageStatus(village.villageStatusCodeAsVillageStatus),
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(
                 count = participantList.size,
-                memberList = participantList.map { convertVillagePlayerToParticipant(it) }
+                memberList = participantList.map { convertVillagePlayerToParticipant(it, village) }
             ),
             spectator = VillageParticipants(
                 count = visitorList.size,
@@ -49,7 +47,8 @@ object VillageDataConverter {
             ),
             day = VillageDays(
                 dayList = village.villageDayList.map { convertVillageDayToVillageDay(it) }
-            )
+            ),
+            winCamp = if (village.winCampCodeAsCamp == null) null else VillageWinCamp(village.winCampCodeAsCamp)
         )
     }
 
@@ -72,22 +71,16 @@ object VillageDataConverter {
             id = village.villageId,
             name = village.villageDisplayName,
             creatorPlayerName = village.createPlayerName,
-            status = VillageStatus(
-                code = village.villageStatusCodeAsVillageStatus.code(),
-                name = village.villageStatusCodeAsVillageStatus.alias()
-            ),
+            status = VillageStatus(village.villageStatusCodeAsVillageStatus),
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
-            participant = VillageParticipants(
-                count = village.participantCount
-            ),
-            spectator = VillageParticipants(
-                count = village.visitorCount
-            ),
+            participant = VillageParticipants(count = village.participantCount),
+            spectator = VillageParticipants(count = village.visitorCount),
             day = VillageDays( // 最新の1日だけ
                 dayList = village.villageDayList.firstOrNull()?.let {
                     listOf(convertVillageDayToVillageDay(it))
                 }.orEmpty()
-            )
+            ),
+            winCamp = if (village.winCampCodeAsCamp == null) null else VillageWinCamp(village.winCampCodeAsCamp)
         )
     }
 
@@ -142,7 +135,7 @@ object VillageDataConverter {
         )
     }
 
-    fun convertVillagePlayerToParticipant(vp: VillagePlayer): VillageParticipant {
+    fun convertVillagePlayerToParticipant(vp: VillagePlayer, village: Village? = null): VillageParticipant {
         return VillageParticipant(
             id = vp.villagePlayerId,
             charaId = vp.charaId,
@@ -154,7 +147,8 @@ object VillageDataConverter {
             skillRequest = SkillRequest(
                 first = Skill(vp.requestSkillCodeAsSkill),
                 second = Skill(vp.secondRequestSkillCodeAsSkill)
-            )
+            ),
+            isWin = if (village?.winCampCode == null || vp.skillCodeAsSkill == null) null else village.winCampCode == vp.skillCodeAsSkill.campCode()
         )
     }
 
@@ -168,10 +162,5 @@ object VillageDataConverter {
 
     private fun convertOrganizeToOrganizationMap(organize: String): Map<Int, String> {
         return organize.replace("\r\n", "\n").split("\n").map { it.length to it }.toMap()
-    }
-
-    private fun hasEpilogue(epilogueDay: Int?, villageDayList: List<VillageDay>): Boolean {
-        epilogueDay ?: return false
-        return villageDayList.any { it.day == epilogueDay }
     }
 }

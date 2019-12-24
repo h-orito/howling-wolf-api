@@ -34,7 +34,8 @@ data class Message(
                             code = "",
                             name = ""
                         )
-                    )
+                    ),
+                    isWin = null
                 ),
                 to = null,
                 time = MessageTime(
