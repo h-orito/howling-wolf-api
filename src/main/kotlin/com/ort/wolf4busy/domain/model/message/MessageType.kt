@@ -13,4 +13,6 @@ data class MessageType(
         code = cdefMessageType.code(),
         name = cdefMessageType.alias()
     )
+
+    fun toCdef(): CDef.MessageType = CDef.MessageType.codeOf(code)
 }

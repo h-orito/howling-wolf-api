@@ -144,7 +144,11 @@ class VillageDataSource(
             it.query().setDay_Equal(day)
             it.query().setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.codeOf(noonnightCode))
         }
-        val village: Village = villageBhv.selectByPK(villageId).get()
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
+    }
+
+    fun selectVillageDayById(villageDayId: Int): com.ort.wolf4busy.domain.model.village.VillageDay {
+        val villageDay = villageDayBhv.selectByPK(villageDayId).get()
         return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
     }
 
@@ -212,7 +216,6 @@ class VillageDataSource(
      * @param charaId charaId
      * @param firstRequestSkill 役職第1希望
      * @param secondRequestSkill 役職第2希望
-     * @param message 入村時発言
      * @param isSpectate 見学か
      * @return 村参加ID
      */
@@ -222,7 +225,6 @@ class VillageDataSource(
         charaId: Int,
         firstRequestSkill: CDef.Skill,
         secondRequestSkill: CDef.Skill,
-        message: String,
         isSpectate: Boolean
     ): Int {
         val vp = VillagePlayer()
@@ -280,6 +282,9 @@ class VillageDataSource(
         )
     }
 
+    // ===================================================================================
+    //                                                                              Update
+    //                                                                              ======
     /**
      * 希望役職を更新
      * @param participant 村参加者
@@ -305,9 +310,89 @@ class VillageDataSource(
         villagePlayerBhv.update(villagePlayer)
     }
 
-    // ===================================================================================
-    //                                                                              Update
-    //                                                                              ======
+    /**
+     * 差分更新
+     * @param before village
+     * @param after village
+     */
+    fun updateDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        // village
+        updateVillageDifference(before, after)
+        // village_day
+        upsertVillageDay(before, after)
+        // village_player
+        updateVillagePlayerDifference(before, after)
+    }
+
+    private fun updateVillageDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        if (before.status.code != after.status.code
+            || before.winCamp?.code != after.winCamp?.code
+        ) {
+            val village = Village()
+            village.villageId = after.id
+            village.villageStatusCodeAsVillageStatus = after.status.toCdef()
+            village.winCampCodeAsCamp = after.winCamp?.toCdef()
+            villageBhv.update(village)
+        }
+    }
+
+    private fun upsertVillageDay(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        if (!before.day.existsDifference(after.day)) return
+        after.day.dayList
+            .filterNot { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
+            .forEach {
+                insertVillageDay(after.id, it)
+            }
+        after.day.dayList
+            .filter { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
+            .forEach { afterDay ->
+                val beforeDay = before.day.dayList.first { it.id == afterDay.id }
+                if (afterDay.existsDifference(beforeDay)) {
+                    updateVillageDay(afterDay)
+                }
+            }
+    }
+
+    private fun updateVillageDay(
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ) {
+        val villageDay = VillageDay()
+        villageDay.villageDayId = day.id
+        villageDay.daychangeDatetime = day.dayChangeDatetime
+        villageDay.isUpdating = day.isUpdating
+        villageDayBhv.update(villageDay)
+    }
+
+    private fun updateVillagePlayerDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        if (!before.participant.existsDifference(after.participant)) return
+        // 増減はないはずなので更新だけ
+        after.participant.memberList.forEach {
+            val beforeMember = before.participant.member(it.id)
+            if (it.existsDifference(beforeMember)) {
+                val villagePlayer = VillagePlayer()
+                villagePlayer.villagePlayerId = it.id
+                villagePlayer.isDead = it.dead != null
+                villagePlayer.deadReasonCodeAsDeadReason = it.dead?.toCdef()
+                villagePlayer.deadVillageDayId = it.dead?.villageDay?.id
+                villagePlayer.isGone = it.isGone
+                villagePlayer.skillCodeAsSkill = it.skill?.toCdef()
+                villagePlayerBhv.update(villagePlayer)
+            }
+        }
+    }
+
     private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
         val setting = VillageSetting()
         setting.villageId = villageId

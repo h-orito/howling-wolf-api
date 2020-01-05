@@ -153,6 +153,65 @@ class MessageDataSource(
         throw Wolf4busyBusinessException("混み合っているため発言に失敗しました。再度発言してください。")
     }
 
+    /**
+     * 差分更新
+     * @param villageId villageId
+     * @param before messages
+     * @param after messages
+     */
+    fun updateDifference(villageId: Int, before: Messages, after: Messages) {
+        // 追加しかないのでbeforeにないindexから追加していく
+        after.messageList.drop(before.messageList.size).forEach {
+            when (it.content.type.toCdef()) {
+                CDef.MessageType.公開システムメッセージ -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text
+                )
+                CDef.MessageType.非公開システムメッセージ -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text
+                )
+                CDef.MessageType.通常発言 -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text,
+                    villagePlayerId = it.from?.id,
+                    faceType = CDef.FaceType.通常.code()
+                )
+                CDef.MessageType.白黒占い結果 -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text,
+                    villagePlayerId = it.from?.id
+                )
+                CDef.MessageType.白黒霊視結果 -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text
+                )
+                CDef.MessageType.襲撃結果 -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text
+                )
+                CDef.MessageType.参加者一覧 -> insertMessage(
+                    villageId = villageId,
+                    dayId = it.time.villageDayId,
+                    messageType = it.content.type.code,
+                    text = it.content.text
+                )
+            }
+        }
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
@@ -208,6 +267,7 @@ class MessageDataSource(
                 isWin = null
             ),
             time = MessageTime(
+                villageDayId = message.villageDayId,
                 day = 1, // dummy
                 datetime = message.messageDatetime,
                 unixTimeMilli = message.messageUnixtimestampMilli

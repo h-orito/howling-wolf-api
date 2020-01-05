@@ -73,8 +73,8 @@ class VillageController(
     /**
      * アンカー発言取得
      * @param villageId villageId
-     * @param day 日付
-     * @param time 昼夜
+     * @param messageType 発言種別
+     * @param messageNumber 発言番号
      * @param user user
      */
     @GetMapping("/village/{villageId}/message/type/{messageType}/number/{messageNumber}")
@@ -100,7 +100,7 @@ class VillageController(
      * 発言取得
      * @param villageId villageId
      * @param day 日付
-     * @param time 昼夜
+     * @param noonnight 昼夜
      * @param user user
      */
     @GetMapping("/village/{villageId}/day/{day}/time/{noonnight}/message-list")
@@ -302,7 +302,6 @@ class VillageController(
     ) {
         // TODO 実装
     }
-
 
     // ===================================================================================
     //                                                                        Assist Logic

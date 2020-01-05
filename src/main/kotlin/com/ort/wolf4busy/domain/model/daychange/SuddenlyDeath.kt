@@ -13,6 +13,9 @@ object SuddenlyDeath {
         var players = dayChange.players.copy()
         var messages = dayChange.messages.copy()
 
+        // 突然死あり設定でなければ何もしない
+        if (!village.setting.rules.availableSuddenlyDeath) return dayChange
+
         // 前日に発言していない人が対象
         dayChange.village.notDummyParticipant().filterAlive().memberList.filter { member ->
             todayMessages.messageList.none { message ->
@@ -43,8 +46,8 @@ object SuddenlyDeath {
         charas: Charas,
         latestDay: VillageDay
     ): Message {
-        val charaName = charas.list.find { it.id == participant.charaId }!!.charaName
+        val charaName = charas.list.first { it.id == participant.charaId }.charaName
         val message = "${charaName}は突然死した。"
-        return DayChange.createNormalSayMessage(message, latestDay.day, participant)
+        return DayChange.createNormalSayMessage(message, latestDay, participant)
     }
 }

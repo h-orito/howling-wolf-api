@@ -12,4 +12,6 @@ data class VillageWinCamp(
         code = cdefCamp.code(),
         name = cdefCamp.name
     )
+
+    fun toCdef(): CDef.Camp = CDef.Camp.codeOf(code)
 }

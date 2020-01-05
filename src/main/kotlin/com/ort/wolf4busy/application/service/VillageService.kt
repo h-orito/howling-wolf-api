@@ -21,27 +21,21 @@ class VillageService(
      * 村一覧取得
      * @return Villages
      */
-    fun findVillageList(): Villages {
-        return villageDataSource.selectVillages()
-    }
+    fun findVillageList(): Villages = villageDataSource.selectVillages()
 
     /**
      * 村取得
      * @param villageId villageId
      * @return Village
      */
-    fun findVillage(villageId: Int): Village {
-        return villageDataSource.selectVillage(villageId)
-    }
+    fun findVillage(villageId: Int): Village = villageDataSource.selectVillage(villageId)
 
     /**
      * 村登録
      * @param village village
      * @return villageId
      */
-    fun registerVillage(village: Village): Int {
-        return villageDataSource.insertVillage(village)
-    }
+    fun registerVillage(village: Village): Int = villageDataSource.insertVillage(village)
 
     /**
      * 村設定登録
@@ -49,19 +43,16 @@ class VillageService(
      * @param villageSettings 村設定
      * @param password 村パスワード
      */
-    fun registerVillageSettings(villageId: Int, villageSettings: VillageSettings, password: String?) {
+    fun registerVillageSettings(villageId: Int, villageSettings: VillageSettings, password: String?) =
         villageDataSource.insertVillageSettings(villageId, villageSettings, password)
-    }
 
     /**
      * 発言制限登録
      * @param villageId villageId
      * @param setting 村設定
      */
-    fun registerMessageRestriction(villageId: Int, setting: VillageSettings) {
+    fun registerMessageRestriction(villageId: Int, setting: VillageSettings) =
         villageDataSource.insertMessageRestrictionList(villageId, setting)
-
-    }
 
     /**
      * 村日付取得
@@ -69,9 +60,11 @@ class VillageService(
      * @param day 日付
      * @param noonnightCode 昼夜
      */
-    fun findVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay {
-        return villageDataSource.selectVillageDay(villageId, day, noonnightCode)
-    }
+    fun findVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay =
+        villageDataSource.selectVillageDay(villageId, day, noonnightCode)
+
+    fun findVillageDayById(villageDayId: Int): com.ort.wolf4busy.domain.model.village.VillageDay =
+        villageDataSource.selectVillageDayById(villageDayId)
 
     /**
      * 村日付登録
@@ -84,12 +77,12 @@ class VillageService(
     fun registerVillageDay(villageId: Int, day: Int, noonnight: CDef.Noonnight, dayChangeDatetime: LocalDateTime): Int {
         return villageDataSource.insertVillageDay(
             villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
-            id = 1, // dummy
-            day = day,
-            noonnight = noonnight.code(),
-            dayChangeDatetime = dayChangeDatetime,
-            isUpdating = true // dummy
-        )
+                id = 1, // dummy
+                day = day,
+                noonnight = noonnight.code(),
+                dayChangeDatetime = dayChangeDatetime,
+                isUpdating = true // dummy
+            )
         )
     }
 
@@ -97,9 +90,7 @@ class VillageService(
      * 村日付を更新完了にする
      * @param villageDayId 村日付ID
      */
-    fun updateVillageDayUpdateComplete(villageDayId: Int) {
-        villageDataSource.updateVillageDayUpdateComplete(villageDayId)
-    }
+    fun updateVillageDayUpdateComplete(villageDayId: Int) = villageDataSource.updateVillageDayUpdateComplete(villageDayId)
 
     fun findParticipantByUid(villageId: Int, uid: String?): VillageParticipant? {
         uid ?: return null
@@ -111,9 +102,7 @@ class VillageService(
      * @param villageId 村ID
      * @param isSpectate 見学か
      */
-    fun findParticipateCount(villageId: Int, isSpectate: Boolean): Int {
-        return villageDataSource.selectVillagePlayerCount(villageId, isSpectate)
-    }
+    fun findParticipateCount(villageId: Int, isSpectate: Boolean): Int = villageDataSource.selectVillagePlayerCount(villageId, isSpectate)
 
     /**
      * 村参加者登録
@@ -141,7 +130,6 @@ class VillageService(
             charaId,
             firstRequestSkill,
             secondRequestSkill,
-            message,
             isSpectate
         )
     }
@@ -163,9 +151,7 @@ class VillageService(
      *
      * @param uid
      */
-    fun isParticipatingAnyProgressVillage(uid: String): Boolean {
-        return villageDataSource.isParticipatingAnyProgressVillage(uid)
-    }
+    fun isParticipatingAnyProgressVillage(uid: String): Boolean = villageDataSource.isParticipatingAnyProgressVillage(uid)
 
     /**
      * 役職希望を取得
@@ -198,7 +184,13 @@ class VillageService(
      * 退村
      * @param participant 村参加者
      */
-    fun leaveVillage(participant: VillageParticipant) {
-        villageDataSource.updateVillagePlayerLeave(participant)
-    }
+    fun leaveVillage(participant: VillageParticipant) = villageDataSource.updateVillagePlayerLeave(participant)
+
+    /**
+     * 差分更新
+     *
+     * @param before village
+     * @param after village
+     */
+    fun updateVillageDifference(before: Village, after: Village) = villageDataSource.updateDifference(before, after)
 }

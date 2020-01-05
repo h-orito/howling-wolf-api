@@ -185,9 +185,16 @@ class MessageService(
      * @param villageDayId 村日付ID
      * @param charas キャラ
      */
-    fun registerAbilitySetMessage(villageId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String, villageDayId: Int, charas: Charas) {
+    fun registerAbilitySetMessage(
+        villageId: Int,
+        participant: VillageParticipant,
+        targetId: Int?,
+        abilityType: String,
+        villageDayId: Int,
+        charas: Charas
+    ) {
         // 自分のキャラ
-        val myChara = charas.list.find { it.id == participant.charaId }!!
+        val myChara = charas.list.first { it.id == participant.charaId }
         // 相手のキャラ
         val targetChara = charas.list.find { it.id == targetId }
         // 登録メッセージ
@@ -212,7 +219,7 @@ class MessageService(
      */
     fun registerCommitMessage(villageId: Int, villageDayId: Int, participant: VillageParticipant, charas: Charas, doCommit: Boolean) {
         // 自分のキャラ
-        val charaName = charas.list.find { it.id == participant.charaId }!!.charaName.name
+        val charaName = charas.list.first { it.id == participant.charaId }.charaName.name
 
         val message = if (doCommit) "${charaName}がコミットしました。" else "${charaName}がコミットを取り消しました。"
         messageDataSource.insertMessage(
@@ -221,5 +228,15 @@ class MessageService(
             messageType = CDef.MessageType.非公開システムメッセージ.code(),
             text = message
         )
+    }
+
+    /**
+     * 差分更新
+     * @param villageId villageId
+     * @param before messages
+     * @param after messages
+     */
+    fun updateDifference(villageId: Int, before: Messages, after: Messages) {
+        messageDataSource.updateDifference(villageId, before, after)
     }
 }

@@ -57,6 +57,8 @@ data class VillageParticipants(
     // 勝敗設定
     fun winLose(cdefWinCamp: CDef.Camp): VillageParticipants = this.copy(memberList = this.memberList.map { it.winLose(cdefWinCamp) })
 
+    fun member(id: Int): VillageParticipant = memberList.first { it.id == id }
+
     fun filterAlive(): VillageParticipants {
         val aliveMembers = memberList.filter { it.isAlive() }
         return VillageParticipants(

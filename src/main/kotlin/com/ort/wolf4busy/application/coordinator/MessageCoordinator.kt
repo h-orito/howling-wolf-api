@@ -39,7 +39,8 @@ class MessageCoordinator(
         }
         val message: Message =
             messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
-        return complementMessage(message, village, message.time.day)
+        val day = villageService.findVillageDayById(message.time.villageDayId).day
+        return complementMessage(message, village, day)
     }
 
     // ===================================================================================
@@ -47,8 +48,8 @@ class MessageCoordinator(
     //                                                                        ============
     private fun complementMessage(message: Message, village: Village, day: Int): Message {
         return message.copy(
-            from = if (message.from == null) null else village.participant.memberList.find { participant -> participant.id == message.from.id },
-            to = if (message.to == null) null else village.participant.memberList.find { participant -> participant.id == message.to.id },
+            from = if (message.from == null) null else village.participant.member(message.from.id),
+            to = if (message.to == null) null else village.participant.member(message.to.id),
             time = message.time.copy(day = day)
         )
     }

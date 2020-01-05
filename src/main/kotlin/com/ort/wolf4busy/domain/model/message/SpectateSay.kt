@@ -20,7 +20,7 @@ object SpectateSay {
         // 見学は開放
         if (participant.isSpectator) return true
         // 突然死以外で死亡している
-        return !participant.isAlive() && CDef.DeadReason.突然.code() != participant.dead!!.code
+        return !participant.isAlive() && CDef.DeadReason.突然.code() != participant.dead?.code
     }
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {

@@ -14,7 +14,8 @@ object Progress {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
-    private const val day2Message: String = "ついに犠牲者が出た。\n\n村人達は、この中にいる人狼を排除するため、投票を行う事にした。\n無実の犠牲者が出るのもやむをえない。村が全滅するよりは……。\n\n最後まで残るのは村人か、それとも人狼か。"
+    private const val day2Message: String =
+        "ついに犠牲者が出た。\n\n村人達は、この中にいる人狼を排除するため、投票を行う事にした。\n無実の犠牲者が出るのもやむをえない。村が全滅するよりは……。\n\n最後まで残るのは村人か、それとも人狼か。"
 
     // ===================================================================================
     //                                                                             Execute
@@ -56,7 +57,7 @@ object Progress {
         dayChange = addDay2MessageIfNeeded(dayChange)
 
         // 勝敗
-        dayChange = Epilogue.transitionToEpilogueIfNeeded(dayChange, charas)
+        dayChange = Epilogue.transitionToEpilogueIfNeeded(dayChange)
 
         // 勝敗が決していたらここで終了
         if (dayChange.village.status.isCompleted()) return dayChange.setIsChange(beforeDayChange)
@@ -100,19 +101,19 @@ object Progress {
 
     private fun addDay2MessageIfNeeded(dayChange: DayChange): DayChange {
         if (dayChange.village.day.latestDay().day != 2) return dayChange
-        val message = DayChange.createPublicSystemMessage(day2Message, dayChange.village.day.latestDay().day)
+        val message = DayChange.createPublicSystemMessage(day2Message, dayChange.village.day.latestDay())
         return dayChange.copy(messages = dayChange.messages.add(message))
     }
 
     // 生存者メッセージ
     private fun addAliveMemberMessage(dayChange: DayChange, charas: Charas): DayChange {
         val text = dayChange.village.participant.filterAlive().memberList.map { member ->
-            charas.list.find { it.id == member.charaId }!!.charaName.name
+            charas.list.first { it.id == member.charaId }.charaName.name
         }.joinToString(
             separator = "\n",
             prefix = "現在の生存者は以下の${dayChange.village.participant.filterAlive().count}名。\n"
         )
-        val message = DayChange.createPublicSystemMessage(text, dayChange.village.day.latestDay().day)
+        val message = DayChange.createPublicSystemMessage(text, dayChange.village.day.latestDay())
         return dayChange.copy(messages = dayChange.messages.add(message))
     }
 
