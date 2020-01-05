@@ -108,11 +108,11 @@ data class VillageSaySituation(
             if (participant == null) return listOf()
 
             val charaId: Int = if (participant.isSpectator) {
-                village.spectator.memberList.find { it.id == participant.id }!!.charaId
+                village.spectator.memberList.first { it.id == participant.id }.charaId
             } else {
-                village.participant.memberList.find { it.id == participant.id }!!.charaId
+                village.participant.memberList.first { it.id == participant.id }.charaId
             }
-            return charas.list.find { it.id == charaId }!!.faceList
+            return charas.list.first { it.id == charaId }.faceList
         }
     }
 }

@@ -8,6 +8,7 @@ import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
@@ -43,13 +44,13 @@ data class DayChange(
          * 更新時登録用の公開メッセージ
          *
          * @param text メッセージ内容
-         * @param day 何日目か
+         * @param day 村日付
          */
-        fun createPublicSystemMessage(text: String, day: Int): Message {
+        fun createPublicSystemMessage(text: String, day: VillageDay): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.公開システムメッセージ),
@@ -62,13 +63,13 @@ data class DayChange(
          * 更新時登録用の非公開メッセージ
          *
          * @param text メッセージ内容
-         * @param day 何日目か
+         * @param day 村日付
          */
-        fun createPrivateSystemMessage(text: String, day: Int): Message {
+        fun createPrivateSystemMessage(text: String, day: VillageDay): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.非公開システムメッセージ),
@@ -77,12 +78,12 @@ data class DayChange(
             )
         }
 
-        fun createNormalSayMessage(text: String, day: Int, participant: VillageParticipant): Message {
+        fun createNormalSayMessage(text: String, day: VillageDay, participant: VillageParticipant): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 from = participant,
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.通常発言),
@@ -91,12 +92,12 @@ data class DayChange(
             )
         }
 
-        fun createSeerPrivateMessage(text: String, day: Int, participant: VillageParticipant): Message {
+        fun createSeerPrivateMessage(text: String, day: VillageDay, participant: VillageParticipant): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 from = participant,
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.白黒占い結果),
@@ -105,11 +106,11 @@ data class DayChange(
             )
         }
 
-        fun createPsychicPrivateMessage(text: String, day: Int): Message {
+        fun createPsychicPrivateMessage(text: String, day: VillageDay): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.白黒霊視結果),
@@ -118,11 +119,11 @@ data class DayChange(
             )
         }
 
-        fun createAttackPrivateMessage(text: String, day: Int): Message {
+        fun createAttackPrivateMessage(text: String, day: VillageDay): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.襲撃結果),
@@ -131,11 +132,11 @@ data class DayChange(
             )
         }
 
-        fun createParticipantsMessage(day: Int): Message {
+        fun createParticipantsMessage(day: VillageDay): Message {
             val dummy = Message.createDummy()
             return dummy.copy(
                 time = dummy.time.copy(
-                    day = day
+                    villageDayId = day.id
                 ),
                 content = dummy.content.copy(
                     type = MessageType(CDef.MessageType.参加者一覧),
@@ -146,8 +147,8 @@ data class DayChange(
     }
 
     fun leaveParticipantIfNeeded(todayMessages: Messages, charas: Charas): DayChange {
-        if (!village.status.isPrologue()) this
-        return Prologue.leaveParticipantIfNeeded(this, todayMessages, charas)
+        return if (!village.status.isPrologue()) this
+        else Prologue.leaveParticipantIfNeeded(this, todayMessages, charas)
     }
 
     // コミットや時間経過で次の日に遷移させる場合は村日付を追加
@@ -157,8 +158,8 @@ data class DayChange(
             village.status.isPrologue() -> Prologue.addDayIfNeeded(this)
             // 進行中
             village.status.isProgress() -> Progress.addDayIfNeeded(this, commits)
-            // エピローグ TODO
-            village.status.code == CDef.VillageStatus.エピローグ.code() -> this
+            // エピローグ
+            village.status.code == CDef.VillageStatus.エピローグ.code() -> Epilogue.addDayIfNeeded(this)
             // 終了後
             else -> this
         }
@@ -172,13 +173,16 @@ data class DayChange(
             // 進行中
             village.status.isProgress() -> Progress.dayChange(this, todayMessages, charas)
             // エピローグ
-            village.status.code == CDef.VillageStatus.エピローグ.code() -> this
+            village.status.code == CDef.VillageStatus.エピローグ.code() -> Epilogue.dayChange(this)
             // 終了後
             else -> this
         }
     }
 
-    fun setIsChange(beforeDayChange: DayChange): DayChange = this.copy(isChange = existsDifference(beforeDayChange))
+    fun setIsChange(beforeDayChange: DayChange): DayChange {
+        return if (isChange) this
+        else this.copy(isChange = existsDifference(beforeDayChange))
+    }
 
     // ===================================================================================
     //                                                                        Assist Logic

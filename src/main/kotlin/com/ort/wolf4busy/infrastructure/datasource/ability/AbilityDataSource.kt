@@ -50,6 +50,17 @@ class AbilityDataSource(
         abilityBhv.insert(ability)
     }
 
+    fun updateDifference(before: VillageAbilities, after: VillageAbilities) {
+        after.list.drop(before.list.size).forEach {
+            insertAbility(
+                villageDayId = it.villageDayId,
+                myselfId = it.myselfId,
+                targetId = it.targetId,
+                abilityType = it.ability.code
+            )
+        }
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============

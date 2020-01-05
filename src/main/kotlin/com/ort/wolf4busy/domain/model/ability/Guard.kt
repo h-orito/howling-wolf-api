@@ -11,6 +11,8 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 object Guard {
 
+    private val ABILITY_TYPE = Ability(CDef.AbilityType.護衛)
+
     fun getSelectableTargetList(
         village: Village,
         participant: VillageParticipant?
@@ -32,11 +34,11 @@ object Guard {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                && it.ability.code == CDef.AbilityType.護衛.code()
+                && it.ability.code == ABILITY_TYPE.code
                 && it.myselfId == participant.id
         }?.targetId
         targetVillageParticipantId ?: return null
-        return village.participant.memberList.find { it.id == targetVillageParticipantId }
+        return village.participant.member(targetVillageParticipantId)
     }
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
@@ -44,6 +46,8 @@ object Guard {
     }
 
     fun getDefaultAbilityList(village: Village): List<VillageAbility> {
+        // 進行中のみ
+        if (!village.status.isProgress()) return listOf()
         // 1日目は護衛できない
         if (village.day.latestDay().day == 1) {
             return listOf()
@@ -63,7 +67,7 @@ object Guard {
                         villageDayId = latestVillageDay.id,
                         myselfId = seer.id,
                         targetId = it.id,
-                        ability = Ability(CDef.AbilityType.占い)
+                        ability = ABILITY_TYPE
                     )
                 } ?: null // 自分しかいない場合
         }
@@ -79,15 +83,17 @@ object Guard {
             dayChange.abilities.list.find {
                 it.myselfId == hunter.id && it.villageDayId == dayChange.village.day.yesterday().id
             }?.let { ability ->
-                val fromCharaName = charas.list.find { it.id == ability.myselfId }!!.charaName.name
-                val toCharaName = charas.list.find { it.id == ability.targetId }!!.charaName.name
+                val myself = dayChange.village.participant.member(ability.myselfId)
+                val fromCharaName = charas.chara(myself!!.charaId).charaName.name
+                val target = dayChange.village.participant.member(ability.targetId!!)
+                val toCharaName = charas.chara(target!!.charaId).charaName.name
                 val text = "${fromCharaName}は、${toCharaName}を護衛している。"
-                messages = messages.add(DayChange.createPrivateSystemMessage(text, latestDay.day))
+                messages = messages.add(DayChange.createPrivateSystemMessage(text, latestDay))
             }
         }
 
         return dayChange.copy(
             messages = messages
-        )
+        ).setIsChange(dayChange)
     }
 }

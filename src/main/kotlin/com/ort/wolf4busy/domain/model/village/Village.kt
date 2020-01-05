@@ -32,7 +32,7 @@ data class Village(
     //                                                                         participant
     //                                                                           =========
     fun dummyChara(): VillageParticipant {
-        return participant.memberList.find { it.charaId == setting.charachip.dummyCharaId }!!
+        return participant.memberList.first { it.charaId == setting.charachip.dummyCharaId }
     }
 
     fun notDummyParticipant(): VillageParticipants {
@@ -43,9 +43,9 @@ data class Village(
         )
     }
 
-    fun deadTodayParticipant(): VillageParticipants {
+    fun todayDeadParticipants(): VillageParticipants {
         val deadTodayMemberList = participant.memberList.filter {
-            !it.isAlive() && it.dead!!.villageDay.id == day.latestDay().id
+            !it.isAlive() && it.dead?.villageDay?.id == day.latestDay().id
         }
         return VillageParticipants(
             count = deadTodayMemberList.size,
@@ -241,9 +241,10 @@ data class Village(
 
     // 差分があるか
     fun existsDifference(village: Village): Boolean {
-        if (status.code != village.status.code) return true
-        if (participant.existsDifference(village.participant)) return true
-        return day.existsDifference(village.day)
+        return status.code != village.status.code
+            || winCamp?.code != village.winCamp?.code
+            || participant.existsDifference(village.participant)
+            || day.existsDifference(village.day)
     }
 
     // ===================================================================================

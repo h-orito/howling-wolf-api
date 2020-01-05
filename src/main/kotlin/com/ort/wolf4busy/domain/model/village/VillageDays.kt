@@ -18,21 +18,18 @@ data class VillageDays(
     }
 
     fun yesterday(): VillageDay {
-        if (dayList.size < 2) throw IllegalStateException("no exists yesterday")
+        check(dayList.size >= 2) { "no exists yesterday" }
         return dayList[dayList.size - 2]
     }
 
     fun prologue(): VillageDay {
-        return dayList.find { it.day == 0 && it.noonnight == CDef.Noonnight.昼.code() }!!
+        return dayList.first { it.day == 0 && it.noonnight == CDef.Noonnight.昼.code() }
     }
 
     fun existsDifference(villageDays: VillageDays): Boolean {
         if (dayList.size != villageDays.dayList.size) return true
         return dayList.any { day1 ->
-            villageDays.dayList.none { day2 ->
-                // TODO 日時比較大丈夫か？
-                day1.day == day2.day && day1.dayChangeDatetime == day2.dayChangeDatetime
-            }
+            villageDays.dayList.none { day2 -> !day1.existsDifference(day2) }
         }
 
     }

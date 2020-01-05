@@ -11,6 +11,8 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 object Attack {
 
+    private val ABILITY_TYPE = Ability(CDef.AbilityType.襲撃)
+
     fun getSelectableTargetList(
         village: Village,
         participant: VillageParticipant?
@@ -41,11 +43,11 @@ object Attack {
 
         val targetVillageParticipantId = villageAbilities.list.find {
             it.villageDayId == village.day.latestDay().id
-                && it.ability.code == CDef.AbilityType.占い.code()
+                && it.ability.code == ABILITY_TYPE.code
                 && attackableParticipantIdList.contains(it.myselfId)
         }?.targetId
         targetVillageParticipantId ?: return null
-        return village.participant.memberList.find { it.id == targetVillageParticipantId }
+        return village.participant.member(targetVillageParticipantId)
     }
 
     fun getSetMessage(myChara: Chara, targetChara: Chara?): String {
@@ -53,6 +55,8 @@ object Attack {
     }
 
     fun getDefaultAbility(village: Village): VillageAbility? {
+        // 進行中のみ
+        if (!village.status.isProgress()) return null
         // 最新日id
         val latestVillageDay = village.day.latestDay()
         // 襲撃者は生存している人狼からランダムに
@@ -65,7 +69,7 @@ object Attack {
                 villageDayId = latestVillageDay.id,
                 myselfId = wolf.id,
                 targetId = village.dummyChara().id,
-                ability = Ability(CDef.AbilityType.襲撃)
+                ability = ABILITY_TYPE
             )
         } else { // 2日目以降は生存者からランダム
             val target = village.participant.filterAlive().findRandom {
@@ -75,7 +79,7 @@ object Attack {
                 villageDayId = latestVillageDay.id,
                 myselfId = wolf.id,
                 targetId = target.id,
-                ability = Ability(CDef.AbilityType.襲撃)
+                ability = ABILITY_TYPE
             )
         }
     }
@@ -92,10 +96,11 @@ object Attack {
             it.ability.code == CDef.AbilityType.襲撃.code() && it.targetId != null && it.villageDayId == village.day.yesterday().id
         }?.let { ability ->
             // 襲撃メッセージ
-            val fromCharaName = charas.list.find { it.id == aliveWolf.charaId }!!.charaName.name
-            val toCharaName = charas.list.find { it.id == ability.targetId }!!.charaName.name
+            val fromCharaName = charas.chara(aliveWolf.charaId).charaName.name
+            val target = village.participant.member(ability.targetId!!)
+            val toCharaName = charas.chara(target.charaId).charaName.name
             val text = "${fromCharaName}達は、${toCharaName}を襲撃した。"
-            messages = messages.add(DayChange.createAttackPrivateMessage(text, latestDay.day))
+            messages = messages.add(DayChange.createAttackPrivateMessage(text, latestDay))
             // 襲撃成功したら死亡
             if (isAttackSuccess(dayChange, ability.targetId!!)) village = village.attackParticipant(ability.targetId!!, latestDay)
         } ?: return dayChange
@@ -103,7 +108,7 @@ object Attack {
         return dayChange.copy(
             village = village,
             messages = messages
-        )
+        ).setIsChange(dayChange)
     }
 
     // ===================================================================================
@@ -111,10 +116,13 @@ object Attack {
     //                                                                        ============
     private fun isAttackSuccess(dayChange: DayChange, targetId: Int): Boolean {
         // 対象が既に死亡していたら失敗
-        if (!dayChange.village.participant.memberList.find { it.id == targetId }!!.isAlive()) return false
+        if (!dayChange.village.participant.member(targetId).isAlive()) return false
         // 対象が護衛されていたら失敗
-        if (dayChange.abilities.list.any {
-                it.ability.code == CDef.AbilityType.護衛.code() && it.targetId == targetId && it.villageDayId == dayChange.village.day.yesterday().id
+        if (dayChange.abilities.list.any { villageAbility ->
+                villageAbility.ability.code == CDef.AbilityType.護衛.code()
+                    && villageAbility.targetId == targetId
+                    && villageAbility.villageDayId == dayChange.village.day.yesterday().id
+                    && dayChange.village.participant.member(villageAbility.myselfId).isAlive()
             }) {
             return false
         }

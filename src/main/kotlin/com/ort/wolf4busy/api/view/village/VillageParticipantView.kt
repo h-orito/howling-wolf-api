@@ -23,7 +23,7 @@ data class VillageParticipantView(
         shouldHidePlayer: Boolean
     ) : this(
         id = villageParticipant.id,
-        chara = charas.list.find { it.id == villageParticipant.charaId }!!,
+        chara = charas.chara(villageParticipant.charaId),
         player = if (shouldHidePlayer || villageParticipant.playerId == null) null
         else PlayerView(players.list.find { it.id == villageParticipant.playerId }!!),
         dead = villageParticipant.dead,

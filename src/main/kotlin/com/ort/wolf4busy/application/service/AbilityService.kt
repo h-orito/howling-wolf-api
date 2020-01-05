@@ -25,4 +25,8 @@ class AbilityService(
     fun updateAbility(villageDayId: Int, participant: VillageParticipant, targetId: Int?, abilityType: String) {
         abilityDataSource.updateAbility(villageDayId, participant.id, targetId, abilityType)
     }
+
+    fun updateDifference(before: VillageAbilities, after: VillageAbilities) {
+        abilityDataSource.updateDifference(before, after)
+    }
 }

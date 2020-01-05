@@ -9,9 +9,9 @@ object MiserableDeath {
         val latestDay = dayChange.village.day.latestDay()
 
         val miserableDeathCharaNameList = dayChange.village.participant.memberList.filter {
-            !it.isAlive() && it.dead!!.villageDay.id == latestDay.id && it.dead!!.toCdef().isMiserableDeath
+            !it.isAlive() && it.dead?.villageDay?.id == latestDay.id && it.dead.toCdef().isMiserableDeath
         }.map { member ->
-            charas.list.find { it.id == member.charaId }!!.charaName.name
+            charas.list.first { it.id == member.charaId }.charaName.name
         }
 
         val text = if (miserableDeathCharaNameList.isEmpty()) {
@@ -24,7 +24,7 @@ object MiserableDeath {
         }
 
         return dayChange.copy(
-            messages = dayChange.messages.add(DayChange.createPublicSystemMessage(text, latestDay.day))
-        )
+            messages = dayChange.messages.add(DayChange.createPublicSystemMessage(text, latestDay))
+        ).setIsChange(dayChange)
     }
 }

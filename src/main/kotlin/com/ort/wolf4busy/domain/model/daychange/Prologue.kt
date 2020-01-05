@@ -52,7 +52,7 @@ object Prologue {
         charas: Charas
     ): DayChange {
         // 開始メッセージ追加
-        var messages = dayChange.messages.add(createProgressStartMessage(dayChange.village.day.latestDay().day))
+        var messages = dayChange.messages.add(createProgressStartMessage(dayChange.village.day.latestDay()))
         // 役職割り当て
         var village = dayChange.village.assignSkill()
         // 役職構成メッセージ追加
@@ -75,9 +75,9 @@ object Prologue {
     //                                                                        Assist Logic
     //                                                                        ============
     private fun createLeaveMessage(participant: VillageParticipant, charas: Charas, day: VillageDay): Message {
-        val chara = charas.list.find { it.id == participant.charaId }!!
+        val chara = charas.list.first { it.id == participant.charaId }
         val message = "${chara.charaName.name}は村を去った。"
-        return DayChange.createPublicSystemMessage(message, day.day)
+        return DayChange.createPublicSystemMessage(message, day)
     }
 
     // 日付を進める必要があるか
@@ -91,7 +91,7 @@ object Prologue {
             messages = dayChange.messages.add(
                 DayChange.createPublicSystemMessage(
                     "人数が不足しているため廃村しました。",
-                    dayChange.village.day.latestDay().day
+                    dayChange.village.day.latestDay()
                 )
             )
         )
@@ -101,15 +101,15 @@ object Prologue {
         village.participant.memberList.count { !it.isGone } < village.setting.capacity.min
 
     private fun createDummyCharaFirstDayMessage(village: Village, charas: Charas): Message? {
-        val firstDayMessage = charas.list.find { it.id == village.dummyChara().id }!!.defaultMessage.firstDayMessage ?: return null
+        val firstDayMessage = charas.list.first { it.id == village.dummyChara().id }.defaultMessage.firstDayMessage ?: return null
         return DayChange.createNormalSayMessage(
             text = firstDayMessage,
-            day = village.day.latestDay().day,
+            day = village.day.latestDay(),
             participant = village.dummyChara()
         )
     }
 
-    private fun createProgressStartMessage(day: Int): Message {
+    private fun createProgressStartMessage(day: VillageDay): Message {
         return DayChange.createPublicSystemMessage(
             text = "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\n例え人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。",
             day = day
@@ -127,6 +127,6 @@ object Prologue {
             prefix = "この村には\n",
             postfix = "いるようだ。"
         )
-        return DayChange.createPublicSystemMessage(text, village.day.latestDay().day)
+        return DayChange.createPublicSystemMessage(text, village.day.latestDay())
     }
 }

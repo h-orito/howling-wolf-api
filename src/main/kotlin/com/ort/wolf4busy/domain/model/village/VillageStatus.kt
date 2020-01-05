@@ -29,4 +29,5 @@ data class VillageStatus(
         return CDef.VillageStatus.codeOf(this.code) == CDef.VillageStatus.進行中
     }
 
+    fun toCdef(): CDef.VillageStatus = CDef.VillageStatus.codeOf(code)
 }

@@ -39,6 +39,7 @@ data class Message(
                 ),
                 to = null,
                 time = MessageTime(
+                    villageDayId = 1,
                     day = 1,
                     datetime = Wolf4busyDateUtil.currentLocalDateTime(),
                     unixTimeMilli = 1L

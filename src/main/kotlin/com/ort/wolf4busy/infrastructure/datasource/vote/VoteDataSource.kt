@@ -44,6 +44,17 @@ class VoteDataSource(
         voteBhv.insert(vote)
     }
 
+    fun updateDifference(before: VillageVotes, after: VillageVotes) {
+        // 追加のみ
+        after.list.drop(before.list.size).forEach {
+            insertVote(
+                villageDayId = it.villageDayId,
+                myselfId = it.myselfId,
+                targetId = it.targetId
+            )
+        }
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============

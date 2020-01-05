@@ -17,4 +17,8 @@ class VoteService(
     fun updateVote(villageDayId: Int, participant: VillageParticipant, targetId: Int) {
         voteDataSource.updateVote(villageDayId, participant.id, targetId)
     }
+
+    fun updateDifference(before: VillageVotes, after: VillageVotes) {
+        voteDataSource.updateDifference(before, after)
+    }
 }

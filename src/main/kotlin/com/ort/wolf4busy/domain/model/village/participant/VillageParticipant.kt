@@ -30,7 +30,7 @@ data class VillageParticipant(
 
     fun assignSkill(skill: Skill): VillageParticipant = this.copy(skill = skill)
 
-    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill!!.toCdef().campCode() == cdefWinCamp.code())
+    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill?.toCdef()?.campCode() == cdefWinCamp.code())
 
     fun existsDifference(participant: VillageParticipant): Boolean {
         if (id != participant.id) return true
