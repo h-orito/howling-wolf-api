@@ -102,7 +102,7 @@ object Attack {
             val text = "${fromCharaName}達は、${toCharaName}を襲撃した。"
             messages = messages.add(DayChange.createAttackPrivateMessage(text, latestDay))
             // 襲撃成功したら死亡
-            if (isAttackSuccess(dayChange, ability.targetId!!)) village = village.attackParticipant(ability.targetId!!, latestDay)
+            if (isAttackSuccess(dayChange, ability.targetId)) village = village.attackParticipant(ability.targetId, latestDay)
         } ?: return dayChange
 
         return dayChange.copy(

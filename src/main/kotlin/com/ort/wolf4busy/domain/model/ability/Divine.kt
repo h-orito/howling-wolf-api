@@ -52,7 +52,8 @@ object Divine {
             it.skill!!.toCdef().isHasDivineAbility
         }.mapNotNull { seer ->
             // 対象は自分以外の生存者からランダム
-            village.participant.filterAlive()
+            village.participant
+                .filterAlive()
                 .findRandom { it.id != seer.id }?.let {
                     VillageAbility(
                         villageDayId = latestVillageDay.id,
@@ -60,7 +61,7 @@ object Divine {
                         targetId = it.id,
                         ability = ABILITY_TYPE
                     )
-                } ?: null // 自分しかいない場合
+                }
         }
     }
 
@@ -75,11 +76,11 @@ object Divine {
                 it.myselfId == seer.id && it.villageDayId == dayChange.village.day.yesterday().id
             }?.let { ability ->
                 val myself = dayChange.village.participant.member(ability.myselfId)
-                val fromCharaName = charas.chara(myself!!.charaId).charaName.name
+                val fromCharaName = charas.chara(myself.charaId).charaName.name
                 val target = dayChange.village.participant.member(ability.targetId!!)
-                val toCharaName = charas.chara(target!!.charaId).charaName.name
+                val toCharaName = charas.chara(target.charaId).charaName.name
                 val isWolf =
-                    dayChange.village.participant.member(ability.targetId!!).skill!!.toCdef().isDivineResultWolf
+                    dayChange.village.participant.member(ability.targetId).skill!!.toCdef().isDivineResultWolf
                 val text = "${fromCharaName}は、${toCharaName}を占った。\n${toCharaName}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
                 messages = messages.add(DayChange.createSeerPrivateMessage(text, latestDay, seer))
             }
