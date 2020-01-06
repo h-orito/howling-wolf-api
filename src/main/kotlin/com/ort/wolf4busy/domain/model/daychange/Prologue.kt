@@ -46,7 +46,6 @@ object Prologue {
         return dayChange.copy(village = dayChange.village.addNewDay()).setIsChange(dayChange)
     }
 
-
     fun dayChange(
         dayChange: DayChange,
         charas: Charas
@@ -60,7 +59,7 @@ object Prologue {
         // ステータス変更
         village = village.changeStatus(CDef.VillageStatus.進行中)
         // デフォルト能力行使指定
-        var abilities = dayChange.abilities.addDefaultAbilities(village)
+        val abilities = dayChange.abilities.addDefaultAbilities(village)
         // ダミーキャラ発言
         createDummyCharaFirstDayMessage(village, charas)?.let { messages = messages.add(it) }
 

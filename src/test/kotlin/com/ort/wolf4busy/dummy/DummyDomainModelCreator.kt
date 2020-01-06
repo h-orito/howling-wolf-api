@@ -6,6 +6,10 @@ import com.ort.wolf4busy.domain.model.charachip.*
 import com.ort.wolf4busy.domain.model.commit.Commits
 import com.ort.wolf4busy.domain.model.daychange.DayChange
 import com.ort.wolf4busy.domain.model.dead.Dead
+import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.MessageContent
+import com.ort.wolf4busy.domain.model.message.MessageTime
+import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
@@ -131,6 +135,27 @@ object DummyDomainModelCreator {
     )
 
     fun createDummyCommits(): Commits = Commits(listOf())
+
+    fun createDummyMessage(): Message = Message(
+        from = createDummyVillageParticipant(),
+        to = null,
+        time = createDummyMessageTime(),
+        content = createDummyMessageContent()
+    )
+
+    fun createDummyMessageTime(): MessageTime = MessageTime(
+        villageDayId = randomNumber(),
+        day = randomNumber(),
+        datetime = LocalDateTime.now(),
+        unixTimeMilli = 1L
+    )
+
+    fun createDummyMessageContent(): MessageContent = MessageContent(
+        type = MessageType(CDef.MessageType.公開システムメッセージ),
+        num = null,
+        text = "dummy message",
+        faceCode = null
+    )
 
     // ===================================================================================
     //                                                                                頻出
