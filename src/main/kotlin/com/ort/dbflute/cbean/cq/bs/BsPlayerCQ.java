@@ -93,7 +93,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
     public Map<String, Object> xdfgetPlayerId_QueryDerivedReferrer_VillagePlayerListParameter() { return xgetSQuePmMap("playerId_QueryDerivedReferrer_VillagePlayerList"); }
     public String keepPlayerId_QueryDerivedReferrer_VillagePlayerListParameter(Object pm) { return xkeepSQuePm("playerId_QueryDerivedReferrer_VillagePlayerList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * PLAYER_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _uid; }
     protected ConditionValue xgetCValueUid() { return xdfgetUid(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UID: {UQ, NotNull, VARCHAR(100)}
      * @return this. (NotNull)
@@ -133,7 +133,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _nickname; }
     protected ConditionValue xgetCValueNickname() { return xdfgetNickname(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * NICKNAME: {NotNull, VARCHAR(50)}
      * @return this. (NotNull)
@@ -153,7 +153,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _twitterUserName; }
     protected ConditionValue xgetCValueTwitterUserName() { return xdfgetTwitterUserName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
      * @return this. (NotNull)
@@ -173,7 +173,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _authorityCode; }
     protected ConditionValue xgetCValueAuthorityCode() { return xdfgetAuthorityCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
      * @return this. (NotNull)
@@ -193,7 +193,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _isRestrictedParticipation; }
     protected ConditionValue xgetCValueIsRestrictedParticipation() { return xdfgetIsRestrictedParticipation(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * IS_RESTRICTED_PARTICIPATION: {NotNull, BIT}
      * @return this. (NotNull)
@@ -213,7 +213,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -233,7 +233,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -253,7 +253,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -273,7 +273,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

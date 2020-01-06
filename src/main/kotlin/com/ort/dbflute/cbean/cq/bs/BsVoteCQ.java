@@ -73,85 +73,25 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
-    protected ConditionValue _villageId;
-    public ConditionValue xdfgetVillageId()
-    { if (_villageId == null) { _villageId = nCV(); }
-      return _villageId; }
-    protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
+    protected ConditionValue _villageDayId;
+    public ConditionValue xdfgetVillageDayId()
+    { if (_villageDayId == null) { _villageDayId = nCV(); }
+      return _villageDayId; }
+    protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
      */
-    public BsVoteCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
+    public BsVoteCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
      */
-    public BsVoteCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
-
-    protected ConditionValue _day;
-    public ConditionValue xdfgetDay()
-    { if (_day == null) { _day = nCV(); }
-      return _day; }
-    protected ConditionValue xgetCValueDay() { return xdfgetDay(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_Day_Asc() { regOBA("DAY"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_Day_Desc() { regOBD("DAY"); return this; }
-
-    protected ConditionValue _charaId;
-    public ConditionValue xdfgetCharaId()
-    { if (_charaId == null) { _charaId = nCV(); }
-      return _charaId; }
-    protected ConditionValue xgetCValueCharaId() { return xdfgetCharaId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_CharaId_Asc() { regOBA("CHARA_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_CharaId_Desc() { regOBD("CHARA_ID"); return this; }
-
-    protected ConditionValue _voteCharaId;
-    public ConditionValue xdfgetVoteCharaId()
-    { if (_voteCharaId == null) { _voteCharaId = nCV(); }
-      return _voteCharaId; }
-    protected ConditionValue xgetCValueVoteCharaId() { return xdfgetVoteCharaId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_VoteCharaId_Asc() { regOBA("VOTE_CHARA_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_VoteCharaId_Desc() { regOBD("VOTE_CHARA_ID"); return this; }
+    public BsVoteCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
 
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
@@ -159,7 +99,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -179,7 +119,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -199,7 +139,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -219,7 +159,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -232,6 +172,46 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_UpdateTrace_Desc() { regOBD("UPDATE_TRACE"); return this; }
+
+    protected ConditionValue _villagePlayerId;
+    public ConditionValue xdfgetVillagePlayerId()
+    { if (_villagePlayerId == null) { _villagePlayerId = nCV(); }
+      return _villagePlayerId; }
+    protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
+
+    protected ConditionValue _targetVillagePlayerId;
+    public ConditionValue xdfgetTargetVillagePlayerId()
+    { if (_targetVillagePlayerId == null) { _targetVillagePlayerId = nCV(); }
+      return _targetVillagePlayerId; }
+    protected ConditionValue xgetCValueTargetVillagePlayerId() { return xdfgetTargetVillagePlayerId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_TargetVillagePlayerId_Asc() { regOBA("TARGET_VILLAGE_PLAYER_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_TargetVillagePlayerId_Desc() { regOBD("TARGET_VILLAGE_PLAYER_ID"); return this; }
 
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
@@ -274,14 +254,14 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     public void reflectRelationOnUnionQuery(ConditionQuery bqs, ConditionQuery uqs) {
         VoteCQ bq = (VoteCQ)bqs;
         VoteCQ uq = (VoteCQ)uqs;
-        if (bq.hasConditionQueryCharaByCharaId()) {
-            uq.queryCharaByCharaId().reflectRelationOnUnionQuery(bq.queryCharaByCharaId(), uq.queryCharaByCharaId());
+        if (bq.hasConditionQueryVillagePlayerByTargetVillagePlayerId()) {
+            uq.queryVillagePlayerByTargetVillagePlayerId().reflectRelationOnUnionQuery(bq.queryVillagePlayerByTargetVillagePlayerId(), uq.queryVillagePlayerByTargetVillagePlayerId());
         }
         if (bq.hasConditionQueryVillageDay()) {
             uq.queryVillageDay().reflectRelationOnUnionQuery(bq.queryVillageDay(), uq.queryVillageDay());
         }
-        if (bq.hasConditionQueryCharaByVoteCharaId()) {
-            uq.queryCharaByVoteCharaId().reflectRelationOnUnionQuery(bq.queryCharaByVoteCharaId(), uq.queryCharaByVoteCharaId());
+        if (bq.hasConditionQueryVillagePlayerByVillagePlayerId()) {
+            uq.queryVillagePlayerByVillagePlayerId().reflectRelationOnUnionQuery(bq.queryVillagePlayerByVillagePlayerId(), uq.queryVillagePlayerByVillagePlayerId());
         }
     }
 
@@ -290,27 +270,27 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     //                                                                       =============
     /**
      * Get the condition-query for relation table. <br>
-     * CHARA by my CHARA_ID, named 'charaByCharaId'.
+     * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
      * @return The instance of condition-query. (NotNull)
      */
-    public CharaCQ queryCharaByCharaId() {
-        return xdfgetConditionQueryCharaByCharaId();
+    public VillagePlayerCQ queryVillagePlayerByTargetVillagePlayerId() {
+        return xdfgetConditionQueryVillagePlayerByTargetVillagePlayerId();
     }
-    public CharaCQ xdfgetConditionQueryCharaByCharaId() {
-        String prop = "charaByCharaId";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryCharaByCharaId()); xsetupOuterJoinCharaByCharaId(); }
+    public VillagePlayerCQ xdfgetConditionQueryVillagePlayerByTargetVillagePlayerId() {
+        String prop = "villagePlayerByTargetVillagePlayerId";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVillagePlayerByTargetVillagePlayerId()); xsetupOuterJoinVillagePlayerByTargetVillagePlayerId(); }
         return xgetQueRlMap(prop);
     }
-    protected CharaCQ xcreateQueryCharaByCharaId() {
-        String nrp = xresolveNRP("vote", "charaByCharaId"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new CharaCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "charaByCharaId", nrp);
+    protected VillagePlayerCQ xcreateQueryVillagePlayerByTargetVillagePlayerId() {
+        String nrp = xresolveNRP("vote", "villagePlayerByTargetVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByTargetVillagePlayerId", nrp);
     }
-    protected void xsetupOuterJoinCharaByCharaId() { xregOutJo("charaByCharaId"); }
-    public boolean hasConditionQueryCharaByCharaId() { return xhasQueRlMap("charaByCharaId"); }
+    protected void xsetupOuterJoinVillagePlayerByTargetVillagePlayerId() { xregOutJo("villagePlayerByTargetVillagePlayerId"); }
+    public boolean hasConditionQueryVillagePlayerByTargetVillagePlayerId() { return xhasQueRlMap("villagePlayerByTargetVillagePlayerId"); }
 
     /**
      * Get the condition-query for relation table. <br>
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The instance of condition-query. (NotNull)
      */
     public VillageDayCQ queryVillageDay() {
@@ -330,23 +310,23 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /**
      * Get the condition-query for relation table. <br>
-     * CHARA by my VOTE_CHARA_ID, named 'charaByVoteCharaId'.
+     * VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
      * @return The instance of condition-query. (NotNull)
      */
-    public CharaCQ queryCharaByVoteCharaId() {
-        return xdfgetConditionQueryCharaByVoteCharaId();
+    public VillagePlayerCQ queryVillagePlayerByVillagePlayerId() {
+        return xdfgetConditionQueryVillagePlayerByVillagePlayerId();
     }
-    public CharaCQ xdfgetConditionQueryCharaByVoteCharaId() {
-        String prop = "charaByVoteCharaId";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryCharaByVoteCharaId()); xsetupOuterJoinCharaByVoteCharaId(); }
+    public VillagePlayerCQ xdfgetConditionQueryVillagePlayerByVillagePlayerId() {
+        String prop = "villagePlayerByVillagePlayerId";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVillagePlayerByVillagePlayerId()); xsetupOuterJoinVillagePlayerByVillagePlayerId(); }
         return xgetQueRlMap(prop);
     }
-    protected CharaCQ xcreateQueryCharaByVoteCharaId() {
-        String nrp = xresolveNRP("vote", "charaByVoteCharaId"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new CharaCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "charaByVoteCharaId", nrp);
+    protected VillagePlayerCQ xcreateQueryVillagePlayerByVillagePlayerId() {
+        String nrp = xresolveNRP("vote", "villagePlayerByVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByVillagePlayerId", nrp);
     }
-    protected void xsetupOuterJoinCharaByVoteCharaId() { xregOutJo("charaByVoteCharaId"); }
-    public boolean hasConditionQueryCharaByVoteCharaId() { return xhasQueRlMap("charaByVoteCharaId"); }
+    protected void xsetupOuterJoinVillagePlayerByVillagePlayerId() { xregOutJo("villagePlayerByVillagePlayerId"); }
+    public boolean hasConditionQueryVillagePlayerByVillagePlayerId() { return xhasQueRlMap("villagePlayerByVillagePlayerId"); }
 
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;
@@ -357,6 +337,30 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     //                                                                     ===============
     public Map<String, VoteCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
     public String keepScalarCondition(VoteCQ sq) { return xkeepSQue("scalarCondition", sq); }
+
+    // ===================================================================================
+    //                                                                       MyselfDerived
+    //                                                                       =============
+    public Map<String, VoteCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
+    public String keepSpecifyMyselfDerived(VoteCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
+
+    public Map<String, VoteCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
+    public String keepQueryMyselfDerived(VoteCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
+    public Map<String, Object> xdfgetQueryMyselfDerivedParameter() { return xgetSQuePmMap("queryMyselfDerived"); }
+    public String keepQueryMyselfDerivedParameter(Object pm) { return xkeepSQuePm("queryMyselfDerived", pm); }
+
+    // ===================================================================================
+    //                                                                        MyselfExists
+    //                                                                        ============
+    protected Map<String, VoteCQ> _myselfExistsMap;
+    public Map<String, VoteCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
+    public String keepMyselfExists(VoteCQ sq) { return xkeepSQue("myselfExists", sq); }
+
+    // ===================================================================================
+    //                                                                       MyselfInScope
+    //                                                                       =============
+    public Map<String, VoteCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
+    public String keepMyselfInScope(VoteCQ sq) { return xkeepSQue("myselfInScope", sq); }
 
     // ===================================================================================
     //                                                                       Very Internal

@@ -18,7 +18,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE
  *
  * [column]
- *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, DAY, MESSAGE_CONTENT, MESSAGE_DATETIME, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, MESSAGE_UNIXTIMESTAMP_MILLI, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, MESSAGE_CONTENT, MESSAGE_DATETIME, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -46,10 +46,11 @@ import com.ort.dbflute.exentity.*;
  * Integer villageId = entity.getVillageId();
  * Integer messageNumber = entity.getMessageNumber();
  * String messageTypeCode = entity.getMessageTypeCode();
+ * Long messageUnixtimestampMilli = entity.getMessageUnixtimestampMilli();
+ * Integer villageDayId = entity.getVillageDayId();
  * Integer villagePlayerId = entity.getVillagePlayerId();
  * Integer toVillagePlayerId = entity.getToVillagePlayerId();
  * Integer playerId = entity.getPlayerId();
- * Integer day = entity.getDay();
  * String messageContent = entity.getMessageContent();
  * java.time.LocalDateTime messageDatetime = entity.getMessageDatetime();
  * Boolean isConvertDisable = entity.getIsConvertDisable();
@@ -61,10 +62,11 @@ import com.ort.dbflute.exentity.*;
  * entity.setVillageId(villageId);
  * entity.setMessageNumber(messageNumber);
  * entity.setMessageTypeCode(messageTypeCode);
+ * entity.setMessageUnixtimestampMilli(messageUnixtimestampMilli);
+ * entity.setVillageDayId(villageDayId);
  * entity.setVillagePlayerId(villagePlayerId);
  * entity.setToVillagePlayerId(toVillagePlayerId);
  * entity.setPlayerId(playerId);
- * entity.setDay(day);
  * entity.setMessageContent(messageContent);
  * entity.setMessageDatetime(messageDatetime);
  * entity.setIsConvertDisable(isConvertDisable);
@@ -88,14 +90,20 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)} */
+    /** VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)} */
     protected Integer _villageId;
 
-    /** MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)} */
+    /** MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)} */
     protected Integer _messageNumber;
 
-    /** MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)} */
+    /** MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)} */
     protected String _messageTypeCode;
+
+    /** MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)} */
+    protected Long _messageUnixtimestampMilli;
+
+    /** VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)} */
+    protected Integer _villageDayId;
 
     /** VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10)} */
     protected Integer _villagePlayerId;
@@ -105,9 +113,6 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
 
     /** PLAYER_ID: {IX, INT UNSIGNED(10)} */
     protected Integer _playerId;
-
-    /** DAY: {NotNull, INT UNSIGNED(10)} */
-    protected Integer _day;
 
     /** MESSAGE_CONTENT: {NotNull, VARCHAR(10000)} */
     protected String _messageContent;
@@ -157,21 +162,6 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
         return true;
     }
 
-    /**
-     * To be unique by the unique column. <br>
-     * You can update the entity by the key when entity update (NOT batch update).
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     */
-    public void uniqueBy(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        __uniqueDrivenProperties.clear();
-        __uniqueDrivenProperties.addPropertyName("villageId");
-        __uniqueDrivenProperties.addPropertyName("messageTypeCode");
-        __uniqueDrivenProperties.addPropertyName("messageNumber");
-        setVillageId(villageId);setMessageTypeCode(messageTypeCode);setMessageNumber(messageNumber);
-    }
-
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
@@ -219,10 +209,11 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
         sb.append(dm).append(xfND(_villageId));
         sb.append(dm).append(xfND(_messageNumber));
         sb.append(dm).append(xfND(_messageTypeCode));
+        sb.append(dm).append(xfND(_messageUnixtimestampMilli));
+        sb.append(dm).append(xfND(_villageDayId));
         sb.append(dm).append(xfND(_villagePlayerId));
         sb.append(dm).append(xfND(_toVillagePlayerId));
         sb.append(dm).append(xfND(_playerId));
-        sb.append(dm).append(xfND(_day));
         sb.append(dm).append(xfND(_messageContent));
         sb.append(dm).append(xfND(_messageDatetime));
         sb.append(dm).append(xfND(_isConvertDisable));
@@ -252,7 +243,7 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)} <br>
+     * [get] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)} <br>
      * 村ID
      * @return The value of the column 'VILLAGE_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -262,7 +253,7 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [set] VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)} <br>
+     * [set] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)} <br>
      * 村ID
      * @param villageId The value of the column 'VILLAGE_ID'. (basically NotNull if update: for the constraint)
      */
@@ -272,7 +263,7 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [get] MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)} <br>
+     * [get] MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)} <br>
      * メッセージ番号
      * @return The value of the column 'MESSAGE_NUMBER'. (basically NotNull if selected: for the constraint)
      */
@@ -282,7 +273,7 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [set] MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)} <br>
+     * [set] MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)} <br>
      * メッセージ番号
      * @param messageNumber The value of the column 'MESSAGE_NUMBER'. (basically NotNull if update: for the constraint)
      */
@@ -292,7 +283,7 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [get] MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)} <br>
+     * [get] MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)} <br>
      * メッセージ種別コード
      * @return The value of the column 'MESSAGE_TYPE_CODE'. (basically NotNull if selected: for the constraint)
      */
@@ -302,13 +293,53 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [set] MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)} <br>
+     * [set] MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)} <br>
      * メッセージ種別コード
      * @param messageTypeCode The value of the column 'MESSAGE_TYPE_CODE'. (basically NotNull if update: for the constraint)
      */
     public void setMessageTypeCode(String messageTypeCode) {
         registerModifiedProperty("messageTypeCode");
         _messageTypeCode = messageTypeCode;
+    }
+
+    /**
+     * [get] MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)} <br>
+     * メッセージUNIXタイムスタンプミリ秒
+     * @return The value of the column 'MESSAGE_UNIXTIMESTAMP_MILLI'. (basically NotNull if selected: for the constraint)
+     */
+    public Long getMessageUnixtimestampMilli() {
+        checkSpecifiedProperty("messageUnixtimestampMilli");
+        return _messageUnixtimestampMilli;
+    }
+
+    /**
+     * [set] MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)} <br>
+     * メッセージUNIXタイムスタンプミリ秒
+     * @param messageUnixtimestampMilli The value of the column 'MESSAGE_UNIXTIMESTAMP_MILLI'. (basically NotNull if update: for the constraint)
+     */
+    public void setMessageUnixtimestampMilli(Long messageUnixtimestampMilli) {
+        registerModifiedProperty("messageUnixtimestampMilli");
+        _messageUnixtimestampMilli = messageUnixtimestampMilli;
+    }
+
+    /**
+     * [get] VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)} <br>
+     * 村日付ID
+     * @return The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getVillageDayId() {
+        checkSpecifiedProperty("villageDayId");
+        return _villageDayId;
+    }
+
+    /**
+     * [set] VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)} <br>
+     * 村日付ID
+     * @param villageDayId The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if update: for the constraint)
+     */
+    public void setVillageDayId(Integer villageDayId) {
+        registerModifiedProperty("villageDayId");
+        _villageDayId = villageDayId;
     }
 
     /**
@@ -369,26 +400,6 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     public void setPlayerId(Integer playerId) {
         registerModifiedProperty("playerId");
         _playerId = playerId;
-    }
-
-    /**
-     * [get] DAY: {NotNull, INT UNSIGNED(10)} <br>
-     * 何日目か
-     * @return The value of the column 'DAY'. (basically NotNull if selected: for the constraint)
-     */
-    public Integer getDay() {
-        checkSpecifiedProperty("day");
-        return _day;
-    }
-
-    /**
-     * [set] DAY: {NotNull, INT UNSIGNED(10)} <br>
-     * 何日目か
-     * @param day The value of the column 'DAY'. (basically NotNull if update: for the constraint)
-     */
-    public void setDay(Integer day) {
-        registerModifiedProperty("day");
-        _day = day;
     }
 
     /**

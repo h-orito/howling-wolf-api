@@ -43,13 +43,13 @@ import com.ort.dbflute.cbean.*;
  *     DESIGNER
  *
  * [referrer table]
- *     CHARA, VILLAGE_SETTINGS
+ *     CHARA
  *
  * [foreign property]
  *     designer
  *
  * [referrer property]
- *     charaList, villageSettingsList
+ *     charaList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -109,7 +109,7 @@ public abstract class BsCharaGroupBhv extends AbstractBehaviorWritable<CharaGrou
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">charaGroup</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">charaGroupBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -423,70 +423,6 @@ public abstract class BsCharaGroupBhv extends AbstractBehaviorWritable<CharaGrou
 
     protected NestedReferrerListGateway<Chara> doLoadChara(List<CharaGroup> charaGroupList, LoadReferrerOption<CharaCB, Chara> option) {
         return helpLoadReferrerInternally(charaGroupList, option, "charaList");
-    }
-
-    /**
-     * Load referrer of villageSettingsList by the set-upper of referrer. <br>
-     * VILLAGE_SETTINGS by CHARACTER_GROUP_ID, named 'villageSettingsList'.
-     * <pre>
-     * <span style="color: #0000C0">charaGroupBhv</span>.<span style="color: #CC4747">loadVillageSettings</span>(<span style="color: #553000">charaGroupList</span>, <span style="color: #553000">settingsCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">settingsCB</span>.setupSelect...
-     *     <span style="color: #553000">settingsCB</span>.query().set...
-     *     <span style="color: #553000">settingsCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * <span style="color: #70226C">for</span> (CharaGroup charaGroup : <span style="color: #553000">charaGroupList</span>) {
-     *     ... = charaGroup.<span style="color: #CC4747">getVillageSettingsList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharacterGroupId_InScope(pkList);
-     * cb.query().addOrderBy_CharacterGroupId_Asc();
-     * </pre>
-     * @param charaGroupList The entity list of charaGroup. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<VillageSettings> loadVillageSettings(List<CharaGroup> charaGroupList, ReferrerConditionSetupper<VillageSettingsCB> refCBLambda) {
-        xassLRArg(charaGroupList, refCBLambda);
-        return doLoadVillageSettings(charaGroupList, new LoadReferrerOption<VillageSettingsCB, VillageSettings>().xinit(refCBLambda));
-    }
-
-    /**
-     * Load referrer of villageSettingsList by the set-upper of referrer. <br>
-     * VILLAGE_SETTINGS by CHARACTER_GROUP_ID, named 'villageSettingsList'.
-     * <pre>
-     * <span style="color: #0000C0">charaGroupBhv</span>.<span style="color: #CC4747">loadVillageSettings</span>(<span style="color: #553000">charaGroup</span>, <span style="color: #553000">settingsCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">settingsCB</span>.setupSelect...
-     *     <span style="color: #553000">settingsCB</span>.query().set...
-     *     <span style="color: #553000">settingsCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * ... = <span style="color: #553000">charaGroup</span>.<span style="color: #CC4747">getVillageSettingsList()</span>;
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharacterGroupId_InScope(pkList);
-     * cb.query().addOrderBy_CharacterGroupId_Asc();
-     * </pre>
-     * @param charaGroup The entity of charaGroup. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<VillageSettings> loadVillageSettings(CharaGroup charaGroup, ReferrerConditionSetupper<VillageSettingsCB> refCBLambda) {
-        xassLRArg(charaGroup, refCBLambda);
-        return doLoadVillageSettings(xnewLRLs(charaGroup), new LoadReferrerOption<VillageSettingsCB, VillageSettings>().xinit(refCBLambda));
-    }
-
-    protected NestedReferrerListGateway<VillageSettings> doLoadVillageSettings(List<CharaGroup> charaGroupList, LoadReferrerOption<VillageSettingsCB, VillageSettings> option) {
-        return helpLoadReferrerInternally(charaGroupList, option, "villageSettingsList");
     }
 
     // ===================================================================================
@@ -934,8 +870,8 @@ public abstract class BsCharaGroupBhv extends AbstractBehaviorWritable<CharaGrou
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * charaGroupBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * charaGroupBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * charaGroupBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * charaGroupBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * charaGroupBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -943,7 +879,7 @@ public abstract class BsCharaGroupBhv extends AbstractBehaviorWritable<CharaGrou
      * charaGroupBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * charaGroupBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * charaGroupBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * charaGroupBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * charaGroupBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -951,7 +887,7 @@ public abstract class BsCharaGroupBhv extends AbstractBehaviorWritable<CharaGrou
      * charaGroupBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * charaGroupBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * charaGroupBhv.outideSql().removeBlockComment().selectList()
      * charaGroupBhv.outideSql().removeLineComment().selectList()
      * charaGroupBhv.outideSql().formatSql().selectList()

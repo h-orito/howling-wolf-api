@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin
 @RestController
 class CharachipController(
-        val charachipService: CharachipService
+    val charachipService: CharachipService
 ) {
 
     // ===================================================================================
@@ -20,34 +20,37 @@ class CharachipController(
     //                                                                           =========
     @GetMapping("/charachip/list")
     fun charachipList(): CharachipListView {
-        val charaChips = charachipService.findCharaChipList()
+        val charachips = charachipService.findCharaChipList()
+        val charas = charachipService.findCharaList(charachips)
         return CharachipListView(
-                charachipList = charaChips.charachipList
+            charachips = charachips,
+            charas = charas
         )
     }
 
     @GetMapping("/charachip/{charaChipId}")
     fun charachip(@PathVariable("charaChipId") charaChipId: Int): CharachipView {
-        val charaChip = charachipService.findCharaChip(charaChipId)
+        val charachip = charachipService.findCharaChip(charaChipId)
+        val charas = charachipService.findCharaList(charachip.id)
         return CharachipView(
-                charachip = charaChip
+            charachip = charachip,
+            charas = charas
         )
     }
 
-    @GetMapping("/charachip/{charaChipId}/chara/{charaId}")
-    fun chara(@PathVariable("charaChipId") charaChipId: Int,
-              @PathVariable("charaId") charaId: Int): CharaView {
-        val chara = charachipService.findChara(charaChipId, charaId)
+    @GetMapping("/chara/{charaId}")
+    fun chara(@PathVariable("charaId") charaId: Int): CharaView {
+        val chara = charachipService.findChara(charaId)
         return CharaView(
-                chara = chara
+            chara = chara
         )
     }
 
     @GetMapping("/charachip/{charaChipId}/dummychara")
-    fun chara(@PathVariable("charaChipId") charaChipId: Int): CharaView {
+    fun dummyChara(@PathVariable("charaChipId") charaChipId: Int): CharaView {
         val chara = charachipService.findDummyChara(charaChipId)
         return CharaView(
-                chara = chara
+            chara = chara
         )
     }
 }

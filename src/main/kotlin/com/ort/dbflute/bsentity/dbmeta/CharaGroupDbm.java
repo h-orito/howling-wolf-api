@@ -83,7 +83,7 @@ public class CharaGroupDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnCharaGroupId = cci("CHARA_GROUP_ID", "CHARA_GROUP_ID", null, null, Integer.class, "charaGroupId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "charaList,villageSettingsList", null, false);
+    protected final ColumnInfo _columnCharaGroupId = cci("CHARA_GROUP_ID", "CHARA_GROUP_ID", null, null, Integer.class, "charaGroupId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "charaList", null, false);
     protected final ColumnInfo _columnCharaGroupName = cci("CHARA_GROUP_NAME", "CHARA_GROUP_NAME", null, null, String.class, "charaGroupName", null, false, false, true, "VARCHAR", 40, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDesignerId = cci("DESIGNER_ID", "DESIGNER_ID", null, null, Integer.class, "designerId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "designer", null, null, false);
     protected final ColumnInfo _columnDescriptionUrl = cci("DESCRIPTION_URL", "DESCRIPTION_URL", null, null, String.class, "descriptionUrl", null, false, false, false, "TEXT", 65535, 0, null, null, false, null, null, null, null, null, false);
@@ -185,14 +185,6 @@ public class CharaGroupDbm extends AbstractDBMeta {
     public ReferrerInfo referrerCharaList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaGroupId(), CharaDbm.getInstance().columnCharaGroupId());
         return cri("FK_CHARA_CHARA_GROUP", "charaList", this, CharaDbm.getInstance(), mp, false, "charaGroup");
-    }
-    /**
-     * VILLAGE_SETTINGS by CHARACTER_GROUP_ID, named 'villageSettingsList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerVillageSettingsList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaGroupId(), VillageSettingsDbm.getInstance().columnCharacterGroupId());
-        return cri("FK_VILLAGE_SETTINGS_CHARA_GROUP", "villageSettingsList", this, VillageSettingsDbm.getInstance(), mp, false, "charaGroup");
     }
 
     // ===================================================================================

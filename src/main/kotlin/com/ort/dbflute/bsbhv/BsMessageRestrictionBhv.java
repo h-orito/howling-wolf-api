@@ -26,10 +26,10 @@ import com.ort.dbflute.cbean.*;
  * The behavior of MESSAGE_RESTRICTION as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, SKILL_CODE, MESSAGE_TYPE_CODE
+ *     VILLAGE_ID, MESSAGE_TYPE_CODE
  *
  * [column]
- *     VILLAGE_ID, SKILL_CODE, MESSAGE_TYPE_CODE, MESSAGE_MAX_NUM, MESSAGE_MAX_LENGTH, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_MAX_NUM, MESSAGE_MAX_LENGTH, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -41,13 +41,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     MESSAGE_TYPE, SKILL, VILLAGE
+ *     MESSAGE_TYPE, VILLAGE
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     messageType, skill, village
+ *     messageType, village
  *
  * [referrer property]
  *     
@@ -110,7 +110,7 @@ public abstract class BsMessageRestrictionBhv extends AbstractBehaviorWritable<M
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">messageRestriction</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">messageRestrictionBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -161,32 +161,31 @@ public abstract class BsMessageRestrictionBhv extends AbstractBehaviorWritable<M
     /**
      * Select the entity by the primary-key value.
      * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village. (NotNull)
-     * @param skillCode : PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill. (NotNull)
      * @param messageTypeCode : PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<MessageRestriction> selectByPK(Integer villageId, CDef.Skill skillCode, CDef.MessageType messageTypeCode) {
-        return facadeSelectByPK(villageId, skillCode, messageTypeCode);
+    public OptionalEntity<MessageRestriction> selectByPK(Integer villageId, CDef.MessageType messageTypeCode) {
+        return facadeSelectByPK(villageId, messageTypeCode);
     }
 
-    protected OptionalEntity<MessageRestriction> facadeSelectByPK(Integer villageId, CDef.Skill skillCode, CDef.MessageType messageTypeCode) {
-        return doSelectOptionalByPK(villageId, skillCode, messageTypeCode, typeOfSelectedEntity());
+    protected OptionalEntity<MessageRestriction> facadeSelectByPK(Integer villageId, CDef.MessageType messageTypeCode) {
+        return doSelectOptionalByPK(villageId, messageTypeCode, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends MessageRestriction> ENTITY doSelectByPK(Integer villageId, CDef.Skill skillCode, CDef.MessageType messageTypeCode, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(villageId, skillCode, messageTypeCode), tp);
+    protected <ENTITY extends MessageRestriction> ENTITY doSelectByPK(Integer villageId, CDef.MessageType messageTypeCode, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(villageId, messageTypeCode), tp);
     }
 
-    protected <ENTITY extends MessageRestriction> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageId, CDef.Skill skillCode, CDef.MessageType messageTypeCode, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(villageId, skillCode, messageTypeCode, tp), villageId, skillCode, messageTypeCode);
+    protected <ENTITY extends MessageRestriction> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageId, CDef.MessageType messageTypeCode, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(villageId, messageTypeCode, tp), villageId, messageTypeCode);
     }
 
-    protected MessageRestrictionCB xprepareCBAsPK(Integer villageId, CDef.Skill skillCode, CDef.MessageType messageTypeCode) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("skillCode", skillCode);assertObjectNotNull("messageTypeCode", messageTypeCode);
-        return newConditionBean().acceptPK(villageId, skillCode, messageTypeCode);
+    protected MessageRestrictionCB xprepareCBAsPK(Integer villageId, CDef.MessageType messageTypeCode) {
+        assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageTypeCode", messageTypeCode);
+        return newConditionBean().acceptPK(villageId, messageTypeCode);
     }
 
     // ===================================================================================
@@ -374,14 +373,6 @@ public abstract class BsMessageRestrictionBhv extends AbstractBehaviorWritable<M
      */
     public List<MessageType> pulloutMessageType(List<MessageRestriction> messageRestrictionList)
     { return helpPulloutInternally(messageRestrictionList, "messageType"); }
-
-    /**
-     * Pull out the list of foreign table 'Skill'.
-     * @param messageRestrictionList The list of messageRestriction. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Skill> pulloutSkill(List<MessageRestriction> messageRestrictionList)
-    { return helpPulloutInternally(messageRestrictionList, "skill"); }
 
     /**
      * Pull out the list of foreign table 'Village'.
@@ -817,8 +808,8 @@ public abstract class BsMessageRestrictionBhv extends AbstractBehaviorWritable<M
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * messageRestrictionBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * messageRestrictionBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * messageRestrictionBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * messageRestrictionBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * messageRestrictionBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -826,7 +817,7 @@ public abstract class BsMessageRestrictionBhv extends AbstractBehaviorWritable<M
      * messageRestrictionBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * messageRestrictionBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * messageRestrictionBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * messageRestrictionBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * messageRestrictionBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -834,7 +825,7 @@ public abstract class BsMessageRestrictionBhv extends AbstractBehaviorWritable<M
      * messageRestrictionBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * messageRestrictionBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * messageRestrictionBhv.outideSql().removeBlockComment().selectList()
      * messageRestrictionBhv.outideSql().removeLineComment().selectList()
      * messageRestrictionBhv.outideSql().formatSql().selectList()

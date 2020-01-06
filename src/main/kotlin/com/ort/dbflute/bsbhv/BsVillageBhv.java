@@ -40,16 +40,16 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     VILLAGE_STATUS, CAMP, VILLAGE_SETTINGS(AsOne)
+ *     VILLAGE_STATUS, CAMP
  *
  * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTINGS
+ *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
  *
  * [foreign property]
- *     villageStatus, camp, villageSettingsAsOne
+ *     villageStatus, camp
  *
  * [referrer property]
- *     messageRestrictionList, villageDayList, villagePlayerList
+ *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -109,7 +109,7 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">village</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">villageBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -553,6 +553,70 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
         return helpLoadReferrerInternally(villageList, option, "villagePlayerList");
     }
 
+    /**
+     * Load referrer of villageSettingList by the set-upper of referrer. <br>
+     * VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * <pre>
+     * <span style="color: #0000C0">villageBhv</span>.<span style="color: #CC4747">loadVillageSetting</span>(<span style="color: #553000">villageList</span>, <span style="color: #553000">settingCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">settingCB</span>.setupSelect...
+     *     <span style="color: #553000">settingCB</span>.query().set...
+     *     <span style="color: #553000">settingCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Village village : <span style="color: #553000">villageList</span>) {
+     *     ... = village.<span style="color: #CC4747">getVillageSettingList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillageId_InScope(pkList);
+     * cb.query().addOrderBy_VillageId_Asc();
+     * </pre>
+     * @param villageList The entity list of village. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<VillageSetting> loadVillageSetting(List<Village> villageList, ReferrerConditionSetupper<VillageSettingCB> refCBLambda) {
+        xassLRArg(villageList, refCBLambda);
+        return doLoadVillageSetting(villageList, new LoadReferrerOption<VillageSettingCB, VillageSetting>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of villageSettingList by the set-upper of referrer. <br>
+     * VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * <pre>
+     * <span style="color: #0000C0">villageBhv</span>.<span style="color: #CC4747">loadVillageSetting</span>(<span style="color: #553000">village</span>, <span style="color: #553000">settingCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">settingCB</span>.setupSelect...
+     *     <span style="color: #553000">settingCB</span>.query().set...
+     *     <span style="color: #553000">settingCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">village</span>.<span style="color: #CC4747">getVillageSettingList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillageId_InScope(pkList);
+     * cb.query().addOrderBy_VillageId_Asc();
+     * </pre>
+     * @param village The entity of village. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<VillageSetting> loadVillageSetting(Village village, ReferrerConditionSetupper<VillageSettingCB> refCBLambda) {
+        xassLRArg(village, refCBLambda);
+        return doLoadVillageSetting(xnewLRLs(village), new LoadReferrerOption<VillageSettingCB, VillageSetting>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<VillageSetting> doLoadVillageSetting(List<Village> villageList, LoadReferrerOption<VillageSettingCB, VillageSetting> option) {
+        return helpLoadReferrerInternally(villageList, option, "villageSettingList");
+    }
+
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
@@ -571,14 +635,6 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
      */
     public List<Camp> pulloutCamp(List<Village> villageList)
     { return helpPulloutInternally(villageList, "camp"); }
-
-    /**
-     * Pull out the list of referrer-as-one table 'VillageSettings'.
-     * @param villageList The list of village. (NotNull, EmptyAllowed)
-     * @return The list of referrer-as-one table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<VillageSettings> pulloutVillageSettingsAsOne(List<Village> villageList)
-    { return helpPulloutInternally(villageList, "villageSettingsAsOne"); }
 
     // ===================================================================================
     //                                                                      Extract Column
@@ -1014,8 +1070,8 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * villageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * villageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * villageBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * villageBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * villageBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -1023,7 +1079,7 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
      * villageBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * villageBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * villageBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * villageBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * villageBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -1031,7 +1087,7 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
      * villageBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * villageBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * villageBhv.outideSql().removeBlockComment().selectList()
      * villageBhv.outideSql().removeLineComment().selectList()
      * villageBhv.outideSql().formatSql().selectList()

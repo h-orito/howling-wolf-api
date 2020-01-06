@@ -93,7 +93,7 @@ public class BsDeadReasonCQ extends AbstractBsDeadReasonCQ {
     public Map<String, Object> xdfgetDeadReasonCode_QueryDerivedReferrer_VillagePlayerListParameter() { return xgetSQuePmMap("deadReasonCode_QueryDerivedReferrer_VillagePlayerList"); }
     public String keepDeadReasonCode_QueryDerivedReferrer_VillagePlayerListParameter(Object pm) { return xkeepSQuePm("deadReasonCode_QueryDerivedReferrer_VillagePlayerList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DEAD_REASON_CODE: {PK, NotNull, VARCHAR(20), classification=DeadReason}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsDeadReasonCQ extends AbstractBsDeadReasonCQ {
       return _deadReasonName; }
     protected ConditionValue xgetCValueDeadReasonName() { return xdfgetDeadReasonName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DEAD_REASON_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)

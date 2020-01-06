@@ -93,7 +93,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
     public Map<String, Object> xdfgetDesignerId_QueryDerivedReferrer_CharaGroupListParameter() { return xgetSQuePmMap("designerId_QueryDerivedReferrer_CharaGroupList"); }
     public String keepDesignerId_QueryDerivedReferrer_CharaGroupListParameter(Object pm) { return xkeepSQuePm("designerId_QueryDerivedReferrer_CharaGroupList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DESIGNER_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
       return _designerName; }
     protected ConditionValue xgetCValueDesignerName() { return xdfgetDesignerName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DESIGNER_NAME: {NotNull, VARCHAR(40)}
      * @return this. (NotNull)
@@ -133,7 +133,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -153,7 +153,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -173,7 +173,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -193,7 +193,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)

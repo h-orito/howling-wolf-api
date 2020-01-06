@@ -62,50 +62,18 @@ public class CharaCIQ extends AbstractBsCharaCQ {
     //                                                                Override about Query
     //                                                                ====================
     protected ConditionValue xgetCValueCharaId() { return _myCQ.xdfgetCharaId(); }
-    public String keepCharaId_ExistsReferrer_AbilityByCharaIdList(AbilityCQ sq)
-    { throwIICBOE("ExistsReferrer"); return null; }
-    public String keepCharaId_ExistsReferrer_AbilityByTargetCharaIdList(AbilityCQ sq)
-    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepCharaId_ExistsReferrer_CharaImageList(CharaImageCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepCharaId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
-    public String keepCharaId_ExistsReferrer_VoteByCharaIdList(VoteCQ sq)
-    { throwIICBOE("ExistsReferrer"); return null; }
-    public String keepCharaId_ExistsReferrer_VoteByVoteCharaIdList(VoteCQ sq)
-    { throwIICBOE("ExistsReferrer"); return null; }
-    public String keepCharaId_NotExistsReferrer_AbilityByCharaIdList(AbilityCQ sq)
-    { throwIICBOE("NotExistsReferrer"); return null; }
-    public String keepCharaId_NotExistsReferrer_AbilityByTargetCharaIdList(AbilityCQ sq)
-    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepCharaId_NotExistsReferrer_CharaImageList(CharaImageCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepCharaId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
-    public String keepCharaId_NotExistsReferrer_VoteByCharaIdList(VoteCQ sq)
-    { throwIICBOE("NotExistsReferrer"); return null; }
-    public String keepCharaId_NotExistsReferrer_VoteByVoteCharaIdList(VoteCQ sq)
-    { throwIICBOE("NotExistsReferrer"); return null; }
-    public String keepCharaId_SpecifyDerivedReferrer_AbilityByCharaIdList(AbilityCQ sq)
-    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
-    public String keepCharaId_SpecifyDerivedReferrer_AbilityByTargetCharaIdList(AbilityCQ sq)
-    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepCharaId_SpecifyDerivedReferrer_CharaImageList(CharaImageCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepCharaId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
-    public String keepCharaId_SpecifyDerivedReferrer_VoteByCharaIdList(VoteCQ sq)
-    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
-    public String keepCharaId_SpecifyDerivedReferrer_VoteByVoteCharaIdList(VoteCQ sq)
-    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_AbilityByCharaIdList(AbilityCQ sq)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_AbilityByCharaIdListParameter(Object vl)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_AbilityByTargetCharaIdList(AbilityCQ sq)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_AbilityByTargetCharaIdListParameter(Object vl)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepCharaId_QueryDerivedReferrer_CharaImageList(CharaImageCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepCharaId_QueryDerivedReferrer_CharaImageListParameter(Object vl)
@@ -113,14 +81,6 @@ public class CharaCIQ extends AbstractBsCharaCQ {
     public String keepCharaId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepCharaId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_VoteByCharaIdList(VoteCQ sq)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_VoteByCharaIdListParameter(Object vl)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_VoteByVoteCharaIdList(VoteCQ sq)
-    { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    public String keepCharaId_QueryDerivedReferrer_VoteByVoteCharaIdListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueCharaName() { return _myCQ.xdfgetCharaName(); }
     protected ConditionValue xgetCValueCharaShortName() { return _myCQ.xdfgetCharaShortName(); }

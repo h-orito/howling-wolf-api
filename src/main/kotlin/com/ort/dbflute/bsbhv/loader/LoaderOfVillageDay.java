@@ -12,31 +12,31 @@ import com.ort.dbflute.cbean.*;
  * The referrer loader of VILLAGE_DAY as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY
+ *     VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, DAYCHANGE_DATETIME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, IS_UPDATING, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
  *
  * [identity]
- *     
+ *     VILLAGE_DAY_ID
  *
  * [version-no]
  *     
  *
  * [foreign table]
- *     VILLAGE
+ *     NOONNIGHT, VILLAGE, VOTE(AsOne)
  *
  * [referrer table]
- *     ABILITY, COMMIT, VOTE
+ *     ABILITY, COMMIT, VILLAGE_PLAYER, VOTE
  *
  * [foreign property]
- *     village
+ *     noonnight, village, voteAsOne
  *
  * [referrer property]
- *     abilityList, commitList, voteList
+ *     abilityList, commitList, villagePlayerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -65,7 +65,7 @@ public class LoaderOfVillageDay {
 
     /**
      * Load referrer of abilityList by the set-upper of referrer. <br>
-     * ABILITY by VILLAGE_ID, DAY, named 'abilityList'.
+     * ABILITY by VILLAGE_DAY_ID, named 'abilityList'.
      * <pre>
      * <span style="color: #0000C0">villageDayBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">villageDayList</span>, <span style="color: #553000">dayLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">dayLoader</span>.<span style="color: #CC4747">loadAbility</span>(<span style="color: #553000">abilityCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -84,8 +84,8 @@ public class LoaderOfVillageDay {
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has settings before callback as follows:
      * <pre>
-     * cb.query().set[ForeignKey]_InScope(pkList);
-     * cb.query().addOrderBy_[ForeignKey]_Asc();
+     * cb.query().setVillageDayId_InScope(pkList);
+     * cb.query().addOrderBy_VillageDayId_Asc();
      * </pre>
      * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
      * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
@@ -99,7 +99,7 @@ public class LoaderOfVillageDay {
 
     /**
      * Load referrer of commitList by the set-upper of referrer. <br>
-     * COMMIT by VILLAGE_ID, DAY, named 'commitList'.
+     * COMMIT by VILLAGE_DAY_ID, named 'commitList'.
      * <pre>
      * <span style="color: #0000C0">villageDayBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">villageDayList</span>, <span style="color: #553000">dayLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">dayLoader</span>.<span style="color: #CC4747">loadCommit</span>(<span style="color: #553000">commitCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -118,8 +118,8 @@ public class LoaderOfVillageDay {
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has settings before callback as follows:
      * <pre>
-     * cb.query().set[ForeignKey]_InScope(pkList);
-     * cb.query().addOrderBy_[ForeignKey]_Asc();
+     * cb.query().setVillageDayId_InScope(pkList);
+     * cb.query().addOrderBy_VillageDayId_Asc();
      * </pre>
      * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
      * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
@@ -129,48 +129,62 @@ public class LoaderOfVillageDay {
         return hd -> hd.handle(new LoaderOfCommit().ready(_referrerCommit, _selector));
     }
 
-    protected List<Vote> _referrerVote;
+    protected List<VillagePlayer> _referrerVillagePlayer;
 
     /**
-     * Load referrer of voteList by the set-upper of referrer. <br>
-     * VOTE by VILLAGE_ID, DAY, named 'voteList'.
+     * Load referrer of villagePlayerList by the set-upper of referrer. <br>
+     * VILLAGE_PLAYER by DEAD_VILLAGE_DAY_ID, named 'villagePlayerList'.
      * <pre>
      * <span style="color: #0000C0">villageDayBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">villageDayList</span>, <span style="color: #553000">dayLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">dayLoader</span>.<span style="color: #CC4747">loadVote</span>(<span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *         <span style="color: #553000">voteCB</span>.setupSelect...
-     *         <span style="color: #553000">voteCB</span>.query().set...
-     *         <span style="color: #553000">voteCB</span>.query().addOrderBy...
+     *     <span style="color: #553000">dayLoader</span>.<span style="color: #CC4747">loadVillagePlayer</span>(<span style="color: #553000">playerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *         <span style="color: #553000">playerCB</span>.setupSelect...
+     *         <span style="color: #553000">playerCB</span>.query().set...
+     *         <span style="color: #553000">playerCB</span>.query().addOrderBy...
      *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">voteLoader</span> -&gt; {</span>
-     *     <span style="color: #3F7E5E">//    voteLoader.load...</span>
+     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">playerLoader</span> -&gt; {</span>
+     *     <span style="color: #3F7E5E">//    playerLoader.load...</span>
      *     <span style="color: #3F7E5E">//});</span>
      * });
      * for (VillageDay villageDay : <span style="color: #553000">villageDayList</span>) {
-     *     ... = villageDay.<span style="color: #CC4747">getVoteList()</span>;
+     *     ... = villageDay.<span style="color: #CC4747">getVillagePlayerList()</span>;
      * }
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has settings before callback as follows:
      * <pre>
-     * cb.query().set[ForeignKey]_InScope(pkList);
-     * cb.query().addOrderBy_[ForeignKey]_Asc();
+     * cb.query().setDeadVillageDayId_InScope(pkList);
+     * cb.query().addOrderBy_DeadVillageDayId_Asc();
      * </pre>
      * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
      * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
      */
-    public NestedReferrerLoaderGateway<LoaderOfVote> loadVote(ReferrerConditionSetupper<VoteCB> refCBLambda) {
-        myBhv().loadVote(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerVote = refLs);
-        return hd -> hd.handle(new LoaderOfVote().ready(_referrerVote, _selector));
+    public NestedReferrerLoaderGateway<LoaderOfVillagePlayer> loadVillagePlayer(ReferrerConditionSetupper<VillagePlayerCB> refCBLambda) {
+        myBhv().loadVillagePlayer(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerVillagePlayer = refLs);
+        return hd -> hd.handle(new LoaderOfVillagePlayer().ready(_referrerVillagePlayer, _selector));
     }
 
     // ===================================================================================
     //                                                                    Pull out Foreign
     //                                                                    ================
+    protected LoaderOfNoonnight _foreignNoonnightLoader;
+    public LoaderOfNoonnight pulloutNoonnight() {
+        if (_foreignNoonnightLoader == null)
+        { _foreignNoonnightLoader = new LoaderOfNoonnight().ready(myBhv().pulloutNoonnight(_selectedList), _selector); }
+        return _foreignNoonnightLoader;
+    }
+
     protected LoaderOfVillage _foreignVillageLoader;
     public LoaderOfVillage pulloutVillage() {
         if (_foreignVillageLoader == null)
         { _foreignVillageLoader = new LoaderOfVillage().ready(myBhv().pulloutVillage(_selectedList), _selector); }
         return _foreignVillageLoader;
+    }
+
+    protected LoaderOfVote _foreignVoteAsOneLoader;
+    public LoaderOfVote pulloutVoteAsOne() {
+        if (_foreignVoteAsOneLoader == null)
+        { _foreignVoteAsOneLoader = new LoaderOfVote().ready(myBhv().pulloutVoteAsOne(_selectedList), _selector); }
+        return _foreignVoteAsOneLoader;
     }
 
     // ===================================================================================

@@ -68,17 +68,23 @@ public class VillageCIQ extends AbstractBsVillageCQ {
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillageId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillageId_ExistsReferrer_VillageSettingList(VillageSettingCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillageId_NotExistsReferrer_MessageRestrictionList(MessageRestrictionCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageId_NotExistsReferrer_VillageDayList(VillageDayCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillageId_NotExistsReferrer_VillageSettingList(VillageSettingCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageId_SpecifyDerivedReferrer_MessageRestrictionList(MessageRestrictionCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageId_SpecifyDerivedReferrer_VillageDayList(VillageDayCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillageId_SpecifyDerivedReferrer_VillageSettingList(VillageSettingCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageId_QueryDerivedReferrer_MessageRestrictionList(MessageRestrictionCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
@@ -91,6 +97,10 @@ public class VillageCIQ extends AbstractBsVillageCQ {
     public String keepVillageId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepVillageId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageId_QueryDerivedReferrer_VillageSettingList(VillageSettingCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageId_QueryDerivedReferrer_VillageSettingListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueVillageDisplayName() { return _myCQ.xdfgetVillageDisplayName(); }
     protected ConditionValue xgetCValueCreatePlayerName() { return _myCQ.xdfgetCreatePlayerName(); }

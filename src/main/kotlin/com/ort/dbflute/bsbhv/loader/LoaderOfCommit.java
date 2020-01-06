@@ -10,10 +10,10 @@ import com.ort.dbflute.exentity.*;
  * The referrer loader of COMMIT as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, VILLAGE_PLAYER_ID
+ *     VILLAGE_PLAYER_ID, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_PLAYER_ID, VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     

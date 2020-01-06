@@ -43,9 +43,8 @@ public class CommitDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
-        setupEpg(_epgMap, et -> ((Commit)et).getVillageId(), (et, vl) -> ((Commit)et).setVillageId(cti(vl)), "villageId");
-        setupEpg(_epgMap, et -> ((Commit)et).getDay(), (et, vl) -> ((Commit)et).setDay(cti(vl)), "day");
         setupEpg(_epgMap, et -> ((Commit)et).getVillagePlayerId(), (et, vl) -> ((Commit)et).setVillagePlayerId(cti(vl)), "villagePlayerId");
+        setupEpg(_epgMap, et -> ((Commit)et).getVillageDayId(), (et, vl) -> ((Commit)et).setVillageDayId(cti(vl)), "villageDayId");
         setupEpg(_epgMap, et -> ((Commit)et).getRegisterDatetime(), (et, vl) -> ((Commit)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((Commit)et).getRegisterTrace(), (et, vl) -> ((Commit)et).setRegisterTrace((String)vl), "registerTrace");
         setupEpg(_epgMap, et -> ((Commit)et).getUpdateDatetime(), (et, vl) -> ((Commit)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -83,29 +82,23 @@ public class CommitDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
-    protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
     protected final ColumnInfo _columnVillagePlayerId = cci("VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", null, null, Integer.class, "villagePlayerId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villagePlayer", null, null, false);
+    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnVillageId() { return _columnVillageId; }
-    /**
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnDay() { return _columnDay; }
-    /**
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillagePlayerId() { return _columnVillagePlayerId; }
+    /**
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
     /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
@@ -129,9 +122,8 @@ public class CommitDbm extends AbstractDBMeta {
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
-        ls.add(columnVillageId());
-        ls.add(columnDay());
         ls.add(columnVillagePlayerId());
+        ls.add(columnVillageDayId());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());
@@ -149,9 +141,8 @@ public class CommitDbm extends AbstractDBMeta {
     //                                       ---------------
     protected UniqueInfo cpui() {
         List<ColumnInfo> ls = newArrayListSized(4);
-        ls.add(columnVillageId());
-        ls.add(columnDay());
         ls.add(columnVillagePlayerId());
+        ls.add(columnVillageDayId());
         return hpcpui(ls);
     }
     public boolean hasPrimaryKey() { return true; }
@@ -166,13 +157,11 @@ public class CommitDbm extends AbstractDBMeta {
     //                                      Foreign Property
     //                                      ----------------
     /**
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The information object of foreign property. (NotNull)
      */
     public ForeignInfo foreignVillageDay() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
-        mp.put(columnVillageId(), VillageDayDbm.getInstance().columnVillageId());
-        mp.put(columnDay(), VillageDayDbm.getInstance().columnDay());
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VillageDayDbm.getInstance().columnVillageDayId());
         return cfi("FK_COMMIT_VILLAGE_DAY", "villageDay", this, VillageDayDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "commitList", false);
     }
     /**

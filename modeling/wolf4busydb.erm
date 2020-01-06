@@ -111,12 +111,12 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>167</x>
-			<y>716</y>
+			<x>376</x>
+			<y>981</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -206,12 +206,12 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>171</x>
-			<y>998</y>
+			<x>408</x>
+			<y>1230</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -276,12 +276,12 @@
 			<width>247</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>941</x>
-			<y>473</y>
+			<x>461</x>
+			<y>83</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -290,10 +290,7 @@
 					<target>table.COMMIT</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -301,6 +298,10 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>13</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>21</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_COMMIT_village_player</name>
@@ -316,25 +317,13 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>21</source_yp>
 					<target_xp>100</target_xp>
-					<target_yp>41</target_yp>
+					<target_yp>62</target_yp>
 				</relationship>
 			</connections>
 			<columns>
-				<normal_column>
-					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_COMMIT_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_COMMIT_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
 				<normal_column>
 					<physical_name>village_player_id</physical_name>
 					<referred_column>table.village_player.village_player_id</referred_column>
@@ -342,113 +331,14 @@
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_COMMIT_village_day</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
 				<column_group>共通カラム</column_group>
-			</columns>
-			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-			</compound_unique_key_list>
-			<table_properties>
-			</table_properties>
-		</table>
-		<table>
-			<physical_name>RANDOM_CONTENT</physical_name>
-			<logical_name>ランダム変換内容</logical_name>
-			<description></description>
-			<height>89</height>
-			<width>303</width>
-			<font_name>.AppleSystemUIFont</font_name>
-			<font_size>9</font_size>
-			<x>1031</x>
-			<y>73</y>
-			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
-			</color>
-			<connections>
-				<relationship>
-					<name>FK_RANDOM_CONTENT_RANDOM_KEYWORD</name>
-					<source>table.RANDOM_KEYWORD</source>
-					<target>table.RANDOM_CONTENT</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>random_keyword_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-				</relationship>
-			</connections>
-			<columns>
-				<normal_column>
-					<physical_name>random_content_id</physical_name>
-					<logical_name>ランダム変換内容ID</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-					<auto_increment>true</auto_increment>
-				</normal_column>
-				<normal_column>
-					<physical_name>random_keyword_id</physical_name>
-					<referred_column>table.RANDOM_KEYWORD.random_keyword_id</referred_column>
-					<relationship>FK_RANDOM_CONTENT_RANDOM_KEYWORD</relationship>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>random_message</physical_name>
-					<logical_name>ランダム変換内容文字列</logical_name>
-					<type>varchar(n)</type>
-					<length>20</length>
-					<not_null>true</not_null>
-				</normal_column>
-			</columns>
-			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-			</compound_unique_key_list>
-			<table_properties>
-			</table_properties>
-		</table>
-		<table>
-			<physical_name>RANDOM_KEYWORD</physical_name>
-			<logical_name>ランダムキーワード</logical_name>
-			<description></description>
-			<height>75</height>
-			<width>303</width>
-			<font_name>.AppleSystemUIFont</font_name>
-			<font_size>9</font_size>
-			<x>1030</x>
-			<y>236</y>
-			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
-			</color>
-			<connections>
-			</connections>
-			<columns>
-				<normal_column>
-					<physical_name>random_keyword_id</physical_name>
-					<logical_name>ランダムキーワードID</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-					<auto_increment>true</auto_increment>
-				</normal_column>
-				<normal_column>
-					<physical_name>keyword</physical_name>
-					<logical_name>キーワード</logical_name>
-					<type>varchar(n)</type>
-					<length>10</length>
-					<not_null>true</not_null>
-					<unique_key>true</unique_key>
-				</normal_column>
 			</columns>
 			<indexes>
 			</indexes>
@@ -463,12 +353,12 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>24</x>
-			<y>471</y>
+			<x>389</x>
+			<y>418</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -477,10 +367,7 @@
 					<target>table.ability</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -488,46 +375,8 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
-					<target_xp>90</target_xp>
-					<target_yp>100</target_yp>
-				</relationship>
-				<relationship>
-					<name>FK_ability_CHARA</name>
-					<source>table.CHARA</source>
-					<target>table.ability</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>chara_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<source_xp>39</source_xp>
-					<source_yp>0</source_yp>
-					<target_xp>73</target_xp>
-					<target_yp>100</target_yp>
-				</relationship>
-				<relationship>
-					<name>FK_ability_CHARA_target</name>
-					<source>table.CHARA</source>
-					<target>table.ability</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>target_chara_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<source_xp>34</source_xp>
-					<source_yp>0</source_yp>
-					<target_xp>54</target_xp>
-					<target_yp>100</target_yp>
+					<target_xp>100</target_xp>
+					<target_yp>34</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_ability_ability_type</name>
@@ -544,41 +393,72 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_ability_target_village_player</name>
+					<source>table.village_player</source>
+					<target>table.ability</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>target_village_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>58</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>73</target_yp>
+				</relationship>
+				<relationship>
+					<name>FK_ability_village_player</name>
+					<source>table.village_player</source>
+					<target>table.ability</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>village_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>48</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>46</target_yp>
+				</relationship>
 			</connections>
 			<columns>
-				<normal_column>
-					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_ability_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_ability_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>chara_id</physical_name>
-					<referred_column>table.CHARA.chara_id</referred_column>
-					<relationship>FK_ability_CHARA</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>target_chara_id</physical_name>
-					<logical_name>行使対象キャラID</logical_name>
-					<referred_column>table.CHARA.chara_id</referred_column>
-					<relationship>FK_ability_CHARA_target</relationship>
-				</normal_column>
 				<normal_column>
 					<physical_name>ability_type_code</physical_name>
 					<referred_column>table.ability_type.ability_type_code</referred_column>
 					<relationship>FK_ability_ability_type</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_ability_village_day</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_player_id</physical_name>
+					<logical_name>行使元村参加者ID</logical_name>
+					<referred_column>table.village_player.village_player_id</referred_column>
+					<relationship>FK_ability_village_player</relationship>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>target_village_player_id</physical_name>
+					<logical_name>行使対象村参加者ID</logical_name>
+					<referred_column>table.village_player.village_player_id</referred_column>
+					<relationship>FK_ability_target_village_player</relationship>
 				</normal_column>
 				<column_group>共通カラム</column_group>
 			</columns>
@@ -595,8 +475,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>64</x>
-			<y>327</y>
+			<x>12</x>
+			<y>455</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -629,52 +509,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<physical_name>allowed_secret_say</physical_name>
-			<logical_name>秘話可能な範囲</logical_name>
-			<description></description>
-			<font_name>.AppleSystemUIFont</font_name>
-			<font_size>9</font_size>
-			<x>1753</x>
-			<y>1233</y>
-			<color>
-				<r>254</r>
-				<g>251</g>
-				<b>0</b>
-			</color>
-			<connections>
-			</connections>
-			<columns>
-				<normal_column>
-					<physical_name>allowed_secret_say_code</physical_name>
-					<logical_name>秘話可能な範囲コード</logical_name>
-					<type>varchar(n)</type>
-					<length>20</length>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>allowed_secret_say_name</physical_name>
-					<logical_name>秘話可能範囲</logical_name>
-					<type>varchar(n)</type>
-					<length>20</length>
-					<not_null>true</not_null>
-				</normal_column>
-			</columns>
-			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-			</compound_unique_key_list>
-			<table_properties>
-			</table_properties>
-		</table>
-		<table>
 			<physical_name>authority</physical_name>
 			<logical_name>権限</logical_name>
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1421</x>
-			<y>153</y>
+			<x>1326</x>
+			<y>196</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -712,8 +553,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1754</x>
-			<y>953</y>
+			<x>2060</x>
+			<y>692</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -753,8 +594,8 @@
 			<width>276</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>530</x>
-			<y>815</y>
+			<x>58</x>
+			<y>1035</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -828,8 +669,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1768</x>
-			<y>620</y>
+			<x>978</x>
+			<y>1062</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -867,8 +708,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>215</x>
-			<y>1231</y>
+			<x>132</x>
+			<y>1248</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -908,8 +749,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>556</x>
-			<y>1010</y>
+			<x>-8</x>
+			<y>661</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -954,12 +795,12 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>929</x>
-			<y>884</y>
+			<x>280</x>
+			<y>610</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -977,7 +818,7 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 					<source_xp>0</source_xp>
-					<source_yp>67</source_yp>
+					<source_yp>93</source_yp>
 				</relationship>
 				<relationship>
 					<name>FK_message_player</name>
@@ -994,7 +835,9 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 					<source_xp>0</source_xp>
-					<source_yp>50</source_yp>
+					<source_yp>49</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>17</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_message_message_type</name>
@@ -1010,6 +853,8 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<target_xp>100</target_xp>
+					<target_yp>95</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_message_village_day</name>
@@ -1017,10 +862,7 @@
 					<target>table.message</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1043,6 +885,10 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>82</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>76</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_message_face_type</name>
@@ -1059,12 +905,29 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_message_village</name>
+					<source>table.village</source>
+					<target>table.message</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>village_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>81</source_yp>
+				</relationship>
 			</connections>
 			<columns>
 				<normal_column>
 					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
-					<relationship>FK_message_village_day</relationship>
+					<referred_column>table.village.village_id</referred_column>
+					<relationship>FK_message_village</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
@@ -1084,6 +947,19 @@
 					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
+					<physical_name>message_unixtimestamp_milli</physical_name>
+					<logical_name>メッセージUNIXタイムスタンプミリ秒</logical_name>
+					<type>bigint</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_message_village_day</relationship>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
 					<physical_name>village_player_id</physical_name>
 					<referred_column>table.village_player.village_player_id</referred_column>
 					<relationship>FK_message_village_player</relationship>
@@ -1098,12 +974,6 @@
 					<physical_name>player_id</physical_name>
 					<referred_column>table.player.player_id</referred_column>
 					<relationship>FK_message_player</relationship>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_message_village_day</relationship>
-					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
 					<physical_name>message_content</physical_name>
@@ -1132,22 +1002,19 @@
 				<column_group>共通カラム</column_group>
 			</columns>
 			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-				<compound_unique_key>
-					<name>UQ_message_number</name>
+				<index>
+					<name>IX_message_unixtimestamp</name>
+					<type>BTREE</type>
+					<non_unique>true</non_unique>
 					<columns>
 						<column>
-							<column_id>table.message.village_id</column_id>
-						</column>
-						<column>
-							<column_id>table.message.message_type_code</column_id>
-						</column>
-						<column>
-							<column_id>table.message.message_number</column_id>
+							<column_id>table.message.message_unixtimestamp_milli</column_id>
+							<desc>true</desc>
 						</column>
 					</columns>
-				</compound_unique_key>
+				</index>
+			</indexes>
+			<compound_unique_key_list>
 			</compound_unique_key_list>
 			<table_properties>
 			</table_properties>
@@ -1156,12 +1023,12 @@
 			<physical_name>message_restriction</physical_name>
 			<logical_name>発言制限</logical_name>
 			<description>レコードなしの場合は無制限</description>
-			<height>75</height>
-			<width>120</width>
+			<height>125</height>
+			<width>294</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>946</x>
-			<y>1309</y>
+			<x>1316</x>
+			<y>1043</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -1198,34 +1065,12 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
-				<relationship>
-					<name>FK_message_restriction_skill</name>
-					<source>table.skill</source>
-					<target>table.message_restriction</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>skill_code</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-				</relationship>
 			</connections>
 			<columns>
 				<normal_column>
 					<physical_name>village_id</physical_name>
 					<referred_column>table.village.village_id</referred_column>
 					<relationship>FK_message_restriction_village</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>skill_code</physical_name>
-					<referred_column>table.skill.skill_code</referred_column>
-					<relationship>FK_message_restriction_skill</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
@@ -1265,8 +1110,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>739</x>
-			<y>1194</y>
+			<x>781</x>
+			<y>1265</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -1299,17 +1144,65 @@
 			</table_properties>
 		</table>
 		<table>
+			<physical_name>noonnight</physical_name>
+			<logical_name>昼夜</logical_name>
+			<description></description>
+			<height>89</height>
+			<width>238</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>952</x>
+			<y>347</y>
+			<color>
+				<r>254</r>
+				<g>251</g>
+				<b>0</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>noonnight_code</physical_name>
+					<logical_name>昼夜コード</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>noonnight_name</physical_name>
+					<logical_name>昼夜名</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>disp_order</physical_name>
+					<logical_name>並び順</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
 			<physical_name>player</physical_name>
 			<logical_name>プレイヤー</logical_name>
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1386</x>
-			<y>280</y>
+			<x>946</x>
+			<y>151</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -1387,8 +1280,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1753</x>
-			<y>781</y>
+			<x>2060</x>
+			<y>808</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -1401,7 +1294,7 @@
 					<target>table.skill</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name> camp_code</fk_column_name>
+							<fk_column_name>camp_code</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1428,7 +1321,14 @@
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
-					<physical_name> camp_code</physical_name>
+					<physical_name>skill_short_name</physical_name>
+					<logical_name>役職略称</logical_name>
+					<type>character(n)</type>
+					<length>1</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>camp_code</physical_name>
 					<referred_column>table.camp.camp_code</referred_column>
 					<relationship>FK_skill_camp</relationship>
 					<not_null>true</not_null>
@@ -1454,12 +1354,12 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1387</x>
-			<y>824</y>
+			<x>1481</x>
+			<y>509</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
 				<relationship>
@@ -1550,8 +1450,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>852</x>
-			<y>712</y>
+			<x>946</x>
+			<y>507</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -1573,14 +1473,37 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_village_day_noonnight</name>
+					<source>table.noonnight</source>
+					<target>table.village_day</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>noonnight_code</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
 			</connections>
 			<columns>
+				<normal_column>
+					<physical_name>village_day_id</physical_name>
+					<logical_name>村日付ID</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+					<auto_increment>true</auto_increment>
+				</normal_column>
 				<normal_column>
 					<physical_name>village_id</physical_name>
 					<referred_column>table.village.village_id</referred_column>
 					<relationship>FK_village_day_village</relationship>
 					<not_null>true</not_null>
-					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
 					<physical_name>day</physical_name>
@@ -1588,12 +1511,23 @@
 					<type>integer</type>
 					<unsigned>true</unsigned>
 					<not_null>true</not_null>
-					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>noonnight_code</physical_name>
+					<referred_column>table.noonnight.noonnight_code</referred_column>
+					<relationship>FK_village_day_noonnight</relationship>
+					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
 					<physical_name>daychange_datetime</physical_name>
 					<logical_name>日付更新日時</logical_name>
 					<type>datetime</type>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>is_updating</physical_name>
+					<logical_name>更新中か</logical_name>
+					<type>boolean</type>
 					<not_null>true</not_null>
 				</normal_column>
 				<column_group>共通カラム</column_group>
@@ -1611,8 +1545,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1388</x>
-			<y>487</y>
+			<x>946</x>
+			<y>736</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -1648,6 +1582,10 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>89</source_xp>
+					<source_yp>100</source_yp>
+					<target_xp>90</target_xp>
+					<target_yp>0</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_village_player_CHARA</name>
@@ -1663,10 +1601,10 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
-					<source_xp>86</source_xp>
-					<source_yp>0</source_yp>
+					<source_xp>100</source_xp>
+					<source_yp>14</source_yp>
 					<target_xp>0</target_xp>
-					<target_yp>43</target_yp>
+					<target_yp>69</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_village_player_skill</name>
@@ -1712,8 +1650,6 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
-					<target_xp>100</target_xp>
-					<target_yp>69</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_village_player_second_skill_req</name>
@@ -1722,6 +1658,21 @@
 					<fk_columns>
 						<fk_column>
 							<fk_column_name>second_request_skill_code</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
+				<relationship>
+					<name>FK_village_player_village_day</name>
+					<source>table.village_day</source>
+					<target>table.village_player</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>dead_village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1794,10 +1745,10 @@
 					<relationship>FK_village_player_dead_reason</relationship>
 				</normal_column>
 				<normal_column>
-					<physical_name>dead_day</physical_name>
+					<physical_name>dead_village_day_id</physical_name>
 					<logical_name>何日目に死亡したか</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
+					<referred_column>table.village_day.village_day_id</referred_column>
+					<relationship>FK_village_player_village_day</relationship>
 				</normal_column>
 				<normal_column>
 					<physical_name>is_gone</physical_name>
@@ -1815,13 +1766,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<physical_name>village_settings</physical_name>
+			<physical_name>village_setting</physical_name>
 			<logical_name>村設定</logical_name>
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1310</x>
-			<y>1102</y>
+			<x>1659</x>
+			<y>1046</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -1831,7 +1782,7 @@
 				<relationship>
 					<name>FK_village_settings_village</name>
 					<source>table.village</source>
-					<target>table.village_settings</target>
+					<target>table.village_setting</target>
 					<fk_columns>
 						<fk_column>
 							<fk_column_name>village_id</fk_column_name>
@@ -1844,27 +1795,12 @@
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
 				<relationship>
-					<name>FK_village_settings_CHARA_group</name>
-					<source>table.CHARA_group</source>
-					<target>table.village_settings</target>
+					<name>FK_village_setting_village_setting_item</name>
+					<source>table.village_setting_item</source>
+					<target>table.village_setting</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>character_group_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-				</relationship>
-				<relationship>
-					<name>FK_village_settings_allowed_secret_say</name>
-					<source>table.allowed_secret_say</source>
-					<target>table.village_settings</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>allowed_secret_say_code</fk_column_name>
+							<fk_column_name>village_setting_item_code</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -1883,116 +1819,65 @@
 					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
-					<physical_name>dummy_chara_id</physical_name>
-					<logical_name>ダミーキャラID</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
+					<physical_name>village_setting_item_code</physical_name>
+					<referred_column>table.village_setting_item.village_setting_item_code</referred_column>
+					<relationship>FK_village_setting_village_setting_item</relationship>
 					<not_null>true</not_null>
+					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
-					<physical_name>start_person_min_num</physical_name>
-					<logical_name>最低開始人数</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-				</normal_column>
-				<normal_column>
-					<physical_name>person_max_num</physical_name>
-					<logical_name>定員</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-				</normal_column>
-				<normal_column>
-					<physical_name>start_datetime</physical_name>
-					<logical_name>開始日時</logical_name>
-					<type>datetime</type>
-				</normal_column>
-				<normal_column>
-					<physical_name>day_change_interval_seconds</physical_name>
-					<logical_name>更新間隔（秒）</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_open_vote</physical_name>
-					<logical_name>記名投票か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_possible_skill_request</physical_name>
-					<logical_name>役職希望有効か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_spectate</physical_name>
-					<logical_name>見学可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_same_wolf_attack</physical_name>
-					<logical_name>連続襲撃可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_open_skill_in_grave</physical_name>
-					<logical_name>墓下役職公開ありか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_visible_grave_spectate_message</physical_name>
-					<logical_name>墓下見学発言を生存者が見られるか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_suddonly_death</physical_name>
-					<logical_name>突然死ありか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_commit</physical_name>
-					<logical_name>コミット可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_guard_same_target</physical_name>
-					<logical_name>連続護衛可能か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>character_group_id</physical_name>
-					<referred_column>table.CHARA_group.chara_group_id</referred_column>
-					<relationship>FK_village_settings_CHARA_group</relationship>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>join_password</physical_name>
-					<logical_name>入村パスワード</logical_name>
+					<physical_name>village_setting_text</physical_name>
+					<logical_name>村設定項目内容</logical_name>
 					<type>varchar(n)</type>
-					<length>12</length>
-				</normal_column>
-				<normal_column>
-					<physical_name>organize</physical_name>
-					<logical_name>構成</logical_name>
-					<type>varchar(n)</type>
-					<length>400</length>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>allowed_secret_say_code</physical_name>
-					<referred_column>table.allowed_secret_say.allowed_secret_say_code</referred_column>
-					<relationship>FK_village_settings_allowed_secret_say</relationship>
-					<not_null>true</not_null>
+					<length>1000</length>
 				</normal_column>
 				<column_group>共通カラム</column_group>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
+			<physical_name>village_setting_item</physical_name>
+			<logical_name>村設定項目</logical_name>
+			<description></description>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>2069</x>
+			<y>1055</y>
+			<color>
+				<r>254</r>
+				<g>251</g>
+				<b>0</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>village_setting_item_code</physical_name>
+					<logical_name>村設定項目コード</logical_name>
+					<type>varchar(n)</type>
+					<length>100</length>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>village_setting_item_name</physical_name>
+					<logical_name>村設定項目名</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>disp_order</physical_name>
+					<logical_name>並び順</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
 			</columns>
 			<indexes>
 			</indexes>
@@ -2007,8 +1892,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1752</x>
-			<y>1070</y>
+			<x>2063</x>
+			<y>554</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -2046,62 +1931,21 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>641</x>
-			<y>471</y>
+			<x>397</x>
+			<y>253</y>
 			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
 			</color>
 			<connections>
-				<relationship>
-					<name>FK_vote_CHARA</name>
-					<source>table.CHARA</source>
-					<target>table.vote</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>chara_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<source_xp>76</source_xp>
-					<source_yp>0</source_yp>
-					<target_xp>34</target_xp>
-					<target_yp>100</target_yp>
-				</relationship>
-				<relationship>
-					<name>FK_vote_CHARA_to</name>
-					<source>table.CHARA</source>
-					<target>table.vote</target>
-					<fk_columns>
-						<fk_column>
-							<fk_column_name>vote_chara_id</fk_column_name>
-						</fk_column>
-					</fk_columns>
-					<parent_cardinality>1</parent_cardinality>
-					<child_cardinality>0..n</child_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<source_xp>66</source_xp>
-					<source_yp>0</source_yp>
-					<target_xp>19</target_xp>
-					<target_yp>100</target_yp>
-				</relationship>
 				<relationship>
 					<name>FK_vote_village_day</name>
 					<source>table.village_day</source>
 					<target>table.vote</target>
 					<fk_columns>
 						<fk_column>
-							<fk_column_name>village_id</fk_column_name>
-						</fk_column>
-						<fk_column>
-							<fk_column_name>day</fk_column_name>
+							<fk_column_name>village_day_id</fk_column_name>
 						</fk_column>
 					</fk_columns>
 					<parent_cardinality>1</parent_cardinality>
@@ -2109,38 +1953,72 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>25</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>32</target_yp>
+				</relationship>
+				<relationship>
+					<name>FK_vote_village_player</name>
+					<source>table.village_player</source>
+					<target>table.vote</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>village_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>43</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>86</target_yp>
+				</relationship>
+				<relationship>
+					<name>FK_vote_target_village_player</name>
+					<source>table.village_player</source>
+					<target>table.vote</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>target_village_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>0</source_xp>
+					<source_yp>33</source_yp>
+					<target_xp>100</target_xp>
+					<target_yp>56</target_yp>
 				</relationship>
 			</connections>
 			<columns>
 				<normal_column>
-					<physical_name>village_id</physical_name>
-					<referred_column>table.village_day.village_id</referred_column>
+					<physical_name>village_day_id</physical_name>
+					<referred_column>table.village_day.village_day_id</referred_column>
 					<relationship>FK_vote_village_day</relationship>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>day</physical_name>
-					<referred_column>table.village_day.day</referred_column>
-					<relationship>FK_vote_village_day</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>chara_id</physical_name>
-					<referred_column>table.CHARA.chara_id</referred_column>
-					<relationship>FK_vote_CHARA</relationship>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-				</normal_column>
-				<normal_column>
-					<physical_name>vote_chara_id</physical_name>
-					<logical_name>投票先キャラクターID</logical_name>
-					<referred_column>table.CHARA.chara_id</referred_column>
-					<relationship>FK_vote_CHARA_to</relationship>
-					<not_null>true</not_null>
 				</normal_column>
 				<column_group>共通カラム</column_group>
+				<normal_column>
+					<physical_name>village_player_id</physical_name>
+					<logical_name>投票元村参加者ID</logical_name>
+					<referred_column>table.village_player.village_player_id</referred_column>
+					<relationship>FK_vote_village_player</relationship>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>target_village_player_id</physical_name>
+					<logical_name>投票先村参加者ID</logical_name>
+					<referred_column>table.village_player.village_player_id</referred_column>
+					<relationship>FK_vote_target_village_player</relationship>
+				</normal_column>
 			</columns>
 			<indexes>
 			</indexes>
@@ -2149,6 +2027,140 @@
 			<table_properties>
 			</table_properties>
 		</table>
+		<walker_group>
+			<height>171</height>
+			<width>376</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>363</x>
+			<y>391</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>ability</walker_group_name>
+			<diagram_walker>table.ability</diagram_walker>
+		</walker_group>
+		<walker_group>
+			<height>232</height>
+			<width>701</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>38</x>
+			<y>953</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>chara</walker_group_name>
+			<diagram_walker>table.CHARA</diagram_walker>
+			<diagram_walker>table.chara_image</diagram_walker>
+		</walker_group>
+		<walker_group>
+			<height>167</height>
+			<width>700</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>37</x>
+			<y>1200</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>charachip</walker_group_name>
+			<diagram_walker>table.CHARA_group</diagram_walker>
+			<diagram_walker>table.designer</diagram_walker>
+		</walker_group>
+		<walker_group>
+			<height>155</height>
+			<width>312</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>427</x>
+			<y>46</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>commit</walker_group_name>
+		</walker_group>
+		<walker_group>
+			<height>343</height>
+			<width>488</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>251</x>
+			<y>581</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>message</walker_group_name>
+			<diagram_walker>table.message</diagram_walker>
+		</walker_group>
+		<walker_group>
+			<height>220</height>
+			<width>347</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>923</x>
+			<y>114</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>player</walker_group_name>
+		</walker_group>
+		<walker_group>
+			<height>798</height>
+			<width>1122</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>923</x>
+			<y>446</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>village</walker_group_name>
+		</walker_group>
+		<walker_group>
+			<height>159</height>
+			<width>372</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>367</x>
+			<y>216</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>vote</walker_group_name>
+		</walker_group>
 	</diagram_walkers>
 	<vdiagrams>
 	</vdiagrams>

@@ -62,7 +62,6 @@ public class MessageRestrictionCIQ extends AbstractBsMessageRestrictionCQ {
     //                                                                Override about Query
     //                                                                ====================
     protected ConditionValue xgetCValueVillageId() { return _myCQ.xdfgetVillageId(); }
-    protected ConditionValue xgetCValueSkillCode() { return _myCQ.xdfgetSkillCode(); }
     protected ConditionValue xgetCValueMessageTypeCode() { return _myCQ.xdfgetMessageTypeCode(); }
     protected ConditionValue xgetCValueMessageMaxNum() { return _myCQ.xdfgetMessageMaxNum(); }
     protected ConditionValue xgetCValueMessageMaxLength() { return _myCQ.xdfgetMessageMaxLength(); }

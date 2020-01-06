@@ -158,19 +158,11 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
-     * Set the value of messageTypeCode as 役職霊視結果 (PRIVATE_GURU). <br>
-     * 役職霊視結果
+     * Set the value of messageTypeCode as 参加者一覧 (PARTICIPANTS). <br>
+     * 参加者一覧
      */
-    public void setMessageTypeCode_役職霊視結果() {
-        setMessageTypeCodeAsMessageType(CDef.MessageType.役職霊視結果);
-    }
-
-    /**
-     * Set the value of messageTypeCode as 足音調査結果 (PRIVATE_INVESTIGATE). <br>
-     * 足音調査結果
-     */
-    public void setMessageTypeCode_足音調査結果() {
-        setMessageTypeCodeAsMessageType(CDef.MessageType.足音調査結果);
+    public void setMessageTypeCode_参加者一覧() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.参加者一覧);
     }
 
     /**
@@ -198,11 +190,11 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
-     * Set the value of messageTypeCode as 役職占い結果 (PRIVATE_WISE). <br>
-     * 役職占い結果
+     * Set the value of messageTypeCode as 襲撃結果 (PRIVATE_WEREWOLF). <br>
+     * 襲撃結果
      */
-    public void setMessageTypeCode_役職占い結果() {
-        setMessageTypeCodeAsMessageType(CDef.MessageType.役職占い結果);
+    public void setMessageTypeCode_襲撃結果() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.襲撃結果);
     }
 
     /**
@@ -296,25 +288,14 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
-     * Is the value of messageTypeCode 役職霊視結果? <br>
-     * 役職霊視結果
+     * Is the value of messageTypeCode 参加者一覧? <br>
+     * 参加者一覧
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
      * @return The determination, true or false.
      */
-    public boolean isMessageTypeCode役職霊視結果() {
+    public boolean isMessageTypeCode参加者一覧() {
         CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
-        return cdef != null ? cdef.equals(CDef.MessageType.役職霊視結果) : false;
-    }
-
-    /**
-     * Is the value of messageTypeCode 足音調査結果? <br>
-     * 足音調査結果
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isMessageTypeCode足音調査結果() {
-        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
-        return cdef != null ? cdef.equals(CDef.MessageType.足音調査結果) : false;
+        return cdef != null ? cdef.equals(CDef.MessageType.参加者一覧) : false;
     }
 
     /**
@@ -351,14 +332,14 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
-     * Is the value of messageTypeCode 役職占い結果? <br>
-     * 役職占い結果
+     * Is the value of messageTypeCode 襲撃結果? <br>
+     * 襲撃結果
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
      * @return The determination, true or false.
      */
-    public boolean isMessageTypeCode役職占い結果() {
+    public boolean isMessageTypeCode襲撃結果() {
         CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
-        return cdef != null ? cdef.equals(CDef.MessageType.役職占い結果) : false;
+        return cdef != null ? cdef.equals(CDef.MessageType.襲撃結果) : false;
     }
 
     /**

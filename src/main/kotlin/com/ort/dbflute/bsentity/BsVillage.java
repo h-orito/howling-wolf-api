@@ -33,16 +33,16 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     VILLAGE_STATUS, CAMP, VILLAGE_SETTINGS(AsOne)
+ *     VILLAGE_STATUS, CAMP
  *
  * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTINGS
+ *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
  *
  * [foreign property]
- *     villageStatus, camp, villageSettingsAsOne
+ *     villageStatus, camp
  *
  * [referrer property]
- *     messageRestrictionList, villageDayList, villagePlayerList
+ *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -323,6 +323,26 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
+     * 決着がついた村 <br>
+     * The group elements:[エピローグ, 廃村, 終了]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_FinishedVillage() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isFinishedVillage();
+    }
+
+    /**
+     * プロローグ中 <br>
+     * The group elements:[募集中, 開始待ち]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_Prologue() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isPrologue();
+    }
+
+    /**
      * Is the value of winCampCode 狐陣営? <br>
      * 狐陣営
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -400,27 +420,6 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         _camp = camp;
     }
 
-    /** village_settings by VILLAGE_ID, named 'villageSettingsAsOne'. */
-    protected OptionalEntity<VillageSettings> _villageSettingsAsOne;
-
-    /**
-     * [get] village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return the entity of foreign property(referrer-as-one) 'villageSettingsAsOne'. (NotNull, EmptyAllowed: when e.g. no data, no setupSelect)
-     */
-    public OptionalEntity<VillageSettings> getVillageSettingsAsOne() {
-        if (_villageSettingsAsOne == null) { _villageSettingsAsOne = OptionalEntity.relationEmpty(this, "villageSettingsAsOne"); }
-        return _villageSettingsAsOne;
-    }
-
-    /**
-     * [set] village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-     * @param villageSettingsAsOne The entity of foreign property(referrer-as-one) 'villageSettingsAsOne'. (NullAllowed)
-     */
-    public void setVillageSettingsAsOne(OptionalEntity<VillageSettings> villageSettingsAsOne) {
-        _villageSettingsAsOne = villageSettingsAsOne;
-    }
-
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
@@ -484,6 +483,26 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         _villagePlayerList = villagePlayerList;
     }
 
+    /** VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'. */
+    protected List<VillageSetting> _villageSettingList;
+
+    /**
+     * [get] VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * @return The entity list of referrer property 'villageSettingList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<VillageSetting> getVillageSettingList() {
+        if (_villageSettingList == null) { _villageSettingList = newReferrerList(); }
+        return _villageSettingList;
+    }
+
+    /**
+     * [set] VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * @param villageSettingList The entity list of referrer property 'villageSettingList'. (NullAllowed)
+     */
+    public void setVillageSettingList(List<VillageSetting> villageSettingList) {
+        _villageSettingList = villageSettingList;
+    }
+
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -517,14 +536,14 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         { sb.append(li).append(xbRDS(_villageStatus, "villageStatus")); }
         if (_camp != null && _camp.isPresent())
         { sb.append(li).append(xbRDS(_camp, "camp")); }
-        if (_villageSettingsAsOne != null && _villageSettingsAsOne.isPresent())
-        { sb.append(li).append(xbRDS(_villageSettingsAsOne, "villageSettingsAsOne")); }
         if (_messageRestrictionList != null) { for (MessageRestriction et : _messageRestrictionList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "messageRestrictionList")); } } }
         if (_villageDayList != null) { for (VillageDay et : _villageDayList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villageDayList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerList")); } } }
+        if (_villageSettingList != null) { for (VillageSetting et : _villageSettingList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "villageSettingList")); } } }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -558,14 +577,14 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         { sb.append(dm).append("villageStatus"); }
         if (_camp != null && _camp.isPresent())
         { sb.append(dm).append("camp"); }
-        if (_villageSettingsAsOne != null && _villageSettingsAsOne.isPresent())
-        { sb.append(dm).append("villageSettingsAsOne"); }
         if (_messageRestrictionList != null && !_messageRestrictionList.isEmpty())
         { sb.append(dm).append("messageRestrictionList"); }
         if (_villageDayList != null && !_villageDayList.isEmpty())
         { sb.append(dm).append("villageDayList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
         { sb.append(dm).append("villagePlayerList"); }
+        if (_villageSettingList != null && !_villageSettingList.isEmpty())
+        { sb.append(dm).append("villageSettingList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }
