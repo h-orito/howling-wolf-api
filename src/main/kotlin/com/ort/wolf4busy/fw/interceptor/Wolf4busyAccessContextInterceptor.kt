@@ -2,6 +2,7 @@ package com.ort.wolf4busy.fw.interceptor
 
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.Wolf4busyUserInfoUtil
+import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.dbflute.hook.AccessContext
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.HttpServletRequest
@@ -21,8 +22,8 @@ class Wolf4busyAccessContextInterceptor : HandlerInterceptorAdapter() {
         val accessLocalDateTime = Wolf4busyDateUtil.currentLocalDateTime()
 
         // [アクセスユーザ]
-        val userInfo = Wolf4busyUserInfoUtil.getUserInfo()
-        val accessUser = if (userInfo == null) "not login user" else userInfo!!.username
+        val userInfo: Wolf4busyUser? = Wolf4busyUserInfoUtil.getUserInfo()
+        val accessUser = userInfo?.username ?: "not login user"
 
         val context = AccessContext()
         context.accessLocalDateTime = accessLocalDateTime

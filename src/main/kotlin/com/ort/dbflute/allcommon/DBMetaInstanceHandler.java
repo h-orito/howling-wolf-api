@@ -33,7 +33,6 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
         final Map<String, String> tmpMap = newHashMap();
         tmpMap.put("ability", "com.ort.dbflute.bsentity.dbmeta.AbilityDbm");
         tmpMap.put("ability_type", "com.ort.dbflute.bsentity.dbmeta.AbilityTypeDbm");
-        tmpMap.put("allowed_secret_say", "com.ort.dbflute.bsentity.dbmeta.AllowedSecretSayDbm");
         tmpMap.put("authority", "com.ort.dbflute.bsentity.dbmeta.AuthorityDbm");
         tmpMap.put("camp", "com.ort.dbflute.bsentity.dbmeta.CampDbm");
         tmpMap.put("chara", "com.ort.dbflute.bsentity.dbmeta.CharaDbm");
@@ -46,14 +45,14 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
         tmpMap.put("message", "com.ort.dbflute.bsentity.dbmeta.MessageDbm");
         tmpMap.put("message_restriction", "com.ort.dbflute.bsentity.dbmeta.MessageRestrictionDbm");
         tmpMap.put("message_type", "com.ort.dbflute.bsentity.dbmeta.MessageTypeDbm");
+        tmpMap.put("noonnight", "com.ort.dbflute.bsentity.dbmeta.NoonnightDbm");
         tmpMap.put("player", "com.ort.dbflute.bsentity.dbmeta.PlayerDbm");
-        tmpMap.put("random_content", "com.ort.dbflute.bsentity.dbmeta.RandomContentDbm");
-        tmpMap.put("random_keyword", "com.ort.dbflute.bsentity.dbmeta.RandomKeywordDbm");
         tmpMap.put("skill", "com.ort.dbflute.bsentity.dbmeta.SkillDbm");
         tmpMap.put("village", "com.ort.dbflute.bsentity.dbmeta.VillageDbm");
         tmpMap.put("village_day", "com.ort.dbflute.bsentity.dbmeta.VillageDayDbm");
         tmpMap.put("village_player", "com.ort.dbflute.bsentity.dbmeta.VillagePlayerDbm");
-        tmpMap.put("village_settings", "com.ort.dbflute.bsentity.dbmeta.VillageSettingsDbm");
+        tmpMap.put("village_setting", "com.ort.dbflute.bsentity.dbmeta.VillageSettingDbm");
+        tmpMap.put("village_setting_item", "com.ort.dbflute.bsentity.dbmeta.VillageSettingItemDbm");
         tmpMap.put("village_status", "com.ort.dbflute.bsentity.dbmeta.VillageStatusDbm");
         tmpMap.put("vote", "com.ort.dbflute.bsentity.dbmeta.VoteDbm");
         _tableDbNameClassNameMap = Collections.unmodifiableMap(tmpMap);
@@ -202,12 +201,12 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
 
     protected static String removeSchemaIfExists(String name) {
         int dotLastIndex = name.lastIndexOf(".");
-        return dotLastIndex >= 0 ? name.substring(dotLastIndex + ".".length()) : name; 
+        return dotLastIndex >= 0 ? name.substring(dotLastIndex + ".".length()) : name;
     }
 
     protected static String extractSchemaIfExists(String name) {
         int dotLastIndex = name.lastIndexOf(".");
-        return dotLastIndex >= 0 ? name.substring(0, dotLastIndex) : null; 
+        return dotLastIndex >= 0 ? name.substring(0, dotLastIndex) : null;
     }
 
     protected static String strip(String name) {
@@ -297,7 +296,7 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
 
     protected static Entity newEntity(Class<?> entityType) {
         try {
-            return (Entity)entityType.newInstance();
+            return (Entity)entityType.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             String msg = "Failed to new the instance: " + entityType;
             throw new IllegalStateException(msg, e);

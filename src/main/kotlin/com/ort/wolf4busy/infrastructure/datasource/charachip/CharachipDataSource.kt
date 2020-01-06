@@ -1,31 +1,28 @@
 package com.ort.wolf4busy.infrastructure.datasource.charachip
 
-import com.ort.dbflute.exbhv.CharaBhv
 import com.ort.dbflute.exbhv.CharaGroupBhv
-import com.ort.dbflute.exentity.Chara
 import com.ort.dbflute.exentity.CharaGroup
-import com.ort.wolf4busy.domain.model.charachip.*
+import com.ort.wolf4busy.domain.model.charachip.Charachip
+import com.ort.wolf4busy.domain.model.charachip.Charachips
+import com.ort.wolf4busy.domain.model.charachip.Designer
 import org.springframework.stereotype.Repository
-import java.util.stream.Collectors
 
 @Repository
 class CharachipDataSource(
-        val charaGroupBhv: CharaGroupBhv,
-        val charaBhv: CharaBhv
+    val charaGroupBhv: CharaGroupBhv
 ) {
-
     fun selectCharachips(): Charachips {
         val charaGroupList = charaGroupBhv.selectList {
             it.setupSelect_Designer()
             it.query().addOrderBy_CharaGroupId_Asc()
         }
-        charaGroupBhv.load(charaGroupList) { loader ->
-            loader.loadChara { charaCB ->
-                charaCB.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
-            }.withNestedReferrer { charaLoader ->
-                charaLoader.loadCharaImage { charaImageCB -> charaImageCB.query().setFaceTypeCode_Equal_通常() }
-            }
-        }
+//        charaGroupBhv.load(charaGroupList) { loader ->
+//            loader.loadChara { charaCB ->
+//                charaCB.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
+//            }.withNestedReferrer { charaLoader ->
+//                charaLoader.loadCharaImage { charaImageCB -> charaImageCB.query().setFaceTypeCode_Equal_通常() }
+//            }
+//        }
         return convertCharaGroupListToCharaChips(charaGroupList)
     }
 
@@ -34,41 +31,17 @@ class CharachipDataSource(
             it.setupSelect_Designer()
             it.query().setCharaGroupId_Equal(charaChipId)
         }
-        charaGroupBhv.load(charaGroup) { loader ->
-            loader.loadChara { charaCB ->
-                charaCB.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
-                charaCB.query().addOrderBy_CharaId_Asc()
-            }.withNestedReferrer { charaLoader ->
-                charaLoader.loadCharaImage {
-                    it.query().queryFaceType().addOrderBy_DispOrder_Asc()
-                }
-            }
-        }
+//        charaGroupBhv.load(charaGroup) { loader ->
+//            loader.loadChara { charaCB ->
+//                charaCB.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
+//                charaCB.query().addOrderBy_CharaId_Asc()
+//            }.withNestedReferrer { charaLoader ->
+//                charaLoader.loadCharaImage {
+//                    it.query().queryFaceType().addOrderBy_DispOrder_Asc()
+//                }
+//            }
+//        }
         return convertCharaGroupToCharaChip(charaGroup)
-    }
-
-    fun selectChara(charaChipId: Int, charaId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
-        val chara = charaBhv.selectEntityWithDeletedCheck {
-            it.query().setCharaId_Equal(charaId)
-            it.query().setCharaGroupId_Equal(charaChipId)
-        }
-        charaBhv.loadCharaImage(chara) {
-            it.query().queryFaceType().addOrderBy_DispOrder_Asc()
-        }
-        return convertCharaToChara(chara)
-    }
-
-    fun selectDummyChara(charaChipId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
-        val chara = charaBhv.selectEntityWithDeletedCheck {
-            it.query().setCharaGroupId_Equal(charaChipId)
-            it.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
-            it.query().addOrderBy_CharaId_Asc()
-            it.fetchFirst(1)
-        }
-        charaBhv.loadCharaImage(chara) {
-            it.query().queryFaceType().addOrderBy_DispOrder_Asc()
-        }
-        return convertCharaToChara(chara)
     }
 
     // ===================================================================================
@@ -76,42 +49,20 @@ class CharachipDataSource(
     //                                                                           =========
     private fun convertCharaGroupListToCharaChips(charaGroupList: List<CharaGroup>): Charachips {
         return Charachips(
-                charachipList = charaGroupList.map { convertCharaGroupToCharaChip(it) }
+            list = charaGroupList.map { convertCharaGroupToCharaChip(it) }
         )
     }
 
     private fun convertCharaGroupToCharaChip(charaGroup: CharaGroup): Charachip {
         return Charachip(
-                id = charaGroup.charaGroupId,
-                name = charaGroup.charaGroupName,
-                designerId = charaGroup.designerId,
-                descriptionUtl = charaGroup.descriptionUrl,
-                charaList = charaGroup.charaList.map { convertCharaToChara(it) }
-        )
-    }
-
-    private fun convertCharaToChara(chara: Chara): com.ort.wolf4busy.domain.model.charachip.Chara {
-        return com.ort.wolf4busy.domain.model.charachip.Chara(
-                id = chara.charaId,
-                charaName = CharaName(
-                        name = chara.charaName,
-                        shortName = chara.charaShortName
-                ),
-                charachipId = chara.charaGroupId,
-                defaultMessage = CharaDefaultMessage(
-                        joinMessage = chara.defaultJoinMessage,
-                        firstDayMessage = chara.defaultFirstdayMessage
-                ),
-                display = CharaSize(
-                        width = chara.displayWidth,
-                        height = chara.displayHeight
-                ),
-                faceList = chara.charaImageList.map { image ->
-                    CharaFace(
-                            type = image.faceTypeCode,
-                            imageUrl = image.charaImgUrl
-                    )
-                }
+            id = charaGroup.charaGroupId,
+            name = charaGroup.charaGroupName,
+            designer = Designer(
+                id = charaGroup.designer.get().designerId,
+                name = charaGroup.designer.get().designerName
+            ),
+            descriptionUrl = charaGroup.descriptionUrl,
+            charaIdList = listOf() // dummy
         )
     }
 }

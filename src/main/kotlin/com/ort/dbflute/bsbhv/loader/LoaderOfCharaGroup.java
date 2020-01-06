@@ -30,13 +30,13 @@ import com.ort.dbflute.cbean.*;
  *     DESIGNER
  *
  * [referrer table]
- *     CHARA, VILLAGE_SETTINGS
+ *     CHARA
  *
  * [foreign property]
  *     designer
  *
  * [referrer property]
- *     charaList, villageSettingsList
+ *     charaList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -93,40 +93,6 @@ public class LoaderOfCharaGroup {
     public NestedReferrerLoaderGateway<LoaderOfChara> loadChara(ReferrerConditionSetupper<CharaCB> refCBLambda) {
         myBhv().loadChara(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerChara = refLs);
         return hd -> hd.handle(new LoaderOfChara().ready(_referrerChara, _selector));
-    }
-
-    protected List<VillageSettings> _referrerVillageSettings;
-
-    /**
-     * Load referrer of villageSettingsList by the set-upper of referrer. <br>
-     * VILLAGE_SETTINGS by CHARACTER_GROUP_ID, named 'villageSettingsList'.
-     * <pre>
-     * <span style="color: #0000C0">charaGroupBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">charaGroupList</span>, <span style="color: #553000">groupLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">groupLoader</span>.<span style="color: #CC4747">loadVillageSettings</span>(<span style="color: #553000">settingsCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *         <span style="color: #553000">settingsCB</span>.setupSelect...
-     *         <span style="color: #553000">settingsCB</span>.query().set...
-     *         <span style="color: #553000">settingsCB</span>.query().addOrderBy...
-     *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">settingsLoader</span> -&gt; {</span>
-     *     <span style="color: #3F7E5E">//    settingsLoader.load...</span>
-     *     <span style="color: #3F7E5E">//});</span>
-     * });
-     * for (CharaGroup charaGroup : <span style="color: #553000">charaGroupList</span>) {
-     *     ... = charaGroup.<span style="color: #CC4747">getVillageSettingsList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharacterGroupId_InScope(pkList);
-     * cb.query().addOrderBy_CharacterGroupId_Asc();
-     * </pre>
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerLoaderGateway<LoaderOfVillageSettings> loadVillageSettings(ReferrerConditionSetupper<VillageSettingsCB> refCBLambda) {
-        myBhv().loadVillageSettings(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerVillageSettings = refLs);
-        return hd -> hd.handle(new LoaderOfVillageSettings().ready(_referrerVillageSettings, _selector));
     }
 
     // ===================================================================================

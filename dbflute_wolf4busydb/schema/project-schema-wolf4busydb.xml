@@ -4,20 +4,17 @@
 <database name="">
     <table comment="能力行使" name="ability"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
-            name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
-            primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="何日目か" dbType="INT UNSIGNED" javaType="Integer"
-            name="DAY" pkName="PRIMARY" pkPosition="2" primaryKey="true"
-            required="true" size="10" type="INTEGER"/>
-        <column comment="キャラクターID" dbType="INT UNSIGNED"
-            javaType="Integer" name="CHARA_ID" pkName="PRIMARY"
-            pkPosition="3" primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="行使対象キャラID" dbType="INT UNSIGNED"
-            javaType="Integer" name="TARGET_CHARA_ID" size="10" type="INTEGER"/>
         <column comment="能力種別コード" dbType="VARCHAR" javaType="String"
-            name="ABILITY_TYPE_CODE" pkName="PRIMARY" pkPosition="4"
+            name="ABILITY_TYPE_CODE" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
+        <column comment="村日付ID" dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_DAY_ID" pkName="PRIMARY" pkPosition="2"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="行使元村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="VILLAGE_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="行使対象村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="TARGET_VILLAGE_PLAYER_ID" size="10" type="INTEGER"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -33,26 +30,25 @@
             <reference foreign="ABILITY_TYPE_CODE" local="ABILITY_TYPE_CODE"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="chara" name="FK_ABILITY_CHARA">
-            <reference foreign="CHARA_ID" local="CHARA_ID"/>
-        </foreign-key>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="chara" name="FK_ABILITY_CHARA_TARGET">
-            <reference foreign="CHARA_ID" local="TARGET_CHARA_ID"/>
+            foreignTable="village_player" name="FK_ABILITY_TARGET_VILLAGE_PLAYER">
+            <reference foreign="VILLAGE_PLAYER_ID" local="TARGET_VILLAGE_PLAYER_ID"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village_day" name="FK_ABILITY_VILLAGE_DAY">
-            <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
-            <reference foreign="DAY" local="DAY"/>
+            <reference foreign="VILLAGE_DAY_ID" local="VILLAGE_DAY_ID"/>
         </foreign-key>
-        <index name="FK_ABILITY_ABILITY_TYPE">
-            <index-column name="ABILITY_TYPE_CODE" position="1"/>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="village_player" name="FK_ABILITY_VILLAGE_PLAYER">
+            <reference foreign="VILLAGE_PLAYER_ID" local="VILLAGE_PLAYER_ID"/>
+        </foreign-key>
+        <index name="FK_ABILITY_TARGET_VILLAGE_PLAYER">
+            <index-column name="TARGET_VILLAGE_PLAYER_ID" position="1"/>
         </index>
-        <index name="FK_ABILITY_CHARA">
-            <index-column name="CHARA_ID" position="1"/>
+        <index name="FK_ABILITY_VILLAGE_DAY">
+            <index-column name="VILLAGE_DAY_ID" position="1"/>
         </index>
-        <index name="FK_ABILITY_CHARA_TARGET">
-            <index-column name="TARGET_CHARA_ID" position="1"/>
+        <index name="FK_ABILITY_VILLAGE_PLAYER">
+            <index-column name="VILLAGE_PLAYER_ID" position="1"/>
         </index>
     </table>
     <table comment="能力種別" name="ability_type"
@@ -62,14 +58,6 @@
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="能力種別" dbType="VARCHAR" javaType="String"
             name="ABILITY_TYPE_NAME" required="true" size="20" type="VARCHAR"/>
-    </table>
-    <table comment="秘話可能な範囲" name="allowed_secret_say"
-        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column comment="秘話可能な範囲コード" dbType="VARCHAR" javaType="String"
-            name="ALLOWED_SECRET_SAY_CODE" pkName="PRIMARY"
-            pkPosition="1" primaryKey="true" required="true" size="20" type="VARCHAR"/>
-        <column comment="秘話可能範囲" dbType="VARCHAR" javaType="String"
-            name="ALLOWED_SECRET_SAY_NAME" required="true" size="20" type="VARCHAR"/>
     </table>
     <table comment="権限" name="authority"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
@@ -182,15 +170,12 @@
     </table>
     <table comment="コミット" name="commit"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
-            name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
-            primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="何日目か" dbType="INT UNSIGNED" javaType="Integer"
-            name="DAY" pkName="PRIMARY" pkPosition="2" primaryKey="true"
-            required="true" size="10" type="INTEGER"/>
         <column comment="村参加者ID" dbType="INT UNSIGNED"
             javaType="Integer" name="VILLAGE_PLAYER_ID" pkName="PRIMARY"
-            pkPosition="3" primaryKey="true" required="true" size="10" type="INTEGER"/>
+            pkPosition="1" primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="村日付ID" dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_DAY_ID" pkName="PRIMARY" pkPosition="2"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -203,15 +188,14 @@
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village_day" name="FK_COMMIT_VILLAGE_DAY">
-            <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
-            <reference foreign="DAY" local="DAY"/>
+            <reference foreign="VILLAGE_DAY_ID" local="VILLAGE_DAY_ID"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village_player" name="FK_COMMIT_VILLAGE_PLAYER">
             <reference foreign="VILLAGE_PLAYER_ID" local="VILLAGE_PLAYER_ID"/>
         </foreign-key>
-        <index name="FK_COMMIT_VILLAGE_PLAYER">
-            <index-column name="VILLAGE_PLAYER_ID" position="1"/>
+        <index name="FK_COMMIT_VILLAGE_DAY">
+            <index-column name="VILLAGE_DAY_ID" position="1"/>
         </index>
     </table>
     <table comment="死亡理由" name="dead_reason"
@@ -262,14 +246,17 @@
         <column comment="メッセージ種別コード" dbType="VARCHAR" javaType="String"
             name="MESSAGE_TYPE_CODE" pkName="PRIMARY" pkPosition="3"
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
+        <column comment="メッセージUNIXタイムスタンプミリ秒" dbType="BIGINT UNSIGNED"
+            javaType="Long" name="MESSAGE_UNIXTIMESTAMP_MILLI"
+            required="true" size="20" type="BIGINT"/>
+        <column comment="村日付ID" dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_DAY_ID" required="true" size="10" type="INTEGER"/>
         <column comment="村参加者ID" dbType="INT UNSIGNED"
             javaType="Integer" name="VILLAGE_PLAYER_ID" size="10" type="INTEGER"/>
         <column comment="秘話相手の村参加者ID" dbType="INT UNSIGNED"
             javaType="Integer" name="TO_VILLAGE_PLAYER_ID" size="10" type="INTEGER"/>
         <column comment="プレイヤーID" dbType="INT UNSIGNED"
             javaType="Integer" name="PLAYER_ID" size="10" type="INTEGER"/>
-        <column comment="何日目か" dbType="INT UNSIGNED" javaType="Integer"
-            name="DAY" required="true" size="10" type="INTEGER"/>
         <column comment="メッセージ内容" dbType="VARCHAR" javaType="String"
             name="MESSAGE_CONTENT" required="true" size="10000" type="VARCHAR"/>
         <column comment="メッセージ日時" dbType="DATETIME"
@@ -289,11 +276,6 @@
             required="true" size="19" type="TIMESTAMP"/>
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
-        <unique name="UQ_message_number">
-            <unique-column name="VILLAGE_ID" position="1"/>
-            <unique-column name="MESSAGE_TYPE_CODE" position="2"/>
-            <unique-column name="MESSAGE_NUMBER" position="3"/>
-        </unique>
         <index name="FK_MESSAGE_FACE_TYPE">
             <index-column name="FACE_TYPE_CODE" position="1"/>
         </index>
@@ -304,8 +286,7 @@
             <index-column name="PLAYER_ID" position="1"/>
         </index>
         <index name="FK_MESSAGE_VILLAGE_DAY">
-            <index-column name="VILLAGE_ID" position="1"/>
-            <index-column name="DAY" position="2"/>
+            <index-column name="VILLAGE_DAY_ID" position="1"/>
         </index>
         <index name="FK_MESSAGE_VILLAGE_PLAYER">
             <index-column name="VILLAGE_PLAYER_ID" position="1"/>
@@ -313,17 +294,17 @@
         <index name="FK_MESSAGE_VILLAGE_PLAYER_TO">
             <index-column name="TO_VILLAGE_PLAYER_ID" position="1"/>
         </index>
+        <index name="IX_MESSAGE_UNIXTIMESTAMP">
+            <index-column name="MESSAGE_UNIXTIMESTAMP_MILLI" position="1"/>
+        </index>
     </table>
     <table comment="発言制限 : レコードなしの場合は無制限" name="message_restriction"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
         <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
             name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="役職コード" dbType="VARCHAR" javaType="String"
-            name="SKILL_CODE" pkName="PRIMARY" pkPosition="2"
-            primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="メッセージ種別コード" dbType="VARCHAR" javaType="String"
-            name="MESSAGE_TYPE_CODE" pkName="PRIMARY" pkPosition="3"
+            name="MESSAGE_TYPE_CODE" pkName="PRIMARY" pkPosition="2"
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="最大発言回数" dbType="INT UNSIGNED"
             javaType="Integer" name="MESSAGE_MAX_NUM" required="true"
@@ -345,18 +326,11 @@
             <reference foreign="MESSAGE_TYPE_CODE" local="MESSAGE_TYPE_CODE"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="skill" name="FK_MESSAGE_RESTRICTION_SKILL">
-            <reference foreign="SKILL_CODE" local="SKILL_CODE"/>
-        </foreign-key>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village" name="FK_MESSAGE_RESTRICTION_VILLAGE">
             <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
         </foreign-key>
         <index name="FK_MESSAGE_RESTRICTION_MESSAGE_TYPE">
             <index-column name="MESSAGE_TYPE_CODE" position="1"/>
-        </index>
-        <index name="FK_MESSAGE_RESTRICTION_SKILL">
-            <index-column name="SKILL_CODE" position="1"/>
         </index>
     </table>
     <table comment="メッセージ種別" name="message_type"
@@ -366,6 +340,16 @@
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="メッセージ種別名" dbType="VARCHAR" javaType="String"
             name="MESSAGE_TYPE_NAME" required="true" size="20" type="VARCHAR"/>
+    </table>
+    <table comment="昼夜" name="noonnight"
+        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
+        <column comment="昼夜コード" dbType="VARCHAR" javaType="String"
+            name="NOONNIGHT_CODE" pkName="PRIMARY" pkPosition="1"
+            primaryKey="true" required="true" size="20" type="VARCHAR"/>
+        <column comment="昼夜名" dbType="VARCHAR" javaType="String"
+            name="NOONNIGHT_NAME" required="true" size="20" type="VARCHAR"/>
+        <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"
+            name="DISP_ORDER" required="true" size="10" type="INTEGER"/>
     </table>
     <table comment="プレイヤー" name="player"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
@@ -405,37 +389,6 @@
             <index-column name="AUTHORITY_CODE" position="1"/>
         </index>
     </table>
-    <table comment="ランダム変換内容" name="random_content"
-        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column autoIncrement="true" comment="ランダム変換内容ID"
-            dbType="INT UNSIGNED" javaType="Integer"
-            name="RANDOM_CONTENT_ID" pkName="PRIMARY" pkPosition="1"
-            primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="ランダムキーワードID" dbType="INT UNSIGNED"
-            javaType="Integer" name="RANDOM_KEYWORD_ID" required="true"
-            size="10" type="INTEGER"/>
-        <column comment="ランダム変換内容文字列" dbType="VARCHAR" javaType="String"
-            name="RANDOM_MESSAGE" required="true" size="20" type="VARCHAR"/>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="random_keyword" name="FK_RANDOM_CONTENT_RANDOM_KEYWORD">
-            <reference foreign="RANDOM_KEYWORD_ID" local="RANDOM_KEYWORD_ID"/>
-        </foreign-key>
-        <index name="FK_RANDOM_CONTENT_RANDOM_KEYWORD">
-            <index-column name="RANDOM_KEYWORD_ID" position="1"/>
-        </index>
-    </table>
-    <table comment="ランダムキーワード" name="random_keyword"
-        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column autoIncrement="true" comment="ランダムキーワードID"
-            dbType="INT UNSIGNED" javaType="Integer"
-            name="RANDOM_KEYWORD_ID" pkName="PRIMARY" pkPosition="1"
-            primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="キーワード" dbType="VARCHAR" javaType="String"
-            name="KEYWORD" required="true" size="10" type="VARCHAR"/>
-        <unique name="KEYWORD">
-            <unique-column name="KEYWORD" position="1"/>
-        </unique>
-    </table>
     <table comment="役職" name="skill"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
         <column comment="役職コード" dbType="VARCHAR" javaType="String"
@@ -443,6 +396,8 @@
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="役職名" dbType="VARCHAR" javaType="String"
             name="SKILL_NAME" required="true" size="20" type="VARCHAR"/>
+        <column comment="役職略称" dbType="CHAR" javaType="String"
+            name="SKILL_SHORT_NAME" required="true" size="1" type="CHAR"/>
         <column comment="陣営コード" dbType="VARCHAR" javaType="String"
             name="CAMP_CODE" required="true" size="20" type="VARCHAR"/>
         <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"
@@ -497,15 +452,21 @@
     </table>
     <table comment="村日付" name="village_day"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
-            name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
+        <column autoIncrement="true" comment="村日付ID"
+            dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_DAY_ID" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_ID" required="true" size="10" type="INTEGER"/>
         <column comment="何日目か" dbType="INT UNSIGNED" javaType="Integer"
-            name="DAY" pkName="PRIMARY" pkPosition="2" primaryKey="true"
-            required="true" size="10" type="INTEGER"/>
+            name="DAY" required="true" size="10" type="INTEGER"/>
+        <column comment="昼夜コード" dbType="VARCHAR" javaType="String"
+            name="NOONNIGHT_CODE" required="true" size="20" type="VARCHAR"/>
         <column comment="日付更新日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="DAYCHANGE_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
+        <column comment="更新中か" dbType="BIT" javaType="Boolean"
+            name="IS_UPDATING" required="true" type="BIT"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -517,9 +478,19 @@
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="noonnight" name="FK_VILLAGE_DAY_NOONNIGHT">
+            <reference foreign="NOONNIGHT_CODE" local="NOONNIGHT_CODE"/>
+        </foreign-key>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village" name="FK_VILLAGE_DAY_VILLAGE">
             <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
         </foreign-key>
+        <index name="FK_VILLAGE_DAY_NOONNIGHT">
+            <index-column name="NOONNIGHT_CODE" position="1"/>
+        </index>
+        <index name="FK_VILLAGE_DAY_VILLAGE">
+            <index-column name="VILLAGE_ID" position="1"/>
+        </index>
     </table>
     <table comment="村参加者" name="village_player"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
@@ -547,7 +518,7 @@
         <column comment="死亡理由コード" dbType="VARCHAR" javaType="String"
             name="DEAD_REASON_CODE" size="20" type="VARCHAR"/>
         <column comment="何日目に死亡したか" dbType="INT UNSIGNED"
-            javaType="Integer" name="DEAD_DAY" size="10" type="INTEGER"/>
+            javaType="Integer" name="DEAD_VILLAGE_DAY_ID" size="10" type="INTEGER"/>
         <column comment="退村済みか" dbType="BIT" javaType="Boolean"
             name="IS_GONE" required="true" type="BIT"/>
         <column comment="登録日時" dbType="DATETIME"
@@ -567,6 +538,10 @@
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="dead_reason" name="FK_VILLAGE_PLAYER_DEAD_REASON">
             <reference foreign="DEAD_REASON_CODE" local="DEAD_REASON_CODE"/>
+        </foreign-key>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="village_day" name="FK_VILLAGE_PLAYER_VILLAGE_DAY">
+            <reference foreign="VILLAGE_DAY_ID" local="DEAD_VILLAGE_DAY_ID"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="player" name="FK_VILLAGE_PLAYER_PLAYER">
@@ -609,53 +584,20 @@
         <index name="FK_VILLAGE_PLAYER_VILLAGE">
             <index-column name="VILLAGE_ID" position="1"/>
         </index>
+        <index name="FK_VILLAGE_PLAYER_VILLAGE_DAY">
+            <index-column name="DEAD_VILLAGE_DAY_ID" position="1"/>
+        </index>
     </table>
-    <table comment="村設定" name="village_settings"
+    <table comment="村設定" name="village_setting"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
         <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
             name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="ダミーキャラID" dbType="INT UNSIGNED"
-            javaType="Integer" name="DUMMY_CHARA_ID" required="true"
-            size="10" type="INTEGER"/>
-        <column comment="最低開始人数" dbType="INT UNSIGNED"
-            javaType="Integer" name="START_PERSON_MIN_NUM" size="10" type="INTEGER"/>
-        <column comment="定員" dbType="INT UNSIGNED" javaType="Integer"
-            name="PERSON_MAX_NUM" size="10" type="INTEGER"/>
-        <column comment="開始日時" dbType="DATETIME"
-            javaType="java.time.LocalDateTime" name="START_DATETIME"
-            size="19" type="TIMESTAMP"/>
-        <column comment="更新間隔（秒）" dbType="INT UNSIGNED"
-            javaType="Integer" name="DAY_CHANGE_INTERVAL_SECONDS"
-            required="true" size="10" type="INTEGER"/>
-        <column comment="記名投票か" dbType="BIT" javaType="Boolean"
-            name="IS_OPEN_VOTE" required="true" type="BIT"/>
-        <column comment="役職希望有効か" dbType="BIT" javaType="Boolean"
-            name="IS_POSSIBLE_SKILL_REQUEST" required="true" type="BIT"/>
-        <column comment="見学可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_SPECTATE" required="true" type="BIT"/>
-        <column comment="連続襲撃可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_SAME_WOLF_ATTACK" required="true" type="BIT"/>
-        <column comment="墓下役職公開ありか" dbType="BIT" javaType="Boolean"
-            name="IS_OPEN_SKILL_IN_GRAVE" required="true" type="BIT"/>
-        <column comment="墓下見学発言を生存者が見られるか" dbType="BIT"
-            javaType="Boolean" name="IS_VISIBLE_GRAVE_SPECTATE_MESSAGE"
-            required="true" type="BIT"/>
-        <column comment="突然死ありか" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_SUDDONLY_DEATH" required="true" type="BIT"/>
-        <column comment="コミット可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_COMMIT" required="true" type="BIT"/>
-        <column comment="連続護衛可能か" dbType="BIT" javaType="Boolean"
-            name="IS_AVAILABLE_GUARD_SAME_TARGET" required="true" type="BIT"/>
-        <column comment="キャラクターグループID" dbType="INT UNSIGNED"
-            javaType="Integer" name="CHARACTER_GROUP_ID" required="true"
-            size="10" type="INTEGER"/>
-        <column comment="入村パスワード" dbType="VARCHAR" javaType="String"
-            name="JOIN_PASSWORD" size="12" type="VARCHAR"/>
-        <column comment="構成" dbType="VARCHAR" javaType="String"
-            name="ORGANIZE" required="true" size="400" type="VARCHAR"/>
-        <column comment="秘話可能な範囲コード" dbType="VARCHAR" javaType="String"
-            name="ALLOWED_SECRET_SAY_CODE" required="true" size="20" type="VARCHAR"/>
+        <column comment="村設定項目コード" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_ITEM_CODE" pkName="PRIMARY"
+            pkPosition="2" primaryKey="true" required="true" size="100" type="VARCHAR"/>
+        <column comment="村設定項目内容" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_TEXT" size="1000" type="VARCHAR"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -667,23 +609,26 @@
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="allowed_secret_say" name="FK_VILLAGE_SETTINGS_ALLOWED_SECRET_SAY">
-            <reference foreign="ALLOWED_SECRET_SAY_CODE" local="ALLOWED_SECRET_SAY_CODE"/>
-        </foreign-key>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="chara_group" name="FK_VILLAGE_SETTINGS_CHARA_GROUP">
-            <reference foreign="CHARA_GROUP_ID" local="CHARACTER_GROUP_ID"/>
-        </foreign-key>
-        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village" name="FK_VILLAGE_SETTINGS_VILLAGE">
             <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
         </foreign-key>
-        <index name="FK_VILLAGE_SETTINGS_ALLOWED_SECRET_SAY">
-            <index-column name="ALLOWED_SECRET_SAY_CODE" position="1"/>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="village_setting_item" name="FK_VILLAGE_SETTING_VILLAGE_SETTING_ITEM">
+            <reference foreign="VILLAGE_SETTING_ITEM_CODE" local="VILLAGE_SETTING_ITEM_CODE"/>
+        </foreign-key>
+        <index name="FK_VILLAGE_SETTING_VILLAGE_SETTING_ITEM">
+            <index-column name="VILLAGE_SETTING_ITEM_CODE" position="1"/>
         </index>
-        <index name="FK_VILLAGE_SETTINGS_CHARA_GROUP">
-            <index-column name="CHARACTER_GROUP_ID" position="1"/>
-        </index>
+    </table>
+    <table comment="村設定項目" name="village_setting_item"
+        schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
+        <column comment="村設定項目コード" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_ITEM_CODE" pkName="PRIMARY"
+            pkPosition="1" primaryKey="true" required="true" size="100" type="VARCHAR"/>
+        <column comment="村設定項目名" dbType="VARCHAR" javaType="String"
+            name="VILLAGE_SETTING_ITEM_NAME" required="true" size="20" type="VARCHAR"/>
+        <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"
+            name="DISP_ORDER" required="true" size="10" type="INTEGER"/>
     </table>
     <table comment="村ステータス" name="village_status"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
@@ -695,18 +640,9 @@
     </table>
     <table comment="投票" name="vote"
         schema="wolf4busydb.$$NoNameSchema$$" type="TABLE">
-        <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
-            name="VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
+        <column comment="村日付ID" dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_DAY_ID" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="何日目か" dbType="INT UNSIGNED" javaType="Integer"
-            name="DAY" pkName="PRIMARY" pkPosition="2" primaryKey="true"
-            required="true" size="10" type="INTEGER"/>
-        <column comment="キャラクターID" dbType="INT UNSIGNED"
-            javaType="Integer" name="CHARA_ID" pkName="PRIMARY"
-            pkPosition="3" primaryKey="true" required="true" size="10" type="INTEGER"/>
-        <column comment="投票先キャラクターID" dbType="INT UNSIGNED"
-            javaType="Integer" name="VOTE_CHARA_ID" required="true"
-            size="10" type="INTEGER"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -717,24 +653,28 @@
             required="true" size="19" type="TIMESTAMP"/>
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
+        <column comment="投票元村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="VILLAGE_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="投票先村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="TARGET_VILLAGE_PLAYER_ID" size="10" type="INTEGER"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="chara" name="FK_VOTE_CHARA">
-            <reference foreign="CHARA_ID" local="CHARA_ID"/>
+            foreignTable="village_player" name="FK_VOTE_TARGET_VILLAGE_PLAYER">
+            <reference foreign="VILLAGE_PLAYER_ID" local="TARGET_VILLAGE_PLAYER_ID"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village_day" name="FK_VOTE_VILLAGE_DAY">
-            <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
-            <reference foreign="DAY" local="DAY"/>
+            <reference foreign="VILLAGE_DAY_ID" local="VILLAGE_DAY_ID"/>
         </foreign-key>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
-            foreignTable="chara" name="FK_VOTE_CHARA_TO">
-            <reference foreign="CHARA_ID" local="VOTE_CHARA_ID"/>
+            foreignTable="village_player" name="FK_VOTE_VILLAGE_PLAYER">
+            <reference foreign="VILLAGE_PLAYER_ID" local="VILLAGE_PLAYER_ID"/>
         </foreign-key>
-        <index name="FK_VOTE_CHARA">
-            <index-column name="CHARA_ID" position="1"/>
+        <index name="FK_VOTE_TARGET_VILLAGE_PLAYER">
+            <index-column name="TARGET_VILLAGE_PLAYER_ID" position="1"/>
         </index>
-        <index name="FK_VOTE_CHARA_TO">
-            <index-column name="VOTE_CHARA_ID" position="1"/>
+        <index name="FK_VOTE_VILLAGE_PLAYER">
+            <index-column name="VILLAGE_PLAYER_ID" position="1"/>
         </index>
     </table>
 </database>

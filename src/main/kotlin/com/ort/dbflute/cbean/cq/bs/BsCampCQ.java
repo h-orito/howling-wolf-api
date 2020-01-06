@@ -107,7 +107,7 @@ public class BsCampCQ extends AbstractBsCampCQ {
     public Map<String, Object> xdfgetCampCode_QueryDerivedReferrer_VillageListParameter() { return xgetSQuePmMap("campCode_QueryDerivedReferrer_VillageList"); }
     public String keepCampCode_QueryDerivedReferrer_VillageListParameter(Object pm) { return xkeepSQuePm("campCode_QueryDerivedReferrer_VillageList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CAMP_CODE: {PK, NotNull, VARCHAR(20), classification=Camp}
      * @return this. (NotNull)
@@ -127,7 +127,7 @@ public class BsCampCQ extends AbstractBsCampCQ {
       return _campName; }
     protected ConditionValue xgetCValueCampName() { return xdfgetCampName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * CAMP_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)

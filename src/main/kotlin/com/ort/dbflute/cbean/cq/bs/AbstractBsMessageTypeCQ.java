@@ -103,19 +103,11 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 役職霊視結果 (PRIVATE_GURU). And OnlyOnceRegistered. <br>
-     * 役職霊視結果
+     * Equal(=). As 参加者一覧 (PARTICIPANTS). And OnlyOnceRegistered. <br>
+     * 参加者一覧
      */
-    public void setMessageTypeCode_Equal_役職霊視結果() {
-        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.役職霊視結果);
-    }
-
-    /**
-     * Equal(=). As 足音調査結果 (PRIVATE_INVESTIGATE). And OnlyOnceRegistered. <br>
-     * 足音調査結果
-     */
-    public void setMessageTypeCode_Equal_足音調査結果() {
-        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.足音調査結果);
+    public void setMessageTypeCode_Equal_参加者一覧() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.参加者一覧);
     }
 
     /**
@@ -143,11 +135,11 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 役職占い結果 (PRIVATE_WISE). And OnlyOnceRegistered. <br>
-     * 役職占い結果
+     * Equal(=). As 襲撃結果 (PRIVATE_WEREWOLF). And OnlyOnceRegistered. <br>
+     * 襲撃結果
      */
-    public void setMessageTypeCode_Equal_役職占い結果() {
-        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.役職占い結果);
+    public void setMessageTypeCode_Equal_襲撃結果() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.襲撃結果);
     }
 
     /**
@@ -246,19 +238,11 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 役職霊視結果 (PRIVATE_GURU). And OnlyOnceRegistered. <br>
-     * 役職霊視結果
+     * NotEqual(&lt;&gt;). As 参加者一覧 (PARTICIPANTS). And OnlyOnceRegistered. <br>
+     * 参加者一覧
      */
-    public void setMessageTypeCode_NotEqual_役職霊視結果() {
-        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.役職霊視結果);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 足音調査結果 (PRIVATE_INVESTIGATE). And OnlyOnceRegistered. <br>
-     * 足音調査結果
-     */
-    public void setMessageTypeCode_NotEqual_足音調査結果() {
-        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.足音調査結果);
+    public void setMessageTypeCode_NotEqual_参加者一覧() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.参加者一覧);
     }
 
     /**
@@ -286,11 +270,11 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 役職占い結果 (PRIVATE_WISE). And OnlyOnceRegistered. <br>
-     * 役職占い結果
+     * NotEqual(&lt;&gt;). As 襲撃結果 (PRIVATE_WEREWOLF). And OnlyOnceRegistered. <br>
+     * 襲撃結果
      */
-    public void setMessageTypeCode_NotEqual_役職占い結果() {
-        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.役職占い結果);
+    public void setMessageTypeCode_NotEqual_襲撃結果() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.襲撃結果);
     }
 
     /**
@@ -609,7 +593,7 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageTypeCB> scalar_Equal() {
@@ -624,7 +608,7 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageTypeCB> scalar_NotEqual() {
@@ -639,7 +623,7 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageTypeCB> scalar_GreaterThan() {
@@ -654,7 +638,7 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageTypeCB> scalar_LessThan() {
@@ -669,7 +653,7 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<MessageTypeCB> scalar_GreaterEqual() {
@@ -772,7 +756,6 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

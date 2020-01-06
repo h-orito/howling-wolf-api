@@ -25,10 +25,10 @@ import com.ort.dbflute.cbean.*;
  * The behavior of VOTE as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, CHARA_ID
+ *     VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, CHARA_ID, VOTE_CHARA_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID
  *
  * [sequence]
  *     
@@ -40,13 +40,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     CHARA, VILLAGE_DAY
+ *     VILLAGE_PLAYER, VILLAGE_DAY
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     charaByCharaId, villageDay, charaByVoteCharaId
+ *     villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
  *
  * [referrer property]
  *     
@@ -109,7 +109,7 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">vote</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">voteBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -159,33 +159,31 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
 
     /**
      * Select the entity by the primary-key value.
-     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param day : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param charaId : PK, IX, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param villageDayId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Vote> selectByPK(Integer villageId, Integer day, Integer charaId) {
-        return facadeSelectByPK(villageId, day, charaId);
+    public OptionalEntity<Vote> selectByPK(Integer villageDayId) {
+        return facadeSelectByPK(villageDayId);
     }
 
-    protected OptionalEntity<Vote> facadeSelectByPK(Integer villageId, Integer day, Integer charaId) {
-        return doSelectOptionalByPK(villageId, day, charaId, typeOfSelectedEntity());
+    protected OptionalEntity<Vote> facadeSelectByPK(Integer villageDayId) {
+        return doSelectOptionalByPK(villageDayId, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Vote> ENTITY doSelectByPK(Integer villageId, Integer day, Integer charaId, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(villageId, day, charaId), tp);
+    protected <ENTITY extends Vote> ENTITY doSelectByPK(Integer villageDayId, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(villageDayId), tp);
     }
 
-    protected <ENTITY extends Vote> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageId, Integer day, Integer charaId, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(villageId, day, charaId, tp), villageId, day, charaId);
+    protected <ENTITY extends Vote> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageDayId, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(villageDayId, tp), villageDayId);
     }
 
-    protected VoteCB xprepareCBAsPK(Integer villageId, Integer day, Integer charaId) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("charaId", charaId);
-        return newConditionBean().acceptPK(villageId, day, charaId);
+    protected VoteCB xprepareCBAsPK(Integer villageDayId) {
+        assertObjectNotNull("villageDayId", villageDayId);
+        return newConditionBean().acceptPK(villageDayId);
     }
 
     // ===================================================================================
@@ -367,12 +365,12 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
     //                                                                   Pull out Relation
     //                                                                   =================
     /**
-     * Pull out the list of foreign table 'Chara'.
+     * Pull out the list of foreign table 'VillagePlayer'.
      * @param voteList The list of vote. (NotNull, EmptyAllowed)
      * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<Chara> pulloutCharaByCharaId(List<Vote> voteList)
-    { return helpPulloutInternally(voteList, "charaByCharaId"); }
+    public List<VillagePlayer> pulloutVillagePlayerByTargetVillagePlayerId(List<Vote> voteList)
+    { return helpPulloutInternally(voteList, "villagePlayerByTargetVillagePlayerId"); }
 
     /**
      * Pull out the list of foreign table 'VillageDay'.
@@ -383,16 +381,24 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
     { return helpPulloutInternally(voteList, "villageDay"); }
 
     /**
-     * Pull out the list of foreign table 'Chara'.
+     * Pull out the list of foreign table 'VillagePlayer'.
      * @param voteList The list of vote. (NotNull, EmptyAllowed)
      * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<Chara> pulloutCharaByVoteCharaId(List<Vote> voteList)
-    { return helpPulloutInternally(voteList, "charaByVoteCharaId"); }
+    public List<VillagePlayer> pulloutVillagePlayerByVillagePlayerId(List<Vote> voteList)
+    { return helpPulloutInternally(voteList, "villagePlayerByVillagePlayerId"); }
 
     // ===================================================================================
     //                                                                      Extract Column
     //                                                                      ==============
+    /**
+     * Extract the value list of (single) primary key villageDayId.
+     * @param voteList The list of vote. (NotNull, EmptyAllowed)
+     * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
+     */
+    public List<Integer> extractVillageDayIdList(List<Vote> voteList)
+    { return helpExtractListInternally(voteList, "villageDayId"); }
+
     // ===================================================================================
     //                                                                       Entity Update
     //                                                                       =============
@@ -816,8 +822,8 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * voteBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * voteBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * voteBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * voteBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * voteBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -825,7 +831,7 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
      * voteBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * voteBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * voteBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * voteBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * voteBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -833,7 +839,7 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
      * voteBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * voteBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * voteBhv.outideSql().removeBlockComment().selectList()
      * voteBhv.outideSql().removeLineComment().selectList()
      * voteBhv.outideSql().formatSql().selectList()

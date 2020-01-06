@@ -93,7 +93,7 @@ public class BsAbilityTypeCQ extends AbstractBsAbilityTypeCQ {
     public Map<String, Object> xdfgetAbilityTypeCode_QueryDerivedReferrer_AbilityListParameter() { return xgetSQuePmMap("abilityTypeCode_QueryDerivedReferrer_AbilityList"); }
     public String keepAbilityTypeCode_QueryDerivedReferrer_AbilityListParameter(Object pm) { return xkeepSQuePm("abilityTypeCode_QueryDerivedReferrer_AbilityList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), classification=AbilityType}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsAbilityTypeCQ extends AbstractBsAbilityTypeCQ {
       return _abilityTypeName; }
     protected ConditionValue xgetCValueAbilityTypeName() { return xdfgetAbilityTypeName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * ABILITY_TYPE_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)

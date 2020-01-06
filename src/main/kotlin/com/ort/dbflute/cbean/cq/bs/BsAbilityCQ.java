@@ -73,105 +73,85 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
-    protected ConditionValue _villageId;
-    public ConditionValue xdfgetVillageId()
-    { if (_villageId == null) { _villageId = nCV(); }
-      return _villageId; }
-    protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
-
-    protected ConditionValue _day;
-    public ConditionValue xdfgetDay()
-    { if (_day == null) { _day = nCV(); }
-      return _day; }
-    protected ConditionValue xgetCValueDay() { return xdfgetDay(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_Day_Asc() { regOBA("DAY"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_Day_Desc() { regOBD("DAY"); return this; }
-
-    protected ConditionValue _charaId;
-    public ConditionValue xdfgetCharaId()
-    { if (_charaId == null) { _charaId = nCV(); }
-      return _charaId; }
-    protected ConditionValue xgetCValueCharaId() { return xdfgetCharaId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_CharaId_Asc() { regOBA("CHARA_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_CharaId_Desc() { regOBD("CHARA_ID"); return this; }
-
-    protected ConditionValue _targetCharaId;
-    public ConditionValue xdfgetTargetCharaId()
-    { if (_targetCharaId == null) { _targetCharaId = nCV(); }
-      return _targetCharaId; }
-    protected ConditionValue xgetCValueTargetCharaId() { return xdfgetTargetCharaId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_TargetCharaId_Asc() { regOBA("TARGET_CHARA_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * TARGET_CHARA_ID: {IX, INT UNSIGNED(10), FK to chara}
-     * @return this. (NotNull)
-     */
-    public BsAbilityCQ addOrderBy_TargetCharaId_Desc() { regOBD("TARGET_CHARA_ID"); return this; }
-
     protected ConditionValue _abilityTypeCode;
     public ConditionValue xdfgetAbilityTypeCode()
     { if (_abilityTypeCode == null) { _abilityTypeCode = nCV(); }
       return _abilityTypeCode; }
     protected ConditionValue xgetCValueAbilityTypeCode() { return xdfgetAbilityTypeCode(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_AbilityTypeCode_Asc() { regOBA("ABILITY_TYPE_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * ABILITY_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_AbilityTypeCode_Desc() { regOBD("ABILITY_TYPE_CODE"); return this; }
+
+    protected ConditionValue _villageDayId;
+    public ConditionValue xdfgetVillageDayId()
+    { if (_villageDayId == null) { _villageDayId = nCV(); }
+      return _villageDayId; }
+    protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return this. (NotNull)
+     */
+    public BsAbilityCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return this. (NotNull)
+     */
+    public BsAbilityCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
+
+    protected ConditionValue _villagePlayerId;
+    public ConditionValue xdfgetVillagePlayerId()
+    { if (_villagePlayerId == null) { _villagePlayerId = nCV(); }
+      return _villagePlayerId; }
+    protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsAbilityCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsAbilityCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
+
+    protected ConditionValue _targetVillagePlayerId;
+    public ConditionValue xdfgetTargetVillagePlayerId()
+    { if (_targetVillagePlayerId == null) { _targetVillagePlayerId = nCV(); }
+      return _targetVillagePlayerId; }
+    protected ConditionValue xgetCValueTargetVillagePlayerId() { return xdfgetTargetVillagePlayerId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsAbilityCQ addOrderBy_TargetVillagePlayerId_Asc() { regOBA("TARGET_VILLAGE_PLAYER_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsAbilityCQ addOrderBy_TargetVillagePlayerId_Desc() { regOBD("TARGET_VILLAGE_PLAYER_ID"); return this; }
 
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
@@ -179,7 +159,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -199,7 +179,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -219,7 +199,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -239,7 +219,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -297,14 +277,14 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
         if (bq.hasConditionQueryAbilityType()) {
             uq.queryAbilityType().reflectRelationOnUnionQuery(bq.queryAbilityType(), uq.queryAbilityType());
         }
-        if (bq.hasConditionQueryCharaByCharaId()) {
-            uq.queryCharaByCharaId().reflectRelationOnUnionQuery(bq.queryCharaByCharaId(), uq.queryCharaByCharaId());
-        }
-        if (bq.hasConditionQueryCharaByTargetCharaId()) {
-            uq.queryCharaByTargetCharaId().reflectRelationOnUnionQuery(bq.queryCharaByTargetCharaId(), uq.queryCharaByTargetCharaId());
+        if (bq.hasConditionQueryVillagePlayerByTargetVillagePlayerId()) {
+            uq.queryVillagePlayerByTargetVillagePlayerId().reflectRelationOnUnionQuery(bq.queryVillagePlayerByTargetVillagePlayerId(), uq.queryVillagePlayerByTargetVillagePlayerId());
         }
         if (bq.hasConditionQueryVillageDay()) {
             uq.queryVillageDay().reflectRelationOnUnionQuery(bq.queryVillageDay(), uq.queryVillageDay());
+        }
+        if (bq.hasConditionQueryVillagePlayerByVillagePlayerId()) {
+            uq.queryVillagePlayerByVillagePlayerId().reflectRelationOnUnionQuery(bq.queryVillagePlayerByVillagePlayerId(), uq.queryVillagePlayerByVillagePlayerId());
         }
     }
 
@@ -333,47 +313,27 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
 
     /**
      * Get the condition-query for relation table. <br>
-     * CHARA by my CHARA_ID, named 'charaByCharaId'.
+     * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
      * @return The instance of condition-query. (NotNull)
      */
-    public CharaCQ queryCharaByCharaId() {
-        return xdfgetConditionQueryCharaByCharaId();
+    public VillagePlayerCQ queryVillagePlayerByTargetVillagePlayerId() {
+        return xdfgetConditionQueryVillagePlayerByTargetVillagePlayerId();
     }
-    public CharaCQ xdfgetConditionQueryCharaByCharaId() {
-        String prop = "charaByCharaId";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryCharaByCharaId()); xsetupOuterJoinCharaByCharaId(); }
+    public VillagePlayerCQ xdfgetConditionQueryVillagePlayerByTargetVillagePlayerId() {
+        String prop = "villagePlayerByTargetVillagePlayerId";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVillagePlayerByTargetVillagePlayerId()); xsetupOuterJoinVillagePlayerByTargetVillagePlayerId(); }
         return xgetQueRlMap(prop);
     }
-    protected CharaCQ xcreateQueryCharaByCharaId() {
-        String nrp = xresolveNRP("ability", "charaByCharaId"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new CharaCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "charaByCharaId", nrp);
+    protected VillagePlayerCQ xcreateQueryVillagePlayerByTargetVillagePlayerId() {
+        String nrp = xresolveNRP("ability", "villagePlayerByTargetVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByTargetVillagePlayerId", nrp);
     }
-    protected void xsetupOuterJoinCharaByCharaId() { xregOutJo("charaByCharaId"); }
-    public boolean hasConditionQueryCharaByCharaId() { return xhasQueRlMap("charaByCharaId"); }
+    protected void xsetupOuterJoinVillagePlayerByTargetVillagePlayerId() { xregOutJo("villagePlayerByTargetVillagePlayerId"); }
+    public boolean hasConditionQueryVillagePlayerByTargetVillagePlayerId() { return xhasQueRlMap("villagePlayerByTargetVillagePlayerId"); }
 
     /**
      * Get the condition-query for relation table. <br>
-     * CHARA by my TARGET_CHARA_ID, named 'charaByTargetCharaId'.
-     * @return The instance of condition-query. (NotNull)
-     */
-    public CharaCQ queryCharaByTargetCharaId() {
-        return xdfgetConditionQueryCharaByTargetCharaId();
-    }
-    public CharaCQ xdfgetConditionQueryCharaByTargetCharaId() {
-        String prop = "charaByTargetCharaId";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryCharaByTargetCharaId()); xsetupOuterJoinCharaByTargetCharaId(); }
-        return xgetQueRlMap(prop);
-    }
-    protected CharaCQ xcreateQueryCharaByTargetCharaId() {
-        String nrp = xresolveNRP("ability", "charaByTargetCharaId"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new CharaCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "charaByTargetCharaId", nrp);
-    }
-    protected void xsetupOuterJoinCharaByTargetCharaId() { xregOutJo("charaByTargetCharaId"); }
-    public boolean hasConditionQueryCharaByTargetCharaId() { return xhasQueRlMap("charaByTargetCharaId"); }
-
-    /**
-     * Get the condition-query for relation table. <br>
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The instance of condition-query. (NotNull)
      */
     public VillageDayCQ queryVillageDay() {
@@ -390,6 +350,26 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
     }
     protected void xsetupOuterJoinVillageDay() { xregOutJo("villageDay"); }
     public boolean hasConditionQueryVillageDay() { return xhasQueRlMap("villageDay"); }
+
+    /**
+     * Get the condition-query for relation table. <br>
+     * VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public VillagePlayerCQ queryVillagePlayerByVillagePlayerId() {
+        return xdfgetConditionQueryVillagePlayerByVillagePlayerId();
+    }
+    public VillagePlayerCQ xdfgetConditionQueryVillagePlayerByVillagePlayerId() {
+        String prop = "villagePlayerByVillagePlayerId";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVillagePlayerByVillagePlayerId()); xsetupOuterJoinVillagePlayerByVillagePlayerId(); }
+        return xgetQueRlMap(prop);
+    }
+    protected VillagePlayerCQ xcreateQueryVillagePlayerByVillagePlayerId() {
+        String nrp = xresolveNRP("ability", "villagePlayerByVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByVillagePlayerId", nrp);
+    }
+    protected void xsetupOuterJoinVillagePlayerByVillagePlayerId() { xregOutJo("villagePlayerByVillagePlayerId"); }
+    public boolean hasConditionQueryVillagePlayerByVillagePlayerId() { return xhasQueRlMap("villagePlayerByVillagePlayerId"); }
 
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;

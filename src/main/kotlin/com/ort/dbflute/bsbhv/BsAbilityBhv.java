@@ -26,10 +26,10 @@ import com.ort.dbflute.cbean.*;
  * The behavior of ABILITY as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, CHARA_ID, ABILITY_TYPE_CODE
+ *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, CHARA_ID, TARGET_CHARA_ID, ABILITY_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -41,13 +41,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     ABILITY_TYPE, CHARA, VILLAGE_DAY
+ *     ABILITY_TYPE, VILLAGE_PLAYER, VILLAGE_DAY
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     abilityType, charaByCharaId, charaByTargetCharaId, villageDay
+ *     abilityType, villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
  *
  * [referrer property]
  *     
@@ -110,7 +110,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">ability</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">abilityBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -160,34 +160,32 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
 
     /**
      * Select the entity by the primary-key value.
-     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param day : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param charaId : PK, IX, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
-     * @param abilityTypeCode : PK, IX, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
+     * @param abilityTypeCode : PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Ability> selectByPK(Integer villageId, Integer day, Integer charaId, CDef.AbilityType abilityTypeCode) {
-        return facadeSelectByPK(villageId, day, charaId, abilityTypeCode);
+    public OptionalEntity<Ability> selectByPK(CDef.AbilityType abilityTypeCode, Integer villageDayId) {
+        return facadeSelectByPK(abilityTypeCode, villageDayId);
     }
 
-    protected OptionalEntity<Ability> facadeSelectByPK(Integer villageId, Integer day, Integer charaId, CDef.AbilityType abilityTypeCode) {
-        return doSelectOptionalByPK(villageId, day, charaId, abilityTypeCode, typeOfSelectedEntity());
+    protected OptionalEntity<Ability> facadeSelectByPK(CDef.AbilityType abilityTypeCode, Integer villageDayId) {
+        return doSelectOptionalByPK(abilityTypeCode, villageDayId, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Ability> ENTITY doSelectByPK(Integer villageId, Integer day, Integer charaId, CDef.AbilityType abilityTypeCode, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(villageId, day, charaId, abilityTypeCode), tp);
+    protected <ENTITY extends Ability> ENTITY doSelectByPK(CDef.AbilityType abilityTypeCode, Integer villageDayId, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(abilityTypeCode, villageDayId), tp);
     }
 
-    protected <ENTITY extends Ability> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageId, Integer day, Integer charaId, CDef.AbilityType abilityTypeCode, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(villageId, day, charaId, abilityTypeCode, tp), villageId, day, charaId, abilityTypeCode);
+    protected <ENTITY extends Ability> OptionalEntity<ENTITY> doSelectOptionalByPK(CDef.AbilityType abilityTypeCode, Integer villageDayId, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(abilityTypeCode, villageDayId, tp), abilityTypeCode, villageDayId);
     }
 
-    protected AbilityCB xprepareCBAsPK(Integer villageId, Integer day, Integer charaId, CDef.AbilityType abilityTypeCode) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("charaId", charaId);assertObjectNotNull("abilityTypeCode", abilityTypeCode);
-        return newConditionBean().acceptPK(villageId, day, charaId, abilityTypeCode);
+    protected AbilityCB xprepareCBAsPK(CDef.AbilityType abilityTypeCode, Integer villageDayId) {
+        assertObjectNotNull("abilityTypeCode", abilityTypeCode);assertObjectNotNull("villageDayId", villageDayId);
+        return newConditionBean().acceptPK(abilityTypeCode, villageDayId);
     }
 
     // ===================================================================================
@@ -377,20 +375,12 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     { return helpPulloutInternally(abilityList, "abilityType"); }
 
     /**
-     * Pull out the list of foreign table 'Chara'.
+     * Pull out the list of foreign table 'VillagePlayer'.
      * @param abilityList The list of ability. (NotNull, EmptyAllowed)
      * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<Chara> pulloutCharaByCharaId(List<Ability> abilityList)
-    { return helpPulloutInternally(abilityList, "charaByCharaId"); }
-
-    /**
-     * Pull out the list of foreign table 'Chara'.
-     * @param abilityList The list of ability. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Chara> pulloutCharaByTargetCharaId(List<Ability> abilityList)
-    { return helpPulloutInternally(abilityList, "charaByTargetCharaId"); }
+    public List<VillagePlayer> pulloutVillagePlayerByTargetVillagePlayerId(List<Ability> abilityList)
+    { return helpPulloutInternally(abilityList, "villagePlayerByTargetVillagePlayerId"); }
 
     /**
      * Pull out the list of foreign table 'VillageDay'.
@@ -399,6 +389,14 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      */
     public List<VillageDay> pulloutVillageDay(List<Ability> abilityList)
     { return helpPulloutInternally(abilityList, "villageDay"); }
+
+    /**
+     * Pull out the list of foreign table 'VillagePlayer'.
+     * @param abilityList The list of ability. (NotNull, EmptyAllowed)
+     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
+     */
+    public List<VillagePlayer> pulloutVillagePlayerByVillagePlayerId(List<Ability> abilityList)
+    { return helpPulloutInternally(abilityList, "villagePlayerByVillagePlayerId"); }
 
     // ===================================================================================
     //                                                                      Extract Column
@@ -826,8 +824,8 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * abilityBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * abilityBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * abilityBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * abilityBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * abilityBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -835,7 +833,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * abilityBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * abilityBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * abilityBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * abilityBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * abilityBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -843,7 +841,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
      * abilityBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * abilityBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * abilityBhv.outideSql().removeBlockComment().selectList()
      * abilityBhv.outideSql().removeLineComment().selectList()
      * abilityBhv.outideSql().formatSql().selectList()

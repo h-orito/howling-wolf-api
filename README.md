@@ -20,6 +20,13 @@
   - インストールしておいてください
   - いくつ以上なら大丈夫かわかりませんが私は`3.5`を使っています
 
+- Firebase
+
+  - JWT検証にFirebase Admin Sdkを利用しているため、プロジェクトを作成し、秘密鍵を生成しておいてください 
+  （後の手順で秘密鍵のファイルパス、データベースURLを利用します） 
+  see https://firebase.google.com/docs/admin/setup?hl=ja
+  
+
 ## Setup for local development
 
 - clone
@@ -41,8 +48,25 @@
 
 * 起動
 
-  - `Wolf4busyApplication#main` を実行
+  - 以下の実行引数とともに`Wolf4busyApplication#main` を実行
+    - `--firebase.adminsdk.secretkey.path=${Firebaseサービスアカウント秘密鍵の配置パス}`
+    - `--firebase.database.url=${FirebaseデータベースURL}`
   - http://localhost:8086/wolf4busy/ がベース URL になります
+
+## Run
+
+  - 実行例
+  
+```
+$ java -jar wolf4busy.jar \
+	--spring.profiles.active=prd \
+	--spring.datasource.url=jdbc:mysql://${server ip and port}/${database name}?characterEncoding=UTF-8 \
+	--spring.datasource.username=${db user name} \
+	--spring.datasource.password=${db user pass} \
+	--firebase.adminsdk.secretkey.path=${Firebaseサービスアカウント秘密鍵の配置パス} \
+	--firebase.database.url=${FirebaseデータベースURL} \
+```
+
 
 ## Contribution
 

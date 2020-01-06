@@ -10,10 +10,10 @@ import com.ort.dbflute.exentity.*;
  * The referrer loader of ABILITY as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, CHARA_ID, ABILITY_TYPE_CODE
+ *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, CHARA_ID, TARGET_CHARA_ID, ABILITY_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -25,13 +25,13 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     ABILITY_TYPE, CHARA, VILLAGE_DAY
+ *     ABILITY_TYPE, VILLAGE_PLAYER, VILLAGE_DAY
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     abilityType, charaByCharaId, charaByTargetCharaId, villageDay
+ *     abilityType, villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
  *
  * [referrer property]
  *     
@@ -66,18 +66,11 @@ public class LoaderOfAbility {
         return _foreignAbilityTypeLoader;
     }
 
-    protected LoaderOfChara _foreignCharaByCharaIdLoader;
-    public LoaderOfChara pulloutCharaByCharaId() {
-        if (_foreignCharaByCharaIdLoader == null)
-        { _foreignCharaByCharaIdLoader = new LoaderOfChara().ready(myBhv().pulloutCharaByCharaId(_selectedList), _selector); }
-        return _foreignCharaByCharaIdLoader;
-    }
-
-    protected LoaderOfChara _foreignCharaByTargetCharaIdLoader;
-    public LoaderOfChara pulloutCharaByTargetCharaId() {
-        if (_foreignCharaByTargetCharaIdLoader == null)
-        { _foreignCharaByTargetCharaIdLoader = new LoaderOfChara().ready(myBhv().pulloutCharaByTargetCharaId(_selectedList), _selector); }
-        return _foreignCharaByTargetCharaIdLoader;
+    protected LoaderOfVillagePlayer _foreignVillagePlayerByTargetVillagePlayerIdLoader;
+    public LoaderOfVillagePlayer pulloutVillagePlayerByTargetVillagePlayerId() {
+        if (_foreignVillagePlayerByTargetVillagePlayerIdLoader == null)
+        { _foreignVillagePlayerByTargetVillagePlayerIdLoader = new LoaderOfVillagePlayer().ready(myBhv().pulloutVillagePlayerByTargetVillagePlayerId(_selectedList), _selector); }
+        return _foreignVillagePlayerByTargetVillagePlayerIdLoader;
     }
 
     protected LoaderOfVillageDay _foreignVillageDayLoader;
@@ -85,6 +78,13 @@ public class LoaderOfAbility {
         if (_foreignVillageDayLoader == null)
         { _foreignVillageDayLoader = new LoaderOfVillageDay().ready(myBhv().pulloutVillageDay(_selectedList), _selector); }
         return _foreignVillageDayLoader;
+    }
+
+    protected LoaderOfVillagePlayer _foreignVillagePlayerByVillagePlayerIdLoader;
+    public LoaderOfVillagePlayer pulloutVillagePlayerByVillagePlayerId() {
+        if (_foreignVillagePlayerByVillagePlayerIdLoader == null)
+        { _foreignVillagePlayerByVillagePlayerIdLoader = new LoaderOfVillagePlayer().ready(myBhv().pulloutVillagePlayerByVillagePlayerId(_selectedList), _selector); }
+        return _foreignVillagePlayerByVillagePlayerIdLoader;
     }
 
     // ===================================================================================

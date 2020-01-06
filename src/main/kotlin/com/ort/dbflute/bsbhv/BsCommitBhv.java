@@ -25,10 +25,10 @@ import com.ort.dbflute.cbean.*;
  * The behavior of COMMIT as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_ID, DAY, VILLAGE_PLAYER_ID
+ *     VILLAGE_PLAYER_ID, VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_ID, DAY, VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_PLAYER_ID, VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -109,7 +109,7 @@ public abstract class BsCommitBhv extends AbstractBehaviorWritable<Commit, Commi
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">commit</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">commitBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -159,33 +159,32 @@ public abstract class BsCommitBhv extends AbstractBehaviorWritable<Commit, Commi
 
     /**
      * Select the entity by the primary-key value.
-     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param day : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
+     * @param villagePlayerId : PK, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Commit> selectByPK(Integer villageId, Integer day, Integer villagePlayerId) {
-        return facadeSelectByPK(villageId, day, villagePlayerId);
+    public OptionalEntity<Commit> selectByPK(Integer villagePlayerId, Integer villageDayId) {
+        return facadeSelectByPK(villagePlayerId, villageDayId);
     }
 
-    protected OptionalEntity<Commit> facadeSelectByPK(Integer villageId, Integer day, Integer villagePlayerId) {
-        return doSelectOptionalByPK(villageId, day, villagePlayerId, typeOfSelectedEntity());
+    protected OptionalEntity<Commit> facadeSelectByPK(Integer villagePlayerId, Integer villageDayId) {
+        return doSelectOptionalByPK(villagePlayerId, villageDayId, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Commit> ENTITY doSelectByPK(Integer villageId, Integer day, Integer villagePlayerId, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(villageId, day, villagePlayerId), tp);
+    protected <ENTITY extends Commit> ENTITY doSelectByPK(Integer villagePlayerId, Integer villageDayId, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(villagePlayerId, villageDayId), tp);
     }
 
-    protected <ENTITY extends Commit> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageId, Integer day, Integer villagePlayerId, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(villageId, day, villagePlayerId, tp), villageId, day, villagePlayerId);
+    protected <ENTITY extends Commit> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villagePlayerId, Integer villageDayId, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(villagePlayerId, villageDayId, tp), villagePlayerId, villageDayId);
     }
 
-    protected CommitCB xprepareCBAsPK(Integer villageId, Integer day, Integer villagePlayerId) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("villagePlayerId", villagePlayerId);
-        return newConditionBean().acceptPK(villageId, day, villagePlayerId);
+    protected CommitCB xprepareCBAsPK(Integer villagePlayerId, Integer villageDayId) {
+        assertObjectNotNull("villagePlayerId", villagePlayerId);assertObjectNotNull("villageDayId", villageDayId);
+        return newConditionBean().acceptPK(villagePlayerId, villageDayId);
     }
 
     // ===================================================================================
@@ -808,8 +807,8 @@ public abstract class BsCommitBhv extends AbstractBehaviorWritable<Commit, Commi
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * commitBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * commitBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * commitBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * commitBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * commitBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -817,7 +816,7 @@ public abstract class BsCommitBhv extends AbstractBehaviorWritable<Commit, Commi
      * commitBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * commitBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * commitBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * commitBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * commitBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -825,7 +824,7 @@ public abstract class BsCommitBhv extends AbstractBehaviorWritable<Commit, Commi
      * commitBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * commitBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * commitBhv.outideSql().removeBlockComment().selectList()
      * commitBhv.outideSql().removeLineComment().selectList()
      * commitBhv.outideSql().formatSql().selectList()

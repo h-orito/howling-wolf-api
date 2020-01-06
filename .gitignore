@@ -28,3 +28,6 @@
 .vscode/
 
 /dbflute_wolf4busydb/log/
+/dbflute_wolf4busydb/output/doc/history-wolf4busydb.html
+/dbflute_wolf4busydb/output/doc/schema-wolf4busydb.html
+/dbflute_wolf4busydb/schema/project-history-wolf4busydb.diffmap

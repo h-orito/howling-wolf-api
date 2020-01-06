@@ -20,11 +20,27 @@ public class VillageDayNss {
     //                                                                     ===============
     /**
      * With nested relation columns to select clause. <br>
+     * NOONNIGHT by my NOONNIGHT_CODE, named 'noonnight'.
+     */
+    public void withNoonnight() {
+        _query.xdoNss(() -> _query.queryNoonnight());
+    }
+    /**
+     * With nested relation columns to select clause. <br>
      * VILLAGE by my VILLAGE_ID, named 'village'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */
     public VillageNss withVillage() {
         _query.xdoNss(() -> _query.queryVillage());
         return new VillageNss(_query.queryVillage());
+    }
+    /**
+     * With nested relation columns to select clause. <br>
+     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
+     */
+    public VoteNss withVoteAsOne() {
+        _query.xdoNss(() -> _query.queryVoteAsOne());
+        return new VoteNss(_query.queryVoteAsOne());
     }
 }

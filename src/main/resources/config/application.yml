@@ -4,6 +4,7 @@ spring:
     username: wolf4busyuser # 本番は起動引数で与える
     password: wolf4busypass # 本番は起動引数で与える
     driverClassName: com.mysql.jdbc.Driver
+    type: org.apache.tomcat.jdbc.pool.DataSource
   messages:
     basename: messages
     cache-duration: -1
@@ -18,7 +19,7 @@ server:
       timeout: 86400
 logging:
   level:
-    org.springframework: DEBUG
+    org.springframework: INFO
     root: INFO
     org.seasar.dbflute: ERROR
   file: /var/log/wolf4busy/tomcat.log

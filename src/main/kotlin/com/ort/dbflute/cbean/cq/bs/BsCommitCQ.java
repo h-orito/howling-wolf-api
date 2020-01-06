@@ -73,65 +73,45 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
-    protected ConditionValue _villageId;
-    public ConditionValue xdfgetVillageId()
-    { if (_villageId == null) { _villageId = nCV(); }
-      return _villageId; }
-    protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsCommitCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsCommitCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
-
-    protected ConditionValue _day;
-    public ConditionValue xdfgetDay()
-    { if (_day == null) { _day = nCV(); }
-      return _day; }
-    protected ConditionValue xgetCValueDay() { return xdfgetDay(); }
-
-    /** 
-     * Add order-by as ascend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsCommitCQ addOrderBy_Day_Asc() { regOBA("DAY"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @return this. (NotNull)
-     */
-    public BsCommitCQ addOrderBy_Day_Desc() { regOBD("DAY"); return this; }
-
     protected ConditionValue _villagePlayerId;
     public ConditionValue xdfgetVillagePlayerId()
     { if (_villagePlayerId == null) { _villagePlayerId = nCV(); }
       return _villagePlayerId; }
     protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
      */
     public BsCommitCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
      */
     public BsCommitCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
+
+    protected ConditionValue _villageDayId;
+    public ConditionValue xdfgetVillageDayId()
+    { if (_villageDayId == null) { _villageDayId = nCV(); }
+      return _villageDayId; }
+    protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return this. (NotNull)
+     */
+    public BsCommitCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @return this. (NotNull)
+     */
+    public BsCommitCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
 
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
@@ -139,7 +119,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -159,7 +139,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -179,7 +159,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -199,7 +179,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -267,7 +247,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
     //                                                                       =============
     /**
      * Get the condition-query for relation table. <br>
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The instance of condition-query. (NotNull)
      */
     public VillageDayCQ queryVillageDay() {

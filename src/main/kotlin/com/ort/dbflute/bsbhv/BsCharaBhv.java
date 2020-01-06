@@ -43,13 +43,13 @@ import com.ort.dbflute.cbean.*;
  *     CHARA_GROUP
  *
  * [referrer table]
- *     ABILITY, CHARA_IMAGE, VILLAGE_PLAYER, VOTE
+ *     CHARA_IMAGE, VILLAGE_PLAYER
  *
  * [foreign property]
  *     charaGroup
  *
  * [referrer property]
- *     abilityByCharaIdList, abilityByTargetCharaIdList, charaImageList, villagePlayerList, voteByCharaIdList, voteByVoteCharaIdList
+ *     charaImageList, villagePlayerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -109,7 +109,7 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">chara</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -362,134 +362,6 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
     }
 
     /**
-     * Load referrer of abilityByCharaIdList by the set-upper of referrer. <br>
-     * ABILITY by CHARA_ID, named 'abilityByCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadAbilityByCharaId</span>(<span style="color: #553000">charaList</span>, <span style="color: #553000">abilityCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">abilityCB</span>.setupSelect...
-     *     <span style="color: #553000">abilityCB</span>.query().set...
-     *     <span style="color: #553000">abilityCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * <span style="color: #70226C">for</span> (Chara chara : <span style="color: #553000">charaList</span>) {
-     *     ... = chara.<span style="color: #CC4747">getAbilityByCharaIdList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharaId_InScope(pkList);
-     * cb.query().addOrderBy_CharaId_Asc();
-     * </pre>
-     * @param charaList The entity list of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Ability> loadAbilityByCharaId(List<Chara> charaList, ReferrerConditionSetupper<AbilityCB> refCBLambda) {
-        xassLRArg(charaList, refCBLambda);
-        return doLoadAbilityByCharaId(charaList, new LoadReferrerOption<AbilityCB, Ability>().xinit(refCBLambda));
-    }
-
-    /**
-     * Load referrer of abilityByCharaIdList by the set-upper of referrer. <br>
-     * ABILITY by CHARA_ID, named 'abilityByCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadAbilityByCharaId</span>(<span style="color: #553000">chara</span>, <span style="color: #553000">abilityCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">abilityCB</span>.setupSelect...
-     *     <span style="color: #553000">abilityCB</span>.query().set...
-     *     <span style="color: #553000">abilityCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * ... = <span style="color: #553000">chara</span>.<span style="color: #CC4747">getAbilityByCharaIdList()</span>;
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharaId_InScope(pkList);
-     * cb.query().addOrderBy_CharaId_Asc();
-     * </pre>
-     * @param chara The entity of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Ability> loadAbilityByCharaId(Chara chara, ReferrerConditionSetupper<AbilityCB> refCBLambda) {
-        xassLRArg(chara, refCBLambda);
-        return doLoadAbilityByCharaId(xnewLRLs(chara), new LoadReferrerOption<AbilityCB, Ability>().xinit(refCBLambda));
-    }
-
-    protected NestedReferrerListGateway<Ability> doLoadAbilityByCharaId(List<Chara> charaList, LoadReferrerOption<AbilityCB, Ability> option) {
-        return helpLoadReferrerInternally(charaList, option, "abilityByCharaIdList");
-    }
-
-    /**
-     * Load referrer of abilityByTargetCharaIdList by the set-upper of referrer. <br>
-     * ABILITY by TARGET_CHARA_ID, named 'abilityByTargetCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadAbilityByTargetCharaId</span>(<span style="color: #553000">charaList</span>, <span style="color: #553000">abilityCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">abilityCB</span>.setupSelect...
-     *     <span style="color: #553000">abilityCB</span>.query().set...
-     *     <span style="color: #553000">abilityCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * <span style="color: #70226C">for</span> (Chara chara : <span style="color: #553000">charaList</span>) {
-     *     ... = chara.<span style="color: #CC4747">getAbilityByTargetCharaIdList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setTargetCharaId_InScope(pkList);
-     * cb.query().addOrderBy_TargetCharaId_Asc();
-     * </pre>
-     * @param charaList The entity list of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Ability> loadAbilityByTargetCharaId(List<Chara> charaList, ReferrerConditionSetupper<AbilityCB> refCBLambda) {
-        xassLRArg(charaList, refCBLambda);
-        return doLoadAbilityByTargetCharaId(charaList, new LoadReferrerOption<AbilityCB, Ability>().xinit(refCBLambda));
-    }
-
-    /**
-     * Load referrer of abilityByTargetCharaIdList by the set-upper of referrer. <br>
-     * ABILITY by TARGET_CHARA_ID, named 'abilityByTargetCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadAbilityByTargetCharaId</span>(<span style="color: #553000">chara</span>, <span style="color: #553000">abilityCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">abilityCB</span>.setupSelect...
-     *     <span style="color: #553000">abilityCB</span>.query().set...
-     *     <span style="color: #553000">abilityCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * ... = <span style="color: #553000">chara</span>.<span style="color: #CC4747">getAbilityByTargetCharaIdList()</span>;
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setTargetCharaId_InScope(pkList);
-     * cb.query().addOrderBy_TargetCharaId_Asc();
-     * </pre>
-     * @param chara The entity of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Ability> loadAbilityByTargetCharaId(Chara chara, ReferrerConditionSetupper<AbilityCB> refCBLambda) {
-        xassLRArg(chara, refCBLambda);
-        return doLoadAbilityByTargetCharaId(xnewLRLs(chara), new LoadReferrerOption<AbilityCB, Ability>().xinit(refCBLambda));
-    }
-
-    protected NestedReferrerListGateway<Ability> doLoadAbilityByTargetCharaId(List<Chara> charaList, LoadReferrerOption<AbilityCB, Ability> option) {
-        return helpLoadReferrerInternally(charaList, option, "abilityByTargetCharaIdList");
-    }
-
-    /**
      * Load referrer of charaImageList by the set-upper of referrer. <br>
      * CHARA_IMAGE by CHARA_ID, named 'charaImageList'.
      * <pre>
@@ -615,134 +487,6 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
 
     protected NestedReferrerListGateway<VillagePlayer> doLoadVillagePlayer(List<Chara> charaList, LoadReferrerOption<VillagePlayerCB, VillagePlayer> option) {
         return helpLoadReferrerInternally(charaList, option, "villagePlayerList");
-    }
-
-    /**
-     * Load referrer of voteByCharaIdList by the set-upper of referrer. <br>
-     * VOTE by CHARA_ID, named 'voteByCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadVoteByCharaId</span>(<span style="color: #553000">charaList</span>, <span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">voteCB</span>.setupSelect...
-     *     <span style="color: #553000">voteCB</span>.query().set...
-     *     <span style="color: #553000">voteCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * <span style="color: #70226C">for</span> (Chara chara : <span style="color: #553000">charaList</span>) {
-     *     ... = chara.<span style="color: #CC4747">getVoteByCharaIdList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharaId_InScope(pkList);
-     * cb.query().addOrderBy_CharaId_Asc();
-     * </pre>
-     * @param charaList The entity list of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Vote> loadVoteByCharaId(List<Chara> charaList, ReferrerConditionSetupper<VoteCB> refCBLambda) {
-        xassLRArg(charaList, refCBLambda);
-        return doLoadVoteByCharaId(charaList, new LoadReferrerOption<VoteCB, Vote>().xinit(refCBLambda));
-    }
-
-    /**
-     * Load referrer of voteByCharaIdList by the set-upper of referrer. <br>
-     * VOTE by CHARA_ID, named 'voteByCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadVoteByCharaId</span>(<span style="color: #553000">chara</span>, <span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">voteCB</span>.setupSelect...
-     *     <span style="color: #553000">voteCB</span>.query().set...
-     *     <span style="color: #553000">voteCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * ... = <span style="color: #553000">chara</span>.<span style="color: #CC4747">getVoteByCharaIdList()</span>;
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setCharaId_InScope(pkList);
-     * cb.query().addOrderBy_CharaId_Asc();
-     * </pre>
-     * @param chara The entity of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Vote> loadVoteByCharaId(Chara chara, ReferrerConditionSetupper<VoteCB> refCBLambda) {
-        xassLRArg(chara, refCBLambda);
-        return doLoadVoteByCharaId(xnewLRLs(chara), new LoadReferrerOption<VoteCB, Vote>().xinit(refCBLambda));
-    }
-
-    protected NestedReferrerListGateway<Vote> doLoadVoteByCharaId(List<Chara> charaList, LoadReferrerOption<VoteCB, Vote> option) {
-        return helpLoadReferrerInternally(charaList, option, "voteByCharaIdList");
-    }
-
-    /**
-     * Load referrer of voteByVoteCharaIdList by the set-upper of referrer. <br>
-     * VOTE by VOTE_CHARA_ID, named 'voteByVoteCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadVoteByVoteCharaId</span>(<span style="color: #553000">charaList</span>, <span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">voteCB</span>.setupSelect...
-     *     <span style="color: #553000">voteCB</span>.query().set...
-     *     <span style="color: #553000">voteCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * <span style="color: #70226C">for</span> (Chara chara : <span style="color: #553000">charaList</span>) {
-     *     ... = chara.<span style="color: #CC4747">getVoteByVoteCharaIdList()</span>;
-     * }
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setVoteCharaId_InScope(pkList);
-     * cb.query().addOrderBy_VoteCharaId_Asc();
-     * </pre>
-     * @param charaList The entity list of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Vote> loadVoteByVoteCharaId(List<Chara> charaList, ReferrerConditionSetupper<VoteCB> refCBLambda) {
-        xassLRArg(charaList, refCBLambda);
-        return doLoadVoteByVoteCharaId(charaList, new LoadReferrerOption<VoteCB, Vote>().xinit(refCBLambda));
-    }
-
-    /**
-     * Load referrer of voteByVoteCharaIdList by the set-upper of referrer. <br>
-     * VOTE by VOTE_CHARA_ID, named 'voteByVoteCharaIdList'.
-     * <pre>
-     * <span style="color: #0000C0">charaBhv</span>.<span style="color: #CC4747">loadVoteByVoteCharaId</span>(<span style="color: #553000">chara</span>, <span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">voteCB</span>.setupSelect...
-     *     <span style="color: #553000">voteCB</span>.query().set...
-     *     <span style="color: #553000">voteCB</span>.query().addOrderBy...
-     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
-     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
-     * <span style="color: #3F7E5E">//    ...</span>
-     * <span style="color: #3F7E5E">//});</span>
-     * ... = <span style="color: #553000">chara</span>.<span style="color: #CC4747">getVoteByVoteCharaIdList()</span>;
-     * </pre>
-     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
-     * The condition-bean, which the set-upper provides, has settings before callback as follows:
-     * <pre>
-     * cb.query().setVoteCharaId_InScope(pkList);
-     * cb.query().addOrderBy_VoteCharaId_Asc();
-     * </pre>
-     * @param chara The entity of chara. (NotNull)
-     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
-     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
-     */
-    public NestedReferrerListGateway<Vote> loadVoteByVoteCharaId(Chara chara, ReferrerConditionSetupper<VoteCB> refCBLambda) {
-        xassLRArg(chara, refCBLambda);
-        return doLoadVoteByVoteCharaId(xnewLRLs(chara), new LoadReferrerOption<VoteCB, Vote>().xinit(refCBLambda));
-    }
-
-    protected NestedReferrerListGateway<Vote> doLoadVoteByVoteCharaId(List<Chara> charaList, LoadReferrerOption<VoteCB, Vote> option) {
-        return helpLoadReferrerInternally(charaList, option, "voteByVoteCharaIdList");
     }
 
     // ===================================================================================
@@ -1190,8 +934,8 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * charaBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * charaBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * charaBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * charaBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * charaBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -1199,7 +943,7 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
      * charaBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * charaBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * charaBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * charaBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * charaBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -1207,7 +951,7 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
      * charaBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * charaBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * charaBhv.outideSql().removeBlockComment().selectList()
      * charaBhv.outideSql().removeLineComment().selectList()
      * charaBhv.outideSql().formatSql().selectList()

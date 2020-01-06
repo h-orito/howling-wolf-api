@@ -159,6 +159,44 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select TARGET_VILLAGE_PLAYER_ID from ability where ...)} <br>
+     * ability by TARGET_VILLAGE_PLAYER_ID, named 'abilityByTargetVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsAbilityByTargetVillagePlayerId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     abilityCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of AbilityByTargetVillagePlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsAbilityByTargetVillagePlayerId(SubQuery<AbilityCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_ExistsReferrer_AbilityByTargetVillagePlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", pp, "abilityByTargetVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_ExistsReferrer_AbilityByTargetVillagePlayerIdList(AbilityCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select VILLAGE_PLAYER_ID from ability where ...)} <br>
+     * ability by VILLAGE_PLAYER_ID, named 'abilityByVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsAbilityByVillagePlayerId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     abilityCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of AbilityByVillagePlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsAbilityByVillagePlayerId(SubQuery<AbilityCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_ExistsReferrer_AbilityByVillagePlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "abilityByVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_ExistsReferrer_AbilityByVillagePlayerIdList(AbilityCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
      * {exists (select VILLAGE_PLAYER_ID from commit where ...)} <br>
      * commit by VILLAGE_PLAYER_ID, named 'commitAsOne'.
      * <pre>
@@ -175,6 +213,82 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         registerExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "commitList");
     }
     public abstract String keepVillagePlayerId_ExistsReferrer_CommitList(CommitCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select TARGET_VILLAGE_PLAYER_ID from vote where ...)} <br>
+     * vote by TARGET_VILLAGE_PLAYER_ID, named 'voteByTargetVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsVoteByTargetVillagePlayerId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VoteByTargetVillagePlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsVoteByTargetVillagePlayerId(SubQuery<VoteCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_ExistsReferrer_VoteByTargetVillagePlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", pp, "voteByTargetVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_ExistsReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select VILLAGE_PLAYER_ID from vote where ...)} <br>
+     * vote by VILLAGE_PLAYER_ID, named 'voteByVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsVoteByVillagePlayerId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VoteByVillagePlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsVoteByVillagePlayerId(SubQuery<VoteCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_ExistsReferrer_VoteByVillagePlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "voteByVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_ExistsReferrer_VoteByVillagePlayerIdList(VoteCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select TARGET_VILLAGE_PLAYER_ID from ability where ...)} <br>
+     * ability by TARGET_VILLAGE_PLAYER_ID, named 'abilityByTargetVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsAbilityByTargetVillagePlayerId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     abilityCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillagePlayerId_NotExistsReferrer_AbilityByTargetVillagePlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsAbilityByTargetVillagePlayerId(SubQuery<AbilityCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_NotExistsReferrer_AbilityByTargetVillagePlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", pp, "abilityByTargetVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_NotExistsReferrer_AbilityByTargetVillagePlayerIdList(AbilityCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select VILLAGE_PLAYER_ID from ability where ...)} <br>
+     * ability by VILLAGE_PLAYER_ID, named 'abilityByVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsAbilityByVillagePlayerId</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     abilityCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillagePlayerId_NotExistsReferrer_AbilityByVillagePlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsAbilityByVillagePlayerId(SubQuery<AbilityCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_NotExistsReferrer_AbilityByVillagePlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "abilityByVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_NotExistsReferrer_AbilityByVillagePlayerIdList(AbilityCQ sq);
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
@@ -195,6 +309,60 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillagePlayerId_NotExistsReferrer_CommitList(CommitCQ sq);
 
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select TARGET_VILLAGE_PLAYER_ID from vote where ...)} <br>
+     * vote by TARGET_VILLAGE_PLAYER_ID, named 'voteByTargetVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsVoteByTargetVillagePlayerId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillagePlayerId_NotExistsReferrer_VoteByTargetVillagePlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsVoteByTargetVillagePlayerId(SubQuery<VoteCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_NotExistsReferrer_VoteByTargetVillagePlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", pp, "voteByTargetVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_NotExistsReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select VILLAGE_PLAYER_ID from vote where ...)} <br>
+     * vote by VILLAGE_PLAYER_ID, named 'voteByVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsVoteByVillagePlayerId</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillagePlayerId_NotExistsReferrer_VoteByVillagePlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsVoteByVillagePlayerId(SubQuery<VoteCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_NotExistsReferrer_VoteByVillagePlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "voteByVillagePlayerIdList");
+    }
+    public abstract String keepVillagePlayerId_NotExistsReferrer_VoteByVillagePlayerIdList(VoteCQ sq);
+
+    public void xsderiveAbilityByTargetVillagePlayerIdList(String fn, SubQuery<AbilityCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillagePlayerId_SpecifyDerivedReferrer_AbilityByTargetVillagePlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", pp, "abilityByTargetVillagePlayerIdList", al, op);
+    }
+    public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_AbilityByTargetVillagePlayerIdList(AbilityCQ sq);
+
+    public void xsderiveAbilityByVillagePlayerIdList(String fn, SubQuery<AbilityCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillagePlayerId_SpecifyDerivedReferrer_AbilityByVillagePlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "abilityByVillagePlayerIdList", al, op);
+    }
+    public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_AbilityByVillagePlayerIdList(AbilityCQ sq);
+
     public void xsderiveCommitList(String fn, SubQuery<CommitCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         CommitCB cb = new CommitCB(); cb.xsetupForDerivedReferrer(this);
@@ -202,6 +370,76 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "commitList", al, op);
     }
     public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_CommitList(CommitCQ sq);
+
+    public void xsderiveVoteByTargetVillagePlayerIdList(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillagePlayerId_SpecifyDerivedReferrer_VoteByTargetVillagePlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", pp, "voteByTargetVillagePlayerIdList", al, op);
+    }
+    public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq);
+
+    public void xsderiveVoteByVillagePlayerIdList(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillagePlayerId_SpecifyDerivedReferrer_VoteByVillagePlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "voteByVillagePlayerIdList", al, op);
+    }
+    public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_VoteByVillagePlayerIdList(VoteCQ sq);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from ability where ...)} <br>
+     * ability by TARGET_VILLAGE_PLAYER_ID, named 'abilityByTargetVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedAbilityByTargetVillagePlayerId()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     abilityCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     abilityCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<AbilityCB> derivedAbilityByTargetVillagePlayerId() {
+        return xcreateQDRFunctionAbilityByTargetVillagePlayerIdList();
+    }
+    protected HpQDRFunction<AbilityCB> xcreateQDRFunctionAbilityByTargetVillagePlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveAbilityByTargetVillagePlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveAbilityByTargetVillagePlayerIdList(String fn, SubQuery<AbilityCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillagePlayerId_QueryDerivedReferrer_AbilityByTargetVillagePlayerIdList(cb.query()); String prpp = keepVillagePlayerId_QueryDerivedReferrer_AbilityByTargetVillagePlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", sqpp, "abilityByTargetVillagePlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_AbilityByTargetVillagePlayerIdList(AbilityCQ sq);
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_AbilityByTargetVillagePlayerIdListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from ability where ...)} <br>
+     * ability by VILLAGE_PLAYER_ID, named 'abilityByVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedAbilityByVillagePlayerId()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     abilityCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     abilityCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<AbilityCB> derivedAbilityByVillagePlayerId() {
+        return xcreateQDRFunctionAbilityByVillagePlayerIdList();
+    }
+    protected HpQDRFunction<AbilityCB> xcreateQDRFunctionAbilityByVillagePlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveAbilityByVillagePlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveAbilityByVillagePlayerIdList(String fn, SubQuery<AbilityCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillagePlayerId_QueryDerivedReferrer_AbilityByVillagePlayerIdList(cb.query()); String prpp = keepVillagePlayerId_QueryDerivedReferrer_AbilityByVillagePlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", sqpp, "abilityByVillagePlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_AbilityByVillagePlayerIdList(AbilityCQ sq);
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_AbilityByVillagePlayerIdListParameter(Object vl);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
@@ -229,6 +467,60 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillagePlayerId_QueryDerivedReferrer_CommitList(CommitCQ sq);
     public abstract String keepVillagePlayerId_QueryDerivedReferrer_CommitListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from vote where ...)} <br>
+     * vote by TARGET_VILLAGE_PLAYER_ID, named 'voteByTargetVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedVoteByTargetVillagePlayerId()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     voteCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<VoteCB> derivedVoteByTargetVillagePlayerId() {
+        return xcreateQDRFunctionVoteByTargetVillagePlayerIdList();
+    }
+    protected HpQDRFunction<VoteCB> xcreateQDRFunctionVoteByTargetVillagePlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveVoteByTargetVillagePlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveVoteByTargetVillagePlayerIdList(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillagePlayerId_QueryDerivedReferrer_VoteByTargetVillagePlayerIdList(cb.query()); String prpp = keepVillagePlayerId_QueryDerivedReferrer_VoteByTargetVillagePlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", sqpp, "voteByTargetVillagePlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq);
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_VoteByTargetVillagePlayerIdListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from vote where ...)} <br>
+     * vote by VILLAGE_PLAYER_ID, named 'voteByVillagePlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedVoteByVillagePlayerId()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     voteCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<VoteCB> derivedVoteByVillagePlayerId() {
+        return xcreateQDRFunctionVoteByVillagePlayerIdList();
+    }
+    protected HpQDRFunction<VoteCB> xcreateQDRFunctionVoteByVillagePlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveVoteByVillagePlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveVoteByVillagePlayerIdList(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillagePlayerId_QueryDerivedReferrer_VoteByVillagePlayerIdList(cb.query()); String prpp = keepVillagePlayerId_QueryDerivedReferrer_VoteByVillagePlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", sqpp, "voteByVillagePlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_VoteByVillagePlayerIdList(VoteCQ sq);
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_VoteByVillagePlayerIdListParameter(Object vl);
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
@@ -616,70 +908,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSkillCode_Equal_C国狂人() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSkillCode_Equal_探偵() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSkillCode_Equal_魔神官() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * Equal(=). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSkillCode_Equal_狂信者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_Equal_おまかせ足音職() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * Equal(=). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSkillCode_Equal_妖狐() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * Equal(=). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_Equal_おまかせ役職窓あり() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * Equal(=). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSkillCode_Equal_導師() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.導師);
-    }
-
-    /**
      * Equal(=). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
      * 狩人
      */
@@ -704,27 +932,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSkillCode_Equal_共鳴者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * Equal(=). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setSkillCode_Equal_霊能者() {
         setSkillCode_Equal_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * Equal(=). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_Equal_おまかせ人外() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -744,35 +956,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSkillCode_Equal_おまかせ村人陣営() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_Equal_人狼() {
         setSkillCode_Equal_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSkillCode_Equal_おまかせ人狼陣営() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * Equal(=). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSkillCode_Equal_賢者() {
-        setSkillCode_Equal_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetSkillCode_Equal(String skillCode) {
@@ -796,70 +984,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_NotEqual_AsSkill(CDef.Skill cdef) {
         doSetSkillCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSkillCode_NotEqual_C国狂人() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSkillCode_NotEqual_探偵() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSkillCode_NotEqual_魔神官() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSkillCode_NotEqual_狂信者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_NotEqual_おまかせ足音職() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSkillCode_NotEqual_妖狐() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_NotEqual_おまかせ役職窓あり() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSkillCode_NotEqual_導師() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.導師);
     }
 
     /**
@@ -887,27 +1011,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSkillCode_NotEqual_共鳴者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setSkillCode_NotEqual_霊能者() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_NotEqual_おまかせ人外() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -927,35 +1035,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSkillCode_NotEqual_おまかせ村人陣営() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_NotEqual_人狼() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSkillCode_NotEqual_おまかせ人狼陣営() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSkillCode_NotEqual_賢者() {
-        setSkillCode_NotEqual_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetSkillCode_NotEqual(String skillCode) {
@@ -979,6 +1063,106 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_AsSkill(Collection<CDef.Skill> cdefList) {
         doSetSkillCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_ViewableWerewolfSay() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfViewableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_AvailableWerewolfSay() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃対象に選べない <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_NotSelectableAttack() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfNotSelectableAttack());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_DivineResultWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_PsychicResultWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃能力を持つ <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_HasAttackAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     */
+    public void setSkillCode_InScope_HasDivineAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasDivineAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     */
+    public void setSkillCode_InScope_HasGuardAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setSkillCode_InScope_HasPsychicAbility() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setSkillCode_InScope_CountWolf() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
@@ -1049,70 +1233,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setRequestSkillCode_Equal_C国狂人() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setRequestSkillCode_Equal_探偵() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setRequestSkillCode_Equal_魔神官() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * Equal(=). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setRequestSkillCode_Equal_狂信者() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setRequestSkillCode_Equal_おまかせ足音職() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * Equal(=). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setRequestSkillCode_Equal_妖狐() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * Equal(=). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setRequestSkillCode_Equal_おまかせ役職窓あり() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * Equal(=). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setRequestSkillCode_Equal_導師() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.導師);
-    }
-
-    /**
      * Equal(=). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
      * 狩人
      */
@@ -1137,27 +1257,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setRequestSkillCode_Equal_共鳴者() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * Equal(=). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setRequestSkillCode_Equal_霊能者() {
         setRequestSkillCode_Equal_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * Equal(=). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setRequestSkillCode_Equal_おまかせ人外() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -1177,35 +1281,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setRequestSkillCode_Equal_おまかせ村人陣営() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setRequestSkillCode_Equal_人狼() {
         setRequestSkillCode_Equal_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setRequestSkillCode_Equal_おまかせ人狼陣営() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * Equal(=). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setRequestSkillCode_Equal_賢者() {
-        setRequestSkillCode_Equal_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetRequestSkillCode_Equal(String requestSkillCode) {
@@ -1229,70 +1309,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setRequestSkillCode_NotEqual_AsSkill(CDef.Skill cdef) {
         doSetRequestSkillCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setRequestSkillCode_NotEqual_C国狂人() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setRequestSkillCode_NotEqual_探偵() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setRequestSkillCode_NotEqual_魔神官() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setRequestSkillCode_NotEqual_狂信者() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setRequestSkillCode_NotEqual_おまかせ足音職() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setRequestSkillCode_NotEqual_妖狐() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setRequestSkillCode_NotEqual_おまかせ役職窓あり() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setRequestSkillCode_NotEqual_導師() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.導師);
     }
 
     /**
@@ -1320,27 +1336,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setRequestSkillCode_NotEqual_共鳴者() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setRequestSkillCode_NotEqual_霊能者() {
         setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setRequestSkillCode_NotEqual_おまかせ人外() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -1360,35 +1360,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setRequestSkillCode_NotEqual_おまかせ村人陣営() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setRequestSkillCode_NotEqual_人狼() {
         setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setRequestSkillCode_NotEqual_おまかせ人狼陣営() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setRequestSkillCode_NotEqual_賢者() {
-        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetRequestSkillCode_NotEqual(String requestSkillCode) {
@@ -1412,6 +1388,106 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setRequestSkillCode_InScope_AsSkill(Collection<CDef.Skill> cdefList) {
         doSetRequestSkillCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_ViewableWerewolfSay() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfViewableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_AvailableWerewolfSay() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃対象に選べない <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_NotSelectableAttack() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfNotSelectableAttack());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_DivineResultWolf() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_PsychicResultWolf() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃能力を持つ <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_HasAttackAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     */
+    public void setRequestSkillCode_InScope_HasDivineAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasDivineAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     */
+    public void setRequestSkillCode_InScope_HasGuardAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setRequestSkillCode_InScope_HasPsychicAbility() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setRequestSkillCode_InScope_CountWolf() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
     }
 
     protected void doSetRequestSkillCode_InScope(Collection<String> requestSkillCodeList) {
@@ -1482,70 +1558,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSecondRequestSkillCode_Equal_C国狂人() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * Equal(=). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSecondRequestSkillCode_Equal_探偵() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * Equal(=). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSecondRequestSkillCode_Equal_魔神官() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * Equal(=). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSecondRequestSkillCode_Equal_狂信者() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Equal(=). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSecondRequestSkillCode_Equal_おまかせ足音職() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * Equal(=). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSecondRequestSkillCode_Equal_妖狐() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * Equal(=). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSecondRequestSkillCode_Equal_おまかせ役職窓あり() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * Equal(=). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSecondRequestSkillCode_Equal_導師() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.導師);
-    }
-
-    /**
      * Equal(=). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
      * 狩人
      */
@@ -1570,27 +1582,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSecondRequestSkillCode_Equal_共鳴者() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * Equal(=). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setSecondRequestSkillCode_Equal_霊能者() {
         setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * Equal(=). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSecondRequestSkillCode_Equal_おまかせ人外() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -1610,35 +1606,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSecondRequestSkillCode_Equal_おまかせ村人陣営() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSecondRequestSkillCode_Equal_人狼() {
         setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSecondRequestSkillCode_Equal_おまかせ人狼陣営() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * Equal(=). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSecondRequestSkillCode_Equal_賢者() {
-        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetSecondRequestSkillCode_Equal(String secondRequestSkillCode) {
@@ -1662,70 +1634,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill cdef) {
         doSetSecondRequestSkillCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As C国狂人 (CMADMAN). And OnlyOnceRegistered. <br>
-     * C国狂人
-     */
-    public void setSecondRequestSkillCode_NotEqual_C国狂人() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 探偵 (DETECTIVE). And OnlyOnceRegistered. <br>
-     * 探偵
-     */
-    public void setSecondRequestSkillCode_NotEqual_探偵() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 魔神官 (EVILMEDIUM). And OnlyOnceRegistered. <br>
-     * 魔神官
-     */
-    public void setSecondRequestSkillCode_NotEqual_魔神官() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 狂信者 (FANATIC). And OnlyOnceRegistered. <br>
-     * 狂信者
-     */
-    public void setSecondRequestSkillCode_NotEqual_狂信者() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ足音職 (FOOTSTEPS). And OnlyOnceRegistered. <br>
-     * おまかせ（足音職）
-     */
-    public void setSecondRequestSkillCode_NotEqual_おまかせ足音職() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
-     * 妖狐
-     */
-    public void setSecondRequestSkillCode_NotEqual_妖狐() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ役職窓あり (FRIENDS). And OnlyOnceRegistered. <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSecondRequestSkillCode_NotEqual_おまかせ役職窓あり() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 導師 (GURU). And OnlyOnceRegistered. <br>
-     * 導師
-     */
-    public void setSecondRequestSkillCode_NotEqual_導師() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.導師);
     }
 
     /**
@@ -1753,27 +1661,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 共鳴者 (MASON). And OnlyOnceRegistered. <br>
-     * 共鳴者
-     */
-    public void setSecondRequestSkillCode_NotEqual_共鳴者() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
     public void setSecondRequestSkillCode_NotEqual_霊能者() {
         setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人外 (NOVILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（人外）
-     */
-    public void setSecondRequestSkillCode_NotEqual_おまかせ人外() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -1793,35 +1685,11 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
-     * おまかせ（村人陣営）
-     */
-    public void setSecondRequestSkillCode_NotEqual_おまかせ村人陣営() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSecondRequestSkillCode_NotEqual_人狼() {
         setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
-     * おまかせ（人狼陣営）
-     */
-    public void setSecondRequestSkillCode_NotEqual_おまかせ人狼陣営() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 賢者 (WISE). And OnlyOnceRegistered. <br>
-     * 賢者
-     */
-    public void setSecondRequestSkillCode_NotEqual_賢者() {
-        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.賢者);
     }
 
     protected void doSetSecondRequestSkillCode_NotEqual(String secondRequestSkillCode) {
@@ -1845,6 +1713,106 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_InScope_AsSkill(Collection<CDef.Skill> cdefList) {
         doSetSecondRequestSkillCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_ViewableWerewolfSay() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfViewableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 囁き可能 <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_AvailableWerewolfSay() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfAvailableWerewolfSay());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃対象に選べない <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_NotSelectableAttack() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfNotSelectableAttack());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_DivineResultWolf() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfDivineResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_PsychicResultWolf() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfPsychicResultWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃能力を持つ <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_HasAttackAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasAttackAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     */
+    public void setSecondRequestSkillCode_InScope_HasDivineAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasDivineAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     */
+    public void setSecondRequestSkillCode_InScope_HasGuardAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasGuardAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     */
+    public void setSecondRequestSkillCode_InScope_HasPsychicAbility() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfHasPsychicAbility());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     */
+    public void setSecondRequestSkillCode_InScope_CountWolf() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
     }
 
     protected void doSetSecondRequestSkillCode_InScope(Collection<String> secondRequestSkillCodeList) {
@@ -1963,7 +1931,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * Equal(=). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_Equal_突然() {
@@ -2018,7 +1986,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * NotEqual(&lt;&gt;). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_NotEqual_突然() {
@@ -2046,6 +2014,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setDeadReasonCode_InScope_AsDeadReason(Collection<CDef.DeadReason> cdefList) {
         doSetDeadReasonCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As DeadReason. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 死亡理由 <br>
+     * 無惨な死 <br>
+     * The group elements:[襲撃, 呪殺]
+     */
+    public void setDeadReasonCode_InScope_MiserableDeath() {
+        setDeadReasonCode_InScope_AsDeadReason(CDef.DeadReason.listOfMiserableDeath());
     }
 
     protected void doSetDeadReasonCode_InScope(Collection<String> deadReasonCodeList) {
@@ -2098,132 +2076,132 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as equal. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_Equal(Integer deadDay) {
-        doSetDeadDay_Equal(deadDay);
+    public void setDeadVillageDayId_Equal(Integer deadVillageDayId) {
+        doSetDeadVillageDayId_Equal(deadVillageDayId);
     }
 
-    protected void doSetDeadDay_Equal(Integer deadDay) {
-        regDeadDay(CK_EQ, deadDay);
+    protected void doSetDeadVillageDayId_Equal(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_EQ, deadVillageDayId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as notEqual. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_NotEqual(Integer deadDay) {
-        doSetDeadDay_NotEqual(deadDay);
+    public void setDeadVillageDayId_NotEqual(Integer deadVillageDayId) {
+        doSetDeadVillageDayId_NotEqual(deadVillageDayId);
     }
 
-    protected void doSetDeadDay_NotEqual(Integer deadDay) {
-        regDeadDay(CK_NES, deadDay);
+    protected void doSetDeadVillageDayId_NotEqual(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_NES, deadVillageDayId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_GreaterThan(Integer deadDay) {
-        regDeadDay(CK_GT, deadDay);
+    public void setDeadVillageDayId_GreaterThan(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_GT, deadVillageDayId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as lessThan. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_LessThan(Integer deadDay) {
-        regDeadDay(CK_LT, deadDay);
+    public void setDeadVillageDayId_LessThan(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_LT, deadVillageDayId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_GreaterEqual(Integer deadDay) {
-        regDeadDay(CK_GE, deadDay);
+    public void setDeadVillageDayId_GreaterEqual(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_GE, deadVillageDayId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDay The value of deadDay as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayId The value of deadVillageDayId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDeadDay_LessEqual(Integer deadDay) {
-        regDeadDay(CK_LE, deadDay);
+    public void setDeadVillageDayId_LessEqual(Integer deadVillageDayId) {
+        regDeadVillageDayId(CK_LE, deadVillageDayId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param minNumber The min number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param minNumber The min number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setDeadDay_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setDeadDay_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setDeadVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setDeadVillageDayId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param minNumber The min number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of deadDay. (basically NotNull: if op.allowOneSide(), null allowed)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param minNumber The min number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of deadVillageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setDeadDay_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueDeadDay(), "DEAD_DAY", rangeOfOption);
+    protected void setDeadVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDayList The collection of deadDay as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayIdList The collection of deadVillageDayId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDeadDay_InScope(Collection<Integer> deadDayList) {
-        doSetDeadDay_InScope(deadDayList);
+    public void setDeadVillageDayId_InScope(Collection<Integer> deadVillageDayIdList) {
+        doSetDeadVillageDayId_InScope(deadVillageDayIdList);
     }
 
-    protected void doSetDeadDay_InScope(Collection<Integer> deadDayList) {
-        regINS(CK_INS, cTL(deadDayList), xgetCValueDeadDay(), "DEAD_DAY");
+    protected void doSetDeadVillageDayId_InScope(Collection<Integer> deadVillageDayIdList) {
+        regINS(CK_INS, cTL(deadVillageDayIdList), xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
-     * @param deadDayList The collection of deadDay as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
+     * @param deadVillageDayIdList The collection of deadVillageDayId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDeadDay_NotInScope(Collection<Integer> deadDayList) {
-        doSetDeadDay_NotInScope(deadDayList);
+    public void setDeadVillageDayId_NotInScope(Collection<Integer> deadVillageDayIdList) {
+        doSetDeadVillageDayId_NotInScope(deadVillageDayIdList);
     }
 
-    protected void doSetDeadDay_NotInScope(Collection<Integer> deadDayList) {
-        regINS(CK_NINS, cTL(deadDayList), xgetCValueDeadDay(), "DEAD_DAY");
+    protected void doSetDeadVillageDayId_NotInScope(Collection<Integer> deadVillageDayIdList) {
+        regINS(CK_NINS, cTL(deadVillageDayIdList), xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
      */
-    public void setDeadDay_IsNull() { regDeadDay(CK_ISN, DOBJ); }
+    public void setDeadVillageDayId_IsNull() { regDeadVillageDayId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * DEAD_DAY: {INT UNSIGNED(10)}
+     * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
      */
-    public void setDeadDay_IsNotNull() { regDeadDay(CK_ISNN, DOBJ); }
+    public void setDeadVillageDayId_IsNotNull() { regDeadVillageDayId(CK_ISNN, DOBJ); }
 
-    protected void regDeadDay(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDeadDay(), "DEAD_DAY"); }
-    protected abstract ConditionValue xgetCValueDeadDay();
+    protected void regDeadVillageDayId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDeadVillageDayId(), "DEAD_VILLAGE_DAY_ID"); }
+    protected abstract ConditionValue xgetCValueDeadVillageDayId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -2668,7 +2646,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillagePlayerCB> scalar_Equal() {
@@ -2683,7 +2661,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillagePlayerCB> scalar_NotEqual() {
@@ -2698,7 +2676,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillagePlayerCB> scalar_GreaterThan() {
@@ -2713,7 +2691,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillagePlayerCB> scalar_LessThan() {
@@ -2728,7 +2706,7 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillagePlayerCB> scalar_GreaterEqual() {
@@ -2831,7 +2809,6 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

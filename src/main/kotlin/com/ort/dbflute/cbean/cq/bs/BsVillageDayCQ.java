@@ -5,7 +5,6 @@ import java.util.Map;
 import org.dbflute.cbean.*;
 import org.dbflute.cbean.chelper.*;
 import org.dbflute.cbean.coption.*;
-import org.dbflute.cbean.scoping.*;
 import org.dbflute.cbean.cvalue.ConditionValue;
 import org.dbflute.cbean.sqlclause.SqlClause;
 import org.dbflute.exception.IllegalConditionBeanOperationException;
@@ -74,22 +73,84 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
+    protected ConditionValue _villageDayId;
+    public ConditionValue xdfgetVillageDayId()
+    { if (_villageDayId == null) { _villageDayId = nCV(); }
+      return _villageDayId; }
+    protected ConditionValue xgetCValueVillageDayId() { return xdfgetVillageDayId(); }
+
+    public Map<String, AbilityCQ> xdfgetVillageDayId_ExistsReferrer_AbilityList() { return xgetSQueMap("villageDayId_ExistsReferrer_AbilityList"); }
+    public String keepVillageDayId_ExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_AbilityList", sq); }
+
+    public Map<String, CommitCQ> xdfgetVillageDayId_ExistsReferrer_CommitList() { return xgetSQueMap("villageDayId_ExistsReferrer_CommitList"); }
+    public String keepVillageDayId_ExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_CommitList", sq); }
+
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_ExistsReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_ExistsReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_VillagePlayerList", sq); }
+
+    public Map<String, AbilityCQ> xdfgetVillageDayId_NotExistsReferrer_AbilityList() { return xgetSQueMap("villageDayId_NotExistsReferrer_AbilityList"); }
+    public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_AbilityList", sq); }
+
+    public Map<String, CommitCQ> xdfgetVillageDayId_NotExistsReferrer_CommitList() { return xgetSQueMap("villageDayId_NotExistsReferrer_CommitList"); }
+    public String keepVillageDayId_NotExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_CommitList", sq); }
+
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_NotExistsReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_NotExistsReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_VillagePlayerList", sq); }
+
+    public Map<String, AbilityCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_AbilityList"); }
+    public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_AbilityList", sq); }
+
+    public Map<String, CommitCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_CommitList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_CommitList"); }
+    public String keepVillageDayId_SpecifyDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_CommitList", sq); }
+
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_VillagePlayerList", sq); }
+
+    public Map<String, AbilityCQ> xdfgetVillageDayId_QueryDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_AbilityList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_AbilityList", sq); }
+    public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_AbilityListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_AbilityList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_AbilityListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_AbilityList", pm); }
+
+    public Map<String, CommitCQ> xdfgetVillageDayId_QueryDerivedReferrer_CommitList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_CommitList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_CommitList", sq); }
+    public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_CommitListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_CommitList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_CommitListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_CommitList", pm); }
+
+    public Map<String, VillagePlayerCQ> xdfgetVillageDayId_QueryDerivedReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_VillagePlayerList", sq); }
+    public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_VillagePlayerList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_VillagePlayerList", pm); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * VILLAGE_DAY_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @return this. (NotNull)
+     */
+    public BsVillageDayCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_DAY_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @return this. (NotNull)
+     */
+    public BsVillageDayCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
+
     protected ConditionValue _villageId;
     public ConditionValue xdfgetVillageId()
     { if (_villageId == null) { _villageId = nCV(); }
       return _villageId; }
     protected ConditionValue xgetCValueVillageId() { return xdfgetVillageId(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
@@ -100,19 +161,39 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _day; }
     protected ConditionValue xgetCValueDay() { return xdfgetDay(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10)}
+     * DAY: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_Day_Asc() { regOBA("DAY"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10)}
+     * DAY: {NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_Day_Desc() { regOBD("DAY"); return this; }
+
+    protected ConditionValue _noonnightCode;
+    public ConditionValue xdfgetNoonnightCode()
+    { if (_noonnightCode == null) { _noonnightCode = nCV(); }
+      return _noonnightCode; }
+    protected ConditionValue xgetCValueNoonnightCode() { return xdfgetNoonnightCode(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * @return this. (NotNull)
+     */
+    public BsVillageDayCQ addOrderBy_NoonnightCode_Asc() { regOBA("NOONNIGHT_CODE"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * @return this. (NotNull)
+     */
+    public BsVillageDayCQ addOrderBy_NoonnightCode_Desc() { regOBD("NOONNIGHT_CODE"); return this; }
 
     protected ConditionValue _daychangeDatetime;
     public ConditionValue xdfgetDaychangeDatetime()
@@ -120,7 +201,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _daychangeDatetime; }
     protected ConditionValue xgetCValueDaychangeDatetime() { return xdfgetDaychangeDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * DAYCHANGE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -134,13 +215,33 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
      */
     public BsVillageDayCQ addOrderBy_DaychangeDatetime_Desc() { regOBD("DAYCHANGE_DATETIME"); return this; }
 
+    protected ConditionValue _isUpdating;
+    public ConditionValue xdfgetIsUpdating()
+    { if (_isUpdating == null) { _isUpdating = nCV(); }
+      return _isUpdating; }
+    protected ConditionValue xgetCValueIsUpdating() { return xdfgetIsUpdating(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * IS_UPDATING: {NotNull, BIT}
+     * @return this. (NotNull)
+     */
+    public BsVillageDayCQ addOrderBy_IsUpdating_Asc() { regOBA("IS_UPDATING"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * IS_UPDATING: {NotNull, BIT}
+     * @return this. (NotNull)
+     */
+    public BsVillageDayCQ addOrderBy_IsUpdating_Desc() { regOBD("IS_UPDATING"); return this; }
+
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
     { if (_registerDatetime == null) { _registerDatetime = nCV(); }
       return _registerDatetime; }
     protected ConditionValue xgetCValueRegisterDatetime() { return xdfgetRegisterDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -160,7 +261,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _registerTrace; }
     protected ConditionValue xgetCValueRegisterTrace() { return xdfgetRegisterTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -180,7 +281,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _updateDatetime; }
     protected ConditionValue xgetCValueUpdateDatetime() { return xdfgetUpdateDatetime(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
@@ -200,7 +301,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
       return _updateTrace; }
     protected ConditionValue xgetCValueUpdateTrace() { return xdfgetUpdateTrace(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
@@ -255,14 +356,40 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public void reflectRelationOnUnionQuery(ConditionQuery bqs, ConditionQuery uqs) {
         VillageDayCQ bq = (VillageDayCQ)bqs;
         VillageDayCQ uq = (VillageDayCQ)uqs;
+        if (bq.hasConditionQueryNoonnight()) {
+            uq.queryNoonnight().reflectRelationOnUnionQuery(bq.queryNoonnight(), uq.queryNoonnight());
+        }
         if (bq.hasConditionQueryVillage()) {
             uq.queryVillage().reflectRelationOnUnionQuery(bq.queryVillage(), uq.queryVillage());
+        }
+        if (bq.hasConditionQueryVoteAsOne()) {
+            uq.queryVoteAsOne().reflectRelationOnUnionQuery(bq.queryVoteAsOne(), uq.queryVoteAsOne());
         }
     }
 
     // ===================================================================================
     //                                                                       Foreign Query
     //                                                                       =============
+    /**
+     * Get the condition-query for relation table. <br>
+     * NOONNIGHT by my NOONNIGHT_CODE, named 'noonnight'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public NoonnightCQ queryNoonnight() {
+        return xdfgetConditionQueryNoonnight();
+    }
+    public NoonnightCQ xdfgetConditionQueryNoonnight() {
+        String prop = "noonnight";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryNoonnight()); xsetupOuterJoinNoonnight(); }
+        return xgetQueRlMap(prop);
+    }
+    protected NoonnightCQ xcreateQueryNoonnight() {
+        String nrp = xresolveNRP("village_day", "noonnight"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new NoonnightCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "noonnight", nrp);
+    }
+    protected void xsetupOuterJoinNoonnight() { xregOutJo("noonnight"); }
+    public boolean hasConditionQueryNoonnight() { return xhasQueRlMap("noonnight"); }
+
     /**
      * Get the condition-query for relation table. <br>
      * VILLAGE by my VILLAGE_ID, named 'village'.
@@ -283,6 +410,24 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     protected void xsetupOuterJoinVillage() { xregOutJo("village"); }
     public boolean hasConditionQueryVillage() { return xhasQueRlMap("village"); }
 
+    /**
+     * Get the condition-query for relation table. <br>
+     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public VoteCQ queryVoteAsOne() { return xdfgetConditionQueryVoteAsOne(); }
+    public VoteCQ xdfgetConditionQueryVoteAsOne() {
+        String prop = "voteAsOne";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVoteAsOne()); xsetupOuterJoinVoteAsOne(); }
+        return xgetQueRlMap(prop);
+    }
+    protected VoteCQ xcreateQueryVoteAsOne() {
+        String nrp = xresolveNRP("village_day", "voteAsOne"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new VoteCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "voteAsOne", nrp);
+    }
+    protected void xsetupOuterJoinVoteAsOne() { xregOutJo("voteAsOne"); }
+    public boolean hasConditionQueryVoteAsOne() { return xhasQueRlMap("voteAsOne"); }
+
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;
     }
@@ -294,241 +439,28 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public String keepScalarCondition(VillageDayCQ sq) { return xkeepSQue("scalarCondition", sq); }
 
     // ===================================================================================
-    //                                                      ExistsReferrer for Compound PK
-    //                                                      ==============================
-    /**
-     * Set up ExistsReferrer (correlated sub-query by compound key). <br>
-     * {exists (select ... from ability where ...)}
-     * @param subQuery The sub-query of AbilityList for 'exists'. (NotNull)
-     */
-    public void existsAbility(SubQuery<AbilityCB> subQuery) {
-        assertObjectNotNull("subQuery<AbilityCB>", subQuery);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
-        try { lock(); subQuery.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_ExistsReferrer_AbilityList(cb.query());
-        registerExistsReferrer(cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "abilityList");
-    }
-    public Map<String, AbilityCQ> xdfgetTwoOrMorePk_ExistsReferrer_AbilityList() { return xgetSQueMap("twoOrMorePk_ExistsReferrer_AbilityList"); }
-    public String keepTwoOrMorePk_ExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("twoOrMorePk_ExistsReferrer_AbilityList", sq); }
+    //                                                                       MyselfDerived
+    //                                                                       =============
+    public Map<String, VillageDayCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
+    public String keepSpecifyMyselfDerived(VillageDayCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
 
-    /**
-     * Set up ExistsReferrer (correlated sub-query by compound key). <br>
-     * {exists (select ... from commit where ...)}
-     * @param subQuery The sub-query of CommitList for 'exists'. (NotNull)
-     */
-    public void existsCommit(SubQuery<CommitCB> subQuery) {
-        assertObjectNotNull("subQuery<CommitCB>", subQuery);
-        CommitCB cb = new CommitCB(); cb.xsetupForExistsReferrer(this);
-        try { lock(); subQuery.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_ExistsReferrer_CommitList(cb.query());
-        registerExistsReferrer(cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "commitList");
-    }
-    public Map<String, CommitCQ> xdfgetTwoOrMorePk_ExistsReferrer_CommitList() { return xgetSQueMap("twoOrMorePk_ExistsReferrer_CommitList"); }
-    public String keepTwoOrMorePk_ExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("twoOrMorePk_ExistsReferrer_CommitList", sq); }
-
-    /**
-     * Set up ExistsReferrer (correlated sub-query by compound key). <br>
-     * {exists (select ... from vote where ...)}
-     * @param subQuery The sub-query of VoteList for 'exists'. (NotNull)
-     */
-    public void existsVote(SubQuery<VoteCB> subQuery) {
-        assertObjectNotNull("subQuery<VoteCB>", subQuery);
-        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
-        try { lock(); subQuery.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_ExistsReferrer_VoteList(cb.query());
-        registerExistsReferrer(cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "voteList");
-    }
-    public Map<String, VoteCQ> xdfgetTwoOrMorePk_ExistsReferrer_VoteList() { return xgetSQueMap("twoOrMorePk_ExistsReferrer_VoteList"); }
-    public String keepTwoOrMorePk_ExistsReferrer_VoteList(VoteCQ sq) { return xkeepSQue("twoOrMorePk_ExistsReferrer_VoteList", sq); }
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query by compound key). <br>
-     * {not exists (select ... from ability where ...)}
-     * @param subQuery The sub-query of AbilityList for 'not exists'. (NotNull)
-     */
-    public void notExistsAbility(SubQuery<AbilityCB> subQuery) {
-        assertObjectNotNull("subQuery<AbilityCB>", subQuery);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForExistsReferrer(this);
-        try { lock(); subQuery.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_NotExistsReferrer_AbilityList(cb.query());
-        registerNotExistsReferrer(cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "abilityList");
-    }
-    public Map<String, AbilityCQ> xdfgetTwoOrMorePk_NotExistsReferrer_AbilityList() { return xgetSQueMap("twoOrMorePk_NotExistsReferrer_AbilityList"); }
-    public String keepTwoOrMorePk_NotExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("twoOrMorePk_NotExistsReferrer_AbilityList", sq); }
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query by compound key). <br>
-     * {not exists (select ... from commit where ...)}
-     * @param subQuery The sub-query of CommitList for 'not exists'. (NotNull)
-     */
-    public void notExistsCommit(SubQuery<CommitCB> subQuery) {
-        assertObjectNotNull("subQuery<CommitCB>", subQuery);
-        CommitCB cb = new CommitCB(); cb.xsetupForExistsReferrer(this);
-        try { lock(); subQuery.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_NotExistsReferrer_CommitList(cb.query());
-        registerNotExistsReferrer(cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "commitList");
-    }
-    public Map<String, CommitCQ> xdfgetTwoOrMorePk_NotExistsReferrer_CommitList() { return xgetSQueMap("twoOrMorePk_NotExistsReferrer_CommitList"); }
-    public String keepTwoOrMorePk_NotExistsReferrer_CommitList(CommitCQ sq) { return xkeepSQue("twoOrMorePk_NotExistsReferrer_CommitList", sq); }
-
-    /**
-     * Set up NotExistsReferrer (correlated sub-query by compound key). <br>
-     * {not exists (select ... from vote where ...)}
-     * @param subQuery The sub-query of VoteList for 'not exists'. (NotNull)
-     */
-    public void notExistsVote(SubQuery<VoteCB> subQuery) {
-        assertObjectNotNull("subQuery<VoteCB>", subQuery);
-        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
-        try { lock(); subQuery.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_NotExistsReferrer_VoteList(cb.query());
-        registerNotExistsReferrer(cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "voteList");
-    }
-    public Map<String, VoteCQ> xdfgetTwoOrMorePk_NotExistsReferrer_VoteList() { return xgetSQueMap("twoOrMorePk_NotExistsReferrer_VoteList"); }
-    public String keepTwoOrMorePk_NotExistsReferrer_VoteList(VoteCQ sq) { return xkeepSQue("twoOrMorePk_NotExistsReferrer_VoteList", sq); }
+    public Map<String, VillageDayCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
+    public String keepQueryMyselfDerived(VillageDayCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
+    public Map<String, Object> xdfgetQueryMyselfDerivedParameter() { return xgetSQuePmMap("queryMyselfDerived"); }
+    public String keepQueryMyselfDerivedParameter(Object pm) { return xkeepSQuePm("queryMyselfDerived", pm); }
 
     // ===================================================================================
-    //                                            (Specify)DerivedReferrer for Compound PK
-    //                                            ========================================
-    public void xsderiveAbilityList(String fn, SubQuery<AbilityCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
-        try { lock(); sq.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_SpecifyDerivedReferrer_AbilityList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "abilityList", al, op);
-    }
-    public Map<String, AbilityCQ> xdfgetTwoOrMorePk_SpecifyDerivedReferrer_AbilityList() { return xgetSQueMap("twoOrMorePk_SpecifyDerivedReferrer_AbilityList"); }
-    public String keepTwoOrMorePk_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("twoOrMorePk_SpecifyDerivedReferrer_AbilityList", sq); }
-
-    public void xsderiveCommitList(String fn, SubQuery<CommitCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        CommitCB cb = new CommitCB(); cb.xsetupForDerivedReferrer(this);
-        try { lock(); sq.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_SpecifyDerivedReferrer_CommitList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "commitList", al, op);
-    }
-    public Map<String, CommitCQ> xdfgetTwoOrMorePk_SpecifyDerivedReferrer_CommitList() { return xgetSQueMap("twoOrMorePk_SpecifyDerivedReferrer_CommitList"); }
-    public String keepTwoOrMorePk_SpecifyDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("twoOrMorePk_SpecifyDerivedReferrer_CommitList", sq); }
-
-    public void xsderiveVoteList(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        try { lock(); sq.query(cb); } finally { unlock(); }
-        String pp = keepTwoOrMorePk_SpecifyDerivedReferrer_VoteList(cb.query());
-        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", pp, "voteList", al, op);
-    }
-    public Map<String, VoteCQ> xdfgetTwoOrMorePk_SpecifyDerivedReferrer_VoteList() { return xgetSQueMap("twoOrMorePk_SpecifyDerivedReferrer_VoteList"); }
-    public String keepTwoOrMorePk_SpecifyDerivedReferrer_VoteList(VoteCQ sq) { return xkeepSQue("twoOrMorePk_SpecifyDerivedReferrer_VoteList", sq); }
+    //                                                                        MyselfExists
+    //                                                                        ============
+    protected Map<String, VillageDayCQ> _myselfExistsMap;
+    public Map<String, VillageDayCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
+    public String keepMyselfExists(VillageDayCQ sq) { return xkeepSQue("myselfExists", sq); }
 
     // ===================================================================================
-    //                                              (Query)DerivedReferrer for Compound PK
-    //                                              ======================================
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from ability where ...)} <br>
-     * ability by VILLAGE_ID, DAY, named 'abilityAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedAbility()</span>.<span style="color: #CC4747">max</span>(new SubQuery&lt;AbilityCB&gt;() {
-     *     public void query(AbilityCB subCB) {
-     *         subCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *         subCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     *     }
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<AbilityCB> derivedAbility() {
-        return xcreateQDRFunctionAbilityList();
-    }
-    protected HpQDRFunction<AbilityCB> xcreateQDRFunctionAbilityList() {
-        return xcQDRFunc(new HpQDRSetupper<AbilityCB>() {
-            public void setup(String fn, SubQuery<AbilityCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-                xqderiveAbilityList(fn, sq, rd, vl, op);
-            }
-        });
-    }
-    public void xqderiveAbilityList(String fn, SubQuery<AbilityCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
-        try { lock(); sq.query(cb); } finally { unlock(); }
-        String sqpp = keepTwoOrMorePk_QueryDerivedReferrer_AbilityList(cb.query()); String prpp = keepTwoOrMorePk_QueryDerivedReferrer_AbilityListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", sqpp, "abilityList", rd, vl, prpp, op);
-    }
-    public Map<String, AbilityCQ> xdfgetTwoOrMorePk_QueryDerivedReferrer_AbilityList() { return xgetSQueMap("twoOrMorePk_QueryDerivedReferrer_AbilityList"); }
-    public String keepTwoOrMorePk_QueryDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("twoOrMorePk_QueryDerivedReferrer_AbilityList", sq); }
-    public Map<String, Object> xdfgetTwoOrMorePk_QueryDerivedReferrer_AbilityListParameter() { return xgetSQuePmMap("twoOrMorePk_QueryDerivedReferrer_AbilityList"); }
-    public String keepTwoOrMorePk_QueryDerivedReferrer_AbilityListParameter(Object pm) { return xkeepSQuePm("twoOrMorePk_QueryDerivedReferrer_AbilityList", pm); }
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from commit where ...)} <br>
-     * commit by VILLAGE_ID, DAY, named 'commitAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedCommit()</span>.<span style="color: #CC4747">max</span>(new SubQuery&lt;CommitCB&gt;() {
-     *     public void query(CommitCB subCB) {
-     *         subCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *         subCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     *     }
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<CommitCB> derivedCommit() {
-        return xcreateQDRFunctionCommitList();
-    }
-    protected HpQDRFunction<CommitCB> xcreateQDRFunctionCommitList() {
-        return xcQDRFunc(new HpQDRSetupper<CommitCB>() {
-            public void setup(String fn, SubQuery<CommitCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-                xqderiveCommitList(fn, sq, rd, vl, op);
-            }
-        });
-    }
-    public void xqderiveCommitList(String fn, SubQuery<CommitCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        CommitCB cb = new CommitCB(); cb.xsetupForDerivedReferrer(this);
-        try { lock(); sq.query(cb); } finally { unlock(); }
-        String sqpp = keepTwoOrMorePk_QueryDerivedReferrer_CommitList(cb.query()); String prpp = keepTwoOrMorePk_QueryDerivedReferrer_CommitListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", sqpp, "commitList", rd, vl, prpp, op);
-    }
-    public Map<String, CommitCQ> xdfgetTwoOrMorePk_QueryDerivedReferrer_CommitList() { return xgetSQueMap("twoOrMorePk_QueryDerivedReferrer_CommitList"); }
-    public String keepTwoOrMorePk_QueryDerivedReferrer_CommitList(CommitCQ sq) { return xkeepSQue("twoOrMorePk_QueryDerivedReferrer_CommitList", sq); }
-    public Map<String, Object> xdfgetTwoOrMorePk_QueryDerivedReferrer_CommitListParameter() { return xgetSQuePmMap("twoOrMorePk_QueryDerivedReferrer_CommitList"); }
-    public String keepTwoOrMorePk_QueryDerivedReferrer_CommitListParameter(Object pm) { return xkeepSQuePm("twoOrMorePk_QueryDerivedReferrer_CommitList", pm); }
-
-    /**
-     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from vote where ...)} <br>
-     * vote by VILLAGE_ID, DAY, named 'voteAsOne'.
-     * <pre>
-     * cb.query().<span style="color: #CC4747">derivedVote()</span>.<span style="color: #CC4747">max</span>(new SubQuery&lt;VoteCB&gt;() {
-     *     public void query(VoteCB subCB) {
-     *         subCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
-     *         subCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
-     *     }
-     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
-     * </pre>
-     * @return The object to set up a function for referrer table. (NotNull)
-     */
-    public HpQDRFunction<VoteCB> derivedVote() {
-        return xcreateQDRFunctionVoteList();
-    }
-    protected HpQDRFunction<VoteCB> xcreateQDRFunctionVoteList() {
-        return xcQDRFunc(new HpQDRSetupper<VoteCB>() {
-            public void setup(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-                xqderiveVoteList(fn, sq, rd, vl, op);
-            }
-        });
-    }
-    public void xqderiveVoteList(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        try { lock(); sq.query(cb); } finally { unlock(); }
-        String sqpp = keepTwoOrMorePk_QueryDerivedReferrer_VoteList(cb.query()); String prpp = keepTwoOrMorePk_QueryDerivedReferrer_VoteListParameter(vl);
-        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_ID, DAY", "VILLAGE_ID, DAY", sqpp, "voteList", rd, vl, prpp, op);
-    }
-    public Map<String, VoteCQ> xdfgetTwoOrMorePk_QueryDerivedReferrer_VoteList() { return xgetSQueMap("twoOrMorePk_QueryDerivedReferrer_VoteList"); }
-    public String keepTwoOrMorePk_QueryDerivedReferrer_VoteList(VoteCQ sq) { return xkeepSQue("twoOrMorePk_QueryDerivedReferrer_VoteList", sq); }
-    public Map<String, Object> xdfgetTwoOrMorePk_QueryDerivedReferrer_VoteListParameter() { return xgetSQuePmMap("twoOrMorePk_QueryDerivedReferrer_VoteList"); }
-    public String keepTwoOrMorePk_QueryDerivedReferrer_VoteListParameter(Object pm) { return xkeepSQuePm("twoOrMorePk_QueryDerivedReferrer_VoteList", pm); }
+    //                                                                       MyselfInScope
+    //                                                                       =============
+    public Map<String, VillageDayCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
+    public String keepMyselfInScope(VillageDayCQ sq) { return xkeepSQue("myselfInScope", sq); }
 
     // ===================================================================================
     //                                                                       Very Internal
