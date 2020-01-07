@@ -3,6 +3,7 @@ package com.ort.wolf4busy.domain.model.daychange
 import com.ort.wolf4busy.domain.model.ability.Attack
 import com.ort.wolf4busy.domain.model.ability.Divine
 import com.ort.wolf4busy.domain.model.ability.Guard
+import com.ort.wolf4busy.domain.model.ability.Psychic
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commits
 import com.ort.wolf4busy.domain.model.message.Messages

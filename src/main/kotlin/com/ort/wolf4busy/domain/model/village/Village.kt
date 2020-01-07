@@ -221,7 +221,11 @@ data class Village(
 
     // 役職割り当て
     fun assignSkill(): Village {
-        val assignedParticipants = SkillAssign.assign(participant, setting.organizations.mapToSkillCount(participant.count), dummyChara())
+        val assignedParticipants = SkillAssign.assign(
+            participant,
+            setting.organizations.mapToSkillCount(participant.count),
+            dummyChara()
+        )
         return this.copy(participant = assignedParticipants)
     }
 

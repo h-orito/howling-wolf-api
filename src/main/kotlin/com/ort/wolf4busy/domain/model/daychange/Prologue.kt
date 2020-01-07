@@ -100,7 +100,7 @@ object Prologue {
         village.participant.memberList.count { !it.isGone } < village.setting.capacity.min
 
     private fun createDummyCharaFirstDayMessage(village: Village, charas: Charas): Message? {
-        val firstDayMessage = charas.list.first { it.id == village.dummyChara().id }.defaultMessage.firstDayMessage ?: return null
+        val firstDayMessage = charas.list.first { it.id == village.dummyChara().charaId }.defaultMessage.firstDayMessage ?: return null
         return DayChange.createNormalSayMessage(
             text = firstDayMessage,
             day = village.day.latestDay(),

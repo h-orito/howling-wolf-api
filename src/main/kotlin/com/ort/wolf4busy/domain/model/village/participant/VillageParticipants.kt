@@ -67,6 +67,14 @@ data class VillageParticipants(
         )
     }
 
+    fun filterNotGone(): VillageParticipants {
+        val notGoneMembers = memberList.filterNot { it.isGone }
+        return VillageParticipants(
+            count = notGoneMembers.size,
+            memberList = notGoneMembers
+        )
+    }
+
     fun findRandom(predicate: (VillageParticipant) -> Boolean): VillageParticipant? {
         return memberList.filter { predicate(it) }.shuffled().firstOrNull()
     }

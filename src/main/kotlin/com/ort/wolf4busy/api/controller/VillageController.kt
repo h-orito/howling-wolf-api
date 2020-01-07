@@ -312,10 +312,7 @@ class VillageController(
             id = 1, // dummy
             name = "dummy village name", // TODO
             creatorPlayerName = "master", // TODO
-            status = VillageStatus(
-                code = CDef.VillageStatus.募集中.code(),
-                name = CDef.VillageStatus.募集中.name
-            ),
+            status = VillageStatus(CDef.VillageStatus.プロローグ),
             setting = convertRegisterBodyToVillageSettings(body),
             participant = VillageParticipants(
                 count = 1, // dummy

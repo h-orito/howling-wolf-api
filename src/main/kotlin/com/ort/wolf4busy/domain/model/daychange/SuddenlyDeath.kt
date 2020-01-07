@@ -27,7 +27,7 @@ object SuddenlyDeath {
             // 入村制限
             players = players.restrictParticipation(member.playerId)
             // 突然死メッセージ
-            messages = messages.add(createSuddenlyDeathMessge(member, charas, village.day.latestDay()))
+            messages = messages.add(createSuddenlyDeathMessage(member, charas, village.day.latestDay()))
         }
 
         return dayChange.copy(
@@ -41,13 +41,13 @@ object SuddenlyDeath {
     //                                                                        Assist Logic
     //                                                                        ============
     // 突然死メッセージ
-    private fun createSuddenlyDeathMessge(
+    private fun createSuddenlyDeathMessage(
         participant: VillageParticipant,
         charas: Charas,
         latestDay: VillageDay
     ): Message {
         val charaName = charas.list.first { it.id == participant.charaId }.charaName
         val message = "${charaName}は突然死した。"
-        return DayChange.createNormalSayMessage(message, latestDay, participant)
+        return DayChange.createPublicSystemMessage(message, latestDay)
     }
 }

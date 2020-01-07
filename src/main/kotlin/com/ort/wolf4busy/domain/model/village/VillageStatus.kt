@@ -22,7 +22,7 @@ data class VillageStatus(
     }
 
     fun isPrologue(): Boolean {
-        return CDef.VillageStatus.codeOf(this.code).isPrologue
+        return CDef.VillageStatus.codeOf(this.code) == CDef.VillageStatus.プロローグ
     }
 
     fun isProgress(): Boolean {

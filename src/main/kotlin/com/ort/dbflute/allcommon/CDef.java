@@ -276,14 +276,11 @@ public interface CDef extends Classification {
         /** エピローグ */
         エピローグ("EPILOGUE", "エピローグ", emptyStrings())
         ,
-        /** 募集中 */
-        募集中("IN_PREPARATION", "募集中", emptyStrings())
-        ,
         /** 進行中 */
         進行中("IN_PROGRESS", "進行中", emptyStrings())
         ,
-        /** 開始待ち */
-        開始待ち("WAITING", "開始待ち", emptyStrings())
+        /** プロローグ */
+        プロローグ("PROLOGUE", "プロローグ", emptyStrings())
         ;
         private static final Map<String, VillageStatus> _codeClsMap = new HashMap<String, VillageStatus>();
         private static final Map<String, VillageStatus> _nameClsMap = new HashMap<String, VillageStatus>();
@@ -312,19 +309,8 @@ public interface CDef extends Classification {
             return エピローグ.equals(this) || 廃村.equals(this) || 終了.equals(this);
         }
 
-        /**
-         * Is the classification in the group? <br>
-         * プロローグ中 <br>
-         * The group elements:[募集中, 開始待ち]
-         * @return The determination, true or false.
-         */
-        public boolean isPrologue() {
-            return 募集中.equals(this) || 開始待ち.equals(this);
-        }
-
         public boolean inGroup(String groupName) {
             if ("finishedVillage".equals(groupName)) { return isFinishedVillage(); }
-            if ("prologue".equals(groupName)) { return isPrologue(); }
             return false;
         }
 
@@ -393,7 +379,6 @@ public interface CDef extends Classification {
         public static List<VillageStatus> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             if ("finishedVillage".equalsIgnoreCase(groupName)) { return listOfFinishedVillage(); }
-            if ("prologue".equalsIgnoreCase(groupName)) { return listOfPrologue(); }
             throw new ClassificationNotFoundException("Unknown classification group: VillageStatus." + groupName);
         }
 
@@ -420,23 +405,12 @@ public interface CDef extends Classification {
         }
 
         /**
-         * Get the list of group classification elements. (returns new copied list) <br>
-         * プロローグ中 <br>
-         * The group elements:[募集中, 開始待ち]
-         * @return The snapshot list of classification elements in the group. (NotNull)
-         */
-        public static List<VillageStatus> listOfPrologue() {
-            return new ArrayList<VillageStatus>(Arrays.asList(募集中, 開始待ち));
-        }
-
-        /**
          * Get the list of classification elements in the specified group. (returns new copied list) <br>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
          */
         public static List<VillageStatus> groupOf(String groupName) {
             if ("finishedVillage".equals(groupName)) { return listOfFinishedVillage(); }
-            if ("prologue".equals(groupName)) { return listOfPrologue(); }
             return new ArrayList<VillageStatus>(4);
         }
 
@@ -1075,8 +1049,19 @@ public interface CDef extends Classification {
             return 襲撃.equals(this) || 呪殺.equals(this);
         }
 
+        /**
+         * Is the classification in the group? <br>
+         * 霊能判定可能な死因 <br>
+         * The group elements:[処刑, 突然]
+         * @return The determination, true or false.
+         */
+        public boolean isPsychicableDeath() {
+            return 処刑.equals(this) || 突然.equals(this);
+        }
+
         public boolean inGroup(String groupName) {
             if ("miserableDeath".equals(groupName)) { return isMiserableDeath(); }
+            if ("psychicableDeath".equals(groupName)) { return isPsychicableDeath(); }
             return false;
         }
 
@@ -1145,6 +1130,7 @@ public interface CDef extends Classification {
         public static List<DeadReason> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             if ("miserableDeath".equalsIgnoreCase(groupName)) { return listOfMiserableDeath(); }
+            if ("psychicableDeath".equalsIgnoreCase(groupName)) { return listOfPsychicableDeath(); }
             throw new ClassificationNotFoundException("Unknown classification group: DeadReason." + groupName);
         }
 
@@ -1171,12 +1157,23 @@ public interface CDef extends Classification {
         }
 
         /**
+         * Get the list of group classification elements. (returns new copied list) <br>
+         * 霊能判定可能な死因 <br>
+         * The group elements:[処刑, 突然]
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         */
+        public static List<DeadReason> listOfPsychicableDeath() {
+            return new ArrayList<DeadReason>(Arrays.asList(処刑, 突然));
+        }
+
+        /**
          * Get the list of classification elements in the specified group. (returns new copied list) <br>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
          */
         public static List<DeadReason> groupOf(String groupName) {
             if ("miserableDeath".equals(groupName)) { return listOfMiserableDeath(); }
+            if ("psychicableDeath".equals(groupName)) { return listOfPsychicableDeath(); }
             return new ArrayList<DeadReason>(4);
         }
 

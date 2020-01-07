@@ -142,14 +142,6 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
     }
 
     /**
-     * Set the value of villageStatusCode as 募集中 (IN_PREPARATION). <br>
-     * 募集中
-     */
-    public void setVillageStatusCode_募集中() {
-        setVillageStatusCodeAsVillageStatus(CDef.VillageStatus.募集中);
-    }
-
-    /**
      * Set the value of villageStatusCode as 進行中 (IN_PROGRESS). <br>
      * 進行中
      */
@@ -158,11 +150,11 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
     }
 
     /**
-     * Set the value of villageStatusCode as 開始待ち (WAITING). <br>
-     * 開始待ち
+     * Set the value of villageStatusCode as プロローグ (PROLOGUE). <br>
+     * プロローグ
      */
-    public void setVillageStatusCode_開始待ち() {
-        setVillageStatusCodeAsVillageStatus(CDef.VillageStatus.開始待ち);
+    public void setVillageStatusCode_プロローグ() {
+        setVillageStatusCodeAsVillageStatus(CDef.VillageStatus.プロローグ);
     }
 
     // ===================================================================================
@@ -202,17 +194,6 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
     }
 
     /**
-     * Is the value of villageStatusCode 募集中? <br>
-     * 募集中
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isVillageStatusCode募集中() {
-        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
-        return cdef != null ? cdef.equals(CDef.VillageStatus.募集中) : false;
-    }
-
-    /**
      * Is the value of villageStatusCode 進行中? <br>
      * 進行中
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -224,14 +205,14 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
     }
 
     /**
-     * Is the value of villageStatusCode 開始待ち? <br>
-     * 開始待ち
+     * Is the value of villageStatusCode プロローグ? <br>
+     * プロローグ
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
      * @return The determination, true or false.
      */
-    public boolean isVillageStatusCode開始待ち() {
+    public boolean isVillageStatusCodeプロローグ() {
         CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
-        return cdef != null ? cdef.equals(CDef.VillageStatus.開始待ち) : false;
+        return cdef != null ? cdef.equals(CDef.VillageStatus.プロローグ) : false;
     }
 
     /**
@@ -242,16 +223,6 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
     public boolean isVillageStatusCode_FinishedVillage() {
         CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
         return cdef != null && cdef.isFinishedVillage();
-    }
-
-    /**
-     * プロローグ中 <br>
-     * The group elements:[募集中, 開始待ち]
-     * @return The determination, true or false.
-     */
-    public boolean isVillageStatusCode_Prologue() {
-        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
-        return cdef != null && cdef.isPrologue();
     }
 
     // ===================================================================================
