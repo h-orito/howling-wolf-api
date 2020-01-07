@@ -1041,6 +1041,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         return cdef != null && cdef.isMiserableDeath();
     }
 
+    /**
+     * 霊能判定可能な死因 <br>
+     * The group elements:[処刑, 突然]
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode_PsychicableDeath() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null && cdef.isPsychicableDeath();
+    }
+
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================

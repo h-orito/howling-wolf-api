@@ -57,7 +57,7 @@ object SkillAssign {
             var count = 0
             for (requestPlayer in requestPlayerList.shuffled()) {
                 if (count >= left) break
-                changedParticipants.assignSkill(requestPlayer.id, skill)
+                changedParticipants = changedParticipants.assignSkill(requestPlayer.id, skill)
                 count++
             }
         }

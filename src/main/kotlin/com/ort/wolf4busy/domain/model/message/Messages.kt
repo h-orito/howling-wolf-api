@@ -5,10 +5,7 @@ data class Messages(
 ) {
 
     fun add(message: Message): Messages {
-        val list = mutableListOf<Message>()
-        list.addAll(messageList)
-        list.add(message)
-        return this.copy(messageList = list)
+        return this.copy(messageList = messageList + message)
     }
 
     fun existsDifference(messages: Messages): Boolean {

@@ -22,6 +22,10 @@ object GraveSay {
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {
         // 死亡していなかったら不可
         if (participant.isAlive()) return false
+        // 見学は不可
+        if (participant.isSpectator) return false
+        // 突然死は不可
+        if (participant.dead?.toCdef() == CDef.DeadReason.突然) return false
         // 進行中以外は不可
         return village.status.isProgress()
     }

@@ -180,6 +180,8 @@ object DummyDomainModelCreator {
 
     fun createDummyDeadSeer(): VillageParticipant = createDummyAliveSeer().copy(dead = createDummyDead())
 
+    fun createDummyDeadPsychic(): VillageParticipant = createDummyAlivePsychic().copy(dead = createDummyDead())
+
     fun createDummyDeadHunter(): VillageParticipant = createDummyAliveHunter().copy(dead = createDummyDead())
 
     // ===================================================================================

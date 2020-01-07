@@ -54,11 +54,6 @@ data class Message(
                     faceCode = "dummy"
                 )
             )
-
-
         }
-
-
     }
-
 }

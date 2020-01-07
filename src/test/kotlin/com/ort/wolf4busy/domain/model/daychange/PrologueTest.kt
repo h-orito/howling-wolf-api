@@ -212,10 +212,41 @@ class PrologueTest : Wolf4busyTest() {
     @Test
     fun test_dayChange() {
         // ## Arrange ##
+        val dummyParticipant = DummyDomainModelCreator.createDummyVillageParticipant()
+        val villagerList = (1..10).toList().map { DummyDomainModelCreator.createDummyVillageParticipant() }
+        val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
+            village = DummyDomainModelCreator.createDummyVillage().copy(
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay(),
+                        DummyDomainModelCreator.createDummyVillageDay()
+                    )
+                ),
+                setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
+                    capacity = PersonCapacity(10, 16),
+                    charachip = DummyDomainModelCreator.createDummyVillageCharachip().copy(
+                        dummyCharaId = dummyParticipant.charaId
+                    )
+                ),
+                participant = VillageParticipants(
+                    count = villagerList.size + 2,
+                    memberList = villagerList + dummyParticipant
+                )
+            )
+        )
+        val charas = Charas(
+            villagerList.map { DummyDomainModelCreator.createDummyChara().copy(id = it.charaId) }
+                + DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId)
+        )
 
         // ## Act ##
+        val afterDayChange = Prologue.dayChange(dayChange, charas)
 
         // ## Assert ##
+        assertThat(afterDayChange.isChange).isTrue()
+        assertThat(afterDayChange.messages.messageList.size).isEqualTo(3)
+        afterDayChange.messages.messageList.forEach { println(it.content.text) }
+        assertThat(afterDayChange.village.participant.memberList.all { it.skill != null }).`as`("役職が割り振られている").isTrue()
+        assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.進行中)
     }
-
 }

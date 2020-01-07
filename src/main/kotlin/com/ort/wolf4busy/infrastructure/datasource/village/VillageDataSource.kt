@@ -260,7 +260,7 @@ class VillageDataSource(
         return villagePlayerBhv.selectCount {
             it.query().queryPlayer().setUid_Equal(uid)
             it.query().queryVillage().setVillageStatusCode_InScope_AsVillageStatus(
-                listOf(CDef.VillageStatus.募集中, CDef.VillageStatus.開始待ち, CDef.VillageStatus.進行中)
+                listOf(CDef.VillageStatus.プロローグ, CDef.VillageStatus.進行中)
             )
             it.query().setIsGone_Equal(false)
         } > 0
