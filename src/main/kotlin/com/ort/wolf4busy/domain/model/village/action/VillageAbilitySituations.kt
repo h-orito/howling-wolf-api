@@ -35,7 +35,7 @@ data class VillageAbilitySituations(
 
     fun isSettableAbility(targetId: Int?, abilityType: String): Boolean {
         val situation = list.find { it.type.code == abilityType } ?: return false
-        // TODO 全部対象なしを許可するか？は今は考えない
-        return targetId == null || situation.targetList.any { it.id == targetId }
+        return if (targetId == null) return situation.type.isAvailableNoTarget()
+        else situation.targetList.any { it.id == targetId }
     }
 }

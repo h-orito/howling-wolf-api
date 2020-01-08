@@ -7,8 +7,6 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 object SpectateSay {
 
     fun isViewable(village: Village, participant: VillageParticipant?, day: Int): Boolean {
-        // 終了していたら全て見られる
-        if (village.status.isCompleted()) return true
         // 進行中以外は開放
         if (CDef.VillageStatus.進行中.code() != village.status.code) return true
         // 見られる設定なら開放

@@ -96,4 +96,6 @@ object Guard {
             messages = messages
         ).setIsChange(dayChange)
     }
+
+    fun isAvailableNoTarget(): Boolean = false
 }
