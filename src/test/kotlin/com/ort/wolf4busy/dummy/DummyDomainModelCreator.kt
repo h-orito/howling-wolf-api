@@ -25,6 +25,7 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
+import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import java.time.LocalDateTime
 
 object DummyDomainModelCreator {
@@ -166,6 +167,11 @@ object DummyDomainModelCreator {
         targetList = listOf(),
         target = null,
         exercisable = false
+    )
+
+    fun createDummyUser(): Wolf4busyUser = Wolf4busyUser(
+        uid = "dummy_user_id",
+        authority = CDef.Authority.プレイヤー
     )
 
     // ===================================================================================

@@ -9,7 +9,6 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 data class VillageSayMessageTypeSituation(
     val messageType: MessageType,
     val restrict: VillageSayRestrictSituation,
-    val isDefault: Boolean,
     // 秘話用
     val targetList: List<VillageParticipant>
 ) {
@@ -19,15 +18,11 @@ data class VillageSayMessageTypeSituation(
         latestDayMessageList: List<Message>,
         messageType: CDef.MessageType
     ) : this(
-        messageType = MessageType(
-            code = messageType.code(),
-            name = messageType.name
-        ),
+        messageType = MessageType(messageType),
         restrict = VillageSayRestrictSituation(
-            village.setting.rules.messageRestrict.restrictList.find { it.type.code == messageType.code() },
-            latestDayMessageList.filter { it.content.type.code == messageType.code() }
+            village.setting.rules.messageRestrict.restrictList.find { it.type.toCdef() == messageType },
+            latestDayMessageList.filter { it.content.type.toCdef() == messageType }
         ),
-        isDefault = false, // todo
         targetList = listOf() // todo
     )
 }

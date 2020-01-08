@@ -86,6 +86,8 @@ data class VillageParticipateSituation(
             if (isParticipatingProgressVillage) return false
             // 入村制限がかかっている
             if (isRestrictedParticipatePlayer) return false
+            // 見学できない設定の村
+            if (!village.setting.rules.availableSpectate) return false
 
             return true
         }
