@@ -19,6 +19,8 @@ import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
+import com.ort.wolf4busy.domain.model.village.action.VillageAbilitySituation
+import com.ort.wolf4busy.domain.model.village.action.VillageAbilitySituations
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
@@ -155,6 +157,15 @@ object DummyDomainModelCreator {
         num = null,
         text = "dummy message",
         faceCode = null
+    )
+
+    fun createDummyVillageAbilitySituations(): VillageAbilitySituations = VillageAbilitySituations(listOf())
+
+    fun createDummyVillageAbilitySituation(): VillageAbilitySituation = VillageAbilitySituation(
+        type = Ability(CDef.AbilityType.襲撃),
+        targetList = listOf(),
+        target = null,
+        exercisable = false
     )
 
     // ===================================================================================

@@ -26,14 +26,10 @@ data class Skill(
         )
 
         fun skillByShortName(shortName: String): Skill? {
-            val cdefSkill: CDef.Skill? = CDef.Skill.listAll().firstOrNull() {
+            val cdefSkill: CDef.Skill = CDef.Skill.listAll().firstOrNull() {
                 it.shortName() == shortName
-            }
-            cdefSkill ?: return null
-            return Skill(
-                code = cdefSkill.code(),
-                name = cdefSkill.name
-            )
+            } ?: return null
+            return Skill(cdefSkill)
         }
     }
 

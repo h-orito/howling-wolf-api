@@ -52,6 +52,15 @@ class Ability(
         }
     }
 
+    fun isAvailableNoTarget(): Boolean {
+        return when(code) {
+            CDef.AbilityType.襲撃.code() -> Attack.isAvailableNoTarget()
+            CDef.AbilityType.占い.code() -> Divine.isAvailableNoTarget()
+            CDef.AbilityType.護衛.code() -> Guard.isAvailableNoTarget()
+            else -> throw IllegalStateException("想定外の能力")
+        }
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============

@@ -91,4 +91,6 @@ object Divine {
             messages = messages
         ).setIsChange(dayChange)
     }
+
+    fun isAvailableNoTarget(): Boolean = false
 }

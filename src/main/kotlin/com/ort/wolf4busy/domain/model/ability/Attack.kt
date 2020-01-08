@@ -111,6 +111,8 @@ object Attack {
         ).setIsChange(dayChange)
     }
 
+    fun isAvailableNoTarget(): Boolean = true
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
