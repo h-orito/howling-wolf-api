@@ -6,11 +6,9 @@ import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
-import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 @Service
 class VillageService(
@@ -35,24 +33,9 @@ class VillageService(
      * @param village village
      * @return villageId
      */
-    fun registerVillage(village: Village): Int = villageDataSource.insertVillage(village)
-
-    /**
-     * 村設定登録
-     * @param villageId villageId
-     * @param villageSettings 村設定
-     * @param password 村パスワード
-     */
-    fun registerVillageSettings(villageId: Int, villageSettings: VillageSettings, password: String?) =
-        villageDataSource.insertVillageSettings(villageId, villageSettings, password)
-
-    /**
-     * 発言制限登録
-     * @param villageId villageId
-     * @param setting 村設定
-     */
-    fun registerMessageRestriction(villageId: Int, setting: VillageSettings) =
-        villageDataSource.insertMessageRestrictionList(villageId, setting)
+    fun registerVillage(village: Village, password: String?): Village {
+        return villageDataSource.registerVillage(village, password)
+    }
 
     /**
      * 村日付取得
@@ -67,26 +50,6 @@ class VillageService(
         villageDataSource.selectVillageDayById(villageDayId)
 
     /**
-     * 村日付登録
-     * @param villageId villageId
-     * @param day 日付
-     * @param noonnight 昼夜
-     * @param dayChangeDatetime 日付変更日時
-     * @return 村日付ID
-     */
-    fun registerVillageDay(villageId: Int, day: Int, noonnight: CDef.Noonnight, dayChangeDatetime: LocalDateTime): Int {
-        return villageDataSource.insertVillageDay(
-            villageId, com.ort.wolf4busy.domain.model.village.VillageDay(
-                id = 1, // dummy
-                day = day,
-                noonnight = noonnight.code(),
-                dayChangeDatetime = dayChangeDatetime,
-                isUpdating = true // dummy
-            )
-        )
-    }
-
-    /**
      * 村日付を更新完了にする
      * @param villageDayId 村日付ID
      */
@@ -96,13 +59,6 @@ class VillageService(
         uid ?: return null
         return villageDataSource.selectVillagePlayer(villageId, uid)
     }
-
-    /**
-     * 村参加者人数取得
-     * @param villageId 村ID
-     * @param isSpectate 見学か
-     */
-    fun findParticipateCount(villageId: Int, isSpectate: Boolean): Int = villageDataSource.selectVillagePlayerCount(villageId, isSpectate)
 
     /**
      * 村参加者登録
@@ -172,7 +128,7 @@ class VillageService(
      */
     fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
         val participant = this.findParticipantByUid(villageId, user.uid)
-        participant ?: throw IllegalStateException("セッション切れ？")
+        checkNotNull(participant)
         val village = villageDataSource.selectVillage(villageId)
         if (!village.status.isPrologue()) return // 開始直前に変更しようとして間に合わなかった
         CDef.Skill.codeOf(firstRequestSkill) ?: IllegalStateException("改竄")

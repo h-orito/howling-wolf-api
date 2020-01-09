@@ -22,6 +22,10 @@ data class VillageDays(
         return dayList[dayList.size - 2]
     }
 
+    fun prologueDay(): VillageDay {
+        return dayList.find { it.day == 0 && it.noonnight == CDef.Noonnight.昼.code() }!!
+    }
+
     fun prologue(): VillageDay {
         return dayList.first { it.day == 0 && it.noonnight == CDef.Noonnight.昼.code() }
     }

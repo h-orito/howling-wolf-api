@@ -98,7 +98,7 @@ class MessageService(
     /**
      * 村作成時のシステムメッセージ登録
      * @param villageId villageId
-     * @param villageDayId 村日付id
+     * @param villageDayId 村日付ID
      */
     fun registerInitialMessage(villageId: Int, villageDayId: Int) {
         val initialMessage: String = messageSource.getMessage(

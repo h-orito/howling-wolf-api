@@ -7,7 +7,6 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
-import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.action.VillageAbilitySituations
 import com.ort.wolf4busy.domain.model.village.action.VillageCommitSituation
@@ -37,23 +36,15 @@ class VillageCoordinator(
         // 作成権限がなければNG
         if (!canRegisterVillage()) throw Wolf4busyBusinessException("村を作成できません。")
         // 村を登録
-        val villageId: Int = villageService.registerVillage(village)
-        // 村設定を登録
-        villageService.registerVillageSettings(villageId, village.setting, villagePassword)
-        // 発言制限を登録
-        villageService.registerMessageRestriction(villageId, village.setting)
-        // 村日付を登録
-        val villageDayId = villageService.registerVillageDay(villageId, 0, CDef.Noonnight.昼, village.setting.time.startDatetime)
+        val village: Village = villageService.registerVillage(village, villagePassword)
         // 村作成時のシステムメッセージを登録
-        messageService.registerInitialMessage(villageId, villageDayId)
+        messageService.registerInitialMessage(village.id, village.day.latestDay().id)
         // ダミーキャラを参加させる
-        participateDummyChara(villageId, village)
-        // tweet TODO
-
+        participateDummyChara(village.id, village)
         // 日付更新完了
-        villageService.updateVillageDayUpdateComplete(villageDayId)
+        villageService.updateVillageDayUpdateComplete(village.day.latestDay().id)
 
-        return villageId
+        return village.id
     }
 
     /**
@@ -102,17 +93,15 @@ class VillageCoordinator(
             secondRequestSkill = secondRequestSkill,
             isSpectate = isSpectate
         )
-        // 0日目昼
-        val villageDay: VillageDay = villageService.findVillageDay(villageId, 0, CDef.Noonnight.昼.code())
         // キャラ
         val chara: Chara = charachipService.findChara(charaId)
         // 何人参加しているか
-        val participateCount: Int = villageService.findParticipateCount(villageId, isSpectate)
+        val participateCount: Int = if (isSpectate) village.spectator.count + 1 else village.participant.count + 1
         // {N}人目、{キャラ名} と
         // ユーザー入力の発言
         messageService.registerParticipateMessage(
             villageId = villageId,
-            villageDayId = villageDay.id,
+            villageDayId = village.day.prologueDay().id,
             villagePlayerId = villagePlayerId,
             charaName = chara.charaName.name,
             firstRequestSkillName = firstRequestSkill.alias(),
@@ -254,7 +243,7 @@ class VillageCoordinator(
 
     private fun participateDummyChara(villageId: Int, village: Village) {
         val dummyPlayerId = 1 // 固定
-        val message: String = "人狼なんているわけないじゃん。みんな大げさだなあ\n>>1>>*1>>+1>>=1>>#1aaa>>-1>>@1" // TODO
+        val message = "人狼なんているわけないじゃん。みんな大げさだなあ\n>>1>>*1>>+1>>=1>>#1aaa>>-1>>@1" // TODO
         this.participate(
             villageId = villageId,
             playerId = dummyPlayerId,
