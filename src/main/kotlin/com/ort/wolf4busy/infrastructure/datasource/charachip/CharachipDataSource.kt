@@ -16,13 +16,6 @@ class CharachipDataSource(
             it.setupSelect_Designer()
             it.query().addOrderBy_CharaGroupId_Asc()
         }
-//        charaGroupBhv.load(charaGroupList) { loader ->
-//            loader.loadChara { charaCB ->
-//                charaCB.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
-//            }.withNestedReferrer { charaLoader ->
-//                charaLoader.loadCharaImage { charaImageCB -> charaImageCB.query().setFaceTypeCode_Equal_通常() }
-//            }
-//        }
         return convertCharaGroupListToCharaChips(charaGroupList)
     }
 
@@ -31,16 +24,6 @@ class CharachipDataSource(
             it.setupSelect_Designer()
             it.query().setCharaGroupId_Equal(charaChipId)
         }
-//        charaGroupBhv.load(charaGroup) { loader ->
-//            loader.loadChara { charaCB ->
-//                charaCB.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
-//                charaCB.query().addOrderBy_CharaId_Asc()
-//            }.withNestedReferrer { charaLoader ->
-//                charaLoader.loadCharaImage {
-//                    it.query().queryFaceType().addOrderBy_DispOrder_Asc()
-//                }
-//            }
-//        }
         return convertCharaGroupToCharaChip(charaGroup)
     }
 

@@ -157,7 +157,7 @@ class VillageCoordinator(
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         // 発言できるか
-        val isAvailableSay = village.isAvailableSay(user, participant, message, messageType, faceType, latestDayMessageList, charas)
+        val isAvailableSay = village.isAvailableSay(user, participant, messageType, latestDayMessageList, charas)
         if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
     }
 
@@ -178,7 +178,7 @@ class VillageCoordinator(
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         // 発言できるか
-        val isAvailableSay = village.isAvailableSay(user, participant, message, messageType, faceType, latestDayMessageList, charas)
+        val isAvailableSay = village.isAvailableSay(user, participant, messageType, latestDayMessageList, charas)
         if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
 
         // 発言

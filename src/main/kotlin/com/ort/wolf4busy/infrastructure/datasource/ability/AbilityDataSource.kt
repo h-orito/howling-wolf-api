@@ -69,10 +69,7 @@ class AbilityDataSource(
             villageDayId = ability.villageDayId,
             myselfId = ability.villagePlayerId,
             targetId = ability.targetVillagePlayerId,
-            ability = com.ort.wolf4busy.domain.model.ability.Ability(
-                code = ability.abilityTypeCodeAsAbilityType.code(),
-                name = ability.abilityTypeCodeAsAbilityType.alias()
-            )
+            ability = com.ort.wolf4busy.domain.model.ability.Ability(ability.abilityTypeCodeAsAbilityType)
         )
     }
 }
