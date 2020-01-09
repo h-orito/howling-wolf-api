@@ -5,6 +5,7 @@ import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.*
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
+import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -19,6 +20,37 @@ class VillageDataSource(
     val villagePlayerBhv: VillagePlayerBhv,
     val messageRestrictionBhv: MessageRestrictionBhv
 ) {
+
+    /**
+     * 村登録
+     * @param village village
+     * @param password 入村パスワード
+     * @return 村ID
+     */
+    fun registerVillage(
+        village: com.ort.wolf4busy.domain.model.village.Village,
+        password: String?
+    ): com.ort.wolf4busy.domain.model.village.Village {
+        // 村
+        val village = insertVillage(village)
+        // 村設定
+        this.insertVillageSettings(village.id, village.setting, password)
+        // 発言制限
+        this.insertMessageRestrictionList(village.id, village.setting)
+        // 村日付
+        val villageDay = this.insertVillageDay(
+            village.id,
+            com.ort.wolf4busy.domain.model.village.VillageDay(
+                id = 1, // dummy
+                day = 0,
+                noonnight = CDef.Noonnight.昼.code(),
+                dayChangeDatetime = village.setting.time.startDatetime,
+                isUpdating = true // dummy
+            )
+        )
+
+        return village.copy(day = VillageDays(listOf(villageDay)))
+    }
 
     /**
      * 村一覧取得
@@ -79,59 +111,6 @@ class VillageDataSource(
     }
 
     /**
-     * 村登録
-     * @param villageModel 村
-     * @return 村ID
-     */
-    fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): Int {
-        val village = Village()
-        village.villageDisplayName = villageModel.name
-        village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(villageModel.status.code)
-        village.createPlayerName = villageModel.creatorPlayerName
-        villageBhv.insert(village)
-        return village.villageId
-    }
-
-    /**
-     * 村設定登録
-     * @param villageId villageId
-     * @param settings model settings
-     * @param password password
-     */
-    fun insertVillageSettings(villageId: Int, settings: VillageSettings, password: String?) {
-        insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
-        insertVillageSetting(
-            villageId,
-            CDef.VillageSettingItem.開始予定日時,
-            settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
-        )
-        insertVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, settings.time.dayChangeIntervalSeconds.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.ダミーキャラid, settings.charachip.dummyCharaId.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.キャラクターグループid, settings.charachip.charachipId.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.構成, settings.organizations.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, password ?: "")
-    }
-
-    /**
-     * 発言制限登録
-     * @param villageId villageId
-     * @param setting 村設定
-     */
-    fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
-        setting.rules.messageRestrict.restrictList.forEach {
-            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
-        }
-    }
-
-    /**
      * 村日付取得
      * @param villageId villageId
      * @param day 何日目か
@@ -158,7 +137,10 @@ class VillageDataSource(
      * @param day 村日付
      * @return 村日付id
      */
-    fun insertVillageDay(villageId: Int, day: com.ort.wolf4busy.domain.model.village.VillageDay): Int {
+    fun insertVillageDay(
+        villageId: Int,
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ): com.ort.wolf4busy.domain.model.village.VillageDay {
         val villageDay = VillageDay()
         villageDay.villageId = villageId
         villageDay.day = day.day
@@ -166,7 +148,7 @@ class VillageDataSource(
         villageDay.daychangeDatetime = day.dayChangeDatetime
         villageDay.isUpdating = true
         villageDayBhv.insert(villageDay)
-        return villageDay.villageDayId
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
     }
 
     /**
@@ -393,12 +375,65 @@ class VillageDataSource(
         }
     }
 
+    /**
+     * 村登録
+     * @param villageModel 村
+     * @return village
+     */
+    private fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): com.ort.wolf4busy.domain.model.village.Village {
+        val village = Village()
+        village.villageDisplayName = villageModel.name
+        village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(villageModel.status.code)
+        village.createPlayerName = villageModel.creatorPlayerName
+        villageBhv.insert(village)
+        return VillageDataConverter.convertVillageToVillage(village)
+    }
+
+    /**
+     * 村設定登録
+     * @param villageId villageId
+     * @param settings model settings
+     * @param password password
+     */
+    private fun insertVillageSettings(villageId: Int, settings: VillageSettings, password: String?) {
+        insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
+        insertVillageSetting(
+            villageId,
+            CDef.VillageSettingItem.開始予定日時,
+            settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
+        )
+        insertVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, settings.time.dayChangeIntervalSeconds.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.ダミーキャラid, settings.charachip.dummyCharaId.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.キャラクターグループid, settings.charachip.charachipId.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.構成, settings.organizations.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, password ?: "")
+    }
+
     private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
         val setting = VillageSetting()
         setting.villageId = villageId
         setting.villageSettingItemCodeAsVillageSettingItem = item
         setting.villageSettingText = value
         villageSettingBhv.insert(setting)
+    }
+
+    /**
+     * 発言制限登録
+     * @param villageId villageId
+     * @param setting 村設定
+     */
+    private fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
+        setting.rules.messageRestrict.restrictList.forEach {
+            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
+        }
     }
 
     private fun insertMessageRestriction(villageId: Int, messageTypeCode: String, count: Int, length: Int) {
