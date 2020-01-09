@@ -40,9 +40,8 @@ data class VillageVoteSituation(
             val voteTargetParticipantId = votes.list.find {
                 it.villageDayId == village.day.latestDay().id
                     && it.myselfId == participant!!.id
-            }?.targetId
-            voteTargetParticipantId ?: return null
-            return village.participant.memberList.find { it.id == voteTargetParticipantId }
+            }?.targetId ?: return null
+            return village.participant.member(voteTargetParticipantId)
         }
 
     }

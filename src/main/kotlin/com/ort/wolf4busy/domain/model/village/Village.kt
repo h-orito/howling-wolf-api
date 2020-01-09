@@ -147,13 +147,16 @@ data class Village(
      *
      * @param user user
      * @param participant 村参加者
-     * @param message 発言内容
      * @param messageType 発言種別
-     * @param faceType 表情種別
+     * @param latestDayMessageList 当日の発言
+     * @param charas charas
      */
     fun isAvailableSay(
-        user: Wolf4busyUser, participant: VillageParticipant, message: String, messageType: String, faceType: String?,
-        latestDayMessageList: List<Message>, charas: Charas
+        user: Wolf4busyUser,
+        participant: VillageParticipant,
+        messageType: String,
+        latestDayMessageList: List<Message>,
+        charas: Charas
     ): Boolean {
         val cdefMessageType = CDef.MessageType.codeOf(messageType)
         cdefMessageType ?: throw IllegalStateException("発言種別改竄")

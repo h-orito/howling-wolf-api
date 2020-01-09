@@ -18,16 +18,11 @@ data class VillageTime(
             startDatetime: LocalDateTime?,
             dayChangeIntervalSeconds: Int?
         ): VillageTime {
-            if (termType != null && CDef.Term.codeOf(termType) == null) {
-                throw IllegalArgumentException("invalid termType.")
+            require(termType == null || CDef.Term.codeOf(termType) != null)
+            requireNotNull(startDatetime)
+            if (dayChangeIntervalSeconds != null) {
+                require(INTERVAL_MIN <= dayChangeIntervalSeconds && dayChangeIntervalSeconds <= INTERVAL_MAX)
             }
-            if (startDatetime == null) {
-                throw java.lang.IllegalArgumentException("startDatetime is required.")
-            }
-            if (dayChangeIntervalSeconds != null && (dayChangeIntervalSeconds < INTERVAL_MIN || INTERVAL_MAX < dayChangeIntervalSeconds)) {
-                throw java.lang.IllegalArgumentException("datChangeIntervalSeconds must be between $INTERVAL_MIN and $INTERVAL_MAX.")
-            }
-
             return VillageTime(
                 termType = termType ?: CDef.Term.長期.code(),
                 startDatetime = startDatetime,

@@ -17,11 +17,11 @@ data class VillageSaySituation(
         village: Village,
         participant: VillageParticipant?,
         charas: Charas,
-        latestDayMessageList: List<Message> // TODO これ通常発言だけになってない？
+        latestDayMessageList: List<Message>
     ) : this(
         isAvailableSay = isAvailableSay(village, participant),
         selectableMessageTypeList = getSelectableMessageTypeList(village, participant, latestDayMessageList),
-        selectableFaceTypeList = getSelectableFaceTypeList(village, participant, charas),
+        selectableFaceTypeList = getSelectableFaceTypeList(participant, charas),
         defaultMessageType = detectDefaultMessageType(
             isAvailableSay(village, participant),
             getSelectableMessageTypeList(village, participant, latestDayMessageList)
@@ -51,6 +51,11 @@ data class VillageSaySituation(
             ) {
                 return false
             }
+            // 終了していたら不可
+            if (village.status.toCdef() == CDef.VillageStatus.終了
+                || village.status.toCdef() == CDef.VillageStatus.廃村) {
+                return false
+            }
 
             return true
         }
@@ -60,10 +65,10 @@ data class VillageSaySituation(
             participant: VillageParticipant?,
             latestDayMessageList: List<Message>
         ): List<VillageSayMessageTypeSituation> {
-            if (participant == null || isAvailableSay(village, participant)) return listOf()
+            if (!isAvailableSay(village, participant)) return listOf()
 
             val selectableMessageTypeList: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
-            if (NormalSay.isSayable(village, participant)) {
+            if (NormalSay.isSayable(village, participant!!)) {
                 selectableMessageTypeList.add(
                     VillageSayMessageTypeSituation(
                         village,
@@ -117,15 +122,9 @@ data class VillageSaySituation(
             return selectableMessageTypeList
         }
 
-        private fun getSelectableFaceTypeList(village: Village, participant: VillageParticipant?, charas: Charas): List<CharaFace> {
+        private fun getSelectableFaceTypeList(participant: VillageParticipant?, charas: Charas): List<CharaFace> {
             if (participant == null) return listOf()
-
-            val charaId: Int = if (participant.isSpectator) {
-                village.spectator.memberList.first { it.id == participant.id }.charaId
-            } else {
-                village.participant.memberList.first { it.id == participant.id }.charaId
-            }
-            return charas.list.first { it.id == charaId }.faceList
+            return charas.chara(participant.charaId).faceList
         }
 
         private fun detectDefaultMessageType(
@@ -133,10 +132,10 @@ data class VillageSaySituation(
             selectableMessageTypeList: List<VillageSayMessageTypeSituation>
         ): MessageType? {
             if (!availableSay || selectableMessageTypeList.isEmpty()) return null
-            val selectableMessageTypeList = selectableMessageTypeList.map { it.messageType.toCdef() }
+            val selectableMessageTypeCdefList = selectableMessageTypeList.map { it.messageType.toCdef() }
 
             defaultMessageTypeOrder.forEach { cdefMessageType ->
-                if (selectableMessageTypeList.contains(cdefMessageType)) return MessageType(cdefMessageType)
+                if (selectableMessageTypeCdefList.contains(cdefMessageType)) return MessageType(cdefMessageType)
             }
             return null
         }

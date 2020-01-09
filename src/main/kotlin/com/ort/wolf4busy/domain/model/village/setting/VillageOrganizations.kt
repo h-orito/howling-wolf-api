@@ -10,7 +10,7 @@ data class VillageOrganizations(
         operator fun invoke(
             organization: Map<Int, String>?
         ): VillageOrganizations {
-            organization ?: throw IllegalArgumentException("organization is required.")
+            requireNotNull(organization)
             return VillageOrganizations(organization = organization)
         }
 
@@ -33,12 +33,12 @@ data class VillageOrganizations(
     }
 
     fun mapToSkillCount(personNum: Int): Map<Skill, Int> {
-        val org = organization[personNum] ?: throw IllegalStateException("構成がありません")
+        val org = checkNotNull(organization[personNum])
         val map = mutableMapOf<Skill, Int>()
         CDef.Skill.listAll().forEach { cdefSkill ->
             val skillShortName = cdefSkill.shortName()
             val count = org.chunked(1).count { char -> char == skillShortName }
-            map[Skill(cdefSkill.code(), cdefSkill.alias())] = count
+            map[Skill(cdefSkill)] = count
         }
         return map
     }
@@ -47,5 +47,4 @@ data class VillageOrganizations(
         val sortedMap = this.organization.toSortedMap()
         return sortedMap.map { it.value }.joinToString(separator = "\n")
     }
-
 }
