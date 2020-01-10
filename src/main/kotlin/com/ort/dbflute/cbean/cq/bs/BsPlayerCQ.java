@@ -79,14 +79,28 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
       return _playerId; }
     protected ConditionValue xgetCValuePlayerId() { return xdfgetPlayerId(); }
 
+    public Map<String, VillageCQ> xdfgetPlayerId_ExistsReferrer_VillageList() { return xgetSQueMap("playerId_ExistsReferrer_VillageList"); }
+    public String keepPlayerId_ExistsReferrer_VillageList(VillageCQ sq) { return xkeepSQue("playerId_ExistsReferrer_VillageList", sq); }
+
     public Map<String, VillagePlayerCQ> xdfgetPlayerId_ExistsReferrer_VillagePlayerList() { return xgetSQueMap("playerId_ExistsReferrer_VillagePlayerList"); }
     public String keepPlayerId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("playerId_ExistsReferrer_VillagePlayerList", sq); }
+
+    public Map<String, VillageCQ> xdfgetPlayerId_NotExistsReferrer_VillageList() { return xgetSQueMap("playerId_NotExistsReferrer_VillageList"); }
+    public String keepPlayerId_NotExistsReferrer_VillageList(VillageCQ sq) { return xkeepSQue("playerId_NotExistsReferrer_VillageList", sq); }
 
     public Map<String, VillagePlayerCQ> xdfgetPlayerId_NotExistsReferrer_VillagePlayerList() { return xgetSQueMap("playerId_NotExistsReferrer_VillagePlayerList"); }
     public String keepPlayerId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("playerId_NotExistsReferrer_VillagePlayerList", sq); }
 
+    public Map<String, VillageCQ> xdfgetPlayerId_SpecifyDerivedReferrer_VillageList() { return xgetSQueMap("playerId_SpecifyDerivedReferrer_VillageList"); }
+    public String keepPlayerId_SpecifyDerivedReferrer_VillageList(VillageCQ sq) { return xkeepSQue("playerId_SpecifyDerivedReferrer_VillageList", sq); }
+
     public Map<String, VillagePlayerCQ> xdfgetPlayerId_SpecifyDerivedReferrer_VillagePlayerList() { return xgetSQueMap("playerId_SpecifyDerivedReferrer_VillagePlayerList"); }
     public String keepPlayerId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("playerId_SpecifyDerivedReferrer_VillagePlayerList", sq); }
+
+    public Map<String, VillageCQ> xdfgetPlayerId_QueryDerivedReferrer_VillageList() { return xgetSQueMap("playerId_QueryDerivedReferrer_VillageList"); }
+    public String keepPlayerId_QueryDerivedReferrer_VillageList(VillageCQ sq) { return xkeepSQue("playerId_QueryDerivedReferrer_VillageList", sq); }
+    public Map<String, Object> xdfgetPlayerId_QueryDerivedReferrer_VillageListParameter() { return xgetSQuePmMap("playerId_QueryDerivedReferrer_VillageList"); }
+    public String keepPlayerId_QueryDerivedReferrer_VillageListParameter(Object pm) { return xkeepSQuePm("playerId_QueryDerivedReferrer_VillageList", pm); }
 
     public Map<String, VillagePlayerCQ> xdfgetPlayerId_QueryDerivedReferrer_VillagePlayerList() { return xgetSQueMap("playerId_QueryDerivedReferrer_VillagePlayerList"); }
     public String keepPlayerId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("playerId_QueryDerivedReferrer_VillagePlayerList", sq); }

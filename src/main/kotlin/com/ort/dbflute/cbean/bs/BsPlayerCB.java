@@ -403,6 +403,23 @@ public class BsPlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from village where ...) as FOO_MAX} <br>
+         * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     villageCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     villageCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Village.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<VillageCB, PlayerCQ> derivedVillage() {
+            assertDerived("villageList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VillageCB> sq, PlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveVillageList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
          * {select max(FOO) from village_player where ...) as FOO_MAX} <br>
          * VILLAGE_PLAYER by PLAYER_ID, named 'villagePlayerList'.
          * <pre>

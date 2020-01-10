@@ -417,8 +417,9 @@
             pkPosition="1" primaryKey="true" required="true" size="10" type="INTEGER"/>
         <column comment="村表示名" dbType="VARCHAR" javaType="String"
             name="VILLAGE_DISPLAY_NAME" required="true" size="40" type="VARCHAR"/>
-        <column comment="村作成プレイヤー名" dbType="VARCHAR" javaType="String"
-            name="CREATE_PLAYER_NAME" required="true" size="12" type="VARCHAR"/>
+        <column comment="村作成プレイヤーID" dbType="INT UNSIGNED"
+            javaType="Integer" name="CREATE_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
         <column comment="村ステータスコード" dbType="VARCHAR" javaType="String"
             name="VILLAGE_STATUS_CODE" required="true" size="20" type="VARCHAR"/>
         <column comment="エピローグ日" dbType="INT UNSIGNED"
@@ -436,6 +437,10 @@
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
+            foreignTable="player" name="FK_VILLAGE_PLAYER">
+            <reference foreign="PLAYER_ID" local="CREATE_PLAYER_ID"/>
+        </foreign-key>
+        <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village_status" name="FK_VILLAGE_VILLAGE_STATUS">
             <reference foreign="VILLAGE_STATUS_CODE" local="VILLAGE_STATUS_CODE"/>
         </foreign-key>
@@ -445,6 +450,9 @@
         </foreign-key>
         <index name="FK_VILLAGE_CAMP">
             <index-column name="WIN_CAMP_CODE" position="1"/>
+        </index>
+        <index name="FK_VILLAGE_PLAYER">
+            <index-column name="CREATE_PLAYER_ID" position="1"/>
         </index>
         <index name="FK_VILLAGE_VILLAGE_STATUS">
             <index-column name="VILLAGE_STATUS_CODE" position="1"/>

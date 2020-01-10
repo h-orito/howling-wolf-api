@@ -9,12 +9,11 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
-import com.ort.wolf4busy.fw.security.Wolf4busyUser
 
 data class Village(
     val id: Int,
     val name: String,
-    val creatorPlayerName: String,
+    val creatorPlayerId: Int,
     val status: VillageStatus,
     val winCamp: VillageWinCamp?,
     val setting: VillageSettings,
@@ -58,30 +57,21 @@ data class Village(
     //                                                                           =========
 
     fun assertParticipate(
-        playerId: Int,
         charaId: Int,
         firstRequestSkill: CDef.Skill,
         secondRequestSkill: CDef.Skill,
         isSpectate: Boolean,
-        charachipCharaNum: Int,
         isCollectPassword: Boolean
     ) {
         // 既に参加しているキャラはNG
         if (isAlreadyParticipateCharacter(charaId)) throw Wolf4busyBusinessException("既に参加されているキャラクターです")
-
-        if (isSpectate) {
-            // [キャラチップの人数 - 定員] 人を超えて見学はできない
-            if (charachipCharaNum - setting.capacity.max <= spectator.count) throw Wolf4busyBusinessException("既に上限人数まで見学者がいるため見学者として参加できません。")
-        } else {
-            if (setting.capacity.max <= participant.count) throw Wolf4busyBusinessException("既に上限人数までプレイヤーが参加しているため参加できません。")
-            if (!setting.rules.isValidSkillRequest(firstRequestSkill, secondRequestSkill)) throw Wolf4busyBusinessException("希望役職が不正です")
-        }
-
-        assertPassword(playerId, isCollectPassword)
+        // 役職希望無効の場合はおまかせのみ
+        if (!isSpectate && !setting.rules.isValidSkillRequest(firstRequestSkill, secondRequestSkill)) throw Wolf4busyBusinessException("希望役職が不正です")
+        // パスワードが合っているかチェック
+        assertPassword(isCollectPassword)
     }
 
-    private fun assertPassword(playerId: Int, isCollectPassword: Boolean) {
-        if (playerId == 1) return // ダミーはパスワードなしでOK
+    private fun assertPassword(isCollectPassword: Boolean) {
         if (!isCollectPassword) throw Wolf4busyBusinessException("入村パスワードが誤っています")
     }
 
@@ -137,47 +127,6 @@ data class Village(
             CDef.MessageType.襲撃結果 -> AttackMessage.isViewable(this, participant)
             else -> return false
         }
-    }
-
-    // ===================================================================================
-    //                                                                                 say
-    //                                                                        ============
-    /**
-     * 発言できるか
-     *
-     * @param user user
-     * @param participant 村参加者
-     * @param messageType 発言種別
-     * @param latestDayMessageList 当日の発言
-     * @param charas charas
-     */
-    fun isAvailableSay(
-        user: Wolf4busyUser,
-        participant: VillageParticipant,
-        messageType: String,
-        latestDayMessageList: List<Message>,
-        charas: Charas
-    ): Boolean {
-        val cdefMessageType = CDef.MessageType.codeOf(messageType)
-        cdefMessageType ?: throw IllegalStateException("発言種別改竄")
-
-        // 管理者は発言可能
-        if (user.authority == CDef.Authority.管理者) return true
-
-        val sayable = when (cdefMessageType) {
-            CDef.MessageType.通常発言 -> NormalSay.isSayable(this, participant)
-            CDef.MessageType.人狼の囁き -> WerewolfSay.isSayable(this, participant)
-            CDef.MessageType.共鳴発言 -> MasonSay.isSayable(this, participant)
-            CDef.MessageType.死者の呻き -> GraveSay.isSayable(this, participant)
-            CDef.MessageType.見学発言 -> SpectateSay.isSayable(this, participant)
-            CDef.MessageType.独り言 -> MonologueSay.isSayable(this, participant)
-            CDef.MessageType.秘話 -> SecretSay.isSayable(this, participant)
-            else -> false
-        }
-        if (!sayable) return false
-
-        // 発言制限
-        return !isRestricted(this, participant, latestDayMessageList, charas, messageType)
     }
 
     // ===================================================================================

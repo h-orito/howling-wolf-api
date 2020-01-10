@@ -2,6 +2,7 @@ package com.ort.wolf4busy.domain.model.village.action
 
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 
 data class VillageParticipateSituation(
@@ -91,5 +92,10 @@ data class VillageParticipateSituation(
 
             return true
         }
+    }
+
+    fun assertParticipate(isSpectate: Boolean) {
+        if (isSpectate && !isAvailableSpectate) throw Wolf4busyBusinessException("見学できません")
+        if (!isSpectate && !isAvailableParticipate) throw Wolf4busyBusinessException("参加できません")
     }
 }

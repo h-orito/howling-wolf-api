@@ -36,13 +36,13 @@ import com.ort.dbflute.exentity.*;
  *     AUTHORITY
  *
  * [referrer table]
- *     VILLAGE_PLAYER
+ *     VILLAGE, VILLAGE_PLAYER
  *
  * [foreign property]
  *     authority
  *
  * [referrer property]
- *     villagePlayerList
+ *     villageList, villagePlayerList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -239,6 +239,26 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
+    /** VILLAGE by CREATE_PLAYER_ID, named 'villageList'. */
+    protected List<Village> _villageList;
+
+    /**
+     * [get] VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+     * @return The entity list of referrer property 'villageList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<Village> getVillageList() {
+        if (_villageList == null) { _villageList = newReferrerList(); }
+        return _villageList;
+    }
+
+    /**
+     * [set] VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+     * @param villageList The entity list of referrer property 'villageList'. (NullAllowed)
+     */
+    public void setVillageList(List<Village> villageList) {
+        _villageList = villageList;
+    }
+
     /** VILLAGE_PLAYER by PLAYER_ID, named 'villagePlayerList'. */
     protected List<VillagePlayer> _villagePlayerList;
 
@@ -290,6 +310,8 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         StringBuilder sb = new StringBuilder();
         if (_authority != null && _authority.isPresent())
         { sb.append(li).append(xbRDS(_authority, "authority")); }
+        if (_villageList != null) { for (Village et : _villageList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "villageList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerList")); } } }
         return sb.toString();
@@ -323,6 +345,8 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         StringBuilder sb = new StringBuilder();
         if (_authority != null && _authority.isPresent())
         { sb.append(dm).append("authority"); }
+        if (_villageList != null && !_villageList.isEmpty())
+        { sb.append(dm).append("villageList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
         { sb.append(dm).append("villagePlayerList"); }
         if (sb.length() > dm.length()) {

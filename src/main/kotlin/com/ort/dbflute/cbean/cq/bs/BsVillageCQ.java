@@ -169,25 +169,25 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
      */
     public BsVillageCQ addOrderBy_VillageDisplayName_Desc() { regOBD("VILLAGE_DISPLAY_NAME"); return this; }
 
-    protected ConditionValue _createPlayerName;
-    public ConditionValue xdfgetCreatePlayerName()
-    { if (_createPlayerName == null) { _createPlayerName = nCV(); }
-      return _createPlayerName; }
-    protected ConditionValue xgetCValueCreatePlayerName() { return xdfgetCreatePlayerName(); }
+    protected ConditionValue _createPlayerId;
+    public ConditionValue xdfgetCreatePlayerId()
+    { if (_createPlayerId == null) { _createPlayerId = nCV(); }
+      return _createPlayerId; }
+    protected ConditionValue xgetCValueCreatePlayerId() { return xdfgetCreatePlayerId(); }
 
     /**
      * Add order-by as ascend. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
-    public BsVillageCQ addOrderBy_CreatePlayerName_Asc() { regOBA("CREATE_PLAYER_NAME"); return this; }
+    public BsVillageCQ addOrderBy_CreatePlayerId_Asc() { regOBA("CREATE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
-    public BsVillageCQ addOrderBy_CreatePlayerName_Desc() { regOBD("CREATE_PLAYER_NAME"); return this; }
+    public BsVillageCQ addOrderBy_CreatePlayerId_Desc() { regOBD("CREATE_PLAYER_ID"); return this; }
 
     protected ConditionValue _villageStatusCode;
     public ConditionValue xdfgetVillageStatusCode()
@@ -370,6 +370,9 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
     public void reflectRelationOnUnionQuery(ConditionQuery bqs, ConditionQuery uqs) {
         VillageCQ bq = (VillageCQ)bqs;
         VillageCQ uq = (VillageCQ)uqs;
+        if (bq.hasConditionQueryPlayer()) {
+            uq.queryPlayer().reflectRelationOnUnionQuery(bq.queryPlayer(), uq.queryPlayer());
+        }
         if (bq.hasConditionQueryVillageStatus()) {
             uq.queryVillageStatus().reflectRelationOnUnionQuery(bq.queryVillageStatus(), uq.queryVillageStatus());
         }
@@ -381,6 +384,26 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
     // ===================================================================================
     //                                                                       Foreign Query
     //                                                                       =============
+    /**
+     * Get the condition-query for relation table. <br>
+     * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public PlayerCQ queryPlayer() {
+        return xdfgetConditionQueryPlayer();
+    }
+    public PlayerCQ xdfgetConditionQueryPlayer() {
+        String prop = "player";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryPlayer()); xsetupOuterJoinPlayer(); }
+        return xgetQueRlMap(prop);
+    }
+    protected PlayerCQ xcreateQueryPlayer() {
+        String nrp = xresolveNRP("village", "player"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new PlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "player", nrp);
+    }
+    protected void xsetupOuterJoinPlayer() { xregOutJo("player"); }
+    public boolean hasConditionQueryPlayer() { return xhasQueRlMap("player"); }
+
     /**
      * Get the condition-query for relation table. <br>
      * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.

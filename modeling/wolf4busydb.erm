@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -1392,6 +1392,23 @@
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
 				</relationship>
+				<relationship>
+					<name>FK_village_player</name>
+					<source>table.player</source>
+					<target>table.village</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>create_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<source_xp>100</source_xp>
+					<source_yp>85</source_yp>
+				</relationship>
 			</connections>
 			<columns>
 				<normal_column>
@@ -1411,10 +1428,10 @@
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
-					<physical_name>create_player_name</physical_name>
-					<logical_name>村作成プレイヤー名</logical_name>
-					<type>varchar(n)</type>
-					<length>12</length>
+					<physical_name>create_player_id</physical_name>
+					<logical_name>村作成プレイヤーID</logical_name>
+					<referred_column>table.player.player_id</referred_column>
+					<relationship>FK_village_player</relationship>
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
@@ -2114,12 +2131,12 @@
 			<diagram_walker>table.message</diagram_walker>
 		</walker_group>
 		<walker_group>
-			<height>220</height>
-			<width>347</width>
+			<height>204</height>
+			<width>362</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
 			<x>923</x>
-			<y>114</y>
+			<y>130</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -2130,12 +2147,12 @@
 			<walker_group_name>player</walker_group_name>
 		</walker_group>
 		<walker_group>
-			<height>798</height>
+			<height>765</height>
 			<width>1122</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
 			<x>923</x>
-			<y>446</y>
+			<y>479</y>
 			<color>
 				<r>128</r>
 				<g>128</g>

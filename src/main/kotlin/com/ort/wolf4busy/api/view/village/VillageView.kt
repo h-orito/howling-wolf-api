@@ -1,5 +1,6 @@
 package com.ort.wolf4busy.api.view.village
 
+import com.ort.wolf4busy.api.view.player.PlayerView
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.player.Players
@@ -11,7 +12,7 @@ import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
 data class VillageView(
     val id: Int,
     val name: String,
-    val creatorPlayerName: String,
+    val creatorPlayer: PlayerView,
     val status: VillageStatus,
     val setting: VillageSettings,
     val participant: VillageParticipantsView,
@@ -22,11 +23,12 @@ data class VillageView(
     constructor(
         village: Village,
         charas: Charas,
-        players: Players
+        players: Players,
+        createPlayer: Player
     ) : this(
         id = village.id,
         name = village.name,
-        creatorPlayerName = village.creatorPlayerName,
+        creatorPlayer = PlayerView(createPlayer),
         status = village.status,
         setting = village.setting,
         participant = VillageParticipantsView(

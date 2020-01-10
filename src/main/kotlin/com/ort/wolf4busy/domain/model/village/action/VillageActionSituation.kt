@@ -8,6 +8,7 @@ import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 
 data class VillageActionSituation(
@@ -80,5 +81,9 @@ data class VillageActionSituation(
             // プロローグなら退村できる
             return village.status.isPrologue()
         }
+    }
+
+    fun assertLeave() {
+        if (!isAvailableLeave) throw throw Wolf4busyBusinessException("退村できません")
     }
 }
