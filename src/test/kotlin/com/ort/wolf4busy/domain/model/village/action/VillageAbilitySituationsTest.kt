@@ -4,7 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
 import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.dummy.DummyDomainModelCreator
-import org.assertj.core.api.Assertions.assertThat
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,7 +17,7 @@ class VillageAbilitySituationsTest : Wolf4busyTest() {
     // ===================================================================================
     //                                                                                Test
     //                                                                           =========
-    @Test
+    @Test(expected = Wolf4busyBusinessException::class)
     fun test_isSettableAbility_その能力を持っていない() {
         // ## Arrange ##
         val villageAbilitySituations = DummyDomainModelCreator.createDummyVillageAbilitySituations()
@@ -25,13 +25,11 @@ class VillageAbilitySituationsTest : Wolf4busyTest() {
         val abilityType = CDef.AbilityType.襲撃.code()
 
         // ## Act ##
-        val isSettable = villageAbilitySituations.isSettableAbility(targetId, abilityType)
-
         // ## Assert ##
-        assertThat(isSettable).isFalse()
+        villageAbilitySituations.assertAbility(targetId, abilityType)
     }
 
-    @Test
+    @Test(expected = Wolf4busyBusinessException::class)
     fun test_isSettableAbility_対象なしにできない能力なのに対象なし() {
         // ## Arrange ##
         val villageAbilitySituations = DummyDomainModelCreator.createDummyVillageAbilitySituations().copy(listOf(
@@ -43,13 +41,10 @@ class VillageAbilitySituationsTest : Wolf4busyTest() {
         val abilityType = CDef.AbilityType.占い.code()
 
         // ## Act ##
-        val isSettable = villageAbilitySituations.isSettableAbility(targetId, abilityType)
-
         // ## Assert ##
-        assertThat(isSettable).isFalse()
+        villageAbilitySituations.assertAbility(targetId, abilityType)
     }
 
-    @Test
     fun test_isSettableAbility_対象なしにできる能力で対象なし() {
         // ## Arrange ##
         val villageAbilitySituations = DummyDomainModelCreator.createDummyVillageAbilitySituations().copy(listOf(
@@ -61,13 +56,11 @@ class VillageAbilitySituationsTest : Wolf4busyTest() {
         val abilityType = CDef.AbilityType.襲撃.code()
 
         // ## Act ##
-        val isSettable = villageAbilitySituations.isSettableAbility(targetId, abilityType)
-
         // ## Assert ##
-        assertThat(isSettable).isTrue()
+        villageAbilitySituations.assertAbility(targetId, abilityType)
     }
 
-    @Test
+    @Test(expected = Wolf4busyBusinessException::class)
     fun test_isSettableAbility_対象あり_対象に選べない人を選ぼうとしている() {
         // ## Arrange ##
         val availableTarget = DummyDomainModelCreator.createDummyAliveHunter()
@@ -83,10 +76,8 @@ class VillageAbilitySituationsTest : Wolf4busyTest() {
         val abilityType = CDef.AbilityType.襲撃.code()
 
         // ## Act ##
-        val isSettable = villageAbilitySituations.isSettableAbility(targetId, abilityType)
-
         // ## Assert ##
-        assertThat(isSettable).isFalse()
+        villageAbilitySituations.assertAbility(targetId, abilityType)
     }
 
     @Test
@@ -105,9 +96,7 @@ class VillageAbilitySituationsTest : Wolf4busyTest() {
         val abilityType = CDef.AbilityType.襲撃.code()
 
         // ## Act ##
-        val isSettable = villageAbilitySituations.isSettableAbility(targetId, abilityType)
-
         // ## Assert ##
-        assertThat(isSettable).isTrue()
+        villageAbilitySituations.assertAbility(targetId, abilityType)
     }
 }
