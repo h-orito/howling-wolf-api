@@ -6,6 +6,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class VillageSaySituation(
     val isAvailableSay: Boolean,
@@ -139,5 +140,23 @@ data class VillageSaySituation(
             }
             return null
         }
+    }
+
+    fun assertSay(
+        message: String,
+        messageType: String,
+        faceType: String
+    ) {
+        if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
+        val available = selectableMessageTypeList.find {
+            it.messageType.code == messageType
+        } ?: throw Wolf4busyBusinessException("発言できません")
+        if (available.restrict.isRestricted) {
+            // TODO 改行等考慮入れる
+            if (available.restrict.remainingCount!! <= 0 || available.restrict.maxLength!! <= message.length) {
+                throw Wolf4busyBusinessException("発言できません")
+            }
+        }
+        if (selectableFaceTypeList.none { it.type == faceType }) throw Wolf4busyBusinessException("発言できません")
     }
 }

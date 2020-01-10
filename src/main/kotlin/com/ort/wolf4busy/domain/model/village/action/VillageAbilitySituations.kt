@@ -4,6 +4,7 @@ import com.ort.wolf4busy.domain.model.ability.Abilities
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class VillageAbilitySituations(
     val list: List<VillageAbilitySituation>
@@ -33,9 +34,9 @@ data class VillageAbilitySituations(
         }
     }
 
-    fun isSettableAbility(targetId: Int?, abilityType: String): Boolean {
-        val situation = list.find { it.type.code == abilityType } ?: return false
-        return if (targetId == null) return situation.type.isAvailableNoTarget()
-        else situation.targetList.any { it.id == targetId }
+    fun assertAbility(targetId: Int?, abilityType: String) {
+        val available = list.find { it.type.code == abilityType } ?: throw Wolf4busyBusinessException("能力セットできません")
+        if (targetId == null && !available.type.isAvailableNoTarget()) throw Wolf4busyBusinessException("能力セットできません")
+        if (targetId != null && available.targetList.none { it.id == targetId }) throw Wolf4busyBusinessException("能力セットできません")
     }
 }

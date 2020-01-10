@@ -11,6 +11,10 @@ class PlayerService(
     private val playerDataSource: PlayerDataSource
 ) {
 
+    fun findPlayer(id: Int): Player {
+        return playerDataSource.findPlayer(id)
+    }
+
     fun findPlayer(user: Wolf4busyUser): Player {
         return playerDataSource.selectPlayer(user.uid)
     }
@@ -26,4 +30,15 @@ class PlayerService(
     fun isRestrictedParticipatePlayer(user: Wolf4busyUser): Boolean {
         return playerDataSource.isRestrictedParticipatePlayer(user.uid)
     }
+
+    fun hasProgressMyselfVillage(uid: String): Boolean {
+        return playerDataSource.hasProgressMyselfVillage(uid)
+    }
+
+    /**
+     * どこかの村に参加しているか
+     *
+     * @param uid
+     */
+    fun isParticipatingAnyProgressVillage(uid: String): Boolean = playerDataSource.isParticipatingAnyProgressVillage(uid)
 }

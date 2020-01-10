@@ -34,7 +34,7 @@ object DummyDomainModelCreator {
         return Village(
             id = randomNumber(),
             name = "dummy",
-            creatorPlayerName = "dummy",
+            creatorPlayerId = randomNumber(),
             status = createDummyVillageStatus(),
             winCamp = null,
             setting = createDummyVillageSettings(),

@@ -103,7 +103,7 @@ public class VillageCIQ extends AbstractBsVillageCQ {
     public String keepVillageId_QueryDerivedReferrer_VillageSettingListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueVillageDisplayName() { return _myCQ.xdfgetVillageDisplayName(); }
-    protected ConditionValue xgetCValueCreatePlayerName() { return _myCQ.xdfgetCreatePlayerName(); }
+    protected ConditionValue xgetCValueCreatePlayerId() { return _myCQ.xdfgetCreatePlayerId(); }
     protected ConditionValue xgetCValueVillageStatusCode() { return _myCQ.xdfgetVillageStatusCode(); }
     protected ConditionValue xgetCValueEpilogueDay() { return _myCQ.xdfgetEpilogueDay(); }
     protected ConditionValue xgetCValueWinCampCode() { return _myCQ.xdfgetWinCampCode(); }

@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_ID
  *
  * [column]
- *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_NAME, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_ID, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -33,13 +33,13 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     VILLAGE_STATUS, CAMP
+ *     PLAYER, VILLAGE_STATUS, CAMP
  *
  * [referrer table]
  *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
  *
  * [foreign property]
- *     villageStatus, camp
+ *     player, villageStatus, camp
  *
  * [referrer property]
  *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
@@ -48,7 +48,7 @@ import com.ort.dbflute.exentity.*;
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * Integer villageId = entity.getVillageId();
  * String villageDisplayName = entity.getVillageDisplayName();
- * String createPlayerName = entity.getCreatePlayerName();
+ * Integer createPlayerId = entity.getCreatePlayerId();
  * String villageStatusCode = entity.getVillageStatusCode();
  * Integer epilogueDay = entity.getEpilogueDay();
  * String winCampCode = entity.getWinCampCode();
@@ -58,7 +58,7 @@ import com.ort.dbflute.exentity.*;
  * String updateTrace = entity.getUpdateTrace();
  * entity.setVillageId(villageId);
  * entity.setVillageDisplayName(villageDisplayName);
- * entity.setCreatePlayerName(createPlayerName);
+ * entity.setCreatePlayerId(createPlayerId);
  * entity.setVillageStatusCode(villageStatusCode);
  * entity.setEpilogueDay(epilogueDay);
  * entity.setWinCampCode(winCampCode);
@@ -87,8 +87,8 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     /** VILLAGE_DISPLAY_NAME: {NotNull, VARCHAR(40)} */
     protected String _villageDisplayName;
 
-    /** CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} */
-    protected String _createPlayerName;
+    /** CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player} */
+    protected Integer _createPlayerId;
 
     /** VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus} */
     protected String _villageStatusCode;
@@ -349,6 +349,27 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
+    /** PLAYER by my CREATE_PLAYER_ID, named 'player'. */
+    protected OptionalEntity<Player> _player;
+
+    /**
+     * [get] PLAYER by my CREATE_PLAYER_ID, named 'player'. <br>
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return The entity of foreign property 'player'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     */
+    public OptionalEntity<Player> getPlayer() {
+        if (_player == null) { _player = OptionalEntity.relationEmpty(this, "player"); }
+        return _player;
+    }
+
+    /**
+     * [set] PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * @param player The entity of foreign property 'player'. (NullAllowed)
+     */
+    public void setPlayer(OptionalEntity<Player> player) {
+        _player = player;
+    }
+
     /** VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'. */
     protected OptionalEntity<VillageStatus> _villageStatus;
 
@@ -503,6 +524,8 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     @Override
     protected String doBuildStringWithRelation(String li) {
         StringBuilder sb = new StringBuilder();
+        if (_player != null && _player.isPresent())
+        { sb.append(li).append(xbRDS(_player, "player")); }
         if (_villageStatus != null && _villageStatus.isPresent())
         { sb.append(li).append(xbRDS(_villageStatus, "villageStatus")); }
         if (_camp != null && _camp.isPresent())
@@ -526,7 +549,7 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_villageId));
         sb.append(dm).append(xfND(_villageDisplayName));
-        sb.append(dm).append(xfND(_createPlayerName));
+        sb.append(dm).append(xfND(_createPlayerId));
         sb.append(dm).append(xfND(_villageStatusCode));
         sb.append(dm).append(xfND(_epilogueDay));
         sb.append(dm).append(xfND(_winCampCode));
@@ -544,6 +567,8 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     @Override
     protected String doBuildRelationString(String dm) {
         StringBuilder sb = new StringBuilder();
+        if (_player != null && _player.isPresent())
+        { sb.append(dm).append("player"); }
         if (_villageStatus != null && _villageStatus.isPresent())
         { sb.append(dm).append("villageStatus"); }
         if (_camp != null && _camp.isPresent())
@@ -611,23 +636,23 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [get] CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} <br>
-     * 村作成プレイヤー名
-     * @return The value of the column 'CREATE_PLAYER_NAME'. (basically NotNull if selected: for the constraint)
+     * [get] CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * 村作成プレイヤーID
+     * @return The value of the column 'CREATE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
-    public String getCreatePlayerName() {
-        checkSpecifiedProperty("createPlayerName");
-        return convertEmptyToNull(_createPlayerName);
+    public Integer getCreatePlayerId() {
+        checkSpecifiedProperty("createPlayerId");
+        return _createPlayerId;
     }
 
     /**
-     * [set] CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} <br>
-     * 村作成プレイヤー名
-     * @param createPlayerName The value of the column 'CREATE_PLAYER_NAME'. (basically NotNull if update: for the constraint)
+     * [set] CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * 村作成プレイヤーID
+     * @param createPlayerId The value of the column 'CREATE_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */
-    public void setCreatePlayerName(String createPlayerName) {
-        registerModifiedProperty("createPlayerName");
-        _createPlayerName = createPlayerName;
+    public void setCreatePlayerId(Integer createPlayerId) {
+        registerModifiedProperty("createPlayerId");
+        _createPlayerId = createPlayerId;
     }
 
     /**

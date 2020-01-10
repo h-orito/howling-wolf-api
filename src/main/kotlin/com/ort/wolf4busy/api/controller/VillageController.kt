@@ -6,7 +6,6 @@ import com.ort.wolf4busy.api.form.VillageMessageForm
 import com.ort.wolf4busy.api.view.VillageParticipateSituationView
 import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
-import com.ort.wolf4busy.application.coordinator.ParticipateSituationCoordinator
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
 import com.ort.wolf4busy.application.service.CharachipService
 import com.ort.wolf4busy.application.service.PlayerService
@@ -21,7 +20,6 @@ import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
-import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
@@ -32,7 +30,6 @@ import java.time.LocalDateTime
 @RestController
 class VillageController(
     val villageCoordinator: VillageCoordinator,
-    val participateSituationCoordinator: ParticipateSituationCoordinator,
     val messageCoordinator: MessageCoordinator,
 
     val villageService: VillageService,
@@ -63,10 +60,12 @@ class VillageController(
         val village = villageService.findVillage(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
+        val createPlayer = playerService.findPlayer(village.creatorPlayerId)
         return VillageView(
             village = village,
             charas = charas,
-            players = players
+            players = players,
+            createPlayer = createPlayer
         )
     }
 
@@ -135,7 +134,7 @@ class VillageController(
     ): VillageRegisterView {
         val password: String? = null // TODO
         val village: Village = convertRegisterBodyToVillage(body, user)
-        val villageId: Int = villageCoordinator.registerVillage(village, password)
+        val villageId: Int = villageCoordinator.registerVillage(village, user, password)
         return VillageRegisterView(villageId = villageId)
     }
 
@@ -152,7 +151,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageParticipateSituationView {
         return VillageParticipateSituationView(
-            situation = participateSituationCoordinator.findParticipateSituation(villageId, user)
+            situation = villageCoordinator.findActionSituation(villageId, user)
         )
     }
 
@@ -168,9 +167,16 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageParticipateBody
     ) {
+        villageCoordinator.assertParticipate(
+            villageId = villageId,
+            user = user,
+            charaId = body.charaId!!,
+            isSpectate = body.spectator ?: false,
+            firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
+            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
+            password = body.joinPassword
+        )
         val player = playerService.findPlayer(user)
-        if (playerService.isRestrictedParticipatePlayer(user)) throw Wolf4busyBusinessException("参加を制限されています")
-
         villageCoordinator.participate(
             villageId = villageId,
             playerId = player.id,
@@ -311,7 +317,7 @@ class VillageController(
         return Village(
             id = 1, // dummy
             name = "dummy village name", // TODO
-            creatorPlayerName = "master", // TODO
+            creatorPlayerId = 1, // TODO
             status = VillageStatus(CDef.VillageStatus.プロローグ),
             setting = convertRegisterBodyToVillageSettings(body),
             participant = VillageParticipants(

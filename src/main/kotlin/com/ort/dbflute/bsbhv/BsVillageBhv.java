@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_ID
  *
  * [column]
- *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_NAME, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_ID, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -40,13 +40,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     VILLAGE_STATUS, CAMP
+ *     PLAYER, VILLAGE_STATUS, CAMP
  *
  * [referrer table]
  *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
  *
  * [foreign property]
- *     villageStatus, camp
+ *     player, villageStatus, camp
  *
  * [referrer property]
  *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
@@ -620,6 +620,14 @@ public abstract class BsVillageBhv extends AbstractBehaviorWritable<Village, Vil
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
+    /**
+     * Pull out the list of foreign table 'Player'.
+     * @param villageList The list of village. (NotNull, EmptyAllowed)
+     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
+     */
+    public List<Player> pulloutPlayer(List<Village> villageList)
+    { return helpPulloutInternally(villageList, "player"); }
+
     /**
      * Pull out the list of foreign table 'VillageStatus'.
      * @param villageList The list of village. (NotNull, EmptyAllowed)

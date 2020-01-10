@@ -19,14 +19,20 @@ class VillageService(
      * 村一覧取得
      * @return Villages
      */
-    fun findVillageList(): Villages = villageDataSource.selectVillages()
+    fun findVillageList(): Villages = villageDataSource.findVillages()
+
+    /**
+     * 参加している村一覧取得
+     * @return Villages
+     */
+    fun findVillageList(user: Wolf4busyUser): Villages = villageDataSource.findVillages(user)
 
     /**
      * 村取得
      * @param villageId villageId
      * @return Village
      */
-    fun findVillage(villageId: Int): Village = villageDataSource.selectVillage(villageId)
+    fun findVillage(villageId: Int): Village = villageDataSource.findVillage(villageId)
 
     /**
      * 村登録
@@ -103,13 +109,6 @@ class VillageService(
     }
 
     /**
-     * どこかの村に参加しているか
-     *
-     * @param uid
-     */
-    fun isParticipatingAnyProgressVillage(uid: String): Boolean = villageDataSource.isParticipatingAnyProgressVillage(uid)
-
-    /**
      * 役職希望を取得
      * @param
      * @return
@@ -129,7 +128,7 @@ class VillageService(
     fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
         val participant = this.findParticipantByUid(villageId, user.uid)
         checkNotNull(participant)
-        val village = villageDataSource.selectVillage(villageId)
+        val village = villageDataSource.findVillage(villageId)
         if (!village.status.isPrologue()) return // 開始直前に変更しようとして間に合わなかった
         CDef.Skill.codeOf(firstRequestSkill) ?: IllegalStateException("改竄")
         CDef.Skill.codeOf(secondRequestSkill) ?: IllegalStateException("改竄")

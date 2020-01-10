@@ -34,7 +34,7 @@ object VillageDataConverter {
         return com.ort.wolf4busy.domain.model.village.Village(
             id = village.villageId,
             name = village.villageDisplayName,
-            creatorPlayerName = village.createPlayerName,
+            creatorPlayerId = village.createPlayerId,
             status = VillageStatus(village.villageStatusCodeAsVillageStatus),
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(
@@ -70,7 +70,7 @@ object VillageDataConverter {
         return com.ort.wolf4busy.domain.model.village.Village(
             id = village.villageId,
             name = village.villageDisplayName,
-            creatorPlayerName = village.createPlayerName,
+            creatorPlayerId = village.createPlayerId,
             status = VillageStatus(village.villageStatusCodeAsVillageStatus),
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(count = village.participantCount),

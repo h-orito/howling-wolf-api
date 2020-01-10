@@ -20,6 +20,15 @@ public class VillageNss {
     //                                                                     ===============
     /**
      * With nested relation columns to select clause. <br>
+     * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
+     */
+    public PlayerNss withPlayer() {
+        _query.xdoNss(() -> _query.queryPlayer());
+        return new PlayerNss(_query.queryPlayer());
+    }
+    /**
+     * With nested relation columns to select clause. <br>
      * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.
      */
     public void withVillageStatus() {

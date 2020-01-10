@@ -5,10 +5,10 @@ import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.*
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
-import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
+import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.converter.VillageDataConverter
 import org.springframework.stereotype.Repository
 
@@ -20,6 +20,10 @@ class VillageDataSource(
     val villagePlayerBhv: VillagePlayerBhv,
     val messageRestrictionBhv: MessageRestrictionBhv
 ) {
+
+    // ===================================================================================
+    //                                                                             village
+    //                                                                           =========
 
     /**
      * 村登録
@@ -34,11 +38,11 @@ class VillageDataSource(
         // 村
         val village = insertVillage(village)
         // 村設定
-        this.insertVillageSettings(village.id, village.setting, password)
+        insertVillageSettings(village.id, village.setting, password)
         // 発言制限
-        this.insertMessageRestrictionList(village.id, village.setting)
+        insertMessageRestrictionList(village.id, village.setting)
         // 村日付
-        val villageDay = this.insertVillageDay(
+        val villageDay = insertVillageDay(
             village.id,
             com.ort.wolf4busy.domain.model.village.VillageDay(
                 id = 1, // dummy
@@ -49,14 +53,14 @@ class VillageDataSource(
             )
         )
 
-        return village.copy(day = VillageDays(listOf(villageDay)))
+        return findVillage(village.id)
     }
 
     /**
      * 村一覧取得
      * @return 村一覧
      */
-    fun selectVillages(): Villages {
+    fun findVillages(user: Wolf4busyUser? = null): Villages {
         val villageList = villageBhv.selectList {
             it.specify().derivedVillagePlayer().count({ vpCB ->
                 vpCB.specify().columnVillagePlayerId()
@@ -68,6 +72,14 @@ class VillageDataSource(
                 vpCB.query().setIsGone_Equal(false)
                 vpCB.query().setIsSpectator_Equal(true)
             }, Village.ALIAS_visitorCount)
+
+            if (user != null) {
+                it.query().existsVillagePlayer { vpCB ->
+                    vpCB.query().setIsGone_Equal(false)
+                    vpCB.query().queryPlayer().setUid_Equal(user.uid)
+                }
+            }
+
             it.query().addOrderBy_VillageId_Desc()
         }
         villageBhv.load(villageList) { loader ->
@@ -86,7 +98,7 @@ class VillageDataSource(
      * @param villageId villageId
      * @return 村情報
      */
-    fun selectVillage(villageId: Int, excludeGonePlayer: Boolean = true): com.ort.wolf4busy.domain.model.village.Village {
+    fun findVillage(villageId: Int, excludeGonePlayer: Boolean = true): com.ort.wolf4busy.domain.model.village.Village {
         val village = villageBhv.selectEntityWithDeletedCheck {
             it.query().setVillageId_Equal(villageId)
         }
@@ -234,21 +246,6 @@ class VillageDataSource(
     }
 
     /**
-     * いずれかの進行中の村に参加しているか
-     * @param uid uid
-     * @return いずれかの進行中の村に参加しているか
-     */
-    fun isParticipatingAnyProgressVillage(uid: String): Boolean {
-        return villagePlayerBhv.selectCount {
-            it.query().queryPlayer().setUid_Equal(uid)
-            it.query().queryVillage().setVillageStatusCode_InScope_AsVillageStatus(
-                listOf(CDef.VillageStatus.プロローグ, CDef.VillageStatus.進行中)
-            )
-            it.query().setIsGone_Equal(false)
-        } > 0
-    }
-
-    /**
      * 役職希望を取得
      * @param participant 参加情報
      * @return 役職希望
@@ -384,7 +381,7 @@ class VillageDataSource(
         val village = Village()
         village.villageDisplayName = villageModel.name
         village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(villageModel.status.code)
-        village.createPlayerName = villageModel.creatorPlayerName
+        village.createPlayerId = villageModel.creatorPlayerId
         villageBhv.insert(village)
         return VillageDataConverter.convertVillageToVillage(village)
     }
