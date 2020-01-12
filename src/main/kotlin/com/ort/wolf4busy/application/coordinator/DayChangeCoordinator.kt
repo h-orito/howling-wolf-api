@@ -7,7 +7,9 @@ import com.ort.wolf4busy.domain.model.daychange.DayChange
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class DayChangeCoordinator(
@@ -25,6 +27,7 @@ class DayChangeCoordinator(
      *
      * @param village village
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun dayChangeIfNeeded(village: Village) {
         // 最新日の通常発言
         val votes: VillageVotes = voteService.findVillageVotes(village.id)
@@ -47,7 +50,6 @@ class DayChangeCoordinator(
         if (!dayChange.isChange) return
 
         // 日付追加
-        // TODO 更新中まわり
         update(beforeDayChange, dayChange)
 
         // 登録後の村日付idが必要になるので取得し直す
@@ -55,12 +57,15 @@ class DayChangeCoordinator(
 
         // 日付更新
         dayChange.process(todayMessages, charas).let { if (it.isChange) update(beforeDayChange, it) }
+
+        // 日付更新完了
+        villageService.updateVillageDayUpdateComplete(dayChange.village.day.latestDay().id)
     }
 
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    fun update(before: DayChange, after: DayChange) {
+    private fun update(before: DayChange, after: DayChange) {
         // village
         if (before.village.existsDifference(after.village)) {
             villageService.updateVillageDifference(before.village, after.village)

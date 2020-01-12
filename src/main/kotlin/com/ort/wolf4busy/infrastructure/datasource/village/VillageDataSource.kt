@@ -27,37 +27,38 @@ class VillageDataSource(
 
     /**
      * 村登録
-     * @param village village
+     * @param paramVillage village
      * @param password 入村パスワード
      * @return 村ID
      */
     fun registerVillage(
-        village: com.ort.wolf4busy.domain.model.village.Village,
+        paramVillage: com.ort.wolf4busy.domain.model.village.Village,
         password: String?
     ): com.ort.wolf4busy.domain.model.village.Village {
         // 村
-        val village = insertVillage(village)
+        val villageId = insertVillage(paramVillage)
         // 村設定
-        insertVillageSettings(village.id, village.setting, password)
+        insertVillageSettings(villageId, paramVillage.setting, password)
         // 発言制限
-        insertMessageRestrictionList(village.id, village.setting)
+        insertMessageRestrictionList(villageId, paramVillage.setting)
         // 村日付
-        val villageDay = insertVillageDay(
-            village.id,
+        insertVillageDay(
+            villageId,
             com.ort.wolf4busy.domain.model.village.VillageDay(
                 id = 1, // dummy
                 day = 0,
                 noonnight = CDef.Noonnight.昼.code(),
-                dayChangeDatetime = village.setting.time.startDatetime,
+                dayChangeDatetime = paramVillage.setting.time.startDatetime,
                 isUpdating = true // dummy
             )
         )
 
-        return findVillage(village.id)
+        return findVillage(villageId)
     }
 
     /**
      * 村一覧取得
+     * @param user 指定した場合は自分が参加した村一覧
      * @return 村一覧
      */
     fun findVillages(user: Wolf4busyUser? = null): Villages {
@@ -144,26 +145,6 @@ class VillageDataSource(
     }
 
     /**
-     * 村日付登録
-     * @param villageId villageId
-     * @param day 村日付
-     * @return 村日付id
-     */
-    fun insertVillageDay(
-        villageId: Int,
-        day: com.ort.wolf4busy.domain.model.village.VillageDay
-    ): com.ort.wolf4busy.domain.model.village.VillageDay {
-        val villageDay = VillageDay()
-        villageDay.villageId = villageId
-        villageDay.day = day.day
-        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
-        villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDay.isUpdating = true
-        villageDayBhv.insert(villageDay)
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
-    }
-
-    /**
      * 村日付を更新完了にする
      * @param villageDayId 村日付ID
      */
@@ -187,20 +168,6 @@ class VillageDataSource(
             it.query().setVillageId_Equal(villageId)
             it.query().queryPlayer().setUid_Equal(uid)
         }.map { VillageDataConverter.convertVillagePlayerToParticipant(it) }.orElse(null)
-    }
-
-    /**
-     * 村参加者人数取得
-     * @param villageId villageId
-     * @param isSpectate 見学か
-     * @return 参加人数
-     */
-    fun selectVillagePlayerCount(villageId: Int, isSpectate: Boolean): Int {
-        return villagePlayerBhv.selectCount {
-            it.query().setVillageId_Equal(villageId)
-            it.query().setIsGone_Equal(false)
-            it.query().setIsSpectator_Equal(isSpectate)
-        }
     }
 
     /**
@@ -330,6 +297,26 @@ class VillageDataSource(
             }
     }
 
+    /**
+     * 村日付登録
+     * @param villageId villageId
+     * @param day 村日付
+     * @return 村日付id
+     */
+    private fun insertVillageDay(
+        villageId: Int,
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ): com.ort.wolf4busy.domain.model.village.VillageDay {
+        val villageDay = VillageDay()
+        villageDay.villageId = villageId
+        villageDay.day = day.day
+        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
+        villageDay.daychangeDatetime = day.dayChangeDatetime
+        villageDay.isUpdating = true
+        villageDayBhv.insert(villageDay)
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
+    }
+
     private fun updateVillageDay(
         day: com.ort.wolf4busy.domain.model.village.VillageDay
     ) {
@@ -364,15 +351,15 @@ class VillageDataSource(
     /**
      * 村登録
      * @param villageModel 村
-     * @return village
+     * @return villageId
      */
-    private fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): com.ort.wolf4busy.domain.model.village.Village {
+    private fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): Int {
         val village = Village()
         village.villageDisplayName = villageModel.name
         village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(villageModel.status.code)
         village.createPlayerId = villageModel.creatorPlayerId
         villageBhv.insert(village)
-        return VillageDataConverter.convertVillageToVillage(village)
+        return village.villageId
     }
 
     /**
