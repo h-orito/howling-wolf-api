@@ -235,17 +235,6 @@ class VillageDataSource(
     }
 
     /**
-     * 村パスワード検索
-     * 大文字小文字も一致しなければいけないので取得してから比較する
-     *
-     * @param villageId villageId
-     * @return 村パスワード
-     */
-    fun selectVillagePassword(villageId: Int): String {
-        return villageSettingBhv.selectByPK(villageId, CDef.VillageSettingItem.入村パスワード).get().villageSettingText
-    }
-
-    /**
      * 役職希望を取得
      * @param participant 参加情報
      * @return 役職希望

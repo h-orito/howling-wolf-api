@@ -75,15 +75,15 @@ data class VillageActionSituation(
         // ===================================================================================
         //                                                            Constructor Assist Logic
         //                                                                        ============
-        private fun isAvailableLeave(village: Village, participant: VillageParticipant?): Boolean {
+        fun isAvailableLeave(village: Village, participant: VillageParticipant?): Boolean {
             // 参加していない
             participant ?: return false
             // プロローグなら退村できる
             return village.status.isPrologue()
         }
-    }
 
-    fun assertLeave() {
-        if (!isAvailableLeave) throw throw Wolf4busyBusinessException("退村できません")
+        fun assertLeave(village: Village, participant: VillageParticipant?) {
+            if (!isAvailableLeave(village, participant)) throw Wolf4busyBusinessException("退村できません")
+        }
     }
 }

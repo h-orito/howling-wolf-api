@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class VillageCommitSituation(
     val isAvailableCommit: Boolean,
@@ -36,7 +37,7 @@ data class VillageCommitSituation(
         }
     }
 
-    fun isSettable(commit: Commit?): Boolean {
-        return isAvailableCommit
+    fun assertCommit() {
+        if (!isAvailableCommit) throw Wolf4busyBusinessException("コミットできません")
     }
 }

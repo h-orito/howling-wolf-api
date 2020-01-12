@@ -3,6 +3,7 @@ package com.ort.wolf4busy.domain.model.village.action
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class VillageVoteSituation(
     val isAvailableVote: Boolean,
@@ -46,7 +47,7 @@ data class VillageVoteSituation(
 
     }
 
-    fun isSettableVote(targetId: Int): Boolean {
-        return isAvailableVote && targetList.any { it.id == targetId }
+    fun assertVote(targetId: Int) {
+        if (!isAvailableVote || targetList.none { it.id == targetId }) throw Wolf4busyBusinessException("投票できません")
     }
 }

@@ -382,7 +382,8 @@ class VillageController(
                 )
             ),
             password = VillagePassword(
-                joinPasswordRequired = false // TODO
+                joinPasswordRequired = false, // TODO
+                joinPassword = null
             )
         )
     }

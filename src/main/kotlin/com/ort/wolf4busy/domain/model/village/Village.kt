@@ -55,24 +55,28 @@ data class Village(
     // ===================================================================================
     //                                                                              assert
     //                                                                           =========
-
     fun assertParticipate(
         charaId: Int,
         firstRequestSkill: CDef.Skill,
         secondRequestSkill: CDef.Skill,
         isSpectate: Boolean,
-        isCollectPassword: Boolean
+        password: String?
     ) {
         // 既に参加しているキャラはNG
         if (isAlreadyParticipateCharacter(charaId)) throw Wolf4busyBusinessException("既に参加されているキャラクターです")
         // 役職希望無効の場合はおまかせのみ
-        if (!isSpectate && !setting.rules.isValidSkillRequest(firstRequestSkill, secondRequestSkill)) throw Wolf4busyBusinessException("希望役職が不正です")
+        if (!isSpectate && !setting.rules.isValidSkillRequest(
+                firstRequestSkill,
+                secondRequestSkill
+            )
+        ) throw Wolf4busyBusinessException("希望役職が不正です")
         // パスワードが合っているかチェック
-        assertPassword(isCollectPassword)
+        assertPassword(password)
     }
 
-    private fun assertPassword(isCollectPassword: Boolean) {
-        if (!isCollectPassword) throw Wolf4busyBusinessException("入村パスワードが誤っています")
+    private fun assertPassword(password: String?) {
+        if (!setting.password.joinPasswordRequired) return
+        if (setting.password.joinPassword != password) throw Wolf4busyBusinessException("入村パスワードが誤っています")
     }
 
     // ===================================================================================
