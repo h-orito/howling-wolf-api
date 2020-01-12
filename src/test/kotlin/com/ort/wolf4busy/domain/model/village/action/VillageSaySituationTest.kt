@@ -2,13 +2,16 @@ package com.ort.wolf4busy.domain.model.village.action
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
+import com.ort.wolf4busy.domain.model.charachip.CharaFace
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.dead.Dead
 import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.MessageContent
+import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.dummy.DummyDomainModelCreator
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -106,5 +109,113 @@ class VillageSaySituationTest : Wolf4busyTest() {
 
         // ## Assert ##
         assertThat(villageSaySituation.isAvailableSay).isFalse()
+    }
+
+    @Test
+    fun test_assertSay_発言制限OK() {
+        // ## Arrange ##
+        val villageSaySituation = VillageSaySituation(
+            isAvailableSay = true,
+            selectableMessageTypeList = listOf(
+                VillageSayMessageTypeSituation(
+                    messageType = MessageType(CDef.MessageType.通常発言),
+                    restrict = VillageSayRestrictSituation(
+                        isRestricted = true,
+                        maxCount = 20,
+                        remainingCount = 1,
+                        maxLength = 200
+                    ),
+                    targetList = listOf()
+                )
+            ),
+            selectableFaceTypeList = listOf(
+                CharaFace(
+                    CDef.FaceType.通常.code(), CDef.FaceType.通常.name, "dummy"
+                )
+            ),
+            defaultMessageType = MessageType(CDef.MessageType.通常発言)
+        )
+        val messageContent = MessageContent(
+            type = MessageType(CDef.MessageType.通常発言),
+            num = null,
+            text = "hoge",
+            faceCode = CDef.FaceType.通常.code()
+        )
+
+        // ## Act ##
+        // ## Assert ##
+        villageSaySituation.assertSay(messageContent)
+    }
+
+    @Test(expected = Wolf4busyBusinessException::class)
+    fun test_assertSay_発言制限NG_回数() {
+        // ## Arrange ##
+        val villageSaySituation = VillageSaySituation(
+            isAvailableSay = true,
+            selectableMessageTypeList = listOf(
+                VillageSayMessageTypeSituation(
+                    messageType = MessageType(CDef.MessageType.通常発言),
+                    restrict = VillageSayRestrictSituation(
+                        isRestricted = true,
+                        maxCount = 20,
+                        remainingCount = 0,
+                        maxLength = 200
+                    ),
+                    targetList = listOf()
+                )
+            ),
+            selectableFaceTypeList = listOf(
+                CharaFace(
+                    CDef.FaceType.通常.code(), CDef.FaceType.通常.name, "dummy"
+                )
+            ),
+            defaultMessageType = MessageType(CDef.MessageType.通常発言)
+        )
+        val messageContent = MessageContent(
+            type = MessageType(CDef.MessageType.通常発言),
+            num = null,
+            text = "hoge",
+            faceCode = CDef.FaceType.通常.code()
+        )
+
+        // ## Act ##
+        // ## Assert ##
+        villageSaySituation.assertSay(messageContent)
+    }
+
+    @Test(expected = Wolf4busyBusinessException::class)
+    fun test_assertSay_発言制限NG_長さ() {
+        // ## Arrange ##
+        val villageSaySituation = VillageSaySituation(
+            isAvailableSay = true,
+            selectableMessageTypeList = listOf(
+                VillageSayMessageTypeSituation(
+                    messageType = MessageType(CDef.MessageType.通常発言),
+                    restrict = VillageSayRestrictSituation(
+                        isRestricted = true,
+                        maxCount = 20,
+                        remainingCount = 1,
+                        maxLength = 10
+                    ),
+                    targetList = listOf()
+                )
+            ),
+            selectableFaceTypeList = listOf(
+                CharaFace(
+                    CDef.FaceType.通常.code(), CDef.FaceType.通常.name, "dummy"
+                )
+            ),
+            defaultMessageType = MessageType(CDef.MessageType.通常発言)
+        )
+        val messageContent = MessageContent(
+            type = MessageType(CDef.MessageType.通常発言),
+            num = null,
+            text = "12345678901",
+            faceCode = CDef.FaceType.通常.code()
+        )
+
+        // ## Act ##
+        // ## Assert ##
+        villageSaySituation.assertSay(messageContent)
     }
 }
