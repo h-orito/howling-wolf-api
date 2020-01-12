@@ -6,6 +6,7 @@ import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
@@ -158,14 +159,15 @@ class VillageCoordinator(
      *
      * @param villageId villageId
      * @param user user
-     * @param message 発言内容
+     * @param messageText 発言内容
      * @param messageType 発言種別
      * @param faceType 表情種別
      */
-    fun confirmToSay(villageId: Int, user: Wolf4busyUser, message: String, messageType: String, faceType: String) {
+    fun confirmToSay(villageId: Int, user: Wolf4busyUser, messageText: String, messageType: String, faceType: String) {
         // 発言できない状況ならエラー
         val situation = findSaySituation(villageId, user)
-        situation.assertSay(message, messageType, faceType)
+        val messageContent = MessageContent.invoke(messageType, messageText, faceType)
+        situation.assertSay(messageContent)
     }
 
     /**
@@ -173,19 +175,19 @@ class VillageCoordinator(
      *
      * @param villageId villageId
      * @param user user
-     * @param message 発言内容
+     * @param messageText 発言内容
      * @param messageType 発言種別
      * @param faceType 表情種別
      */
-    fun say(villageId: Int, user: Wolf4busyUser, message: String, messageType: String, faceType: String) {
+    fun say(villageId: Int, user: Wolf4busyUser, messageText: String, messageType: String, faceType: String) {
         // 発言できない状況ならエラー
         val situation = findSaySituation(villageId, user)
-        situation.assertSay(message, messageType, faceType)
-
+        val messageContent = MessageContent.invoke(messageType, messageText, faceType)
+        situation.assertSay(messageContent)
         // 発言
         val village = villageService.findVillage(villageId)
         val participant = villageService.findParticipantByUid(villageId, user.uid)!!
-        messageService.registerSayMessage(villageId, village.day.latestDay().id, participant, message, messageType, faceType)
+        messageService.registerSayMessage(villageId, village.day.latestDay().id, participant, messageContent)
     }
 
     /**

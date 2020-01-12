@@ -54,7 +54,8 @@ data class VillageSaySituation(
             }
             // 終了していたら不可
             if (village.status.toCdef() == CDef.VillageStatus.終了
-                || village.status.toCdef() == CDef.VillageStatus.廃村) {
+                || village.status.toCdef() == CDef.VillageStatus.廃村
+            ) {
                 return false
             }
 
@@ -143,20 +144,18 @@ data class VillageSaySituation(
     }
 
     fun assertSay(
-        message: String,
-        messageType: String,
-        faceType: String
+        messageContent: MessageContent
     ) {
         if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
         val available = selectableMessageTypeList.find {
-            it.messageType.code == messageType
+            it.messageType.code == messageContent.type.code
         } ?: throw Wolf4busyBusinessException("発言できません")
         if (available.restrict.isRestricted) {
-            // TODO 改行等考慮入れる
-            if (available.restrict.remainingCount!! <= 0 || available.restrict.maxLength!! <= message.length) {
-                throw Wolf4busyBusinessException("発言できません")
-            }
+            // 回数
+            if (available.restrict.remainingCount!! <= 0) throw Wolf4busyBusinessException("発言できません")
+            // 文字数
+            messageContent.assertMessageLength(available.restrict.maxLength!!)
         }
-        if (selectableFaceTypeList.none { it.type == faceType }) throw Wolf4busyBusinessException("発言できません")
+        if (selectableFaceTypeList.none { it.type == messageContent.faceCode }) throw Wolf4busyBusinessException("発言できません")
     }
 }

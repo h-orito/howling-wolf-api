@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
@@ -74,24 +75,20 @@ class MessageService(
      * @param villageDayId 村日付id
      * @param participant 参加情報
      * @param message 発言内容
-     * @param messageType 発言種別
-     * @param faceType 表情種別
      */
     fun registerSayMessage(
         villageId: Int,
         villageDayId: Int,
         participant: VillageParticipant,
-        message: String,
-        messageType: String,
-        faceType: String
+        messageContent: MessageContent
     ) {
         messageDataSource.insertMessage(
             villageId = villageId,
             dayId = villageDayId,
-            messageType = messageType,
-            text = message,
+            messageType = messageContent.type.code,
+            text = messageContent.text,
             villagePlayerId = participant.id,
-            faceType = faceType
+            faceType = messageContent.faceCode
         )
     }
 
