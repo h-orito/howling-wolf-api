@@ -14,6 +14,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
@@ -133,7 +134,8 @@ class VillageController(
         @RequestBody @Validated body: VillageRegisterBody
     ): VillageRegisterView {
         val password: String? = null // TODO
-        val village: Village = convertRegisterBodyToVillage(body, user)
+        val player = playerService.findPlayer(user)
+        val village: Village = convertRegisterBodyToVillage(body, player)
         val villageId: Int = villageCoordinator.registerVillage(village, user, password)
         return VillageRegisterView(villageId = villageId)
     }
@@ -312,12 +314,12 @@ class VillageController(
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun convertRegisterBodyToVillage(body: VillageRegisterBody, user: Wolf4busyUser): Village {
+    private fun convertRegisterBodyToVillage(body: VillageRegisterBody, player: Player): Village {
         // TODO
         return Village(
             id = 1, // dummy
             name = "dummy village name", // TODO
-            creatorPlayerId = 1, // TODO
+            creatorPlayerId = player.id,
             status = VillageStatus(CDef.VillageStatus.プロローグ),
             setting = convertRegisterBodyToVillageSettings(body),
             participant = VillageParticipants(

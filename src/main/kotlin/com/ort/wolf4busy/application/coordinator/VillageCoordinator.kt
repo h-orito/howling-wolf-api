@@ -13,8 +13,10 @@ import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.action.*
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 
 @Service
@@ -38,6 +40,7 @@ class VillageCoordinator(
      * @param villagePassword password
      * @return 村ID
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun registerVillage(paramVillage: Village, user: Wolf4busyUser?, villagePassword: String?): Int {
         // 作成できない状況ならエラー
         val situation = playerCoordinator.findPlayerSituation(user)
@@ -98,6 +101,7 @@ class VillageCoordinator(
      * @param secondRequestSkill 役職第2希望
      * @param password 入村パスワード
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun participate(
         villageId: Int,
         playerId: Int,
@@ -142,6 +146,7 @@ class VillageCoordinator(
      * @param villageId villageId
      * @param user user
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun leaveVillage(villageId: Int, user: Wolf4busyUser) {
         // 退村できない状況ならエラー
         val village = villageService.findVillage(villageId)
@@ -179,6 +184,7 @@ class VillageCoordinator(
      * @param messageType 発言種別
      * @param faceType 表情種別
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun say(villageId: Int, user: Wolf4busyUser, messageText: String, messageType: String, faceType: String) {
         // 発言できない状況ならエラー
         val situation = findSaySituation(villageId, user)
@@ -198,6 +204,7 @@ class VillageCoordinator(
      * @param targetId 対象村参加者ID
      * @param abilityType 能力種別
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun setAbility(villageId: Int, user: Wolf4busyUser, targetId: Int?, abilityType: String) {
         // 能力セットできない状況ならエラー
         val village = villageService.findVillage(villageId)
@@ -217,6 +224,7 @@ class VillageCoordinator(
      * @param user user
      * @param targetId 対象村参加者ID
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun setVote(villageId: Int, user: Wolf4busyUser, targetId: Int) {
         // 投票セットできない状況ならエラー
         val village = villageService.findVillage(villageId)
@@ -234,6 +242,7 @@ class VillageCoordinator(
      * @param user user
      * @param doCommit コミットするか
      */
+    @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun setCommit(villageId: Int, user: Wolf4busyUser, doCommit: Boolean) {
         // コミットできない状況ならエラー
         val village = villageService.findVillage(villageId)
