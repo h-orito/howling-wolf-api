@@ -67,7 +67,7 @@ object DummyDomainModelCreator {
         )
     }
 
-    fun createDummyVillagePassword(): VillagePassword = VillagePassword(false)
+    fun createDummyVillagePassword(): VillagePassword = VillagePassword(false, null)
 
     fun createDummyVillageRules(): VillageRules = VillageRules()
 

@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
+import com.ort.wolf4busy.domain.model.village.action.VillageSkillRequestSituation
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
@@ -61,6 +62,12 @@ class VillageService(
      */
     fun updateVillageDayUpdateComplete(villageDayId: Int) = villageDataSource.updateVillageDayUpdateComplete(villageDayId)
 
+    /**
+     * 村参加者取得
+     * @param villageId villageId
+     * @param uid uid
+     * @return 村参加者
+     */
     fun findParticipantByUid(villageId: Int, uid: String?): VillageParticipant? {
         uid ?: return null
         return villageDataSource.selectVillagePlayer(villageId, uid)
@@ -97,21 +104,10 @@ class VillageService(
     }
 
     /**
-     * パスワードが正しいか
-     *
-     * @param villageId villageId
-     * @param password 入村パスワード
-     */
-    fun isCollectPassword(villageId: Int, password: String?): Boolean {
-        password ?: return false
-        val villagePassword: String = villageDataSource.selectVillagePassword(villageId)
-        return villagePassword == password
-    }
-
-    /**
      * 役職希望を取得
-     * @param
-     * @return
+     *
+     * @param participant 村参加者
+     * @return 役職希望
      */
     fun findSkillRequest(participant: VillageParticipant?): SkillRequest? {
         participant ?: return null
@@ -126,13 +122,17 @@ class VillageService(
      * @param secondRequestSkill 第2希望
      */
     fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
-        val participant = this.findParticipantByUid(villageId, user.uid)
-        checkNotNull(participant)
+        // 役職希望変更できない状況ならエラー
         val village = villageDataSource.findVillage(villageId)
-        if (!village.status.isPrologue()) return // 開始直前に変更しようとして間に合わなかった
-        CDef.Skill.codeOf(firstRequestSkill) ?: IllegalStateException("改竄")
-        CDef.Skill.codeOf(secondRequestSkill) ?: IllegalStateException("改竄")
-        villageDataSource.updateSkillRequest(participant, Skill(firstRequestSkill, ""), Skill(secondRequestSkill, ""))
+        val participant = this.findParticipantByUid(villageId, user.uid)
+        val situation = findSkillRequestSituation(village, participant)
+        situation.assertSkillRequest(firstRequestSkill, secondRequestSkill)
+        // 役職希望変更
+        villageDataSource.updateSkillRequest(
+            participant!!,
+            Skill(CDef.Skill.codeOf(firstRequestSkill)),
+            Skill(CDef.Skill.codeOf(secondRequestSkill))
+        )
     }
 
     /**
@@ -148,4 +148,15 @@ class VillageService(
      * @param after village
      */
     fun updateVillageDifference(before: Village, after: Village) = villageDataSource.updateDifference(before, after)
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun findSkillRequestSituation(village: Village, participant: VillageParticipant?): VillageSkillRequestSituation {
+        return VillageSkillRequestSituation(
+            village,
+            participant,
+            null
+        )
+    }
 }
