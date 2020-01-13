@@ -16,21 +16,21 @@ class Wolf4busySecurityConfig() : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
 
         http
-                // AUTHORIZE
-                .authorizeRequests()
-                .mvcMatchers("/admin/**")
-                .hasRole("ADMIN")
-                .anyRequest()
-                .permitAll()
-                .and()
-                // EXCEPTION
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint())
-                .accessDeniedHandler(accessDeniedHandler())
-                .and()
-                // CSRF
-                .csrf()
-                .disable()
+            // AUTHORIZE
+            .authorizeRequests()
+            .mvcMatchers("/admin/**")
+            .hasRole("ADMIN")
+            .anyRequest()
+            .permitAll()
+            .and()
+            // EXCEPTION
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint())
+            .accessDeniedHandler(accessDeniedHandler())
+            .and()
+            // CSRF
+            .csrf()
+            .disable()
     }
 
     internal fun authenticationEntryPoint(): AuthenticationEntryPoint {

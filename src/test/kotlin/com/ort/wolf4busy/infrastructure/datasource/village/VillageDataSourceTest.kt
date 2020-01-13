@@ -13,10 +13,12 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
+@Transactional
 class VillageDataSourceTest : Wolf4busyTest() {
 
     // ===================================================================================
@@ -112,19 +114,6 @@ class VillageDataSourceTest : Wolf4busyTest() {
         assertThat(village.villageStatusCodeAsVillageStatus).isEqualTo(CDef.VillageStatus.プロローグ)
         assertThat(village.epilogueDay as Int?).isNull()
         assertThat(village.winCampCodeAsCamp).isNull()
-        // village_player
-//        val villagePlayerList = villagePlayerBhv.selectList { it.query().setVillageId_Equal(villageId) }
-//        assertThat(villagePlayerList.size).isEqualTo(1)
-//        assertThat(villagePlayerList.first()).satisfies { dummyPlayer ->
-//            assertThat(dummyPlayer.playerId).isEqualTo(1)
-//            assertThat(dummyPlayer.charaId).isEqualTo(dummyCharaId)
-//            assertThat(dummyPlayer.skillCodeAsSkill).isNull()
-//            assertThat(dummyPlayer.isDead).isFalse()
-//            assertThat(dummyPlayer.isSpectator).isFalse()
-//            assertThat(dummyPlayer.deadReasonCodeAsDeadReason).isNull()
-//            assertThat(dummyPlayer.deadVillageDayId).isNull()
-//            assertThat(dummyPlayer.isGone).isFalse()
-//        }
         // village_day
         val villageDayList = villageDayBhv.selectList { it.query().setVillageId_Equal(villageId) }
         assertThat(villageDayList.size).isEqualTo(1)
@@ -147,7 +136,7 @@ class VillageDataSourceTest : Wolf4busyTest() {
         assertThat(settingList.first { it.isVillageSettingItemCode突然死ありか }.villageSettingText).isEqualTo("1")
         assertThat(settingList.first { it.isVillageSettingItemCode記名投票か }.villageSettingText).isEqualTo("0")
         assertThat(settingList.first { it.isVillageSettingItemCode開始予定日時 }.villageSettingText).isNotNull()
-        assertThat(settingList.first { it.isVillageSettingItemCode期間形式 }.villageSettingText).isEqualTo(CDef.Noonnight.昼.code())
+        assertThat(settingList.first { it.isVillageSettingItemCode期間形式 }.villageSettingText).isEqualTo(CDef.Term.長期.code())
         // message_restriction
         val restrictList = messageRestrictionBhv.selectList { it.query().setVillageId_Equal(villageId) }
         assertThat(restrictList.size).isEqualTo(2)
@@ -159,5 +148,83 @@ class VillageDataSourceTest : Wolf4busyTest() {
             assertThat(restrict.messageMaxLength).isEqualTo(200)
             assertThat(restrict.messageMaxNum).isEqualTo(20)
         }
+    }
+
+    @Test
+    fun test_findVillages() {
+        // ## Arrange ##
+        val village1 = villageDataSource.registerVillage(createDummyVillageParam(), "")
+        villageDataSource.registerVillageParticipant(village1.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        villageDataSource.registerVillageParticipant(village1.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        villageDataSource.registerVillageParticipant(village1.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        val village2 = villageDataSource.registerVillage(createDummyVillageParam(), "")
+        villageDataSource.registerVillageParticipant(village2.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        villageDataSource.registerVillageParticipant(village2.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        villageDataSource.registerVillageParticipant(village2.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        val village3 = villageDataSource.registerVillage(createDummyVillageParam(), "")
+        villageDataSource.registerVillageParticipant(village3.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        villageDataSource.registerVillageParticipant(village3.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+        villageDataSource.registerVillageParticipant(village3.id, 1, 1, CDef.Skill.おまかせ, CDef.Skill.おまかせ, false)
+
+        // ## Act ##
+        val villages = villageDataSource.findVillages()
+
+        // ## Assert ##
+        assertThat(villages.villageList.size).isEqualTo(3)
+        assertThat(villages.villageList.first().participant.count).isEqualTo(3)
+    }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun createDummyVillageParam(): com.ort.wolf4busy.domain.model.village.Village {
+        return com.ort.wolf4busy.domain.model.village.Village(
+            id = 1,
+            name = "dummy_village_name",
+            creatorPlayerId = 1,
+            status = VillageStatus(CDef.VillageStatus.プロローグ),
+            setting = VillageSettings(
+                capacity = PersonCapacity(
+                    min = 10,
+                    max = 16
+                ),
+                time = VillageTime(
+                    termType = CDef.Term.長期.code(),
+                    startDatetime = LocalDateTime.now().plusDays(1L).withNano(0),
+                    dayChangeIntervalSeconds = 24 * 60 * 60
+                ),
+                charachip = VillageCharachip(
+                    dummyCharaId = 1,
+                    charachipId = 1
+                ),
+                organizations = VillageOrganizations(),
+                rules = VillageRules(
+                    openVote = false,
+                    availableSkillRequest = true,
+                    availableSpectate = false,
+                    openSkillInGrave = false,
+                    visibleGraveMessage = false,
+                    availableSuddenlyDeath = true,
+                    availableCommit = false,
+                    messageRestrict = VillageMessageRestricts()
+                ),
+                password = VillagePassword(
+                    joinPasswordRequired = false,
+                    joinPassword = null
+                )
+            ),
+            participant = VillageParticipants(
+                count = 1,
+                memberList = listOf()
+            ),
+            spectator = VillageParticipants(
+                count = 0,
+                memberList = listOf()
+            ),
+            day = VillageDays(
+                dayList = listOf()
+            ),
+            winCamp = null
+        )
     }
 }

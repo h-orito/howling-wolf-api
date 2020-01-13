@@ -93,7 +93,7 @@ class VillageService(
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         isSpectate: Boolean = false
     ): Int {
-        return villageDataSource.insertVillagePlayer(
+        return villageDataSource.registerVillageParticipant(
             villageId,
             playerId,
             charaId,
