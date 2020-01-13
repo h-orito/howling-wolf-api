@@ -1,2 +1,16 @@
 PLAYER_ID	UID	NICKNAME	TWITTER_USER_NAME	AUTHORITY_CODE	IS_RESTRICTED_PARTICIPATION
 1	9LPlRsyAyDgyIqnVKZFvk6zOf752	ort	ort_dev	ROLE_ADMIN	0
+2	dummy2	nickname_2	user_name_2	ROLE_PLAYER	0
+3	dummy3	nickname_3	user_name_3	ROLE_PLAYER	0
+4	dummy4	nickname_4	user_name_4	ROLE_PLAYER	0
+5	dummy5	nickname_5	user_name_5	ROLE_PLAYER	0
+6	dummy6	nickname_6	user_name_6	ROLE_PLAYER	0
+7	dummy7	nickname_7	user_name_7	ROLE_PLAYER	0
+8	dummy8	nickname_8	user_name_8	ROLE_PLAYER	0
+9	dummy9	nickname_9	user_name_9	ROLE_PLAYER	0
+10	dummy10	nickname_10	user_name_10	ROLE_PLAYER	0
+11	dummy11	nickname_11	user_name_11	ROLE_PLAYER	0
+12	dummy12	nickname_12	user_name_12	ROLE_PLAYER	0
+13	dummy13	nickname_13	user_name_13	ROLE_PLAYER	0
+14	dummy14	nickname_14	user_name_14	ROLE_PLAYER	0
+15	dummy15	nickname_15	user_name_15	ROLE_PLAYER	0

@@ -20,6 +20,7 @@ class VillageDataSource(
     val villagePlayerBhv: VillagePlayerBhv,
     val messageRestrictionBhv: MessageRestrictionBhv
 ) {
+    // TODO updateは全てdomain objectを受け取って差分更新が良いのでは
 
     // ===================================================================================
     //                                                                             village
@@ -180,7 +181,7 @@ class VillageDataSource(
      * @param isSpectate 見学か
      * @return 村参加ID
      */
-    fun insertVillagePlayer(
+    fun registerVillageParticipant(
         villageId: Int,
         playerId: Int,
         charaId: Int,

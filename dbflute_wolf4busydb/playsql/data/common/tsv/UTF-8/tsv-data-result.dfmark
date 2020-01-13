@@ -17,6 +17,6 @@ data-directory: playsql/data/common/tsv/UTF-8
 09-CHARA_GROUP.tsv (2)
 10-FACE_TYPE.tsv (6)
 11-VILLAGE_SETTING_ITEM.tsv (16)
-12-CHARA.tsv (66)
-13-CHARA_IMAGE.tsv (66)
+12-CHARA.tsv (86)
+13-CHARA_IMAGE.tsv (194)
 14-NOONNIGHT.tsv (2)
