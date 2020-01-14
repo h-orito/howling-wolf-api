@@ -10,8 +10,8 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 data class VillageParticipantView(
     val id: Int,
-    val chara: Chara, // domainと違う箇所
-    val player: PlayerView?, // domainと違う箇所
+    val chara: Chara,
+    val player: PlayerView?,
     val dead: Dead?,
     val isSpectator: Boolean,
     val skill: Skill?
@@ -28,6 +28,6 @@ data class VillageParticipantView(
         else PlayerView(players.list.find { it.id == villageParticipant.playerId }!!),
         dead = villageParticipant.dead,
         isSpectator = villageParticipant.isSpectator,
-        skill = villageParticipant.skill
+        skill = if (shouldHidePlayer) null else villageParticipant.skill
     )
 }

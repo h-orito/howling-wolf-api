@@ -20,7 +20,7 @@ data class VillageMessageView(
                 message = it,
                 players = players,
                 charas = charas,
-                shouldHidePlayer = !village.status.isCompleted()
+                shouldHidePlayer = !village.status.isSolved()
             )
         }
     )

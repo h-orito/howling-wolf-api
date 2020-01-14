@@ -867,6 +867,16 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      * 決着がついた村 <br>
      * The group elements:[エピローグ, 廃村, 終了]
      */
+    public void setVillageStatusCode_InScope_SolvedVillage() {
+        setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfSolvedVillage());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As VillageStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 村ステータス <br>
+     * 終了した村 <br>
+     * The group elements:[廃村, 終了]
+     */
     public void setVillageStatusCode_InScope_FinishedVillage() {
         setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfFinishedVillage());
     }

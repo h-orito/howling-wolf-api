@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
@@ -8,6 +8,9 @@ import com.ort.wolf4busy.domain.model.dead.Dead
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageType
+import com.ort.wolf4busy.domain.model.myself.participant.VillageSayMessageTypeSituation
+import com.ort.wolf4busy.domain.model.myself.participant.VillageSayRestrictSituation
+import com.ort.wolf4busy.domain.model.myself.participant.VillageSaySituation
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.dummy.DummyDomainModelCreator
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -33,7 +36,8 @@ class VillageSaySituationTest : Wolf4busyTest() {
         val latestDayMessageList: List<Message> = listOf()
 
         // ## Act ##
-        val villageSaySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
+        val villageSaySituation =
+            VillageSaySituation(village, participant, charas, latestDayMessageList)
 
         // ## Assert ##
         assertThat(villageSaySituation.isAvailableSay).isFalse()
@@ -50,7 +54,8 @@ class VillageSaySituationTest : Wolf4busyTest() {
         val latestDayMessageList: List<Message> = listOf()
 
         // ## Act ##
-        val villageSaySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
+        val villageSaySituation =
+            VillageSaySituation(village, participant, charas, latestDayMessageList)
 
         // ## Assert ##
         assertThat(villageSaySituation.isAvailableSay).isTrue()
@@ -69,7 +74,8 @@ class VillageSaySituationTest : Wolf4busyTest() {
         val latestDayMessageList: List<Message> = listOf()
 
         // ## Act ##
-        val villageSaySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
+        val villageSaySituation =
+            VillageSaySituation(village, participant, charas, latestDayMessageList)
 
         // ## Assert ##
         assertThat(villageSaySituation.isAvailableSay).isFalse()
@@ -88,7 +94,8 @@ class VillageSaySituationTest : Wolf4busyTest() {
         val latestDayMessageList: List<Message> = listOf()
 
         // ## Act ##
-        val villageSaySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
+        val villageSaySituation =
+            VillageSaySituation(village, participant, charas, latestDayMessageList)
 
         // ## Assert ##
         assertThat(villageSaySituation.isAvailableSay).isTrue()
@@ -105,7 +112,8 @@ class VillageSaySituationTest : Wolf4busyTest() {
         val latestDayMessageList: List<Message> = listOf()
 
         // ## Act ##
-        val villageSaySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
+        val villageSaySituation =
+            VillageSaySituation(village, participant, charas, latestDayMessageList)
 
         // ## Assert ##
         assertThat(villageSaySituation.isAvailableSay).isFalse()

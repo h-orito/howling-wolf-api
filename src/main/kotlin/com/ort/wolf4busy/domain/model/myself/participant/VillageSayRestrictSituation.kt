@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.setting.VillageMessageRestrict

@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -15,8 +15,14 @@ data class VillageVoteSituation(
         participant: VillageParticipant?,
         votes: VillageVotes
     ) : this(
-        isAvailableVote = isAvailableVote(village, participant),
-        targetList = getSelectableTargetList(village, participant),
+        isAvailableVote = isAvailableVote(
+            village,
+            participant
+        ),
+        targetList = getSelectableTargetList(
+            village,
+            participant
+        ),
         target = getTarget(village, participant, votes)
 
     )

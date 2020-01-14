@@ -5,7 +5,7 @@ import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 
 data class VillageParticipantsView(
-    val count: Int, // 退村した人は含まない
+    val count: Int,
     val memberList: List<VillageParticipantView>
 ) {
     constructor(

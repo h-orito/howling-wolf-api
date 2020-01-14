@@ -26,19 +26,4 @@ class PlayerService(
     fun updateNickname(user: Wolf4busyUser, nickname: String, twitterUserName: String) {
         playerDataSource.updateNickname(user.uid, nickname, twitterUserName)
     }
-
-    fun isRestrictedParticipatePlayer(user: Wolf4busyUser): Boolean {
-        return playerDataSource.isRestrictedParticipatePlayer(user.uid)
-    }
-
-    fun hasProgressMyselfVillage(uid: String): Boolean {
-        return playerDataSource.hasProgressMyselfVillage(uid)
-    }
-
-    /**
-     * どこかの村に参加しているか
-     *
-     * @param uid
-     */
-    fun isParticipatingAnyProgressVillage(uid: String): Boolean = playerDataSource.isParticipatingAnyProgressVillage(uid)
 }

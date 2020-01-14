@@ -7,7 +7,7 @@ object MonologueSay {
 
     fun isViewable(village: Village): Boolean {
         // 終了していたら全て見られる
-        return village.status.isCompleted()
+        return village.status.isSolved()
     }
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {

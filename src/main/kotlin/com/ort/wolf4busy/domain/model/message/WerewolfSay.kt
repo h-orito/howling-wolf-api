@@ -7,7 +7,7 @@ object WerewolfSay {
 
     fun isViewable(village: Village, participant: VillageParticipant?): Boolean {
         // 終了していたら全て見られる
-        if (village.status.isCompleted()) return true
+        if (village.status.isSolved()) return true
         // 参加していて人狼なら開放
         return participant?.skill?.toCdef()?.isViewableWerewolfSay ?: false
     }
