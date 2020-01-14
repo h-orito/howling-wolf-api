@@ -1,20 +1,18 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
-import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
-import com.ort.wolf4busy.fw.security.Wolf4busyUser
 
-data class VillageActionSituation(
+data class SituationAsParticipant(
     val participate: VillageParticipateSituation,
     val skillRequest: VillageSkillRequestSituation,
-    val isAvailableLeave: Boolean,
     val commit: VillageCommitSituation,
     val say: VillageSaySituation,
     val ability: VillageAbilitySituations, // TODO 役職仲間
@@ -22,10 +20,8 @@ data class VillageActionSituation(
 ) {
     constructor(
         village: Village,
+        player: Player?,
         participant: VillageParticipant?,
-        user: Wolf4busyUser?,
-        isParticipatingProgressVillage: Boolean,
-        isRestrictedParticipatePlayer: Boolean,
         charas: Charas,
         skillRequest: SkillRequest?,
         abilities: VillageAbilities,
@@ -36,9 +32,7 @@ data class VillageActionSituation(
         participate = VillageParticipateSituation(
             village,
             participant,
-            user,
-            isParticipatingProgressVillage,
-            isRestrictedParticipatePlayer,
+            player,
             charas.list.size
         ),
         skillRequest = VillageSkillRequestSituation(
@@ -46,7 +40,6 @@ data class VillageActionSituation(
             participant,
             skillRequest
         ),
-        isAvailableLeave = isAvailableLeave(village, participant),
         commit = VillageCommitSituation(
             village,
             participant,
@@ -69,21 +62,4 @@ data class VillageActionSituation(
             votes
         )
     )
-
-    companion object {
-
-        // ===================================================================================
-        //                                                            Constructor Assist Logic
-        //                                                                        ============
-        fun isAvailableLeave(village: Village, participant: VillageParticipant?): Boolean {
-            // 参加していない
-            participant ?: return false
-            // プロローグなら退村できる
-            return village.status.isPrologue()
-        }
-
-        fun assertLeave(village: Village, participant: VillageParticipant?) {
-            if (!isAvailableLeave(village, participant)) throw Wolf4busyBusinessException("退村できません")
-        }
-    }
 }

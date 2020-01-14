@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
@@ -35,7 +35,8 @@ class VillageSkillRequestSituationTest : Wolf4busyTest() {
         val skillRequest = SkillRequest(Skill(CDef.Skill.村人), Skill(CDef.Skill.村人))
 
         // ## Act ##
-        val villageSkillRequestSituation = VillageSkillRequestSituation(village, participant, skillRequest)
+        val villageSkillRequestSituation =
+            VillageSkillRequestSituation(village, participant, skillRequest)
 
         // ## Assert ##
         assertThat(villageSkillRequestSituation.isAvailableSkillRequest).isFalse()
@@ -56,7 +57,8 @@ class VillageSkillRequestSituationTest : Wolf4busyTest() {
         val skillRequest = SkillRequest(Skill(CDef.Skill.村人), Skill(CDef.Skill.村人))
 
         // ## Act ##
-        val villageSkillRequestSituation = VillageSkillRequestSituation(village, participant, skillRequest)
+        val villageSkillRequestSituation =
+            VillageSkillRequestSituation(village, participant, skillRequest)
 
         // ## Assert ##
         assertThat(villageSkillRequestSituation.isAvailableSkillRequest).isFalse()
@@ -77,7 +79,8 @@ class VillageSkillRequestSituationTest : Wolf4busyTest() {
         val skillRequest = SkillRequest(Skill(CDef.Skill.村人), Skill(CDef.Skill.村人))
 
         // ## Act ##
-        val villageSkillRequestSituation = VillageSkillRequestSituation(village, participant, skillRequest)
+        val villageSkillRequestSituation =
+            VillageSkillRequestSituation(village, participant, skillRequest)
 
         // ## Assert ##
         assertThat(villageSkillRequestSituation.isAvailableSkillRequest).isFalse()
@@ -99,7 +102,8 @@ class VillageSkillRequestSituationTest : Wolf4busyTest() {
         val skillRequest = SkillRequest(Skill(CDef.Skill.村人), Skill(CDef.Skill.村人))
 
         // ## Act ##
-        val villageSkillRequestSituation = VillageSkillRequestSituation(village, participant, skillRequest)
+        val villageSkillRequestSituation =
+            VillageSkillRequestSituation(village, participant, skillRequest)
 
         // ## Assert ##
         assertThat(villageSkillRequestSituation.isAvailableSkillRequest).isTrue()
@@ -113,7 +117,8 @@ class VillageSkillRequestSituationTest : Wolf4busyTest() {
         val skillRequest = SkillRequest(Skill(CDef.Skill.村人), Skill(CDef.Skill.村人))
 
         // ## Act ##
-        val villageSkillRequestSituation = VillageSkillRequestSituation(village, participant, skillRequest)
+        val villageSkillRequestSituation =
+            VillageSkillRequestSituation(village, participant, skillRequest)
 
         // ## Assert ##
         assertThat(villageSkillRequestSituation.selectableSkillList.any { it.toCdef() == CDef.Skill.村人 }).isTrue()

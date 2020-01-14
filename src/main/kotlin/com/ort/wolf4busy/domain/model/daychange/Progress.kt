@@ -61,7 +61,7 @@ object Progress {
         dayChange = Epilogue.transitionToEpilogueIfNeeded(dayChange)
 
         // 勝敗が決していたらここで終了
-        if (dayChange.village.status.isCompleted()) return dayChange.setIsChange(beforeDayChange)
+        if (dayChange.village.status.isSolved()) return dayChange.setIsChange(beforeDayChange)
 
         // 投票や能力行使のデフォルト設定
         dayChange = addDefaultVoteAndAbilities(dayChange)

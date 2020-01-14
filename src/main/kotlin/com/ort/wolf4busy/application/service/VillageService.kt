@@ -1,11 +1,11 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.myself.participant.VillageSkillRequestSituation
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.Villages
-import com.ort.wolf4busy.domain.model.village.action.VillageSkillRequestSituation
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
@@ -18,15 +18,17 @@ class VillageService(
 
     /**
      * 村一覧取得
+     * @param user 入力した場合、参加している村一覧
      * @return Villages
      */
-    fun findVillageList(): Villages = villageDataSource.findVillages()
+    fun findVillages(user: Wolf4busyUser? = null): Villages = villageDataSource.findVillages(user)
 
     /**
-     * 参加している村一覧取得
+     * 村一覧取得
+     * @param villageIdList 村IDリスト
      * @return Villages
      */
-    fun findVillageList(user: Wolf4busyUser): Villages = villageDataSource.findVillages(user)
+    fun findVillages(villageIdList: List<Int>): Villages = villageDataSource.findVillages(villageIdList)
 
     /**
      * 村取得
@@ -125,8 +127,7 @@ class VillageService(
         // 役職希望変更できない状況ならエラー
         val village = villageDataSource.findVillage(villageId)
         val participant = this.findParticipantByUid(villageId, user.uid)
-        val situation = findSkillRequestSituation(village, participant)
-        situation.assertSkillRequest(firstRequestSkill, secondRequestSkill)
+        village.assertSkillRequest(participant, firstRequestSkill, secondRequestSkill)
         // 役職希望変更
         villageDataSource.updateSkillRequest(
             participant!!,

@@ -43,6 +43,16 @@ data class VillageOrganizations(
         return map
     }
 
+    fun allRequestableSkillList(): List<Skill> {
+        val skillList: MutableList<Skill> = organization
+            .map { org -> org.value } // 人数ごとの編成を
+            .flatMap { org -> org.split("") } // 全部まとめて1文字ずつに
+            .mapNotNull { orgChar -> Skill.skillByShortName(orgChar) } // 略称から役職を取得して
+            .distinct().toMutableList() // 重複削除
+        skillList.addAll(Skill.skillRequestSomeoneList.map { Skill(it) })
+        return skillList.sortedBy { it.toCdef().order() }
+    }
+
     override fun toString(): String {
         val sortedMap = this.organization.toSortedMap()
         return sortedMap.map { it.value }.joinToString(separator = "\n")

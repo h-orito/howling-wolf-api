@@ -308,6 +308,16 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
      * The group elements:[エピローグ, 廃村, 終了]
      * @return The determination, true or false.
      */
+    public boolean isVillageStatusCode_SolvedVillage() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isSolvedVillage();
+    }
+
+    /**
+     * 終了した村 <br>
+     * The group elements:[廃村, 終了]
+     * @return The determination, true or false.
+     */
     public boolean isVillageStatusCode_FinishedVillage() {
         CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
         return cdef != null && cdef.isFinishedVillage();

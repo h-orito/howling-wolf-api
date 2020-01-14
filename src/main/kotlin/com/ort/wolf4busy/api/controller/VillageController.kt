@@ -46,7 +46,7 @@ class VillageController(
      */
     @GetMapping("/village/list")
     fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillageListView {
-        val villages = villageService.findVillageList()
+        val villages = villageService.findVillages()
         return VillageListView(
             villageList = villages.villageList
         )

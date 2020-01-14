@@ -55,10 +55,14 @@ map:{
         ; map:{
         	; topComment=村ステータス; codeType=String
         	; groupingMap = map:{
-        		; finishedVillage = map:{
+        		; solvedVillage = map:{
         			; groupComment=決着がついた村
         			; elementList= list:{エピローグ;廃村;終了}
         		}
+        		; finishedVillage = map:{
+					; groupComment=終了した村
+					; elementList= list:{廃村;終了}
+				}
         	}
         }
         ; map:{

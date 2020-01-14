@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.wolf4busy.domain.model.ability.Abilities
 import com.ort.wolf4busy.domain.model.village.Village
@@ -14,7 +14,11 @@ data class VillageAbilitySituations(
         participant: VillageParticipant?,
         abilities: VillageAbilities
     ) : this(
-        list = convertToAbilityList(village, participant, abilities)
+        list = convertToAbilityList(
+            village,
+            participant,
+            abilities
+        )
     )
 
     companion object {

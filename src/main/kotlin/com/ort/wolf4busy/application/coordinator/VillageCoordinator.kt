@@ -7,10 +7,10 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageContent
+import com.ort.wolf4busy.domain.model.myself.participant.*
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
-import com.ort.wolf4busy.domain.model.village.action.*
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class VillageCoordinator(
-    val playerCoordinator: PlayerCoordinator,
     val dayChangeCoordinator: DayChangeCoordinator,
 
     val villageService: VillageService,
@@ -41,10 +40,10 @@ class VillageCoordinator(
      * @return 村ID
      */
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
-    fun registerVillage(paramVillage: Village, user: Wolf4busyUser?, villagePassword: String?): Int {
+    fun registerVillage(paramVillage: Village, user: Wolf4busyUser, villagePassword: String?): Int {
         // 作成できない状況ならエラー
-        val situation = playerCoordinator.findPlayerSituation(user)
-        situation.assertCreateVillage()
+        val player = playerService.findPlayer(user)
+        player.assertCreateVillage(user)
         // 村を登録
         val village: Village = villageService.registerVillage(paramVillage, villagePassword)
         // 村作成時のシステムメッセージを登録
@@ -78,16 +77,21 @@ class VillageCoordinator(
     ) {
         // 参加できない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
-        val situation = findParticipateSituation(village, user)
-        situation.assertParticipate(isSpectate)
-        // 希望役職やパスワードをチェック
-        village.assertParticipate(
-            charaId,
-            firstRequestSkill,
-            secondRequestSkill,
-            isSpectate,
-            password
-        )
+        val player = playerService.findPlayer(user)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+
+        if (isSpectate) {
+            village.assertSpectate(player, charas.list.size)
+        } else {
+            village.assertParticipate(
+                player,
+                charaId,
+                firstRequestSkill,
+                secondRequestSkill,
+                isSpectate,
+                password
+            )
+        }
     }
 
     /**
@@ -151,7 +155,7 @@ class VillageCoordinator(
         // 退村できない状況ならエラー
         val village = villageService.findVillage(villageId)
         val participant = villageService.findParticipantByUid(villageId, user.uid)
-        assertLeave(village, participant)
+        village.assertLeave(participant)
         // 退村
         villageService.leaveVillage(participant!!)
         // 退村メッセージ
@@ -247,8 +251,7 @@ class VillageCoordinator(
         // コミットできない状況ならエラー
         val village = villageService.findVillage(villageId)
         val participant = villageService.findParticipantByUid(villageId, user.uid)
-        val situation = findCommitSituation(village, participant)
-        situation.assertCommit()
+        village.assertCommit(participant)
         // コミット
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         commitService.updateCommit(village.day.latestDay().id, participant!!, doCommit)
@@ -262,11 +265,10 @@ class VillageCoordinator(
      * @param villageId villageId
      * @param user user
      */
-    fun findActionSituation(villageId: Int, user: Wolf4busyUser?): VillageActionSituation {
+    fun findActionSituation(villageId: Int, user: Wolf4busyUser?): SituationAsParticipant {
         val village: Village = villageService.findVillage(villageId)
+        val player = if (user == null) null else playerService.findPlayer(user)
         val participant: VillageParticipant? = if (user == null) null else villageService.findParticipantByUid(villageId, user.uid)
-        val isParticipatingProgressVillage: Boolean = user != null && playerService.isParticipatingAnyProgressVillage(user.uid)
-        val isRestrictedParticipatePlayer: Boolean = user != null && playerService.isRestrictedParticipatePlayer(user)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val skillRequest: SkillRequest? = villageService.findSkillRequest(participant)
         val abilities: VillageAbilities = abilityService.findVillageAbilities(villageId)
@@ -275,12 +277,10 @@ class VillageCoordinator(
         val latestDayMessageList: List<Message> =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
 
-        return VillageActionSituation(
+        return SituationAsParticipant(
             village,
+            player,
             participant,
-            user,
-            isParticipatingProgressVillage,
-            isRestrictedParticipatePlayer,
             charas,
             skillRequest,
             abilities,
@@ -304,26 +304,6 @@ class VillageCoordinator(
             isSpectate = false,
             password = ""
         )
-    }
-
-    private fun findParticipateSituation(village: Village, user: Wolf4busyUser): VillageParticipateSituation {
-        val participant: VillageParticipant? = villageService.findParticipantByUid(village.id, user.uid)
-        val isParticipatingProgressVillage: Boolean = playerService.isParticipatingAnyProgressVillage(user.uid)
-        val isRestrictedParticipatePlayer: Boolean = playerService.isRestrictedParticipatePlayer(user)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-
-        return VillageParticipateSituation(
-            village,
-            participant,
-            user,
-            isParticipatingProgressVillage,
-            isRestrictedParticipatePlayer,
-            charas.list.size
-        )
-    }
-
-    private fun assertLeave(village: Village, participant: VillageParticipant?) {
-        VillageActionSituation.assertLeave(village, participant)
     }
 
     private fun findSaySituation(villageId: Int, user: Wolf4busyUser?): VillageSaySituation {

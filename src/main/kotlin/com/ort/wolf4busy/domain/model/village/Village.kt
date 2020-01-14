@@ -4,7 +4,8 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.SkillAssign
 import com.ort.wolf4busy.domain.model.message.*
-import com.ort.wolf4busy.domain.model.village.action.VillageSaySituation
+import com.ort.wolf4busy.domain.model.myself.participant.VillageSaySituation
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -53,15 +54,37 @@ data class Village(
     }
 
     // ===================================================================================
-    //                                                                              assert
+    //                                                                           situation
     //                                                                           =========
+    /**
+     * @param player player
+     * @return 参加可能な状況か
+     */
+    fun isAvailableParticipate(
+        player: Player?
+    ): Boolean {
+        // プレイヤーとして参加可能か
+        player ?: return false
+        if (!player.isAvailableParticipate()) return false
+
+        // 村として参加可能か
+        // プロローグでない
+        if (!status.isPrologue()) return false
+        // 既に最大人数まで参加している
+        if (participant.count >= setting.capacity.max) return false
+
+        return true
+    }
+
     fun assertParticipate(
+        player: Player?,
         charaId: Int,
         firstRequestSkill: CDef.Skill,
         secondRequestSkill: CDef.Skill,
         isSpectate: Boolean,
         password: String?
     ) {
+        if (!isAvailableParticipate(player)) throw Wolf4busyBusinessException("参加できません")
         // 既に参加しているキャラはNG
         if (isAlreadyParticipateCharacter(charaId)) throw Wolf4busyBusinessException("既に参加されているキャラクターです")
         // 役職希望無効の場合はおまかせのみ
@@ -74,9 +97,128 @@ data class Village(
         assertPassword(password)
     }
 
-    private fun assertPassword(password: String?) {
-        if (!setting.password.joinPasswordRequired) return
-        if (setting.password.joinPassword != password) throw Wolf4busyBusinessException("入村パスワードが誤っています")
+    /**
+     * @param player player
+     * @param charachipCharaNum 使用するキャラチップのキャラ数
+     * @return 見学可能な状況か
+     */
+    fun isAvailableSpectate(
+        player: Player?,
+        charachipCharaNum: Int
+    ): Boolean {
+        // プレイヤーとして参加可能か
+        player ?: return false
+        if (!player.isAvailableParticipate()) return false
+
+        // 村として見学可能か
+        // プロローグでない
+        if (!status.isPrologue()) return false
+        // 既に最大人数まで参加している
+        if (charachipCharaNum - setting.capacity.max <= spectator.count) return false
+        // 見学できない設定の村である
+        if (!setting.rules.availableSpectate) return false
+
+        return true
+    }
+
+    /**
+     * 見学チェック
+     * @param player player
+     * @param charachipCharaNum 使用するキャラチップのキャラ数
+     */
+    fun assertSpectate(
+        player: Player?,
+        charachipCharaNum: Int
+    ) {
+        if (!isAvailableSpectate(player, charachipCharaNum)) throw Wolf4busyBusinessException("見学できません")
+    }
+
+    /**
+     * @param participant 参加者
+     * @return 退村可能か
+     */
+    fun isAvailableLeave(participant: VillageParticipant?): Boolean {
+        // 参加していない
+        participant ?: return false
+        // プロローグなら退村できる
+        return status.isPrologue()
+    }
+
+    /**
+     * 退村チェック
+     * @param participant 参加者
+     */
+    fun assertLeave(participant: VillageParticipant?) {
+        if (!isAvailableLeave(participant)) throw Wolf4busyBusinessException("退村できません")
+    }
+
+    /**
+     * @param participant 参加者
+     * @return 役職希望可能か
+     */
+    fun isAvailableSkillRequest(participant: VillageParticipant?): Boolean {
+        // 参加者として可能か
+        participant ?: return false
+        participant.isAvailableSkillRequest()
+        // 村として可能か
+        // プロローグでない
+        if (!status.isPrologue()) return false
+        // 役職希望設定
+        return setting.rules.availableSkillRequest
+    }
+
+    /**
+     * 役職希望変更チェック
+     * @param participant 参加者
+     * @param firstRequestSkill 第1役職希望
+     * @param secondRequestSkill 第2役職希望
+     */
+    fun assertSkillRequest(participant: VillageParticipant?, firstRequestSkill: String, secondRequestSkill: String) {
+        if (!isAvailableSkillRequest(participant)) throw Wolf4busyBusinessException("役職希望変更できません")
+        val first = CDef.Skill.codeOf(firstRequestSkill) ?: throw Wolf4busyBusinessException("第1希望が不正")
+        val second = CDef.Skill.codeOf(secondRequestSkill) ?: throw Wolf4busyBusinessException("第1希望が不正")
+        if (setting.organizations.allRequestableSkillList().none { it.code == first.code() }) throw Wolf4busyBusinessException("役職希望変更できません")
+        if (setting.organizations.allRequestableSkillList().none { it.code == second.code() }) throw Wolf4busyBusinessException("役職希望変更できません")
+    }
+
+    /**
+     * @param participant 参加者
+     * @return コミットできるか
+     */
+    fun isAvailableCommit(participant: VillageParticipant?): Boolean {
+        // 参加者として可能か
+        participant ?: return false
+        participant.isAvailableCommit(dummyChara().id)
+        // 村として可能か
+        // コミットできない設定ならNG
+        if (!setting.rules.availableCommit) return false
+        // 進行中以外はNG
+        if (!status.isProgress()) return false
+
+        return true
+    }
+
+    /**
+     * コミットチェック
+     * @param participant 参加者
+     */
+    fun assertCommit(participant: VillageParticipant?) {
+        if (!isAvailableCommit(participant)) throw Wolf4busyBusinessException("コミットできません")
+    }
+
+    /**
+     * @param participant 参加者
+     * @return 発言できるか
+     */
+    fun isAvailableSay(participant: VillageParticipant?): Boolean {
+        // 参加者として可能か
+        participant ?: return false
+        participant.isAvailableSay(status.toCdef() == CDef.VillageStatus.エピローグ)
+        // 村として可能か
+        // 終了していたら不可
+        if (status.toCdef().isFinishedVillage) return false
+
+        return true
     }
 
     // ===================================================================================
@@ -98,7 +240,7 @@ data class Village(
         // 管理者は全て見られる
         if (authority == CDef.Authority.管理者) return CDef.MessageType.listAll()
         // 村が終了していたら全て見られる
-        if (status.isCompleted()) return CDef.MessageType.listAll()
+        if (status.isSolved()) return CDef.MessageType.listAll()
 
         val allowedTypeList: MutableList<CDef.MessageType> = mutableListOf()
         allowedTypeList.addAll(everyoneAllowedMessageTypeList)
@@ -222,9 +364,15 @@ data class Village(
         charas: Charas,
         messageType: String
     ): Boolean {
-        val saySituation = VillageSaySituation(village, participant, charas, latestDayMessageList)
+        val saySituation =
+            VillageSaySituation(village, participant, charas, latestDayMessageList)
         val restrict = saySituation.selectableMessageTypeList.find { it.messageType.code == messageType }
         restrict ?: return false
         return restrict.restrict.isRestricted && restrict.restrict.remainingCount != null && restrict.restrict.remainingCount <= 0
+    }
+
+    private fun assertPassword(password: String?) {
+        if (!setting.password.joinPasswordRequired) return
+        if (setting.password.joinPassword != password) throw Wolf4busyBusinessException("入村パスワードが誤っています")
     }
 }

@@ -17,17 +17,13 @@ data class VillageStatus(
     // ===================================================================================
     //                                                                              status
     //                                                                           =========
-    fun isCompleted(): Boolean {
-        return CDef.VillageStatus.codeOf(this.code).isFinishedVillage
-    }
+    fun isSolved(): Boolean = this.toCdef().isSolvedVillage
 
-    fun isPrologue(): Boolean {
-        return CDef.VillageStatus.codeOf(this.code) == CDef.VillageStatus.プロローグ
-    }
+    fun isPrologue(): Boolean = this.toCdef() == CDef.VillageStatus.プロローグ
 
-    fun isProgress(): Boolean {
-        return CDef.VillageStatus.codeOf(this.code) == CDef.VillageStatus.進行中
-    }
+    fun isProgress(): Boolean = this.toCdef() == CDef.VillageStatus.進行中
+
+    fun isFinished(): Boolean = this.toCdef().isFinishedVillage
 
     fun toCdef(): CDef.VillageStatus = CDef.VillageStatus.codeOf(code)
 }

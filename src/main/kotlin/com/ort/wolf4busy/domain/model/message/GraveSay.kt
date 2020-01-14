@@ -8,7 +8,7 @@ object GraveSay {
 
     fun isViewable(village: Village, participant: VillageParticipant?): Boolean {
         // 終了していたら全て見られる
-        if (village.status.isCompleted()) return true
+        if (village.status.isSolved()) return true
         // 見られる設定なら開放
         if (village.setting.rules.visibleGraveMessage) return true
         // 参加していなければNG

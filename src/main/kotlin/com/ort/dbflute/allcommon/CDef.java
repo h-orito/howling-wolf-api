@@ -305,11 +305,22 @@ public interface CDef extends Classification {
          * The group elements:[エピローグ, 廃村, 終了]
          * @return The determination, true or false.
          */
-        public boolean isFinishedVillage() {
+        public boolean isSolvedVillage() {
             return エピローグ.equals(this) || 廃村.equals(this) || 終了.equals(this);
         }
 
+        /**
+         * Is the classification in the group? <br>
+         * 終了した村 <br>
+         * The group elements:[廃村, 終了]
+         * @return The determination, true or false.
+         */
+        public boolean isFinishedVillage() {
+            return 廃村.equals(this) || 終了.equals(this);
+        }
+
         public boolean inGroup(String groupName) {
+            if ("solvedVillage".equals(groupName)) { return isSolvedVillage(); }
             if ("finishedVillage".equals(groupName)) { return isFinishedVillage(); }
             return false;
         }
@@ -378,6 +389,7 @@ public interface CDef extends Classification {
          */
         public static List<VillageStatus> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
+            if ("solvedVillage".equalsIgnoreCase(groupName)) { return listOfSolvedVillage(); }
             if ("finishedVillage".equalsIgnoreCase(groupName)) { return listOfFinishedVillage(); }
             throw new ClassificationNotFoundException("Unknown classification group: VillageStatus." + groupName);
         }
@@ -400,8 +412,18 @@ public interface CDef extends Classification {
          * The group elements:[エピローグ, 廃村, 終了]
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
-        public static List<VillageStatus> listOfFinishedVillage() {
+        public static List<VillageStatus> listOfSolvedVillage() {
             return new ArrayList<VillageStatus>(Arrays.asList(エピローグ, 廃村, 終了));
+        }
+
+        /**
+         * Get the list of group classification elements. (returns new copied list) <br>
+         * 終了した村 <br>
+         * The group elements:[廃村, 終了]
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         */
+        public static List<VillageStatus> listOfFinishedVillage() {
+            return new ArrayList<VillageStatus>(Arrays.asList(廃村, 終了));
         }
 
         /**
@@ -410,6 +432,7 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
          */
         public static List<VillageStatus> groupOf(String groupName) {
+            if ("solvedVillage".equals(groupName)) { return listOfSolvedVillage(); }
             if ("finishedVillage".equals(groupName)) { return listOfFinishedVillage(); }
             return new ArrayList<VillageStatus>(4);
         }

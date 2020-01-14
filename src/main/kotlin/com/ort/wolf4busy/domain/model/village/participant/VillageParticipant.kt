@@ -44,4 +44,28 @@ data class VillageParticipant(
         if (skillRequest.second.code != participant.skillRequest.second.code) return true
         return false
     }
+
+    // ===================================================================================
+    //                                                                                権限
+    //                                                                        ============
+    // 役職希望可能か
+    fun isAvailableSkillRequest(): Boolean = true // 制限なし
+
+    // コミット可能か
+    fun isAvailableCommit(dummyParticipantId: Int): Boolean {
+        // 参加していなかったり死亡していたらNG
+        if (isSpectator) return false
+        if (!isAlive()) return false
+        // ダミーはコミットできない
+        if (id == dummyParticipantId) return false
+
+        return true
+    }
+
+    // 発言可能か
+    fun isAvailableSay(isEpilogue: Boolean): Boolean {
+        // 突然死した場合はエピローグ以外NG
+        if (dead?.toCdef() == CDef.DeadReason.突然 && !isEpilogue) return false
+        return true
+    }
 }

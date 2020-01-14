@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.village.action
+package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.CharaFace
@@ -20,12 +20,23 @@ data class VillageSaySituation(
         charas: Charas,
         latestDayMessageList: List<Message>
     ) : this(
-        isAvailableSay = isAvailableSay(village, participant),
-        selectableMessageTypeList = getSelectableMessageTypeList(village, participant, latestDayMessageList),
-        selectableFaceTypeList = getSelectableFaceTypeList(participant, charas),
+        isAvailableSay = village.isAvailableSay(participant),
+        selectableMessageTypeList = getSelectableMessageTypeList(
+            village,
+            participant,
+            latestDayMessageList
+        ),
+        selectableFaceTypeList = getSelectableFaceTypeList(
+            participant,
+            charas
+        ),
         defaultMessageType = detectDefaultMessageType(
             isAvailableSay(village, participant),
-            getSelectableMessageTypeList(village, participant, latestDayMessageList)
+            getSelectableMessageTypeList(
+                village,
+                participant,
+                latestDayMessageList
+            )
         )
     )
 
@@ -43,31 +54,12 @@ data class VillageSaySituation(
         // ===================================================================================
         //                                                            Constructor Assist Logic
         //                                                                        ============
-        private fun isAvailableSay(village: Village, participant: VillageParticipant?): Boolean {
-            // 参加していない場合はNG
-            participant ?: return false
-            // 突然死した場合はエピローグ以外NG
-            if (participant.dead?.toCdef() == CDef.DeadReason.突然 //
-                && village.status.toCdef() != CDef.VillageStatus.エピローグ
-            ) {
-                return false
-            }
-            // 終了していたら不可
-            if (village.status.toCdef() == CDef.VillageStatus.終了
-                || village.status.toCdef() == CDef.VillageStatus.廃村
-            ) {
-                return false
-            }
-
-            return true
-        }
-
         private fun getSelectableMessageTypeList(
             village: Village,
             participant: VillageParticipant?,
             latestDayMessageList: List<Message>
         ): List<VillageSayMessageTypeSituation> {
-            if (!isAvailableSay(village, participant)) return listOf()
+            if (!village.isAvailableSay(participant)) return listOf()
 
             val selectableMessageTypeList: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
             if (NormalSay.isSayable(village, participant!!)) {
