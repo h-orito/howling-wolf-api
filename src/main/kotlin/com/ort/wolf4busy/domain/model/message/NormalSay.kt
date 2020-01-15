@@ -12,11 +12,8 @@ object NormalSay {
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {
         // 参加者として可能か
-        participant.isSayableNormalSay(village.status.toCdef() == CDef.VillageStatus.エピローグ)
+        if (!participant.isSayableNormalSay(village.status.toCdef() == CDef.VillageStatus.エピローグ)) return false
         // 村として可能か
-        village.isSayableNormalSay()
-
-
-        return true
+        return village.isSayableNormalSay()
     }
 }
