@@ -15,7 +15,7 @@ data class VillageSkillRequestSituation(
         participant: VillageParticipant?,
         skillRequest: SkillRequest?
     ) : this(
-        isAvailableSkillRequest = village.isAvailableSkillRequest(participant),
+        isAvailableSkillRequest = SkillRequest.isAvailableSkillRequest(village, participant),
         selectableSkillList = village.setting.organizations.allRequestableSkillList(),
         skillRequest = skillRequest
     )

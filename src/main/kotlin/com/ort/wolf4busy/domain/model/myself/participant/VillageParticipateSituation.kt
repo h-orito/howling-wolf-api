@@ -2,6 +2,8 @@ package com.ort.wolf4busy.domain.model.myself.participant
 
 import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.participant.Leave
+import com.ort.wolf4busy.domain.model.village.participant.Participate
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 data class VillageParticipateSituation(
@@ -19,9 +21,9 @@ data class VillageParticipateSituation(
         charachipCharaNum: Int
     ) : this(
         isParticipating = participant != null,
-        isAvailableParticipate = village.isAvailableParticipate(player),
-        isAvailableSpectate = village.isAvailableSpectate(player, charachipCharaNum),
-        isAvailableLeave = village.isAvailableLeave(participant),
+        isAvailableParticipate = Participate.isAvailableParticipate(player, village),
+        isAvailableSpectate = Participate.isAvailableSpectate(player, village, charachipCharaNum),
+        isAvailableLeave = Leave.isAvailableLeave(village, participant),
         myself = participant
     )
 }

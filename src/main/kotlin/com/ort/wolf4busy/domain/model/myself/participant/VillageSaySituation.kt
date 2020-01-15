@@ -20,7 +20,7 @@ data class VillageSaySituation(
         charas: Charas,
         latestDayMessageList: List<Message>
     ) : this(
-        isAvailableSay = village.isAvailableSay(participant),
+        isAvailableSay = Say.isAvailableSay(village, participant),
         selectableMessageTypeList = getSelectableMessageTypeList(
             village,
             participant,
@@ -31,7 +31,7 @@ data class VillageSaySituation(
             charas
         ),
         defaultMessageType = detectDefaultMessageType(
-            isAvailableSay(village, participant),
+            Say.isAvailableSay(village, participant),
             getSelectableMessageTypeList(
                 village,
                 participant,
@@ -59,7 +59,7 @@ data class VillageSaySituation(
             participant: VillageParticipant?,
             latestDayMessageList: List<Message>
         ): List<VillageSayMessageTypeSituation> {
-            if (!village.isAvailableSay(participant)) return listOf()
+            if (!Say.isAvailableSay(village, participant)) return listOf()
 
             val selectableMessageTypeList: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
             if (NormalSay.isSayable(village, participant!!)) {

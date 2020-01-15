@@ -11,6 +11,8 @@ import com.ort.wolf4busy.domain.model.myself.participant.*
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
+import com.ort.wolf4busy.domain.model.village.participant.Leave
+import com.ort.wolf4busy.domain.model.village.participant.Participate
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -81,10 +83,11 @@ class VillageCoordinator(
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
 
         if (isSpectate) {
-            village.assertSpectate(player, charas.list.size)
+            Participate.assertSpectate(player, village, charas.list.size)
         } else {
-            village.assertParticipate(
+            Participate.assertParticipate(
                 player,
+                village,
                 charaId,
                 firstRequestSkill,
                 secondRequestSkill,
@@ -155,7 +158,7 @@ class VillageCoordinator(
         // 退村できない状況ならエラー
         val village = villageService.findVillage(villageId)
         val participant = villageService.findParticipantByUid(villageId, user.uid)
-        village.assertLeave(participant)
+        Leave.assertLeave(village, participant)
         // 退村
         villageService.leaveVillage(participant!!)
         // 退村メッセージ
@@ -251,7 +254,7 @@ class VillageCoordinator(
         // コミットできない状況ならエラー
         val village = villageService.findVillage(villageId)
         val participant = villageService.findParticipantByUid(villageId, user.uid)
-        village.assertCommit(participant)
+        Commit.assertCommit(village, participant)
         // コミット
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         commitService.updateCommit(village.day.latestDay().id, participant!!, doCommit)

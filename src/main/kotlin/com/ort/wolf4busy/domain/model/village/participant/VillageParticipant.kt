@@ -68,4 +68,13 @@ data class VillageParticipant(
         if (dead?.toCdef() == CDef.DeadReason.突然 && !isEpilogue) return false
         return true
     }
+
+    fun isSayableNormalSay(isEpilogue: Boolean): Boolean {
+        // 見学は不可
+        if (isSpectator) return false
+        // エピローグ以外で死亡している場合は不可
+        if (!isAlive() && !isEpilogue) return false
+
+        return true
+    }
 }
