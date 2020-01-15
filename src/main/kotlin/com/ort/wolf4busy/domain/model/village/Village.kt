@@ -135,21 +135,14 @@ data class Village(
     }
 
     /**
-     * @return 村として通常発言できるか
-     */
-    fun isSayableNormalSay(): Boolean {
-        // 終了していたら不可
-        return !status.toCdef().isFinishedVillage
-    }
-
-    /**
      * 村の状況として発言できるか
      */
-    fun isAvailableSay(): Boolean {
-        // 終了していたら不可
-        return !status.toCdef().isFinishedVillage
-    }
+    fun isAvailableSay(): Boolean = !status.toCdef().isFinishedVillage // 終了していたら不可
 
+    /**
+     * @return 村として通常発言できるか
+     */
+    fun isSayableNormalSay(): Boolean = !status.toCdef().isFinishedVillage // 終了していたら不可
 
     // ===================================================================================
     //                                                                                View
