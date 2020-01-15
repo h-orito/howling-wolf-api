@@ -13,7 +13,7 @@ data class VillageCommitSituation(
         participant: VillageParticipant?,
         commit: Commit?
     ) : this(
-        isAvailableCommit = village.isAvailableCommit(participant),
+        isAvailableCommit = Commit.isAvailableCommit(village, participant),
         isCommitting = commit != null
     )
 }

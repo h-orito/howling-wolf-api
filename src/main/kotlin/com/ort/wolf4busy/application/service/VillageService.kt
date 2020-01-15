@@ -127,7 +127,7 @@ class VillageService(
         // 役職希望変更できない状況ならエラー
         val village = villageDataSource.findVillage(villageId)
         val participant = this.findParticipantByUid(villageId, user.uid)
-        village.assertSkillRequest(participant, firstRequestSkill, secondRequestSkill)
+        SkillRequest.assertSkillRequest(village, participant, firstRequestSkill, secondRequestSkill)
         // 役職希望変更
         villageDataSource.updateSkillRequest(
             participant!!,

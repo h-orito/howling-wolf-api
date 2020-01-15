@@ -11,12 +11,12 @@ object NormalSay {
     }
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {
-        if (participant.isSpectator) return false
-        // 終了していたら不可
-        if (village.status.toCdef() == CDef.VillageStatus.終了 || village.status.toCdef() == CDef.VillageStatus.廃村) {
-            return false
-        }
-        // エピローグ以外で死亡している場合は不可
-        return participant.isAlive() || village.status.code == CDef.VillageStatus.エピローグ.code()
+        // 参加者として可能か
+        participant.isSayableNormalSay(village.status.toCdef() == CDef.VillageStatus.エピローグ)
+        // 村として可能か
+        village.isSayableNormalSay()
+
+
+        return true
     }
 }
