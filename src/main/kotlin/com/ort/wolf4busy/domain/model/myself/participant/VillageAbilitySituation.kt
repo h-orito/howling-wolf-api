@@ -9,7 +9,7 @@ data class VillageAbilitySituation(
     val type: Ability,
     val targetList: List<VillageParticipant>,
     val target: VillageParticipant?,
-    val exercisable: Boolean // 能力行使可能か
+    val usable: Boolean // 能力行使可能か
 ) {
     constructor(
         village: Village,
@@ -20,6 +20,6 @@ data class VillageAbilitySituation(
         type = ability,
         targetList = ability.getSelectableTargetList(village, participant),
         target = ability.getSelectingTarget(village, participant, villageAbilities),
-        exercisable = ability.getSelectableTargetList(village, participant).isEmpty()
+        usable = ability.getSelectableTargetList(village, participant).isEmpty()
     )
 }

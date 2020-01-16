@@ -4,5 +4,5 @@ data class CharaDefaultMessage(
     val joinMessage: String?,
     val firstDayMessage: String?
 ) {
-    
+
 }

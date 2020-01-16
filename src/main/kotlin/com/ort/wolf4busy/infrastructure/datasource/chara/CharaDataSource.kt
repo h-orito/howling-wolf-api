@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 class CharaDataSource(
     val charaBhv: CharaBhv
 ) {
-    fun selectCharaList(charachipId: Int): Charas {
+    fun findCharas(charachipId: Int): Charas {
         val charaList = charaBhv.selectList {
             it.query().setCharaGroupId_Equal(charachipId)
         }
@@ -19,7 +19,7 @@ class CharaDataSource(
         return Charas(charaList.map { convertCharaToChara(it) })
     }
 
-    fun selectCharaList(charachips: Charachips): Charas {
+    fun findCharas(charachips: Charachips): Charas {
         val charaList = charaBhv.selectList {
             it.query().setCharaGroupId_InScope(charachips.list.map { charachip -> charachip.id })
         }
@@ -29,7 +29,7 @@ class CharaDataSource(
         return Charas(charaList.map { convertCharaToChara(it) })
     }
 
-    fun selectChara(charaId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
+    fun findChara(charaId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
         val chara = charaBhv.selectEntityWithDeletedCheck {
             it.query().setCharaId_Equal(charaId)
         }
@@ -39,7 +39,7 @@ class CharaDataSource(
         return convertCharaToChara(chara)
     }
 
-    fun selectDummyChara(charaChipId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
+    fun findDummyChara(charaChipId: Int): com.ort.wolf4busy.domain.model.charachip.Chara {
         val chara = charaBhv.selectEntityWithDeletedCheck {
             it.query().setCharaGroupId_Equal(charaChipId)
             it.query().addOrderBy_DefaultJoinMessage_Asc().withNullsLast()
@@ -53,8 +53,8 @@ class CharaDataSource(
     }
 
     // ===================================================================================
-    //                                                                             Convert
-    //                                                                           =========
+    //                                                                             Mapping
+    //                                                                             =======
     private fun convertCharaToChara(chara: Chara): com.ort.wolf4busy.domain.model.charachip.Chara {
         return Chara(
             id = chara.charaId,

@@ -6,7 +6,8 @@ import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class Commit(
     val villageDayId: Int,
-    val isCommiting: Boolean
+    val myselfId: Int,
+    val isCommitting: Boolean
 ) {
 
     companion object {
@@ -21,12 +22,10 @@ data class Commit(
             participant: VillageParticipant?
         ): Boolean {
             // 村として可能か
-            village.isAvailableCommit()
+            if (!village.isAvailableCommit()) return false
             // 参加者として可能か
             participant ?: return false
-            participant.isAvailableCommit(village.dummyChara().id)
-
-            return true
+            return participant.isAvailableCommit(village.dummyChara().id)
         }
 
         /**

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 class CharachipDataSource(
     val charaGroupBhv: CharaGroupBhv
 ) {
-    fun selectCharachips(): Charachips {
+    fun findCharachips(): Charachips {
         val charaGroupList = charaGroupBhv.selectList {
             it.setupSelect_Designer()
             it.query().addOrderBy_CharaGroupId_Asc()
@@ -19,7 +19,7 @@ class CharachipDataSource(
         return convertCharaGroupListToCharaChips(charaGroupList)
     }
 
-    fun selectCharachip(charaChipId: Int): Charachip {
+    fun findCharachip(charaChipId: Int): Charachip {
         val charaGroup = charaGroupBhv.selectEntityWithDeletedCheck {
             it.setupSelect_Designer()
             it.query().setCharaGroupId_Equal(charaChipId)
@@ -28,8 +28,8 @@ class CharachipDataSource(
     }
 
     // ===================================================================================
-    //                                                                             Convert
-    //                                                                           =========
+    //                                                                             Mapping
+    //                                                                             =======
     private fun convertCharaGroupListToCharaChips(charaGroupList: List<CharaGroup>): Charachips {
         return Charachips(
             list = charaGroupList.map { convertCharaGroupToCharaChip(it) }

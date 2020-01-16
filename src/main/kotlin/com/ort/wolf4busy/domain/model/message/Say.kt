@@ -41,6 +41,7 @@ object Say {
             CDef.MessageType.死者の呻き -> GraveSay.assertSay(village, participant!!)
             CDef.MessageType.独り言 -> MonologueSay.isSayable(village, participant!!)
             CDef.MessageType.見学発言 -> SpectateSay.isSayable(village, participant!!)
+            else -> throw Wolf4busyBusinessException("発言できません")
         }
         // 表情種別チェック
         if (!isSelectableFaceType(charas, participant!!, messageContent)) throw Wolf4busyBusinessException("発言できません")

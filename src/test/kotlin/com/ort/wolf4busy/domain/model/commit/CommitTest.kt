@@ -1,8 +1,7 @@
-package com.ort.wolf4busy.domain.model.myself.participant
+package com.ort.wolf4busy.domain.model.commit
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
-import com.ort.wolf4busy.domain.model.myself.participant.VillageCommitSituation
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
@@ -16,13 +15,13 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class VillageCommitSituationTest : Wolf4busyTest() {
+class CommitTest : Wolf4busyTest() {
 
     // ===================================================================================
     //                                                                                Test
     //                                                                           =========
     @Test
-    fun test_constructor_コミット不可設定() {
+    fun test_isAvailableCommit_コミット不可設定() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
@@ -32,77 +31,72 @@ class VillageCommitSituationTest : Wolf4busyTest() {
             )
         )
         val participant = null
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isFalse()
+        assertThat(isAvailableCommit).isFalse()
     }
 
     @Test
-    fun test_constructor_参加していない() {
+    fun test_isAvailableCommit_参加していない() {
         // ## Arrange ##
         val village = createCommitAvailableVillage()
         val participant = null
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isFalse()
+        assertThat(isAvailableCommit).isFalse()
     }
 
     @Test
-    fun test_constructor_見学() {
+    fun test_isAvailableCommit_見学() {
         // ## Arrange ##
         val village = createCommitAvailableVillage()
         val participant = DummyDomainModelCreator.createDummyVillageParticipant().copy(
             isSpectator = true
         )
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isFalse()
+        assertThat(isAvailableCommit).isFalse()
     }
 
     @Test
-    fun test_constructor_死亡している() {
+    fun test_isAvailableCommit_死亡している() {
         // ## Arrange ##
         val village = createCommitAvailableVillage()
         val participant = DummyDomainModelCreator.createDummyDeadVillager()
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isFalse()
+        assertThat(isAvailableCommit).isFalse()
     }
 
     @Test
-    fun test_constructor_エピローグ() {
+    fun test_isAvailableCommit_エピローグ() {
         // ## Arrange ##
         val village = createCommitAvailableVillage().copy(
             status = VillageStatus(CDef.VillageStatus.エピローグ)
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isFalse()
+        assertThat(isAvailableCommit).isFalse()
     }
 
     @Test
-    fun test_constructor_ダミーキャラ() {
+    fun test_isAvailableCommit_ダミーキャラ() {
         // ## Arrange ##
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
         val village = createCommitAvailableVillage().copy(
@@ -118,17 +112,16 @@ class VillageCommitSituationTest : Wolf4busyTest() {
                 memberList = listOf(participant)
             )
         )
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isFalse()
+        assertThat(isAvailableCommit).isFalse()
     }
 
     @Test
-    fun test_constructor_生存している() {
+    fun test_isAvailableCommit_生存している() {
         // ## Arrange ##
         val dummyParticipant = DummyDomainModelCreator.createDummyAliveVillager()
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
@@ -145,23 +138,32 @@ class VillageCommitSituationTest : Wolf4busyTest() {
                 memberList = listOf(participant, dummyParticipant)
             )
         )
-        val commit = null
 
         // ## Act ##
-        val villageCommitSituation = VillageCommitSituation(village, participant, commit)
+        val isAvailableCommit = Commit.isAvailableCommit(village, participant)
 
         // ## Assert ##
-        assertThat(villageCommitSituation.isAvailableCommit).isTrue()
+        assertThat(isAvailableCommit).isTrue()
     }
 
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun createCommitAvailableVillage(): Village = DummyDomainModelCreator.createDummyVillage().copy(
-        setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
-            rules = VillageRules().copy(
-                availableCommit = true
+    private fun createCommitAvailableVillage(): Village {
+        val dummy = DummyDomainModelCreator.createDummyDeadVillager()
+        return DummyDomainModelCreator.createDummyVillage().copy(
+            setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
+                rules = VillageRules().copy(
+                    availableCommit = true
+                ),
+                charachip = DummyDomainModelCreator.createDummyVillageCharachip().copy(
+                    dummyCharaId = dummy.charaId
+                )
+            ),
+            participant = VillageParticipants(
+                count = 1,
+                memberList = listOf(dummy)
             )
         )
-    )
+    }
 }

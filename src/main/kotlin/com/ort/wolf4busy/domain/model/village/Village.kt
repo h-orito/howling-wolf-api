@@ -28,7 +28,7 @@ data class Village(
     private val everyoneAllowedMessageTypeList = listOf(CDef.MessageType.公開システムメッセージ, CDef.MessageType.通常発言, CDef.MessageType.村建て発言)
 
     // ===================================================================================
-    //                                                                         participant
+    //                                                                                read
     //                                                                           =========
     fun dummyChara(): VillageParticipant = participant.memberList.first { it.charaId == setting.charachip.dummyCharaId }
 
@@ -50,12 +50,18 @@ data class Village(
         )
     }
 
+    // 差分があるか
+    fun existsDifference(village: Village): Boolean {
+        return status.code != village.status.code
+            || winCamp?.code != village.winCamp?.code
+            || participant.existsDifference(village.participant)
+            || day.existsDifference(village.day)
+    }
+
     // ===================================================================================
-    //                                                                           situation
+    //                                                                                 権限
     //                                                                           =========
-    /**
-     * @return 村として参加可能か
-     */
+    /** 村として参加可能か */
     fun isAvailableParticipate(): Boolean {
         // プロローグでない
         if (!status.isPrologue()) return false
@@ -67,8 +73,8 @@ data class Village(
 
     /**
      * 村としての参加チェック
-     * @param charaId
-     * @param password
+     * @param charaId charaId
+     * @param password 入村パスワード
      */
     fun assertParticipate(
         charaId: Int,
@@ -97,14 +103,10 @@ data class Village(
         return true
     }
 
-    /**
-     * @return 村として退村可能か
-     */
+    /** 村として退村可能か */
     fun isAvailableLeave(): Boolean = status.isPrologue() // プロローグなら退村できる
 
-    /**
-     * @return 村として役職希望可能か
-     */
+    /** 村として役職希望可能か */
     fun isAvailableSkillRequest(): Boolean {
         // プロローグでない
         if (!status.isPrologue()) return false
@@ -122,9 +124,7 @@ data class Village(
         if (setting.organizations.allRequestableSkillList().none { it.code == second.code() }) throw Wolf4busyBusinessException("役職希望変更できません")
     }
 
-    /**
-     * @return 村としてコミットできるか
-     */
+    /** 村としてコミットできるか */
     fun isAvailableCommit(): Boolean {
         // コミットできない設定ならNG
         if (!setting.rules.availableCommit) return false
@@ -134,52 +134,34 @@ data class Village(
         return true
     }
 
-    /**
-     * 村の状況として発言できるか
-     */
+    /** 村の状況として発言できるか */
     fun isAvailableSay(): Boolean = !status.toCdef().isFinishedVillage // 終了していたら不可
 
-    /**
-     * @return 村として通常発言できるか
-     */
+    /** 村として通常発言できるか */
     fun isSayableNormalSay(): Boolean = !status.toCdef().isFinishedVillage // 終了していたら不可
 
-    /**
-     * @return 村として囁き発言を見られるか
-     */
+    /** 村として囁き発言を見られるか */
     fun isViewableWerewolfSay(): Boolean = status.isSolved()
 
-    /**
-     * @return 村として囁き発言できるか
-     */
+    /** 村として囁き発言できるか */
     fun isSayableWerewolfSay(): Boolean = status.isProgress() // 進行中以外は不可
 
-    /**
-     * @return 村として墓下発言を見られるか
-     */
+    /** 村として墓下発言を見られるか */
     fun isViewableGraveSay(): Boolean {
         if (status.isSolved()) return true
         return setting.rules.visibleGraveMessage
     }
 
-    /**
-     * @return 村として墓下発言できるか
-     */
+    /** 村として墓下発言できるか */
     fun isSayableGraveSay(): Boolean = status.isProgress() // 進行中以外は不可
 
-    /**
-     * @return 村として独り言を見られるか
-     */
+    /** 村として独り言を見られるか */
     fun isViewableMonologueSay(): Boolean = status.isSolved() // 終了していたら全て見られる
 
-    /**
-     * @return 村として独り言発言できるか
-     */
+    /** 村として独り言発言できるか */
     fun isSayableMonologueSay(): Boolean = true // 制約なし
 
-    /**
-     * @return 村として見学発言を見られるか
-     */
+    /** 村として見学発言を見られるか */
     fun isViewableSpectateSay(): Boolean {
         // 進行中以外は開放
         if (!status.isProgress()) return true
@@ -187,24 +169,16 @@ data class Village(
         return setting.rules.visibleGraveMessage
     }
 
-    /**
-     * @return 村として見学発言できるか
-     */
+    /** 村として見学発言できるか */
     fun isSayableSpectateSay(): Boolean = true // 制約なし
 
-    /**
-     * @return 村として襲撃メッセージを見られるか
-     */
+    /** 村として襲撃メッセージを見られるか */
     fun isViewableAttackMessage(): Boolean = status.isSolved() // 終了していたら全て見られる
 
-    /**
-     * @return 村として白黒霊能結果を見られるか
-     */
+    /** 村として白黒霊能結果を見られるか */
     fun isViewablePsychicMessage(): Boolean = status.isSolved()// 終了していたら全て見られる
 
-    /**
-     * @return 村として秘話を見られるか
-     */
+    /** 村として秘話を見られるか */
     fun isViewableSecretSay(): Boolean = status.isSolved()
 
     /**
@@ -217,17 +191,15 @@ data class Village(
         restrict.assertSay(messageContent, latestDayMessageList)
     }
 
-    /**
-     * @return 村として投票できるか
-     */
+    /** 村として能力を行使できるか */
+    fun canUseAbility(): Boolean = status.isProgress()
+
+    /** 村として投票できるか */
     fun isAvailableVote(): Boolean {
         if (!status.isProgress()) return false
         return day.latestDay().day > 1
     }
 
-    // ===================================================================================
-    //                                                                                View
-    //                                                                           =========
     /**
      * 閲覧できる発言種別リスト
      *
@@ -280,7 +252,7 @@ data class Village(
     }
 
     // ===================================================================================
-    //                                                                          day change
+    //                                                                              update
     //                                                                        ============
     // 最新の村日付を追加
     fun addNewDay(): Village {
@@ -332,14 +304,6 @@ data class Village(
 
     // 最新の日を24時間にする
     fun extendLatestDay(): Village = this.copy(day = this.day.extendLatestDay())
-
-    // 差分があるか
-    fun existsDifference(village: Village): Boolean {
-        return status.code != village.status.code
-            || winCamp?.code != village.winCamp?.code
-            || participant.existsDifference(village.participant)
-            || day.existsDifference(village.day)
-    }
 
     // ===================================================================================
     //                                                                        Assist Logic

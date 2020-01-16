@@ -12,18 +12,19 @@ class CommitDataSource(
 ) {
 
     // ===================================================================================
-//                                                                              Select
-//                                                                              ======
-
+    //                                                                              Select
+    //                                                                              ======
     /**
      * コミットを取得
      * @param village village
      * @param participant 村参加情報
      * @return コミット
      */
-    fun selectCommit(village: com.ort.wolf4busy.domain.model.village.Village, participant: VillageParticipant)
-            : com.ort.wolf4busy.domain.model.commit.Commit? {
-        val latestDay: com.ort.wolf4busy.domain.model.village.VillageDay = village.day.latestDay()
+    fun findCommit(
+        village: com.ort.wolf4busy.domain.model.village.Village,
+        participant: VillageParticipant
+    ): com.ort.wolf4busy.domain.model.commit.Commit? {
+        val latestDay = village.day.latestDay()
 
         val optCommit = commitBhv.selectEntity {
             it.query().setVillageDayId_Equal(latestDay.id)
@@ -32,12 +33,13 @@ class CommitDataSource(
         return optCommit.map { c ->
             com.ort.wolf4busy.domain.model.commit.Commit(
                 villageDayId = c.villageDayId,
-                isCommiting = true
+                myselfId = c.villagePlayerId,
+                isCommitting = true
             )
         }.orElse(null)
     }
 
-    fun selectCommitList(villageId: Int): Commits {
+    fun findCommits(villageId: Int): Commits {
         val commitList = commitBhv.selectList {
             it.query().queryVillageDay().setVillageId_Equal(villageId)
         }
@@ -45,7 +47,8 @@ class CommitDataSource(
             list = commitList.map { c ->
                 com.ort.wolf4busy.domain.model.commit.Commit(
                     villageDayId = c.villageDayId,
-                    isCommiting = true
+                    myselfId = c.villagePlayerId,
+                    isCommitting = true
                 )
             }
         )
@@ -61,22 +64,22 @@ class CommitDataSource(
      * @param myselfId 村参加者id
      * @param commit コミットするか
      */
-    fun updateCommit(villageDayId: Int, myselfId: Int, commit: Boolean) {
-        deleteCommit(villageDayId, myselfId)
-        if (commit) insertCommit(villageDayId, myselfId)
+    fun updateCommit(commit: com.ort.wolf4busy.domain.model.commit.Commit) {
+        deleteCommit(commit)
+        if (commit.isCommitting) insertCommit(commit)
     }
 
-    private fun deleteCommit(villageDayId: Int, myselfId: Int) {
+    private fun deleteCommit(commit: com.ort.wolf4busy.domain.model.commit.Commit) {
         commitBhv.queryDelete {
-            it.query().setVillageDayId_Equal(villageDayId)
-            it.query().setVillagePlayerId_Equal(myselfId)
+            it.query().setVillageDayId_Equal(commit.villageDayId)
+            it.query().setVillagePlayerId_Equal(commit.myselfId)
         }
     }
 
-    private fun insertCommit(villageDayId: Int, myselfId: Int) {
+    private fun insertCommit(c: com.ort.wolf4busy.domain.model.commit.Commit) {
         val commit = Commit()
-        commit.villageDayId = villageDayId
-        commit.villagePlayerId = myselfId
+        commit.villageDayId = c.villageDayId
+        commit.villagePlayerId = c.myselfId
         commitBhv.insert(commit)
     }
 }

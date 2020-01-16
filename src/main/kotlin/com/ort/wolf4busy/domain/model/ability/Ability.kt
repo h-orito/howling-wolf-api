@@ -61,25 +61,33 @@ class Ability(
     }
 
     fun assertAbility(village: Village, participant: VillageParticipant?, targetId: Int?) {
+        participant?.skill ?: throw Wolf4busyBusinessException("能力セットできません")
+        // その能力を持っていない
+        if (Abilities(participant.skill).list.none { it.code == code }) throw Wolf4busyBusinessException("能力セットできません")
+        // 対象指定がおかしい
         if (targetId == null && !isAvailableNoTarget()) throw Wolf4busyBusinessException("能力セットできません")
         if (targetId != null && getSelectableTargetList(village, participant).none { it.id == targetId }) throw Wolf4busyBusinessException("能力セットできません")
     }
 
-    fun isAvailableNoTarget(): Boolean {
+    fun toCdef(): CDef.AbilityType = CDef.AbilityType.codeOf(code)
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun canUseAbility(village: Village, participant: VillageParticipant?): Boolean {
+        // 村として可能か
+        if (!village.canUseAbility()) return false
+        // 参加者として可能か
+        participant ?: return false
+        return participant.canUseAbility()
+    }
+
+    private fun isAvailableNoTarget(): Boolean {
         return when (code) {
             CDef.AbilityType.襲撃.code() -> Attack.isAvailableNoTarget()
             CDef.AbilityType.占い.code() -> Divine.isAvailableNoTarget()
             CDef.AbilityType.護衛.code() -> Guard.isAvailableNoTarget()
             else -> throw IllegalStateException("想定外の能力")
         }
-    }
-
-    // ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-    private fun canUseAbility(village: Village, participant: VillageParticipant?): Boolean {
-        participant ?: return false
-        if (!village.status.isProgress()) return false
-        return !participant.isSpectator
     }
 }

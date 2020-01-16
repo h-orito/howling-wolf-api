@@ -8,6 +8,7 @@ import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.dummy.DummyDomainModelCreator
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -156,5 +157,85 @@ class AbilityTest : Wolf4busyTest() {
 
         // ## Assert ##
         assertThat(message).isNotEmpty()
+    }
+
+    @Test(expected = Wolf4busyBusinessException::class)
+    fun test_assertAbility_その能力を持っていない() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.襲撃)
+        val village = DummyDomainModelCreator.createDummyVillage()
+        val participant = DummyDomainModelCreator.createDummyAliveSeer()
+        val targetId = null
+
+        // ## Act ##
+        // ## Assert ##
+        ability.assertAbility(village, participant, targetId)
+    }
+
+    @Test(expected = Wolf4busyBusinessException::class)
+    fun test_assertAbility_対象なしにできない能力なのに対象なし() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.占い)
+        val village = DummyDomainModelCreator.createDummyVillage()
+        val participant = DummyDomainModelCreator.createDummyAliveSeer()
+        val targetId = null
+
+        // ## Act ##
+        // ## Assert ##
+        ability.assertAbility(village, participant, targetId)
+    }
+
+    fun test_assertAbility_対象なしにできる能力で対象なし() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.襲撃)
+        val village = DummyDomainModelCreator.createDummyVillage()
+        val participant = DummyDomainModelCreator.createDummyAliveWolf()
+        val targetId = null
+
+        // ## Act ##
+        // ## Assert ##
+        ability.assertAbility(village, participant, targetId)
+    }
+
+    @Test(expected = Wolf4busyBusinessException::class)
+    fun test_assertAbility_対象あり_対象に選べない人を選ぼうとしている() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.襲撃)
+        val availableTarget = DummyDomainModelCreator.createDummyAliveHunter()
+        val village = DummyDomainModelCreator.createDummyVillage().copy(
+            status = VillageStatus(CDef.VillageStatus.進行中),
+            participant = VillageParticipants(
+                count = 1,
+                memberList = listOf(availableTarget)
+            ),
+            day = VillageDays(listOf(DummyDomainModelCreator.createDummyVillageDay()))
+        )
+        val participant = DummyDomainModelCreator.createDummyAliveWolf()
+        val targetId = 10001
+
+        // ## Act ##
+        // ## Assert ##
+        ability.assertAbility(village, participant, targetId)
+    }
+
+    @Test
+    fun test_assertAbility_対象あり_正しい対象() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.襲撃)
+        val availableTarget = DummyDomainModelCreator.createDummyAliveHunter()
+        val village = DummyDomainModelCreator.createDummyVillage().copy(
+            status = VillageStatus(CDef.VillageStatus.進行中),
+            participant = VillageParticipants(
+                count = 1,
+                memberList = listOf(availableTarget)
+            ),
+            day = VillageDays(listOf(DummyDomainModelCreator.createDummyVillageDay()))
+        )
+        val participant = DummyDomainModelCreator.createDummyAliveWolf()
+        val targetId = availableTarget.id
+
+        // ## Act ##
+        // ## Assert ##
+        ability.assertAbility(village, participant, targetId)
     }
 }

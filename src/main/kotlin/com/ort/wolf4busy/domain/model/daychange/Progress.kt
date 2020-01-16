@@ -88,7 +88,7 @@ object Progress {
         // ダミーを除く最新日の生存者数
         val livingPersonCount = village.notDummyParticipant().filterAlive().count
         // コミット数
-        val commitCount = commits.list.filter { it.villageDayId == village.day.latestDay().id && it.isCommiting }.size
+        val commitCount = commits.list.filter { it.villageDayId == village.day.latestDay().id && it.isCommitting }.size
 
         return livingPersonCount == commitCount
     }

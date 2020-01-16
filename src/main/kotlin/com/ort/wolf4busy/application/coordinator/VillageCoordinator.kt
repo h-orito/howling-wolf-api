@@ -13,6 +13,7 @@ import com.ort.wolf4busy.domain.model.myself.participant.SituationAsParticipant
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
+import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
 import com.ort.wolf4busy.domain.model.village.participant.Leave
 import com.ort.wolf4busy.domain.model.village.participant.Participate
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
@@ -202,7 +203,8 @@ class VillageCoordinator(
         // 発言
         val village = villageService.findVillage(villageId)
         val participant = villageService.findParticipantByUid(villageId, user.uid)!!
-        messageService.registerSayMessage(villageId, village.day.latestDay().id, participant, messageContent)
+        val message = Message.createSayMessage(participant, village.day.latestDay().id, messageContent)
+        messageService.registerSayMessage(villageId, message)
     }
 
     /**
@@ -221,7 +223,8 @@ class VillageCoordinator(
         val ability = Ability(abilityType)
         ability.assertAbility(village, participant, targetId)
         // 能力セット
-        abilityService.updateAbility(village.day.latestDay().id, participant!!, targetId, abilityType)
+        val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, ability)
+        abilityService.updateAbility(villageAbility)
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         messageService.registerAbilitySetMessage(villageId, participant, targetId, ability, village.day.latestDay().id, charas)
     }
@@ -257,8 +260,9 @@ class VillageCoordinator(
         val participant = villageService.findParticipantByUid(villageId, user.uid)
         Commit.assertCommit(village, participant)
         // コミット
+        val commit = Commit(village.day.latestDay().id, participant!!.id, doCommit)
+        commitService.updateCommit(commit)
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-        commitService.updateCommit(village.day.latestDay().id, participant!!, doCommit)
         messageService.registerCommitMessage(villageId, village.day.latestDay().id, participant, charas, doCommit)
         // 日付更新
         if (doCommit) dayChangeCoordinator.dayChangeIfNeeded(village)

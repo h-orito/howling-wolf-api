@@ -11,23 +11,20 @@ import org.springframework.stereotype.Service
 class CommitService(
     val commitDataSource: CommitDataSource
 ) {
+    fun findCommits(villageId: Int): Commits {
+        return commitDataSource.findCommits(villageId)
+    }
+
     fun findCommit(village: Village, participant: VillageParticipant?): Commit? {
         participant ?: return null
-        return commitDataSource.selectCommit(village, participant)
+        return commitDataSource.findCommit(village, participant)
     }
 
     /**
      * コミット/取り消し
-     *
-     * @param villageDayId 村日付id
-     * @param participant 村参加者
-     * @param commit コミットするか
+     * @param commit commit
      */
-    fun updateCommit(villageDayId: Int, participant: VillageParticipant, commit: Boolean) {
-        commitDataSource.updateCommit(villageDayId, participant.id, commit)
-    }
-
-    fun findCommits(villageId: Int): Commits {
-        return commitDataSource.selectCommitList(villageId)
+    fun updateCommit(commit: Commit) {
+        commitDataSource.updateCommit(commit)
     }
 }

@@ -17,21 +17,13 @@ data class VillageParticipant(
     val skillRequest: SkillRequest,
     val isWin: Boolean?
 ) {
-
+    // ===================================================================================
+    //                                                                                read
+    //                                                                           =========
+    // 生存しているか
     fun isAlive(): Boolean = dead == null
 
-    fun gone(): VillageParticipant = this.copy(isGone = true)
-
-    fun suddenlyDeath(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.突然, villageDay))
-
-    fun execute(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.処刑, villageDay))
-
-    fun attack(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.襲撃, villageDay))
-
-    fun assignSkill(skill: Skill): VillageParticipant = this.copy(skill = skill)
-
-    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill?.toCdef()?.campCode() == cdefWinCamp.code())
-
+    // 差分有無
     fun existsDifference(participant: VillageParticipant): Boolean {
         if (id != participant.id) return true
         if (charaId != participant.charaId) return true
@@ -44,6 +36,27 @@ data class VillageParticipant(
         if (skillRequest.second.code != participant.skillRequest.second.code) return true
         return false
     }
+
+    // ===================================================================================
+    //                                                                              update
+    //                                                                           =========
+    // 退村
+    fun gone(): VillageParticipant = this.copy(isGone = true)
+
+    // 突然死
+    fun suddenlyDeath(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.突然, villageDay))
+
+    // 処刑
+    fun execute(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.処刑, villageDay))
+
+    // 襲撃
+    fun attack(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.襲撃, villageDay))
+
+    // 役職割り当て
+    fun assignSkill(skill: Skill): VillageParticipant = this.copy(skill = skill)
+
+    // 勝敗
+    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill?.toCdef()?.campCode() == cdefWinCamp.code())
 
     // ===================================================================================
     //                                                                                権限
@@ -129,6 +142,9 @@ data class VillageParticipant(
     }
 
     fun isViewableSecretSay(): Boolean = true // 制約なし
+
+    // 能力行使可能か
+    fun canUseAbility(): Boolean = !isSpectator
 
     // 投票可能か
     fun isAvailableVote(): Boolean {

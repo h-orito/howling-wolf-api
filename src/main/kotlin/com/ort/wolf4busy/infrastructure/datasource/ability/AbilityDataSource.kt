@@ -15,7 +15,7 @@ class AbilityDataSource(
     // ===================================================================================
     //                                                                              Select
     //                                                                              ======
-    fun selectAbilities(villageId: Int): VillageAbilities {
+    fun findAbilities(villageId: Int): VillageAbilities {
         val abilityList = abilityBhv.selectList {
             it.query().queryVillageDay().setVillageId_Equal(villageId)
         }
@@ -25,45 +25,42 @@ class AbilityDataSource(
     // ===================================================================================
     //                                                                              Update
     //                                                                              ======
-    fun updateAbility(villageDayId: Int, myselfId: Int, targetId: Int?, abilityType: String) {
-        deleteAbility(villageDayId, myselfId, targetId, abilityType)
-        insertAbility(villageDayId, myselfId, targetId, abilityType)
-    }
-
-    private fun deleteAbility(villageDayId: Int, myselfId: Int, targetId: Int?, abilityType: String) {
-        abilityBhv.queryDelete {
-            it.query().setVillageDayId_Equal(villageDayId)
-            if (abilityType != CDef.AbilityType.襲撃.code()) {
-                it.query().setVillagePlayerId_Equal(myselfId)
-            }
-            it.query().setTargetVillagePlayerId_Equal(targetId)
-            it.query().setAbilityTypeCode_Equal_AsAbilityType(CDef.AbilityType.codeOf(abilityType))
-        }
-    }
-
-    private fun insertAbility(villageDayId: Int, myselfId: Int, targetId: Int?, abilityType: String) {
-        val ability = Ability()
-        ability.villageDayId = villageDayId
-        ability.villagePlayerId = myselfId
-        ability.targetVillagePlayerId = targetId
-        ability.abilityTypeCodeAsAbilityType = CDef.AbilityType.codeOf(abilityType)
-        abilityBhv.insert(ability)
+    fun updateAbility(villageAbility: VillageAbility) {
+        deleteAbility(villageAbility)
+        insertAbility(villageAbility)
     }
 
     fun updateDifference(before: VillageAbilities, after: VillageAbilities) {
         after.list.drop(before.list.size).forEach {
-            insertAbility(
-                villageDayId = it.villageDayId,
-                myselfId = it.myselfId,
-                targetId = it.targetId,
-                abilityType = it.ability.code
-            )
+            insertAbility(it)
         }
     }
 
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
+    private fun deleteAbility(villageAbility: VillageAbility) {
+        abilityBhv.queryDelete {
+            it.query().setVillageDayId_Equal(villageAbility.villageDayId)
+            if (villageAbility.ability.toCdef() != CDef.AbilityType.襲撃) {
+                it.query().setVillagePlayerId_Equal(villageAbility.myselfId)
+            }
+            it.query().setAbilityTypeCode_Equal_AsAbilityType(villageAbility.ability.toCdef())
+        }
+    }
+
+    private fun insertAbility(villageAbility: VillageAbility) {
+        val ability = Ability()
+        ability.villageDayId = villageAbility.villageDayId
+        ability.villagePlayerId = villageAbility.myselfId
+        ability.targetVillagePlayerId = villageAbility.targetId
+        ability.abilityTypeCodeAsAbilityType = villageAbility.ability.toCdef()
+        abilityBhv.insert(ability)
+    }
+
+    // ===================================================================================
+    //                                                                             Mapping
+    //                                                                             =======
     private fun convertToAbilityToVillageAbility(ability: Ability): VillageAbility {
         return VillageAbility(
             villageDayId = ability.villageDayId,
