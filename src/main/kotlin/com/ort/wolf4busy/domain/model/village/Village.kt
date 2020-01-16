@@ -144,6 +144,87 @@ data class Village(
      */
     fun isSayableNormalSay(): Boolean = !status.toCdef().isFinishedVillage // 終了していたら不可
 
+    /**
+     * @return 村として囁き発言を見られるか
+     */
+    fun isViewableWerewolfSay(): Boolean = status.isSolved()
+
+    /**
+     * @return 村として囁き発言できるか
+     */
+    fun isSayableWerewolfSay(): Boolean = status.isProgress() // 進行中以外は不可
+
+    /**
+     * @return 村として墓下発言を見られるか
+     */
+    fun isViewableGraveSay(): Boolean {
+        if (status.isSolved()) return true
+        return setting.rules.visibleGraveMessage
+    }
+
+    /**
+     * @return 村として墓下発言できるか
+     */
+    fun isSayableGraveSay(): Boolean = status.isProgress() // 進行中以外は不可
+
+    /**
+     * @return 村として独り言を見られるか
+     */
+    fun isViewableMonologueSay(): Boolean = status.isSolved() // 終了していたら全て見られる
+
+    /**
+     * @return 村として独り言発言できるか
+     */
+    fun isSayableMonologueSay(): Boolean = true // 制約なし
+
+    /**
+     * @return 村として見学発言を見られるか
+     */
+    fun isViewableSpectateSay(): Boolean {
+        // 進行中以外は開放
+        if (!status.isProgress()) return true
+        // 見られる設定なら開放
+        return setting.rules.visibleGraveMessage
+    }
+
+    /**
+     * @return 村として見学発言できるか
+     */
+    fun isSayableSpectateSay(): Boolean = true // 制約なし
+
+    /**
+     * @return 村として襲撃メッセージを見られるか
+     */
+    fun isViewableAttackMessage(): Boolean = status.isSolved() // 終了していたら全て見られる
+
+    /**
+     * @return 村として白黒霊能結果を見られるか
+     */
+    fun isViewablePsychicMessage(): Boolean = status.isSolved()// 終了していたら全て見られる
+
+    /**
+     * @return 村として秘話を見られるか
+     */
+    fun isViewableSecretSay(): Boolean = status.isSolved()
+
+    /**
+     * 発言制限チェック
+     * @param messageContent 発言内容
+     * @param latestDayMessageList 本日の発言
+     */
+    fun assertMessageRestrict(messageContent: MessageContent, latestDayMessageList: List<Message>) {
+        val restrict = setting.rules.messageRestrict.restrict(messageContent.type.toCdef()) ?: return // 制限なし
+        restrict.assertSay(messageContent, latestDayMessageList)
+    }
+
+    /**
+     * @return 村として投票できるか
+     */
+    fun isAvailableVote(): Boolean {
+        if (!status.isProgress()) return false
+        return day.latestDay().day > 1
+    }
+
     // ===================================================================================
     //                                                                                View
     //                                                                           =========
@@ -190,8 +271,8 @@ data class Village(
             CDef.MessageType.人狼の囁き -> WerewolfSay.isViewable(this, participant)
             CDef.MessageType.死者の呻き -> GraveSay.isViewable(this, participant)
             CDef.MessageType.見学発言 -> SpectateSay.isViewable(this, participant, day)
-            CDef.MessageType.独り言 -> MonologueSay.isViewable(this)
-            CDef.MessageType.秘話 -> SecretSay.isViewable(this)
+            CDef.MessageType.独り言 -> MonologueSay.isViewable(this, participant)
+            CDef.MessageType.秘話 -> SecretSay.isViewable(this, participant)
             CDef.MessageType.白黒霊視結果 -> PsychicMessage.isViewable(this, participant)
             CDef.MessageType.襲撃結果 -> AttackMessage.isViewable(this, participant)
             else -> return false

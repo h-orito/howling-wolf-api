@@ -178,7 +178,7 @@ class MessageService(
      * @param villageId villageId
      * @param participant 村参加者
      * @param targetId 対象の村参加者ID
-     * @param abilityType 能力種別
+     * @param ability ability
      * @param villageDayId 村日付ID
      * @param charas キャラ
      */
@@ -186,7 +186,7 @@ class MessageService(
         villageId: Int,
         participant: VillageParticipant,
         targetId: Int?,
-        abilityType: String,
+        ability: Ability,
         villageDayId: Int,
         charas: Charas
     ) {
@@ -195,7 +195,7 @@ class MessageService(
         // 相手のキャラ
         val targetChara = charas.list.find { it.id == targetId }
         // 登録メッセージ
-        val message = Ability(abilityType, "").getAbilitySetMessage(myChara, targetChara)
+        val message = ability.getAbilitySetMessage(myChara, targetChara)
 
         messageDataSource.insertMessage(
             villageId = villageId,

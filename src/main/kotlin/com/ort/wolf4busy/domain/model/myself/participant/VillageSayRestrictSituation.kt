@@ -1,7 +1,8 @@
 package com.ort.wolf4busy.domain.model.myself.participant
 
+import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.message.Message
-import com.ort.wolf4busy.domain.model.village.setting.VillageMessageRestrict
+import com.ort.wolf4busy.domain.model.village.Village
 
 data class VillageSayRestrictSituation(
     val isRestricted: Boolean,
@@ -10,12 +11,13 @@ data class VillageSayRestrictSituation(
     val maxLength: Int?
 ) {
     constructor(
-        restrictSetting: VillageMessageRestrict?,
-        messageList: List<Message>
+        village: Village,
+        latestDayMessageList: List<Message>,
+        messageType: CDef.MessageType
     ) : this(
-        isRestricted = restrictSetting != null,
-        maxCount = restrictSetting?.count,
-        remainingCount = if (restrictSetting == null) null else restrictSetting.count - messageList.size,
-        maxLength = restrictSetting?.length
+        isRestricted = village.setting.rules.messageRestrict.restrict(messageType) != null,
+        maxCount = village.setting.rules.messageRestrict.restrict(messageType)?.count,
+        remainingCount = village.setting.rules.messageRestrict.restrict(messageType)?.remainingCount(latestDayMessageList),
+        maxLength = village.setting.rules.messageRestrict.restrict(messageType)?.length
     )
 }

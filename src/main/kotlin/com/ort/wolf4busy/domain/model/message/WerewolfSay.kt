@@ -2,22 +2,27 @@ package com.ort.wolf4busy.domain.model.message
 
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 object WerewolfSay {
 
     fun isViewable(village: Village, participant: VillageParticipant?): Boolean {
-        // 終了していたら全て見られる
-        if (village.status.isSolved()) return true
-        // 参加していて人狼なら開放
-        return participant?.skill?.toCdef()?.isViewableWerewolfSay ?: false
+        // いずれかを満たせばok
+        // 村として可能か
+        if (village.isViewableWerewolfSay()) return true
+        // 参加者として可能か
+        participant ?: return false
+        return participant.isViewableWerewolfSay()
     }
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {
-        // 進行中以外は不可
-        if (!village.status.isProgress()) return false
-        // 死亡していたら不可
-        if (!participant.isAlive()) return false
-        // 囁ける役職でなければ不可
-        return participant.skill?.toCdef()?.isAvailableWerewolfSay ?: false
+        // 参加者として可能か
+        if (!participant.isSayableWerewolfSay()) return false
+        // 村として可能か
+        return village.isSayableWerewolfSay()
+    }
+
+    fun assertSay(village: Village, participant: VillageParticipant) {
+        if (!isSayable(village, participant)) throw Wolf4busyBusinessException("発言できません")
     }
 }

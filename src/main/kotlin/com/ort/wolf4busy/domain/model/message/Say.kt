@@ -1,8 +1,10 @@
 package com.ort.wolf4busy.domain.model.message
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 /**
  * 発言
@@ -22,4 +24,33 @@ object Say {
         if (!village.isAvailableSay()) return false
         return true
     }
+
+    fun assertSay(
+        village: Village,
+        participant: VillageParticipant?,
+        charas: Charas,
+        latestDayMessageList: List<Message>,
+        messageContent: MessageContent
+    ) {
+        // 事前チェック
+        if (!isAvailableSay(village, participant)) throw Wolf4busyBusinessException("発言できません")
+        // 発言種別ごとのチェック
+        when (messageContent.type.toCdef()) {
+            CDef.MessageType.通常発言 -> NormalSay.assertSay(village, participant!!)
+            CDef.MessageType.人狼の囁き -> WerewolfSay.assertSay(village, participant!!)
+            CDef.MessageType.死者の呻き -> GraveSay.assertSay(village, participant!!)
+            CDef.MessageType.独り言 -> MonologueSay.isSayable(village, participant!!)
+            CDef.MessageType.見学発言 -> SpectateSay.isSayable(village, participant!!)
+        }
+        // 表情種別チェック
+        if (!isSelectableFaceType(charas, participant!!, messageContent)) throw Wolf4busyBusinessException("発言できません")
+        // 発言回数、長さ、行数チェック
+        village.assertMessageRestrict(messageContent, latestDayMessageList)
+    }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun isSelectableFaceType(charas: Charas, participant: VillageParticipant, messageContent: MessageContent): Boolean =
+        charas.chara(participant.charaId).faceList.any { it.type == messageContent.faceCode }
 }

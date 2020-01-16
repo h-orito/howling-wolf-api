@@ -6,7 +6,6 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
-import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class VillageSaySituation(
     val isAvailableSay: Boolean,
@@ -21,23 +20,9 @@ data class VillageSaySituation(
         latestDayMessageList: List<Message>
     ) : this(
         isAvailableSay = Say.isAvailableSay(village, participant),
-        selectableMessageTypeList = getSelectableMessageTypeList(
-            village,
-            participant,
-            latestDayMessageList
-        ),
-        selectableFaceTypeList = getSelectableFaceTypeList(
-            participant,
-            charas
-        ),
-        defaultMessageType = detectDefaultMessageType(
-            Say.isAvailableSay(village, participant),
-            getSelectableMessageTypeList(
-                village,
-                participant,
-                latestDayMessageList
-            )
-        )
+        selectableMessageTypeList = getSelectableMessageTypeList(village, participant, latestDayMessageList),
+        selectableFaceTypeList = getSelectableFaceTypeList(participant, charas),
+        defaultMessageType = detectDefaultMessageType(Say.isAvailableSay(village, participant), getSelectableMessageTypeList(village, participant, latestDayMessageList))
     )
 
     companion object {
@@ -61,59 +46,15 @@ data class VillageSaySituation(
         ): List<VillageSayMessageTypeSituation> {
             if (!Say.isAvailableSay(village, participant)) return listOf()
 
-            val selectableMessageTypeList: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
-            if (NormalSay.isSayable(village, participant!!)) {
-                selectableMessageTypeList.add(
-                    VillageSayMessageTypeSituation(
-                        village,
-                        participant,
-                        latestDayMessageList,
-                        CDef.MessageType.通常発言
-                    )
-                )
-            }
-            if (WerewolfSay.isSayable(village, participant)) {
-                selectableMessageTypeList.add(
-                    VillageSayMessageTypeSituation(
-                        village,
-                        participant,
-                        latestDayMessageList,
-                        CDef.MessageType.人狼の囁き
-                    )
-                )
-            }
-            if (GraveSay.isSayable(village, participant)) {
-                selectableMessageTypeList.add(
-                    VillageSayMessageTypeSituation(
-                        village,
-                        participant,
-                        latestDayMessageList,
-                        CDef.MessageType.死者の呻き
-                    )
-                )
-            }
-            if (MonologueSay.isSayable(village, participant)) {
-                selectableMessageTypeList.add(
-                    VillageSayMessageTypeSituation(
-                        village,
-                        participant,
-                        latestDayMessageList,
-                        CDef.MessageType.独り言
-                    )
-                )
-            }
-            if (SpectateSay.isSayable(village, participant)) {
-                selectableMessageTypeList.add(
-                    VillageSayMessageTypeSituation(
-                        village,
-                        participant,
-                        latestDayMessageList,
-                        CDef.MessageType.見学発言
-                    )
-                )
-            }
+            val list: MutableList<VillageSayMessageTypeSituation> = mutableListOf()
 
-            return selectableMessageTypeList
+            if (NormalSay.isSayable(village, participant!!)) list.add(VillageSayMessageTypeSituation(village, latestDayMessageList, CDef.MessageType.通常発言))
+            if (WerewolfSay.isSayable(village, participant)) list.add(VillageSayMessageTypeSituation(village, latestDayMessageList, CDef.MessageType.人狼の囁き))
+            if (GraveSay.isSayable(village, participant)) list.add(VillageSayMessageTypeSituation(village, latestDayMessageList, CDef.MessageType.死者の呻き))
+            if (MonologueSay.isSayable(village, participant)) list.add(VillageSayMessageTypeSituation(village, latestDayMessageList, CDef.MessageType.独り言))
+            if (SpectateSay.isSayable(village, participant)) list.add(VillageSayMessageTypeSituation(village, latestDayMessageList, CDef.MessageType.見学発言))
+
+            return list
         }
 
         private fun getSelectableFaceTypeList(participant: VillageParticipant?, charas: Charas): List<CharaFace> {
@@ -133,21 +74,5 @@ data class VillageSaySituation(
             }
             return null
         }
-    }
-
-    fun assertSay(
-        messageContent: MessageContent
-    ) {
-        if (!isAvailableSay) throw Wolf4busyBusinessException("発言できません")
-        val available = selectableMessageTypeList.find {
-            it.messageType.code == messageContent.type.code
-        } ?: throw Wolf4busyBusinessException("発言できません")
-        if (available.restrict.isRestricted) {
-            // 回数
-            if (available.restrict.remainingCount!! <= 0) throw Wolf4busyBusinessException("発言できません")
-            // 文字数
-            messageContent.assertMessageLength(available.restrict.maxLength!!)
-        }
-        if (selectableFaceTypeList.none { it.type == messageContent.faceCode }) throw Wolf4busyBusinessException("発言できません")
     }
 }

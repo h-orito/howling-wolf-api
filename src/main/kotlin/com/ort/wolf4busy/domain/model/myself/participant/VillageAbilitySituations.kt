@@ -4,7 +4,6 @@ import com.ort.wolf4busy.domain.model.ability.Abilities
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
-import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 data class VillageAbilitySituations(
     val list: List<VillageAbilitySituation>
@@ -31,16 +30,8 @@ data class VillageAbilitySituations(
             participant?.skill ?: return listOf()
             val abilities = Abilities(participant.skill)
             return abilities.list.map {
-                VillageAbilitySituation(
-                    village, participant, it, villageAbilities
-                )
+                VillageAbilitySituation(village, participant, it, villageAbilities)
             }
         }
-    }
-
-    fun assertAbility(targetId: Int?, abilityType: String) {
-        val available = list.find { it.type.code == abilityType } ?: throw Wolf4busyBusinessException("能力セットできません")
-        if (targetId == null && !available.type.isAvailableNoTarget()) throw Wolf4busyBusinessException("能力セットできません")
-        if (targetId != null && available.targetList.none { it.id == targetId }) throw Wolf4busyBusinessException("能力セットできません")
     }
 }
