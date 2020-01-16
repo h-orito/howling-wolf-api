@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
 class Ability(
     val code: String,
@@ -17,6 +18,13 @@ class Ability(
         code = cdefAbilityType.code(),
         name = cdefAbilityType.alias()
     )
+
+    companion object {
+        operator fun invoke(abilityTypeCode: String): Ability {
+            val cdefAbility = checkNotNull(CDef.AbilityType.codeOf(abilityTypeCode))
+            return Ability(cdefAbility)
+        }
+    }
 
     // 選択可能な対象
     fun getSelectableTargetList(village: Village, participant: VillageParticipant?): List<VillageParticipant> {
@@ -52,8 +60,13 @@ class Ability(
         }
     }
 
+    fun assertAbility(village: Village, participant: VillageParticipant?, targetId: Int?) {
+        if (targetId == null && !isAvailableNoTarget()) throw Wolf4busyBusinessException("能力セットできません")
+        if (targetId != null && getSelectableTargetList(village, participant).none { it.id == targetId }) throw Wolf4busyBusinessException("能力セットできません")
+    }
+
     fun isAvailableNoTarget(): Boolean {
-        return when(code) {
+        return when (code) {
             CDef.AbilityType.襲撃.code() -> Attack.isAvailableNoTarget()
             CDef.AbilityType.占い.code() -> Divine.isAvailableNoTarget()
             CDef.AbilityType.護衛.code() -> Guard.isAvailableNoTarget()

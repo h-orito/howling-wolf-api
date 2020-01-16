@@ -36,12 +36,8 @@ data class Skill(
     fun getAbilities(): Abilities {
         val cdefSkill = CDef.Skill.codeOf(code) ?: return Abilities(listOf())
         val cdefAbilityList = skillAbilityTypeListMap[cdefSkill] ?: return Abilities(listOf())
-        return Abilities(
-            list = cdefAbilityList.map { Ability(it) }
-        )
+        return Abilities(cdefAbilityList.map { Ability(it) })
     }
 
-    fun toCdef(): CDef.Skill {
-        return CDef.Skill.codeOf(code)
-    }
+    fun toCdef(): CDef.Skill = CDef.Skill.codeOf(code)
 }

@@ -181,7 +181,6 @@ map:{
         }
     }
 
-
 	# アプリ定義
     ; Term = list:{
         ; map:{topComment=期間; codeType=String}

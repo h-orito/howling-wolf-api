@@ -17,4 +17,10 @@ data class VillageMessageRestricts(
             length = 200
         )
     )
-)
+) {
+
+    fun restrict(cdefMessageType: CDef.MessageType): VillageMessageRestrict? {
+        return if (!existRestricts) null
+        else restrictList.find { it.type.toCdef() == cdefMessageType }
+    }
+}

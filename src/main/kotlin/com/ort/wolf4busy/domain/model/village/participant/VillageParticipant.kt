@@ -77,4 +77,63 @@ data class VillageParticipant(
 
         return true
     }
+
+    fun isViewableWerewolfSay(): Boolean = skill?.toCdef()?.isViewableWerewolfSay ?: false
+
+    fun isSayableWerewolfSay(): Boolean {
+        // 死亡していたら不可
+        if (!isAlive()) return false
+        // 囁ける役職でなければ不可
+        return skill?.toCdef()?.isAvailableWerewolfSay ?: false
+    }
+
+    fun isViewableGraveSay(): Boolean {
+        if (isSpectator) return true
+        // 突然死以外で死亡している
+        return !isAlive() && CDef.DeadReason.突然.code() != dead?.code
+    }
+
+    fun isSayableGraveSay(): Boolean {
+        // 死亡していなかったら不可
+        if (isAlive()) return false
+        // 見学は不可
+        if (isSpectator) return false
+        // 突然死は不可
+        if (dead?.toCdef() == CDef.DeadReason.突然) return false
+        return true
+    }
+
+    fun isViewableMonologueSay(): Boolean = true // 制約なし
+
+    fun isSayableMonologueSay(): Boolean = true // 制約なし
+
+    fun isViewableSpectateSay(): Boolean {
+        // 見学は開放
+        if (isSpectator) return true
+        // 突然死以外で死亡している
+        return !isAlive() && CDef.DeadReason.突然.code() != dead?.code
+    }
+
+    fun isSayableSpectateSay(): Boolean = isSpectator // 見学していなかったら不可
+
+    fun isViewableAttackMessage(): Boolean {
+        // 生存していて襲撃可能職なら開放
+        if (!isAlive()) return false
+        return skill?.toCdef()?.isHasAttackAbility ?: false
+    }
+
+    fun isViewablePsychicMessage(): Boolean {
+        // 生存していて霊能者なら開放
+        if (!isAlive()) return false
+        return skill?.toCdef() == CDef.Skill.霊能者
+    }
+
+    fun isViewableSecretSay(): Boolean = true // 制約なし
+
+    // 投票可能か
+    fun isAvailableVote(): Boolean {
+        if (!isAlive()) return false
+        if (isSpectator) return false
+        return true
+    }
 }

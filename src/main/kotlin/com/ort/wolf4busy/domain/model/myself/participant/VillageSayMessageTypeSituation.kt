@@ -14,15 +14,11 @@ data class VillageSayMessageTypeSituation(
 ) {
     constructor(
         village: Village,
-        participant: VillageParticipant?,
         latestDayMessageList: List<Message>,
         messageType: CDef.MessageType
     ) : this(
         messageType = MessageType(messageType),
-        restrict = VillageSayRestrictSituation(
-            village.setting.rules.messageRestrict.restrictList.find { it.type.toCdef() == messageType },
-            latestDayMessageList.filter { it.content.type.toCdef() == messageType }
-        ),
+        restrict = VillageSayRestrictSituation(village, latestDayMessageList, messageType),
         targetList = listOf() // todo
     )
 }
