@@ -15,26 +15,26 @@ class CharachipService(
 ) {
 
     fun findCharaChipList(): Charachips {
-        return charachipDataSource.selectCharachips()
+        return charachipDataSource.findCharachips()
     }
 
     fun findCharaChip(charachipId: Int): Charachip {
-        return charachipDataSource.selectCharachip(charachipId)
+        return charachipDataSource.findCharachip(charachipId)
     }
 
     fun findChara(charaId: Int): Chara {
-        return charaDataSource.selectChara(charaId)
+        return charaDataSource.findChara(charaId)
     }
 
     fun findCharaList(charachips: Charachips): Charas {
-        return charaDataSource.selectCharaList(charachips)
+        return charaDataSource.findCharas(charachips)
     }
 
     fun findCharaList(charachipId: Int): Charas {
-        return charaDataSource.selectCharaList(charachipId)
+        return charaDataSource.findCharas(charachipId)
     }
 
     fun findDummyChara(charaChipId: Int): Chara {
-        return charaDataSource.selectDummyChara(charaChipId)
+        return charaDataSource.findDummyChara(charaChipId)
     }
 }

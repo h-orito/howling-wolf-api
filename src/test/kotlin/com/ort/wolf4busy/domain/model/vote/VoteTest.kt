@@ -1,4 +1,4 @@
-package com.ort.wolf4busy.domain.model.myself.participant
+package com.ort.wolf4busy.domain.model.vote
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
@@ -16,13 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class VillageVoteSituationTest : Wolf4busyTest() {
+class VoteTest : Wolf4busyTest() {
 
     // ===================================================================================
     //                                                                                Test
     //                                                                           =========
     @Test
-    fun test_constructor_isAvailableVote_投票できる() {
+    fun test_isAvailableVote_投票できる() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             status = VillageStatus(CDef.VillageStatus.進行中),
@@ -31,17 +31,16 @@ class VillageVoteSituationTest : Wolf4busyTest() {
             ))
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isAvailableVote = Vote.isAvailableVote(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.isAvailableVote).isTrue()
+        assertThat(isAvailableVote).isTrue()
     }
 
     @Test
-    fun test_constructor_isAvailableVote_参加していない() {
+    fun test_isAvailableVote_参加していない() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             status = VillageStatus(CDef.VillageStatus.進行中),
@@ -50,17 +49,16 @@ class VillageVoteSituationTest : Wolf4busyTest() {
             ))
         )
         val participant = null
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isAvailableVote = Vote.isAvailableVote(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.isAvailableVote).isFalse()
+        assertThat(isAvailableVote).isFalse()
     }
 
     @Test
-    fun test_constructor_isAvailableVote_死亡() {
+    fun test_isAvailableVote_死亡() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             status = VillageStatus(CDef.VillageStatus.進行中),
@@ -69,17 +67,16 @@ class VillageVoteSituationTest : Wolf4busyTest() {
             ))
         )
         val participant = DummyDomainModelCreator.createDummyDeadVillager()
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isAvailableVote = Vote.isAvailableVote(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.isAvailableVote).isFalse()
+        assertThat(isAvailableVote).isFalse()
     }
 
     @Test
-    fun test_constructor_isAvailableVote_見学() {
+    fun test_isAvailableVote_見学() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             status = VillageStatus(CDef.VillageStatus.進行中),
@@ -90,17 +87,16 @@ class VillageVoteSituationTest : Wolf4busyTest() {
         val participant = DummyDomainModelCreator.createDummyVillageParticipant().copy(
             isSpectator = true
         )
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isAvailableVote = Vote.isAvailableVote(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.isAvailableVote).isFalse()
+        assertThat(isAvailableVote).isFalse()
     }
 
     @Test
-    fun test_constructor_isAvailableVote_エピローグ() {
+    fun test_isAvailableVote_エピローグ() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             status = VillageStatus(CDef.VillageStatus.エピローグ),
@@ -109,17 +105,16 @@ class VillageVoteSituationTest : Wolf4busyTest() {
             ))
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isAvailableVote = Vote.isAvailableVote(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.isAvailableVote).isFalse()
+        assertThat(isAvailableVote).isFalse()
     }
 
     @Test
-    fun test_constructor_isAvailableVote_1日目() {
+    fun test_isAvailableVote_1日目() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(
             status = VillageStatus(CDef.VillageStatus.進行中),
@@ -128,17 +123,16 @@ class VillageVoteSituationTest : Wolf4busyTest() {
             ))
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val isAvailableVote = Vote.isAvailableVote(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.isAvailableVote).isFalse()
+        assertThat(isAvailableVote).isFalse()
     }
 
     @Test
-    fun test_constructor_getSelectableTargetList() {
+    fun test_getSelectableTargetList() {
         // ## Arrange ##
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
         val aliveVillager = DummyDomainModelCreator.createDummyAliveVillager()
@@ -153,19 +147,18 @@ class VillageVoteSituationTest : Wolf4busyTest() {
                 memberList = listOf(participant, aliveVillager, deadVillager)
             )
         )
-        val votes = DummyDomainModelCreator.createDummyVillageVotes()
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val selectableTargetList = Vote.getSelectableTargetList(village, participant)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.targetList.size).isEqualTo(2)
-        assertThat(villageVoteSituation.targetList.any { it.id == participant.id }).isTrue()
-        assertThat(villageVoteSituation.targetList.any { it.id == aliveVillager.id }).isTrue()
+        assertThat(selectableTargetList.size).isEqualTo(2)
+        assertThat(selectableTargetList.any { it.id == participant.id }).isTrue()
+        assertThat(selectableTargetList.any { it.id == aliveVillager.id }).isTrue()
     }
 
     @Test
-    fun test_constructor_getTarget() {
+    fun test_getSelectingTarget() {
         // ## Arrange ##
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
         val aliveVillager = DummyDomainModelCreator.createDummyAliveVillager()
@@ -187,9 +180,11 @@ class VillageVoteSituationTest : Wolf4busyTest() {
         ))
 
         // ## Act ##
-        val villageVoteSituation = VillageVoteSituation(village, participant, votes)
+        val target = Vote.getSelectingTarget(village, participant, votes)
 
         // ## Assert ##
-        assertThat(villageVoteSituation.target?.id).isEqualTo(aliveVillager.id)
+        assertThat(target?.id).isEqualTo(aliveVillager.id)
     }
+
+    // TODO assertVote
 }

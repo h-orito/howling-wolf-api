@@ -61,6 +61,7 @@ class ProgressTest : Wolf4busyTest() {
         val latestDay = DummyDomainModelCreator.createDummyVillageDay().copy(
             dayChangeDatetime = LocalDateTime.now().plusHours(1L)
         )
+        val participants = (1..3).map { DummyDomainModelCreator.createDummyAliveVillager() }
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
                 setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
@@ -71,19 +72,12 @@ class ProgressTest : Wolf4busyTest() {
                 day = VillageDays(listOf(latestDay)),
                 participant = VillageParticipants(
                     count = 3,
-                    memberList = listOf(
-                        DummyDomainModelCreator.createDummyAliveVillager(),
-                        DummyDomainModelCreator.createDummyAliveVillager(),
-                        DummyDomainModelCreator.createDummyAliveVillager()
-                    )
+                    memberList = participants
                 )
             )
         )
         val commits = Commits(
-            listOf(
-                Commit(latestDay.id, true),
-                Commit(latestDay.id, true)
-            )
+            participants.map { Commit(latestDay.id, it.id, true) }
         )
 
         // ## Act ##
@@ -99,6 +93,7 @@ class ProgressTest : Wolf4busyTest() {
         val latestDay = DummyDomainModelCreator.createDummyVillageDay().copy(
             dayChangeDatetime = LocalDateTime.now().plusHours(1L)
         )
+        val participants = (1..3).map { DummyDomainModelCreator.createDummyAliveVillager() }
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
                 setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
@@ -109,20 +104,12 @@ class ProgressTest : Wolf4busyTest() {
                 day = VillageDays(listOf(latestDay)),
                 participant = VillageParticipants(
                     count = 3,
-                    memberList = listOf(
-                        DummyDomainModelCreator.createDummyAliveVillager(),
-                        DummyDomainModelCreator.createDummyAliveVillager(),
-                        DummyDomainModelCreator.createDummyAliveVillager()
-                    )
+                    memberList = participants
                 )
             )
         )
         val commits = Commits(
-            listOf(
-                Commit(latestDay.id, true),
-                Commit(latestDay.id, true),
-                Commit(latestDay.id, true)
-            )
+            participants.map { Commit(latestDay.id, it.id, true) }
         )
 
         // ## Act ##

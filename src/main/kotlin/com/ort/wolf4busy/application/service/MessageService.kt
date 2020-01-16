@@ -72,25 +72,9 @@ class MessageService(
      * 発言登録
      *
      * @param villageId villageId
-     * @param villageDayId 村日付id
-     * @param participant 参加情報
      * @param message 発言内容
      */
-    fun registerSayMessage(
-        villageId: Int,
-        villageDayId: Int,
-        participant: VillageParticipant,
-        messageContent: MessageContent
-    ) {
-        messageDataSource.insertMessage(
-            villageId = villageId,
-            dayId = villageDayId,
-            messageType = messageContent.type.code,
-            text = messageContent.text,
-            villagePlayerId = participant.id,
-            faceType = messageContent.faceCode
-        )
-    }
+    fun registerSayMessage(villageId: Int, message: Message) = messageDataSource.registerMessage(villageId, message)
 
     /**
      * 村作成時のシステムメッセージ登録
@@ -103,7 +87,7 @@ class MessageService(
             null,
             Locale.JAPANESE
         )
-        messageDataSource.insertMessage(
+        messageDataSource.registerMessage(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.公開システムメッセージ.code(),
@@ -136,14 +120,14 @@ class MessageService(
         isSpectate: Boolean
     ) {
         // {N}人目、{キャラ名}。
-        messageDataSource.insertMessage(
+        messageDataSource.registerMessage(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.公開システムメッセージ.code(),
             text = (if (isSpectate) "（見学） " else "") + "${participateNumber}人目、$charaName。"
         )
         // 参加発言
-        messageDataSource.insertMessage(
+        messageDataSource.registerMessage(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.通常発言.code(),
@@ -165,7 +149,7 @@ class MessageService(
             arrayOf(chara.charaName.name),
             Locale.JAPANESE
         )
-        messageDataSource.insertMessage(
+        messageDataSource.registerMessage(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.公開システムメッセージ.code(),
@@ -197,7 +181,7 @@ class MessageService(
         // 登録メッセージ
         val message = ability.getAbilitySetMessage(myChara, targetChara)
 
-        messageDataSource.insertMessage(
+        messageDataSource.registerMessage(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.非公開システムメッセージ.code(),
@@ -219,7 +203,7 @@ class MessageService(
         val charaName = charas.list.first { it.id == participant.charaId }.charaName.name
 
         val message = if (doCommit) "${charaName}がコミットしました。" else "${charaName}がコミットを取り消しました。"
-        messageDataSource.insertMessage(
+        messageDataSource.registerMessage(
             villageId = villageId,
             dayId = villageDayId,
             messageType = CDef.MessageType.非公開システムメッセージ.code(),

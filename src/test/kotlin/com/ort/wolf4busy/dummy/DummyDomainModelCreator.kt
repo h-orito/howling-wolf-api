@@ -1,7 +1,6 @@
 package com.ort.wolf4busy.dummy
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.*
 import com.ort.wolf4busy.domain.model.commit.Commits
 import com.ort.wolf4busy.domain.model.daychange.DayChange
@@ -10,6 +9,7 @@ import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
@@ -18,14 +18,10 @@ import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
-import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
-import com.ort.wolf4busy.domain.model.myself.participant.VillageAbilitySituation
-import com.ort.wolf4busy.domain.model.myself.participant.VillageAbilitySituations
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
-import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import java.time.LocalDateTime
 
 object DummyDomainModelCreator {
@@ -79,7 +75,7 @@ object DummyDomainModelCreator {
 
     fun createDummyPersonCapacity(): PersonCapacity = PersonCapacity(1, 1)
 
-    fun createDummyVillageStatus(): VillageStatus = VillageStatus("dummy", "dummy")
+    fun createDummyVillageStatus(): VillageStatus = VillageStatus(CDef.VillageStatus.廃村)
 
     fun createDummyVillageParticipant(): VillageParticipant = VillageParticipant(
         id = randomNumber(),
@@ -117,16 +113,16 @@ object DummyDomainModelCreator {
 
     fun createDummyDead(): Dead = Dead(CDef.DeadReason.処刑, createDummyVillageDay())
 
-    fun createDummyVillageAbility(): VillageAbility = VillageAbility(
-        villageDayId = randomNumber(),
-        myselfId = randomNumber(),
-        targetId = randomNumber(),
-        ability = Ability(CDef.AbilityType.襲撃)
-    )
-
     fun createDummyVillageVotes(): VillageVotes = VillageVotes(listOf())
 
     fun createDummyPlayers(): Players = Players(listOf())
+
+    fun createDummyPlayer(): Player = Player(
+        id = randomNumber(),
+        nickname = "dummy",
+        twitterUserName = "dummy",
+        isRestrictedParticipation = false
+    )
 
     fun createDummyCharas(): Charas = Charas(listOf())
 
@@ -158,22 +154,6 @@ object DummyDomainModelCreator {
         num = null,
         text = "dummy message",
         faceCode = null
-    )
-
-    fun createDummyVillageAbilitySituations(): VillageAbilitySituations =
-        VillageAbilitySituations(listOf())
-
-    fun createDummyVillageAbilitySituation(): VillageAbilitySituation =
-        VillageAbilitySituation(
-            type = Ability(CDef.AbilityType.襲撃),
-            targetList = listOf(),
-            target = null,
-            exercisable = false
-        )
-
-    fun createDummyUser(): Wolf4busyUser = Wolf4busyUser(
-        uid = "dummy_user_id",
-        authority = CDef.Authority.プレイヤー
     )
 
     // ===================================================================================
