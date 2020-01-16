@@ -1,5 +1,6 @@
 package com.ort.wolf4busy.domain.model.commit
 
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -39,6 +40,9 @@ data class Commit(
         ) {
             if (!isAvailableCommit(village, participant)) throw Wolf4busyBusinessException("コミットできません")
         }
+
+        fun getCommitSetMessage(doCommit: Boolean, chara: Chara): String =
+            if (doCommit) "${chara.charaName.name}がコミットしました。" else "${chara.charaName.name}がコミットを取り消しました。"
     }
 
 }

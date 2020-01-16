@@ -4,18 +4,17 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
-import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.Messages
+import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.participant.Leave
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
-import org.springframework.context.MessageSource
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class MessageService(
-    val messageSource: MessageSource,
     val messageDataSource: MessageDataSource
 ) {
     /**
@@ -35,7 +34,7 @@ class MessageService(
         participant: VillageParticipant? = null,
         from: Long? = null
     ): Messages {
-        return messageDataSource.selectMessageList(villageId, villageDayId, messageTypeList, participant, from)
+        return messageDataSource.findMessages(villageId, villageDayId, messageTypeList, participant, from)
     }
 
     /**
@@ -47,7 +46,7 @@ class MessageService(
      * @return 発言
      */
     fun findMessage(villageId: Int, messageType: CDef.MessageType, messageNumber: Int): Message? {
-        return messageDataSource.selectMessage(villageId, messageType, messageNumber)
+        return messageDataSource.findMessage(villageId, messageType, messageNumber)
     }
 
 
@@ -82,17 +81,9 @@ class MessageService(
      * @param villageDayId 村日付ID
      */
     fun registerInitialMessage(villageId: Int, villageDayId: Int) {
-        val initialMessage: String = messageSource.getMessage(
-            "village.initial.message",
-            null,
-            Locale.JAPANESE
-        )
-        messageDataSource.registerMessage(
-            villageId = villageId,
-            dayId = villageDayId,
-            messageType = CDef.MessageType.公開システムメッセージ.code(),
-            text = initialMessage
-        )
+        val text = Village.getInitialMessage()
+        val message = Message.createPublicSystemMessage(text, villageDayId)
+        messageDataSource.registerMessage(villageId, message)
     }
 
     /**
@@ -144,49 +135,31 @@ class MessageService(
      * @param villageDayId 村日付ID
      */
     fun registerLeaveMessage(villageId: Int, chara: Chara, villageDayId: Int) {
-        val leaveMessage: String = messageSource.getMessage(
-            "village.leave.message",
-            arrayOf(chara.charaName.name),
-            Locale.JAPANESE
-        )
-        messageDataSource.registerMessage(
-            villageId = villageId,
-            dayId = villageDayId,
-            messageType = CDef.MessageType.公開システムメッセージ.code(),
-            text = leaveMessage
-        )
+        val text = Leave.getLeaveMessage(chara)
+        val message = Message.createPublicSystemMessage(text, villageDayId)
+        messageDataSource.registerMessage(villageId, message)
     }
 
     /**
      * 能力セットする際のシステムメッセージを登録
-     * @param villageId villageId
+     * @param village village
      * @param participant 村参加者
      * @param targetId 対象の村参加者ID
      * @param ability ability
-     * @param villageDayId 村日付ID
      * @param charas キャラ
      */
     fun registerAbilitySetMessage(
-        villageId: Int,
+        village: Village,
         participant: VillageParticipant,
         targetId: Int?,
         ability: Ability,
-        villageDayId: Int,
         charas: Charas
     ) {
-        // 自分のキャラ
-        val myChara = charas.list.first { it.id == participant.charaId }
-        // 相手のキャラ
-        val targetChara = charas.list.find { it.id == targetId }
-        // 登録メッセージ
-        val message = ability.getAbilitySetMessage(myChara, targetChara)
-
-        messageDataSource.registerMessage(
-            villageId = villageId,
-            dayId = villageDayId,
-            messageType = CDef.MessageType.非公開システムメッセージ.code(),
-            text = message
-        )
+        val myChara = charas.chara(participant.charaId)
+        val targetChara = if (targetId == null) null else charas.chara(village.participant.member(targetId).charaId)
+        val text = ability.getAbilitySetMessage(myChara, targetChara)
+        val message = Message.createPrivateSystemMessage(text, village.day.latestDay().id)
+        messageDataSource.registerMessage(village.id, message)
     }
 
     /**
@@ -200,15 +173,10 @@ class MessageService(
      */
     fun registerCommitMessage(villageId: Int, villageDayId: Int, participant: VillageParticipant, charas: Charas, doCommit: Boolean) {
         // 自分のキャラ
-        val charaName = charas.list.first { it.id == participant.charaId }.charaName.name
-
-        val message = if (doCommit) "${charaName}がコミットしました。" else "${charaName}がコミットを取り消しました。"
-        messageDataSource.registerMessage(
-            villageId = villageId,
-            dayId = villageDayId,
-            messageType = CDef.MessageType.非公開システムメッセージ.code(),
-            text = message
-        )
+        val chara = charas.chara(participant.charaId)
+        val text = Commit.getCommitSetMessage(doCommit, chara)
+        val message = Message.createPrivateSystemMessage(text, villageDayId)
+        messageDataSource.registerMessage(villageId, message)
     }
 
     /**

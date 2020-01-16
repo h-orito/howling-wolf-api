@@ -226,7 +226,7 @@ class VillageCoordinator(
         val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, ability)
         abilityService.updateAbility(villageAbility)
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-        messageService.registerAbilitySetMessage(villageId, participant, targetId, ability, village.day.latestDay().id, charas)
+        messageService.registerAbilitySetMessage(village, participant, targetId, ability, charas)
     }
 
     /**
