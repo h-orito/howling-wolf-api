@@ -41,7 +41,7 @@ class MessageDataSource(
      * @param from これ以降の発言を取得
      * @return 発言
      */
-    fun selectMessageList(
+    fun findMessages(
         villageId: Int,
         villageDayId: Int,
         messageTypeList: List<CDef.MessageType>,
@@ -86,7 +86,7 @@ class MessageDataSource(
      * @param messageNumber 発言番号
      * @return 発言
      */
-    fun selectMessage(
+    fun findMessage(
         villageId: Int,
         messageType: CDef.MessageType,
         messageNumber: Int

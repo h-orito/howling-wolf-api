@@ -1,5 +1,6 @@
 package com.ort.wolf4busy.domain.model.village.participant
 
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
@@ -34,4 +35,5 @@ object Leave {
         if (!isAvailableLeave(village, participant)) throw Wolf4busyBusinessException("退村できません")
     }
 
+    fun getLeaveMessage(chara: Chara): String = "${chara.charaName.name}は村を去った。"
 }

@@ -1,10 +1,8 @@
 package com.ort.wolf4busy.domain.model.village
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.SkillAssign
 import com.ort.wolf4busy.domain.model.message.*
-import com.ort.wolf4busy.domain.model.myself.participant.VillageSaySituation
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -21,6 +19,12 @@ data class Village(
     val spectator: VillageParticipants,
     val day: VillageDays
 ) {
+
+    companion object {
+
+        fun getInitialMessage(): String =
+            "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この館に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
+    }
 
     // ===================================================================================
     //                                                                          Definition
@@ -273,13 +277,16 @@ data class Village(
     fun leaveParticipant(participantId: Int): Village = this.copy(participant = this.participant.leave(participantId))
 
     // 突然死
-    fun suddenlyDeathParticipant(participantId: Int, latestDay: VillageDay): Village = this.copy(participant = this.participant.suddenlyDeath(participantId, latestDay))
+    fun suddenlyDeathParticipant(participantId: Int, latestDay: VillageDay): Village =
+        this.copy(participant = this.participant.suddenlyDeath(participantId, latestDay))
 
     // 処刑
-    fun executeParticipant(participantId: Int, latestDay: VillageDay): Village = this.copy(participant = this.participant.execute(participantId, latestDay))
+    fun executeParticipant(participantId: Int, latestDay: VillageDay): Village =
+        this.copy(participant = this.participant.execute(participantId, latestDay))
 
     // 襲撃
-    fun attackParticipant(participantId: Int, latestDay: VillageDay): Village = this.copy(participant = this.participant.attack(participantId, latestDay))
+    fun attackParticipant(participantId: Int, latestDay: VillageDay): Village =
+        this.copy(participant = this.participant.attack(participantId, latestDay))
 
     // 役職割り当て
     fun assignSkill(): Village {
@@ -311,20 +318,6 @@ data class Village(
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
         return participant.memberList.any { it.charaId == charaId }
             || spectator.memberList.any { it.charaId == charaId }
-    }
-
-    private fun isRestricted(
-        village: Village,
-        participant: VillageParticipant,
-        latestDayMessageList: List<Message>,
-        charas: Charas,
-        messageType: String
-    ): Boolean {
-        val saySituation =
-            VillageSaySituation(village, participant, charas, latestDayMessageList)
-        val restrict = saySituation.selectableMessageTypeList.find { it.messageType.code == messageType }
-        restrict ?: return false
-        return restrict.restrict.isRestricted && restrict.restrict.remainingCount != null && restrict.restrict.remainingCount <= 0
     }
 
     private fun assertPassword(password: String?) {
