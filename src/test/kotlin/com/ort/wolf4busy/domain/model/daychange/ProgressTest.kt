@@ -39,11 +39,13 @@ class ProgressTest : Wolf4busyTest() {
                         availableCommit = false
                     )
                 ),
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyVillageDay().copy(
-                        dayChangeDatetime = LocalDateTime.now().plusHours(1L)
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay().copy(
+                            dayChangeDatetime = LocalDateTime.now().plusHours(1L)
+                        )
                     )
-                ))
+                )
             )
         )
         val commits = DummyDomainModelCreator.createDummyCommits()
@@ -72,7 +74,7 @@ class ProgressTest : Wolf4busyTest() {
                 day = VillageDays(listOf(latestDay)),
                 participant = VillageParticipants(
                     count = 3,
-                    memberList = participants
+                    memberList = participants + DummyDomainModelCreator.createDummyAliveVillager()
                 )
             )
         )
@@ -189,19 +191,23 @@ class ProgressTest : Wolf4busyTest() {
                     )
                 )
             ),
-            abilities = VillageAbilities(listOf(
-                VillageAbility(yesterday.id, wolf.id, dummyParticipant.id, Ability(CDef.AbilityType.襲撃))
-            ))
+            abilities = VillageAbilities(
+                listOf(
+                    VillageAbility(yesterday.id, wolf.id, dummyParticipant.id, Ability(CDef.AbilityType.襲撃))
+                )
+            )
         )
         val messages = Messages(listOf())
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = villager.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = seer.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = hunter.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = psychic.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = wolf.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = villager.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = seer.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = hunter.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = psychic.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = wolf.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Progress.dayChange(dayChange, messages, charas)
@@ -261,30 +267,36 @@ class ProgressTest : Wolf4busyTest() {
                     )
                 )
             ),
-            abilities = VillageAbilities(listOf(
-                VillageAbility(yesterday.id, wolf1.id, villager.id, Ability(CDef.AbilityType.襲撃)),
-                VillageAbility(yesterday.id, hunter.id, wolf2.id, Ability(CDef.AbilityType.護衛)),
-                VillageAbility(yesterday.id, seer.id, wolf2.id, Ability(CDef.AbilityType.占い))
-            )),
-            votes = VillageVotes(listOf(
-                VillageVote(yesterday.id, villager.id, wolf1.id),
-                VillageVote(yesterday.id, seer.id, wolf1.id),
-                VillageVote(yesterday.id, hunter.id, wolf1.id),
-                VillageVote(yesterday.id, psychic.id, wolf1.id),
-                VillageVote(yesterday.id, wolf1.id, wolf1.id),
-                VillageVote(yesterday.id, wolf2.id, wolf1.id)
-            ))
+            abilities = VillageAbilities(
+                listOf(
+                    VillageAbility(yesterday.id, wolf1.id, villager.id, Ability(CDef.AbilityType.襲撃)),
+                    VillageAbility(yesterday.id, hunter.id, wolf2.id, Ability(CDef.AbilityType.護衛)),
+                    VillageAbility(yesterday.id, seer.id, wolf2.id, Ability(CDef.AbilityType.占い))
+                )
+            ),
+            votes = VillageVotes(
+                listOf(
+                    VillageVote(yesterday.id, villager.id, wolf1.id),
+                    VillageVote(yesterday.id, seer.id, wolf1.id),
+                    VillageVote(yesterday.id, hunter.id, wolf1.id),
+                    VillageVote(yesterday.id, psychic.id, wolf1.id),
+                    VillageVote(yesterday.id, wolf1.id, wolf1.id),
+                    VillageVote(yesterday.id, wolf2.id, wolf1.id)
+                )
+            )
         )
         val messages = Messages(listOf())
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = villager.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = seer.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = hunter.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = psychic.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = wolf1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = wolf2.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = villager.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = seer.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = hunter.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = psychic.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = wolf1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = wolf2.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Progress.dayChange(dayChange, messages, charas)
@@ -345,28 +357,34 @@ class ProgressTest : Wolf4busyTest() {
                     )
                 )
             ),
-            abilities = VillageAbilities(listOf(
-                VillageAbility(yesterday.id, wolf2.id, seer.id, Ability(CDef.AbilityType.襲撃)),
-                VillageAbility(yesterday.id, hunter.id, seer.id, Ability(CDef.AbilityType.護衛)),
-                VillageAbility(yesterday.id, seer.id, wolf2.id, Ability(CDef.AbilityType.占い))
-            )),
-            votes = VillageVotes(listOf(
-                VillageVote(yesterday.id, seer.id, wolf2.id),
-                VillageVote(yesterday.id, hunter.id, wolf2.id),
-                VillageVote(yesterday.id, psychic.id, wolf2.id),
-                VillageVote(yesterday.id, wolf2.id, wolf2.id)
-            ))
+            abilities = VillageAbilities(
+                listOf(
+                    VillageAbility(yesterday.id, wolf2.id, seer.id, Ability(CDef.AbilityType.襲撃)),
+                    VillageAbility(yesterday.id, hunter.id, seer.id, Ability(CDef.AbilityType.護衛)),
+                    VillageAbility(yesterday.id, seer.id, wolf2.id, Ability(CDef.AbilityType.占い))
+                )
+            ),
+            votes = VillageVotes(
+                listOf(
+                    VillageVote(yesterday.id, seer.id, wolf2.id),
+                    VillageVote(yesterday.id, hunter.id, wolf2.id),
+                    VillageVote(yesterday.id, psychic.id, wolf2.id),
+                    VillageVote(yesterday.id, wolf2.id, wolf2.id)
+                )
+            )
         )
         val messages = Messages(listOf())
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = villager.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = seer.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = hunter.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = psychic.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = wolf1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = wolf2.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = dummyParticipant.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = villager.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = seer.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = hunter.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = psychic.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = wolf1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = wolf2.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Progress.dayChange(dayChange, messages, charas)
