@@ -27,9 +27,7 @@ class MessageCoordinator(
         val villageDayId = villageService.findVillageDay(village.id, day, noonnight).id
         val messages = messageService.findMessageList(village.id, villageDayId, messageTypeList, participant, from)
         dayChangeCoordinator.dayChangeIfNeeded(village)
-        return Messages(
-            messageList = messages.messageList.map { complementMessage(it, village, day) }
-        )
+        return messages
     }
 
     fun findMessage(village: Village, messageType: String, messageNumber: Int, user: Wolf4busyUser?): Message? {
@@ -37,21 +35,6 @@ class MessageCoordinator(
         if (!village.isViewableMessage(participant, messageType)) {
             return null
         }
-        val message: Message =
-            messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
-        val day = villageService.findVillageDayById(message.time.villageDayId).day
-        return complementMessage(message, village, day)
-    }
-
-    // ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-    // TODO Messageには内容をもたずにView側でやる
-    private fun complementMessage(message: Message, village: Village, day: Int): Message {
-        return message.copy(
-            from = if (message.from == null) null else village.participant.member(message.from.id),
-            to = if (message.to == null) null else village.participant.member(message.to.id),
-            time = message.time.copy(day = day)
-        )
+        return messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
     }
 }

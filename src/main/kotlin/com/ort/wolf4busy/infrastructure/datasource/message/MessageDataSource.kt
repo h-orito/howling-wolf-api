@@ -8,8 +8,6 @@ import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
-import com.ort.wolf4busy.domain.model.skill.Skill
-import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -32,7 +30,6 @@ class MessageDataSource(
     //                                                                           =========
     /**
      * 発言取得
-     * partitionを切っているので関連テーブルの情報は別途取得して埋めること
      *
      * @param villageId villageId
      * @param villageDayId 村日付ID
@@ -126,9 +123,9 @@ class MessageDataSource(
         mes.villageDayId = message.time.villageDayId
         mes.messageTypeCode = message.content.type.code
         mes.messageContent = message.content.text
-        mes.villagePlayerId = message.from?.id
-        mes.toVillagePlayerId = message.to?.id
-        mes.playerId = message.from?.playerId
+        mes.villagePlayerId = message.fromVillageParticipantId
+        mes.toVillagePlayerId = message.toVillageParticipantId
+        mes.playerId = null // TODO プレイヤー発言を実装する際に実装する
         mes.faceTypeCode = message.content.faceCode
         mes.isConvertDisable = true
         val now = Wolf4busyDateUtil.currentLocalDateTime()
@@ -175,49 +172,10 @@ class MessageDataSource(
 
     private fun convertMessageToMessage(message: Message): com.ort.wolf4busy.domain.model.message.Message {
         return com.ort.wolf4busy.domain.model.message.Message(
-            from = if (message.villagePlayerId == null) null else VillageParticipant(
-                id = message.villagePlayerId,
-                charaId = 1, // dummy
-                dead = null, // dummy
-                isSpectator = false, // dummy
-                isGone = false, // dummy
-                playerId = message.playerId,
-                skill = null, // dummy
-                skillRequest = SkillRequest(
-                    first = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    ),
-                    second = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    )
-                ),
-                isWin = null
-            ),
-            to = if (message.toVillagePlayerId == null) null else VillageParticipant(
-                id = message.toVillagePlayerId,
-                charaId = 1, // dummy
-                dead = null, // dummy
-                isSpectator = false, // dummy
-                isGone = false, // dummy
-                playerId = null,
-                skill = null, // dummy
-                skillRequest = SkillRequest(
-                    first = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    ),
-                    second = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    )
-                ),
-                isWin = null
-            ),
+            fromVillageParticipantId = message.villagePlayerId,
+            toVillageParticipantId = message.toVillagePlayerId,
             time = MessageTime(
                 villageDayId = message.villageDayId,
-                day = 1, // dummy
                 datetime = message.messageDatetime,
                 unixTimeMilli = message.messageUnixtimestampMilli
             ),

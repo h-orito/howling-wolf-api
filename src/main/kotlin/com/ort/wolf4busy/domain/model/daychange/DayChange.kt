@@ -3,14 +3,10 @@ package com.ort.wolf4busy.domain.model.daychange
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commits
-import com.ort.wolf4busy.domain.model.message.Message
-import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
-import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
-import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 
 data class DayChange(
@@ -37,114 +33,6 @@ data class DayChange(
         abilities = abilities,
         players = players
     )
-
-    companion object {
-
-        /**
-         * 更新時登録用の公開メッセージ
-         *
-         * @param text メッセージ内容
-         * @param day 村日付
-         */
-        fun createPublicSystemMessage(text: String, day: VillageDay): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.公開システムメッセージ),
-                    text = text
-                )
-            )
-        }
-
-        /**
-         * 更新時登録用の非公開メッセージ
-         *
-         * @param text メッセージ内容
-         * @param day 村日付
-         */
-        fun createPrivateSystemMessage(text: String, day: VillageDay): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.非公開システムメッセージ),
-                    text = text
-                )
-            )
-        }
-
-        fun createNormalSayMessage(text: String, day: VillageDay, participant: VillageParticipant): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                from = participant,
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.通常発言),
-                    text = text
-                )
-            )
-        }
-
-        fun createSeerPrivateMessage(text: String, day: VillageDay, participant: VillageParticipant): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                from = participant,
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.白黒占い結果),
-                    text = text
-                )
-            )
-        }
-
-        fun createPsychicPrivateMessage(text: String, day: VillageDay): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.白黒霊視結果),
-                    text = text
-                )
-            )
-        }
-
-        fun createAttackPrivateMessage(text: String, day: VillageDay): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.襲撃結果),
-                    text = text
-                )
-            )
-        }
-
-        fun createParticipantsMessage(day: VillageDay): Message {
-            val dummy = Message.createDummy()
-            return dummy.copy(
-                time = dummy.time.copy(
-                    villageDayId = day.id
-                ),
-                content = dummy.content.copy(
-                    type = MessageType(CDef.MessageType.参加者一覧),
-                    text = "読み込み中..."
-                )
-            )
-        }
-    }
 
     fun leaveParticipantIfNeeded(todayMessages: Messages, charas: Charas): DayChange {
         return if (!village.status.isPrologue()) this

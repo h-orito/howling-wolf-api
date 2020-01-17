@@ -3,8 +3,6 @@ package com.ort.wolf4busy.domain.model.daychange
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
-import com.ort.wolf4busy.domain.model.village.VillageDay
-import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 object SuddenlyDeath {
 
@@ -19,7 +17,7 @@ object SuddenlyDeath {
         // 前日に発言していない人が対象
         dayChange.village.notDummyParticipant().filterAlive().memberList.filter { member ->
             todayMessages.messageList.none { message ->
-                message.from!!.id == member.id
+                message.fromVillageParticipantId == member.id
             }
         }.forEach { member ->
             // 突然死
@@ -27,27 +25,13 @@ object SuddenlyDeath {
             // 入村制限
             players = players.restrictParticipation(member.playerId)
             // 突然死メッセージ
-            messages = messages.add(createSuddenlyDeathMessage(member, charas, village.day.latestDay()))
+            messages = messages.add(Message.createSuddenlyDeathMessage(charas.chara(member.charaId), village.day.latestDay().id))
         }
 
         return dayChange.copy(
             village = village,
             messages = messages,
             players = players
-        )
-    }
-
-    // ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-    // 突然死メッセージ
-    private fun createSuddenlyDeathMessage(
-        participant: VillageParticipant,
-        charas: Charas,
-        latestDay: VillageDay
-    ): Message {
-        val charaName = charas.list.first { it.id == participant.charaId }.charaName
-        val message = "${charaName}は突然死した。"
-        return DayChange.createPublicSystemMessage(message, latestDay)
+        ).setIsChange(dayChange)
     }
 }

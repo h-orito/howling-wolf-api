@@ -41,7 +41,7 @@ class PrologueTest : Wolf4busyTest() {
         val todayMessages = Messages(
             listOf(
                 DummyDomainModelCreator.createDummyMessage().copy(
-                    from = participant1,
+                    fromVillageParticipantId = participant1.id,
                     content = DummyDomainModelCreator.createDummyMessageContent().copy(
                         type = MessageType(CDef.MessageType.通常発言)
                     ),
@@ -50,7 +50,7 @@ class PrologueTest : Wolf4busyTest() {
                     )
                 ),
                 DummyDomainModelCreator.createDummyMessage().copy(
-                    from = participant2,
+                    fromVillageParticipantId = participant2.id,
                     content = DummyDomainModelCreator.createDummyMessageContent().copy(
                         type = MessageType(CDef.MessageType.通常発言)
                     ),
@@ -94,7 +94,7 @@ class PrologueTest : Wolf4busyTest() {
         val todayMessages = Messages(
             listOf(
                 DummyDomainModelCreator.createDummyMessage().copy(
-                    from = participant1,
+                    fromVillageParticipantId = participant1.id,
                     content = DummyDomainModelCreator.createDummyMessageContent().copy(
                         type = MessageType(CDef.MessageType.通常発言)
                     ),
@@ -104,7 +104,7 @@ class PrologueTest : Wolf4busyTest() {
                     )
                 ),
                 DummyDomainModelCreator.createDummyMessage().copy(
-                    from = participant2,
+                    fromVillageParticipantId = participant2.id,
                     content = DummyDomainModelCreator.createDummyMessageContent().copy(
                         type = MessageType(CDef.MessageType.通常発言)
                     ),

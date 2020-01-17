@@ -31,13 +31,13 @@ data class VillageView(
         status = village.status,
         setting = VillageSettingsView(village.setting),
         participant = VillageParticipantsView(
-            villageParticipants = village.participant,
+            village = village,
             charas = charas,
             players = players,
             shouldHidePlayer = !village.status.isSolved()
         ),
         spectator = VillageParticipantsView(
-            villageParticipants = village.spectator,
+            village = village,
             charas = charas,
             players = players,
             shouldHidePlayer = !village.status.isSolved()

@@ -45,7 +45,7 @@ object Epilogue {
         // 勝利陣営設定、勝敗設定
         village = village.win(winCamp)
         // エピローグ遷移メッセージ登録
-        var messages = dayChange.messages.add(createEpilogueMessage(winCamp, village.day.latestDay()))
+        var messages = dayChange.messages.add(Message.createWinCampMessage(winCamp, village.day.latestDay().id))
         // 参加者一覧メッセージ登録
         messages = messages.add(createParticipantsMessage(village.day.latestDay()))
         // エピローグは固定で24時間にするので、最新日を差し替える
@@ -55,15 +55,6 @@ object Epilogue {
             village = village,
             messages = messages
         )
-    }
-
-    private fun createEpilogueMessage(winCamp: CDef.Camp, latestDay: VillageDay): Message {
-        val message = when (winCamp) {
-            CDef.Camp.村人陣営 -> "全ての人狼を退治した。人狼に怯える日々は去ったのだ！"
-            CDef.Camp.人狼陣営 -> "もう人狼に抵抗できるほど村人は残っていない。\n人狼は残った村人を全て食らい、別の獲物を求めて村を去っていった。"
-            CDef.Camp.狐陣営 -> "全ては終わったかのように見えた。\nだが、奴が生き残っていた。"
-        }
-        return DayChange.createPublicSystemMessage(message, latestDay)
     }
 
     private fun createParticipantsMessage(latestDay: VillageDay): Message {

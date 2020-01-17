@@ -18,6 +18,7 @@ data class VillageMessageView(
         messageList = messageList.map {
             MessageView(
                 message = it,
+                village = village,
                 players = players,
                 charas = charas,
                 shouldHidePlayer = !village.status.isSolved()

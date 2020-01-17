@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.DayChange
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
@@ -96,11 +97,9 @@ object Attack {
             it.ability.code == CDef.AbilityType.襲撃.code() && it.targetId != null && it.villageDayId == village.day.yesterday().id
         }?.let { ability ->
             // 襲撃メッセージ
-            val fromCharaName = charas.chara(aliveWolf.charaId).charaName.name
-            val target = village.participant.member(ability.targetId!!)
-            val toCharaName = charas.chara(target.charaId).charaName.name
-            val text = "${fromCharaName}達は、${toCharaName}を襲撃した。"
-            messages = messages.add(DayChange.createAttackPrivateMessage(text, latestDay))
+            val fromChara = charas.chara(aliveWolf.charaId)
+            val targetChara = charas.chara(village.participant, ability.targetId!!)
+            messages = messages.add(Message.createAttackMessage(fromChara, targetChara, latestDay.id))
             // 襲撃成功したら死亡
             if (isAttackSuccess(dayChange, ability.targetId)) village = village.attackParticipant(ability.targetId, latestDay)
         } ?: return dayChange
