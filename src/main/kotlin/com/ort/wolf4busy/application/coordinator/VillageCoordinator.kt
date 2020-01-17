@@ -125,7 +125,7 @@ class VillageCoordinator(
         password: String?
     ) {
         // 村参加者登録
-        val villagePlayerId: Int = villageService.registerVillagePlayer(
+        val participantId: Int = villageService.registerVillageParticipant(
             villageId = villageId,
             playerId = playerId,
             charaId = charaId,
@@ -136,19 +136,12 @@ class VillageCoordinator(
         )
         val village: Village = villageService.findVillage(villageId)
         val chara: Chara = charachipService.findChara(charaId)
-        // 何人参加しているか
-        val participateCount: Int = if (isSpectate) village.spectator.count + 1 else village.participant.count + 1
-        // {N}人目、{キャラ名} と
-        // ユーザー入力の発言
+        // {N}人目、{キャラ名} とユーザー入力の発言
         messageService.registerParticipateMessage(
-            villageId = villageId,
-            villageDayId = village.day.prologueDay().id,
-            villagePlayerId = villagePlayerId,
-            charaName = chara.charaName.name,
-            firstRequestSkillName = firstRequestSkill.alias(),
-            secondRequestSkillName = secondRequestSkill.alias(),
+            village = village,
+            participant = village.participant.member(participantId),
+            chara = chara,
             message = message,
-            participateNumber = participateCount, // 何人目か
             isSpectate = isSpectate
         )
     }
@@ -168,7 +161,7 @@ class VillageCoordinator(
         villageService.leaveVillage(participant!!)
         // 退村メッセージ
         val chara = charachipService.findChara(participant.charaId)
-        messageService.registerLeaveMessage(village.id, chara, village.day.prologue().id)
+        messageService.registerLeaveMessage(village.id, chara, village.day.prologueDay().id)
     }
 
     /**
@@ -318,9 +311,9 @@ class VillageCoordinator(
     private fun assertSay(villageId: Int, user: Wolf4busyUser?, messageContent: MessageContent) {
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = if (user == null) null else villageService.findParticipantByUid(villageId, user.uid)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val chara = if (participant == null) null else charachipService.findChara(participant.charaId)
         val latestDayMessageList: List<Message> =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
-        Say.assertSay(village, participant, charas, latestDayMessageList, messageContent)
+        Say.assertSay(village, participant, chara, latestDayMessageList, messageContent)
     }
 }

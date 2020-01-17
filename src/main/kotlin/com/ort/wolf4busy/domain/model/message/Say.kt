@@ -1,7 +1,7 @@
 package com.ort.wolf4busy.domain.model.message
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -28,7 +28,7 @@ object Say {
     fun assertSay(
         village: Village,
         participant: VillageParticipant?,
-        charas: Charas,
+        chara: Chara?,
         latestDayMessageList: List<Message>,
         messageContent: MessageContent
     ) {
@@ -44,7 +44,7 @@ object Say {
             else -> throw Wolf4busyBusinessException("発言できません")
         }
         // 表情種別チェック
-        if (!isSelectableFaceType(charas, participant!!, messageContent)) throw Wolf4busyBusinessException("発言できません")
+        if (!isSelectableFaceType(chara!!, participant!!, messageContent)) throw Wolf4busyBusinessException("発言できません")
         // 発言回数、長さ、行数チェック
         village.assertMessageRestrict(messageContent, latestDayMessageList)
     }
@@ -52,6 +52,6 @@ object Say {
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun isSelectableFaceType(charas: Charas, participant: VillageParticipant, messageContent: MessageContent): Boolean =
-        charas.chara(participant.charaId).faceList.any { it.type == messageContent.faceCode }
+    private fun isSelectableFaceType(chara: Chara, participant: VillageParticipant, messageContent: MessageContent): Boolean =
+        chara.faceList.any { it.type == messageContent.faceCode }
 }

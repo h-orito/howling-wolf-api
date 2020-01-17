@@ -26,10 +26,6 @@ data class VillageDays(
         return dayList.find { it.day == 0 && it.noonnight == CDef.Noonnight.昼.code() }!!
     }
 
-    fun prologue(): VillageDay {
-        return dayList.first { it.day == 0 && it.noonnight == CDef.Noonnight.昼.code() }
-    }
-
     fun existsDifference(villageDays: VillageDays): Boolean {
         if (dayList.size != villageDays.dayList.size) return true
         return dayList.any { day1 ->

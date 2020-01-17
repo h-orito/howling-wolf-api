@@ -46,6 +46,7 @@ class MessageCoordinator(
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
+    // TODO Messageには内容をもたずにView側でやる
     private fun complementMessage(message: Message, village: Village, day: Int): Message {
         return message.copy(
             from = if (message.from == null) null else village.participant.member(message.from.id),
