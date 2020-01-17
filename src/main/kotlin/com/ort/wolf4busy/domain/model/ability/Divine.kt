@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.DayChange
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
@@ -82,7 +83,7 @@ object Divine {
                 val isWolf =
                     dayChange.village.participant.member(ability.targetId).skill!!.toCdef().isDivineResultWolf
                 val text = "${fromCharaName}は、${toCharaName}を占った。\n${toCharaName}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
-                messages = messages.add(DayChange.createSeerPrivateMessage(text, latestDay, seer))
+                messages = messages.add(Message.createSeerPrivateMessage(text, latestDay, seer))
             }
         }
         // TODO 呪殺、逆呪殺

@@ -136,15 +136,14 @@ object DummyDomainModelCreator {
     fun createDummyCommits(): Commits = Commits(listOf())
 
     fun createDummyMessage(): Message = Message(
-        from = createDummyVillageParticipant(),
-        to = null,
+        fromVillageParticipantId = createDummyVillageParticipant().id,
+        toVillageParticipantId = null,
         time = createDummyMessageTime(),
         content = createDummyMessageContent()
     )
 
     fun createDummyMessageTime(): MessageTime = MessageTime(
         villageDayId = randomNumber(),
-        day = randomNumber(),
         datetime = LocalDateTime.now(),
         unixTimeMilli = 1L
     )
