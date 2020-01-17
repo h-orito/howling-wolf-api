@@ -86,7 +86,7 @@ class VillageService(
      * @param isSpectate 見学か
      * @return 村参加者ID
      */
-    fun registerVillagePlayer(
+    fun registerVillageParticipant(
         villageId: Int,
         playerId: Int,
         charaId: Int,

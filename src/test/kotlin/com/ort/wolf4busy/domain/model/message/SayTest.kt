@@ -3,7 +3,6 @@ package com.ort.wolf4busy.domain.model.message
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.Wolf4busyTest
 import com.ort.wolf4busy.domain.model.charachip.CharaFace
-import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.dead.Dead
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.setting.VillageMessageRestrict
@@ -112,14 +111,12 @@ class SayTest : Wolf4busyTest() {
             )
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(
-                id = participant.charaId,
-                faceList = listOf(
-                    CharaFace(CDef.FaceType.通常.code(), CDef.FaceType.通常.alias(), "url")
-                )
+        val chara = DummyDomainModelCreator.createDummyChara().copy(
+            id = participant.charaId,
+            faceList = listOf(
+                CharaFace(CDef.FaceType.通常.code(), CDef.FaceType.通常.alias(), "url")
             )
-        ))
+        )
         val latestDayMesasgeList = (1..19).map {
             DummyDomainModelCreator.createDummyMessage().copy(
                 content = DummyDomainModelCreator.createDummyMessageContent().copy(
@@ -136,7 +133,7 @@ class SayTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        Say.assertSay(village, participant, charas, latestDayMesasgeList, messageContent)
+        Say.assertSay(village, participant, chara, latestDayMesasgeList, messageContent)
     }
 
     @Test(expected = Wolf4busyBusinessException::class)
@@ -151,14 +148,12 @@ class SayTest : Wolf4busyTest() {
             )
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(
-                id = participant.charaId,
-                faceList = listOf(
-                    CharaFace(CDef.FaceType.通常.code(), CDef.FaceType.通常.alias(), "url")
-                )
+        val chara = DummyDomainModelCreator.createDummyChara().copy(
+            id = participant.charaId,
+            faceList = listOf(
+                CharaFace(CDef.FaceType.通常.code(), CDef.FaceType.通常.alias(), "url")
             )
-        ))
+        )
         val latestDayMesasgeList = (1..20).map {
             DummyDomainModelCreator.createDummyMessage().copy(
                 content = DummyDomainModelCreator.createDummyMessageContent().copy(
@@ -175,7 +170,7 @@ class SayTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        Say.assertSay(village, participant, charas, latestDayMesasgeList, messageContent)
+        Say.assertSay(village, participant, chara, latestDayMesasgeList, messageContent)
     }
 
     @Test(expected = Wolf4busyBusinessException::class)
@@ -204,14 +199,12 @@ class SayTest : Wolf4busyTest() {
             )
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(
-                id = participant.charaId,
-                faceList = listOf(
-                    CharaFace(CDef.FaceType.通常.code(), CDef.FaceType.通常.alias(), "url")
-                )
+        val chara = DummyDomainModelCreator.createDummyChara().copy(
+            id = participant.charaId,
+            faceList = listOf(
+                CharaFace(CDef.FaceType.通常.code(), CDef.FaceType.通常.alias(), "url")
             )
-        ))
+        )
         val latestDayMessageList = (1..19).map {
             DummyDomainModelCreator.createDummyMessage().copy(
                 content = DummyDomainModelCreator.createDummyMessageContent().copy(
@@ -228,6 +221,6 @@ class SayTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        Say.assertSay(village, participant, charas, latestDayMessageList, messageContent)
+        Say.assertSay(village, participant, chara, latestDayMessageList, messageContent)
     }
 }

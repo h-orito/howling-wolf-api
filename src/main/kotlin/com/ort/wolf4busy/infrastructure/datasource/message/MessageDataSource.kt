@@ -120,43 +120,6 @@ class MessageDataSource(
         return messageList.map { convertMessageToMessage(it) }
     }
 
-    fun registerMessage(
-        villageId: Int,
-        dayId: Int,
-        messageType: String,
-        text: String,
-        villagePlayerId: Int? = null,
-        targetVillagePlayerId: Int? = null,
-        playerId: Int? = null,
-        faceType: String? = null
-    ) {
-        val mes = Message()
-        mes.villageId = villageId
-        mes.villageDayId = dayId
-        mes.messageTypeCode = messageType
-        mes.messageContent = text
-        mes.villagePlayerId = villagePlayerId
-        mes.toVillagePlayerId = targetVillagePlayerId
-        mes.playerId = playerId
-        mes.faceTypeCode = faceType
-        mes.isConvertDisable = true
-        val now = Wolf4busyDateUtil.currentLocalDateTime()
-        mes.messageDatetime = now
-        mes.messageUnixtimestampMilli = now.toInstant(ZoneOffset.ofHours(+9)).toEpochMilli()
-
-        // 発言番号の採番 & insert (3回チャレンジする)
-        for (i in 1..3) {
-            try {
-                mes.messageNumber = selectNextMessageNumber(villageId, messageType)
-                messageBhv.insert(mes)
-                return
-            } catch (e: RuntimeException) {
-                logger.error(e.message, e)
-            }
-        }
-        throw Wolf4busyBusinessException("混み合っているため発言に失敗しました。再度発言してください。")
-    }
-
     fun registerMessage(villageId: Int, message: com.ort.wolf4busy.domain.model.message.Message) {
         val mes = Message()
         mes.villageId = villageId
@@ -194,53 +157,7 @@ class MessageDataSource(
     fun updateDifference(villageId: Int, before: Messages, after: Messages) {
         // 追加しかないのでbeforeにないindexから追加していく
         after.messageList.drop(before.messageList.size).forEach {
-            when (it.content.type.toCdef()) {
-                CDef.MessageType.公開システムメッセージ -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.非公開システムメッセージ -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.通常発言 -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text,
-                    villagePlayerId = it.from?.id,
-                    faceType = CDef.FaceType.通常.code()
-                )
-                CDef.MessageType.白黒占い結果 -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text,
-                    villagePlayerId = it.from?.id
-                )
-                CDef.MessageType.白黒霊視結果 -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.襲撃結果 -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.参加者一覧 -> registerMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-            }
+            registerMessage(villageId, it)
         }
     }
 
