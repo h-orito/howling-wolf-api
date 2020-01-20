@@ -3,7 +3,6 @@ package com.ort.wolf4busy.domain.model.daychange
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
-import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 
 object Epilogue {
@@ -47,7 +46,7 @@ object Epilogue {
         // エピローグ遷移メッセージ登録
         var messages = dayChange.messages.add(Message.createWinCampMessage(winCamp, village.day.latestDay().id))
         // 参加者一覧メッセージ登録
-        messages = messages.add(createParticipantsMessage(village.day.latestDay()))
+        messages = messages.add(Message.createParticipantsMessage(village.day.latestDay().id))
         // エピローグは固定で24時間にするので、最新日を差し替える
         village = village.extendLatestDay()
 
@@ -55,11 +54,6 @@ object Epilogue {
             village = village,
             messages = messages
         )
-    }
-
-    private fun createParticipantsMessage(latestDay: VillageDay): Message {
-        // 別途情報取得して表示させるので、参加者一覧であることだけわかればok
-        return DayChange.createParticipantsMessage(latestDay)
     }
 
     // 日付を進める必要があるか

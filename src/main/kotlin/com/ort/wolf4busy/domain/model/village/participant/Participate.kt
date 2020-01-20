@@ -1,6 +1,8 @@
 package com.ort.wolf4busy.domain.model.village.participant
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.charachip.Chara
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -82,5 +84,27 @@ object Participate {
         charachipCharaNum: Int
     ) {
         if (!isAvailableSpectate(player, village, charachipCharaNum)) throw Wolf4busyBusinessException("見学できません")
+    }
+
+    /**
+     * 参加メッセージ
+     * @param village village
+     * @param chara chara
+     * @param isSpectate 見学か
+     * @return 参加時のメッセージ e.g. {N}人目、{キャラ名}。
+     */
+    fun createParticipateMessage(village: Village, chara: Chara, isSpectate: Boolean): Message {
+        // 何人目か
+        val number = if (isSpectate) {
+            village.spectator.count + 1
+        } else {
+            village.participant.count + 1
+        }
+        val text = if (isSpectate) {
+            "（見学）${number}人目、${chara.charaName.name}。"
+        } else {
+            "${number}人目、${chara.charaName.name}。"
+        }
+        return Message.createPublicSystemMessage(text, village.day.prologueDay().id)
     }
 }

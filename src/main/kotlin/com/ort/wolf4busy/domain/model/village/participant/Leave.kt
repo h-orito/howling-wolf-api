@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.domain.model.village.participant
 
 import com.ort.wolf4busy.domain.model.charachip.Chara
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 
@@ -35,5 +36,20 @@ object Leave {
         if (!isAvailableLeave(village, participant)) throw Wolf4busyBusinessException("退村できません")
     }
 
-    fun getLeaveMessage(chara: Chara): String = "${chara.charaName.name}は村を去った。"
+
+    /**
+     * 退村メッセージ
+     * @param village village
+     * @param chara chara
+     * @return 退村時のメッセージ e.g. {キャラ名}は村を去った。
+     */
+    fun createLeaveMessage(village: Village, chara: Chara): Message =
+        Message.createPublicSystemMessage(createLeaveMessageString(chara), village.day.latestDay().id)
+
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun createLeaveMessageString(chara: Chara): String =
+        "${chara.charaName.name}は村を去った。"
 }

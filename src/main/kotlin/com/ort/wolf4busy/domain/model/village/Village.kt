@@ -20,24 +20,40 @@ data class Village(
     val day: VillageDays
 ) {
 
-    companion object {
-
-        fun getInitialMessage(): String =
-            "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この館に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
-
-        fun getDay1Message(): String =
-            "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\n例え人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。"
-
-        fun getDay2Message(): String =
-            "ついに犠牲者が出た。\n\n村人達は、この中にいる人狼を排除するため、投票を行う事にした。\n無実の犠牲者が出るのもやむをえない。村が全滅するよりは……。\n\n最後まで残るのは村人か、それとも人狼か。"
-
-        fun getCancelMessage(): String = "人数が不足しているため廃村しました。"
-    }
-
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
     private val everyoneAllowedMessageTypeList = listOf(CDef.MessageType.公開システムメッセージ, CDef.MessageType.通常発言, CDef.MessageType.村建て発言)
+
+    private val initialMessage: String =
+        "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この館に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
+
+    private val day1Message: String =
+        "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\n例え人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。"
+
+    private val day2Message: String =
+        "ついに犠牲者が出た。\n\n村人達は、この中にいる人狼を排除するため、投票を行う事にした。\n無実の犠牲者が出るのもやむをえない。村が全滅するよりは……。\n\n最後まで残るのは村人か、それとも人狼か。"
+
+    private val cancelMessage: String = "人数が不足しているため廃村しました。"
+
+    // ===================================================================================
+    //                                                                             message
+    //                                                                           =========
+    /** 村作成時のメッセージ */
+    fun createVillagePrologueMessage(): Message =
+        Message.createPublicSystemMessage(initialMessage, day.latestDay().id)
+
+    /** 1日目のメッセージ */
+    fun createVillageDay1Message(): Message =
+        Message.createPublicSystemMessage(day1Message, day.latestDay().id)
+
+    /** 2日目のメッセージ */
+    fun createVillageDay2Message(): Message =
+        Message.createPublicSystemMessage(day2Message, day.latestDay().id)
+
+    /** 廃村メッセージ */
+    fun createCancelVillageMessage(): Message =
+        Message.createPublicSystemMessage(cancelMessage, day.latestDay().id)
 
     // ===================================================================================
     //                                                                                read

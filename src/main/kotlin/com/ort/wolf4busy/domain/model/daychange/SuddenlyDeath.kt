@@ -1,5 +1,6 @@
 package com.ort.wolf4busy.domain.model.daychange
 
+import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
@@ -25,7 +26,7 @@ object SuddenlyDeath {
             // 入村制限
             players = players.restrictParticipation(member.playerId)
             // 突然死メッセージ
-            messages = messages.add(Message.createSuddenlyDeathMessage(charas.chara(member.charaId), village.day.latestDay().id))
+            messages = messages.add(createSuddenlyDeathMessage(charas.chara(member.charaId), village.day.latestDay().id))
         }
 
         return dayChange.copy(
@@ -34,4 +35,24 @@ object SuddenlyDeath {
             players = players
         ).setIsChange(dayChange)
     }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    /**
+     * 突然死メッセージ
+     * @param chara chara
+     * @param villageDayId 村日付ID
+     */
+    private fun createSuddenlyDeathMessage(
+        chara: Chara,
+        villageDayId: Int
+    ): Message {
+        return Message.createPublicSystemMessage(
+            createSuddenlyDeathMessageString(chara), villageDayId
+        )
+    }
+
+    private fun createSuddenlyDeathMessageString(chara: Chara): String =
+        "${chara.charaName.name}は突然死した。"
 }
