@@ -96,9 +96,10 @@ object Progress {
     }
 
     private fun addDay2MessageIfNeeded(dayChange: DayChange): DayChange {
-        if (dayChange.village.day.latestDay().day != 2) return dayChange
+        val village = dayChange.village
+        if (village.day.latestDay().day != 2) return dayChange
         return dayChange.copy(
-            messages = dayChange.messages.add(Message.createVillageDay2Message(dayChange.village.day.latestDay().id))
+            messages = dayChange.messages.add(village.createVillageDay2Message())
         ).setIsChange(dayChange)
     }
 

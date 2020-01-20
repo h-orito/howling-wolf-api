@@ -9,6 +9,8 @@ import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.message.Say
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.participant.Leave
+import com.ort.wolf4busy.domain.model.village.participant.Participate
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.infrastructure.datasource.message.MessageDataSource
 import org.springframework.stereotype.Service
@@ -77,12 +79,11 @@ class MessageService(
 
     /**
      * 村作成時のシステムメッセージ登録
-     * @param villageId villageId
-     * @param villageDayId 村日付ID
+     * @param village village
      */
-    fun registerInitialMessage(villageId: Int, villageDayId: Int) {
-        val message = Message.createVillagePrologueMessage(villageDayId)
-        messageDataSource.registerMessage(villageId, message)
+    fun registerInitialMessage(village: Village) {
+        val message = village.createVillagePrologueMessage()
+        messageDataSource.registerMessage(village.id, message)
     }
 
     /**
@@ -103,7 +104,7 @@ class MessageService(
         // {N}人目、{キャラ名}。
         messageDataSource.registerMessage(
             village.id,
-            Message.createParticipateMessage(village, chara, isSpectate)
+            Participate.createParticipateMessage(village, chara, isSpectate)
         )
         // 参加発言
         val messageContent = MessageContent.invoke(
@@ -120,13 +121,12 @@ class MessageService(
 
     /**
      * 退村する際のシステムメッセージを登録
-     * @param villageId villageId
+     * @param village village
      * @param chara chara
-     * @param villageDayId 村日付ID
      */
-    fun registerLeaveMessage(villageId: Int, chara: Chara, villageDayId: Int) {
-        val message = Message.createLeaveMessage(chara, villageDayId)
-        messageDataSource.registerMessage(villageId, message)
+    fun registerLeaveMessage(village: Village, chara: Chara) {
+        val message = Leave.createLeaveMessage(village, chara)
+        messageDataSource.registerMessage(village.id, message)
     }
 
     /**
@@ -145,8 +145,8 @@ class MessageService(
         charas: Charas
     ) {
         val myChara = charas.chara(participant.charaId)
-        val targetChara = if (targetId == null) null else charas.chara(village.participant.member(targetId).charaId)
-        val message = Message.createAbilitySetMessage(village, myChara, targetChara, ability)
+        val targetChara = if (targetId == null) null else charas.chara(village.participant, targetId)
+        val message = ability.createAbilitySetMessage(village, myChara, targetChara)
         messageDataSource.registerMessage(village.id, message)
     }
 

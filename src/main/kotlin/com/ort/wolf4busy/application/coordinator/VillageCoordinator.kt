@@ -53,7 +53,7 @@ class VillageCoordinator(
         // 村を登録
         val village: Village = villageService.registerVillage(paramVillage, villagePassword)
         // 村作成時のシステムメッセージを登録
-        messageService.registerInitialMessage(village.id, village.day.latestDay().id)
+        messageService.registerInitialMessage(village)
         // ダミーキャラを参加させる
         val chara = charachipService.findChara(village.dummyChara().charaId)
         participateDummyChara(village.id, village, chara)
@@ -161,7 +161,7 @@ class VillageCoordinator(
         villageService.leaveVillage(participant!!)
         // 退村メッセージ
         val chara = charachipService.findChara(participant.charaId)
-        messageService.registerLeaveMessage(village.id, chara, village.day.prologueDay().id)
+        messageService.registerLeaveMessage(village, chara)
     }
 
     /**

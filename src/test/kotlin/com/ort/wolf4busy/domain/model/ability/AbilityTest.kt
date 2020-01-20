@@ -146,17 +146,24 @@ class AbilityTest : Wolf4busyTest() {
     }
 
     @Test
-    fun test_getAbilitySetMessage() {
+    fun test_createAbilitySetMessage() {
         // ## Arrange ##
         val ability = Ability(CDef.AbilityType.占い)
+        val village = DummyDomainModelCreator.createDummyVillage().copy(
+            day = VillageDays(
+                listOf(
+                    DummyDomainModelCreator.createDummyVillageDay()
+                )
+            )
+        )
         val chara = DummyDomainModelCreator.createDummyChara()
         val targetChara = DummyDomainModelCreator.createDummyChara()
 
         // ## Act ##
-        val message = ability.getAbilitySetMessage(chara, targetChara)
+        val message = ability.createAbilitySetMessage(village, chara, targetChara)
 
         // ## Assert ##
-        assertThat(message).isNotEmpty()
+        assertThat(message.content.text).isNotEmpty()
     }
 
     @Test(expected = Wolf4busyBusinessException::class)

@@ -1,14 +1,12 @@
 package com.ort.wolf4busy.domain.model.message
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.camp.Camp
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.village.Village
-import com.ort.wolf4busy.domain.model.village.participant.Leave
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.vote.VillageVote
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
@@ -21,84 +19,6 @@ data class Message(
 ) {
 
     companion object {
-
-        /** 村作成時のメッセージ */
-        fun createVillagePrologueMessage(villageDayId: Int): Message =
-            createPublicSystemMessage(Village.getInitialMessage(), villageDayId)
-
-        /** 1日目のメッセージ */
-        fun createVillageDay1Message(villageDayId: Int): Message =
-            createPublicSystemMessage(Village.getDay1Message(), villageDayId)
-
-        /** 2日目のメッセージ */
-        fun createVillageDay2Message(villageDayId: Int): Message =
-            createPublicSystemMessage(Village.getDay2Message(), villageDayId)
-
-        /** 廃村メッセージ */
-        fun createCancelVillageMessage(villageDayId: Int): Message =
-            createPublicSystemMessage(Village.getCancelMessage(), villageDayId)
-
-        /**
-         * 参加メッセージ
-         * @param village village
-         * @param chara chara
-         * @param isSpectate 見学か
-         * @return 参加時のメッセージ e.g. {N}人目、{キャラ名}。
-         */
-        fun createParticipateMessage(village: Village, chara: Chara, isSpectate: Boolean): Message {
-            // 何人目か
-            val number = if (isSpectate) {
-                village.spectator.count + 1
-            } else {
-                village.participant.count + 1
-            }
-            val text = if (isSpectate) {
-                "（見学）${number}人目、${chara.charaName.name}。"
-            } else {
-                "${number}人目、${chara.charaName.name}。"
-            }
-            return createPublicSystemMessage(text, village.day.prologueDay().id)
-        }
-
-        /**
-         * 退村メッセージ
-         * @param chara chara
-         * @param villageDayId 村日付ID
-         * @return 退村時のメッセージ e.g. {キャラ名}は村を去った。
-         */
-        fun createLeaveMessage(chara: Chara, villageDayId: Int): Message =
-            createPublicSystemMessage(Leave.getLeaveMessage(chara), villageDayId)
-
-        /**
-         * 突然死メッセージ
-         * @param chara chara
-         * @param villageDayId 村日付ID
-         */
-        fun createSuddenlyDeathMessage(
-            chara: Chara,
-            villageDayId: Int
-        ): Message {
-            val message = "${chara.charaName.name}は突然死した。"
-            return createPublicSystemMessage(message, villageDayId)
-        }
-
-        /**
-         * 能力セットメッセージ
-         * @param village village
-         * @param myChara セットするキャラ
-         * @param targetChara セットされるキャラ
-         * @param ability ability
-         * @return 能力セット時のメッセージ e.g. "{キャラ名}が襲撃対象を{キャラ名}に設定しました。"
-         */
-        fun createAbilitySetMessage(
-            village: Village,
-            myChara: Chara,
-            targetChara: Chara?,
-            ability: Ability
-        ): Message {
-            val text = ability.getAbilitySetMessage(myChara, targetChara)
-            return createPrivateSystemMessage(text, village.day.latestDay().id)
-        }
 
         /**
          * コミットメッセージ
@@ -115,7 +35,8 @@ data class Message(
          * @param cdefWinCamp 勝利した陣営
          * @param villageDayId 村日付ID
          */
-        fun createWinCampMessage(cdefWinCamp: CDef.Camp, villageDayId: Int): Message = createPublicSystemMessage(Camp.getWinCampMessage(cdefWinCamp), villageDayId)
+        fun createWinCampMessage(cdefWinCamp: CDef.Camp, villageDayId: Int): Message =
+            createPublicSystemMessage(Camp.getWinCampMessage(cdefWinCamp), villageDayId)
 
         /**
          * 投票結果メッセージ
@@ -273,18 +194,6 @@ data class Message(
             return createAttackPrivateMessage(text, villageDayId)
         }
 
-        /**
-         * 占いメッセージ
-         * @param chara 占い師
-         * @param targetChara 対象者
-         * @param isWolf 人狼か
-         * @param villageDayId 村日付ID
-         */
-        fun createDivineMessage(chara: Chara, targetChara: Chara, isWolf: Boolean, seer: VillageParticipant, villageDayId: Int): Message {
-            val text = "${chara.charaName.name}は、${targetChara.charaName.name}を占った。\n${targetChara.charaName.name}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
-            createSeerPrivateMessage(text, villageDayId, seer)
-        }
-
         fun createSayMessage(
             from: VillageParticipant,
             villageDayId: Int,
@@ -301,24 +210,9 @@ data class Message(
             content = messageContent
         )
 
-        // 登録用
-        fun createPublicSystemMessage(text: String, villageDayId: Int): Message =
-            createSystemMessage(MessageType(CDef.MessageType.公開システムメッセージ), text, villageDayId)
-
-        fun createPrivateSystemMessage(text: String, villageDayId: Int): Message =
-            createSystemMessage(MessageType(CDef.MessageType.非公開システムメッセージ), text, villageDayId)
-
-        fun createSeerPrivateMessage(text: String, villageDayId: Int, participant: VillageParticipant): Message =
-            createSystemMessage(MessageType(CDef.MessageType.白黒占い結果), text, villageDayId, participant)
-
-        fun createPsychicPrivateMessage(text: String, villageDayId: Int): Message =
-            createSystemMessage(MessageType(CDef.MessageType.白黒霊視結果), text, villageDayId)
-
-        fun createAttackPrivateMessage(text: String, villageDayId: Int): Message =
-            createSystemMessage(MessageType(CDef.MessageType.襲撃結果), text, villageDayId)
-
+        // 別途情報取得して表示させるので、参加者一覧であることだけわかればok
         fun createParticipantsMessage(villageDayId: Int): Message =
-            createSystemMessage(MessageType(CDef.MessageType.襲撃結果), "読み込み中...", villageDayId)
+            createSystemMessage(MessageType(CDef.MessageType.参加者一覧), "読み込み中...", villageDayId)
 
         // ===================================================================================
         //                                                                        Assist Logic
@@ -343,6 +237,21 @@ data class Message(
                 faceCode = null
             )
         )
+
+        fun createPublicSystemMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.公開システムメッセージ), text, villageDayId)
+
+        fun createPrivateSystemMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.非公開システムメッセージ), text, villageDayId)
+
+        fun createSeerPrivateMessage(text: String, villageDayId: Int, participant: VillageParticipant): Message =
+            createSystemMessage(MessageType(CDef.MessageType.白黒占い結果), text, villageDayId, participant)
+
+        fun createPsychicPrivateMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.白黒霊視結果), text, villageDayId)
+
+        private fun createAttackPrivateMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.襲撃結果), text, villageDayId)
 
         /**
          * @param fromChara 投票したキャラ

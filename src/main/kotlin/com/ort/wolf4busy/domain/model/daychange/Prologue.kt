@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.participant.Leave
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 
 object Prologue {
@@ -23,7 +24,7 @@ object Prologue {
         dayChange.village.participant.memberList.forEach { member ->
             if (recentMessageList.none { message -> message.fromVillageParticipantId!! == member.id }) {
                 village = village.leaveParticipant(member.id)
-                messages = messages.add(Message.createLeaveMessage(charas.chara(member.charaId), dayChange.village.day.latestDay().id))
+                messages = messages.add(Leave.createLeaveMessage(village, charas.chara(member.charaId)))
             }
         }
         return dayChange.copy(
@@ -48,7 +49,7 @@ object Prologue {
         charas: Charas
     ): DayChange {
         // 開始メッセージ追加
-        var messages = dayChange.messages.add(Message.createVillageDay1Message(dayChange.village.day.latestDay().id))
+        var messages = dayChange.messages.add(dayChange.village.createVillageDay1Message())
         // 役職割り当て
         var village = dayChange.village.assignSkill()
         // 役職構成メッセージ追加
@@ -78,7 +79,7 @@ object Prologue {
     private fun cancelVillage(dayChange: DayChange): DayChange {
         return dayChange.copy(
             village = dayChange.village.changeStatus(CDef.VillageStatus.廃村),
-            messages = dayChange.messages.add(Message.createCancelVillageMessage(dayChange.village.day.latestDay().id))
+            messages = dayChange.messages.add(dayChange.village.createCancelVillageMessage())
         )
     }
 
