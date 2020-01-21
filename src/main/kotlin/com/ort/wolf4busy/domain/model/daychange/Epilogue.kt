@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.domain.model.daychange
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.camp.Camp
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
@@ -44,7 +45,7 @@ object Epilogue {
         // 勝利陣営設定、勝敗設定
         village = village.win(winCamp)
         // エピローグ遷移メッセージ登録
-        var messages = dayChange.messages.add(Message.createWinCampMessage(winCamp, village.day.latestDay().id))
+        var messages = dayChange.messages.add(Camp.createWinCampMessage(winCamp, village.day.latestDay().id))
         // 参加者一覧メッセージ登録
         messages = messages.add(Message.createParticipantsMessage(village.day.latestDay().id))
         // エピローグは固定で24時間にするので、最新日を差し替える

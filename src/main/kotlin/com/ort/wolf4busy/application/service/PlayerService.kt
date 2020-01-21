@@ -16,14 +16,14 @@ class PlayerService(
     }
 
     fun findPlayer(user: Wolf4busyUser): Player {
-        return playerDataSource.selectPlayer(user.uid)
+        return playerDataSource.findPlayer(user.uid)
     }
 
     fun findPlayers(villageId: Int): Players {
-        return playerDataSource.selectPlayerList(villageId)
+        return playerDataSource.findPlayers(villageId)
     }
 
     fun updateNickname(user: Wolf4busyUser, nickname: String, twitterUserName: String) {
-        playerDataSource.updateNickname(user.uid, nickname, twitterUserName)
+        playerDataSource.update(user.uid, nickname, twitterUserName)
     }
 }

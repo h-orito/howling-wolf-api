@@ -24,7 +24,7 @@ class MessageCoordinator(
     fun findMessageList(village: Village, day: Int, noonnight: String, user: Wolf4busyUser?, from: Long?): Messages {
         val participant: VillageParticipant? = villageService.findParticipantByUid(village.id, user?.uid)
         val messageTypeList = village.viewableMessageTypeList(participant, day, user?.authority)
-        val villageDayId = villageService.findVillageDay(village.id, day, noonnight).id
+        val villageDayId = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
         val messages = messageService.findMessageList(village.id, villageDayId, messageTypeList, participant, from)
         dayChangeCoordinator.dayChangeIfNeeded(village)
         return messages

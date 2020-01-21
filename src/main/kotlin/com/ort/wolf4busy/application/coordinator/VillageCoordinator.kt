@@ -129,7 +129,6 @@ class VillageCoordinator(
             villageId = villageId,
             playerId = playerId,
             charaId = charaId,
-            message = message,
             firstRequestSkill = firstRequestSkill,
             secondRequestSkill = secondRequestSkill,
             isSpectate = isSpectate
@@ -255,8 +254,8 @@ class VillageCoordinator(
         // コミット
         val commit = Commit(village.day.latestDay().id, participant!!.id, doCommit)
         commitService.updateCommit(commit)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-        messageService.registerCommitMessage(villageId, village.day.latestDay().id, participant, charas, doCommit)
+        val chara = charachipService.findChara(participant.charaId)
+        messageService.registerCommitMessage(village, chara, doCommit)
         // 日付更新
         if (doCommit) dayChangeCoordinator.dayChangeIfNeeded(village)
     }
@@ -271,7 +270,7 @@ class VillageCoordinator(
         val player = if (user == null) null else playerService.findPlayer(user)
         val participant: VillageParticipant? = if (user == null) null else villageService.findParticipantByUid(villageId, user.uid)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-        val skillRequest: SkillRequest? = villageService.findSkillRequest(participant)
+        val skillRequest: SkillRequest? = if (participant == null) null else village.participant.member(participant.id).skillRequest
         val abilities: VillageAbilities = abilityService.findVillageAbilities(villageId)
         val votes: VillageVotes = voteService.findVillageVotes(villageId)
         val commit: Commit? = commitService.findCommit(village, participant)
