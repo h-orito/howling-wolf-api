@@ -2,7 +2,6 @@ package com.ort.wolf4busy.domain.model.daychange
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Charas
-import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.participant.Leave
@@ -53,13 +52,13 @@ object Prologue {
         // 役職割り当て
         var village = dayChange.village.assignSkill()
         // 役職構成メッセージ追加
-        messages = messages.add(Message.createOrganizationMessage(village))
+        messages = messages.add(village.createOrganizationMessage())
         // ステータス変更
         village = village.changeStatus(CDef.VillageStatus.進行中)
         // デフォルト能力行使指定
         val abilities = dayChange.abilities.addDefaultAbilities(village)
         // ダミーキャラ発言
-        Message.createDummyCharaFirstDayMessage(village, charas)?.let { messages = messages.add(it) }
+        village.createDummyCharaFirstDayMessage(charas)?.let { messages = messages.add(it) }
 
         return dayChange.copy(
             village = village,

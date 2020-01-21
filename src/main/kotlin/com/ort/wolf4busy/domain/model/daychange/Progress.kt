@@ -106,8 +106,18 @@ object Progress {
     // 生存者メッセージ
     private fun addAliveMemberMessage(dayChange: DayChange, charas: Charas): DayChange {
         return dayChange.copy(
-            messages = dayChange.messages.add(Message.createAliveMemberMessage(dayChange.village, charas))
+            messages = dayChange.messages.add(createAliveMemberMessage(dayChange.village, charas))
         ).setIsChange(dayChange)
+    }
+
+    private fun createAliveMemberMessage(village: Village, charas: Charas): Message {
+        val text = village.participant.filterAlive().memberList.joinToString(
+            separator = "\n",
+            prefix = "現在の生存者は以下の${village.participant.filterAlive().count}名。\n"
+        ) { member ->
+            charas.chara(member.charaId).charaName.name
+        }
+        return Message.createPublicSystemMessage(text, village.day.latestDay().id)
     }
 
     // デフォルト投票能力行使

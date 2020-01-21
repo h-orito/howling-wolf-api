@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.commit.Commit
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.Messages
@@ -153,16 +154,15 @@ class MessageService(
     /**
      * コミットする際のシステムメッセージを登録
      *
-     * @param villageId villageId
-     * @param villageDayId villageDayId
-     * @param participant 村参加者
-     * @param charas キャラ
+     * @param village village
+     * @param chara キャラ
      * @param doCommit コミット/取り消し
      */
-    fun registerCommitMessage(villageId: Int, villageDayId: Int, participant: VillageParticipant, charas: Charas, doCommit: Boolean) {
-        val chara = charas.chara(participant.charaId)
-        val message = Message.createCommitMessage(chara, doCommit, villageDayId)
-        messageDataSource.registerMessage(villageId, message)
+    fun registerCommitMessage(village: Village, chara: Chara, doCommit: Boolean) {
+        messageDataSource.registerMessage(
+            village.id,
+            Commit.createCommitMessage(chara, doCommit, village.day.latestDay().id)
+        )
     }
 
     /**

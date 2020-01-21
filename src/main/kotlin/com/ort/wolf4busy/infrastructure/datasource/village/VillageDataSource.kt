@@ -25,7 +25,6 @@ class VillageDataSource(
     // ===================================================================================
     //                                                                             village
     //                                                                           =========
-
     /**
      * 村登録
      * @param paramVillage village
@@ -157,27 +156,6 @@ class VillageDataSource(
     }
 
     /**
-     * 村日付取得
-     * @param villageId villageId
-     * @param day 何日目か
-     * @param noonnightCode 昼夜
-     * @return 村日付
-     */
-    fun selectVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay {
-        val villageDay: VillageDay = villageDayBhv.selectEntityWithDeletedCheck {
-            it.query().setVillageId_Equal(villageId)
-            it.query().setDay_Equal(day)
-            it.query().setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.codeOf(noonnightCode))
-        }
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
-    }
-
-    fun selectVillageDayById(villageDayId: Int): com.ort.wolf4busy.domain.model.village.VillageDay {
-        val villageDay = villageDayBhv.selectByPK(villageDayId).get()
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
-    }
-
-    /**
      * 村日付を更新完了にする
      * @param villageDayId 村日付ID
      */
@@ -194,7 +172,7 @@ class VillageDataSource(
      * @param uid uid
      * @return 村参加者
      */
-    fun selectVillagePlayer(villageId: Int, uid: String): VillageParticipant? {
+    fun findVillageParticipantByUid(villageId: Int, uid: String): VillageParticipant? {
         return villagePlayerBhv.selectEntity {
             it.setupSelect_Chara()
             it.setupSelect_Player()
@@ -206,48 +184,24 @@ class VillageDataSource(
     /**
      * 村参加者登録
      * @param villageId villageId
-     * @param playerId playerId
-     * @param charaId charaId
-     * @param firstRequestSkill 役職第1希望
-     * @param secondRequestSkill 役職第2希望
-     * @param isSpectate 見学か
+     * @param participant participant
      * @return 村参加ID
      */
     fun registerVillageParticipant(
         villageId: Int,
-        playerId: Int,
-        charaId: Int,
-        firstRequestSkill: CDef.Skill,
-        secondRequestSkill: CDef.Skill,
-        isSpectate: Boolean
+        participant: VillageParticipant
     ): Int {
         val vp = VillagePlayer()
         vp.villageId = villageId
-        vp.playerId = playerId
-        vp.charaId = charaId
+        vp.playerId = participant.playerId
+        vp.charaId = participant.charaId
         vp.isDead = false
-        vp.isSpectator = isSpectate
+        vp.isSpectator = participant.isSpectator
         vp.isGone = false
-        vp.requestSkillCodeAsSkill = firstRequestSkill
-        vp.secondRequestSkillCodeAsSkill = secondRequestSkill
+        vp.requestSkillCodeAsSkill = participant.skillRequest.first.toCdef()
+        vp.secondRequestSkillCodeAsSkill = participant.skillRequest.second.toCdef()
         villagePlayerBhv.insert(vp)
         return vp.villagePlayerId
-    }
-
-    /**
-     * 役職希望を取得
-     * @param participant 参加情報
-     * @return 役職希望
-     */
-    fun selectSkillRequest(participant: VillageParticipant): SkillRequest? {
-        val villagePlayer = villagePlayerBhv.selectEntityWithDeletedCheck {
-            it.query().setVillagePlayerId_Equal(participant.id)
-        }
-
-        return SkillRequest(
-            first = villagePlayer.requestSkillCodeAsSkill.let { Skill(it.code(), it.name) },
-            second = villagePlayer.secondRequestSkillCodeAsSkill.let { Skill(it.code(), it.name) }
-        )
     }
 
     // ===================================================================================

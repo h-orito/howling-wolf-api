@@ -24,7 +24,7 @@ class PlayerDataSource(
         return convertPlayerToPlayer(player)
     }
 
-    fun selectPlayer(uid: String): com.ort.wolf4busy.domain.model.player.Player {
+    fun findPlayer(uid: String): com.ort.wolf4busy.domain.model.player.Player {
         val player = playerBhv.selectEntityWithDeletedCheck {
             it.query().setUid_Equal(uid)
         }
@@ -38,7 +38,7 @@ class PlayerDataSource(
         return convertPlayerToPlayer(player)
     }
 
-    fun selectPlayerList(villageId: Int): Players {
+    fun findPlayers(villageId: Int): Players {
         val playerList = playerBhv.selectList {
             it.query().existsVillagePlayer {
                 it.query().setVillageId_Equal(villageId)
@@ -47,7 +47,7 @@ class PlayerDataSource(
         return Players(list = playerList.map { convertPlayerToSimplePlayer(it) })
     }
 
-    fun updateNickname(uid: String, nickname: String, twitterUserName: String) {
+    fun update(uid: String, nickname: String, twitterUserName: String) {
         val player = Player()
         player.uniqueBy(uid)
         player.nickname = nickname

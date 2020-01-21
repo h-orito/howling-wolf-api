@@ -47,18 +47,6 @@ class VillageService(
     }
 
     /**
-     * 村日付取得
-     * @param villageId villageId
-     * @param day 日付
-     * @param noonnightCode 昼夜
-     */
-    fun findVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay =
-        villageDataSource.selectVillageDay(villageId, day, noonnightCode)
-
-    fun findVillageDayById(villageDayId: Int): com.ort.wolf4busy.domain.model.village.VillageDay =
-        villageDataSource.selectVillageDayById(villageDayId)
-
-    /**
      * 村日付を更新完了にする
      * @param villageDayId 村日付ID
      */
@@ -72,7 +60,7 @@ class VillageService(
      */
     fun findParticipantByUid(villageId: Int, uid: String?): VillageParticipant? {
         uid ?: return null
-        return villageDataSource.selectVillagePlayer(villageId, uid)
+        return villageDataSource.findVillageParticipantByUid(villageId, uid)
     }
 
     /**
@@ -90,30 +78,22 @@ class VillageService(
         villageId: Int,
         playerId: Int,
         charaId: Int,
-        message: String,
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         isSpectate: Boolean = false
     ): Int {
-        return villageDataSource.registerVillageParticipant(
-            villageId,
-            playerId,
-            charaId,
-            firstRequestSkill,
-            secondRequestSkill,
-            isSpectate
+        val participant = VillageParticipant(
+            id = 1, // dummy
+            charaId = charaId,
+            playerId = playerId,
+            dead = null,
+            isSpectator = isSpectate,
+            isGone = false,
+            skill = null,
+            skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
+            isWin = null
         )
-    }
-
-    /**
-     * 役職希望を取得
-     *
-     * @param participant 村参加者
-     * @return 役職希望
-     */
-    fun findSkillRequest(participant: VillageParticipant?): SkillRequest? {
-        participant ?: return null
-        return villageDataSource.selectSkillRequest(participant)
+        return villageDataSource.registerVillageParticipant(villageId, participant)
     }
 
     /**

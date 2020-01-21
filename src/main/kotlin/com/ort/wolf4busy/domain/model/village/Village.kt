@@ -1,8 +1,10 @@
 package com.ort.wolf4busy.domain.model.village
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.SkillAssign
 import com.ort.wolf4busy.domain.model.message.*
+import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -54,6 +56,39 @@ data class Village(
     /** 廃村メッセージ */
     fun createCancelVillageMessage(): Message =
         Message.createPublicSystemMessage(cancelMessage, day.latestDay().id)
+
+    /** 構成メッセージ */
+    fun createOrganizationMessage(): Message {
+        val skillCountMap = setting.organizations.mapToSkillCount(participant.count)
+        val text = CDef.Skill.listAll().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
+            val skill = Skill(cdefSkill)
+            val count = skillCountMap[skill]
+            if (count == null || count == 0) null else "${skill.name}が${count}人"
+        }.joinToString(
+            separator = "、\n",
+            prefix = "この村には\n",
+            postfix = "いるようだ。"
+        )
+        return Message.createPublicSystemMessage(text, day.latestDay().id)
+    }
+
+    /**
+     * ダミーキャラの1日目発言
+     * @param charas charas
+     */
+    fun createDummyCharaFirstDayMessage(charas: Charas): Message? {
+        val firstDayMessage = charas.chara(dummyChara().charaId).defaultMessage.firstDayMessage ?: return null
+        val messageContent = MessageContent.invoke(
+            messageType = CDef.MessageType.通常発言.code(),
+            text = firstDayMessage,
+            faceCode = CDef.FaceType.通常.code()
+        )
+        return Message.createSayMessage(
+            from = dummyChara(),
+            villageDayId = day.latestDay().id,
+            messageContent = messageContent
+        )
+    }
 
     // ===================================================================================
     //                                                                                read
