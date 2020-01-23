@@ -11,17 +11,11 @@ class PlayerService(
     private val playerDataSource: PlayerDataSource
 ) {
 
-    fun findPlayer(id: Int): Player {
-        return playerDataSource.findPlayer(id)
-    }
+    fun findPlayer(id: Int): Player = playerDataSource.findPlayer(id)
 
-    fun findPlayer(user: Wolf4busyUser): Player {
-        return playerDataSource.findPlayer(user.uid)
-    }
+    fun findPlayer(user: Wolf4busyUser): Player = playerDataSource.findPlayer(user.uid)
 
-    fun findPlayers(villageId: Int): Players {
-        return playerDataSource.findPlayers(villageId)
-    }
+    fun findPlayers(villageId: Int): Players = playerDataSource.findPlayers(villageId)
 
     fun updateNickname(user: Wolf4busyUser, nickname: String, twitterUserName: String) {
         playerDataSource.update(user.uid, nickname, twitterUserName)

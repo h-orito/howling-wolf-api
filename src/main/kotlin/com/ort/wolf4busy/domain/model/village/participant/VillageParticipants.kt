@@ -2,6 +2,7 @@ package com.ort.wolf4busy.domain.model.village.participant
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.VillageDay
 
 data class VillageParticipants(
@@ -14,6 +15,23 @@ data class VillageParticipants(
                 if (it.id == villageParticipantId) it.assignSkill(skill)
                 else it.copy()
             }
+        )
+    }
+
+    fun addParticipant(charaId: Int, playerId: Int, skillRequest: SkillRequest, isSpectator: Boolean): VillageParticipants {
+        return this.copy(
+            count = count + 1,
+            memberList = memberList + VillageParticipant(
+                id = -1, // dummy
+                charaId = charaId,
+                playerId = playerId,
+                dead = null,
+                isSpectator = isSpectator,
+                isGone = false,
+                skill = null,
+                skillRequest = skillRequest,
+                isWin = null
+            )
         )
     }
 
@@ -73,14 +91,6 @@ data class VillageParticipants(
         return VillageParticipants(
             count = aliveMembers.size,
             memberList = aliveMembers
-        )
-    }
-
-    fun filterNotGone(): VillageParticipants {
-        val notGoneMembers = memberList.filterNot { it.isGone }
-        return VillageParticipants(
-            count = notGoneMembers.size,
-            memberList = notGoneMembers
         )
     }
 

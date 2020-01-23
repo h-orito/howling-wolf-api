@@ -31,9 +31,7 @@ class MessageCoordinator(
 
     fun findMessage(village: Village, messageType: String, messageNumber: Int, user: Wolf4busyUser?): Message? {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        if (!village.isViewableMessage(participant, messageType)) {
-            return null
-        }
-        return messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
+        return if (!village.isViewableMessage(participant, messageType)) null
+        else messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
     }
 }

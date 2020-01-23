@@ -19,6 +19,7 @@ import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
+import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
@@ -46,7 +47,7 @@ class VillageController(
      */
     @GetMapping("/village/list")
     fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillageListView {
-        val villages = villageService.findVillages()
+        val villages: Villages = villageService.findVillages()
         return VillageListView(
             villageList = villages.villageList
         )
@@ -58,10 +59,10 @@ class VillageController(
      */
     @GetMapping("/village/{villageId}")
     fun village(@PathVariable("villageId") villageId: Int): VillageView {
-        val village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
-        val createPlayer = playerService.findPlayer(village.creatorPlayerId)
+        val createPlayer: Player = playerService.findPlayer(village.creatorPlayerId)
         return VillageView(
             village = village,
             charas = charas,
@@ -84,7 +85,7 @@ class VillageController(
         @PathVariable("messageNumber") messageNumber: Int,
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageAnchorMessageView {
-        val village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId)
         val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -111,7 +112,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?,
         @RequestBody @Validated form: VillageMessageForm?
     ): VillageMessageView {
-        val village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId)
         val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -134,7 +135,7 @@ class VillageController(
         @RequestBody @Validated body: VillageRegisterBody
     ): VillageRegisterView {
         val password: String? = null // TODO
-        val player = playerService.findPlayer(user)
+        val player: Player = playerService.findPlayer(user)
         val village: Village = convertRegisterBodyToVillage(body, player)
         val villageId: Int = villageCoordinator.registerVillage(village, user, password)
         return VillageRegisterView(villageId = villageId)
@@ -182,7 +183,7 @@ class VillageController(
         villageCoordinator.participate(
             villageId = villageId,
             playerId = player.id,
-            charaId = body.charaId!!,
+            charaId = body.charaId,
             message = body.joinMessage!!,
             isSpectate = body.spectator ?: false,
             firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),

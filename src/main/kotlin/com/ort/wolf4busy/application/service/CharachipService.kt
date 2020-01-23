@@ -14,27 +14,15 @@ class CharachipService(
     val charaDataSource: CharaDataSource
 ) {
 
-    fun findCharaChipList(): Charachips {
-        return charachipDataSource.findCharachips()
-    }
+    fun findCharaChipList(): Charachips = charachipDataSource.findCharachips()
 
-    fun findCharaChip(charachipId: Int): Charachip {
-        return charachipDataSource.findCharachip(charachipId)
-    }
+    fun findCharaChip(charachipId: Int): Charachip = charachipDataSource.findCharachip(charachipId)
 
-    fun findChara(charaId: Int): Chara {
-        return charaDataSource.findChara(charaId)
-    }
+    fun findChara(charaId: Int): Chara = charaDataSource.findChara(charaId)
 
-    fun findCharaList(charachips: Charachips): Charas {
-        return charaDataSource.findCharas(charachips)
-    }
+    fun findCharaList(charachips: Charachips): Charas = charaDataSource.findCharas(charachips)
 
-    fun findCharaList(charachipId: Int): Charas {
-        return charaDataSource.findCharas(charachipId)
-    }
+    fun findCharaList(charachipId: Int): Charas = charaDataSource.findCharas(charachipId)
 
-    fun findDummyChara(charaChipId: Int): Chara {
-        return charaDataSource.findDummyChara(charaChipId)
-    }
+    fun findDummyChara(charaChipId: Int): Chara = charaDataSource.findDummyChara(charaChipId)
 }

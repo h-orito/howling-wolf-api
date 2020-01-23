@@ -391,11 +391,6 @@ public class BsVillageDayCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnDaychangeDatetime() { return doColumn("DAYCHANGE_DATETIME"); }
         /**
-         * IS_UPDATING: {NotNull, BIT}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnIsUpdating() { return doColumn("IS_UPDATING"); }
-        /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)
          */

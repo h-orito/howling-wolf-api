@@ -124,7 +124,6 @@ class VillageDataSourceTest : Wolf4busyTest() {
             assertThat(firstDay.day).isEqualTo(0)
             assertThat(firstDay.noonnightCodeAsNoonnight).isEqualTo(CDef.Noonnight.昼)
             assertThat(firstDay.daychangeDatetime).isEqualTo(startDatetime)
-            assertThat(firstDay.isUpdating).isTrue()
         }
         // village_settings
         val settingList = villageSettingBhv.selectList { it.query().setVillageId_Equal(villageId) }

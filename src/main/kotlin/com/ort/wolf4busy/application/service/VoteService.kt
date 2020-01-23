@@ -10,9 +10,7 @@ class VoteService(
     val voteDataSource: VoteDataSource
 ) {
 
-    fun findVillageVotes(villageId: Int): VillageVotes {
-        return voteDataSource.selectVotes(villageId)
-    }
+    fun findVillageVotes(villageId: Int): VillageVotes = voteDataSource.selectVotes(villageId)
 
     fun updateVote(villageDayId: Int, participant: VillageParticipant, targetId: Int) {
         voteDataSource.updateVote(villageDayId, participant.id, targetId)

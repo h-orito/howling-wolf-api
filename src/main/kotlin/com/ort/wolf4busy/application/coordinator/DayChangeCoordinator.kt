@@ -51,6 +51,7 @@ class DayChangeCoordinator(
             if (!dayChange.isChange) return
             // 日付追加
             update(beforeDayChange, it)
+            // TODO 同時に来ると辛い
         }
 
         // 登録後の村日付idが必要になるので取得し直す
@@ -58,9 +59,6 @@ class DayChangeCoordinator(
 
         // 日付更新
         dayChange.process(todayMessages, charas).let { if (it.isChange) update(dayChange, it) }
-
-        // 日付更新完了
-        villageService.updateVillageDayUpdateComplete(dayChange.village.day.latestDay().id)
     }
 
     // ===================================================================================

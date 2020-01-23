@@ -215,26 +215,6 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
      */
     public BsVillageDayCQ addOrderBy_DaychangeDatetime_Desc() { regOBD("DAYCHANGE_DATETIME"); return this; }
 
-    protected ConditionValue _isUpdating;
-    public ConditionValue xdfgetIsUpdating()
-    { if (_isUpdating == null) { _isUpdating = nCV(); }
-      return _isUpdating; }
-    protected ConditionValue xgetCValueIsUpdating() { return xdfgetIsUpdating(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * IS_UPDATING: {NotNull, BIT}
-     * @return this. (NotNull)
-     */
-    public BsVillageDayCQ addOrderBy_IsUpdating_Asc() { regOBA("IS_UPDATING"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * IS_UPDATING: {NotNull, BIT}
-     * @return this. (NotNull)
-     */
-    public BsVillageDayCQ addOrderBy_IsUpdating_Desc() { regOBD("IS_UPDATING"); return this; }
-
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
     { if (_registerDatetime == null) { _registerDatetime = nCV(); }

@@ -5,6 +5,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.SkillAssign
 import com.ort.wolf4busy.domain.model.message.*
 import com.ort.wolf4busy.domain.model.skill.Skill
+import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -325,11 +326,39 @@ data class Village(
             id = 0, // dummy
             day = day.latestDay().day + 1, // 一旦長期だけを考えるので常に昼
             noonnight = CDef.Noonnight.昼.code(),
-            dayChangeDatetime = day.latestDay().dayChangeDatetime.plusSeconds(setting.time.dayChangeIntervalSeconds.toLong()),
-            isUpdating = true
+            dayChangeDatetime = day.latestDay().dayChangeDatetime.plusSeconds(setting.time.dayChangeIntervalSeconds.toLong())
         )
         dayList.add(newDay)
         return this.copy(day = this.day.copy(dayList = dayList))
+    }
+
+    // 入村
+    fun participate(
+        playerId: Int,
+        charaId: Int,
+        firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
+        secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
+        isSpectate: Boolean
+    ): Village {
+        return if (isSpectate) {
+            this.copy(
+                spectator = spectator.addParticipant(
+                    charaId = charaId,
+                    playerId = playerId,
+                    skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
+                    isSpectator = true
+                )
+            )
+        } else {
+            this.copy(
+                participant = participant.addParticipant(
+                    charaId = charaId,
+                    playerId = playerId,
+                    skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
+                    isSpectator = false
+                )
+            )
+        }
     }
 
     // 希望役職変更

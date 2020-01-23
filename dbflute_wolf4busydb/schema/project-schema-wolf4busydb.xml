@@ -473,8 +473,6 @@
         <column comment="日付更新日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="DAYCHANGE_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
-        <column comment="更新中か" dbType="BIT" javaType="Boolean"
-            name="IS_UPDATING" required="true" type="BIT"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>

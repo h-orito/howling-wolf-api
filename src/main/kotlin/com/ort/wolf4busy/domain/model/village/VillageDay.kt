@@ -6,8 +6,7 @@ data class VillageDay(
     val id: Int,
     val day: Int,
     val noonnight: String,
-    val dayChangeDatetime: LocalDateTime,
-    val isUpdating: Boolean
+    val dayChangeDatetime: LocalDateTime
 ) {
 
     fun existsDifference(villageDay: VillageDay): Boolean {

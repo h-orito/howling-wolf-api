@@ -18,11 +18,7 @@ class VillageDataSource(
     val villagePlayerBhv: VillagePlayerBhv,
     val messageRestrictionBhv: MessageRestrictionBhv
 ) {
-    // TODO updateは全てdomain objectを受け取って差分更新が良いのでは
 
-    // ===================================================================================
-    //                                                                             village
-    //                                                                           =========
     /**
      * 村登録
      * @param paramVillage village
@@ -46,8 +42,7 @@ class VillageDataSource(
                 id = 1, // dummy
                 day = 0,
                 noonnight = CDef.Noonnight.昼.code(),
-                dayChangeDatetime = paramVillage.setting.time.startDatetime,
-                isUpdating = true // dummy
+                dayChangeDatetime = paramVillage.setting.time.startDatetime
             )
         )
 
@@ -153,53 +148,6 @@ class VillageDataSource(
         return VillageDataConverter.convertVillageToVillage(village)
     }
 
-    /**
-     * 村日付を更新完了にする
-     * @param villageDayId 村日付ID
-     */
-    fun updateVillageDayUpdateComplete(villageDayId: Int) {
-        val villageDay = VillageDay()
-        villageDay.villageDayId = villageDayId
-        villageDay.isUpdating = false
-        villageDayBhv.update(villageDay)
-    }
-
-    /**
-     * 村参加者登録
-     * @param villageId villageId
-     * @param participant participant
-     * @return 村参加ID
-     */
-    fun registerVillageParticipant(
-        villageId: Int,
-        participant: VillageParticipant
-    ): Int {
-        val vp = VillagePlayer()
-        vp.villageId = villageId
-        vp.playerId = participant.playerId
-        vp.charaId = participant.charaId
-        vp.isDead = false
-        vp.isSpectator = participant.isSpectator
-        vp.isGone = false
-        vp.requestSkillCodeAsSkill = participant.skillRequest.first.toCdef()
-        vp.secondRequestSkillCodeAsSkill = participant.skillRequest.second.toCdef()
-        villagePlayerBhv.insert(vp)
-        return vp.villagePlayerId
-    }
-
-    // ===================================================================================
-    //                                                                              Update
-    //                                                                              ======
-    /**
-     * 退村
-     * @param participant 村参加者
-     */
-    fun updateVillagePlayerLeave(participant: VillageParticipant) {
-        val villagePlayer = VillagePlayer()
-        villagePlayer.villagePlayerId = participant.id
-        villagePlayer.isGone = true
-        villagePlayerBhv.update(villagePlayer)
-    }
 
     /**
      * 差分更新
@@ -209,27 +157,26 @@ class VillageDataSource(
     fun updateDifference(
         before: com.ort.wolf4busy.domain.model.village.Village,
         after: com.ort.wolf4busy.domain.model.village.Village
-    ) {
+    ): com.ort.wolf4busy.domain.model.village.Village {
         // village
         updateVillageDifference(before, after)
         // village_day
         upsertVillageDay(before, after)
         // village_player
         updateVillagePlayerDifference(before, after)
+
+        return findVillage(before.id)
     }
 
+    // ===================================================================================
+    //                                                                              Update
+    //                                                                              ======
     private fun updateVillageDifference(
         before: com.ort.wolf4busy.domain.model.village.Village,
         after: com.ort.wolf4busy.domain.model.village.Village
     ) {
-        if (before.status.code != after.status.code
-            || before.winCamp?.code != after.winCamp?.code
-        ) {
-            val village = Village()
-            village.villageId = after.id
-            village.villageStatusCodeAsVillageStatus = after.status.toCdef()
-            village.winCampCodeAsCamp = after.winCamp?.toCdef()
-            villageBhv.update(village)
+        if (before.status.code != after.status.code || before.winCamp?.code != after.winCamp?.code) {
+            updateVillage(after)
         }
     }
 
@@ -247,10 +194,37 @@ class VillageDataSource(
             .filter { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
             .forEach { afterDay ->
                 val beforeDay = before.day.dayList.first { it.id == afterDay.id }
-                if (afterDay.existsDifference(beforeDay)) {
-                    updateVillageDay(afterDay)
-                }
+                if (afterDay.existsDifference(beforeDay)) updateVillageDay(afterDay)
             }
+    }
+
+    private fun updateVillagePlayerDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        val villageId = after.id
+        if (!before.participant.existsDifference(after.participant)) return
+        // 新規
+        after.participant.memberList.filterNot { member ->
+            before.participant.memberList.any { it.id == member.id }
+        }.forEach {
+            insertVillagePlayer(villageId, it)
+        }
+        after.spectator.memberList.filterNot { member ->
+            before.spectator.memberList.any { it.id == member.id }
+        }.forEach {
+            insertVillagePlayer(villageId, it)
+        }
+
+        // 更新
+        after.participant.memberList.forEach {
+            val beforeMember = before.participant.member(it.id)
+            if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
+        }
+        after.spectator.memberList.forEach {
+            val beforeMember = before.spectator.member(it.id)
+            if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
+        }
     }
 
     /**
@@ -268,7 +242,6 @@ class VillageDataSource(
         villageDay.day = day.day
         villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
         villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDay.isUpdating = true
         villageDayBhv.insert(villageDay)
         return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
     }
@@ -279,31 +252,7 @@ class VillageDataSource(
         val villageDay = VillageDay()
         villageDay.villageDayId = day.id
         villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDay.isUpdating = day.isUpdating
         villageDayBhv.update(villageDay)
-    }
-
-    private fun updateVillagePlayerDifference(
-        before: com.ort.wolf4busy.domain.model.village.Village,
-        after: com.ort.wolf4busy.domain.model.village.Village
-    ) {
-        if (!before.participant.existsDifference(after.participant)) return
-        // 増減はないはずなので更新だけ
-        after.participant.memberList.forEach {
-            val beforeMember = before.participant.member(it.id)
-            if (it.existsDifference(beforeMember)) {
-                val villagePlayer = VillagePlayer()
-                villagePlayer.villagePlayerId = it.id
-                villagePlayer.isDead = it.dead != null
-                villagePlayer.deadReasonCodeAsDeadReason = it.dead?.toCdef()
-                villagePlayer.deadVillageDayId = it.dead?.villageDay?.id
-                villagePlayer.isGone = it.isGone
-                villagePlayer.skillCodeAsSkill = it.skill?.toCdef()
-                villagePlayer.requestSkillCodeAsSkill = it.skillRequest.first.toCdef()
-                villagePlayer.secondRequestSkillCodeAsSkill = it.skillRequest.second.toCdef()
-                villagePlayerBhv.update(villagePlayer)
-            }
-        }
     }
 
     /**
@@ -318,6 +267,18 @@ class VillageDataSource(
         village.createPlayerId = villageModel.creatorPlayerId
         villageBhv.insert(village)
         return village.villageId
+    }
+
+    /**
+     * 村更新
+     * @param villageModel 村
+     */
+    private fun updateVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village) {
+        val village = Village()
+        village.villageId = villageModel.id
+        village.villageStatusCodeAsVillageStatus = villageModel.status.toCdef()
+        village.winCampCodeAsCamp = villageModel.winCamp?.toCdef()
+        villageBhv.update(village)
     }
 
     /**
@@ -374,6 +335,47 @@ class VillageDataSource(
         restrict.messageMaxNum = count
         restrict.messageMaxLength = length
         messageRestrictionBhv.insert(restrict)
+    }
+
+
+    /**
+     * 村参加者登録
+     * @param villageId villageId
+     * @param participant participant
+     * @return 村参加ID
+     */
+    private fun insertVillagePlayer(
+        villageId: Int,
+        participant: VillageParticipant
+    ): Int {
+        val vp = VillagePlayer()
+        vp.villageId = villageId
+        vp.playerId = participant.playerId
+        vp.charaId = participant.charaId
+        vp.isDead = false
+        vp.isSpectator = participant.isSpectator
+        vp.isGone = false
+        vp.requestSkillCodeAsSkill = participant.skillRequest.first.toCdef()
+        vp.secondRequestSkillCodeAsSkill = participant.skillRequest.second.toCdef()
+        villagePlayerBhv.insert(vp)
+        return vp.villagePlayerId
+    }
+
+    private fun updateVillagePlayer(
+        villageId: Int,
+        villagePlayerModel: VillageParticipant
+    ) {
+        val villagePlayer = VillagePlayer()
+        villagePlayer.villageId = villageId
+        villagePlayer.villagePlayerId = villagePlayerModel.id
+        villagePlayer.isDead = villagePlayerModel.dead != null
+        villagePlayer.deadReasonCodeAsDeadReason = villagePlayerModel.dead?.toCdef()
+        villagePlayer.deadVillageDayId = villagePlayerModel.dead?.villageDay?.id
+        villagePlayer.isGone = villagePlayerModel.isGone
+        villagePlayer.skillCodeAsSkill = villagePlayerModel.skill?.toCdef()
+        villagePlayer.requestSkillCodeAsSkill = villagePlayerModel.skillRequest.first.toCdef()
+        villagePlayer.secondRequestSkillCodeAsSkill = villagePlayerModel.skillRequest.second.toCdef()
+        villagePlayerBhv.update(villagePlayer)
     }
 
     // ===================================================================================

@@ -58,8 +58,7 @@ object VillageDataConverter {
             id = villageDay.villageDayId,
             day = day,
             noonnight = villageDay.noonnightCode,
-            dayChangeDatetime = villageDay.daychangeDatetime,
-            isUpdating = villageDay.isUpdating
+            dayChangeDatetime = villageDay.daychangeDatetime
         )
     }
 
