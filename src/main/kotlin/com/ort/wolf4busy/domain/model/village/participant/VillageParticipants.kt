@@ -17,6 +17,15 @@ data class VillageParticipants(
         )
     }
 
+    fun changeSkillRequest(participantId: Int, first: CDef.Skill, second: CDef.Skill): VillageParticipants {
+        return this.copy(
+            memberList = this.memberList.map {
+                if (it.id == participantId) it.changeSkillRequest(first, second)
+                else it.copy()
+            }
+        )
+    }
+
     // 退村
     fun leave(participantId: Int): VillageParticipants {
         return this.copy(

@@ -332,6 +332,10 @@ data class Village(
         return this.copy(day = this.day.copy(dayList = dayList))
     }
 
+    // 希望役職変更
+    fun changeSkillRequest(participantId: Int, first: CDef.Skill, second: CDef.Skill): Village =
+        this.copy(participant = participant.changeSkillRequest(participantId, first, second))
+
     // 退村
     fun leaveParticipant(participantId: Int): Village = this.copy(participant = this.participant.leave(participantId))
 

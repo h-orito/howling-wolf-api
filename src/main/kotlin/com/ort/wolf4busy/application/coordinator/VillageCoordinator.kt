@@ -39,6 +39,19 @@ class VillageCoordinator(
 ) {
 
     /**
+     * 村参加者取得
+     * @param village village
+     * @param user user
+     * @return 村参加者
+     */
+    fun findParticipant(village: Village, user: Wolf4busyUser?): VillageParticipant? {
+        user ?: return null
+        val player = playerService.findPlayer(user)
+        val participant = village.participant.memberList.find { it.playerId == player.id }
+        return participant ?: village.spectator.memberList.find { it.playerId == player.id }
+    }
+
+    /**
      * 村登録
      * @param paramVillage village
      * @param user user
@@ -146,6 +159,27 @@ class VillageCoordinator(
     }
 
     /**
+     * 役職希望変更
+     * @param villageId villageId
+     * @param user user
+     * @param firstRequestSkill 第1希望
+     * @param secondRequestSkill 第2希望
+     */
+    fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
+        // 役職希望変更できない状況ならエラー
+        val village = villageService.findVillage(villageId)
+        val participant = findParticipant(village, user)
+        SkillRequest.assertSkillRequest(village, participant, firstRequestSkill, secondRequestSkill)
+        // 役職希望変更
+        val changedVillage = village.changeSkillRequest(
+            participant!!.id,
+            CDef.Skill.codeOf(firstRequestSkill)!!,
+            CDef.Skill.codeOf(secondRequestSkill)!!
+        )
+        villageService.updateVillageDifference(village, changedVillage)
+    }
+
+    /**
      * 退村
      * @param villageId villageId
      * @param user user
@@ -154,7 +188,7 @@ class VillageCoordinator(
     fun leaveVillage(villageId: Int, user: Wolf4busyUser) {
         // 退村できない状況ならエラー
         val village = villageService.findVillage(villageId)
-        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        val participant = findParticipant(village, user)
         Leave.assertLeave(village, participant)
         // 退村
         villageService.leaveVillage(participant!!)
@@ -194,7 +228,7 @@ class VillageCoordinator(
         assertSay(villageId, user, messageContent)
         // 発言
         val village = villageService.findVillage(villageId)
-        val participant = villageService.findParticipantByUid(villageId, user.uid)!!
+        val participant = findParticipant(village, user)!!
         val message = Message.createSayMessage(participant, village.day.latestDay().id, messageContent)
         messageService.registerSayMessage(villageId, message)
     }
@@ -211,7 +245,7 @@ class VillageCoordinator(
     fun setAbility(villageId: Int, user: Wolf4busyUser, targetId: Int?, abilityType: String) {
         // 能力セットできない状況ならエラー
         val village = villageService.findVillage(villageId)
-        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        val participant = findParticipant(village, user)
         val ability = Ability(abilityType)
         ability.assertAbility(village, participant, targetId)
         // 能力セット
@@ -232,7 +266,7 @@ class VillageCoordinator(
     fun setVote(villageId: Int, user: Wolf4busyUser, targetId: Int) {
         // 投票セットできない状況ならエラー
         val village = villageService.findVillage(villageId)
-        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        val participant = findParticipant(village, user)
         Vote.assertVote(village, participant, targetId)
         // 投票
         voteService.updateVote(village.day.latestDay().id, participant!!, targetId)
@@ -249,7 +283,7 @@ class VillageCoordinator(
     fun setCommit(villageId: Int, user: Wolf4busyUser, doCommit: Boolean) {
         // コミットできない状況ならエラー
         val village = villageService.findVillage(villageId)
-        val participant = villageService.findParticipantByUid(villageId, user.uid)
+        val participant = findParticipant(village, user)
         Commit.assertCommit(village, participant)
         // コミット
         val commit = Commit(village.day.latestDay().id, participant!!.id, doCommit)
@@ -268,7 +302,7 @@ class VillageCoordinator(
     fun findActionSituation(villageId: Int, user: Wolf4busyUser?): SituationAsParticipant {
         val village: Village = villageService.findVillage(villageId)
         val player = if (user == null) null else playerService.findPlayer(user)
-        val participant: VillageParticipant? = if (user == null) null else villageService.findParticipantByUid(villageId, user.uid)
+        val participant: VillageParticipant? = findParticipant(village, user)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val skillRequest: SkillRequest? = if (participant == null) null else village.participant.member(participant.id).skillRequest
         val abilities: VillageAbilities = abilityService.findVillageAbilities(villageId)
@@ -309,7 +343,7 @@ class VillageCoordinator(
 
     private fun assertSay(villageId: Int, user: Wolf4busyUser?, messageContent: MessageContent) {
         val village: Village = villageService.findVillage(villageId)
-        val participant: VillageParticipant? = if (user == null) null else villageService.findParticipantByUid(villageId, user.uid)
+        val participant: VillageParticipant? = findParticipant(village, user)
         val chara = if (participant == null) null else charachipService.findChara(participant.charaId)
         val latestDayMessageList: List<Message> =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
