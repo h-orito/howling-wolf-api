@@ -3,8 +3,6 @@ package com.ort.wolf4busy.infrastructure.datasource.village
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.*
-import com.ort.wolf4busy.domain.model.skill.Skill
-import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
@@ -167,21 +165,6 @@ class VillageDataSource(
     }
 
     /**
-     * 村参加者取得
-     * @param villageId villageId
-     * @param uid uid
-     * @return 村参加者
-     */
-    fun findVillageParticipantByUid(villageId: Int, uid: String): VillageParticipant? {
-        return villagePlayerBhv.selectEntity {
-            it.setupSelect_Chara()
-            it.setupSelect_Player()
-            it.query().setVillageId_Equal(villageId)
-            it.query().queryPlayer().setUid_Equal(uid)
-        }.map { VillageDataConverter.convertVillagePlayerToParticipant(it) }.orElse(null)
-    }
-
-    /**
      * 村参加者登録
      * @param villageId villageId
      * @param participant participant
@@ -207,20 +190,6 @@ class VillageDataSource(
     // ===================================================================================
     //                                                                              Update
     //                                                                              ======
-    /**
-     * 希望役職を更新
-     * @param participant 村参加者
-     * @param firstRequest 第1希望
-     * @param secondRequest 第2希望
-     */
-    fun updateSkillRequest(participant: VillageParticipant, firstRequest: Skill, secondRequest: Skill) {
-        val villagePlayer = VillagePlayer()
-        villagePlayer.villagePlayerId = participant.id
-        villagePlayer.requestSkillCodeAsSkill = CDef.Skill.codeOf(firstRequest.code)
-        villagePlayer.secondRequestSkillCodeAsSkill = CDef.Skill.codeOf(secondRequest.code)
-        villagePlayerBhv.update(villagePlayer)
-    }
-
     /**
      * 退村
      * @param participant 村参加者
@@ -330,6 +299,8 @@ class VillageDataSource(
                 villagePlayer.deadVillageDayId = it.dead?.villageDay?.id
                 villagePlayer.isGone = it.isGone
                 villagePlayer.skillCodeAsSkill = it.skill?.toCdef()
+                villagePlayer.requestSkillCodeAsSkill = it.skillRequest.first.toCdef()
+                villagePlayer.secondRequestSkillCodeAsSkill = it.skillRequest.second.toCdef()
                 villagePlayerBhv.update(villagePlayer)
             }
         }

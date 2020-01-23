@@ -203,7 +203,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageChangeSkillBody
     ) {
-        villageService.changeSkillRequest(villageId, user, body.firstRequestSkill!!, body.secondRequestSkill!!)
+        villageCoordinator.changeSkillRequest(villageId, user, body.firstRequestSkill!!, body.secondRequestSkill!!)
     }
 
     /**

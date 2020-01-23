@@ -55,6 +55,10 @@ data class VillageParticipant(
     // 役職割り当て
     fun assignSkill(skill: Skill): VillageParticipant = this.copy(skill = skill)
 
+    // 希望役職
+    fun changeSkillRequest(first: CDef.Skill, second: CDef.Skill): VillageParticipant =
+        this.copy(skillRequest = SkillRequest(Skill(first), Skill(second)))
+
     // 勝敗
     fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill?.toCdef()?.campCode() == cdefWinCamp.code())
 

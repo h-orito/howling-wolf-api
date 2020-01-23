@@ -35,7 +35,8 @@ class VillageService(
      * @param villageId villageId
      * @return Village
      */
-    fun findVillage(villageId: Int): Village = villageDataSource.findVillage(villageId)
+    fun findVillage(villageId: Int, excludeGonePlayer: Boolean = true): Village =
+        villageDataSource.findVillage(villageId, excludeGonePlayer)
 
     /**
      * 村登録
@@ -51,17 +52,6 @@ class VillageService(
      * @param villageDayId 村日付ID
      */
     fun updateVillageDayUpdateComplete(villageDayId: Int) = villageDataSource.updateVillageDayUpdateComplete(villageDayId)
-
-    /**
-     * 村参加者取得
-     * @param villageId villageId
-     * @param uid uid
-     * @return 村参加者
-     */
-    fun findParticipantByUid(villageId: Int, uid: String?): VillageParticipant? {
-        uid ?: return null
-        return villageDataSource.findVillageParticipantByUid(villageId, uid)
-    }
 
     /**
      * 村参加者登録
@@ -94,26 +84,6 @@ class VillageService(
             isWin = null
         )
         return villageDataSource.registerVillageParticipant(villageId, participant)
-    }
-
-    /**
-     * 役職希望変更
-     * @param villageId villageId
-     * @param user user
-     * @param firstRequestSkill 第1希望
-     * @param secondRequestSkill 第2希望
-     */
-    fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
-        // 役職希望変更できない状況ならエラー
-        val village = villageDataSource.findVillage(villageId)
-        val participant = this.findParticipantByUid(villageId, user.uid)
-        SkillRequest.assertSkillRequest(village, participant, firstRequestSkill, secondRequestSkill)
-        // 役職希望変更
-        villageDataSource.updateSkillRequest(
-            participant!!,
-            Skill(CDef.Skill.codeOf(firstRequestSkill)),
-            Skill(CDef.Skill.codeOf(secondRequestSkill))
-        )
     }
 
     /**
