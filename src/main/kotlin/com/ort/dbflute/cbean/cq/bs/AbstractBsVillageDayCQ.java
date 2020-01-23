@@ -829,18 +829,6 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * IS_UPDATING: {NotNull, BIT}
-     * @param isUpdating The value of isUpdating as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setIsUpdating_Equal(Boolean isUpdating) {
-        regIsUpdating(CK_EQ, isUpdating);
-    }
-
-    protected void regIsUpdating(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIsUpdating(), "IS_UPDATING"); }
-    protected abstract ConditionValue xgetCValueIsUpdating();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @param registerDatetime The value of registerDatetime as equal. (basically NotNull: error as default, or no condition as option)
      */

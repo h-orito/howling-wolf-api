@@ -151,8 +151,7 @@ class AttackTest : Wolf4busyTest() {
                         id = 1,
                         day = 2,
                         noonnight = CDef.Noonnight.昼.code(),
-                        dayChangeDatetime = LocalDateTime.now(),
-                        isUpdating = false
+                        dayChangeDatetime = LocalDateTime.now()
                     )
                 )
             ),

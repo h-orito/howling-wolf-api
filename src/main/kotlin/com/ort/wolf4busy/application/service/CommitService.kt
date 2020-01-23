@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service
 class CommitService(
     val commitDataSource: CommitDataSource
 ) {
-    fun findCommits(villageId: Int): Commits {
-        return commitDataSource.findCommits(villageId)
-    }
+    fun findCommits(villageId: Int): Commits = commitDataSource.findCommits(villageId)
 
     fun findCommit(village: Village, participant: VillageParticipant?): Commit? {
         participant ?: return null
@@ -24,7 +22,5 @@ class CommitService(
      * コミット/取り消し
      * @param commit commit
      */
-    fun updateCommit(commit: Commit) {
-        commitDataSource.updateCommit(commit)
-    }
+    fun updateCommit(commit: Commit) = commitDataSource.updateCommit(commit)
 }

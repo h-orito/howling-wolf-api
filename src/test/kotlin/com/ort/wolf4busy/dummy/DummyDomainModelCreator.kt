@@ -46,8 +46,7 @@ object DummyDomainModelCreator {
         id = randomNumber(),
         day = randomNumber(),
         noonnight = CDef.Noonnight.昼.code(),
-        dayChangeDatetime = LocalDateTime.now(),
-        isUpdating = false
+        dayChangeDatetime = LocalDateTime.now()
     )
 
     fun createDummyVillageParticipants(): VillageParticipants = VillageParticipants(0, listOf())

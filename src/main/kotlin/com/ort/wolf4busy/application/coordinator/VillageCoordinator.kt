@@ -47,8 +47,12 @@ class VillageCoordinator(
     fun findParticipant(village: Village, user: Wolf4busyUser?): VillageParticipant? {
         user ?: return null
         val player = playerService.findPlayer(user)
-        val participant = village.participant.memberList.find { it.playerId == player.id }
-        return participant ?: village.spectator.memberList.find { it.playerId == player.id }
+        return this.findParticipant(village, player.id)
+    }
+
+    fun findParticipant(village: Village, playerId: Int): VillageParticipant? {
+        val participant = village.participant.memberList.find { it.playerId == playerId }
+        return participant ?: village.spectator.memberList.find { it.playerId == playerId }
     }
 
     /**
@@ -70,8 +74,6 @@ class VillageCoordinator(
         // ダミーキャラを参加させる
         val chara = charachipService.findChara(village.dummyChara().charaId)
         participateDummyChara(village.id, village, chara)
-        // 日付更新完了
-        villageService.updateVillageDayUpdateComplete(village.day.latestDay().id)
 
         return village.id
     }
@@ -138,20 +140,21 @@ class VillageCoordinator(
         password: String?
     ) {
         // 村参加者登録
-        val participantId: Int = villageService.registerVillageParticipant(
-            villageId = villageId,
+        var village: Village = villageService.findVillage(villageId)
+        val changedVillage = village.participate(
             playerId = playerId,
             charaId = charaId,
             firstRequestSkill = firstRequestSkill,
             secondRequestSkill = secondRequestSkill,
             isSpectate = isSpectate
         )
-        val village: Village = villageService.findVillage(villageId)
+        village = villageService.updateVillageDifference(village, changedVillage)
+        val participant = findParticipant(village, playerId)!!
         val chara: Chara = charachipService.findChara(charaId)
         // {N}人目、{キャラ名} とユーザー入力の発言
         messageService.registerParticipateMessage(
             village = village,
-            participant = village.participant.member(participantId),
+            participant = village.participant.member(participant.id),
             chara = chara,
             message = message,
             isSpectate = isSpectate
@@ -187,14 +190,17 @@ class VillageCoordinator(
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun leaveVillage(villageId: Int, user: Wolf4busyUser) {
         // 退村できない状況ならエラー
-        val village = villageService.findVillage(villageId)
-        val participant = findParticipant(village, user)
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant? = findParticipant(village, user)
         Leave.assertLeave(village, participant)
         // 退村
-        villageService.leaveVillage(participant!!)
+        val updatedVillage: Village = villageService.updateVillageDifference(
+            village,
+            village.leaveParticipant(participant!!.id)
+        )
         // 退村メッセージ
-        val chara = charachipService.findChara(participant.charaId)
-        messageService.registerLeaveMessage(village, chara)
+        val chara: Chara = charachipService.findChara(participant.charaId)
+        messageService.registerLeaveMessage(updatedVillage, chara)
     }
 
     /**

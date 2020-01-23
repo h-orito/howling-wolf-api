@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, IS_UPDATING, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -51,7 +51,6 @@ import com.ort.dbflute.exentity.*;
  * Integer day = entity.getDay();
  * String noonnightCode = entity.getNoonnightCode();
  * java.time.LocalDateTime daychangeDatetime = entity.getDaychangeDatetime();
- * Boolean isUpdating = entity.getIsUpdating();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
@@ -61,7 +60,6 @@ import com.ort.dbflute.exentity.*;
  * entity.setDay(day);
  * entity.setNoonnightCode(noonnightCode);
  * entity.setDaychangeDatetime(daychangeDatetime);
- * entity.setIsUpdating(isUpdating);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -95,9 +93,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
 
     /** DAYCHANGE_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _daychangeDatetime;
-
-    /** IS_UPDATING: {NotNull, BIT} */
-    protected Boolean _isUpdating;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -385,7 +380,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         sb.append(dm).append(xfND(_day));
         sb.append(dm).append(xfND(_noonnightCode));
         sb.append(dm).append(xfND(_daychangeDatetime));
-        sb.append(dm).append(xfND(_isUpdating));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -525,26 +519,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     public void setDaychangeDatetime(java.time.LocalDateTime daychangeDatetime) {
         registerModifiedProperty("daychangeDatetime");
         _daychangeDatetime = daychangeDatetime;
-    }
-
-    /**
-     * [get] IS_UPDATING: {NotNull, BIT} <br>
-     * 更新中か
-     * @return The value of the column 'IS_UPDATING'. (basically NotNull if selected: for the constraint)
-     */
-    public Boolean getIsUpdating() {
-        checkSpecifiedProperty("isUpdating");
-        return _isUpdating;
-    }
-
-    /**
-     * [set] IS_UPDATING: {NotNull, BIT} <br>
-     * 更新中か
-     * @param isUpdating The value of the column 'IS_UPDATING'. (basically NotNull if update: for the constraint)
-     */
-    public void setIsUpdating(Boolean isUpdating) {
-        registerModifiedProperty("isUpdating");
-        _isUpdating = isUpdating;
     }
 
     /**

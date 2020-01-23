@@ -82,10 +82,7 @@ class MessageService(
      * 村作成時のシステムメッセージ登録
      * @param village village
      */
-    fun registerInitialMessage(village: Village) {
-        val message = village.createVillagePrologueMessage()
-        messageDataSource.registerMessage(village.id, message)
-    }
+    fun registerInitialMessage(village: Village) = messageDataSource.registerMessage(village.id, village.createVillagePrologueMessage())
 
     /**
      * 村に参加する際の発言を登録
@@ -125,10 +122,8 @@ class MessageService(
      * @param village village
      * @param chara chara
      */
-    fun registerLeaveMessage(village: Village, chara: Chara) {
-        val message = Leave.createLeaveMessage(village, chara)
-        messageDataSource.registerMessage(village.id, message)
-    }
+    fun registerLeaveMessage(village: Village, chara: Chara) =
+        messageDataSource.registerMessage(village.id, Leave.createLeaveMessage(village, chara))
 
     /**
      * 能力セットする際のシステムメッセージを登録

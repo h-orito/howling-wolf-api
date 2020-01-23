@@ -10,19 +10,13 @@ class AbilityService(
     val abilityDataSource: AbilityDataSource
 ) {
 
-    fun findVillageAbilities(villageId: Int): VillageAbilities {
-        return abilityDataSource.findAbilities(villageId)
-    }
+    fun findVillageAbilities(villageId: Int): VillageAbilities = abilityDataSource.findAbilities(villageId)
 
     /**
      * 能力セット
      * @param villageAbility ability
      */
-    fun updateAbility(villageAbility: VillageAbility) {
-        abilityDataSource.updateAbility(villageAbility)
-    }
+    fun updateAbility(villageAbility: VillageAbility) = abilityDataSource.updateAbility(villageAbility)
 
-    fun updateDifference(before: VillageAbilities, after: VillageAbilities) {
-        abilityDataSource.updateDifference(before, after)
-    }
+    fun updateDifference(before: VillageAbilities, after: VillageAbilities) = abilityDataSource.updateDifference(before, after)
 }

@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -1539,12 +1539,6 @@
 					<physical_name>daychange_datetime</physical_name>
 					<logical_name>日付更新日時</logical_name>
 					<type>datetime</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_updating</physical_name>
-					<logical_name>更新中か</logical_name>
-					<type>boolean</type>
 					<not_null>true</not_null>
 				</normal_column>
 				<column_group>共通カラム</column_group>
