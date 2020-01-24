@@ -25,10 +25,10 @@ import com.ort.dbflute.cbean.*;
  * The behavior of VOTE as TABLE. <br>
  * <pre>
  * [primary key]
- *     VILLAGE_DAY_ID
+ *     VILLAGE_DAY_ID, VILLAGE_PLAYER_ID
  *
  * [column]
- *     VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID
+ *     VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -160,30 +160,31 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
     /**
      * Select the entity by the primary-key value.
      * @param villageDayId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
+     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Vote> selectByPK(Integer villageDayId) {
-        return facadeSelectByPK(villageDayId);
+    public OptionalEntity<Vote> selectByPK(Integer villageDayId, Integer villagePlayerId) {
+        return facadeSelectByPK(villageDayId, villagePlayerId);
     }
 
-    protected OptionalEntity<Vote> facadeSelectByPK(Integer villageDayId) {
-        return doSelectOptionalByPK(villageDayId, typeOfSelectedEntity());
+    protected OptionalEntity<Vote> facadeSelectByPK(Integer villageDayId, Integer villagePlayerId) {
+        return doSelectOptionalByPK(villageDayId, villagePlayerId, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Vote> ENTITY doSelectByPK(Integer villageDayId, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(villageDayId), tp);
+    protected <ENTITY extends Vote> ENTITY doSelectByPK(Integer villageDayId, Integer villagePlayerId, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(villageDayId, villagePlayerId), tp);
     }
 
-    protected <ENTITY extends Vote> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageDayId, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(villageDayId, tp), villageDayId);
+    protected <ENTITY extends Vote> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageDayId, Integer villagePlayerId, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(villageDayId, villagePlayerId, tp), villageDayId, villagePlayerId);
     }
 
-    protected VoteCB xprepareCBAsPK(Integer villageDayId) {
-        assertObjectNotNull("villageDayId", villageDayId);
-        return newConditionBean().acceptPK(villageDayId);
+    protected VoteCB xprepareCBAsPK(Integer villageDayId, Integer villagePlayerId) {
+        assertObjectNotNull("villageDayId", villageDayId);assertObjectNotNull("villagePlayerId", villagePlayerId);
+        return newConditionBean().acceptPK(villageDayId, villagePlayerId);
     }
 
     // ===================================================================================
@@ -391,14 +392,6 @@ public abstract class BsVoteBhv extends AbstractBehaviorWritable<Vote, VoteCB> {
     // ===================================================================================
     //                                                                      Extract Column
     //                                                                      ==============
-    /**
-     * Extract the value list of (single) primary key villageDayId.
-     * @param voteList The list of vote. (NotNull, EmptyAllowed)
-     * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Integer> extractVillageDayIdList(List<Vote> voteList)
-    { return helpExtractListInternally(voteList, "villageDayId"); }
-
     // ===================================================================================
     //                                                                       Entity Update
     //                                                                       =============

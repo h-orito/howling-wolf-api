@@ -88,6 +88,9 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public Map<String, VillagePlayerCQ> xdfgetVillageDayId_ExistsReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_ExistsReferrer_VillagePlayerList"); }
     public String keepVillageDayId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_VillagePlayerList", sq); }
 
+    public Map<String, VoteCQ> xdfgetVillageDayId_ExistsReferrer_VoteList() { return xgetSQueMap("villageDayId_ExistsReferrer_VoteList"); }
+    public String keepVillageDayId_ExistsReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_ExistsReferrer_VoteList", sq); }
+
     public Map<String, AbilityCQ> xdfgetVillageDayId_NotExistsReferrer_AbilityList() { return xgetSQueMap("villageDayId_NotExistsReferrer_AbilityList"); }
     public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_AbilityList", sq); }
 
@@ -97,6 +100,9 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public Map<String, VillagePlayerCQ> xdfgetVillageDayId_NotExistsReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_NotExistsReferrer_VillagePlayerList"); }
     public String keepVillageDayId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_VillagePlayerList", sq); }
 
+    public Map<String, VoteCQ> xdfgetVillageDayId_NotExistsReferrer_VoteList() { return xgetSQueMap("villageDayId_NotExistsReferrer_VoteList"); }
+    public String keepVillageDayId_NotExistsReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_NotExistsReferrer_VoteList", sq); }
+
     public Map<String, AbilityCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_AbilityList"); }
     public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_AbilityList", sq); }
 
@@ -105,6 +111,9 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     public Map<String, VillagePlayerCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_VillagePlayerList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_VillagePlayerList"); }
     public String keepVillageDayId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_VillagePlayerList", sq); }
+
+    public Map<String, VoteCQ> xdfgetVillageDayId_SpecifyDerivedReferrer_VoteList() { return xgetSQueMap("villageDayId_SpecifyDerivedReferrer_VoteList"); }
+    public String keepVillageDayId_SpecifyDerivedReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_SpecifyDerivedReferrer_VoteList", sq); }
 
     public Map<String, AbilityCQ> xdfgetVillageDayId_QueryDerivedReferrer_AbilityList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_AbilityList"); }
     public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_AbilityList", sq); }
@@ -120,6 +129,11 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_VillagePlayerList", sq); }
     public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_VillagePlayerList"); }
     public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_VillagePlayerList", pm); }
+
+    public Map<String, VoteCQ> xdfgetVillageDayId_QueryDerivedReferrer_VoteList() { return xgetSQueMap("villageDayId_QueryDerivedReferrer_VoteList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_VoteList(VoteCQ sq) { return xkeepSQue("villageDayId_QueryDerivedReferrer_VoteList", sq); }
+    public Map<String, Object> xdfgetVillageDayId_QueryDerivedReferrer_VoteListParameter() { return xgetSQuePmMap("villageDayId_QueryDerivedReferrer_VoteList"); }
+    public String keepVillageDayId_QueryDerivedReferrer_VoteListParameter(Object pm) { return xkeepSQuePm("villageDayId_QueryDerivedReferrer_VoteList", pm); }
 
     /**
      * Add order-by as ascend. <br>
@@ -342,9 +356,6 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
         if (bq.hasConditionQueryVillage()) {
             uq.queryVillage().reflectRelationOnUnionQuery(bq.queryVillage(), uq.queryVillage());
         }
-        if (bq.hasConditionQueryVoteAsOne()) {
-            uq.queryVoteAsOne().reflectRelationOnUnionQuery(bq.queryVoteAsOne(), uq.queryVoteAsOne());
-        }
     }
 
     // ===================================================================================
@@ -389,24 +400,6 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     }
     protected void xsetupOuterJoinVillage() { xregOutJo("village"); }
     public boolean hasConditionQueryVillage() { return xhasQueRlMap("village"); }
-
-    /**
-     * Get the condition-query for relation table. <br>
-     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-     * @return The instance of condition-query. (NotNull)
-     */
-    public VoteCQ queryVoteAsOne() { return xdfgetConditionQueryVoteAsOne(); }
-    public VoteCQ xdfgetConditionQueryVoteAsOne() {
-        String prop = "voteAsOne";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryVoteAsOne()); xsetupOuterJoinVoteAsOne(); }
-        return xgetQueRlMap(prop);
-    }
-    protected VoteCQ xcreateQueryVoteAsOne() {
-        String nrp = xresolveNRP("village_day", "voteAsOne"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new VoteCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "voteAsOne", nrp);
-    }
-    protected void xsetupOuterJoinVoteAsOne() { xregOutJo("voteAsOne"); }
-    public boolean hasConditionQueryVoteAsOne() { return xhasQueRlMap("voteAsOne"); }
 
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;

@@ -17,10 +17,10 @@ import com.ort.dbflute.exentity.*;
  * 投票
  * <pre>
  * [primary-key]
- *     VILLAGE_DAY_ID
+ *     VILLAGE_DAY_ID, VILLAGE_PLAYER_ID
  *
  * [column]
- *     VILLAGE_DAY_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID
+ *     VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -46,19 +46,19 @@ import com.ort.dbflute.exentity.*;
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * Integer villageDayId = entity.getVillageDayId();
+ * Integer villagePlayerId = entity.getVillagePlayerId();
+ * Integer targetVillagePlayerId = entity.getTargetVillagePlayerId();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * String updateTrace = entity.getUpdateTrace();
- * Integer villagePlayerId = entity.getVillagePlayerId();
- * Integer targetVillagePlayerId = entity.getTargetVillagePlayerId();
  * entity.setVillageDayId(villageDayId);
+ * entity.setVillagePlayerId(villagePlayerId);
+ * entity.setTargetVillagePlayerId(targetVillagePlayerId);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
  * entity.setUpdateTrace(updateTrace);
- * entity.setVillagePlayerId(villagePlayerId);
- * entity.setTargetVillagePlayerId(targetVillagePlayerId);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
@@ -77,6 +77,12 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     /** VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} */
     protected Integer _villageDayId;
 
+    /** VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player} */
+    protected Integer _villagePlayerId;
+
+    /** TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} */
+    protected Integer _targetVillagePlayerId;
+
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
 
@@ -88,12 +94,6 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
 
     /** UPDATE_TRACE: {NotNull, VARCHAR(64)} */
     protected String _updateTrace;
-
-    /** VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} */
-    protected Integer _villagePlayerId;
-
-    /** TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} */
-    protected Integer _targetVillagePlayerId;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -114,6 +114,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     /** {@inheritDoc} */
     public boolean hasPrimaryKeyValue() {
         if (_villageDayId == null) { return false; }
+        if (_villagePlayerId == null) { return false; }
         return true;
     }
 
@@ -198,6 +199,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
         if (obj instanceof BsVote) {
             BsVote other = (BsVote)obj;
             if (!xSV(_villageDayId, other._villageDayId)) { return false; }
+            if (!xSV(_villagePlayerId, other._villagePlayerId)) { return false; }
             return true;
         } else {
             return false;
@@ -209,6 +211,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
         int hs = initial;
         hs = xCH(hs, asTableDbName());
         hs = xCH(hs, _villageDayId);
+        hs = xCH(hs, _villagePlayerId);
         return hs;
     }
 
@@ -231,12 +234,12 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_villageDayId));
+        sb.append(dm).append(xfND(_villagePlayerId));
+        sb.append(dm).append(xfND(_targetVillagePlayerId));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
         sb.append(dm).append(xfND(_updateTrace));
-        sb.append(dm).append(xfND(_villagePlayerId));
-        sb.append(dm).append(xfND(_targetVillagePlayerId));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -285,6 +288,46 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     public void setVillageDayId(Integer villageDayId) {
         registerModifiedProperty("villageDayId");
         _villageDayId = villageDayId;
+    }
+
+    /**
+     * [get] VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票元村参加者ID
+     * @return The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getVillagePlayerId() {
+        checkSpecifiedProperty("villagePlayerId");
+        return _villagePlayerId;
+    }
+
+    /**
+     * [set] VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票元村参加者ID
+     * @param villagePlayerId The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if update: for the constraint)
+     */
+    public void setVillagePlayerId(Integer villagePlayerId) {
+        registerModifiedProperty("villagePlayerId");
+        _villagePlayerId = villagePlayerId;
+    }
+
+    /**
+     * [get] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票先村参加者ID
+     * @return The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed even if selected: for no constraint)
+     */
+    public Integer getTargetVillagePlayerId() {
+        checkSpecifiedProperty("targetVillagePlayerId");
+        return _targetVillagePlayerId;
+    }
+
+    /**
+     * [set] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * 投票先村参加者ID
+     * @param targetVillagePlayerId The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setTargetVillagePlayerId(Integer targetVillagePlayerId) {
+        registerModifiedProperty("targetVillagePlayerId");
+        _targetVillagePlayerId = targetVillagePlayerId;
     }
 
     /**
@@ -365,45 +408,5 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     public void setUpdateTrace(String updateTrace) {
         registerModifiedProperty("updateTrace");
         _updateTrace = updateTrace;
-    }
-
-    /**
-     * [get] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
-     * 投票元村参加者ID
-     * @return The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
-     */
-    public Integer getVillagePlayerId() {
-        checkSpecifiedProperty("villagePlayerId");
-        return _villagePlayerId;
-    }
-
-    /**
-     * [set] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
-     * 投票元村参加者ID
-     * @param villagePlayerId The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if update: for the constraint)
-     */
-    public void setVillagePlayerId(Integer villagePlayerId) {
-        registerModifiedProperty("villagePlayerId");
-        _villagePlayerId = villagePlayerId;
-    }
-
-    /**
-     * [get] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
-     * 投票先村参加者ID
-     * @return The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed even if selected: for no constraint)
-     */
-    public Integer getTargetVillagePlayerId() {
-        checkSpecifiedProperty("targetVillagePlayerId");
-        return _targetVillagePlayerId;
-    }
-
-    /**
-     * [set] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
-     * 投票先村参加者ID
-     * @param targetVillagePlayerId The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed: null update allowed for no constraint)
-     */
-    public void setTargetVillagePlayerId(Integer targetVillagePlayerId) {
-        registerModifiedProperty("targetVillagePlayerId");
-        _targetVillagePlayerId = targetVillagePlayerId;
     }
 }

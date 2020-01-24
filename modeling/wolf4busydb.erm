@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/wolf4busy-api/dbflute_wolf4busydb/playsql/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -2016,13 +2016,13 @@
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
 				</normal_column>
-				<column_group>共通カラム</column_group>
 				<normal_column>
 					<physical_name>village_player_id</physical_name>
 					<logical_name>投票元村参加者ID</logical_name>
 					<referred_column>table.village_player.village_player_id</referred_column>
 					<relationship>FK_vote_village_player</relationship>
 					<not_null>true</not_null>
+					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
 					<physical_name>target_village_player_id</physical_name>
@@ -2030,6 +2030,7 @@
 					<referred_column>table.village_player.village_player_id</referred_column>
 					<relationship>FK_vote_target_village_player</relationship>
 				</normal_column>
+				<column_group>共通カラム</column_group>
 			</columns>
 			<indexes>
 			</indexes>

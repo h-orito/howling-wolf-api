@@ -60,9 +60,7 @@ class CommitDataSource(
     /**
      * コミット/取り消し
      *
-     * @param villageDayId 村日付id
-     * @param myselfId 村参加者id
-     * @param commit コミットするか
+     * @param commit commit
      */
     fun updateCommit(commit: com.ort.wolf4busy.domain.model.commit.Commit) {
         deleteCommit(commit)

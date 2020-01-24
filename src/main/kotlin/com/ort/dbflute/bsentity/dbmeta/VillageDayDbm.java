@@ -72,7 +72,6 @@ public class VillageDayDbm extends AbstractDBMeta {
     protected void xsetupEfpg() {
         setupEfpg(_efpgMap, et -> ((VillageDay)et).getNoonnight(), (et, vl) -> ((VillageDay)et).setNoonnight((OptionalEntity<Noonnight>)vl), "noonnight");
         setupEfpg(_efpgMap, et -> ((VillageDay)et).getVillage(), (et, vl) -> ((VillageDay)et).setVillage((OptionalEntity<Village>)vl), "village");
-        setupEfpg(_efpgMap, et -> ((VillageDay)et).getVoteAsOne(), (et, vl) -> ((VillageDay)et).setVoteAsOne((OptionalEntity<Vote>)vl), "voteAsOne");
     }
     public PropertyGateway findForeignPropertyGateway(String prop)
     { return doFindEfpg(_efpgMap, prop); }
@@ -93,7 +92,7 @@ public class VillageDayDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList,villagePlayerList", null, false);
+    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "abilityList,commitList,villagePlayerList,voteList", null, false);
     protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", null, null, false);
     protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnNoonnightCode = cci("NOONNIGHT_CODE", "NOONNIGHT_CODE", null, null, String.class, "noonnightCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "noonnight", null, CDef.DefMeta.Noonnight, false);
@@ -199,14 +198,6 @@ public class VillageDayDbm extends AbstractDBMeta {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageId(), VillageDbm.getInstance().columnVillageId());
         return cfi("FK_VILLAGE_DAY_VILLAGE", "village", this, VillageDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageDayList", false);
     }
-    /**
-     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-     * @return The information object of foreign property(referrer-as-one). (NotNull)
-     */
-    public ForeignInfo foreignVoteAsOne() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VoteDbm.getInstance().columnVillageDayId());
-        return cfi("FK_VOTE_VILLAGE_DAY", "voteAsOne", this, VoteDbm.getInstance(), mp, 2, org.dbflute.optional.OptionalEntity.class, true, false, true, false, null, null, false, "villageDay", false);
-    }
 
     // -----------------------------------------------------
     //                                     Referrer Property
@@ -234,6 +225,14 @@ public class VillageDayDbm extends AbstractDBMeta {
     public ReferrerInfo referrerVillagePlayerList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VillagePlayerDbm.getInstance().columnDeadVillageDayId());
         return cri("FK_VILLAGE_PLAYER_VILLAGE_DAY", "villagePlayerList", this, VillagePlayerDbm.getInstance(), mp, false, "villageDay");
+    }
+    /**
+     * VOTE by VILLAGE_DAY_ID, named 'voteList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerVoteList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VoteDbm.getInstance().columnVillageDayId());
+        return cri("FK_VOTE_VILLAGE_DAY", "voteList", this, VoteDbm.getInstance(), mp, false, "villageDay");
     }
 
     // ===================================================================================
