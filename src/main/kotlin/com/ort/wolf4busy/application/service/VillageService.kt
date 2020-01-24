@@ -38,7 +38,7 @@ class VillageService(
      * @param village village
      * @return villageId
      */
-    fun registerVillage(village: Village, password: String?): Village = villageDataSource.registerVillage(village, password)
+    fun registerVillage(village: Village): Village = villageDataSource.registerVillage(village)
 
     /**
      * 差分更新

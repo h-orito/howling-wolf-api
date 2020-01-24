@@ -137,7 +137,7 @@ class VillageController(
         val password: String? = null // TODO
         val player: Player = playerService.findPlayer(user)
         val village: Village = convertRegisterBodyToVillage(body, player)
-        val villageId: Int = villageCoordinator.registerVillage(village, user, password)
+        val villageId: Int = villageCoordinator.registerVillage(village, user)
         return VillageRegisterView(villageId = villageId)
     }
 

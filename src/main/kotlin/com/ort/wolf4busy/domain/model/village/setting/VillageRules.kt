@@ -41,4 +41,15 @@ data class VillageRules(
         if (availableSkillRequest) return true
         return firstRequest == CDef.Skill.おまかせ && secondRequest == CDef.Skill.おまかせ
     }
+
+    fun existsDifference(rules: VillageRules): Boolean {
+        return openVote != rules.openVote
+            || availableSkillRequest != rules.availableSkillRequest
+            || availableSpectate != rules.availableSpectate
+            || openSkillInGrave != rules.openSkillInGrave
+            || visibleGraveMessage != rules.visibleGraveMessage
+            || availableSuddenlyDeath != rules.availableSuddenlyDeath
+            || availableCommit != rules.availableCommit
+            || messageRestrict.existsDifference(rules.messageRestrict)
+    }
 }

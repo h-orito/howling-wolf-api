@@ -120,6 +120,7 @@ data class Village(
             || winCamp?.code != village.winCamp?.code
             || participant.existsDifference(village.participant)
             || day.existsDifference(village.day)
+            || setting.existsDifference(village.setting)
     }
 
     // ===================================================================================

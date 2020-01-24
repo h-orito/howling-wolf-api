@@ -2,6 +2,7 @@ package com.ort.wolf4busy.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
+import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.wolf4busy.Wolf4busyTest
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
@@ -103,10 +104,9 @@ class VillageDataSourceTest : Wolf4busyTest() {
             ),
             winCamp = null
         )
-        val password = "password"
 
         // ## Act ##
-        val registeredVillage = villageDataSource.registerVillage(paramVillage, password)
+        val registeredVillage = villageDataSource.registerVillage(paramVillage)
         val villageId = registeredVillage.id
 
         // ## Assert ##
@@ -155,18 +155,18 @@ class VillageDataSourceTest : Wolf4busyTest() {
     @Test
     fun test_findVillages() {
         // ## Arrange ##
-        val village1 = villageDataSource.registerVillage(createDummyVillageParam(), "")
-        villageDataSource.registerVillageParticipant(village1.id, createDummyVillageParticipantParam())
-        villageDataSource.registerVillageParticipant(village1.id, createDummyVillageParticipantParam())
-        villageDataSource.registerVillageParticipant(village1.id, createDummyVillageParticipantParam())
-        val village2 = villageDataSource.registerVillage(createDummyVillageParam(), "")
-        villageDataSource.registerVillageParticipant(village2.id, createDummyVillageParticipantParam())
-        villageDataSource.registerVillageParticipant(village2.id, createDummyVillageParticipantParam())
-        villageDataSource.registerVillageParticipant(village2.id, createDummyVillageParticipantParam())
-        val village3 = villageDataSource.registerVillage(createDummyVillageParam(), "")
-        villageDataSource.registerVillageParticipant(village3.id, createDummyVillageParticipantParam())
-        villageDataSource.registerVillageParticipant(village3.id, createDummyVillageParticipantParam())
-        villageDataSource.registerVillageParticipant(village3.id, createDummyVillageParticipantParam())
+        val village1 = villageDataSource.registerVillage(createDummyVillageParam())
+        insertVillagePlayer(village1.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village1.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village1.id, createDummyVillageParticipantParam())
+        val village2 = villageDataSource.registerVillage(createDummyVillageParam())
+        insertVillagePlayer(village2.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village2.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village2.id, createDummyVillageParticipantParam())
+        val village3 = villageDataSource.registerVillage(createDummyVillageParam())
+        insertVillagePlayer(village3.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village3.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village3.id, createDummyVillageParticipantParam())
 
         // ## Act ##
         val villages = villageDataSource.findVillages()
@@ -242,5 +242,22 @@ class VillageDataSourceTest : Wolf4busyTest() {
             skillRequest = SkillRequest(Skill(CDef.Skill.おまかせ), Skill(CDef.Skill.おまかせ)),
             isWin = null
         )
+    }
+
+    private fun insertVillagePlayer(
+        villageId: Int,
+        participant: VillageParticipant
+    ): Int {
+        val vp = VillagePlayer()
+        vp.villageId = villageId
+        vp.playerId = participant.playerId
+        vp.charaId = participant.charaId
+        vp.isDead = false
+        vp.isSpectator = participant.isSpectator
+        vp.isGone = false
+        vp.requestSkillCodeAsSkill = participant.skillRequest.first.toCdef()
+        vp.secondRequestSkillCodeAsSkill = participant.skillRequest.second.toCdef()
+        villagePlayerBhv.insert(vp)
+        return vp.villagePlayerId
     }
 }

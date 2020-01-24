@@ -140,9 +140,9 @@ class MessageService(
         ability: Ability,
         charas: Charas
     ) {
-        val myChara = charas.chara(participant.charaId)
-        val targetChara = if (targetId == null) null else charas.chara(village.participant, targetId)
-        val message = ability.createAbilitySetMessage(village, myChara, targetChara)
+        val myChara: Chara = charas.chara(participant.charaId)
+        val targetChara: Chara? = if (targetId == null) null else charas.chara(village.participant, targetId)
+        val message: Message = ability.createAbilitySetMessage(village, myChara, targetChara)
         messageDataSource.registerMessage(village.id, message)
     }
 

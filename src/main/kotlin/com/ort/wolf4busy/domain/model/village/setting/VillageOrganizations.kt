@@ -53,6 +53,15 @@ data class VillageOrganizations(
         return skillList.sortedBy { it.toCdef().order() }
     }
 
+    fun existsDifference(organizations: VillageOrganizations): Boolean {
+        if (organization.size != organizations.organization.size) return true
+        organization.forEach { (count, org) ->
+            if (!organizations.organization.containsKey(count)) return true
+            if (org != organizations.organization[count]) return true
+        }
+        return false
+    }
+
     override fun toString(): String {
         val sortedMap = this.organization.toSortedMap()
         return sortedMap.map { it.value }.joinToString(separator = "\n")
