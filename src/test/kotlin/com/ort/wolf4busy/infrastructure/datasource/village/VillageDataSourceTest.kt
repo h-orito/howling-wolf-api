@@ -4,10 +4,13 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.wolf4busy.Wolf4busyTest
+import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
+import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
+import com.ort.wolf4busy.domain.model.village.VillageWinCamp
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
@@ -176,6 +179,94 @@ class VillageDataSourceTest : Wolf4busyTest() {
         assertThat(villages.villageList.first().participant.count).isEqualTo(3)
     }
 
+    @Test
+    fun test_findVillage() {
+        // ## Arrange ##
+        val param = createDummyVillageParam()
+
+        // ## Act ##
+        var village = villageDataSource.registerVillage(param)
+        insertVillagePlayer(village.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village.id, createDummyVillageParticipantParam())
+        insertVillagePlayer(village.id, createDummyVillageParticipantParam())
+        village = villageDataSource.findVillage(village.id)
+
+        // ## Assert ##
+        assertThat(village.name).isEqualTo(param.name)
+        assertThat(village.creatorPlayerId).isEqualTo(param.creatorPlayerId)
+        assertThat(village.status.toCdef()).isEqualTo(param.status.toCdef())
+        assertThat(village.winCamp).isNull()
+        assertThat(village.setting).satisfies { settings ->
+            assertThat(settings.capacity.min).isEqualTo(param.setting.capacity.min)
+            assertThat(settings.capacity.max).isEqualTo(param.setting.capacity.max)
+            assertThat(settings.charachip.charachipId).isEqualTo(param.setting.charachip.charachipId)
+            assertThat(settings.charachip.dummyCharaId).isEqualTo(param.setting.charachip.dummyCharaId)
+            assertThat(settings.time.termType).isEqualTo(param.setting.time.termType)
+            assertThat(settings.time.dayChangeIntervalSeconds).isEqualTo(param.setting.time.dayChangeIntervalSeconds)
+            assertThat(settings.time.startDatetime).isEqualTo(param.setting.time.startDatetime)
+            assertThat(settings.organizations.organization.toString()).isEqualTo(param.setting.organizations.organization.toString())
+            assertThat(settings.rules).satisfies { rules ->
+                assertThat(rules.availableCommit).isEqualTo(param.setting.rules.availableCommit)
+                assertThat(rules.availableSkillRequest).isEqualTo(param.setting.rules.availableSkillRequest)
+                assertThat(rules.availableSpectate).isEqualTo(param.setting.rules.availableSpectate)
+                assertThat(rules.availableSuddenlyDeath).isEqualTo(param.setting.rules.availableSuddenlyDeath)
+                assertThat(rules.openSkillInGrave).isEqualTo(param.setting.rules.openSkillInGrave)
+                assertThat(rules.openVote).isEqualTo(param.setting.rules.openVote)
+                assertThat(rules.visibleGraveMessage).isEqualTo(param.setting.rules.visibleGraveMessage)
+                assertThat(rules.messageRestrict.restrictList.size).isEqualTo(param.setting.rules.messageRestrict.restrictList.size)
+            }
+            assertThat(settings.password.joinPassword).isEqualTo(param.setting.password.joinPassword)
+        }
+        assertThat(village.winCamp).isNull()
+        assertThat(village.participant.count).isEqualTo(3)
+        assertThat(village.spectator.count).isEqualTo(0)
+        assertThat(village.day.dayList.size).isEqualTo(1)
+    }
+
+    @Test
+    fun test_updateDifference() {
+        // ## Arrange ##
+        val before = createDummyVillageParam()
+        val beforeVillage = villageDataSource.registerVillage(before)
+        val after = createDummyUpdateVillageParam().copy(id = beforeVillage.id)
+
+        // ## Act ##
+        val village = villageDataSource.updateDifference(beforeVillage, after)
+
+        // ## Assert ##
+        assertThat(village.name).isEqualTo(after.name)
+        assertThat(village.creatorPlayerId).isEqualTo(after.creatorPlayerId)
+        assertThat(village.status.toCdef()).isEqualTo(after.status.toCdef())
+        assertThat(village.winCamp?.toCdef()).isEqualTo(after.winCamp?.toCdef())
+        assertThat(village.setting).satisfies { settings ->
+            assertThat(settings.capacity.min).isEqualTo(after.setting.capacity.min)
+            assertThat(settings.capacity.max).isEqualTo(after.setting.capacity.max)
+            assertThat(settings.charachip.charachipId).isEqualTo(after.setting.charachip.charachipId)
+            assertThat(settings.charachip.dummyCharaId).isEqualTo(after.setting.charachip.dummyCharaId)
+            assertThat(settings.time.termType).isEqualTo(after.setting.time.termType)
+            assertThat(settings.time.dayChangeIntervalSeconds).isEqualTo(after.setting.time.dayChangeIntervalSeconds)
+            assertThat(settings.time.startDatetime).isEqualTo(after.setting.time.startDatetime)
+            assertThat(settings.organizations.organization.toString()).isEqualTo(after.setting.organizations.organization.toString())
+            assertThat(settings.rules).satisfies { rules ->
+                assertThat(rules.availableCommit).isEqualTo(after.setting.rules.availableCommit)
+                assertThat(rules.availableSkillRequest).isEqualTo(after.setting.rules.availableSkillRequest)
+                assertThat(rules.availableSpectate).isEqualTo(after.setting.rules.availableSpectate)
+                assertThat(rules.availableSuddenlyDeath).isEqualTo(after.setting.rules.availableSuddenlyDeath)
+                assertThat(rules.openSkillInGrave).isEqualTo(after.setting.rules.openSkillInGrave)
+                assertThat(rules.openVote).isEqualTo(after.setting.rules.openVote)
+                assertThat(rules.visibleGraveMessage).isEqualTo(after.setting.rules.visibleGraveMessage)
+                assertThat(rules.messageRestrict.restrictList.any { it.type.toCdef() == CDef.MessageType.通常発言 }).isTrue()
+                assertThat(rules.messageRestrict.restrictList.none { it.type.toCdef() == CDef.MessageType.人狼の囁き }).isTrue()
+                assertThat(rules.messageRestrict.restrictList.any { it.type.toCdef() == CDef.MessageType.独り言 }).isTrue()
+            }
+            assertThat(settings.password.joinPassword).isEqualTo(after.setting.password.joinPassword)
+        }
+        assertThat(village.winCamp?.toCdef()).isEqualTo(after.winCamp?.toCdef())
+        assertThat(village.participant.count).isEqualTo(2)
+        assertThat(village.spectator.count).isEqualTo(2)
+        assertThat(village.day.dayList.size).isEqualTo(3)
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
@@ -227,6 +318,104 @@ class VillageDataSourceTest : Wolf4busyTest() {
                 dayList = listOf()
             ),
             winCamp = null
+        )
+    }
+
+    private fun createDummyUpdateVillageParam(): com.ort.wolf4busy.domain.model.village.Village {
+        return com.ort.wolf4busy.domain.model.village.Village(
+            id = 1,
+            name = "updated_village_name",
+            creatorPlayerId = 1,
+            status = VillageStatus(CDef.VillageStatus.進行中),
+            setting = VillageSettings(
+                capacity = PersonCapacity(
+                    min = 12,
+                    max = 14
+                ),
+                time = VillageTime(
+                    termType = CDef.Term.短期.code(),
+                    startDatetime = LocalDateTime.now().plusDays(2L).withNano(0),
+                    dayChangeIntervalSeconds = 48 * 60 * 60
+                ),
+                charachip = VillageCharachip(
+                    dummyCharaId = 1,
+                    charachipId = 1
+                ),
+                organizations = VillageOrganizations(),
+                rules = VillageRules(
+                    openVote = true,
+                    availableSkillRequest = false,
+                    availableSpectate = true,
+                    openSkillInGrave = true,
+                    visibleGraveMessage = true,
+                    availableSuddenlyDeath = false,
+                    availableCommit = true,
+                    messageRestrict = VillageMessageRestricts(
+                        existRestricts = true,
+                        restrictList = listOf(
+                            VillageMessageRestrict(
+                                type = MessageType(CDef.MessageType.通常発言),
+                                count = 40,
+                                length = 400,
+                                line = 20
+                            ),
+                            VillageMessageRestrict(
+                                type = MessageType(CDef.MessageType.独り言),
+                                count = 30,
+                                length = 300,
+                                line = 20
+                            )
+                        )
+                    )
+                ),
+                password = VillagePassword(
+                    joinPasswordRequired = true,
+                    joinPassword = "password"
+                )
+            ),
+            participant = VillageParticipants(
+                count = 2,
+                memberList = listOf(
+                    createDummyVillageParticipantParam(),
+                    createDummyVillageParticipantParam().copy(
+                        charaId = 2,
+                        playerId = 2,
+                        skillRequest = SkillRequest(Skill(CDef.Skill.狩人), Skill(CDef.Skill.霊能者))
+                    )
+                )
+            ),
+            spectator = VillageParticipants(
+                count = 2,
+                memberList = listOf(
+                    createDummyVillageParticipantParam().copy(
+                        charaId = 3,
+                        playerId = 3,
+                        isSpectator = true
+                    ),
+                    createDummyVillageParticipantParam().copy(
+                        charaId = 4,
+                        playerId = 4,
+                        isSpectator = true
+                    )
+                )
+            ),
+            day = VillageDays(
+                dayList = listOf(
+                    VillageDay(
+                        id = 1,
+                        day = 0,
+                        noonnight = CDef.Noonnight.昼.code(),
+                        dayChangeDatetime = LocalDateTime.now()
+                    ),
+                    VillageDay(
+                        id = 1,
+                        day = 1,
+                        noonnight = CDef.Noonnight.昼.code(),
+                        dayChangeDatetime = LocalDateTime.now().plusDays(2L)
+                    )
+                )
+            ),
+            winCamp = VillageWinCamp(CDef.Camp.人狼陣営)
         )
     }
 

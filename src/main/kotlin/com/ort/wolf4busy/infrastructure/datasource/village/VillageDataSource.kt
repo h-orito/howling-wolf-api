@@ -220,11 +220,15 @@ class VillageDataSource(
         }
 
         // 更新
-        after.participant.memberList.forEach {
+        after.participant.memberList.filter { member ->
+            before.participant.memberList.any { it.id == member.id }
+        }.forEach {
             val beforeMember = before.participant.member(it.id)
             if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
         }
-        after.spectator.memberList.forEach {
+        after.spectator.memberList.filter { member ->
+            before.spectator.memberList.any { it.id == member.id }
+        }.forEach {
             val beforeMember = before.spectator.member(it.id)
             if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
         }
@@ -245,7 +249,11 @@ class VillageDataSource(
         after.setting.time.let(fun(afterTime) {
             if (!before.setting.time.existsDifference(afterTime)) return
             updateVillageSetting(villageId, CDef.VillageSettingItem.期間形式, afterTime.termType)
-            updateVillageSetting(villageId, CDef.VillageSettingItem.開始予定日時, afterTime.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER))
+            updateVillageSetting(
+                villageId,
+                CDef.VillageSettingItem.開始予定日時,
+                afterTime.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
+            )
             updateVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, afterTime.dayChangeIntervalSeconds.toString())
         })
         after.setting.organizations.let(fun(afterOrg) {
@@ -257,13 +265,14 @@ class VillageDataSource(
             updateVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(afterRules.openVote))
             updateVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(afterRules.availableSkillRequest))
             updateVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(afterRules.availableSpectate))
-            updateVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(afterRules.visibleGraveMessage))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(afterRules.openSkillInGrave))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか, toFlg(afterRules.visibleGraveMessage))
             updateVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(afterRules.availableSuddenlyDeath))
             updateVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(afterRules.availableCommit))
         })
         after.setting.password.let(fun(afterPassword) {
             if (!before.setting.password.existsDifference(afterPassword)) return
-            insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, afterPassword.joinPassword ?: "")
+            updateVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, afterPassword.joinPassword ?: "")
         })
     }
 
@@ -313,6 +322,7 @@ class VillageDataSource(
     private fun updateVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village) {
         val village = Village()
         village.villageId = villageModel.id
+        village.villageDisplayName = villageModel.name
         village.villageStatusCodeAsVillageStatus = villageModel.status.toCdef()
         village.winCampCodeAsCamp = villageModel.winCamp?.toCdef()
         villageBhv.update(village)
@@ -416,7 +426,8 @@ class VillageDataSource(
         insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
         insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
         insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.openSkillInGrave))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか, toFlg(settings.rules.visibleGraveMessage))
         insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
         insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
         insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, settings.password.joinPassword ?: "")
