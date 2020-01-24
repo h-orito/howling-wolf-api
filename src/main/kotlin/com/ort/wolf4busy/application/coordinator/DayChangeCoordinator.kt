@@ -48,10 +48,8 @@ class DayChangeCoordinator(
 
         // 必要あれば日付追加
         dayChange = dayChange.addDayIfNeeded(commits).also {
-            if (!dayChange.isChange) return
-            // 日付追加
+            if (!it.isChange) return
             update(beforeDayChange, it)
-            // TODO 同時に来ると辛い
         }
 
         // 登録後の村日付idが必要になるので取得し直す

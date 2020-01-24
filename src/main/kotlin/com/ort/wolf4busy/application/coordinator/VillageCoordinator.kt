@@ -10,6 +10,7 @@ import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.Say
 import com.ort.wolf4busy.domain.model.myself.participant.SituationAsParticipant
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
@@ -46,12 +47,12 @@ class VillageCoordinator(
      */
     fun findParticipant(village: Village, user: Wolf4busyUser?): VillageParticipant? {
         user ?: return null
-        val player = playerService.findPlayer(user)
+        val player: Player = playerService.findPlayer(user)
         return this.findParticipant(village, player.id)
     }
 
     fun findParticipant(village: Village, playerId: Int): VillageParticipant? {
-        val participant = village.participant.memberList.find { it.playerId == playerId }
+        val participant: VillageParticipant? = village.participant.memberList.find { it.playerId == playerId }
         return participant ?: village.spectator.memberList.find { it.playerId == playerId }
     }
 
@@ -59,20 +60,19 @@ class VillageCoordinator(
      * 村登録
      * @param paramVillage village
      * @param user user
-     * @param villagePassword password
      * @return 村ID
      */
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
-    fun registerVillage(paramVillage: Village, user: Wolf4busyUser, villagePassword: String?): Int {
+    fun registerVillage(paramVillage: Village, user: Wolf4busyUser): Int {
         // 作成できない状況ならエラー
-        val player = playerService.findPlayer(user)
+        val player: Player = playerService.findPlayer(user)
         player.assertCreateVillage(user)
         // 村を登録
-        val village: Village = villageService.registerVillage(paramVillage, villagePassword)
+        val village: Village = villageService.registerVillage(paramVillage)
         // 村作成時のシステムメッセージを登録
         messageService.registerInitialMessage(village)
         // ダミーキャラを参加させる
-        val chara = charachipService.findChara(village.dummyChara().charaId)
+        val chara: Chara = charachipService.findChara(village.dummyChara().charaId)
         participateDummyChara(village.id, village, chara)
 
         return village.id
@@ -99,7 +99,7 @@ class VillageCoordinator(
     ) {
         // 参加できない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
-        val player = playerService.findPlayer(user)
+        val player: Player = playerService.findPlayer(user)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
 
         if (isSpectate) {
@@ -141,7 +141,7 @@ class VillageCoordinator(
     ) {
         // 村参加者登録
         var village: Village = villageService.findVillage(villageId)
-        val changedVillage = village.participate(
+        val changedVillage: Village = village.participate(
             playerId = playerId,
             charaId = charaId,
             firstRequestSkill = firstRequestSkill,
@@ -149,7 +149,7 @@ class VillageCoordinator(
             isSpectate = isSpectate
         )
         village = villageService.updateVillageDifference(village, changedVillage)
-        val participant = findParticipant(village, playerId)!!
+        val participant: VillageParticipant = findParticipant(village, playerId)!!
         val chara: Chara = charachipService.findChara(charaId)
         // {N}人目、{キャラ名} とユーザー入力の発言
         messageService.registerParticipateMessage(
@@ -170,11 +170,11 @@ class VillageCoordinator(
      */
     fun changeSkillRequest(villageId: Int, user: Wolf4busyUser, firstRequestSkill: String, secondRequestSkill: String) {
         // 役職希望変更できない状況ならエラー
-        val village = villageService.findVillage(villageId)
-        val participant = findParticipant(village, user)
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant? = findParticipant(village, user)
         SkillRequest.assertSkillRequest(village, participant, firstRequestSkill, secondRequestSkill)
         // 役職希望変更
-        val changedVillage = village.changeSkillRequest(
+        val changedVillage: Village = village.changeSkillRequest(
             participant!!.id,
             CDef.Skill.codeOf(firstRequestSkill)!!,
             CDef.Skill.codeOf(secondRequestSkill)!!
@@ -213,7 +213,7 @@ class VillageCoordinator(
      * @param faceType 表情種別
      */
     fun confirmToSay(villageId: Int, user: Wolf4busyUser, messageText: String, messageType: String, faceType: String) {
-        val messageContent = MessageContent.invoke(messageType, messageText, faceType)
+        val messageContent: MessageContent = MessageContent.invoke(messageType, messageText, faceType)
         // 発言できない状況ならエラー
         assertSay(villageId, user, messageContent)
     }
@@ -229,13 +229,13 @@ class VillageCoordinator(
      */
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun say(villageId: Int, user: Wolf4busyUser, messageText: String, messageType: String, faceType: String) {
-        val messageContent = MessageContent.invoke(messageType, messageText, faceType)
+        val messageContent: MessageContent = MessageContent.invoke(messageType, messageText, faceType)
         // 発言できない状況ならエラー
         assertSay(villageId, user, messageContent)
         // 発言
-        val village = villageService.findVillage(villageId)
-        val participant = findParticipant(village, user)!!
-        val message = Message.createSayMessage(participant, village.day.latestDay().id, messageContent)
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant = findParticipant(village, user)!!
+        val message: Message = Message.createSayMessage(participant, village.day.latestDay().id, messageContent)
         messageService.registerSayMessage(villageId, message)
     }
 
@@ -250,14 +250,14 @@ class VillageCoordinator(
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun setAbility(villageId: Int, user: Wolf4busyUser, targetId: Int?, abilityType: String) {
         // 能力セットできない状況ならエラー
-        val village = villageService.findVillage(villageId)
-        val participant = findParticipant(village, user)
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant? = findParticipant(village, user)
         val ability = Ability(abilityType)
         ability.assertAbility(village, participant, targetId)
         // 能力セット
         val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, ability)
         abilityService.updateAbility(villageAbility)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         messageService.registerAbilitySetMessage(village, participant, targetId, ability, charas)
     }
 
@@ -271,8 +271,8 @@ class VillageCoordinator(
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun setVote(villageId: Int, user: Wolf4busyUser, targetId: Int) {
         // 投票セットできない状況ならエラー
-        val village = villageService.findVillage(villageId)
-        val participant = findParticipant(village, user)
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant? = findParticipant(village, user)
         Vote.assertVote(village, participant, targetId)
         // 投票
         voteService.updateVote(village.day.latestDay().id, participant!!, targetId)
@@ -288,13 +288,13 @@ class VillageCoordinator(
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun setCommit(villageId: Int, user: Wolf4busyUser, doCommit: Boolean) {
         // コミットできない状況ならエラー
-        val village = villageService.findVillage(villageId)
-        val participant = findParticipant(village, user)
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant? = findParticipant(village, user)
         Commit.assertCommit(village, participant)
         // コミット
         val commit = Commit(village.day.latestDay().id, participant!!.id, doCommit)
         commitService.updateCommit(commit)
-        val chara = charachipService.findChara(participant.charaId)
+        val chara: Chara = charachipService.findChara(participant.charaId)
         messageService.registerCommitMessage(village, chara, doCommit)
         // 日付更新
         if (doCommit) dayChangeCoordinator.dayChangeIfNeeded(village)
@@ -307,7 +307,7 @@ class VillageCoordinator(
      */
     fun findActionSituation(villageId: Int, user: Wolf4busyUser?): SituationAsParticipant {
         val village: Village = villageService.findVillage(villageId)
-        val player = if (user == null) null else playerService.findPlayer(user)
+        val player: Player? = if (user == null) null else playerService.findPlayer(user)
         val participant: VillageParticipant? = findParticipant(village, user)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val skillRequest: SkillRequest? = if (participant == null) null else village.participant.member(participant.id).skillRequest
@@ -336,7 +336,7 @@ class VillageCoordinator(
     private fun participateDummyChara(villageId: Int, village: Village, dummyChara: Chara) {
         val dummyPlayerId = 1 // 固定
 //        val message = "人狼なんているわけないじゃん。みんな大げさだなあ\n>>1>>*1>>+1>>=1>>#1aaa>>-1>>@1" // TODO
-        val message = dummyChara.defaultMessage.joinMessage ?: "人狼なんているわけないじゃん。みんな大げさだなあ"
+        val message: String = dummyChara.defaultMessage.joinMessage ?: "人狼なんているわけないじゃん。みんな大げさだなあ"
         this.participate(
             villageId = villageId,
             playerId = dummyPlayerId,
@@ -350,7 +350,7 @@ class VillageCoordinator(
     private fun assertSay(villageId: Int, user: Wolf4busyUser?, messageContent: MessageContent) {
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
-        val chara = if (participant == null) null else charachipService.findChara(participant.charaId)
+        val chara: Chara? = if (participant == null) null else charachipService.findChara(participant.charaId)
         val latestDayMessageList: List<Message> =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
         Say.assertSay(village, participant, chara, latestDayMessageList, messageContent)

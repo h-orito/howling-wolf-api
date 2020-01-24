@@ -5,6 +5,7 @@ import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.*
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.domain.model.village.setting.VillageMessageRestrict
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.converter.VillageDataConverter
@@ -22,17 +23,15 @@ class VillageDataSource(
     /**
      * 村登録
      * @param paramVillage village
-     * @param password 入村パスワード
      * @return 村ID
      */
     fun registerVillage(
-        paramVillage: com.ort.wolf4busy.domain.model.village.Village,
-        password: String?
+        paramVillage: com.ort.wolf4busy.domain.model.village.Village
     ): com.ort.wolf4busy.domain.model.village.Village {
         // 村
         val villageId = insertVillage(paramVillage)
         // 村設定
-        insertVillageSettings(villageId, paramVillage.setting, password)
+        insertVillageSettings(villageId, paramVillage.setting)
         // 発言制限
         insertMessageRestrictionList(villageId, paramVillage.setting)
         // 村日付
@@ -161,9 +160,13 @@ class VillageDataSource(
         // village
         updateVillageDifference(before, after)
         // village_day
-        upsertVillageDay(before, after)
+        updateVillageDayDifference(before, after)
         // village_player
         updateVillagePlayerDifference(before, after)
+        // village_setting
+        updateVillageSettingDifference(before, after)
+        // message_restriction
+        updateMessageRestrictionDifference(before, after)
 
         return findVillage(before.id)
     }
@@ -180,7 +183,7 @@ class VillageDataSource(
         }
     }
 
-    private fun upsertVillageDay(
+    private fun updateVillageDayDifference(
         before: com.ort.wolf4busy.domain.model.village.Village,
         after: com.ort.wolf4busy.domain.model.village.Village
     ) {
@@ -227,34 +230,68 @@ class VillageDataSource(
         }
     }
 
-    /**
-     * 村日付登録
-     * @param villageId villageId
-     * @param day 村日付
-     * @return 村日付id
-     */
-    private fun insertVillageDay(
-        villageId: Int,
-        day: com.ort.wolf4busy.domain.model.village.VillageDay
-    ): com.ort.wolf4busy.domain.model.village.VillageDay {
-        val villageDay = VillageDay()
-        villageDay.villageId = villageId
-        villageDay.day = day.day
-        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
-        villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDayBhv.insert(villageDay)
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
-    }
-
-    private fun updateVillageDay(
-        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    private fun updateVillageSettingDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
     ) {
-        val villageDay = VillageDay()
-        villageDay.villageDayId = day.id
-        villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDayBhv.update(villageDay)
+        val villageId = after.id
+        if (!before.setting.existsDifference(after.setting)) return
+
+        after.setting.capacity.let(fun(afterCapacity) {
+            if (!before.setting.capacity.existsDifference(afterCapacity)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.最低人数, afterCapacity.min.toString())
+            updateVillageSetting(villageId, CDef.VillageSettingItem.最大人数, afterCapacity.max.toString())
+        })
+        after.setting.time.let(fun(afterTime) {
+            if (!before.setting.time.existsDifference(afterTime)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.期間形式, afterTime.termType)
+            updateVillageSetting(villageId, CDef.VillageSettingItem.開始予定日時, afterTime.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, afterTime.dayChangeIntervalSeconds.toString())
+        })
+        after.setting.organizations.let(fun(afterOrg) {
+            if (!before.setting.organizations.existsDifference(afterOrg)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.構成, afterOrg.toString())
+        })
+        after.setting.rules.let(fun(afterRules) {
+            if (!before.setting.rules.existsDifference(afterRules)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(afterRules.openVote))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(afterRules.availableSkillRequest))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(afterRules.availableSpectate))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(afterRules.visibleGraveMessage))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(afterRules.availableSuddenlyDeath))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(afterRules.availableCommit))
+        })
+        after.setting.password.let(fun(afterPassword) {
+            if (!before.setting.password.existsDifference(afterPassword)) return
+            insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, afterPassword.joinPassword ?: "")
+        })
     }
 
+    private fun updateMessageRestrictionDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        val villageId = after.id
+        val beforeRestricts = before.setting.rules.messageRestrict
+        val afterRestricts = after.setting.rules.messageRestrict
+        if (!beforeRestricts.existsDifference(afterRestricts)) return
+        // 変更前にしかないものは削除
+        beforeRestricts.restrictList.filterNot { beforeRestrict ->
+            afterRestricts.restrictList.any { afterRestrict -> beforeRestrict.type.code == afterRestrict.type.code }
+        }.forEach { deleteMessageRestriction(villageId, it) }
+        // 両方にあるものは更新
+        beforeRestricts.restrictList.filter { beforeRestrict ->
+            afterRestricts.restrictList.any { afterRestrict -> beforeRestrict.type.code == afterRestrict.type.code }
+        }.forEach { updateMessageRestriction(villageId, it) }
+        // 変更後にしかないものは登録
+        afterRestricts.restrictList.filterNot { afterRestrict ->
+            beforeRestricts.restrictList.any { beforeRestrict -> beforeRestrict.type.code == afterRestrict.type.code }
+        }.forEach { insertMessageRestriction(villageId, it) }
+    }
+
+    // ===================================================================================
+    //                                                                             village
+    //                                                                        ============
     /**
      * 村登録
      * @param villageModel 村
@@ -281,63 +318,9 @@ class VillageDataSource(
         villageBhv.update(village)
     }
 
-    /**
-     * 村設定登録
-     * @param villageId villageId
-     * @param settings model settings
-     * @param password password
-     */
-    private fun insertVillageSettings(villageId: Int, settings: VillageSettings, password: String?) {
-        insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
-        insertVillageSetting(
-            villageId,
-            CDef.VillageSettingItem.開始予定日時,
-            settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
-        )
-        insertVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, settings.time.dayChangeIntervalSeconds.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.ダミーキャラid, settings.charachip.dummyCharaId.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.キャラクターグループid, settings.charachip.charachipId.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.構成, settings.organizations.toString())
-        insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, password ?: "")
-    }
-
-    private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
-        val setting = VillageSetting()
-        setting.villageId = villageId
-        setting.villageSettingItemCodeAsVillageSettingItem = item
-        setting.villageSettingText = value
-        villageSettingBhv.insert(setting)
-    }
-
-    /**
-     * 発言制限登録
-     * @param villageId villageId
-     * @param setting 村設定
-     */
-    private fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
-        setting.rules.messageRestrict.restrictList.forEach {
-            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
-        }
-    }
-
-    private fun insertMessageRestriction(villageId: Int, messageTypeCode: String, count: Int, length: Int) {
-        val restrict = MessageRestriction()
-        restrict.villageId = villageId
-        restrict.messageTypeCodeAsMessageType = CDef.MessageType.codeOf(messageTypeCode)
-        restrict.messageMaxNum = count
-        restrict.messageMaxLength = length
-        messageRestrictionBhv.insert(restrict)
-    }
-
-
+    // ===================================================================================
+    //                                                                      village_player
+    //                                                                        ============
     /**
      * 村参加者登録
      * @param villageId villageId
@@ -376,6 +359,128 @@ class VillageDataSource(
         villagePlayer.requestSkillCodeAsSkill = villagePlayerModel.skillRequest.first.toCdef()
         villagePlayer.secondRequestSkillCodeAsSkill = villagePlayerModel.skillRequest.second.toCdef()
         villagePlayerBhv.update(villagePlayer)
+    }
+
+    // ===================================================================================
+    //                                                                         village_day
+    //                                                                        ============
+    /**
+     * 村日付登録
+     * @param villageId villageId
+     * @param day 村日付
+     * @return 村日付id
+     */
+    private fun insertVillageDay(
+        villageId: Int,
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ): com.ort.wolf4busy.domain.model.village.VillageDay {
+        val villageDay = VillageDay()
+        villageDay.villageId = villageId
+        villageDay.day = day.day
+        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
+        villageDay.daychangeDatetime = day.dayChangeDatetime
+        villageDayBhv.insert(villageDay)
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
+    }
+
+    private fun updateVillageDay(
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ) {
+        val villageDay = VillageDay()
+        villageDay.villageDayId = day.id
+        villageDay.daychangeDatetime = day.dayChangeDatetime
+        villageDayBhv.update(villageDay)
+    }
+
+    // ===================================================================================
+    //                                                                     village_setting
+    //                                                                        ============
+    /**
+     * 村設定登録
+     * @param villageId villageId
+     * @param settings model settings
+     */
+    private fun insertVillageSettings(villageId: Int, settings: VillageSettings) {
+        insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
+        insertVillageSetting(
+            villageId,
+            CDef.VillageSettingItem.開始予定日時,
+            settings.time.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
+        )
+        insertVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, settings.time.dayChangeIntervalSeconds.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.ダミーキャラid, settings.charachip.dummyCharaId.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.キャラクターグループid, settings.charachip.charachipId.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.構成, settings.organizations.toString())
+        insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, settings.password.joinPassword ?: "")
+    }
+
+    private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
+        val setting = VillageSetting()
+        setting.villageId = villageId
+        setting.villageSettingItemCodeAsVillageSettingItem = item
+        setting.villageSettingText = value
+        villageSettingBhv.insert(setting)
+    }
+
+    private fun updateVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
+        val setting = VillageSetting()
+        setting.villageSettingText = value
+        villageSettingBhv.queryUpdate(setting) {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setVillageSettingItemCode_Equal_AsVillageSettingItem(item)
+        }
+    }
+
+    // ===================================================================================
+    //                                                                 message_restriction
+    //                                                                        ============
+    /**
+     * 発言制限登録
+     * @param villageId villageId
+     * @param setting 村設定
+     */
+    private fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
+        setting.rules.messageRestrict.restrictList.forEach {
+            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
+        }
+    }
+
+    private fun insertMessageRestriction(villageId: Int, messageTypeCode: String, count: Int, length: Int) {
+        val restrict = MessageRestriction()
+        restrict.villageId = villageId
+        restrict.messageTypeCodeAsMessageType = CDef.MessageType.codeOf(messageTypeCode)
+        restrict.messageMaxNum = count
+        restrict.messageMaxLength = length
+        messageRestrictionBhv.insert(restrict)
+    }
+
+    private fun insertMessageRestriction(villageId: Int, restrict: VillageMessageRestrict) {
+        insertMessageRestriction(villageId, restrict.type.code, restrict.count, restrict.length)
+    }
+
+    private fun updateMessageRestriction(villageId: Int, restrictModel: VillageMessageRestrict) {
+        val restrict = MessageRestriction()
+        restrict.messageMaxNum = restrictModel.count
+        restrict.messageMaxLength = restrictModel.length
+        messageRestrictionBhv.queryUpdate(restrict) {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setMessageTypeCode_Equal_AsMessageType(restrictModel.type.toCdef())
+        }
+    }
+
+    private fun deleteMessageRestriction(villageId: Int, restrict: VillageMessageRestrict) {
+        messageRestrictionBhv.queryDelete {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setMessageTypeCode_Equal_AsMessageType(restrict.type.toCdef())
+        }
     }
 
     // ===================================================================================

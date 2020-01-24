@@ -5,6 +5,7 @@ data class VillagePassword(
     val joinPassword: String?
 ) {
     companion object {
+
         operator fun invoke(
             joinPassword: String?
         ): VillagePassword {
@@ -13,5 +14,9 @@ data class VillagePassword(
                 joinPassword = joinPassword
             )
         }
+    }
+
+    fun existsDifference(password: VillagePassword): Boolean {
+        return joinPassword != password.joinPassword
     }
 }

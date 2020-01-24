@@ -4,6 +4,7 @@ data class PersonCapacity(
     val min: Int,
     val max: Int
 ) {
+
     companion object {
 
         private const val DEFAULT_MIN = 10
@@ -22,5 +23,9 @@ data class PersonCapacity(
             require(minimum <= maximum) { "max must be greater than or equal to min." }
             return PersonCapacity(minimum, maximum)
         }
+    }
+
+    fun existsDifference(capacity: PersonCapacity): Boolean {
+        return min != capacity.min || max != capacity.max
     }
 }

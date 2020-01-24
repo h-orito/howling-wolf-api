@@ -23,4 +23,16 @@ data class VillageMessageRestricts(
         return if (!existRestricts) null
         else restrictList.find { it.type.toCdef() == cdefMessageType }
     }
+
+    fun existsDifference(messageRestrict: VillageMessageRestricts): Boolean {
+        if (existRestricts != messageRestrict.existRestricts) return true
+        if (restrictList.size != messageRestrict.restrictList.size) return true
+        return restrictList.any { restrict1 ->
+            messageRestrict.restrictList.none { restrict2 ->
+                restrict1.type.code == restrict2.type.code
+                    && restrict1.count == restrict2.count
+                    && restrict1.length == restrict2.length
+            }
+        }
+    }
 }
