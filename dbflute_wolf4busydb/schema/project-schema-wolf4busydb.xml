@@ -649,6 +649,11 @@
         <column comment="村日付ID" dbType="INT UNSIGNED" javaType="Integer"
             name="VILLAGE_DAY_ID" pkName="PRIMARY" pkPosition="1"
             primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="投票元村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="VILLAGE_PLAYER_ID" pkName="PRIMARY"
+            pkPosition="2" primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="投票先村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="TARGET_VILLAGE_PLAYER_ID" size="10" type="INTEGER"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -659,11 +664,6 @@
             required="true" size="19" type="TIMESTAMP"/>
         <column comment="更新トレース" dbType="VARCHAR" javaType="String"
             name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
-        <column comment="投票元村参加者ID" dbType="INT UNSIGNED"
-            javaType="Integer" name="VILLAGE_PLAYER_ID" required="true"
-            size="10" type="INTEGER"/>
-        <column comment="投票先村参加者ID" dbType="INT UNSIGNED"
-            javaType="Integer" name="TARGET_VILLAGE_PLAYER_ID" size="10" type="INTEGER"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="village_player" name="FK_VOTE_TARGET_VILLAGE_PLAYER">
             <reference foreign="VILLAGE_PLAYER_ID" local="TARGET_VILLAGE_PLAYER_ID"/>

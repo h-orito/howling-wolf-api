@@ -18,6 +18,7 @@ import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
 import com.ort.wolf4busy.domain.model.village.participant.Leave
 import com.ort.wolf4busy.domain.model.village.participant.Participate
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.domain.model.village.vote.VillageVote
 import com.ort.wolf4busy.domain.model.village.vote.VillageVotes
 import com.ort.wolf4busy.domain.model.vote.Vote
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -275,7 +276,12 @@ class VillageCoordinator(
         val participant: VillageParticipant? = findParticipant(village, user)
         Vote.assertVote(village, participant, targetId)
         // 投票
-        voteService.updateVote(village.day.latestDay().id, participant!!, targetId)
+        val villageVote = VillageVote(
+            village.day.latestDay().id,
+            participant!!.id,
+            targetId
+        )
+        voteService.updateVote(villageVote)
     }
 
     /**

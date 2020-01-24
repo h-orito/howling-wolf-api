@@ -40,16 +40,16 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     NOONNIGHT, VILLAGE, VOTE(AsOne)
+ *     NOONNIGHT, VILLAGE
  *
  * [referrer table]
  *     ABILITY, COMMIT, VILLAGE_PLAYER, VOTE
  *
  * [foreign property]
- *     noonnight, village, voteAsOne
+ *     noonnight, village
  *
  * [referrer property]
- *     abilityList, commitList, villagePlayerList
+ *     abilityList, commitList, villagePlayerList, voteList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -553,6 +553,70 @@ public abstract class BsVillageDayBhv extends AbstractBehaviorWritable<VillageDa
         return helpLoadReferrerInternally(villageDayList, option, "villagePlayerList");
     }
 
+    /**
+     * Load referrer of voteList by the set-upper of referrer. <br>
+     * VOTE by VILLAGE_DAY_ID, named 'voteList'.
+     * <pre>
+     * <span style="color: #0000C0">villageDayBhv</span>.<span style="color: #CC4747">loadVote</span>(<span style="color: #553000">villageDayList</span>, <span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">voteCB</span>.setupSelect...
+     *     <span style="color: #553000">voteCB</span>.query().set...
+     *     <span style="color: #553000">voteCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (VillageDay villageDay : <span style="color: #553000">villageDayList</span>) {
+     *     ... = villageDay.<span style="color: #CC4747">getVoteList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillageDayId_InScope(pkList);
+     * cb.query().addOrderBy_VillageDayId_Asc();
+     * </pre>
+     * @param villageDayList The entity list of villageDay. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Vote> loadVote(List<VillageDay> villageDayList, ReferrerConditionSetupper<VoteCB> refCBLambda) {
+        xassLRArg(villageDayList, refCBLambda);
+        return doLoadVote(villageDayList, new LoadReferrerOption<VoteCB, Vote>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of voteList by the set-upper of referrer. <br>
+     * VOTE by VILLAGE_DAY_ID, named 'voteList'.
+     * <pre>
+     * <span style="color: #0000C0">villageDayBhv</span>.<span style="color: #CC4747">loadVote</span>(<span style="color: #553000">villageDay</span>, <span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">voteCB</span>.setupSelect...
+     *     <span style="color: #553000">voteCB</span>.query().set...
+     *     <span style="color: #553000">voteCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">villageDay</span>.<span style="color: #CC4747">getVoteList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillageDayId_InScope(pkList);
+     * cb.query().addOrderBy_VillageDayId_Asc();
+     * </pre>
+     * @param villageDay The entity of villageDay. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Vote> loadVote(VillageDay villageDay, ReferrerConditionSetupper<VoteCB> refCBLambda) {
+        xassLRArg(villageDay, refCBLambda);
+        return doLoadVote(xnewLRLs(villageDay), new LoadReferrerOption<VoteCB, Vote>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<Vote> doLoadVote(List<VillageDay> villageDayList, LoadReferrerOption<VoteCB, Vote> option) {
+        return helpLoadReferrerInternally(villageDayList, option, "voteList");
+    }
+
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
@@ -571,14 +635,6 @@ public abstract class BsVillageDayBhv extends AbstractBehaviorWritable<VillageDa
      */
     public List<Village> pulloutVillage(List<VillageDay> villageDayList)
     { return helpPulloutInternally(villageDayList, "village"); }
-
-    /**
-     * Pull out the list of referrer-as-one table 'Vote'.
-     * @param villageDayList The list of villageDay. (NotNull, EmptyAllowed)
-     * @return The list of referrer-as-one table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Vote> pulloutVoteAsOne(List<VillageDay> villageDayList)
-    { return helpPulloutInternally(villageDayList, "voteAsOne"); }
 
     // ===================================================================================
     //                                                                      Extract Column
