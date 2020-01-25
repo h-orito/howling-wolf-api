@@ -9,7 +9,7 @@ data class VillageAbilitySituation(
     val type: Ability,
     val targetList: List<VillageParticipant>,
     val target: VillageParticipant?,
-    val usable: Boolean // 能力行使可能か
+    val usable: Boolean
 ) {
     constructor(
         village: Village,
