@@ -1,8 +1,7 @@
 package com.ort.wolf4busy.api.controller
 
-import com.ort.wolf4busy.api.view.charachip.CharaView
-import com.ort.wolf4busy.api.view.charachip.CharachipListView
 import com.ort.wolf4busy.api.view.charachip.CharachipView
+import com.ort.wolf4busy.api.view.charachip.CharachipsView
 import com.ort.wolf4busy.application.service.CharachipService
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charachip
@@ -23,10 +22,10 @@ class CharachipController(
     //                                                                             Execute
     //                                                                           =========
     @GetMapping("/charachip/list")
-    fun charachipList(): CharachipListView {
+    fun charachipList(): CharachipsView {
         val charachips: Charachips = charachipService.findCharaChipList()
         val charas: Charas = charachipService.findCharaList(charachips)
-        return CharachipListView(
+        return CharachipsView(
             charachips = charachips,
             charas = charas
         )
@@ -43,18 +42,12 @@ class CharachipController(
     }
 
     @GetMapping("/chara/{charaId}")
-    fun chara(@PathVariable("charaId") charaId: Int): CharaView {
-        val chara: Chara = charachipService.findChara(charaId)
-        return CharaView(
-            chara = chara
-        )
+    fun chara(@PathVariable("charaId") charaId: Int): Chara {
+        return charachipService.findChara(charaId)
     }
 
     @GetMapping("/charachip/{charaChipId}/dummychara")
-    fun dummyChara(@PathVariable("charaChipId") charaChipId: Int): CharaView {
-        val chara: Chara = charachipService.findDummyChara(charaChipId)
-        return CharaView(
-            chara = chara
-        )
+    fun dummyChara(@PathVariable("charaChipId") charaChipId: Int): Chara {
+        return charachipService.findDummyChara(charaChipId)
     }
 }

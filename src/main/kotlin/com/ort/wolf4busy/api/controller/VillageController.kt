@@ -46,10 +46,10 @@ class VillageController(
      * @param user user
      */
     @GetMapping("/village/list")
-    fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillageListView {
+    fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillagesView {
         val villages: Villages = villageService.findVillages()
-        return VillageListView(
-            villageList = villages.villageList
+        return VillagesView(
+            list = villages.list
         )
     }
 

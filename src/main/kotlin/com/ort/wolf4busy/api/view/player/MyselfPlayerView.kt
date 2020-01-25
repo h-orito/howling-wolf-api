@@ -1,6 +1,6 @@
 package com.ort.wolf4busy.api.view.player
 
-import com.ort.wolf4busy.api.view.village.VillageListView
+import com.ort.wolf4busy.api.view.village.VillagesView
 import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.Villages
 
@@ -8,10 +8,10 @@ data class MyselfPlayerView(
     val id: Int,
     val nickname: String,
     val twitterUserName: String,
-    val participateProgressVillages: VillageListView,
-    val participateFinishedVillages: VillageListView,
-    val createProgressVillages: VillageListView,
-    val createFinishedVillages: VillageListView
+    val participateProgressVillages: VillagesView,
+    val participateFinishedVillages: VillagesView,
+    val createProgressVillages: VillagesView,
+    val createFinishedVillages: VillagesView
 ) {
     constructor(
         player: Player,
@@ -21,16 +21,16 @@ data class MyselfPlayerView(
         id = player.id,
         nickname = player.nickname,
         twitterUserName = player.twitterUserName,
-        participateProgressVillages = VillageListView(participantVillages.villageList.filter {
+        participateProgressVillages = VillagesView(participantVillages.list.filter {
             !it.status.isSolved()
         }),
-        participateFinishedVillages = VillageListView(participantVillages.villageList.filter {
+        participateFinishedVillages = VillagesView(participantVillages.list.filter {
             it.status.isSolved()
         }),
-        createProgressVillages = VillageListView(createVillages.villageList.filter {
+        createProgressVillages = VillagesView(createVillages.list.filter {
             !it.status.isSolved()
         }),
-        createFinishedVillages = VillageListView(createVillages.villageList.filter {
+        createFinishedVillages = VillagesView(createVillages.list.filter {
             it.status.isSolved()
         })
     )

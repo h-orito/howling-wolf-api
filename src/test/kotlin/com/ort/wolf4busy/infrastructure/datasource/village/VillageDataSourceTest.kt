@@ -175,8 +175,8 @@ class VillageDataSourceTest : Wolf4busyTest() {
         val villages = villageDataSource.findVillages()
 
         // ## Assert ##
-        assertThat(villages.villageList.size).isEqualTo(3)
-        assertThat(villages.villageList.first().participant.count).isEqualTo(3)
+        assertThat(villages.list.size).isEqualTo(3)
+        assertThat(villages.list.first().participant.count).isEqualTo(3)
     }
 
     @Test
