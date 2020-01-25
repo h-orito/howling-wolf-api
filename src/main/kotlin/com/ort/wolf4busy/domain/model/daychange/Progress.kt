@@ -3,19 +3,15 @@ package com.ort.wolf4busy.domain.model.daychange
 import com.ort.wolf4busy.domain.model.ability.Attack
 import com.ort.wolf4busy.domain.model.ability.Divine
 import com.ort.wolf4busy.domain.model.ability.Guard
+import com.ort.wolf4busy.domain.model.ability.Psychic
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.commit.Commits
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.Messages
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 
 object Progress {
-
-    // ===================================================================================
-    //                                                                          Definition
-    //                                                                          ==========
-    private const val day2Message: String =
-        "ついに犠牲者が出た。\n\n村人達は、この中にいる人狼を排除するため、投票を行う事にした。\n無実の犠牲者が出るのもやむをえない。村が全滅するよりは……。\n\n最後まで残るのは村人か、それとも人狼か。"
 
     // ===================================================================================
     //                                                                             Execute
@@ -60,7 +56,7 @@ object Progress {
         dayChange = Epilogue.transitionToEpilogueIfNeeded(dayChange)
 
         // 勝敗が決していたらここで終了
-        if (dayChange.village.status.isCompleted()) return dayChange.setIsChange(beforeDayChange)
+        if (dayChange.village.status.isSolved()) return dayChange.setIsChange(beforeDayChange)
 
         // 投票や能力行使のデフォルト設定
         dayChange = addDefaultVoteAndAbilities(dayChange)
@@ -87,7 +83,7 @@ object Progress {
         // ダミーを除く最新日の生存者数
         val livingPersonCount = village.notDummyParticipant().filterAlive().count
         // コミット数
-        val commitCount = commits.list.filter { it.villageDayId == village.day.latestDay().id && it.isCommiting }.size
+        val commitCount = commits.list.filter { it.villageDayId == village.day.latestDay().id && it.isCommitting }.size
 
         return livingPersonCount == commitCount
     }
@@ -96,25 +92,32 @@ object Progress {
     private fun addNewDay(dayChange: DayChange): DayChange {
         return dayChange.copy(
             village = dayChange.village.addNewDay()
-        )
+        ).setIsChange(dayChange)
     }
 
     private fun addDay2MessageIfNeeded(dayChange: DayChange): DayChange {
-        if (dayChange.village.day.latestDay().day != 2) return dayChange
-        val message = DayChange.createPublicSystemMessage(day2Message, dayChange.village.day.latestDay())
-        return dayChange.copy(messages = dayChange.messages.add(message))
+        val village = dayChange.village
+        if (village.day.latestDay().day != 2) return dayChange
+        return dayChange.copy(
+            messages = dayChange.messages.add(village.createVillageDay2Message())
+        ).setIsChange(dayChange)
     }
 
     // 生存者メッセージ
     private fun addAliveMemberMessage(dayChange: DayChange, charas: Charas): DayChange {
-        val text = dayChange.village.participant.filterAlive().memberList.map { member ->
-            charas.list.first { it.id == member.charaId }.charaName.name
-        }.joinToString(
+        return dayChange.copy(
+            messages = dayChange.messages.add(createAliveMemberMessage(dayChange.village, charas))
+        ).setIsChange(dayChange)
+    }
+
+    private fun createAliveMemberMessage(village: Village, charas: Charas): Message {
+        val text = village.participant.filterAlive().memberList.joinToString(
             separator = "\n",
-            prefix = "現在の生存者は以下の${dayChange.village.participant.filterAlive().count}名。\n"
-        )
-        val message = DayChange.createPublicSystemMessage(text, dayChange.village.day.latestDay())
-        return dayChange.copy(messages = dayChange.messages.add(message))
+            prefix = "現在の生存者は以下の${village.participant.filterAlive().count}名。\n"
+        ) { member ->
+            charas.chara(member.charaId).charaName.name
+        }
+        return Message.createPublicSystemMessage(text, village.day.latestDay().id)
     }
 
     // デフォルト投票能力行使
@@ -124,6 +127,6 @@ object Progress {
         return dayChange.copy(
             abilities = abilities,
             votes = votes
-        )
+        ).setIsChange(dayChange)
     }
 }

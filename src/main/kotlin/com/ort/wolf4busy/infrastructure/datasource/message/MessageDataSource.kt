@@ -8,8 +8,6 @@ import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.MessageTime
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
-import com.ort.wolf4busy.domain.model.skill.Skill
-import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
@@ -32,7 +30,6 @@ class MessageDataSource(
     //                                                                           =========
     /**
      * 発言取得
-     * partitionを切っているので関連テーブルの情報は別途取得して埋めること
      *
      * @param villageId villageId
      * @param villageDayId 村日付ID
@@ -41,7 +38,7 @@ class MessageDataSource(
      * @param from これ以降の発言を取得
      * @return 発言
      */
-    fun selectMessageList(
+    fun findMessages(
         villageId: Int,
         villageDayId: Int,
         messageTypeList: List<CDef.MessageType>,
@@ -86,7 +83,11 @@ class MessageDataSource(
      * @param messageNumber 発言番号
      * @return 発言
      */
-    fun selectMessage(villageId: Int, messageType: CDef.MessageType, messageNumber: Int): com.ort.wolf4busy.domain.model.message.Message? {
+    fun findMessage(
+        villageId: Int,
+        messageType: CDef.MessageType,
+        messageNumber: Int
+    ): com.ort.wolf4busy.domain.model.message.Message? {
         val optMessage = messageBhv.selectEntity {
             it.query().setVillageId_Equal(villageId)
             it.query().setMessageNumber_Equal(messageNumber)
@@ -116,25 +117,16 @@ class MessageDataSource(
         return messageList.map { convertMessageToMessage(it) }
     }
 
-    fun insertMessage(
-        villageId: Int,
-        dayId: Int,
-        messageType: String,
-        text: String,
-        villagePlayerId: Int? = null,
-        targetVillagePlayerId: Int? = null,
-        playerId: Int? = null,
-        faceType: String? = null
-    ) {
+    fun registerMessage(villageId: Int, message: com.ort.wolf4busy.domain.model.message.Message) {
         val mes = Message()
         mes.villageId = villageId
-        mes.villageDayId = dayId
-        mes.messageTypeCode = messageType
-        mes.messageContent = text
-        mes.villagePlayerId = villagePlayerId
-        mes.toVillagePlayerId = targetVillagePlayerId
-        mes.playerId = playerId
-        mes.faceTypeCode = faceType
+        mes.villageDayId = message.time.villageDayId
+        mes.messageTypeCode = message.content.type.code
+        mes.messageContent = message.content.text
+        mes.villagePlayerId = message.fromVillageParticipantId
+        mes.toVillagePlayerId = message.toVillageParticipantId
+        mes.playerId = null // TODO プレイヤー発言を実装する際に実装する
+        mes.faceTypeCode = message.content.faceCode
         mes.isConvertDisable = true
         val now = Wolf4busyDateUtil.currentLocalDateTime()
         mes.messageDatetime = now
@@ -143,7 +135,7 @@ class MessageDataSource(
         // 発言番号の採番 & insert (3回チャレンジする)
         for (i in 1..3) {
             try {
-                mes.messageNumber = selectNextMessageNumber(villageId, messageType)
+                mes.messageNumber = selectNextMessageNumber(villageId, message.content.type.code)
                 messageBhv.insert(mes)
                 return
             } catch (e: RuntimeException) {
@@ -162,53 +154,7 @@ class MessageDataSource(
     fun updateDifference(villageId: Int, before: Messages, after: Messages) {
         // 追加しかないのでbeforeにないindexから追加していく
         after.messageList.drop(before.messageList.size).forEach {
-            when (it.content.type.toCdef()) {
-                CDef.MessageType.公開システムメッセージ -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.非公開システムメッセージ -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.通常発言 -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text,
-                    villagePlayerId = it.from?.id,
-                    faceType = CDef.FaceType.通常.code()
-                )
-                CDef.MessageType.白黒占い結果 -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text,
-                    villagePlayerId = it.from?.id
-                )
-                CDef.MessageType.白黒霊視結果 -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.襲撃結果 -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-                CDef.MessageType.参加者一覧 -> insertMessage(
-                    villageId = villageId,
-                    dayId = it.time.villageDayId,
-                    messageType = it.content.type.code,
-                    text = it.content.text
-                )
-            }
+            registerMessage(villageId, it)
         }
     }
 
@@ -226,49 +172,10 @@ class MessageDataSource(
 
     private fun convertMessageToMessage(message: Message): com.ort.wolf4busy.domain.model.message.Message {
         return com.ort.wolf4busy.domain.model.message.Message(
-            from = if (message.villagePlayerId == null) null else VillageParticipant(
-                id = message.villagePlayerId,
-                charaId = 1, // dummy
-                dead = null, // dummy
-                isSpectator = false, // dummy
-                isGone = false, // dummy
-                playerId = message.playerId,
-                skill = null, // dummy
-                skillRequest = SkillRequest(
-                    first = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    ),
-                    second = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    )
-                ),
-                isWin = null
-            ),
-            to = if (message.toVillagePlayerId == null) null else VillageParticipant(
-                id = message.toVillagePlayerId,
-                charaId = 1, // dummy
-                dead = null, // dummy
-                isSpectator = false, // dummy
-                isGone = false, // dummy
-                playerId = null,
-                skill = null, // dummy
-                skillRequest = SkillRequest(
-                    first = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    ),
-                    second = Skill(
-                        code = "", // dummy
-                        name = "" // dummy
-                    )
-                ),
-                isWin = null
-            ),
+            fromVillageParticipantId = message.villagePlayerId,
+            toVillageParticipantId = message.toVillagePlayerId,
             time = MessageTime(
                 villageDayId = message.villageDayId,
-                day = 1, // dummy
                 datetime = message.messageDatetime,
                 unixTimeMilli = message.messageUnixtimestampMilli
             ),

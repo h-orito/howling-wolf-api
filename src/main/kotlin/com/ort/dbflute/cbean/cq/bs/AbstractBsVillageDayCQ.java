@@ -215,6 +215,25 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
     public abstract String keepVillageDayId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
 
     /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select VILLAGE_DAY_ID from vote where ...)} <br>
+     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsVote</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VoteList for 'exists'. (NotNull)
+     */
+    public void existsVote(SubQuery<VoteCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillageDayId_ExistsReferrer_VoteList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_DAY_ID", "VILLAGE_DAY_ID", pp, "voteList");
+    }
+    public abstract String keepVillageDayId_ExistsReferrer_VoteList(VoteCQ sq);
+
+    /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
      * {not exists (select VILLAGE_DAY_ID from ability where ...)} <br>
      * ability by VILLAGE_DAY_ID, named 'abilityAsOne'.
@@ -271,6 +290,25 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillageDayId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
 
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select VILLAGE_DAY_ID from vote where ...)} <br>
+     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsVote</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillageDayId_NotExistsReferrer_VoteList for 'not exists'. (NotNull)
+     */
+    public void notExistsVote(SubQuery<VoteCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VoteCB cb = new VoteCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillageDayId_NotExistsReferrer_VoteList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_DAY_ID", "VILLAGE_DAY_ID", pp, "voteList");
+    }
+    public abstract String keepVillageDayId_NotExistsReferrer_VoteList(VoteCQ sq);
+
     public void xsderiveAbilityList(String fn, SubQuery<AbilityCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         AbilityCB cb = new AbilityCB(); cb.xsetupForDerivedReferrer(this);
@@ -294,6 +332,14 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_DAY_ID", "DEAD_VILLAGE_DAY_ID", pp, "villagePlayerList", al, op);
     }
     public abstract String keepVillageDayId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
+
+    public void xsderiveVoteList(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillageDayId_SpecifyDerivedReferrer_VoteList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_DAY_ID", "VILLAGE_DAY_ID", pp, "voteList", al, op);
+    }
+    public abstract String keepVillageDayId_SpecifyDerivedReferrer_VoteList(VoteCQ sq);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
@@ -375,6 +421,33 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillageDayId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
     public abstract String keepVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from vote where ...)} <br>
+     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedVote()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     voteCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     voteCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<VoteCB> derivedVote() {
+        return xcreateQDRFunctionVoteList();
+    }
+    protected HpQDRFunction<VoteCB> xcreateQDRFunctionVoteList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveVoteList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveVoteList(String fn, SubQuery<VoteCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillageDayId_QueryDerivedReferrer_VoteList(cb.query()); String prpp = keepVillageDayId_QueryDerivedReferrer_VoteListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_DAY_ID", "VILLAGE_DAY_ID", sqpp, "voteList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillageDayId_QueryDerivedReferrer_VoteList(VoteCQ sq);
+    public abstract String keepVillageDayId_QueryDerivedReferrer_VoteListParameter(Object vl);
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
@@ -826,18 +899,6 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     protected void regDaychangeDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDaychangeDatetime(), "DAYCHANGE_DATETIME"); }
     protected abstract ConditionValue xgetCValueDaychangeDatetime();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * IS_UPDATING: {NotNull, BIT}
-     * @param isUpdating The value of isUpdating as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setIsUpdating_Equal(Boolean isUpdating) {
-        regIsUpdating(CK_EQ, isUpdating);
-    }
-
-    protected void regIsUpdating(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIsUpdating(), "IS_UPDATING"); }
-    protected abstract ConditionValue xgetCValueIsUpdating();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>

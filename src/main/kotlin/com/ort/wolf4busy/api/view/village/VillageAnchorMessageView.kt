@@ -17,9 +17,10 @@ data class VillageAnchorMessageView(
     ) : this(
         message = if (message == null) null else MessageView(
             message = message,
+            village = village,
             players = players,
             charas = charas,
-            shouldHidePlayer = !village.status.isCompleted()
+            shouldHidePlayer = !village.status.isSolved()
         )
     )
 }

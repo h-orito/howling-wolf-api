@@ -11,19 +11,13 @@ class PlayerService(
     private val playerDataSource: PlayerDataSource
 ) {
 
-    fun findPlayer(user: Wolf4busyUser): Player {
-        return playerDataSource.selectPlayer(user.uid)
-    }
+    fun findPlayer(id: Int): Player = playerDataSource.findPlayer(id)
 
-    fun findPlayers(villageId: Int): Players {
-        return playerDataSource.selectPlayerList(villageId)
-    }
+    fun findPlayer(user: Wolf4busyUser): Player = playerDataSource.findPlayer(user.uid)
+
+    fun findPlayers(villageId: Int): Players = playerDataSource.findPlayers(villageId)
 
     fun updateNickname(user: Wolf4busyUser, nickname: String, twitterUserName: String) {
-        playerDataSource.updateNickname(user.uid, nickname, twitterUserName)
-    }
-
-    fun isRestrictedParticipatePlayer(user: Wolf4busyUser): Boolean {
-        return playerDataSource.isRestrictedParticipatePlayer(user.uid)
+        playerDataSource.update(user.uid, nickname, twitterUserName)
     }
 }

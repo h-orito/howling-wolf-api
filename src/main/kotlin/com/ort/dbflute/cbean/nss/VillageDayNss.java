@@ -34,13 +34,4 @@ public class VillageDayNss {
         _query.xdoNss(() -> _query.queryVillage());
         return new VillageNss(_query.queryVillage());
     }
-    /**
-     * With nested relation columns to select clause. <br>
-     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-     * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
-     */
-    public VoteNss withVoteAsOne() {
-        _query.xdoNss(() -> _query.queryVoteAsOne());
-        return new VoteNss(_query.queryVoteAsOne());
-    }
 }

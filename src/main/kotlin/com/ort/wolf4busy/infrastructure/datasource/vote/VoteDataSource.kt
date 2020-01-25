@@ -14,7 +14,7 @@ class VoteDataSource(
     // ===================================================================================
     //                                                                              Select
     //                                                                              ======
-    fun selectVotes(villageId: Int): VillageVotes {
+    fun findVotes(villageId: Int): VillageVotes {
         val voteList = voteBhv.selectList {
             it.query().queryVillageDay().setVillageId_Equal(villageId)
         }
@@ -24,35 +24,48 @@ class VoteDataSource(
     // ===================================================================================
     //                                                                              Update
     //                                                                              ======
-    fun updateVote(villageDayId: Int, myselfId: Int, targetId: Int) {
-        deleteVote(villageDayId, myselfId)
-        insertVote(villageDayId, myselfId, targetId)
+    fun updateVote(villageVote: VillageVote) {
+        deleteVote(villageVote)
+        insertVote(villageVote)
     }
 
-    private fun deleteVote(villageDayId: Int, myselfId: Int) {
+    private fun deleteVote(villageVote: VillageVote) {
         voteBhv.queryDelete {
-            it.query().setVillageDayId_Equal(villageDayId)
-            it.query().setVillagePlayerId_Equal(myselfId)
+            it.query().setVillageDayId_Equal(villageVote.villageDayId)
+            it.query().setVillagePlayerId_Equal(villageVote.myselfId)
         }
     }
 
-    private fun insertVote(villageDayId: Int, myselfId: Int, targetId: Int) {
+    private fun insertVote(villageVote: VillageVote) {
         val vote = Vote()
-        vote.villageDayId = villageDayId
-        vote.villagePlayerId = myselfId
-        vote.targetVillagePlayerId = targetId
+        vote.villageDayId = villageVote.villageDayId
+        vote.villagePlayerId = villageVote.myselfId
+        vote.targetVillagePlayerId = villageVote.targetId
         voteBhv.insert(vote)
     }
 
     fun updateDifference(before: VillageVotes, after: VillageVotes) {
-        // 追加のみ
-        after.list.drop(before.list.size).forEach {
-            insertVote(
-                villageDayId = it.villageDayId,
-                myselfId = it.myselfId,
-                targetId = it.targetId
-            )
-        }
+        // 削除
+        before.list.filterNot { beforeVote ->
+            after.list.any { afterVote ->
+                beforeVote.villageDayId == afterVote.villageDayId
+                    && beforeVote.myselfId == afterVote.myselfId
+            }
+        }.forEach { deleteVote(it) }
+        // 更新
+        after.list.filter { afterVote ->
+            before.list.any { beforeVote ->
+                beforeVote.villageDayId == afterVote.villageDayId
+                    && beforeVote.myselfId == afterVote.myselfId
+            }
+        }.forEach { updateVote(it) }
+        // 追加
+        after.list.filterNot { afterVote ->
+            before.list.any { beforeVote ->
+                beforeVote.villageDayId == afterVote.villageDayId
+                    && beforeVote.myselfId == afterVote.myselfId
+            }
+        }.forEach { insertVote(it) }
     }
 
     // ===================================================================================

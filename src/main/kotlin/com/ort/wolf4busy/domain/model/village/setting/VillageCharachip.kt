@@ -9,13 +9,12 @@ data class VillageCharachip(
             dummyCharaId: Int?,
             charachipId: Int?
         ): VillageCharachip {
-            dummyCharaId ?: throw IllegalArgumentException("dummyCharaId is required.")
-            charachipId ?: throw IllegalArgumentException("charachipId is required.")
+            requireNotNull(dummyCharaId)
+            requireNotNull(charachipId)
             return VillageCharachip(
                 dummyCharaId = dummyCharaId,
                 charachipId = charachipId
             )
         }
-
     }
 }

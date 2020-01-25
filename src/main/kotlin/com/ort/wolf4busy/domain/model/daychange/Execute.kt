@@ -4,6 +4,7 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.vote.VillageVote
+import com.ort.wolf4busy.domain.model.vote.Vote
 
 object Execute {
 
@@ -24,16 +25,18 @@ object Execute {
         if (votedMap.isEmpty()) return dayChange // 全員突然死
 
         // 個別投票メッセージ
-        messages = messages.add(createEachVoteMessage(votedMap, village, charas))
+        messages = messages.add(Vote.createEachVoteMessage(village, charas, votedMap))
 
         // 得票数トップの参加者リスト
-        val maxVotedParticipantIdList = excludeMaxVotedParticipantList(votedMap)
+        val maxVotedParticipantIdList = filterMaxVotedParticipantList(votedMap)
         // うち一人を処刑する
         maxVotedParticipantIdList.shuffled().first().let { executedParticipantId ->
             // 処刑（突然死していた場合は死因を上書きしない）
-            if (village.participant.member(executedParticipantId).isAlive()) village = village.executeParticipant(executedParticipantId, village.day.latestDay())
+            if (village.participant.member(executedParticipantId).isAlive()) {
+                village = village.executeParticipant(executedParticipantId, village.day.latestDay())
+            }
             // 処刑メッセージ
-            messages = messages.add(createExecuteMessage(executedParticipantId, votedMap, village, charas))
+            messages = messages.add(createExecuteMessage(village, executedParticipantId, votedMap, charas))
         }
         return dayChange.copy(
             village = village,
@@ -45,70 +48,38 @@ object Execute {
     //                                                                        Assist Logic
     //                                                                        ============
     // 得票数トップの参加者idリスト
-    private fun excludeMaxVotedParticipantList(votedMap: Map<Int, List<VillageVote>>): List<Int> {
+    private fun filterMaxVotedParticipantList(votedMap: Map<Int, List<VillageVote>>): List<Int> {
         // 最大得票数
         val maxVotedCount = votedMap.maxBy { it.value.size }!!.value.size
         // 最大得票数の参加者idリスト
         return votedMap.filter { it.value.size == maxVotedCount }.keys.toList()
     }
 
-    private fun createEachVoteMessage(votedMap: Map<Int, List<VillageVote>>, village: Village, charas: Charas): Message {
-        val maxFromCharaNameLength = votedMap.values.flatten().map { vote ->
-            charas.list.first { chara ->
-                chara.id == village.participant.memberList.first { member ->
-                    member.id == vote.myselfId
-                }.charaId
-            }.charaName.name.length
-        }.max()!!
-        val maxToCharaNameLength = votedMap.values.flatten().map { vote ->
-            charas.list.first { chara ->
-                chara.id == village.participant.memberList.first { member ->
-                    member.id == vote.targetId
-                }.charaId
-            }.charaName.name.length
-        }.max()!!
-
-        val text = votedMap.entries.sortedBy { it.value.size }.reversed().map { entry ->
-            // 得票数が多い順
-            entry.value.map { vote ->
-                val fromCharaName = extractCharaName(vote.myselfId, village, charas)
-                val toCharaName = extractCharaName(vote.targetId, village, charas)
-                val voteCountStr = "${entry.value.size}票"
-                "${fromCharaName.padEnd(length = maxFromCharaNameLength, padChar = '　')} → ${toCharaName.padEnd(
-                    maxToCharaNameLength,
-                    '　'
-                )}(${voteCountStr})"
-            }
-        }.flatten().joinToString(
-            prefix = "投票結果は以下の通り。\n",
-            separator = "\n"
-        )
-
-        return if (village.setting.rules.openVote) {
-            DayChange.createPublicSystemMessage(text, village.day.latestDay())
-        } else {
-            DayChange.createPrivateSystemMessage(text, village.day.latestDay())
-        }
-    }
-
-    private fun createExecuteMessage(participantId: Int, votedMap: Map<Int, List<VillageVote>>, village: Village, charas: Charas): Message {
-        val executedCharaName = extractCharaName(participantId, village, charas)
-        val message = votedMap.entries.sortedBy { it.value.size }.reversed().map { entry ->
-            val votedCharaName = extractCharaName(entry.key, village, charas)
-            "${votedCharaName}、${entry.value.size}票"
-        }.joinToString(
+    /**
+     * 処刑メッセージ
+     * @param village village
+     * @param participantId 処刑される村参加者ID
+     * @param votedMap key: 非投票参加者ID, value: 投票
+     * @param charas charas
+     * @return 処刑メッセージ
+     */
+    private fun createExecuteMessage(
+        village: Village,
+        participantId: Int,
+        votedMap: Map<Int, List<VillageVote>>,
+        charas: Charas
+    ): Message {
+        val executedCharaName = charas.chara(village.participant, participantId).charaName.name
+        val message = votedMap.entries.sortedBy { it.value.size }.reversed().joinToString(
             separator = "\n",
             postfix = "\n\n${executedCharaName}は村人達の手により処刑された。"
+        ) { entry ->
+            val votedCharaName = charas.chara(village.participant, entry.key).charaName.name
+            "${votedCharaName}、${entry.value.size}票"
+        }
+        return Message.createPublicSystemMessage(
+            message,
+            village.day.latestDay().id
         )
-        return DayChange.createPublicSystemMessage(
-            text = message,
-            day = village.day.latestDay()
-        )
-    }
-
-    private fun extractCharaName(participantId: Int, village: Village, charas: Charas): String {
-        return charas.list.first { chara ->
-            chara.id == village.participant.memberList.first { member -> member.id == participantId }.charaId
-        }.charaName.name
     }
 }

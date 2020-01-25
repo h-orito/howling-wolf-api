@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 
 data class MessageTime(
     val villageDayId: Int,
-    val day: Int,
     val datetime: LocalDateTime,
     val unixTimeMilli: Long
 ) {

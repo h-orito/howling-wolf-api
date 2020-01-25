@@ -174,6 +174,264 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_Equal(Integer villagePlayerId) {
+        doSetVillagePlayerId_Equal(villagePlayerId);
+    }
+
+    protected void doSetVillagePlayerId_Equal(Integer villagePlayerId) {
+        regVillagePlayerId(CK_EQ, villagePlayerId);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
+        doSetVillagePlayerId_NotEqual(villagePlayerId);
+    }
+
+    protected void doSetVillagePlayerId_NotEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_NES, villagePlayerId);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
+        regVillagePlayerId(CK_GT, villagePlayerId);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
+        regVillagePlayerId(CK_LT, villagePlayerId);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_GE, villagePlayerId);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_LE, villagePlayerId);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
+        doSetVillagePlayerId_InScope(villagePlayerIdList);
+    }
+
+    protected void doSetVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
+        regINS(CK_INS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
+        doSetVillagePlayerId_NotInScope(villagePlayerIdList);
+    }
+
+    protected void doSetVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
+        regINS(CK_NINS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
+    }
+
+    /**
+     * IsNull {is null}. And OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     */
+    public void setVillagePlayerId_IsNull() { regVillagePlayerId(CK_ISN, DOBJ); }
+
+    /**
+     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     */
+    public void setVillagePlayerId_IsNotNull() { regVillagePlayerId(CK_ISNN, DOBJ); }
+
+    protected void regVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueVillagePlayerId();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
+        doSetTargetVillagePlayerId_Equal(targetVillagePlayerId);
+    }
+
+    protected void doSetTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_EQ, targetVillagePlayerId);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
+        doSetTargetVillagePlayerId_NotEqual(targetVillagePlayerId);
+    }
+
+    protected void doSetTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_NES, targetVillagePlayerId);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_GreaterThan(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_GT, targetVillagePlayerId);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_LessThan(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_LT, targetVillagePlayerId);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_GreaterEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_GE, targetVillagePlayerId);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_LessEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_LE, targetVillagePlayerId);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setTargetVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
+        doSetTargetVillagePlayerId_InScope(targetVillagePlayerIdList);
+    }
+
+    protected void doSetTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
+        regINS(CK_INS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
+        doSetTargetVillagePlayerId_NotInScope(targetVillagePlayerIdList);
+    }
+
+    protected void doSetTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
+        regINS(CK_NINS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
+    }
+
+    /**
+     * IsNull {is null}. And OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     */
+    public void setTargetVillagePlayerId_IsNull() { regTargetVillagePlayerId(CK_ISN, DOBJ); }
+
+    /**
+     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     */
+    public void setTargetVillagePlayerId_IsNotNull() { regTargetVillagePlayerId(CK_ISNN, DOBJ); }
+
+    protected void regTargetVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueTargetVillagePlayerId();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @param registerDatetime The value of registerDatetime as equal. (basically NotNull: error as default, or no condition as option)
      */
@@ -592,252 +850,6 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
     protected void regUpdateTrace(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueUpdateTrace(), "UPDATE_TRACE"); }
     protected abstract ConditionValue xgetCValueUpdateTrace();
 
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_Equal(Integer villagePlayerId) {
-        doSetVillagePlayerId_Equal(villagePlayerId);
-    }
-
-    protected void doSetVillagePlayerId_Equal(Integer villagePlayerId) {
-        regVillagePlayerId(CK_EQ, villagePlayerId);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
-        doSetVillagePlayerId_NotEqual(villagePlayerId);
-    }
-
-    protected void doSetVillagePlayerId_NotEqual(Integer villagePlayerId) {
-        regVillagePlayerId(CK_NES, villagePlayerId);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
-        regVillagePlayerId(CK_GT, villagePlayerId);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
-        regVillagePlayerId(CK_LT, villagePlayerId);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
-        regVillagePlayerId(CK_GE, villagePlayerId);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
-        regVillagePlayerId(CK_LE, villagePlayerId);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
-        doSetVillagePlayerId_InScope(villagePlayerIdList);
-    }
-
-    protected void doSetVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
-        regINS(CK_INS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
-        doSetVillagePlayerId_NotInScope(villagePlayerIdList);
-    }
-
-    protected void doSetVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
-        regINS(CK_NINS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
-    }
-
-    protected void regVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID"); }
-    protected abstract ConditionValue xgetCValueVillagePlayerId();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerId The value of targetVillagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
-        doSetTargetVillagePlayerId_Equal(targetVillagePlayerId);
-    }
-
-    protected void doSetTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
-        regTargetVillagePlayerId(CK_EQ, targetVillagePlayerId);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerId The value of targetVillagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
-        doSetTargetVillagePlayerId_NotEqual(targetVillagePlayerId);
-    }
-
-    protected void doSetTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
-        regTargetVillagePlayerId(CK_NES, targetVillagePlayerId);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_GreaterThan(Integer targetVillagePlayerId) {
-        regTargetVillagePlayerId(CK_GT, targetVillagePlayerId);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_LessThan(Integer targetVillagePlayerId) {
-        regTargetVillagePlayerId(CK_LT, targetVillagePlayerId);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_GreaterEqual(Integer targetVillagePlayerId) {
-        regTargetVillagePlayerId(CK_GE, targetVillagePlayerId);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_LessEqual(Integer targetVillagePlayerId) {
-        regTargetVillagePlayerId(CK_LE, targetVillagePlayerId);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setTargetVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
-        doSetTargetVillagePlayerId_InScope(targetVillagePlayerIdList);
-    }
-
-    protected void doSetTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
-        regINS(CK_INS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
-        doSetTargetVillagePlayerId_NotInScope(targetVillagePlayerIdList);
-    }
-
-    protected void doSetTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
-        regINS(CK_NINS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
-    }
-
-    /**
-     * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     */
-    public void setTargetVillagePlayerId_IsNull() { regTargetVillagePlayerId(CK_ISN, DOBJ); }
-
-    /**
-     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     */
-    public void setTargetVillagePlayerId_IsNotNull() { regTargetVillagePlayerId(CK_ISNN, DOBJ); }
-
-    protected void regTargetVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID"); }
-    protected abstract ConditionValue xgetCValueTargetVillagePlayerId();
-
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============
@@ -950,51 +962,6 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
     protected VoteCB xcreateScalarConditionPartitionByCB() {
         VoteCB cb = newMyCB(); cb.xsetupForScalarConditionPartitionBy(this); return cb;
     }
-
-    // ===================================================================================
-    //                                                                       MyselfDerived
-    //                                                                       =============
-    public void xsmyselfDerive(String fn, SubQuery<VoteCB> sq, String al, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepSpecifyMyselfDerived(cb.query()); String pk = "VILLAGE_DAY_ID";
-        registerSpecifyMyselfDerived(fn, cb.query(), pk, pk, pp, "myselfDerived", al, op);
-    }
-    public abstract String keepSpecifyMyselfDerived(VoteCQ sq);
-
-    /**
-     * Prepare for (Query)MyselfDerived (correlated sub-query).
-     * @return The object to set up a function for myself table. (NotNull)
-     */
-    public HpQDRFunction<VoteCB> myselfDerived() {
-        return xcreateQDRFunctionMyselfDerived(VoteCB.class);
-    }
-    @SuppressWarnings("unchecked")
-    protected <CB extends ConditionBean> void xqderiveMyselfDerived(String fn, SubQuery<CB> sq, String rd, Object vl, DerivedReferrerOption op) {
-        assertObjectNotNull("subQuery", sq);
-        VoteCB cb = new VoteCB(); cb.xsetupForDerivedReferrer(this); sq.query((CB)cb);
-        String pk = "VILLAGE_DAY_ID";
-        String sqpp = keepQueryMyselfDerived(cb.query()); // for saving query-value.
-        String prpp = keepQueryMyselfDerivedParameter(vl);
-        registerQueryMyselfDerived(fn, cb.query(), pk, pk, sqpp, "myselfDerived", rd, vl, prpp, op);
-    }
-    public abstract String keepQueryMyselfDerived(VoteCQ sq);
-    public abstract String keepQueryMyselfDerivedParameter(Object vl);
-
-    // ===================================================================================
-    //                                                                        MyselfExists
-    //                                                                        ============
-    /**
-     * Prepare for MyselfExists (correlated sub-query).
-     * @param subCBLambda The implementation of sub-query. (NotNull)
-     */
-    public void myselfExists(SubQuery<VoteCB> subCBLambda) {
-        assertObjectNotNull("subCBLambda", subCBLambda);
-        VoteCB cb = new VoteCB(); cb.xsetupForMyselfExists(this);
-        lockCall(() -> subCBLambda.query(cb)); String pp = keepMyselfExists(cb.query());
-        registerMyselfExists(cb.query(), pp);
-    }
-    public abstract String keepMyselfExists(VoteCQ sq);
 
     // ===================================================================================
     //                                                                        Manual Order

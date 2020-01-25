@@ -93,6 +93,46 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
      */
     public BsVoteCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
 
+    protected ConditionValue _villagePlayerId;
+    public ConditionValue xdfgetVillagePlayerId()
+    { if (_villagePlayerId == null) { _villagePlayerId = nCV(); }
+      return _villagePlayerId; }
+    protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
+
+    protected ConditionValue _targetVillagePlayerId;
+    public ConditionValue xdfgetTargetVillagePlayerId()
+    { if (_targetVillagePlayerId == null) { _targetVillagePlayerId = nCV(); }
+      return _targetVillagePlayerId; }
+    protected ConditionValue xgetCValueTargetVillagePlayerId() { return xdfgetTargetVillagePlayerId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_TargetVillagePlayerId_Asc() { regOBA("TARGET_VILLAGE_PLAYER_ID"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @return this. (NotNull)
+     */
+    public BsVoteCQ addOrderBy_TargetVillagePlayerId_Desc() { regOBD("TARGET_VILLAGE_PLAYER_ID"); return this; }
+
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
     { if (_registerDatetime == null) { _registerDatetime = nCV(); }
@@ -172,46 +212,6 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_UpdateTrace_Desc() { regOBD("UPDATE_TRACE"); return this; }
-
-    protected ConditionValue _villagePlayerId;
-    public ConditionValue xdfgetVillagePlayerId()
-    { if (_villagePlayerId == null) { _villagePlayerId = nCV(); }
-      return _villagePlayerId; }
-    protected ConditionValue xgetCValueVillagePlayerId() { return xdfgetVillagePlayerId(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
-
-    protected ConditionValue _targetVillagePlayerId;
-    public ConditionValue xdfgetTargetVillagePlayerId()
-    { if (_targetVillagePlayerId == null) { _targetVillagePlayerId = nCV(); }
-      return _targetVillagePlayerId; }
-    protected ConditionValue xgetCValueTargetVillagePlayerId() { return xdfgetTargetVillagePlayerId(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_TargetVillagePlayerId_Asc() { regOBA("TARGET_VILLAGE_PLAYER_ID"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-     * @return this. (NotNull)
-     */
-    public BsVoteCQ addOrderBy_TargetVillagePlayerId_Desc() { regOBD("TARGET_VILLAGE_PLAYER_ID"); return this; }
 
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
@@ -337,30 +337,6 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     //                                                                     ===============
     public Map<String, VoteCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
     public String keepScalarCondition(VoteCQ sq) { return xkeepSQue("scalarCondition", sq); }
-
-    // ===================================================================================
-    //                                                                       MyselfDerived
-    //                                                                       =============
-    public Map<String, VoteCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
-    public String keepSpecifyMyselfDerived(VoteCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
-
-    public Map<String, VoteCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
-    public String keepQueryMyselfDerived(VoteCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
-    public Map<String, Object> xdfgetQueryMyselfDerivedParameter() { return xgetSQuePmMap("queryMyselfDerived"); }
-    public String keepQueryMyselfDerivedParameter(Object pm) { return xkeepSQuePm("queryMyselfDerived", pm); }
-
-    // ===================================================================================
-    //                                                                        MyselfExists
-    //                                                                        ============
-    protected Map<String, VoteCQ> _myselfExistsMap;
-    public Map<String, VoteCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
-    public String keepMyselfExists(VoteCQ sq) { return xkeepSQue("myselfExists", sq); }
-
-    // ===================================================================================
-    //                                                                       MyselfInScope
-    //                                                                       =============
-    public Map<String, VoteCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
-    public String keepMyselfInScope(VoteCQ sq) { return xkeepSQue("myselfInScope", sq); }
 
     // ===================================================================================
     //                                                                       Very Internal

@@ -86,22 +86,25 @@ public class BsVoteCB extends AbstractConditionBean {
     /**
      * Accept the query condition of primary key as equal.
      * @param villageDayId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
+     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
      * @return this. (NotNull)
      */
-    public VoteCB acceptPK(Integer villageDayId) {
-        assertObjectNotNull("villageDayId", villageDayId);
+    public VoteCB acceptPK(Integer villageDayId, Integer villagePlayerId) {
+        assertObjectNotNull("villageDayId", villageDayId);assertObjectNotNull("villagePlayerId", villagePlayerId);
         BsVoteCB cb = this;
-        cb.query().setVillageDayId_Equal(villageDayId);
+        cb.query().setVillageDayId_Equal(villageDayId);cb.query().setVillagePlayerId_Equal(villagePlayerId);
         return (VoteCB)this;
     }
 
     public ConditionBean addOrderBy_PK_Asc() {
         query().addOrderBy_VillageDayId_Asc();
+        query().addOrderBy_VillagePlayerId_Asc();
         return this;
     }
 
     public ConditionBean addOrderBy_PK_Desc() {
         query().addOrderBy_VillageDayId_Desc();
+        query().addOrderBy_VillagePlayerId_Desc();
         return this;
     }
 
@@ -317,9 +320,6 @@ public class BsVoteCB extends AbstractConditionBean {
      */
     public VillagePlayerNss setupSelect_VillagePlayerByVillagePlayerId() {
         assertSetupSelectPurpose("villagePlayerByVillagePlayerId");
-        if (hasSpecifiedLocalColumn()) {
-            specify().columnVillagePlayerId();
-        }
         doSetupSelect(() -> query().queryVillagePlayerByVillagePlayerId());
         if (_nssVillagePlayerByVillagePlayerId == null || !_nssVillagePlayerByVillagePlayerId.hasConditionQuery())
         { _nssVillagePlayerByVillagePlayerId = new VillagePlayerNss(query().queryVillagePlayerByVillagePlayerId()); }
@@ -380,6 +380,16 @@ public class BsVoteCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
+         * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
+        /**
+         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnTargetVillagePlayerId() { return doColumn("TARGET_VILLAGE_PLAYER_ID"); }
+        /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)
          */
@@ -399,28 +409,15 @@ public class BsVoteCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnUpdateTrace() { return doColumn("UPDATE_TRACE"); }
-        /**
-         * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
-        /**
-         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnTargetVillagePlayerId() { return doColumn("TARGET_VILLAGE_PLAYER_ID"); }
         public void everyColumn() { doEveryColumn(); }
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override
         protected void doSpecifyRequiredColumn() {
             columnVillageDayId(); // PK
+            columnVillagePlayerId(); // PK
             if (qyCall().qy().hasConditionQueryVillagePlayerByTargetVillagePlayerId()
                     || qyCall().qy().xgetReferrerQuery() instanceof VillagePlayerCQ) {
                 columnTargetVillagePlayerId(); // FK or one-to-one referrer
-            }
-            if (qyCall().qy().hasConditionQueryVillagePlayerByVillagePlayerId()
-                    || qyCall().qy().xgetReferrerQuery() instanceof VillagePlayerCQ) {
-                columnVillagePlayerId(); // FK or one-to-one referrer
             }
         }
         @Override
@@ -484,15 +481,6 @@ public class BsVoteCB extends AbstractConditionBean {
                 }
             }
             return _villagePlayerByVillagePlayerId;
-        }
-        /**
-         * Prepare for (Specify)MyselfDerived (SubQuery).
-         * @return The object to set up a function for myself table. (NotNull)
-         */
-        public HpSDRFunction<VoteCB, VoteCQ> myselfDerived() {
-            assertDerived("myselfDerived"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
-            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VoteCB> sq, VoteCQ cq, String al, DerivedReferrerOption op)
-                    -> cq.xsmyselfDerive(fn, sq, al, op), _dbmetaProvider);
         }
     }
 

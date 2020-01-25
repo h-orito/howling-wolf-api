@@ -55,13 +55,13 @@ map:{
         ; map:{
         	; topComment=村ステータス; codeType=String
         	; groupingMap = map:{
-        		; finishedVillage = map:{
+        		; solvedVillage = map:{
         			; groupComment=決着がついた村
         			; elementList= list:{エピローグ;廃村;終了}
         		}
-        		; prologue = map:{
-					; groupComment=プロローグ中
-        			; elementList= list:{募集中;開始待ち}
+        		; finishedVillage = map:{
+					; groupComment=終了した村
+					; elementList= list:{廃村;終了}
 				}
         	}
         }
@@ -141,6 +141,10 @@ map:{
 					; groupComment=無惨な死
 					; elementList= list:{襲撃;呪殺}
 				}
+				; psychicableDeath = map:{
+					; groupComment=霊能判定可能な死因
+					; elementList= list:{処刑;突然}
+				}
 			}
         }
         ; map:{
@@ -176,7 +180,6 @@ map:{
             ; code=NOONNIGHT_CODE; name=NOONNIGHT_NAME
         }
     }
-
 
 	# アプリ定義
     ; Term = list:{

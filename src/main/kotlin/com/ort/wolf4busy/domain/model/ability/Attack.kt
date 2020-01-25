@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.DayChange
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
@@ -96,13 +97,9 @@ object Attack {
             it.ability.code == CDef.AbilityType.襲撃.code() && it.targetId != null && it.villageDayId == village.day.yesterday().id
         }?.let { ability ->
             // 襲撃メッセージ
-            val fromCharaName = charas.chara(aliveWolf.charaId).charaName.name
-            val target = village.participant.member(ability.targetId!!)
-            val toCharaName = charas.chara(target.charaId).charaName.name
-            val text = "${fromCharaName}達は、${toCharaName}を襲撃した。"
-            messages = messages.add(DayChange.createAttackPrivateMessage(text, latestDay))
+            messages = messages.add(createAttackMessage(village, charas, aliveWolf, ability))
             // 襲撃成功したら死亡
-            if (isAttackSuccess(dayChange, ability.targetId!!)) village = village.attackParticipant(ability.targetId!!, latestDay)
+            if (isAttackSuccess(dayChange, ability.targetId!!)) village = village.attackParticipant(ability.targetId, latestDay)
         } ?: return dayChange
 
         return dayChange.copy(
@@ -110,6 +107,8 @@ object Attack {
             messages = messages
         ).setIsChange(dayChange)
     }
+
+    fun isAvailableNoTarget(): Boolean = true
 
     // ===================================================================================
     //                                                                        Assist Logic
@@ -129,4 +128,31 @@ object Attack {
         // TODO 襲撃を耐える役職
         return true
     }
+
+    /**
+     * 襲撃メッセージ
+     * @param village village
+     * @param charas charas
+     * @param wolf 狼
+     * @param ability ability
+     */
+    private fun createAttackMessage(
+        village: Village,
+        charas: Charas,
+        wolf: VillageParticipant,
+        ability: VillageAbility
+    ): Message {
+        val fromChara = charas.chara(wolf.charaId)
+        val targetChara = charas.chara(village.participant, ability.targetId!!)
+        val text = createAttackMessageString(fromChara, targetChara)
+        return Message.createAttackPrivateMessage(text, village.day.latestDay().id)
+    }
+
+    /**
+     * 襲撃メッセージ
+     * @param chara 狼
+     * @param targetChara 被襲撃者
+     */
+    private fun createAttackMessageString(chara: Chara, targetChara: Chara): String =
+        "${chara.charaName.name}達は、${targetChara.charaName.name}を襲撃した。"
 }

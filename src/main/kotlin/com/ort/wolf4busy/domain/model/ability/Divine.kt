@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.DayChange
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
@@ -52,7 +53,8 @@ object Divine {
             it.skill!!.toCdef().isHasDivineAbility
         }.mapNotNull { seer ->
             // 対象は自分以外の生存者からランダム
-            village.participant.filterAlive()
+            village.participant
+                .filterAlive()
                 .findRandom { it.id != seer.id }?.let {
                     VillageAbility(
                         villageDayId = latestVillageDay.id,
@@ -60,7 +62,7 @@ object Divine {
                         targetId = it.id,
                         ability = ABILITY_TYPE
                     )
-                } ?: null // 自分しかいない場合
+                }
         }
     }
 
@@ -74,14 +76,7 @@ object Divine {
             dayChange.abilities.list.find {
                 it.myselfId == seer.id && it.villageDayId == dayChange.village.day.yesterday().id
             }?.let { ability ->
-                val myself = dayChange.village.participant.member(ability.myselfId)
-                val fromCharaName = charas.chara(myself!!.charaId).charaName.name
-                val target = dayChange.village.participant.member(ability.targetId!!)
-                val toCharaName = charas.chara(target!!.charaId).charaName.name
-                val isWolf =
-                    dayChange.village.participant.member(ability.targetId!!).skill!!.toCdef().isDivineResultWolf
-                val text = "${fromCharaName}は、${toCharaName}を占った。\n${toCharaName}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
-                messages = messages.add(DayChange.createSeerPrivateMessage(text, latestDay, seer))
+                messages = messages.add(createDivineMessage(dayChange.village, charas, ability, seer))
             }
         }
         // TODO 呪殺、逆呪殺
@@ -90,4 +85,26 @@ object Divine {
             messages = messages
         ).setIsChange(dayChange)
     }
+
+    fun isAvailableNoTarget(): Boolean = false
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun createDivineMessage(
+        village: Village,
+        charas: Charas,
+        ability: VillageAbility,
+        seer: VillageParticipant
+    ): Message {
+        val myself = village.participant.member(ability.myselfId)
+        val myChara = charas.chara(myself.charaId)
+        val targetChara = charas.chara(village.participant, ability.targetId!!)
+        val isWolf = village.participant.member(ability.targetId).skill!!.toCdef().isDivineResultWolf
+        val text = createDivineMessageString(myChara, targetChara, isWolf)
+        return Message.createSeerPrivateMessage(text, village.day.latestDay().id, seer)
+    }
+
+    private fun createDivineMessageString(chara: Chara, targetChara: Chara, isWolf: Boolean): String =
+        "${chara.charaName.name}は、${targetChara.charaName.name}を占った。\n${targetChara.charaName.name}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
 }

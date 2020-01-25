@@ -18,6 +18,7 @@ import com.ort.dbflute.allcommon.ImplementedInvokerAssistant;
 import com.ort.dbflute.allcommon.ImplementedSqlClauseCreator;
 import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
+import com.ort.dbflute.cbean.nss.*;
 
 /**
  * The base condition-bean of village.
@@ -241,6 +242,35 @@ public class BsVillageCB extends AbstractConditionBean {
     // ===================================================================================
     //                                                                         SetupSelect
     //                                                                         ===========
+    protected PlayerNss _nssPlayer;
+    public PlayerNss xdfgetNssPlayer() {
+        if (_nssPlayer == null) { _nssPlayer = new PlayerNss(null); }
+        return _nssPlayer;
+    }
+    /**
+     * Set up relation columns to select clause. <br>
+     * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * <pre>
+     * <span style="color: #0000C0">villageBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_Player()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">village</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">village</span>.<span style="color: #CC4747">getPlayer()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
+     */
+    public PlayerNss setupSelect_Player() {
+        assertSetupSelectPurpose("player");
+        if (hasSpecifiedLocalColumn()) {
+            specify().columnCreatePlayerId();
+        }
+        doSetupSelect(() -> query().queryPlayer());
+        if (_nssPlayer == null || !_nssPlayer.hasConditionQuery())
+        { _nssPlayer = new PlayerNss(query().queryPlayer()); }
+        return _nssPlayer;
+    }
+
     /**
      * Set up relation columns to select clause. <br>
      * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.
@@ -322,6 +352,7 @@ public class BsVillageCB extends AbstractConditionBean {
     }
 
     public static class HpSpecification extends HpAbstractSpecification<VillageCQ> {
+        protected PlayerCB.HpSpecification _player;
         protected VillageStatusCB.HpSpecification _villageStatus;
         protected CampCB.HpSpecification _camp;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<VillageCQ> qyCall
@@ -339,10 +370,10 @@ public class BsVillageCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnVillageDisplayName() { return doColumn("VILLAGE_DISPLAY_NAME"); }
         /**
-         * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
+         * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnCreatePlayerName() { return doColumn("CREATE_PLAYER_NAME"); }
+        public SpecifiedColumn columnCreatePlayerId() { return doColumn("CREATE_PLAYER_ID"); }
         /**
          * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
          * @return The information object of specified column. (NotNull)
@@ -383,6 +414,10 @@ public class BsVillageCB extends AbstractConditionBean {
         @Override
         protected void doSpecifyRequiredColumn() {
             columnVillageId(); // PK
+            if (qyCall().qy().hasConditionQueryPlayer()
+                    || qyCall().qy().xgetReferrerQuery() instanceof PlayerCQ) {
+                columnCreatePlayerId(); // FK or one-to-one referrer
+            }
             if (qyCall().qy().hasConditionQueryVillageStatus()
                     || qyCall().qy().xgetReferrerQuery() instanceof VillageStatusCQ) {
                 columnVillageStatusCode(); // FK or one-to-one referrer
@@ -394,6 +429,26 @@ public class BsVillageCB extends AbstractConditionBean {
         }
         @Override
         protected String getTableDbName() { return "village"; }
+        /**
+         * Prepare to specify functions about relation table. <br>
+         * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public PlayerCB.HpSpecification specifyPlayer() {
+            assertRelation("player");
+            if (_player == null) {
+                _player = new PlayerCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryPlayer()
+                                    , () -> _qyCall.qy().queryPlayer())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _player.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryPlayer()
+                      , () -> xsyncQyCall().qy().queryPlayer()));
+                }
+            }
+            return _player;
+        }
         /**
          * Prepare to specify functions about relation table. <br>
          * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.

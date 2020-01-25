@@ -10,23 +10,44 @@ class PlayerDataSource(
     private val playerBhv: PlayerBhv
 ) {
 
-    fun selectPlayer(uid: String): com.ort.wolf4busy.domain.model.player.Player {
+    fun findPlayer(id: Int): com.ort.wolf4busy.domain.model.player.Player {
         val player = playerBhv.selectEntityWithDeletedCheck {
-            it.query().setUid_Equal(uid)
+            it.query().setPlayerId_Equal(id)
+        }
+        playerBhv.load(player) {
+            it.loadVillage { } // creator village
+            it.loadVillagePlayer { vpCB ->
+                vpCB.setupSelect_Village()
+                vpCB.query().setIsGone_Equal(false) // participant village
+            }
         }
         return convertPlayerToPlayer(player)
     }
 
-    fun selectPlayerList(villageId: Int): Players {
+    fun findPlayer(uid: String): com.ort.wolf4busy.domain.model.player.Player {
+        val player = playerBhv.selectEntityWithDeletedCheck {
+            it.query().setUid_Equal(uid)
+        }
+        playerBhv.load(player) {
+            it.loadVillage { } // creator village
+            it.loadVillagePlayer { vpCB ->
+                vpCB.setupSelect_Village()
+                vpCB.query().setIsGone_Equal(false) // participant village
+            }
+        }
+        return convertPlayerToPlayer(player)
+    }
+
+    fun findPlayers(villageId: Int): Players {
         val playerList = playerBhv.selectList {
             it.query().existsVillagePlayer {
                 it.query().setVillageId_Equal(villageId)
             }
         }
-        return Players(list = playerList.map { convertPlayerToPlayer(it) })
+        return Players(list = playerList.map { convertPlayerToSimplePlayer(it) })
     }
 
-    fun updateNickname(uid: String, nickname: String, twitterUserName: String) {
+    fun update(uid: String, nickname: String, twitterUserName: String) {
         val player = Player()
         player.uniqueBy(uid)
         player.nickname = nickname
@@ -34,16 +55,31 @@ class PlayerDataSource(
         playerBhv.update(player)
     }
 
-    fun isRestrictedParticipatePlayer(uid: String): Boolean {
-        return playerBhv.selectEntityWithDeletedCheck {
-            it.query().setUid_Equal(uid)
-        }.isRestrictedParticipation
-    }
-
     // ===================================================================================
     //                                                                             Mapping
     //                                                                             =======
     private fun convertPlayerToPlayer(player: Player): com.ort.wolf4busy.domain.model.player.Player {
+        return com.ort.wolf4busy.domain.model.player.Player(
+            id = player.playerId,
+            nickname = player.nickname,
+            twitterUserName = player.twitterUserName,
+            isRestrictedParticipation = player.isRestrictedParticipation,
+            participateProgressVillageIdList = player.villagePlayerList.filter {
+                !it.village.get().villageStatusCodeAsVillageStatus.isSolvedVillage
+            }.map { it.villageId },
+            participateFinishedVillageIdList = player.villagePlayerList.filter {
+                it.village.get().villageStatusCodeAsVillageStatus.isSolvedVillage
+            }.map { it.villageId },
+            createProgressVillageIdList = player.villageList.filter {
+                !it.villageStatusCodeAsVillageStatus.isSolvedVillage
+            }.map { it.villageId },
+            createFinishedVillageIdList = player.villageList.filter {
+                it.villageStatusCodeAsVillageStatus.isSolvedVillage
+            }.map { it.villageId }
+        )
+    }
+
+    private fun convertPlayerToSimplePlayer(player: Player): com.ort.wolf4busy.domain.model.player.Player {
         return com.ort.wolf4busy.domain.model.player.Player(
             id = player.playerId,
             nickname = player.nickname,
