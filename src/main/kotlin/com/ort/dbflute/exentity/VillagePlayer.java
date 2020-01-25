@@ -16,10 +16,10 @@ public class VillagePlayer extends BsVillagePlayer {
     private static final long serialVersionUID = 1L;
 
     public boolean isParticipant() {
-        return !this.getIsSpectator() && !this.getIsGone();
+        return !this.getIsSpectator();
     }
 
     public boolean isVisitor() {
-        return this.getIsSpectator() && !this.getIsGone();
+        return this.getIsSpectator();
     }
 }

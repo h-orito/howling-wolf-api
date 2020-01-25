@@ -187,8 +187,7 @@ class VillageController(
             message = body.joinMessage!!,
             isSpectate = body.spectator ?: false,
             firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
-            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
-            password = body.joinPassword
+            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill)
         )
     }
 
@@ -217,7 +216,7 @@ class VillageController(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: Wolf4busyUser
     ) {
-        villageCoordinator.leaveVillage(villageId, user)
+        villageCoordinator.leave(villageId, user)
     }
 
     /**

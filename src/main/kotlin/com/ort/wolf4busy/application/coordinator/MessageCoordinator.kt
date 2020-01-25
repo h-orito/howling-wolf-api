@@ -24,7 +24,7 @@ class MessageCoordinator(
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
         val messageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, user?.authority)
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
-        val messages: Messages = messageService.findMessageList(village.id, villageDayId, messageTypeList, participant, from)
+        val messages: Messages = messageService.findMessages(village.id, villageDayId, messageTypeList, participant, from)
         dayChangeCoordinator.dayChangeIfNeeded(village)
         return messages
     }

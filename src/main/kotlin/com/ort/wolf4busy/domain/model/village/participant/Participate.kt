@@ -81,9 +81,13 @@ object Participate {
     fun assertSpectate(
         player: Player?,
         village: Village,
-        charachipCharaNum: Int
+        charaId: Int,
+        charachipCharaNum: Int,
+        password: String?
     ) {
         if (!isAvailableSpectate(player, village, charachipCharaNum)) throw Wolf4busyBusinessException("見学できません")
+        // 既にそのキャラが参加していたりパスワードを間違えていたらNG
+        village.assertParticipate(charaId, password)
     }
 
     /**

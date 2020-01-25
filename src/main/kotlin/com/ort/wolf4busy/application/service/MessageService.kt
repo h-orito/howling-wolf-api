@@ -30,7 +30,7 @@ class MessageService(
      * @param from これ以降の発言を取得する unixtimemilli
      * @return 発言
      */
-    fun findMessageList(
+    fun findMessages(
         villageId: Int,
         villageDayId: Int,
         messageTypeList: List<CDef.MessageType>,

@@ -73,7 +73,7 @@ class VillageCoordinator(
         // 村作成時のシステムメッセージを登録
         messageService.registerInitialMessage(village)
         // ダミーキャラを参加させる
-        val chara: Chara = charachipService.findChara(village.dummyChara().charaId)
+        val chara: Chara = charachipService.findChara(village.setting.charachip.dummyCharaId)
         participateDummyChara(village.id, village, chara)
 
         return village.id
@@ -104,7 +104,13 @@ class VillageCoordinator(
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
 
         if (isSpectate) {
-            Participate.assertSpectate(player, village, charas.list.size)
+            Participate.assertSpectate(
+                player,
+                village,
+                charaId,
+                charas.list.size,
+                password
+            )
         } else {
             Participate.assertParticipate(
                 player,
@@ -127,7 +133,6 @@ class VillageCoordinator(
      * @param isSpectate 見学か
      * @param firstRequestSkill 役職第1希望
      * @param secondRequestSkill 役職第2希望
-     * @param password 入村パスワード
      */
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
     fun participate(
@@ -137,8 +142,7 @@ class VillageCoordinator(
         message: String,
         isSpectate: Boolean,
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
-        secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
-        password: String?
+        secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ
     ) {
         // 村参加者登録
         var village: Village = villageService.findVillage(villageId)
@@ -189,7 +193,7 @@ class VillageCoordinator(
      * @param user user
      */
     @Transactional(rollbackFor = [Exception::class, Wolf4busyBusinessException::class])
-    fun leaveVillage(villageId: Int, user: Wolf4busyUser) {
+    fun leave(villageId: Int, user: Wolf4busyUser) {
         // 退村できない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
@@ -341,15 +345,13 @@ class VillageCoordinator(
     //                                                                        ============
     private fun participateDummyChara(villageId: Int, village: Village, dummyChara: Chara) {
         val dummyPlayerId = 1 // 固定
-//        val message = "人狼なんているわけないじゃん。みんな大げさだなあ\n>>1>>*1>>+1>>=1>>#1aaa>>-1>>@1" // TODO
         val message: String = dummyChara.defaultMessage.joinMessage ?: "人狼なんているわけないじゃん。みんな大げさだなあ"
         this.participate(
             villageId = villageId,
             playerId = dummyPlayerId,
             charaId = village.setting.charachip.dummyCharaId,
             message = message,
-            isSpectate = false,
-            password = ""
+            isSpectate = false
         )
     }
 

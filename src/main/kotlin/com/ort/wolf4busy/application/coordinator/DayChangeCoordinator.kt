@@ -35,21 +35,23 @@ class DayChangeCoordinator(
         val votes: VillageVotes = voteService.findVillageVotes(village.id)
         val abilities: VillageAbilities = abilityService.findVillageAbilities(village.id)
         val commits: Commits = commitService.findCommits(village.id)
-        val todayMessages = messageService.findMessageList(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言))
+        val todayMessages = messageService.findMessages(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言))
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(village.id)
 
         val beforeDayChange = DayChange(village, votes, abilities, players)
 
         // プロローグで長時間発言していない人を退村させる
-        var dayChange: DayChange = beforeDayChange.leaveParticipantIfNeeded(todayMessages, charas).also {
+        var dayChange: DayChange = beforeDayChange.leaveParticipantIfNeeded(todayMessages, charas).let {
             if (it.isChange) update(beforeDayChange, it)
+            it.copy(isChange = false)
         }
 
         // 必要あれば日付追加
-        dayChange = dayChange.addDayIfNeeded(commits).also {
+        dayChange = dayChange.addDayIfNeeded(commits).let {
             if (!it.isChange) return
             update(beforeDayChange, it)
+            it.copy(isChange = false)
         }
 
         // 登録後の村日付idが必要になるので取得し直す

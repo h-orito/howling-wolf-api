@@ -20,7 +20,7 @@ object Prologue {
         // 24時間以内に発言していなかったら退村
         var village = dayChange.village.copy()
         var messages = dayChange.messages.copy()
-        dayChange.village.participant.memberList.forEach { member ->
+        dayChange.village.notDummyParticipant().memberList.forEach { member ->
             if (recentMessageList.none { message -> message.fromVillageParticipantId!! == member.id }) {
                 village = village.leaveParticipant(member.id)
                 messages = messages.add(Leave.createLeaveMessage(village, charas.chara(member.charaId)))
