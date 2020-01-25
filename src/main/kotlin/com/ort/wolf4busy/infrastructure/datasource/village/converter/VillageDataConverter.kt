@@ -24,7 +24,7 @@ object VillageDataConverter {
 
     fun convertVillageListToVillages(villageList: ListResultBean<Village>): Villages {
         return Villages(
-            villageList = villageList.map { convertVillageToSimpleVillage(it) }
+            list = villageList.map { convertVillageToSimpleVillage(it) }
         )
     }
 
