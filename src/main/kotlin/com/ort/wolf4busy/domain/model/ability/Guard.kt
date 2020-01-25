@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.daychange.DayChange
+import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
@@ -83,12 +84,7 @@ object Guard {
             dayChange.abilities.list.find {
                 it.myselfId == hunter.id && it.villageDayId == dayChange.village.day.yesterday().id
             }?.let { ability ->
-                val myself = dayChange.village.participant.member(ability.myselfId)
-                val fromCharaName = charas.chara(myself!!.charaId).charaName.name
-                val target = dayChange.village.participant.member(ability.targetId!!)
-                val toCharaName = charas.chara(target!!.charaId).charaName.name
-                val text = "${fromCharaName}は、${toCharaName}を護衛している。"
-                messages = messages.add(DayChange.createPrivateSystemMessage(text, latestDay))
+                messages = messages.add(createGuardMessage(dayChange.village, charas, ability))
             }
         }
 
@@ -96,4 +92,19 @@ object Guard {
             messages = messages
         ).setIsChange(dayChange)
     }
+
+    fun isAvailableNoTarget(): Boolean = false
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun createGuardMessage(village: Village, charas: Charas, ability: VillageAbility): Message {
+        val myChara = charas.chara(village.participant, ability.myselfId)
+        val targetChara = charas.chara(village.participant, ability.targetId!!)
+        val text = createGuardMessageString(myChara, targetChara)
+        return Message.createPrivateSystemMessage(text, village.day.latestDay().id)
+    }
+
+    private fun createGuardMessageString(myChara: Chara, targetChara: Chara): String =
+        "${myChara.charaName.name}は、${targetChara.charaName.name}を護衛している。"
 }

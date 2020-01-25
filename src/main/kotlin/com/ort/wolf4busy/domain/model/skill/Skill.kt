@@ -26,26 +26,18 @@ data class Skill(
         )
 
         fun skillByShortName(shortName: String): Skill? {
-            val cdefSkill: CDef.Skill? = CDef.Skill.listAll().firstOrNull() {
+            val cdefSkill: CDef.Skill = CDef.Skill.listAll().firstOrNull() {
                 it.shortName() == shortName
-            }
-            cdefSkill ?: return null
-            return Skill(
-                code = cdefSkill.code(),
-                name = cdefSkill.name
-            )
+            } ?: return null
+            return Skill(cdefSkill)
         }
     }
 
     fun getAbilities(): Abilities {
         val cdefSkill = CDef.Skill.codeOf(code) ?: return Abilities(listOf())
         val cdefAbilityList = skillAbilityTypeListMap[cdefSkill] ?: return Abilities(listOf())
-        return Abilities(
-            list = cdefAbilityList.map { Ability(it) }
-        )
+        return Abilities(cdefAbilityList.map { Ability(it) })
     }
 
-    fun toCdef(): CDef.Skill {
-        return CDef.Skill.codeOf(code)
-    }
+    fun toCdef(): CDef.Skill = CDef.Skill.codeOf(code)
 }

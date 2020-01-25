@@ -5,9 +5,13 @@ import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 
 object SecretSay {
 
-    fun isViewable(village: Village): Boolean {
-        // 終了していたら全て見られる
-        return village.status.isCompleted()
+    fun isViewable(village: Village, participant: VillageParticipant?): Boolean {
+        // いずれかを満たせばok
+        // 村として可能か
+        if (village.isViewableSecretSay()) return true
+        // 参加者として可能か
+        participant ?: return false
+        return participant.isViewableSecretSay()
     }
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {

@@ -182,6 +182,16 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
         setDeadReasonCode_InScope_AsDeadReason(CDef.DeadReason.listOfMiserableDeath());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As DeadReason. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 死亡理由 <br>
+     * 霊能判定可能な死因 <br>
+     * The group elements:[処刑, 突然]
+     */
+    public void setDeadReasonCode_InScope_PsychicableDeath() {
+        setDeadReasonCode_InScope_AsDeadReason(CDef.DeadReason.listOfPsychicableDeath());
+    }
+
     protected void doSetDeadReasonCode_InScope(Collection<String> deadReasonCodeList) {
         regINS(CK_INS, cTL(deadReasonCodeList), xgetCValueDeadReasonCode(), "DEAD_REASON_CODE");
     }

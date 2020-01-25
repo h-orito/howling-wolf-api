@@ -34,7 +34,7 @@ object VillageDataConverter {
         return com.ort.wolf4busy.domain.model.village.Village(
             id = village.villageId,
             name = village.villageDisplayName,
-            creatorPlayerName = village.createPlayerName,
+            creatorPlayerId = village.createPlayerId,
             status = VillageStatus(village.villageStatusCodeAsVillageStatus),
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(
@@ -58,8 +58,7 @@ object VillageDataConverter {
             id = villageDay.villageDayId,
             day = day,
             noonnight = villageDay.noonnightCode,
-            dayChangeDatetime = villageDay.daychangeDatetime,
-            isUpdating = villageDay.isUpdating
+            dayChangeDatetime = villageDay.daychangeDatetime
         )
     }
 
@@ -70,7 +69,7 @@ object VillageDataConverter {
         return com.ort.wolf4busy.domain.model.village.Village(
             id = village.villageId,
             name = village.villageDisplayName,
-            creatorPlayerName = village.createPlayerName,
+            creatorPlayerId = village.createPlayerId,
             status = VillageStatus(village.villageStatusCodeAsVillageStatus),
             setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
             participant = VillageParticipants(count = village.participantCount),

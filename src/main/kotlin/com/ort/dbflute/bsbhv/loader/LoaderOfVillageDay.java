@@ -15,7 +15,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, IS_UPDATING, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -27,16 +27,16 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     NOONNIGHT, VILLAGE, VOTE(AsOne)
+ *     NOONNIGHT, VILLAGE
  *
  * [referrer table]
  *     ABILITY, COMMIT, VILLAGE_PLAYER, VOTE
  *
  * [foreign property]
- *     noonnight, village, voteAsOne
+ *     noonnight, village
  *
  * [referrer property]
- *     abilityList, commitList, villagePlayerList
+ *     abilityList, commitList, villagePlayerList, voteList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -163,6 +163,40 @@ public class LoaderOfVillageDay {
         return hd -> hd.handle(new LoaderOfVillagePlayer().ready(_referrerVillagePlayer, _selector));
     }
 
+    protected List<Vote> _referrerVote;
+
+    /**
+     * Load referrer of voteList by the set-upper of referrer. <br>
+     * VOTE by VILLAGE_DAY_ID, named 'voteList'.
+     * <pre>
+     * <span style="color: #0000C0">villageDayBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">villageDayList</span>, <span style="color: #553000">dayLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">dayLoader</span>.<span style="color: #CC4747">loadVote</span>(<span style="color: #553000">voteCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *         <span style="color: #553000">voteCB</span>.setupSelect...
+     *         <span style="color: #553000">voteCB</span>.query().set...
+     *         <span style="color: #553000">voteCB</span>.query().addOrderBy...
+     *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">voteLoader</span> -&gt; {</span>
+     *     <span style="color: #3F7E5E">//    voteLoader.load...</span>
+     *     <span style="color: #3F7E5E">//});</span>
+     * });
+     * for (VillageDay villageDay : <span style="color: #553000">villageDayList</span>) {
+     *     ... = villageDay.<span style="color: #CC4747">getVoteList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillageDayId_InScope(pkList);
+     * cb.query().addOrderBy_VillageDayId_Asc();
+     * </pre>
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerLoaderGateway<LoaderOfVote> loadVote(ReferrerConditionSetupper<VoteCB> refCBLambda) {
+        myBhv().loadVote(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerVote = refLs);
+        return hd -> hd.handle(new LoaderOfVote().ready(_referrerVote, _selector));
+    }
+
     // ===================================================================================
     //                                                                    Pull out Foreign
     //                                                                    ================
@@ -178,13 +212,6 @@ public class LoaderOfVillageDay {
         if (_foreignVillageLoader == null)
         { _foreignVillageLoader = new LoaderOfVillage().ready(myBhv().pulloutVillage(_selectedList), _selector); }
         return _foreignVillageLoader;
-    }
-
-    protected LoaderOfVote _foreignVoteAsOneLoader;
-    public LoaderOfVote pulloutVoteAsOne() {
-        if (_foreignVoteAsOneLoader == null)
-        { _foreignVoteAsOneLoader = new LoaderOfVote().ready(myBhv().pulloutVoteAsOne(_selectedList), _selector); }
-        return _foreignVoteAsOneLoader;
     }
 
     // ===================================================================================

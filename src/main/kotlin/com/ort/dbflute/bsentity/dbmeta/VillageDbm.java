@@ -45,7 +45,7 @@ public class VillageDbm extends AbstractDBMeta {
     protected void xsetupEpg() {
         setupEpg(_epgMap, et -> ((Village)et).getVillageId(), (et, vl) -> ((Village)et).setVillageId(cti(vl)), "villageId");
         setupEpg(_epgMap, et -> ((Village)et).getVillageDisplayName(), (et, vl) -> ((Village)et).setVillageDisplayName((String)vl), "villageDisplayName");
-        setupEpg(_epgMap, et -> ((Village)et).getCreatePlayerName(), (et, vl) -> ((Village)et).setCreatePlayerName((String)vl), "createPlayerName");
+        setupEpg(_epgMap, et -> ((Village)et).getCreatePlayerId(), (et, vl) -> ((Village)et).setCreatePlayerId(cti(vl)), "createPlayerId");
         setupEpg(_epgMap, et -> ((Village)et).getVillageStatusCode(), (et, vl) -> {
             CDef.VillageStatus cls = (CDef.VillageStatus)gcls(et, columnVillageStatusCode(), vl);
             if (cls != null) {
@@ -78,6 +78,7 @@ public class VillageDbm extends AbstractDBMeta {
     { xsetupEfpg(); }
     @SuppressWarnings("unchecked")
     protected void xsetupEfpg() {
+        setupEfpg(_efpgMap, et -> ((Village)et).getPlayer(), (et, vl) -> ((Village)et).setPlayer((OptionalEntity<Player>)vl), "player");
         setupEfpg(_efpgMap, et -> ((Village)et).getVillageStatus(), (et, vl) -> ((Village)et).setVillageStatus((OptionalEntity<VillageStatus>)vl), "villageStatus");
         setupEfpg(_efpgMap, et -> ((Village)et).getCamp(), (et, vl) -> ((Village)et).setCamp((OptionalEntity<Camp>)vl), "camp");
     }
@@ -102,7 +103,7 @@ public class VillageDbm extends AbstractDBMeta {
     //                                                                         ===========
     protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "messageRestrictionList,villageDayList,villagePlayerList,villageSettingList", null, false);
     protected final ColumnInfo _columnVillageDisplayName = cci("VILLAGE_DISPLAY_NAME", "VILLAGE_DISPLAY_NAME", null, null, String.class, "villageDisplayName", null, false, false, true, "VARCHAR", 40, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnCreatePlayerName = cci("CREATE_PLAYER_NAME", "CREATE_PLAYER_NAME", null, null, String.class, "createPlayerName", null, false, false, true, "VARCHAR", 12, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnCreatePlayerId = cci("CREATE_PLAYER_ID", "CREATE_PLAYER_ID", null, null, Integer.class, "createPlayerId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "player", null, null, false);
     protected final ColumnInfo _columnVillageStatusCode = cci("VILLAGE_STATUS_CODE", "VILLAGE_STATUS_CODE", null, null, String.class, "villageStatusCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "villageStatus", null, CDef.DefMeta.VillageStatus, false);
     protected final ColumnInfo _columnEpilogueDay = cci("EPILOGUE_DAY", "EPILOGUE_DAY", null, null, Integer.class, "epilogueDay", null, false, false, false, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnWinCampCode = cci("WIN_CAMP_CODE", "WIN_CAMP_CODE", null, null, String.class, "winCampCode", null, false, false, false, "VARCHAR", 20, 0, null, null, false, null, null, "camp", null, CDef.DefMeta.Camp, false);
@@ -122,10 +123,10 @@ public class VillageDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnVillageDisplayName() { return _columnVillageDisplayName; }
     /**
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnCreatePlayerName() { return _columnCreatePlayerName; }
+    public ColumnInfo columnCreatePlayerId() { return _columnCreatePlayerId; }
     /**
      * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
      * @return The information object of specified column. (NotNull)
@@ -166,7 +167,7 @@ public class VillageDbm extends AbstractDBMeta {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnVillageId());
         ls.add(columnVillageDisplayName());
-        ls.add(columnCreatePlayerName());
+        ls.add(columnCreatePlayerId());
         ls.add(columnVillageStatusCode());
         ls.add(columnEpilogueDay());
         ls.add(columnWinCampCode());
@@ -198,12 +199,20 @@ public class VillageDbm extends AbstractDBMeta {
     //                                      Foreign Property
     //                                      ----------------
     /**
+     * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * @return The information object of foreign property. (NotNull)
+     */
+    public ForeignInfo foreignPlayer() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCreatePlayerId(), PlayerDbm.getInstance().columnPlayerId());
+        return cfi("FK_VILLAGE_PLAYER", "player", this, PlayerDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageList", false);
+    }
+    /**
      * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.
      * @return The information object of foreign property. (NotNull)
      */
     public ForeignInfo foreignVillageStatus() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageStatusCode(), VillageStatusDbm.getInstance().columnVillageStatusCode());
-        return cfi("FK_VILLAGE_VILLAGE_STATUS", "villageStatus", this, VillageStatusDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageList", false);
+        return cfi("FK_VILLAGE_VILLAGE_STATUS", "villageStatus", this, VillageStatusDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageList", false);
     }
     /**
      * CAMP by my WIN_CAMP_CODE, named 'camp'.
@@ -211,7 +220,7 @@ public class VillageDbm extends AbstractDBMeta {
      */
     public ForeignInfo foreignCamp() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnWinCampCode(), CampDbm.getInstance().columnCampCode());
-        return cfi("FK_VILLAGE_CAMP", "camp", this, CampDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageList", false);
+        return cfi("FK_VILLAGE_CAMP", "camp", this, CampDbm.getInstance(), mp, 2, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "villageList", false);
     }
 
     // -----------------------------------------------------

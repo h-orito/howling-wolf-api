@@ -6,7 +6,6 @@ import com.ort.wolf4busy.api.form.VillageMessageForm
 import com.ort.wolf4busy.api.view.VillageParticipateSituationView
 import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
-import com.ort.wolf4busy.application.coordinator.ParticipateSituationCoordinator
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
 import com.ort.wolf4busy.application.service.CharachipService
 import com.ort.wolf4busy.application.service.PlayerService
@@ -15,13 +14,14 @@ import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.message.MessageType
 import com.ort.wolf4busy.domain.model.message.Messages
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
+import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
-import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
@@ -32,7 +32,6 @@ import java.time.LocalDateTime
 @RestController
 class VillageController(
     val villageCoordinator: VillageCoordinator,
-    val participateSituationCoordinator: ParticipateSituationCoordinator,
     val messageCoordinator: MessageCoordinator,
 
     val villageService: VillageService,
@@ -48,7 +47,7 @@ class VillageController(
      */
     @GetMapping("/village/list")
     fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillageListView {
-        val villages = villageService.findVillageList()
+        val villages: Villages = villageService.findVillages()
         return VillageListView(
             villageList = villages.villageList
         )
@@ -60,13 +59,15 @@ class VillageController(
      */
     @GetMapping("/village/{villageId}")
     fun village(@PathVariable("villageId") villageId: Int): VillageView {
-        val village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
+        val createPlayer: Player = playerService.findPlayer(village.creatorPlayerId)
         return VillageView(
             village = village,
             charas = charas,
-            players = players
+            players = players,
+            createPlayer = createPlayer
         )
     }
 
@@ -84,7 +85,7 @@ class VillageController(
         @PathVariable("messageNumber") messageNumber: Int,
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageAnchorMessageView {
-        val village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId)
         val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -111,7 +112,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?,
         @RequestBody @Validated form: VillageMessageForm?
     ): VillageMessageView {
-        val village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId)
         val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -134,8 +135,9 @@ class VillageController(
         @RequestBody @Validated body: VillageRegisterBody
     ): VillageRegisterView {
         val password: String? = null // TODO
-        val village: Village = convertRegisterBodyToVillage(body, user)
-        val villageId: Int = villageCoordinator.registerVillage(village, password)
+        val player: Player = playerService.findPlayer(user)
+        val village: Village = convertRegisterBodyToVillage(body, player)
+        val villageId: Int = villageCoordinator.registerVillage(village, user)
         return VillageRegisterView(villageId = villageId)
     }
 
@@ -152,7 +154,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageParticipateSituationView {
         return VillageParticipateSituationView(
-            situation = participateSituationCoordinator.findParticipateSituation(villageId, user)
+            situation = villageCoordinator.findActionSituation(villageId, user)
         )
     }
 
@@ -168,18 +170,24 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageParticipateBody
     ) {
-        val player = playerService.findPlayer(user)
-        if (playerService.isRestrictedParticipatePlayer(user)) throw Wolf4busyBusinessException("参加を制限されています")
-
-        villageCoordinator.participate(
+        villageCoordinator.assertParticipate(
             villageId = villageId,
-            playerId = player.id,
+            user = user,
             charaId = body.charaId!!,
-            message = body.joinMessage!!,
             isSpectate = body.spectator ?: false,
             firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
             secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
             password = body.joinPassword
+        )
+        val player = playerService.findPlayer(user)
+        villageCoordinator.participate(
+            villageId = villageId,
+            playerId = player.id,
+            charaId = body.charaId,
+            message = body.joinMessage!!,
+            isSpectate = body.spectator ?: false,
+            firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
+            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill)
         )
     }
 
@@ -195,7 +203,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: VillageChangeSkillBody
     ) {
-        villageService.changeSkillRequest(villageId, user, body.firstRequestSkill!!, body.secondRequestSkill!!)
+        villageCoordinator.changeSkillRequest(villageId, user, body.firstRequestSkill!!, body.secondRequestSkill!!)
     }
 
     /**
@@ -208,7 +216,7 @@ class VillageController(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: Wolf4busyUser
     ) {
-        villageCoordinator.leaveVillage(villageId, user)
+        villageCoordinator.leave(villageId, user)
     }
 
     /**
@@ -306,16 +314,13 @@ class VillageController(
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun convertRegisterBodyToVillage(body: VillageRegisterBody, user: Wolf4busyUser): Village {
+    private fun convertRegisterBodyToVillage(body: VillageRegisterBody, player: Player): Village {
         // TODO
         return Village(
             id = 1, // dummy
             name = "dummy village name", // TODO
-            creatorPlayerName = "master", // TODO
-            status = VillageStatus(
-                code = CDef.VillageStatus.募集中.code(),
-                name = CDef.VillageStatus.募集中.name
-            ),
+            creatorPlayerId = player.id,
+            status = VillageStatus(CDef.VillageStatus.プロローグ),
             setting = convertRegisterBodyToVillageSettings(body),
             participant = VillageParticipants(
                 count = 1, // dummy
@@ -379,7 +384,8 @@ class VillageController(
                 )
             ),
             password = VillagePassword(
-                joinPasswordRequired = false // TODO
+                joinPasswordRequired = false, // TODO
+                joinPassword = null
             )
         )
     }

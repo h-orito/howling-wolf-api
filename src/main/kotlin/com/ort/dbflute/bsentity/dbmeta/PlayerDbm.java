@@ -92,7 +92,7 @@ public class PlayerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "villagePlayerList", null, false);
+    protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "villageList,villagePlayerList", null, false);
     protected final ColumnInfo _columnUid = cci("UID", "UID", null, null, String.class, "uid", null, false, false, true, "VARCHAR", 100, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnNickname = cci("NICKNAME", "NICKNAME", null, null, String.class, "nickname", null, false, false, true, "VARCHAR", 50, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnTwitterUserName = cci("TWITTER_USER_NAME", "TWITTER_USER_NAME", null, null, String.class, "twitterUserName", null, false, false, true, "VARCHAR", 15, 0, null, null, false, null, null, null, null, null, false);
@@ -206,6 +206,14 @@ public class PlayerDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
+    /**
+     * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerVillageList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnPlayerId(), VillageDbm.getInstance().columnCreatePlayerId());
+        return cri("FK_VILLAGE_PLAYER", "villageList", this, VillageDbm.getInstance(), mp, false, "player");
+    }
     /**
      * VILLAGE_PLAYER by PLAYER_ID, named 'villagePlayerList'.
      * @return The information object of referrer property. (NotNull)

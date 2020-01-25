@@ -3,11 +3,11 @@ package com.ort.wolf4busy.infrastructure.datasource.village
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.*
-import com.ort.wolf4busy.domain.model.skill.Skill
-import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
+import com.ort.wolf4busy.domain.model.village.setting.VillageMessageRestrict
 import com.ort.wolf4busy.domain.model.village.setting.VillageSettings
+import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.converter.VillageDataConverter
 import org.springframework.stereotype.Repository
 
@@ -21,10 +21,39 @@ class VillageDataSource(
 ) {
 
     /**
+     * 村登録
+     * @param paramVillage village
+     * @return 村ID
+     */
+    fun registerVillage(
+        paramVillage: com.ort.wolf4busy.domain.model.village.Village
+    ): com.ort.wolf4busy.domain.model.village.Village {
+        // 村
+        val villageId = insertVillage(paramVillage)
+        // 村設定
+        insertVillageSettings(villageId, paramVillage.setting)
+        // 発言制限
+        insertMessageRestrictionList(villageId, paramVillage.setting)
+        // 村日付
+        insertVillageDay(
+            villageId,
+            com.ort.wolf4busy.domain.model.village.VillageDay(
+                id = 1, // dummy
+                day = 0,
+                noonnight = CDef.Noonnight.昼.code(),
+                dayChangeDatetime = paramVillage.setting.time.startDatetime
+            )
+        )
+
+        return findVillage(villageId)
+    }
+
+    /**
      * 村一覧取得
+     * @param user 指定した場合は自分が参加した村一覧
      * @return 村一覧
      */
-    fun selectVillages(): Villages {
+    fun findVillages(user: Wolf4busyUser? = null): Villages {
         val villageList = villageBhv.selectList {
             it.specify().derivedVillagePlayer().count({ vpCB ->
                 vpCB.specify().columnVillagePlayerId()
@@ -36,6 +65,46 @@ class VillageDataSource(
                 vpCB.query().setIsGone_Equal(false)
                 vpCB.query().setIsSpectator_Equal(true)
             }, Village.ALIAS_visitorCount)
+
+            if (user != null) {
+                it.query().existsVillagePlayer { vpCB ->
+                    vpCB.query().setIsGone_Equal(false)
+                    vpCB.query().queryPlayer().setUid_Equal(user.uid)
+                }
+            }
+
+            it.query().addOrderBy_VillageId_Desc()
+        }
+        villageBhv.load(villageList) { loader ->
+            loader.loadVillageSetting { }
+            loader.loadVillageDay {
+                it.query().addOrderBy_Day_Desc()
+                it.query().queryNoonnight().addOrderBy_DispOrder_Desc()
+            }
+            loader.loadMessageRestriction { }
+        }
+        return VillageDataConverter.convertVillageListToVillages(villageList)
+    }
+
+    /**
+     * 村一覧取得
+     * @param villageIdList 村IDリスト
+     * @return 村一覧
+     */
+    fun findVillages(villageIdList: List<Int>): Villages {
+        val villageList = villageBhv.selectList {
+            it.specify().derivedVillagePlayer().count({ vpCB ->
+                vpCB.specify().columnVillagePlayerId()
+                vpCB.query().setIsGone_Equal(false)
+                vpCB.query().setIsSpectator_Equal(false)
+            }, Village.ALIAS_participantCount)
+            it.specify().derivedVillagePlayer().count({ vpCB ->
+                vpCB.specify().columnVillagePlayerId()
+                vpCB.query().setIsGone_Equal(false)
+                vpCB.query().setIsSpectator_Equal(true)
+            }, Village.ALIAS_visitorCount)
+
+            it.query().setVillageId_InScope(villageIdList)
             it.query().addOrderBy_VillageId_Desc()
         }
         villageBhv.load(villageList) { loader ->
@@ -54,7 +123,7 @@ class VillageDataSource(
      * @param villageId villageId
      * @return 村情報
      */
-    fun selectVillage(villageId: Int, excludeGonePlayer: Boolean = true): com.ort.wolf4busy.domain.model.village.Village {
+    fun findVillage(villageId: Int, excludeGonePlayer: Boolean = true): com.ort.wolf4busy.domain.model.village.Village {
         val village = villageBhv.selectEntityWithDeletedCheck {
             it.query().setVillageId_Equal(villageId)
         }
@@ -78,27 +147,270 @@ class VillageDataSource(
         return VillageDataConverter.convertVillageToVillage(village)
     }
 
+
+    /**
+     * 差分更新
+     * @param before village
+     * @param after village
+     */
+    fun updateDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ): com.ort.wolf4busy.domain.model.village.Village {
+        // village
+        updateVillageDifference(before, after)
+        // village_day
+        updateVillageDayDifference(before, after)
+        // village_player
+        updateVillagePlayerDifference(before, after)
+        // village_setting
+        updateVillageSettingDifference(before, after)
+        // message_restriction
+        updateMessageRestrictionDifference(before, after)
+
+        return findVillage(before.id)
+    }
+
+    // ===================================================================================
+    //                                                                              Update
+    //                                                                              ======
+    private fun updateVillageDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        if (before.status.code != after.status.code || before.winCamp?.code != after.winCamp?.code) {
+            updateVillage(after)
+        }
+    }
+
+    private fun updateVillageDayDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        if (!before.day.existsDifference(after.day)) return
+        after.day.dayList
+            .filterNot { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
+            .forEach {
+                insertVillageDay(after.id, it)
+            }
+        after.day.dayList
+            .filter { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
+            .forEach { afterDay ->
+                val beforeDay = before.day.dayList.first { it.id == afterDay.id }
+                if (afterDay.existsDifference(beforeDay)) updateVillageDay(afterDay)
+            }
+    }
+
+    private fun updateVillagePlayerDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        val villageId = after.id
+        if (!before.participant.existsDifference(after.participant)) return
+        // 新規
+        after.participant.memberList.filterNot { member ->
+            before.participant.memberList.any { it.id == member.id }
+        }.forEach {
+            insertVillagePlayer(villageId, it)
+        }
+        after.spectator.memberList.filterNot { member ->
+            before.spectator.memberList.any { it.id == member.id }
+        }.forEach {
+            insertVillagePlayer(villageId, it)
+        }
+
+        // 更新
+        after.participant.memberList.filter { member ->
+            before.participant.memberList.any { it.id == member.id }
+        }.forEach {
+            val beforeMember = before.participant.member(it.id)
+            if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
+        }
+        after.spectator.memberList.filter { member ->
+            before.spectator.memberList.any { it.id == member.id }
+        }.forEach {
+            val beforeMember = before.spectator.member(it.id)
+            if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
+        }
+    }
+
+    private fun updateVillageSettingDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        val villageId = after.id
+        if (!before.setting.existsDifference(after.setting)) return
+
+        after.setting.capacity.let(fun(afterCapacity) {
+            if (!before.setting.capacity.existsDifference(afterCapacity)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.最低人数, afterCapacity.min.toString())
+            updateVillageSetting(villageId, CDef.VillageSettingItem.最大人数, afterCapacity.max.toString())
+        })
+        after.setting.time.let(fun(afterTime) {
+            if (!before.setting.time.existsDifference(afterTime)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.期間形式, afterTime.termType)
+            updateVillageSetting(
+                villageId,
+                CDef.VillageSettingItem.開始予定日時,
+                afterTime.startDatetime.format(VillageDataConverter.DATETIME_FORMATTER)
+            )
+            updateVillageSetting(villageId, CDef.VillageSettingItem.更新間隔秒, afterTime.dayChangeIntervalSeconds.toString())
+        })
+        after.setting.organizations.let(fun(afterOrg) {
+            if (!before.setting.organizations.existsDifference(afterOrg)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.構成, afterOrg.toString())
+        })
+        after.setting.rules.let(fun(afterRules) {
+            if (!before.setting.rules.existsDifference(afterRules)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(afterRules.openVote))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(afterRules.availableSkillRequest))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(afterRules.availableSpectate))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(afterRules.openSkillInGrave))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか, toFlg(afterRules.visibleGraveMessage))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(afterRules.availableSuddenlyDeath))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(afterRules.availableCommit))
+        })
+        after.setting.password.let(fun(afterPassword) {
+            if (!before.setting.password.existsDifference(afterPassword)) return
+            updateVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, afterPassword.joinPassword ?: "")
+        })
+    }
+
+    private fun updateMessageRestrictionDifference(
+        before: com.ort.wolf4busy.domain.model.village.Village,
+        after: com.ort.wolf4busy.domain.model.village.Village
+    ) {
+        val villageId = after.id
+        val beforeRestricts = before.setting.rules.messageRestrict
+        val afterRestricts = after.setting.rules.messageRestrict
+        if (!beforeRestricts.existsDifference(afterRestricts)) return
+        // 変更前にしかないものは削除
+        beforeRestricts.restrictList.filterNot { beforeRestrict ->
+            afterRestricts.restrictList.any { afterRestrict -> beforeRestrict.type.code == afterRestrict.type.code }
+        }.forEach { deleteMessageRestriction(villageId, it) }
+        // 両方にあるものは更新
+        beforeRestricts.restrictList.filter { beforeRestrict ->
+            afterRestricts.restrictList.any { afterRestrict -> beforeRestrict.type.code == afterRestrict.type.code }
+        }.forEach { updateMessageRestriction(villageId, it) }
+        // 変更後にしかないものは登録
+        afterRestricts.restrictList.filterNot { afterRestrict ->
+            beforeRestricts.restrictList.any { beforeRestrict -> beforeRestrict.type.code == afterRestrict.type.code }
+        }.forEach { insertMessageRestriction(villageId, it) }
+    }
+
+    // ===================================================================================
+    //                                                                             village
+    //                                                                        ============
     /**
      * 村登録
      * @param villageModel 村
-     * @return 村ID
+     * @return villageId
      */
-    fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): Int {
+    private fun insertVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village): Int {
         val village = Village()
         village.villageDisplayName = villageModel.name
         village.villageStatusCodeAsVillageStatus = CDef.VillageStatus.codeOf(villageModel.status.code)
-        village.createPlayerName = villageModel.creatorPlayerName
+        village.createPlayerId = villageModel.creatorPlayerId
         villageBhv.insert(village)
         return village.villageId
     }
 
     /**
+     * 村更新
+     * @param villageModel 村
+     */
+    private fun updateVillage(villageModel: com.ort.wolf4busy.domain.model.village.Village) {
+        val village = Village()
+        village.villageId = villageModel.id
+        village.villageDisplayName = villageModel.name
+        village.villageStatusCodeAsVillageStatus = villageModel.status.toCdef()
+        village.winCampCodeAsCamp = villageModel.winCamp?.toCdef()
+        villageBhv.update(village)
+    }
+
+    // ===================================================================================
+    //                                                                      village_player
+    //                                                                        ============
+    /**
+     * 村参加者登録
+     * @param villageId villageId
+     * @param participant participant
+     * @return 村参加ID
+     */
+    private fun insertVillagePlayer(
+        villageId: Int,
+        participant: VillageParticipant
+    ): Int {
+        val vp = VillagePlayer()
+        vp.villageId = villageId
+        vp.playerId = participant.playerId
+        vp.charaId = participant.charaId
+        vp.isDead = false
+        vp.isSpectator = participant.isSpectator
+        vp.isGone = false
+        vp.requestSkillCodeAsSkill = participant.skillRequest.first.toCdef()
+        vp.secondRequestSkillCodeAsSkill = participant.skillRequest.second.toCdef()
+        villagePlayerBhv.insert(vp)
+        return vp.villagePlayerId
+    }
+
+    private fun updateVillagePlayer(
+        villageId: Int,
+        villagePlayerModel: VillageParticipant
+    ) {
+        val villagePlayer = VillagePlayer()
+        villagePlayer.villageId = villageId
+        villagePlayer.villagePlayerId = villagePlayerModel.id
+        villagePlayer.isDead = villagePlayerModel.dead != null
+        villagePlayer.deadReasonCodeAsDeadReason = villagePlayerModel.dead?.toCdef()
+        villagePlayer.deadVillageDayId = villagePlayerModel.dead?.villageDay?.id
+        villagePlayer.isGone = villagePlayerModel.isGone
+        villagePlayer.skillCodeAsSkill = villagePlayerModel.skill?.toCdef()
+        villagePlayer.requestSkillCodeAsSkill = villagePlayerModel.skillRequest.first.toCdef()
+        villagePlayer.secondRequestSkillCodeAsSkill = villagePlayerModel.skillRequest.second.toCdef()
+        villagePlayerBhv.update(villagePlayer)
+    }
+
+    // ===================================================================================
+    //                                                                         village_day
+    //                                                                        ============
+    /**
+     * 村日付登録
+     * @param villageId villageId
+     * @param day 村日付
+     * @return 村日付id
+     */
+    private fun insertVillageDay(
+        villageId: Int,
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ): com.ort.wolf4busy.domain.model.village.VillageDay {
+        val villageDay = VillageDay()
+        villageDay.villageId = villageId
+        villageDay.day = day.day
+        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
+        villageDay.daychangeDatetime = day.dayChangeDatetime
+        villageDayBhv.insert(villageDay)
+        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
+    }
+
+    private fun updateVillageDay(
+        day: com.ort.wolf4busy.domain.model.village.VillageDay
+    ) {
+        val villageDay = VillageDay()
+        villageDay.villageDayId = day.id
+        villageDay.daychangeDatetime = day.dayChangeDatetime
+        villageDayBhv.update(villageDay)
+    }
+
+    // ===================================================================================
+    //                                                                     village_setting
+    //                                                                        ============
+    /**
      * 村設定登録
      * @param villageId villageId
      * @param settings model settings
-     * @param password password
      */
-    fun insertVillageSettings(villageId: Int, settings: VillageSettings, password: String?) {
+    private fun insertVillageSettings(villageId: Int, settings: VillageSettings) {
         insertVillageSetting(villageId, CDef.VillageSettingItem.最低人数, settings.capacity.min.toString())
         insertVillageSetting(villageId, CDef.VillageSettingItem.最大人数, settings.capacity.max.toString())
         insertVillageSetting(villageId, CDef.VillageSettingItem.期間形式, settings.time.termType)
@@ -114,283 +426,11 @@ class VillageDataSource(
         insertVillageSetting(villageId, CDef.VillageSettingItem.記名投票か, toFlg(settings.rules.openVote))
         insertVillageSetting(villageId, CDef.VillageSettingItem.役職希望可能か, toFlg(settings.rules.availableSkillRequest))
         insertVillageSetting(villageId, CDef.VillageSettingItem.見学可能か, toFlg(settings.rules.availableSpectate))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.visibleGraveMessage))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下役職公開ありか, toFlg(settings.rules.openSkillInGrave))
+        insertVillageSetting(villageId, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか, toFlg(settings.rules.visibleGraveMessage))
         insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
         insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
-        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, password ?: "")
-    }
-
-    /**
-     * 発言制限登録
-     * @param villageId villageId
-     * @param setting 村設定
-     */
-    fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
-        setting.rules.messageRestrict.restrictList.forEach {
-            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
-        }
-    }
-
-    /**
-     * 村日付取得
-     * @param villageId villageId
-     * @param day 何日目か
-     * @param noonnightCode 昼夜
-     * @return 村日付
-     */
-    fun selectVillageDay(villageId: Int, day: Int, noonnightCode: String): com.ort.wolf4busy.domain.model.village.VillageDay {
-        val villageDay: VillageDay = villageDayBhv.selectEntityWithDeletedCheck {
-            it.query().setVillageId_Equal(villageId)
-            it.query().setDay_Equal(day)
-            it.query().setNoonnightCode_Equal_AsNoonnight(CDef.Noonnight.codeOf(noonnightCode))
-        }
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
-    }
-
-    fun selectVillageDayById(villageDayId: Int): com.ort.wolf4busy.domain.model.village.VillageDay {
-        val villageDay = villageDayBhv.selectByPK(villageDayId).get()
-        return VillageDataConverter.convertVillageDayToVillageDay(villageDay)
-    }
-
-    /**
-     * 村日付登録
-     * @param villageId villageId
-     * @param day 村日付
-     * @return 村日付id
-     */
-    fun insertVillageDay(villageId: Int, day: com.ort.wolf4busy.domain.model.village.VillageDay): Int {
-        val villageDay = VillageDay()
-        villageDay.villageId = villageId
-        villageDay.day = day.day
-        villageDay.noonnightCodeAsNoonnight = CDef.Noonnight.codeOf(day.noonnight)
-        villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDay.isUpdating = true
-        villageDayBhv.insert(villageDay)
-        return villageDay.villageDayId
-    }
-
-    /**
-     * 村日付を更新完了にする
-     * @param villageDayId 村日付ID
-     */
-    fun updateVillageDayUpdateComplete(villageDayId: Int) {
-        val villageDay = VillageDay()
-        villageDay.villageDayId = villageDayId
-        villageDay.isUpdating = false
-        villageDayBhv.update(villageDay)
-    }
-
-    /**
-     * 村参加者取得
-     * @param villageId villageId
-     * @param uid uid
-     * @return 村参加者
-     */
-    fun selectVillagePlayer(villageId: Int, uid: String): VillageParticipant? {
-        return villagePlayerBhv.selectEntity {
-            it.setupSelect_Chara()
-            it.setupSelect_Player()
-            it.query().setVillageId_Equal(villageId)
-            it.query().queryPlayer().setUid_Equal(uid)
-        }.map { VillageDataConverter.convertVillagePlayerToParticipant(it) }.orElse(null)
-    }
-
-    /**
-     * 村参加者人数取得
-     * @param villageId villageId
-     * @param isSpectate 見学か
-     * @return 参加人数
-     */
-    fun selectVillagePlayerCount(villageId: Int, isSpectate: Boolean): Int {
-        return villagePlayerBhv.selectCount {
-            it.query().setVillageId_Equal(villageId)
-            it.query().setIsGone_Equal(false)
-            it.query().setIsSpectator_Equal(isSpectate)
-        }
-    }
-
-    /**
-     * 村参加者登録
-     * @param villageId villageId
-     * @param playerId playerId
-     * @param charaId charaId
-     * @param firstRequestSkill 役職第1希望
-     * @param secondRequestSkill 役職第2希望
-     * @param isSpectate 見学か
-     * @return 村参加ID
-     */
-    fun insertVillagePlayer(
-        villageId: Int,
-        playerId: Int,
-        charaId: Int,
-        firstRequestSkill: CDef.Skill,
-        secondRequestSkill: CDef.Skill,
-        isSpectate: Boolean
-    ): Int {
-        val vp = VillagePlayer()
-        vp.villageId = villageId
-        vp.playerId = playerId
-        vp.charaId = charaId
-        vp.isDead = false
-        vp.isSpectator = isSpectate
-        vp.isGone = false
-        vp.requestSkillCodeAsSkill = firstRequestSkill
-        vp.secondRequestSkillCodeAsSkill = secondRequestSkill
-        villagePlayerBhv.insert(vp)
-        return vp.villagePlayerId
-    }
-
-    /**
-     * 村パスワード検索
-     * 大文字小文字も一致しなければいけないので取得してから比較する
-     *
-     * @param villageId villageId
-     * @return 村パスワード
-     */
-    fun selectVillagePassword(villageId: Int): String {
-        return villageSettingBhv.selectByPK(villageId, CDef.VillageSettingItem.入村パスワード).get().villageSettingText
-    }
-
-    /**
-     * いずれかの進行中の村に参加しているか
-     * @param uid uid
-     * @return いずれかの進行中の村に参加しているか
-     */
-    fun isParticipatingAnyProgressVillage(uid: String): Boolean {
-        return villagePlayerBhv.selectCount {
-            it.query().queryPlayer().setUid_Equal(uid)
-            it.query().queryVillage().setVillageStatusCode_InScope_AsVillageStatus(
-                listOf(CDef.VillageStatus.募集中, CDef.VillageStatus.開始待ち, CDef.VillageStatus.進行中)
-            )
-            it.query().setIsGone_Equal(false)
-        } > 0
-    }
-
-    /**
-     * 役職希望を取得
-     * @param participant 参加情報
-     * @return 役職希望
-     */
-    fun selectSkillRequest(participant: VillageParticipant): SkillRequest? {
-        val villagePlayer = villagePlayerBhv.selectEntityWithDeletedCheck {
-            it.query().setVillagePlayerId_Equal(participant.id)
-        }
-
-        return SkillRequest(
-            first = villagePlayer.requestSkillCodeAsSkill.let { Skill(it.code(), it.name) },
-            second = villagePlayer.secondRequestSkillCodeAsSkill.let { Skill(it.code(), it.name) }
-        )
-    }
-
-    // ===================================================================================
-    //                                                                              Update
-    //                                                                              ======
-    /**
-     * 希望役職を更新
-     * @param participant 村参加者
-     * @param firstRequest 第1希望
-     * @param secondRequest 第2希望
-     */
-    fun updateSkillRequest(participant: VillageParticipant, firstRequest: Skill, secondRequest: Skill) {
-        val villagePlayer = VillagePlayer()
-        villagePlayer.villagePlayerId = participant.id
-        villagePlayer.requestSkillCodeAsSkill = CDef.Skill.codeOf(firstRequest.code)
-        villagePlayer.secondRequestSkillCodeAsSkill = CDef.Skill.codeOf(secondRequest.code)
-        villagePlayerBhv.update(villagePlayer)
-    }
-
-    /**
-     * 退村
-     * @param participant 村参加者
-     */
-    fun updateVillagePlayerLeave(participant: VillageParticipant) {
-        val villagePlayer = VillagePlayer()
-        villagePlayer.villagePlayerId = participant.id
-        villagePlayer.isGone = true
-        villagePlayerBhv.update(villagePlayer)
-    }
-
-    /**
-     * 差分更新
-     * @param before village
-     * @param after village
-     */
-    fun updateDifference(
-        before: com.ort.wolf4busy.domain.model.village.Village,
-        after: com.ort.wolf4busy.domain.model.village.Village
-    ) {
-        // village
-        updateVillageDifference(before, after)
-        // village_day
-        upsertVillageDay(before, after)
-        // village_player
-        updateVillagePlayerDifference(before, after)
-    }
-
-    private fun updateVillageDifference(
-        before: com.ort.wolf4busy.domain.model.village.Village,
-        after: com.ort.wolf4busy.domain.model.village.Village
-    ) {
-        if (before.status.code != after.status.code
-            || before.winCamp?.code != after.winCamp?.code
-        ) {
-            val village = Village()
-            village.villageId = after.id
-            village.villageStatusCodeAsVillageStatus = after.status.toCdef()
-            village.winCampCodeAsCamp = after.winCamp?.toCdef()
-            villageBhv.update(village)
-        }
-    }
-
-    private fun upsertVillageDay(
-        before: com.ort.wolf4busy.domain.model.village.Village,
-        after: com.ort.wolf4busy.domain.model.village.Village
-    ) {
-        if (!before.day.existsDifference(after.day)) return
-        after.day.dayList
-            .filterNot { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
-            .forEach {
-                insertVillageDay(after.id, it)
-            }
-        after.day.dayList
-            .filter { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
-            .forEach { afterDay ->
-                val beforeDay = before.day.dayList.first { it.id == afterDay.id }
-                if (afterDay.existsDifference(beforeDay)) {
-                    updateVillageDay(afterDay)
-                }
-            }
-    }
-
-    private fun updateVillageDay(
-        day: com.ort.wolf4busy.domain.model.village.VillageDay
-    ) {
-        val villageDay = VillageDay()
-        villageDay.villageDayId = day.id
-        villageDay.daychangeDatetime = day.dayChangeDatetime
-        villageDay.isUpdating = day.isUpdating
-        villageDayBhv.update(villageDay)
-    }
-
-    private fun updateVillagePlayerDifference(
-        before: com.ort.wolf4busy.domain.model.village.Village,
-        after: com.ort.wolf4busy.domain.model.village.Village
-    ) {
-        if (!before.participant.existsDifference(after.participant)) return
-        // 増減はないはずなので更新だけ
-        after.participant.memberList.forEach {
-            val beforeMember = before.participant.member(it.id)
-            if (it.existsDifference(beforeMember)) {
-                val villagePlayer = VillagePlayer()
-                villagePlayer.villagePlayerId = it.id
-                villagePlayer.isDead = it.dead != null
-                villagePlayer.deadReasonCodeAsDeadReason = it.dead?.toCdef()
-                villagePlayer.deadVillageDayId = it.dead?.villageDay?.id
-                villagePlayer.isGone = it.isGone
-                villagePlayer.skillCodeAsSkill = it.skill?.toCdef()
-                villagePlayerBhv.update(villagePlayer)
-            }
-        }
+        insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, settings.password.joinPassword ?: "")
     }
 
     private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
@@ -401,6 +441,29 @@ class VillageDataSource(
         villageSettingBhv.insert(setting)
     }
 
+    private fun updateVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
+        val setting = VillageSetting()
+        setting.villageSettingText = value
+        villageSettingBhv.queryUpdate(setting) {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setVillageSettingItemCode_Equal_AsVillageSettingItem(item)
+        }
+    }
+
+    // ===================================================================================
+    //                                                                 message_restriction
+    //                                                                        ============
+    /**
+     * 発言制限登録
+     * @param villageId villageId
+     * @param setting 村設定
+     */
+    private fun insertMessageRestrictionList(villageId: Int, setting: VillageSettings) {
+        setting.rules.messageRestrict.restrictList.forEach {
+            insertMessageRestriction(villageId, it.type.code, it.count, it.length)
+        }
+    }
+
     private fun insertMessageRestriction(villageId: Int, messageTypeCode: String, count: Int, length: Int) {
         val restrict = MessageRestriction()
         restrict.villageId = villageId
@@ -408,6 +471,27 @@ class VillageDataSource(
         restrict.messageMaxNum = count
         restrict.messageMaxLength = length
         messageRestrictionBhv.insert(restrict)
+    }
+
+    private fun insertMessageRestriction(villageId: Int, restrict: VillageMessageRestrict) {
+        insertMessageRestriction(villageId, restrict.type.code, restrict.count, restrict.length)
+    }
+
+    private fun updateMessageRestriction(villageId: Int, restrictModel: VillageMessageRestrict) {
+        val restrict = MessageRestriction()
+        restrict.messageMaxNum = restrictModel.count
+        restrict.messageMaxLength = restrictModel.length
+        messageRestrictionBhv.queryUpdate(restrict) {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setMessageTypeCode_Equal_AsMessageType(restrictModel.type.toCdef())
+        }
+    }
+
+    private fun deleteMessageRestriction(villageId: Int, restrict: VillageMessageRestrict) {
+        messageRestrictionBhv.queryDelete {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setMessageTypeCode_Equal_AsMessageType(restrict.type.toCdef())
+        }
     }
 
     // ===================================================================================

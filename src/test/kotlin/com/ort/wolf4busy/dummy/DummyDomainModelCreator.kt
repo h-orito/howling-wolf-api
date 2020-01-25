@@ -1,11 +1,15 @@
 package com.ort.wolf4busy.dummy
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.wolf4busy.domain.model.ability.Ability
 import com.ort.wolf4busy.domain.model.charachip.*
 import com.ort.wolf4busy.domain.model.commit.Commits
 import com.ort.wolf4busy.domain.model.daychange.DayChange
 import com.ort.wolf4busy.domain.model.dead.Dead
+import com.ort.wolf4busy.domain.model.message.Message
+import com.ort.wolf4busy.domain.model.message.MessageContent
+import com.ort.wolf4busy.domain.model.message.MessageTime
+import com.ort.wolf4busy.domain.model.message.MessageType
+import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.skill.Skill
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
@@ -14,7 +18,6 @@ import com.ort.wolf4busy.domain.model.village.VillageDay
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
-import com.ort.wolf4busy.domain.model.village.ability.VillageAbility
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipant
 import com.ort.wolf4busy.domain.model.village.participant.VillageParticipants
 import com.ort.wolf4busy.domain.model.village.setting.*
@@ -27,7 +30,7 @@ object DummyDomainModelCreator {
         return Village(
             id = randomNumber(),
             name = "dummy",
-            creatorPlayerName = "dummy",
+            creatorPlayerId = randomNumber(),
             status = createDummyVillageStatus(),
             winCamp = null,
             setting = createDummyVillageSettings(),
@@ -43,8 +46,7 @@ object DummyDomainModelCreator {
         id = randomNumber(),
         day = randomNumber(),
         noonnight = CDef.Noonnight.昼.code(),
-        dayChangeDatetime = LocalDateTime.now(),
-        isUpdating = false
+        dayChangeDatetime = LocalDateTime.now()
     )
 
     fun createDummyVillageParticipants(): VillageParticipants = VillageParticipants(0, listOf())
@@ -60,7 +62,7 @@ object DummyDomainModelCreator {
         )
     }
 
-    fun createDummyVillagePassword(): VillagePassword = VillagePassword(false)
+    fun createDummyVillagePassword(): VillagePassword = VillagePassword(false, null)
 
     fun createDummyVillageRules(): VillageRules = VillageRules()
 
@@ -72,7 +74,7 @@ object DummyDomainModelCreator {
 
     fun createDummyPersonCapacity(): PersonCapacity = PersonCapacity(1, 1)
 
-    fun createDummyVillageStatus(): VillageStatus = VillageStatus("dummy", "dummy")
+    fun createDummyVillageStatus(): VillageStatus = VillageStatus(CDef.VillageStatus.廃村)
 
     fun createDummyVillageParticipant(): VillageParticipant = VillageParticipant(
         id = randomNumber(),
@@ -110,16 +112,16 @@ object DummyDomainModelCreator {
 
     fun createDummyDead(): Dead = Dead(CDef.DeadReason.処刑, createDummyVillageDay())
 
-    fun createDummyVillageAbility(): VillageAbility = VillageAbility(
-        villageDayId = randomNumber(),
-        myselfId = randomNumber(),
-        targetId = randomNumber(),
-        ability = Ability(CDef.AbilityType.襲撃)
-    )
-
     fun createDummyVillageVotes(): VillageVotes = VillageVotes(listOf())
 
     fun createDummyPlayers(): Players = Players(listOf())
+
+    fun createDummyPlayer(): Player = Player(
+        id = randomNumber(),
+        nickname = "dummy",
+        twitterUserName = "dummy",
+        isRestrictedParticipation = false
+    )
 
     fun createDummyCharas(): Charas = Charas(listOf())
 
@@ -131,6 +133,26 @@ object DummyDomainModelCreator {
     )
 
     fun createDummyCommits(): Commits = Commits(listOf())
+
+    fun createDummyMessage(): Message = Message(
+        fromVillageParticipantId = createDummyVillageParticipant().id,
+        toVillageParticipantId = null,
+        time = createDummyMessageTime(),
+        content = createDummyMessageContent()
+    )
+
+    fun createDummyMessageTime(): MessageTime = MessageTime(
+        villageDayId = randomNumber(),
+        datetime = LocalDateTime.now(),
+        unixTimeMilli = 1L
+    )
+
+    fun createDummyMessageContent(): MessageContent = MessageContent(
+        type = MessageType(CDef.MessageType.公開システムメッセージ),
+        num = null,
+        text = "dummy message",
+        faceCode = null
+    )
 
     // ===================================================================================
     //                                                                                頻出
@@ -154,6 +176,8 @@ object DummyDomainModelCreator {
     fun createDummyDeadVillager(): VillageParticipant = createDummyAliveVillager().copy(dead = createDummyDead())
 
     fun createDummyDeadSeer(): VillageParticipant = createDummyAliveSeer().copy(dead = createDummyDead())
+
+    fun createDummyDeadPsychic(): VillageParticipant = createDummyAlivePsychic().copy(dead = createDummyDead())
 
     fun createDummyDeadHunter(): VillageParticipant = createDummyAliveHunter().copy(dead = createDummyDead())
 

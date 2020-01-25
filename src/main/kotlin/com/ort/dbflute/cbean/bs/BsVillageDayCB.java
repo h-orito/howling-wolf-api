@@ -291,32 +291,6 @@ public class BsVillageDayCB extends AbstractConditionBean {
         return _nssVillage;
     }
 
-    protected VoteNss _nssVoteAsOne;
-    public VoteNss xdfgetNssVoteAsOne() {
-        if (_nssVoteAsOne == null) { _nssVoteAsOne = new VoteNss(null); }
-        return _nssVoteAsOne;
-    }
-    /**
-     * Set up relation columns to select clause. <br>
-     * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-     * <pre>
-     * <span style="color: #0000C0">villageDayBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_VoteAsOne()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
-     *     <span style="color: #553000">cb</span>.query().set...
-     * }).alwaysPresent(<span style="color: #553000">villageDay</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     ... = <span style="color: #553000">villageDay</span>.<span style="color: #CC4747">getVoteAsOne()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
-     * });
-     * </pre>
-     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
-     */
-    public VoteNss setupSelect_VoteAsOne() {
-        assertSetupSelectPurpose("voteAsOne");
-        doSetupSelect(() -> query().queryVoteAsOne());
-        if (_nssVoteAsOne == null || !_nssVoteAsOne.hasConditionQuery())
-        { _nssVoteAsOne = new VoteNss(query().queryVoteAsOne()); }
-        return _nssVoteAsOne;
-    }
-
     // [DBFlute-0.7.4]
     // ===================================================================================
     //                                                                             Specify
@@ -360,7 +334,6 @@ public class BsVillageDayCB extends AbstractConditionBean {
     public static class HpSpecification extends HpAbstractSpecification<VillageDayCQ> {
         protected NoonnightCB.HpSpecification _noonnight;
         protected VillageCB.HpSpecification _village;
-        protected VoteCB.HpSpecification _voteAsOne;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<VillageDayCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
@@ -390,11 +363,6 @@ public class BsVillageDayCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnDaychangeDatetime() { return doColumn("DAYCHANGE_DATETIME"); }
-        /**
-         * IS_UPDATING: {NotNull, BIT}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnIsUpdating() { return doColumn("IS_UPDATING"); }
         /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)
@@ -472,26 +440,6 @@ public class BsVillageDayCB extends AbstractConditionBean {
             return _village;
         }
         /**
-         * Prepare to specify functions about relation table. <br>
-         * vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-         * @return The instance for specification for relation table to specify. (NotNull)
-         */
-        public VoteCB.HpSpecification specifyVoteAsOne() {
-            assertRelation("voteAsOne");
-            if (_voteAsOne == null) {
-                _voteAsOne = new VoteCB.HpSpecification(_baseCB
-                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryVoteAsOne()
-                                    , () -> _qyCall.qy().queryVoteAsOne())
-                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
-                if (xhasSyncQyCall()) { // inherits it
-                    _voteAsOne.xsetSyncQyCall(xcreateSpQyCall(
-                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryVoteAsOne()
-                      , () -> xsyncQyCall().qy().queryVoteAsOne()));
-                }
-            }
-            return _voteAsOne;
-        }
-        /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
          * {select max(FOO) from ability where ...) as FOO_MAX} <br>
          * ABILITY by VILLAGE_DAY_ID, named 'abilityList'.
@@ -541,6 +489,23 @@ public class BsVillageDayCB extends AbstractConditionBean {
             assertDerived("villagePlayerList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
             return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VillagePlayerCB> sq, VillageDayCQ cq, String al, DerivedReferrerOption op)
                     -> cq.xsderiveVillagePlayerList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from vote where ...) as FOO_MAX} <br>
+         * VOTE by VILLAGE_DAY_ID, named 'voteList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     voteCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     voteCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Vote.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<VoteCB, VillageDayCQ> derivedVote() {
+            assertDerived("voteList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VoteCB> sq, VillageDayCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveVoteList(fn, sq, al, op), _dbmetaProvider);
         }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).

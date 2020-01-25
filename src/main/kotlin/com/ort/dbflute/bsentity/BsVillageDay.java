@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_DAY_ID
  *
  * [column]
- *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, IS_UPDATING, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -33,16 +33,16 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     NOONNIGHT, VILLAGE, VOTE(AsOne)
+ *     NOONNIGHT, VILLAGE
  *
  * [referrer table]
  *     ABILITY, COMMIT, VILLAGE_PLAYER, VOTE
  *
  * [foreign property]
- *     noonnight, village, voteAsOne
+ *     noonnight, village
  *
  * [referrer property]
- *     abilityList, commitList, villagePlayerList
+ *     abilityList, commitList, villagePlayerList, voteList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -51,7 +51,6 @@ import com.ort.dbflute.exentity.*;
  * Integer day = entity.getDay();
  * String noonnightCode = entity.getNoonnightCode();
  * java.time.LocalDateTime daychangeDatetime = entity.getDaychangeDatetime();
- * Boolean isUpdating = entity.getIsUpdating();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
@@ -61,7 +60,6 @@ import com.ort.dbflute.exentity.*;
  * entity.setDay(day);
  * entity.setNoonnightCode(noonnightCode);
  * entity.setDaychangeDatetime(daychangeDatetime);
- * entity.setIsUpdating(isUpdating);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -95,9 +93,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
 
     /** DAYCHANGE_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _daychangeDatetime;
-
-    /** IS_UPDATING: {NotNull, BIT} */
-    protected Boolean _isUpdating;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -246,27 +241,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         _village = village;
     }
 
-    /** vote by VILLAGE_DAY_ID, named 'voteAsOne'. */
-    protected OptionalEntity<Vote> _voteAsOne;
-
-    /**
-     * [get] vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return the entity of foreign property(referrer-as-one) 'voteAsOne'. (NotNull, EmptyAllowed: when e.g. no data, no setupSelect)
-     */
-    public OptionalEntity<Vote> getVoteAsOne() {
-        if (_voteAsOne == null) { _voteAsOne = OptionalEntity.relationEmpty(this, "voteAsOne"); }
-        return _voteAsOne;
-    }
-
-    /**
-     * [set] vote by VILLAGE_DAY_ID, named 'voteAsOne'.
-     * @param voteAsOne The entity of foreign property(referrer-as-one) 'voteAsOne'. (NullAllowed)
-     */
-    public void setVoteAsOne(OptionalEntity<Vote> voteAsOne) {
-        _voteAsOne = voteAsOne;
-    }
-
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
@@ -330,6 +304,26 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         _villagePlayerList = villagePlayerList;
     }
 
+    /** VOTE by VILLAGE_DAY_ID, named 'voteList'. */
+    protected List<Vote> _voteList;
+
+    /**
+     * [get] VOTE by VILLAGE_DAY_ID, named 'voteList'.
+     * @return The entity list of referrer property 'voteList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<Vote> getVoteList() {
+        if (_voteList == null) { _voteList = newReferrerList(); }
+        return _voteList;
+    }
+
+    /**
+     * [set] VOTE by VILLAGE_DAY_ID, named 'voteList'.
+     * @param voteList The entity list of referrer property 'voteList'. (NullAllowed)
+     */
+    public void setVoteList(List<Vote> voteList) {
+        _voteList = voteList;
+    }
+
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -363,14 +357,14 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         { sb.append(li).append(xbRDS(_noonnight, "noonnight")); }
         if (_village != null && _village.isPresent())
         { sb.append(li).append(xbRDS(_village, "village")); }
-        if (_voteAsOne != null && _voteAsOne.isPresent())
-        { sb.append(li).append(xbRDS(_voteAsOne, "voteAsOne")); }
         if (_abilityList != null) { for (Ability et : _abilityList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "abilityList")); } } }
         if (_commitList != null) { for (Commit et : _commitList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "commitList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerList")); } } }
+        if (_voteList != null) { for (Vote et : _voteList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "voteList")); } } }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -385,7 +379,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         sb.append(dm).append(xfND(_day));
         sb.append(dm).append(xfND(_noonnightCode));
         sb.append(dm).append(xfND(_daychangeDatetime));
-        sb.append(dm).append(xfND(_isUpdating));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -404,14 +397,14 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
         { sb.append(dm).append("noonnight"); }
         if (_village != null && _village.isPresent())
         { sb.append(dm).append("village"); }
-        if (_voteAsOne != null && _voteAsOne.isPresent())
-        { sb.append(dm).append("voteAsOne"); }
         if (_abilityList != null && !_abilityList.isEmpty())
         { sb.append(dm).append("abilityList"); }
         if (_commitList != null && !_commitList.isEmpty())
         { sb.append(dm).append("commitList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
         { sb.append(dm).append("villagePlayerList"); }
+        if (_voteList != null && !_voteList.isEmpty())
+        { sb.append(dm).append("voteList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }
@@ -525,26 +518,6 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     public void setDaychangeDatetime(java.time.LocalDateTime daychangeDatetime) {
         registerModifiedProperty("daychangeDatetime");
         _daychangeDatetime = daychangeDatetime;
-    }
-
-    /**
-     * [get] IS_UPDATING: {NotNull, BIT} <br>
-     * 更新中か
-     * @return The value of the column 'IS_UPDATING'. (basically NotNull if selected: for the constraint)
-     */
-    public Boolean getIsUpdating() {
-        checkSpecifiedProperty("isUpdating");
-        return _isUpdating;
-    }
-
-    /**
-     * [set] IS_UPDATING: {NotNull, BIT} <br>
-     * 更新中か
-     * @param isUpdating The value of the column 'IS_UPDATING'. (basically NotNull if update: for the constraint)
-     */
-    public void setIsUpdating(Boolean isUpdating) {
-        registerModifiedProperty("isUpdating");
-        _isUpdating = isUpdating;
     }
 
     /**

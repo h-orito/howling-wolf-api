@@ -10,7 +10,7 @@ data class VillageOrganizations(
         operator fun invoke(
             organization: Map<Int, String>?
         ): VillageOrganizations {
-            organization ?: throw IllegalArgumentException("organization is required.")
+            requireNotNull(organization)
             return VillageOrganizations(organization = organization)
         }
 
@@ -33,19 +33,37 @@ data class VillageOrganizations(
     }
 
     fun mapToSkillCount(personNum: Int): Map<Skill, Int> {
-        val org = organization[personNum] ?: throw IllegalStateException("構成がありません")
+        val org = checkNotNull(organization[personNum])
         val map = mutableMapOf<Skill, Int>()
         CDef.Skill.listAll().forEach { cdefSkill ->
             val skillShortName = cdefSkill.shortName()
             val count = org.chunked(1).count { char -> char == skillShortName }
-            map[Skill(cdefSkill.code(), cdefSkill.alias())] = count
+            map[Skill(cdefSkill)] = count
         }
         return map
+    }
+
+    fun allRequestableSkillList(): List<Skill> {
+        val skillList: MutableList<Skill> = organization
+            .map { org -> org.value } // 人数ごとの編成を
+            .flatMap { org -> org.split("") } // 全部まとめて1文字ずつに
+            .mapNotNull { orgChar -> Skill.skillByShortName(orgChar) } // 略称から役職を取得して
+            .distinct().toMutableList() // 重複削除
+        skillList.addAll(Skill.skillRequestSomeoneList.map { Skill(it) })
+        return skillList.sortedBy { it.toCdef().order() }
+    }
+
+    fun existsDifference(organizations: VillageOrganizations): Boolean {
+        if (organization.size != organizations.organization.size) return true
+        organization.forEach { (count, org) ->
+            if (!organizations.organization.containsKey(count)) return true
+            if (org != organizations.organization[count]) return true
+        }
+        return false
     }
 
     override fun toString(): String {
         val sortedMap = this.organization.toSortedMap()
         return sortedMap.map { it.value }.joinToString(separator = "\n")
     }
-
 }

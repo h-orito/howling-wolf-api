@@ -8,4 +8,11 @@ data class VillageSettings(
     val rules: VillageRules,
     val password: VillagePassword
 ) {
+    fun existsDifference(setting: VillageSettings): Boolean {
+        return capacity.existsDifference(setting.capacity)
+            || time.existsDifference(setting.time)
+            || organizations.existsDifference(setting.organizations)
+            || rules.existsDifference(setting.rules)
+            || password.existsDifference(setting.password)
+    }
 }

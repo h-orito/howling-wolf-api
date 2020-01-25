@@ -68,17 +68,23 @@ public class VillageDayCIQ extends AbstractBsVillageDayCQ {
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillageDayId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillageDayId_ExistsReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageDayId_NotExistsReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageDayId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillageDayId_NotExistsReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageDayId_SpecifyDerivedReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageDayId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillageDayId_SpecifyDerivedReferrer_VoteList(VoteCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
@@ -92,11 +98,14 @@ public class VillageDayCIQ extends AbstractBsVillageDayCQ {
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_VoteListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueVillageId() { return _myCQ.xdfgetVillageId(); }
     protected ConditionValue xgetCValueDay() { return _myCQ.xdfgetDay(); }
     protected ConditionValue xgetCValueNoonnightCode() { return _myCQ.xdfgetNoonnightCode(); }
     protected ConditionValue xgetCValueDaychangeDatetime() { return _myCQ.xdfgetDaychangeDatetime(); }
-    protected ConditionValue xgetCValueIsUpdating() { return _myCQ.xdfgetIsUpdating(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }
