@@ -24,7 +24,7 @@ data class SkillRequest(
             // 村として可能か
             if (!village.isAvailableSkillRequest()) return false
             // 参加者として可能か
-            participant ?: return false
+            participant ?: return true
             return participant.isAvailableSkillRequest()
         }
 

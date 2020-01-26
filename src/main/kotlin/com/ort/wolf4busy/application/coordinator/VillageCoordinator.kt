@@ -11,6 +11,7 @@ import com.ort.wolf4busy.domain.model.message.MessageContent
 import com.ort.wolf4busy.domain.model.message.Say
 import com.ort.wolf4busy.domain.model.myself.participant.SituationAsParticipant
 import com.ort.wolf4busy.domain.model.player.Player
+import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.skill.SkillRequest
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.ability.VillageAbilities
@@ -312,20 +313,25 @@ class VillageCoordinator(
 
     /**
      * 参加状況や可能なアクションを取得
-     * @param villageId villageId
+     * @param village village
      * @param user user
+     * @param players players
+     * @param charas charas
      */
-    fun findActionSituation(villageId: Int, user: Wolf4busyUser?): SituationAsParticipant {
-        val village: Village = villageService.findVillage(villageId)
+    fun findActionSituation(
+        village: Village,
+        user: Wolf4busyUser?,
+        players: Players,
+        charas: Charas
+    ): SituationAsParticipant {
         val player: Player? = if (user == null) null else playerService.findPlayer(user)
         val participant: VillageParticipant? = findParticipant(village, user)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val skillRequest: SkillRequest? = if (participant == null) null else village.participant.member(participant.id).skillRequest
-        val abilities: VillageAbilities = abilityService.findVillageAbilities(villageId)
-        val votes: VillageVotes = voteService.findVillageVotes(villageId)
+        val abilities: VillageAbilities = abilityService.findVillageAbilities(village.id)
+        val votes: VillageVotes = voteService.findVillageVotes(village.id)
         val commit: Commit? = commitService.findCommit(village, participant)
         val latestDayMessageList: List<Message> =
-            messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
+            messageService.findParticipateDayMessageList(village.id, village.day.latestDay(), participant)
 
         return SituationAsParticipant(
             village,

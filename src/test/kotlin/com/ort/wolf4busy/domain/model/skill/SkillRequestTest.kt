@@ -35,7 +35,7 @@ class SkillRequestTest : Wolf4busyTest() {
         val isAvailableSkillRequest = SkillRequest.isAvailableSkillRequest(village, participant)
 
         // ## Assert ##
-        assertThat(isAvailableSkillRequest).isFalse()
+        assertThat(isAvailableSkillRequest).isTrue()
     }
 
     @Test

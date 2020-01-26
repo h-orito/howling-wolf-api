@@ -15,7 +15,7 @@ data class SituationAsParticipant(
     val skillRequest: VillageSkillRequestSituation,
     val commit: VillageCommitSituation,
     val say: VillageSaySituation,
-    val ability: VillageAbilitySituations, // TODO 役職仲間
+    val ability: VillageAbilitySituations,
     val vote: VillageVoteSituation
 ) {
     constructor(
@@ -33,7 +33,7 @@ data class SituationAsParticipant(
             village,
             participant,
             player,
-            charas.list.size
+            charas
         ),
         skillRequest = VillageSkillRequestSituation(
             village,
