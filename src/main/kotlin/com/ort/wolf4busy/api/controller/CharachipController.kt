@@ -7,12 +7,10 @@ import com.ort.wolf4busy.domain.model.charachip.Chara
 import com.ort.wolf4busy.domain.model.charachip.Charachip
 import com.ort.wolf4busy.domain.model.charachip.Charachips
 import com.ort.wolf4busy.domain.model.charachip.Charas
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
-@CrossOrigin
 @RestController
 class CharachipController(
     val charachipService: CharachipService
