@@ -84,7 +84,7 @@ class VillageController(
         @PathVariable("messageNumber") messageNumber: Int,
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageAnchorMessageView {
-        val village: Village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId, false)
         val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -111,7 +111,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?,
         @RequestBody @Validated form: VillageMessageForm?
     ): VillageMessageView {
-        val village: Village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId, false)
         val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
