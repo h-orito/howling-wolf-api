@@ -54,8 +54,8 @@ class VillageCoordinator(
     }
 
     fun findParticipant(village: Village, playerId: Int): VillageParticipant? {
-        val participant: VillageParticipant? = village.participant.memberList.find { it.playerId == playerId }
-        return participant ?: village.spectator.memberList.find { it.playerId == playerId }
+        val participant: VillageParticipant? = village.participant.memberList.find { it.playerId == playerId && !it.isGone }
+        return participant ?: village.spectator.memberList.find { it.playerId == playerId && !it.isGone }
     }
 
     /**

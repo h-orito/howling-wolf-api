@@ -10,6 +10,7 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
+
 /**
  * see https://qiita.com/rubytomato@github/items/6c6318c948398fa62275
  */
@@ -28,12 +29,13 @@ class Wolf4busySecurityConfig() : WebSecurityConfigurerAdapter() {
     //                                                                           =========
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-
         http
             // AUTHORIZE
             .authorizeRequests()
-            .mvcMatchers("/admin/**")
-            .hasRole("ADMIN")
+            // TODO うまく動作させられていないので調査
+            // LoginFilterあたり？
+//            .antMatchers("/admin/**")
+//            .hasRole("ADMIN")
             .anyRequest()
             .permitAll()
             .and()
