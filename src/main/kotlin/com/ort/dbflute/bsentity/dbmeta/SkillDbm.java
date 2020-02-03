@@ -62,6 +62,7 @@ public class SkillDbm extends AbstractDBMeta {
             }
         }, "campCode");
         setupEpg(_epgMap, et -> ((Skill)et).getDispOrder(), (et, vl) -> ((Skill)et).setDispOrder(cti(vl)), "dispOrder");
+        setupEpg(_epgMap, et -> ((Skill)et).getDescription(), (et, vl) -> ((Skill)et).setDescription((String)vl), "description");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -99,6 +100,7 @@ public class SkillDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnSkillShortName = cci("SKILL_SHORT_NAME", "SKILL_SHORT_NAME", null, null, String.class, "skillShortName", null, false, false, true, "CHAR", 1, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCampCode = cci("CAMP_CODE", "CAMP_CODE", null, null, String.class, "campCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "camp", null, CDef.DefMeta.Camp, false);
     protected final ColumnInfo _columnDispOrder = cci("DISP_ORDER", "DISP_ORDER", null, null, Integer.class, "dispOrder", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnDescription = cci("DESCRIPTION", "DESCRIPTION", null, null, String.class, "description", null, false, false, true, "TEXT", 65535, 0, null, null, false, null, null, null, null, null, false);
 
     /**
      * SKILL_CODE: {PK, NotNull, VARCHAR(20), classification=Skill}
@@ -125,6 +127,11 @@ public class SkillDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnDispOrder() { return _columnDispOrder; }
+    /**
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnDescription() { return _columnDescription; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
@@ -133,6 +140,7 @@ public class SkillDbm extends AbstractDBMeta {
         ls.add(columnSkillShortName());
         ls.add(columnCampCode());
         ls.add(columnDispOrder());
+        ls.add(columnDescription());
         return ls;
     }
 

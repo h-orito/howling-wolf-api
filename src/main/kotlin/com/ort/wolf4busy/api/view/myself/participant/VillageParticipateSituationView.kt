@@ -19,8 +19,7 @@ data class VillageParticipateSituationView(
         situation: VillageParticipateSituation,
         village: Village,
         players: Players,
-        charas: Charas,
-        shouldHidePlayer: Boolean
+        charas: Charas
     ) : this(
         isParticipating = situation.isParticipating,
         isAvailableParticipate = situation.isAvailableParticipate,
@@ -33,7 +32,7 @@ data class VillageParticipateSituationView(
                 villageParticipantId = it.id,
                 players = players,
                 charas = charas,
-                shouldHidePlayer = shouldHidePlayer
+                shouldHidePlayer = false // 自分自身なので見えても問題なし
             )
         }
     )

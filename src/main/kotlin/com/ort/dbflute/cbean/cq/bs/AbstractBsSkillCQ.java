@@ -1111,6 +1111,141 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     protected void regDispOrder(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDispOrder(), "DISP_ORDER"); }
     protected abstract ConditionValue xgetCValueDispOrder();
 
+    /**
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_Equal(String description) {
+        doSetDescription_Equal(fRES(description));
+    }
+
+    protected void doSetDescription_Equal(String description) {
+        regDescription(CK_EQ, description);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_NotEqual(String description) {
+        doSetDescription_NotEqual(fRES(description));
+    }
+
+    protected void doSetDescription_NotEqual(String description) {
+        regDescription(CK_NES, description);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_GreaterThan(String description) {
+        regDescription(CK_GT, fRES(description));
+    }
+
+    /**
+     * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_LessThan(String description) {
+        regDescription(CK_LT, fRES(description));
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_GreaterEqual(String description) {
+        regDescription(CK_GE, fRES(description));
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_LessEqual(String description) {
+        regDescription(CK_LE, fRES(description));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param descriptionList The collection of description as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_InScope(Collection<String> descriptionList) {
+        doSetDescription_InScope(descriptionList);
+    }
+
+    protected void doSetDescription_InScope(Collection<String> descriptionList) {
+        regINS(CK_INS, cTL(descriptionList), xgetCValueDescription(), "DESCRIPTION");
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param descriptionList The collection of description as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDescription_NotInScope(Collection<String> descriptionList) {
+        doSetDescription_NotInScope(descriptionList);
+    }
+
+    protected void doSetDescription_NotInScope(Collection<String> descriptionList) {
+        regINS(CK_NINS, cTL(descriptionList), xgetCValueDescription(), "DESCRIPTION");
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)} <br>
+     * <pre>e.g. setDescription_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param description The value of description as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setDescription_LikeSearch(String description, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setDescription_LikeSearch(description, xcLSOP(opLambda));
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)} <br>
+     * <pre>e.g. setDescription_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param description The value of description as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of like-search. (NotNull)
+     */
+    protected void setDescription_LikeSearch(String description, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(description), xgetCValueDescription(), "DESCRIPTION", likeSearchOption);
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setDescription_NotLikeSearch(String description, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setDescription_NotLikeSearch(description, xcLSOP(opLambda));
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @param description The value of description as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of not-like-search. (NotNull)
+     */
+    protected void setDescription_NotLikeSearch(String description, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(description), xgetCValueDescription(), "DESCRIPTION", likeSearchOption);
+    }
+
+    protected void regDescription(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDescription(), "DESCRIPTION"); }
+    protected abstract ConditionValue xgetCValueDescription();
+
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============

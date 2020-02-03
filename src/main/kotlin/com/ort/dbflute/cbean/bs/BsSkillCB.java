@@ -333,6 +333,11 @@ public class BsSkillCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnDispOrder() { return doColumn("DISP_ORDER"); }
+        /**
+         * DESCRIPTION: {NotNull, TEXT(65535)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnDescription() { return doColumn("DESCRIPTION"); }
         public void everyColumn() { doEveryColumn(); }
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override
