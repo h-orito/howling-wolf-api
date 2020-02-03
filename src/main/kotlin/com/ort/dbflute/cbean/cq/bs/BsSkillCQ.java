@@ -215,6 +215,26 @@ public class BsSkillCQ extends AbstractBsSkillCQ {
      */
     public BsSkillCQ addOrderBy_DispOrder_Desc() { regOBD("DISP_ORDER"); return this; }
 
+    protected ConditionValue _description;
+    public ConditionValue xdfgetDescription()
+    { if (_description == null) { _description = nCV(); }
+      return _description; }
+    protected ConditionValue xgetCValueDescription() { return xdfgetDescription(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @return this. (NotNull)
+     */
+    public BsSkillCQ addOrderBy_Description_Asc() { regOBA("DESCRIPTION"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @return this. (NotNull)
+     */
+    public BsSkillCQ addOrderBy_Description_Desc() { regOBD("DESCRIPTION"); return this; }
+
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
     //                                                             =======================

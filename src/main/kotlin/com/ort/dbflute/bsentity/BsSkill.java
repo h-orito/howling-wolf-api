@@ -20,7 +20,7 @@ import com.ort.dbflute.exentity.*;
  *     SKILL_CODE
  *
  * [column]
- *     SKILL_CODE, SKILL_NAME, SKILL_SHORT_NAME, CAMP_CODE, DISP_ORDER
+ *     SKILL_CODE, SKILL_NAME, SKILL_SHORT_NAME, CAMP_CODE, DISP_ORDER, DESCRIPTION
  *
  * [sequence]
  *     
@@ -50,11 +50,13 @@ import com.ort.dbflute.exentity.*;
  * String skillShortName = entity.getSkillShortName();
  * String campCode = entity.getCampCode();
  * Integer dispOrder = entity.getDispOrder();
+ * String description = entity.getDescription();
  * entity.setSkillCode(skillCode);
  * entity.setSkillName(skillName);
  * entity.setSkillShortName(skillShortName);
  * entity.setCampCode(campCode);
  * entity.setDispOrder(dispOrder);
+ * entity.setDescription(description);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
@@ -84,6 +86,9 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
 
     /** DISP_ORDER: {NotNull, INT UNSIGNED(10)} */
     protected Integer _dispOrder;
+
+    /** DESCRIPTION: {NotNull, TEXT(65535)} */
+    protected String _description;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -586,6 +591,7 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
         sb.append(dm).append(xfND(_skillShortName));
         sb.append(dm).append(xfND(_campCode));
         sb.append(dm).append(xfND(_dispOrder));
+        sb.append(dm).append(xfND(_description));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -718,6 +724,26 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public void setDispOrder(Integer dispOrder) {
         registerModifiedProperty("dispOrder");
         _dispOrder = dispOrder;
+    }
+
+    /**
+     * [get] DESCRIPTION: {NotNull, TEXT(65535)} <br>
+     * 説明
+     * @return The value of the column 'DESCRIPTION'. (basically NotNull if selected: for the constraint)
+     */
+    public String getDescription() {
+        checkSpecifiedProperty("description");
+        return convertEmptyToNull(_description);
+    }
+
+    /**
+     * [set] DESCRIPTION: {NotNull, TEXT(65535)} <br>
+     * 説明
+     * @param description The value of the column 'DESCRIPTION'. (basically NotNull if update: for the constraint)
+     */
+    public void setDescription(String description) {
+        registerModifiedProperty("description");
+        _description = description;
     }
 
     /**

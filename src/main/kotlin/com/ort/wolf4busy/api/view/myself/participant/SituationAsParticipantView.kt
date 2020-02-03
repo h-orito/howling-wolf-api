@@ -26,8 +26,7 @@ data class SituationAsParticipantView(
             situation = situation.participate,
             village = village,
             players = players,
-            charas = charas,
-            shouldHidePlayer = !village.status.isSolved()
+            charas = charas
         ),
         skillRequest = situation.skillRequest,
         commit = situation.commit,
