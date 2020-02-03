@@ -1,13 +1,17 @@
 package com.ort.wolf4busy.api.controller
 
-import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.CharaBhv
+import com.ort.dbflute.exbhv.PlayerBhv
+import com.ort.dbflute.exbhv.VillageDayBhv
+import com.ort.dbflute.exentity.Player
 import com.ort.wolf4busy.api.body.AdminDummyLoginBody
 import com.ort.wolf4busy.api.body.AdminParticipateBody
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
 import com.ort.wolf4busy.application.service.VillageService
+import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PathVariable
@@ -22,11 +26,20 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class DebugController(
     val charaBhv: CharaBhv,
+    val playerBhv: PlayerBhv,
+    val villageDayBhv: VillageDayBhv,
 
     val villageCoordinator: VillageCoordinator,
 
     val villageService: VillageService
 ) {
+
+    // ===================================================================================
+    //                                                                           Attribute
+    //                                                                           =========
+    @Value("\${env}")
+    private val env: String? = null
+
     // ===================================================================================
     //                                                                             Execute
     //                                                                           =========
@@ -42,7 +55,7 @@ class DebugController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: AdminParticipateBody
     ) {
-        if (user.authority != CDef.Authority.管理者) throw Wolf4busyBusinessException("invalid user")
+        if ("local" != env) throw Wolf4busyBusinessException("ローカル環境でしか使用できません")
 
         val village = villageService.findVillage(villageId)
 
@@ -86,9 +99,56 @@ class DebugController(
         @AuthenticationPrincipal user: Wolf4busyUser,
         @RequestBody @Validated body: AdminDummyLoginBody
     ) {
-        // TODO ローカルでだけ動作させる
-        if (user.authority != CDef.Authority.管理者) throw Wolf4busyBusinessException("invalid user")
-        // TODO 実装
+        if ("local" != env) throw Wolf4busyBusinessException("ローカル環境でしか使用できません")
 
+        // 現在接続しているユーザのuidと、指定されたプレイヤーのuidを入れ替える
+        val currentPlayer = playerBhv.selectEntityWithDeletedCheck {
+            it.query().setUid_Equal(user.uid)
+        }
+        val toPlayer = playerBhv.selectEntityWithDeletedCheck {
+            it.query().existsVillagePlayer { vpCB ->
+                vpCB.query().setVillageId_Equal(villageId)
+                vpCB.query().setVillagePlayerId_Equal(body.targetId!!)
+                vpCB.query().setIsGone_Equal(false)
+            }
+        }
+        val current = currentPlayer.uid
+        val to = toPlayer.uid
+        updatePlayerUid(currentPlayer.playerId, "dummy_uid")
+        updatePlayerUid(toPlayer.playerId, current)
+        updatePlayerUid(currentPlayer.playerId, to)
+    }
+
+    /**
+     * 次の日へ
+     * @param villageId villageId
+     * @param user user
+     * @param body body
+     */
+    @PostMapping("/admin/village/{villageId}/change-day")
+    fun changeDay(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser
+    ) {
+        if ("local" != env) throw Wolf4busyBusinessException("ローカル環境でしか使用できません")
+
+        val latestDay = villageDayBhv.selectEntityWithDeletedCheck {
+            it.query().setVillageId_Equal(villageId)
+            it.query().addOrderBy_Day_Desc()
+            it.query().queryNoonnight().addOrderBy_DispOrder_Desc()
+            it.fetchFirst(1)
+        }
+        latestDay.daychangeDatetime = Wolf4busyDateUtil.currentLocalDateTime().minusSeconds(1L)
+        villageDayBhv.update(latestDay)
+    }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    private fun updatePlayerUid(playerId: Int?, uid: String?) {
+        val p = Player()
+        p.playerId = playerId
+        p.uid = uid
+        playerBhv.update(p)
     }
 }
