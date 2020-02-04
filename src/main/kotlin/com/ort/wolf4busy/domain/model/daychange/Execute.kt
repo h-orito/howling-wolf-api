@@ -19,7 +19,10 @@ object Execute {
 
         // 得票 key: target participant id, value: vote list
         val votedMap = dayChange.votes.list
-            .filter { village.participant.member(it.myselfId).isAlive() }
+            .filter {
+                it.villageDayId == village.day.yesterday().id &&
+                    village.participant.member(it.myselfId).isAlive()
+            }
             .groupBy { it.targetId }
 
         if (votedMap.isEmpty()) return dayChange // 全員突然死
