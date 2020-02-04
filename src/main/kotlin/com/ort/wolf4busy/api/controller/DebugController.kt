@@ -3,21 +3,26 @@ package com.ort.wolf4busy.api.controller
 import com.ort.dbflute.exbhv.CharaBhv
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.dbflute.exbhv.VillageDayBhv
+import com.ort.dbflute.exbhv.VillageSettingBhv
 import com.ort.dbflute.exentity.Player
+import com.ort.dbflute.exentity.VillageSetting
 import com.ort.wolf4busy.api.body.AdminDummyLoginBody
 import com.ort.wolf4busy.api.body.AdminParticipateBody
+import com.ort.wolf4busy.api.view.debug.DebugVillageView
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
+import com.ort.wolf4busy.application.service.CharachipService
+import com.ort.wolf4busy.application.service.PlayerService
 import com.ort.wolf4busy.application.service.VillageService
+import com.ort.wolf4busy.domain.model.charachip.Charas
+import com.ort.wolf4busy.domain.model.player.Players
+import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.fw.Wolf4busyDateUtil
 import com.ort.wolf4busy.fw.exception.Wolf4busyBusinessException
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 /**
@@ -28,10 +33,13 @@ class DebugController(
     val charaBhv: CharaBhv,
     val playerBhv: PlayerBhv,
     val villageDayBhv: VillageDayBhv,
+    val villageSettingBhv: VillageSettingBhv,
 
     val villageCoordinator: VillageCoordinator,
 
-    val villageService: VillageService
+    val villageService: VillageService,
+    val charachipService: CharachipService,
+    val playerService: PlayerService
 ) {
 
     // ===================================================================================
@@ -123,7 +131,6 @@ class DebugController(
      * 次の日へ
      * @param villageId villageId
      * @param user user
-     * @param body body
      */
     @PostMapping("/admin/village/{villageId}/change-day")
     fun changeDay(
@@ -140,6 +147,45 @@ class DebugController(
         }
         latestDay.daychangeDatetime = Wolf4busyDateUtil.currentLocalDateTime().minusSeconds(1L)
         villageDayBhv.update(latestDay)
+    }
+
+    /**
+     * 村情報取得（役職やプレーヤーが全て見える状態）
+     * @param villageId villageId
+     */
+    @GetMapping("/admin/village/{villageId}")
+    fun village(@PathVariable("villageId") villageId: Int): DebugVillageView {
+        if ("local" != env) throw Wolf4busyBusinessException("ローカル環境でしか使用できません")
+
+        val village: Village = villageService.findVillage(villageId)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val players: Players = playerService.findPlayers(villageId)
+        val createPlayer: com.ort.wolf4busy.domain.model.player.Player = playerService.findPlayer(village.creatorPlayerId)
+        return DebugVillageView(
+            village = village,
+            charas = charas,
+            players = players,
+            createPlayer = createPlayer
+        )
+    }
+
+    /**
+     * 突然死なしにする
+     * @param villageId villageId
+     * @param user user
+     */
+    @PostMapping("/admin/village/{villageId}/no-suddenly-death")
+    fun setNoSuddenlyDeath(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: Wolf4busyUser
+    ) {
+        if ("local" != env) throw Wolf4busyBusinessException("ローカル環境でしか使用できません")
+
+        val setting = VillageSetting()
+        setting.villageId = villageId
+        setting.setVillageSettingItemCode_突然死ありか()
+        setting.villageSettingText = "0"
+        villageSettingBhv.update(setting)
     }
 
     // ===================================================================================

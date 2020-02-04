@@ -77,12 +77,21 @@ class Ability(
         // その能力を持っていない
         if (Abilities(participant.skill).list.none { it.code == code }) throw Wolf4busyBusinessException("能力セットできません")
         // 対象指定がおかしい
-        if (targetId == null && !isAvailableNoTarget()) throw Wolf4busyBusinessException("能力セットできません")
+        if (targetId == null && !canNoTarget(village)) throw Wolf4busyBusinessException("能力セットできません")
         if (targetId != null && getSelectableTargetList(
                 village,
                 participant
             ).none { it.id == targetId }
         ) throw Wolf4busyBusinessException("能力セットできません")
+    }
+
+    fun canNoTarget(village: Village): Boolean {
+        return when (code) {
+            CDef.AbilityType.襲撃.code() -> Attack.isAvailableNoTarget(village)
+            CDef.AbilityType.占い.code() -> Divine.isAvailableNoTarget()
+            CDef.AbilityType.護衛.code() -> Guard.isAvailableNoTarget()
+            else -> false
+        }
     }
 
     fun toCdef(): CDef.AbilityType = CDef.AbilityType.codeOf(code)
@@ -97,16 +106,6 @@ class Ability(
         participant ?: return false
         return participant.canUseAbility()
     }
-
-    private fun isAvailableNoTarget(): Boolean {
-        return when (code) {
-            CDef.AbilityType.襲撃.code() -> Attack.isAvailableNoTarget()
-            CDef.AbilityType.占い.code() -> Divine.isAvailableNoTarget()
-            CDef.AbilityType.護衛.code() -> Guard.isAvailableNoTarget()
-            else -> throw IllegalStateException("想定外の能力")
-        }
-    }
-
 
     // 能力セット時のシステムメッセージ
     private fun getAbilitySetMessage(myChara: Chara, targetChara: Chara?): String {

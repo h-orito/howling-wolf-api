@@ -51,18 +51,8 @@ class MessageDataSource(
             if (participant != null) {
                 it.orScopeQuery { orCB ->
                     orCB.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
-                    orCB.orScopeQueryAndPart { andCB ->
-                        andCB.query().setMessageTypeCode_Equal(CDef.MessageType.独り言.code())
-                        andCB.query().setVillagePlayerId_Equal(participant.id)
-                    }
-                    orCB.orScopeQueryAndPart { andCB ->
-                        andCB.query().setMessageTypeCode_Equal(CDef.MessageType.秘話.code())
-                        andCB.query().setVillagePlayerId_Equal(participant.id)
-                    }
-                    orCB.orScopeQueryAndPart { andCB ->
-                        andCB.query().setMessageTypeCode_Equal(CDef.MessageType.秘話.code())
-                        andCB.query().setToVillagePlayerId_Equal(participant.id)
-                    }
+                    orCB.query().setVillagePlayerId_Equal(participant.id)
+                    orCB.query().setToVillagePlayerId_Equal(participant.id)
                 }
             } else {
                 it.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
