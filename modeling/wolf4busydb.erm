@@ -1340,6 +1340,12 @@
 					<unsigned>true</unsigned>
 					<not_null>true</not_null>
 				</normal_column>
+				<normal_column>
+					<physical_name>description</physical_name>
+					<logical_name>説明</logical_name>
+					<type>text</type>
+					<not_null>true</not_null>
+				</normal_column>
 			</columns>
 			<indexes>
 			</indexes>

@@ -17,7 +17,7 @@ object Leave {
         participant: VillageParticipant?
     ): Boolean {
         // 村として退村可能か
-        village.isAvailableLeave()
+        if (!village.isAvailableLeave()) return false
         // 参加していない
         participant ?: return false
 

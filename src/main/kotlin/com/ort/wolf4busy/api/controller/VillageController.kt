@@ -3,7 +3,7 @@ package com.ort.wolf4busy.api.controller
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.api.body.*
 import com.ort.wolf4busy.api.form.VillageMessageForm
-import com.ort.wolf4busy.api.view.VillageParticipateSituationView
+import com.ort.wolf4busy.api.view.myself.participant.SituationAsParticipantView
 import com.ort.wolf4busy.api.view.village.*
 import com.ort.wolf4busy.application.coordinator.MessageCoordinator
 import com.ort.wolf4busy.application.coordinator.VillageCoordinator
@@ -28,7 +28,6 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
-@CrossOrigin
 @RestController
 class VillageController(
     val villageCoordinator: VillageCoordinator,
@@ -46,10 +45,10 @@ class VillageController(
      * @param user user
      */
     @GetMapping("/village/list")
-    fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillageListView {
+    fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillagesView {
         val villages: Villages = villageService.findVillages()
-        return VillageListView(
-            villageList = villages.villageList
+        return VillagesView(
+            list = villages.list
         )
     }
 
@@ -85,7 +84,7 @@ class VillageController(
         @PathVariable("messageNumber") messageNumber: Int,
         @AuthenticationPrincipal user: Wolf4busyUser?
     ): VillageAnchorMessageView {
-        val village: Village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId, false)
         val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -112,7 +111,7 @@ class VillageController(
         @AuthenticationPrincipal user: Wolf4busyUser?,
         @RequestBody @Validated form: VillageMessageForm?
     ): VillageMessageView {
-        val village: Village = villageService.findVillage(villageId)
+        val village: Village = villageService.findVillage(villageId, false)
         val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -148,13 +147,19 @@ class VillageController(
      * @param user user
      * @return 参加状況
      */
-    @GetMapping("/village/{villageId}/participate")
+    @GetMapping("/village/{villageId}/situation")
     fun getParticipateSituation(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: Wolf4busyUser?
-    ): VillageParticipateSituationView {
-        return VillageParticipateSituationView(
-            situation = villageCoordinator.findActionSituation(villageId, user)
+    ): SituationAsParticipantView {
+        val village: Village = villageService.findVillage(villageId)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val players: Players = playerService.findPlayers(villageId)
+        return SituationAsParticipantView(
+            situation = villageCoordinator.findActionSituation(village, user, players, charas),
+            village = village,
+            charas = charas,
+            players = players
         )
     }
 
@@ -345,7 +350,7 @@ class VillageController(
             ),
             time = VillageTime(
                 termType = CDef.Term.長期.code(), // TODO
-                startDatetime = LocalDateTime.now(), // TODO
+                startDatetime = LocalDateTime.now().plusDays(3L), // TODO
                 dayChangeIntervalSeconds = 86400 // TODO
             ),
             charachip = VillageCharachip(

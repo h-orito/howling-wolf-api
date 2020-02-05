@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.wolf4busy.Wolf4busyTest
 import com.ort.wolf4busy.application.service.*
+import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
@@ -38,6 +39,8 @@ class VillageCoordinatorTest : Wolf4busyTest() {
     lateinit var messageService: MessageService
     @Autowired
     lateinit var charachipService: CharachipService
+    @Autowired
+    lateinit var playerService: PlayerService
     @Autowired
     lateinit var abilityService: AbilityService
     @Autowired
@@ -391,11 +394,12 @@ class VillageCoordinatorTest : Wolf4busyTest() {
         val user = Wolf4busyUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
+        val players: Players = playerService.findPlayers(villageId)
         val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
         (2..11).forEach {
@@ -411,7 +415,7 @@ class VillageCoordinatorTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
         village = villageService.findVillage(villageId)
@@ -426,7 +430,7 @@ class VillageCoordinatorTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
         villageCoordinator.say(
@@ -439,7 +443,7 @@ class VillageCoordinatorTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
         villageCoordinator.setAbility(
@@ -451,21 +455,21 @@ class VillageCoordinatorTest : Wolf4busyTest() {
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
         villageCoordinator.setVote(villageId, user, village.dummyChara().id)
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
         villageCoordinator.setCommit(villageId, user, true)
 
         // ## Act ##
         // ## Assert ##
-        villageCoordinator.findActionSituation(villageId, user)
+        villageCoordinator.findActionSituation(village, user, players, charas)
     }
 
     // ===================================================================================

@@ -30,7 +30,6 @@ import kotlin.collections.HashMap
  */
 @Component
 class LoginFilter(
-    val objectMapper: ObjectMapper,
     val userService: Wolf4busyUserDetailService
 ) : OncePerRequestFilter() {
 

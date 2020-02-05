@@ -2,6 +2,7 @@ package com.ort.wolf4busy.domain.model.village.participant
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.domain.model.charachip.Chara
+import com.ort.wolf4busy.domain.model.charachip.Charas
 import com.ort.wolf4busy.domain.model.message.Message
 import com.ort.wolf4busy.domain.model.player.Player
 import com.ort.wolf4busy.domain.model.village.Village
@@ -100,9 +101,9 @@ object Participate {
     fun createParticipateMessage(village: Village, chara: Chara, isSpectate: Boolean): Message {
         // 何人目か
         val number = if (isSpectate) {
-            village.spectator.count + 1
+            village.spectator.count
         } else {
-            village.participant.count + 1
+            village.participant.count
         }
         val text = if (isSpectate) {
             "（見学）${number}人目、${chara.charaName.name}。"
@@ -110,5 +111,17 @@ object Participate {
             "${number}人目、${chara.charaName.name}。"
         }
         return Message.createPublicSystemMessage(text, village.day.prologueDay().id)
+    }
+
+    /**
+     * @param village village
+     * @param charas charas
+     * @return 参加/見学できるキャラ
+     */
+    fun getSelectableCharaList(village: Village, charas: Charas): List<Chara> {
+        return charas.list.filterNot { chara ->
+            village.participant.memberList.any { it.charaId == chara.id }
+                || village.spectator.memberList.any { it.charaId == chara.id }
+        }
     }
 }
