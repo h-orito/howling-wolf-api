@@ -11,6 +11,9 @@ spring:
     encoding: UTF-8
   jackson:
     property-naming-strategy: SNAKE_CASE
+security:
+  corsClientUrls:
+    - http://localhost:3000
 server:
   port: 8086
   servlet:

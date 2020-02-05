@@ -92,6 +92,7 @@ class VillageDataSource(
      * @return 村一覧
      */
     fun findVillages(villageIdList: List<Int>): Villages {
+        if (villageIdList.isEmpty()) return Villages(listOf())
         val villageList = villageBhv.selectList {
             it.specify().derivedVillagePlayer().count({ vpCB ->
                 vpCB.specify().columnVillagePlayerId()

@@ -123,6 +123,7 @@ map:{
             	; shortName=SKILL_SHORT_NAME
             	; order=DISP_ORDER
             	; campCode=CAMP_CODE
+            	; description=DESCRIPTION
 			}
 		}
     }

@@ -6,14 +6,16 @@ import com.ort.wolf4busy.domain.model.ability.Ability
 
 data class Skill(
     val code: String,
-    val name: String
+    val name: String,
+    val description: String
 ) {
 
     constructor(
         cdefSkill: CDef.Skill
     ) : this(
         code = cdefSkill.code(),
-        name = cdefSkill.alias()
+        name = cdefSkill.alias(),
+        description = cdefSkill.description()
     )
 
     companion object {
@@ -26,7 +28,7 @@ data class Skill(
         )
 
         fun skillByShortName(shortName: String): Skill? {
-            val cdefSkill: CDef.Skill = CDef.Skill.listAll().firstOrNull() {
+            val cdefSkill: CDef.Skill = CDef.Skill.listAll().firstOrNull {
                 it.shortName() == shortName
             } ?: return null
             return Skill(cdefSkill)

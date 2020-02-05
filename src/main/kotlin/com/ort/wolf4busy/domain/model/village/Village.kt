@@ -68,7 +68,7 @@ data class Village(
         }.joinToString(
             separator = "、\n",
             prefix = "この村には\n",
-            postfix = "いるようだ。"
+            postfix = "\nいるようだ。"
         )
         return Message.createPublicSystemMessage(text, day.latestDay().id)
     }

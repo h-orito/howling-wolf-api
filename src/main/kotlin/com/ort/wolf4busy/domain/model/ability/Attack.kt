@@ -108,7 +108,7 @@ object Attack {
         ).setIsChange(dayChange)
     }
 
-    fun isAvailableNoTarget(): Boolean = true
+    fun isAvailableNoTarget(village: Village): Boolean = village.day.latestDay().day !== 1 // 1日目はダミー固定
 
     // ===================================================================================
     //                                                                        Assist Logic

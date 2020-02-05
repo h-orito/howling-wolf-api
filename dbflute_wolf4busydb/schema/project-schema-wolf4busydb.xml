@@ -402,6 +402,8 @@
             name="CAMP_CODE" required="true" size="20" type="VARCHAR"/>
         <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"
             name="DISP_ORDER" required="true" size="10" type="INTEGER"/>
+        <column comment="説明" dbType="TEXT" javaType="String"
+            name="DESCRIPTION" required="true" size="65535" type="LONGVARCHAR"/>
         <foreign-key foreignSchema="wolf4busydb.$$NoNameSchema$$"
             foreignTable="camp" name="FK_SKILL_CAMP">
             <reference foreign="CAMP_CODE" local="CAMP_CODE"/>

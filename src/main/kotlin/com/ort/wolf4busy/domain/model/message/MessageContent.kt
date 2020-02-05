@@ -11,6 +11,7 @@ data class MessageContent(
 ) {
     companion object {
 
+        const val defaultLengthMax = 400
         const val lineMax: Int = 20
 
         operator fun invoke(
@@ -45,8 +46,8 @@ data class MessageContent(
         // 文字数
         if (text.isEmpty()) throw Wolf4busyBusinessException("発言内容がありません")
         // 改行は文字数としてカウントしない
-        val length = text.replace("\r\n", "").length
+        val length = text.replace("\n", "").length
         if (length <= 0) throw Wolf4busyBusinessException("発言内容がありません") // 改行のみもNG
-        if (maxLength < length) throw Wolf4busyBusinessException("文字数オーバーです")
+        if (maxLength < length) throw Wolf4busyBusinessException("文字数オーバーです length: $length")
     }
 }

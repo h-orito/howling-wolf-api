@@ -39,7 +39,12 @@ class DayChangeCoordinator(
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(village.id)
 
-        val beforeDayChange = DayChange(village, votes, abilities, players)
+        val beforeDayChange = DayChange(village.copy(
+            participant = village.participant.copy(
+                count = village.participant.memberList.count { !it.isGone },
+                memberList = village.participant.memberList.filter { !it.isGone }
+            )
+        ), votes, abilities, players)
 
         // プロローグで長時間発言していない人を退村させる
         var dayChange: DayChange = beforeDayChange.leaveParticipantIfNeeded(todayMessages, charas).let {
