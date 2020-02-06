@@ -38,7 +38,8 @@ class PlayerController(
         return MyselfPlayerView(
             player,
             participantVillages,
-            createVillages
+            createVillages,
+            user
         )
     }
 
