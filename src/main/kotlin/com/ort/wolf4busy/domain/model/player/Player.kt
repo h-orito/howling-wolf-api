@@ -35,6 +35,19 @@ data class Player(
         return true
     }
 
+    /**
+     * @param user user
+     * @return 村を作成可能か
+     */
+    fun isAvailableCreateVillage(user: Wolf4busyUser?): Boolean {
+        user ?: return false
+        if (user.authority == CDef.Authority.管理者) return true
+        if (isParticipatingProgressVillage()) return false
+        if (isRestrictedParticipation) return false
+        if (isProgressCreateVillage()) return false
+        return true
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
@@ -43,17 +56,4 @@ data class Player(
 
     // 作成した村の勝敗が決していないか
     private fun isProgressCreateVillage(): Boolean = createProgressVillageIdList.isNotEmpty()
-
-    /**
-     * @param user user
-     * @return 村を作成可能か
-     */
-    private fun isAvailableCreateVillage(user: Wolf4busyUser?): Boolean {
-        user ?: return false
-        if (user.authority == CDef.Authority.管理者) return true
-        if (isParticipatingProgressVillage()) return false
-        if (isRestrictedParticipation) return false
-        if (isProgressCreateVillage()) return false
-        return true
-    }
 }
