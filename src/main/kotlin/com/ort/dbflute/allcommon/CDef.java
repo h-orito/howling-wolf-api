@@ -481,7 +481,7 @@ public interface CDef extends Classification {
                 subItemMap.put("shortName", "狩");
                 subItemMap.put("order", "6");
                 subItemMap.put("campCode", "VILLAGER");
-                subItemMap.put("description", "あなたは狩人です。毎晩自分以外の一人を人狼の襲撃から守ることができます。");
+                subItemMap.put("description", "あなたは狩人です。初日以外の毎晩、自分以外の一人を人狼の襲撃から守ることができます。");
                 _subItemMapMap.put(狩人.code(), Collections.unmodifiableMap(subItemMap));
             }
             {
@@ -529,7 +529,7 @@ public interface CDef extends Classification {
                 subItemMap.put("shortName", "狼");
                 subItemMap.put("order", "2");
                 subItemMap.put("campCode", "WEREWOLF");
-                subItemMap.put("description", "あなたは人狼です。人狼系役職とC国狂人同士にしか聞こえない会話が可能です。\nまた、毎晩一人を襲撃することができます。");
+                subItemMap.put("description", "あなたは人狼です。人狼系役職とC国狂人同士にしか聞こえない会話が可能です。また、毎晩一人を襲撃することができます。");
                 _subItemMapMap.put(人狼.code(), Collections.unmodifiableMap(subItemMap));
             }
         }
@@ -1485,6 +1485,9 @@ public interface CDef extends Classification {
         ,
         /** ダミーキャラID */
         ダミーキャラid("dummy_chara_id", "ダミーキャラID", emptyStrings())
+        ,
+        /** 自動生成村か */
+        自動生成村か("is_auto_generated", "自動生成村か", emptyStrings())
         ,
         /** コミット可能か */
         コミット可能か("is_available_commit", "コミット可能か", emptyStrings())

@@ -147,6 +147,14 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     }
 
     /**
+     * Set the value of villageSettingItemCode as 自動生成村か (is_auto_generated). <br>
+     * 自動生成村か
+     */
+    public void setVillageSettingItemCode_自動生成村か() {
+        setVillageSettingItemCodeAsVillageSettingItem(CDef.VillageSettingItem.自動生成村か);
+    }
+
+    /**
      * Set the value of villageSettingItemCode as コミット可能か (is_available_commit). <br>
      * コミット可能か
      */
@@ -284,6 +292,17 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     public boolean isVillageSettingItemCodeダミーキャラid() {
         CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
         return cdef != null ? cdef.equals(CDef.VillageSettingItem.ダミーキャラid) : false;
+    }
+
+    /**
+     * Is the value of villageSettingItemCode 自動生成村か? <br>
+     * 自動生成村か
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isVillageSettingItemCode自動生成村か() {
+        CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
+        return cdef != null ? cdef.equals(CDef.VillageSettingItem.自動生成村か) : false;
     }
 
     /**
