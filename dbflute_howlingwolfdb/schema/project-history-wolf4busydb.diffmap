@@ -1,0 +1,57 @@
+map:{
+    ; 2020/02/03 23:50:18 = map:{
+        ; diffDate = 2020/02/03 23:50:18
+        ; diffAuthor = hitoshi
+        ; diffGitBranch = feature/junit
+        ; tableDiff = map:{
+            ; skill = map:{
+                ; tableName = skill
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; DESCRIPTION = map:{
+                        ; columnName = DESCRIPTION
+                        ; diffType = ADD
+                    }
+                }
+            }
+        }
+    }
+    ; 2020/01/25 00:52:20 = map:{
+        ; diffDate = 2020/01/25 00:52:20
+        ; diffAuthor = hitoshi
+        ; diffGitBranch = feature/junit
+        ; tableDiff = map:{
+            ; vote = map:{
+                ; tableName = vote
+                ; diffType = CHANGE
+                ; primaryKeyDiff = map:{
+                    ; PRIMARY = map:{
+                        ; constraintName = PRIMARY
+                        ; diffType = CHANGE
+                        ; columnDiff = map:{
+                            ; next = VILLAGE_DAY_ID, VILLAGE_PLAYER_ID
+                            ; previous = VILLAGE_DAY_ID
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ; 2020/01/24 00:16:01 = map:{
+        ; diffDate = 2020/01/24 00:16:01
+        ; diffAuthor = hitoshi
+        ; diffGitBranch = feature/junit
+        ; tableDiff = map:{
+            ; village_day = map:{
+                ; tableName = village_day
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; IS_UPDATING = map:{
+                        ; columnName = IS_UPDATING
+                        ; diffType = DELETE
+                    }
+                }
+            }
+        }
+    }
+}
