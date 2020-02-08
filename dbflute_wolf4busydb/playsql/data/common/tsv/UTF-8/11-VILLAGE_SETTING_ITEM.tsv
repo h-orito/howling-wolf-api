@@ -15,3 +15,4 @@ is_available_commit	コミット可能か	13
 character_group_id	キャラクターグループID	14
 join_password	入村パスワード	15
 organize	構成	16
+is_auto_generated	自動生成村か	17

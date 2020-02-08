@@ -87,6 +87,14 @@ public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQu
     }
 
     /**
+     * Equal(=). As 自動生成村か (is_auto_generated). And OnlyOnceRegistered. <br>
+     * 自動生成村か
+     */
+    public void setVillageSettingItemCode_Equal_自動生成村か() {
+        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.自動生成村か);
+    }
+
+    /**
      * Equal(=). As コミット可能か (is_available_commit). And OnlyOnceRegistered. <br>
      * コミット可能か
      */
@@ -235,6 +243,14 @@ public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQu
      */
     public void setVillageSettingItemCode_NotEqual_ダミーキャラid() {
         setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.ダミーキャラid);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 自動生成村か (is_auto_generated). And OnlyOnceRegistered. <br>
+     * 自動生成村か
+     */
+    public void setVillageSettingItemCode_NotEqual_自動生成村か() {
+        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.自動生成村か);
     }
 
     /**

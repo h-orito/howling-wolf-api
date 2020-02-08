@@ -50,7 +50,7 @@ class PlayerDataSource(
     fun update(uid: String, nickname: String, twitterUserName: String) {
         val player = Player()
         player.uniqueBy(uid)
-        player.nickname = nickname
+        player.nickname = removeSurrogate(nickname)
         player.twitterUserName = twitterUserName
         playerBhv.update(player)
     }
@@ -86,5 +86,19 @@ class PlayerDataSource(
             twitterUserName = player.twitterUserName,
             isRestrictedParticipation = player.isRestrictedParticipation
         )
+    }
+
+    // ===================================================================================
+    //                                                                        Assist Logic
+    //                                                                        ============
+    /**
+     * 絵文字を除く文字列を返す
+     * @param text
+     * @return 4byte文字を除いた文字列
+     */
+    private fun removeSurrogate(text: String): String {
+        return text.chunked(1).filter { c ->
+            !c.matches("[\\uD800-\\uDFFF]".toRegex())
+        }.joinToString(separator = "")
     }
 }
