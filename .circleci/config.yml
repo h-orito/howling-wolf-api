@@ -24,7 +24,7 @@ jobs:
         - develop
         - master
 
-    working_directory: ~/wolf4busy-api
+    working_directory: ~/howling-wolf-api
 
     environment:
       # Customize the JVM maximum heap limit
@@ -53,7 +53,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # prepare database
-      - run: export answer=y;sh dbflute_wolf4busydb/manage.sh 0 > /dev/null
+      - run: export answer=y;sh dbflute_howlingwolfdb/manage.sh 0 > /dev/null
 
       # run tests!
       - run: mvn package # run the actual tests
@@ -83,18 +83,18 @@ jobs:
           name: Upload jar
           command: |
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-             scp -P ${SSH_PORT} ./target/wolf4busy-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}wolf4busy_dev.jar
+             scp -P ${SSH_PORT} ./target/howling-wolf-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}howling-wolf_dev.jar
             fi
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-             scp -P ${SSH_PORT} ./target/wolf4busy-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}wolf4busy.jar
+             scp -P ${SSH_PORT} ./target/howling-wolf-0.0.1-SNAPSHOT.jar ${SSH_USERNAME}@${SSH_IPADDRESS}:${SSH_APP_PATH}howling-wolf.jar
             fi
 
       - run:
           name: Deploy
           command: |
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-             ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_busy_dev.sh"
+             ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_howling_dev.sh"
             fi
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-             ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_busy.sh"
+             ssh -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_IPADDRESS} "sudo sh deploy/deploy_howling.sh"
             fi
