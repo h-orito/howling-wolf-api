@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ort</groupId>
-    <artifactId>wolf4busy</artifactId>
+    <artifactId>howling-wolf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>wolf4busy</name>
+    <name>howling-wolf</name>
     <packaging>jar</packaging>
     <description>忙しい人のためのオプションルールを盛り込んだ人狼がプレイできるサイトのAPI</description>
 
@@ -162,7 +162,7 @@
                 <artifactId>dbflute-maven-plugin</artifactId>
                 <version>1.1.0</version>
                 <configuration>
-                    <clientProject>wolf4busydb</clientProject>
+                    <clientProject>howlingwolfdb</clientProject>
                     <packageBase>com.ort.dbflute</packageBase>
                 </configuration>
             </plugin>
