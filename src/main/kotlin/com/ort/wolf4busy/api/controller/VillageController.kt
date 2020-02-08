@@ -2,6 +2,7 @@ package com.ort.wolf4busy.api.controller
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.wolf4busy.api.body.*
+import com.ort.wolf4busy.api.form.VillageListForm
 import com.ort.wolf4busy.api.form.VillageMessageForm
 import com.ort.wolf4busy.api.view.myself.participant.SituationAsParticipantView
 import com.ort.wolf4busy.api.view.village.*
@@ -43,10 +44,17 @@ class VillageController(
     /**
      * 村一覧取得
      * @param user user
+     * @param form 検索パラメータ
      */
     @GetMapping("/village/list")
-    fun villageList(@AuthenticationPrincipal user: Wolf4busyUser?): VillagesView {
-        val villages: Villages = villageService.findVillages()
+    fun villageList(
+        @AuthenticationPrincipal user: Wolf4busyUser?,
+        @Validated form: VillageListForm
+    ): VillagesView {
+        val villageStatusList = form.village_status?.map { VillageStatus(CDef.VillageStatus.codeOf(it)) } ?: listOf()
+        val villages: Villages = villageService.findVillages(
+            villageStatusList = villageStatusList
+        )
         return VillagesView(
             list = villages.list
         )
@@ -320,7 +328,6 @@ class VillageController(
     //                                                                        Assist Logic
     //                                                                        ============
     private fun convertRegisterBodyToVillage(body: VillageRegisterBody, player: Player): Village {
-        // TODO
         return Village(
             id = 1, // dummy
             name = "dummy village name", // TODO

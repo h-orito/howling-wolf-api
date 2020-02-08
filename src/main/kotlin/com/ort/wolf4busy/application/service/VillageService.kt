@@ -1,6 +1,7 @@
 package com.ort.wolf4busy.application.service
 
 import com.ort.wolf4busy.domain.model.village.Village
+import com.ort.wolf4busy.domain.model.village.VillageStatus
 import com.ort.wolf4busy.domain.model.village.Villages
 import com.ort.wolf4busy.fw.security.Wolf4busyUser
 import com.ort.wolf4busy.infrastructure.datasource.village.VillageDataSource
@@ -14,9 +15,15 @@ class VillageService(
     /**
      * 村一覧取得
      * @param user 入力した場合、参加している村一覧
+     * @param villageStatusList 入力した場合、そのステータスで絞り込む
+     * @param isAutoGenerate 指定した場合、自動生成村orそれ以外で絞り込む
      * @return Villages
      */
-    fun findVillages(user: Wolf4busyUser? = null): Villages = villageDataSource.findVillages(user)
+    fun findVillages(
+        user: Wolf4busyUser? = null,
+        villageStatusList: List<VillageStatus>? = listOf(),
+        isAutoGenerate: Boolean? = null
+    ): Villages = villageDataSource.findVillages(user, villageStatusList, isAutoGenerate)
 
     /**
      * 村一覧取得

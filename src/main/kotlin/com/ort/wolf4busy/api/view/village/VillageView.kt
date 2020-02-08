@@ -7,12 +7,14 @@ import com.ort.wolf4busy.domain.model.player.Players
 import com.ort.wolf4busy.domain.model.village.Village
 import com.ort.wolf4busy.domain.model.village.VillageDays
 import com.ort.wolf4busy.domain.model.village.VillageStatus
+import com.ort.wolf4busy.domain.model.village.VillageWinCamp
 
 data class VillageView(
     val id: Int,
     val name: String,
     val creatorPlayer: PlayerView,
     val status: VillageStatus,
+    val winCamp: VillageWinCamp?,
     val setting: VillageSettingsView,
     val participant: VillageParticipantsView,
     val spectator: VillageParticipantsView,
@@ -29,6 +31,7 @@ data class VillageView(
         name = village.name,
         creatorPlayer = PlayerView(createPlayer),
         status = village.status,
+        winCamp = village.winCamp,
         setting = VillageSettingsView(village.setting),
         participant = VillageParticipantsView(
             village = village,
