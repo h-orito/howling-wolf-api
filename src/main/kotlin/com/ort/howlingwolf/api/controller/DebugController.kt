@@ -45,8 +45,8 @@ class DebugController(
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    @Value("\${env}")
-    private val env: String? = null
+    @Value("\${env: null}")
+    private var env: String? = null
 
     // ===================================================================================
     //                                                                             Execute
