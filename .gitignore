@@ -27,7 +27,7 @@
 ### VS Code ###
 .vscode/
 
-/dbflute_wolf4busydb/log/
-/dbflute_wolf4busydb/output/doc/history-wolf4busydb.html
-/dbflute_wolf4busydb/output/doc/schema-wolf4busydb.html
-/dbflute_wolf4busydb/schema/project-history-wolf4busydb.diffmap
+/dbflute_howlingwolfdb/log/
+/dbflute_howlingwolfdb/output/doc/history-howlingwolfdb.html
+/dbflute_howlingwolfdb/output/doc/schema-howlingwolfdb.html
+/dbflute_howlingwolfdb/schema/project-history-howlingwolfdb.diffmap
