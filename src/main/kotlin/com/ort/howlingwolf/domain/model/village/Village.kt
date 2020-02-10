@@ -253,7 +253,7 @@ data class Village(
      */
     fun assertMessageRestrict(messageContent: MessageContent, latestDayMessageList: List<Message>) {
         val restrict = setting.rules.messageRestrict.restrict(messageContent.type.toCdef()) ?: return // 制限なし
-        restrict.assertSay(messageContent, latestDayMessageList)
+        restrict.assertSay(messageContent, status.toCdef(), latestDayMessageList)
     }
 
     /** 村として能力を行使できるか */

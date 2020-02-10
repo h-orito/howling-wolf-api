@@ -19,7 +19,7 @@ data class VillageSayRestrictSituation(
     ) : this(
         isRestricted = village.setting.rules.messageRestrict.restrict(messageType) != null,
         maxCount = village.setting.rules.messageRestrict.restrict(messageType)?.count,
-        remainingCount = village.setting.rules.messageRestrict.restrict(messageType)?.remainingCount(latestDayMessageList),
+        remainingCount = village.setting.rules.messageRestrict.restrict(messageType)?.remainingCount(village.status.toCdef(), latestDayMessageList),
         maxLength = village.setting.rules.messageRestrict.restrict(messageType)?.length ?: MessageContent.defaultLengthMax,
         maxLine = village.setting.rules.messageRestrict.restrict(messageType)?.line ?: MessageContent.lineMax
     )
