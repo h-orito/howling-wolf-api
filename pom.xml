@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>howling-wolf</name>
     <packaging>jar</packaging>
-    <description>忙しい人のためのオプションルールを盛り込んだ人狼がプレイできるサイトのAPI</description>
+    <description>人狼ゲームがプレイできるサイトのAPI</description>
 
     <properties>
         <java.version>1.8</java.version>
