@@ -42,11 +42,11 @@ data class MessageContent(
 
     fun assertMessageLength(maxLength: Int) {
         // 行数
-        if (text.split("\r\n").size > lineMax) throw HowlingWolfBusinessException("行数オーバーです")
+        if (text.replace("\r\n", "\n").split("\n").size > lineMax) throw HowlingWolfBusinessException("行数オーバーです")
         // 文字数
         if (text.isEmpty()) throw HowlingWolfBusinessException("発言内容がありません")
         // 改行は文字数としてカウントしない
-        val length = text.replace("\r\n", "").length
+        val length = text.replace("\r\n", "").replace("\n", "").length
         if (length <= 0) throw HowlingWolfBusinessException("発言内容がありません") // 改行のみもNG
         if (maxLength < length) throw HowlingWolfBusinessException("文字数オーバーです length: $length")
     }
