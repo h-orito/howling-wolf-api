@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.api.body.*
 import com.ort.howlingwolf.api.form.VillageListForm
 import com.ort.howlingwolf.api.form.VillageMessageForm
+import com.ort.howlingwolf.api.view.message.MessageView
 import com.ort.howlingwolf.api.view.myself.participant.SituationAsParticipantView
 import com.ort.howlingwolf.api.view.village.*
 import com.ort.howlingwolf.application.coordinator.MessageCoordinator
@@ -12,9 +13,7 @@ import com.ort.howlingwolf.application.service.CharachipService
 import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.charachip.Charas
-import com.ort.howlingwolf.domain.model.message.Message
-import com.ort.howlingwolf.domain.model.message.MessageType
-import com.ort.howlingwolf.domain.model.message.Messages
+import com.ort.howlingwolf.domain.model.message.*
 import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
@@ -28,6 +27,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @RestController
 class VillageController(
@@ -239,13 +239,37 @@ class VillageController(
      * @param body 発言内容
      */
     @PostMapping("/village/{villageId}/say-confirm")
+    @ResponseBody
     fun sayConfirm(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: VillageSayBody
-    ) {
-        // TODO パラメータ多数の場合にどう受け渡すか考える
+    ): MessageView {
         villageCoordinator.confirmToSay(villageId, user, body.message!!, body.messageType!!, body.faceType!!)
+        val village = villageService.findVillage(villageId)
+        val participant = villageCoordinator.findParticipant(village, user)
+        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val players: Players = playerService.findPlayers(villageId)
+        return MessageView(
+            message = Message(
+                fromVillageParticipantId = participant!!.id,
+                toVillageParticipantId = null,
+                time = MessageTime(
+                    villageDayId = village.day.latestDay().id,
+                    datetime = LocalDateTime.now(),
+                    unixTimeMilli = LocalDateTime.now().toInstant(ZoneOffset.ofHours(+9)).toEpochMilli()
+                ),
+                content = MessageContent.invoke(
+                    messageType = body.messageType,
+                    text = body.message,
+                    faceCode = body.faceType
+                ).copy(num = 1)
+            ),
+            village = village,
+            players = players,
+            charas = charas,
+            shouldHidePlayer = true
+        )
     }
 
     /**
