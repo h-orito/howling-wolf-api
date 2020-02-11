@@ -49,8 +49,8 @@ class MiserableDeathTest : HowlingWolfTest() {
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
-        assertThat(afterDayChange.messages.messageList.size).isEqualTo(1)
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { message ->
+        assertThat(afterDayChange.messages.list.size).isEqualTo(1)
+        assertThat(afterDayChange.messages.list.first()).satisfies { message ->
             assertThat(message.content.type.toCdef()).isEqualTo(CDef.MessageType.公開システムメッセージ)
             assertThat(message.content.text).contains("犠牲者がいない")
         }
@@ -79,17 +79,19 @@ class MiserableDeathTest : HowlingWolfTest() {
                 )
             )
         )
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = attackedVillager.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = attackedVillager.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = MiserableDeath.process(dayChange, charas)
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
-        assertThat(afterDayChange.messages.messageList.size).isEqualTo(1)
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { message ->
+        assertThat(afterDayChange.messages.list.size).isEqualTo(1)
+        assertThat(afterDayChange.messages.list.first()).satisfies { message ->
             println(message.content.text)
             assertThat(message.content.type.toCdef()).isEqualTo(CDef.MessageType.公開システムメッセージ)
             assertThat(message.content.text).contains(charas.list.first().charaName.name)
@@ -123,18 +125,20 @@ class MiserableDeathTest : HowlingWolfTest() {
                 )
             )
         )
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = attackedVillager1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = attackedVillager2.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = attackedVillager1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = attackedVillager2.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = MiserableDeath.process(dayChange, charas)
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
-        assertThat(afterDayChange.messages.messageList.size).isEqualTo(1)
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { message ->
+        assertThat(afterDayChange.messages.list.size).isEqualTo(1)
+        assertThat(afterDayChange.messages.list.first()).satisfies { message ->
             println(message.content.text)
             assertThat(message.content.type.toCdef()).isEqualTo(CDef.MessageType.公開システムメッセージ)
             assertThat(message.content.text).contains(charas.list.first().charaName.name)

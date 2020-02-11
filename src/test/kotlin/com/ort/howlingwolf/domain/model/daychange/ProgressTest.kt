@@ -216,18 +216,18 @@ class ProgressTest : HowlingWolfTest() {
         assertThat(afterDayChange.isChange).isTrue()
         assertThat(afterDayChange.village.dummyChara().isAlive()).isFalse()
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.進行中)
-        assertThat(afterDayChange.messages.messageList.any { message ->
+        assertThat(afterDayChange.messages.list.any { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
                 && message.content.text.contains("ついに犠牲者が")
         }).isTrue()
-        assertThat(afterDayChange.messages.messageList.any { message ->
+        assertThat(afterDayChange.messages.list.any { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
                 && message.content.text.contains("現在の生存者は")
                 && message.content.text.contains(charas.list.last().charaName.name)
         }).isTrue()
         assertThat(afterDayChange.abilities.list.filter { it.villageDayId == latestDay.id }).isNotEmpty
         assertThat(afterDayChange.votes.list.filter { it.villageDayId == latestDay.id }).isNotEmpty
-        afterDayChange.messages.messageList.forEach { println(it.content.text) }
+        afterDayChange.messages.list.forEach { println(it.content.text) }
     }
 
     @Test
@@ -306,7 +306,7 @@ class ProgressTest : HowlingWolfTest() {
         assertThat(afterDayChange.village.participant.member(villager.id).isAlive()).isFalse()
         assertThat(afterDayChange.village.participant.member(wolf1.id).isAlive()).isFalse()
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.進行中)
-        assertThat(afterDayChange.messages.messageList.any { message ->
+        assertThat(afterDayChange.messages.list.any { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
                 && message.content.text.contains("現在の生存者は")
                 && message.content.text.contains(charas.list.last().charaName.name)
@@ -317,7 +317,7 @@ class ProgressTest : HowlingWolfTest() {
             assertThat(latestDayAbilityList.any { it.ability.code == CDef.AbilityType.護衛.code() }).isTrue()
         }
         assertThat(afterDayChange.votes.list.count { it.villageDayId == latestDay.id }).isEqualTo(4)
-        afterDayChange.messages.messageList.forEach { println(it.content.text) }
+        afterDayChange.messages.list.forEach { println(it.content.text) }
     }
 
     @Test
@@ -394,7 +394,7 @@ class ProgressTest : HowlingWolfTest() {
         assertThat(afterDayChange.village.participant.member(wolf2.id).isAlive()).isFalse()
         assertThat(afterDayChange.village.participant.member(seer.id).isAlive()).isTrue()
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.エピローグ)
-        assertThat(afterDayChange.messages.messageList.none { message ->
+        assertThat(afterDayChange.messages.list.none { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
                 && message.content.text.contains("現在の生存者は")
         }).isTrue()
@@ -404,6 +404,6 @@ class ProgressTest : HowlingWolfTest() {
             assertThat(latestDayAbilityList.none { it.ability.code == CDef.AbilityType.護衛.code() }).isTrue()
         }
         assertThat(afterDayChange.votes.list.count { it.villageDayId == latestDay.id }).isEqualTo(0)
-        afterDayChange.messages.messageList.forEach { println(it.content.text) }
+        afterDayChange.messages.list.forEach { println(it.content.text) }
     }
 }

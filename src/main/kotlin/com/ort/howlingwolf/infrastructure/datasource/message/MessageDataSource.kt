@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.infrastructure.datasource.message
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.dbflute.cbean.MessageCB
 import com.ort.dbflute.exbhv.MessageBhv
 import com.ort.dbflute.exentity.Message
 import com.ort.howlingwolf.api.controller.VillageController
@@ -43,26 +44,55 @@ class MessageDataSource(
         villageDayId: Int,
         messageTypeList: List<CDef.MessageType>,
         participant: VillageParticipant?,
-        from: Long?
+        from: Long?,
+        pageSize: Int? = null,
+        pageNum: Int? = null
     ): Messages {
-        val messageList = messageBhv.selectList {
-            it.query().setVillageId_Equal(villageId)
-            it.query().setVillageDayId_Equal(villageDayId)
-            if (participant != null) {
-                it.orScopeQuery { orCB ->
-                    orCB.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
-                    orCB.query().setVillagePlayerId_Equal(participant.id)
-                    orCB.query().setToVillagePlayerId_Equal(participant.id)
-                }
-            } else {
-                it.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
+        return if (pageSize == null || pageNum == null) {
+            val messageList = messageBhv.selectList {
+                specifyMessage(it, villageId, villageDayId, messageTypeList, participant, from)
             }
-            if (from != null) {
-                it.query().setMessageUnixtimestampMilli_GreaterThan(from)
+            Messages(
+                list = messageList.map { convertMessageToMessage(it) }
+            )
+        } else {
+            val messageList = messageBhv.selectPage {
+                specifyMessage(it, villageId, villageDayId, messageTypeList, participant, from)
+                it.paging(pageSize, pageNum)
             }
-            it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
+            Messages(
+                list = messageList.map { convertMessageToMessage(it) },
+                allPageCount = messageList.allPageCount,
+                isExistPrePage = messageList.existsPreviousPage(),
+                isExistNextPage = messageList.existsNextPage(),
+                currentPageNum = messageList.currentPageNumber
+            )
         }
-        return Messages(messageList.map { convertMessageToMessage(it) })
+    }
+
+    private fun specifyMessage(
+        cb: MessageCB,
+        villageId: Int,
+        villageDayId: Int,
+        messageTypeList: List<CDef.MessageType>,
+        participant: VillageParticipant?,
+        from: Long?
+    ) {
+        cb.query().setVillageId_Equal(villageId)
+        cb.query().setVillageDayId_Equal(villageDayId)
+        if (participant != null) {
+            cb.orScopeQuery { orCB ->
+                orCB.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
+                orCB.query().setVillagePlayerId_Equal(participant.id)
+                orCB.query().setToVillagePlayerId_Equal(participant.id)
+            }
+        } else {
+            cb.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
+        }
+        if (from != null) {
+            cb.query().setMessageUnixtimestampMilli_GreaterThan(from)
+        }
+        cb.query().addOrderBy_MessageUnixtimestampMilli_Asc()
     }
 
     /**
@@ -143,7 +173,7 @@ class MessageDataSource(
      */
     fun updateDifference(villageId: Int, before: Messages, after: Messages) {
         // 追加しかないのでbeforeにないindexから追加していく
-        after.messageList.drop(before.messageList.size).forEach {
+        after.list.drop(before.list.size).forEach {
             registerMessage(villageId, it)
         }
     }

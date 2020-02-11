@@ -16,7 +16,7 @@ object Prologue {
     ): DayChange {
         // 24時間以内の発言
         val recentMessageList =
-            todayMessages.messageList.filter { it.time.datetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime().minusDays(1L)) }
+            todayMessages.list.filter { it.time.datetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime().minusDays(1L)) }
         // 24時間以内に発言していなかったら退村
         var village = dayChange.village.copy()
         var messages = dayChange.messages.copy()

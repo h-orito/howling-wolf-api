@@ -487,7 +487,7 @@ class AttackTest : HowlingWolfTest() {
                 assertThat(attackedVillager.dead?.code).`as`("襲撃死").isEqualTo(CDef.DeadReason.襲撃.code())
                 assertThat(attackedVillager.dead?.villageDay?.id).isEqualTo(latestDay.id)
             }
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { message ->
+        assertThat(afterDayChange.messages.list.first()).satisfies { message ->
             assertThat(message.content.text).contains("襲撃した")
             assertThat(message.content.type.code).isEqualTo(CDef.MessageType.襲撃結果.code())
         }
@@ -553,7 +553,7 @@ class AttackTest : HowlingWolfTest() {
         assertThat(afterDayChange.isChange).isTrue()
         assertThat(afterDayChange.village.participant.memberList.first { it.id == aliveVillager.id }.isAlive())
             .`as`("護衛成功").isTrue()
-        assertThat(afterDayChange.messages.messageList.isNotEmpty()).isTrue()
+        assertThat(afterDayChange.messages.list.isNotEmpty()).isTrue()
     }
 
     @Test
@@ -621,6 +621,6 @@ class AttackTest : HowlingWolfTest() {
                 assertThat(attackedVillager.isAlive()).`as`("死亡").isFalse()
                 assertThat(attackedVillager.dead?.code).`as`("襲撃死ではない").isNotEqualTo(CDef.DeadReason.襲撃.code())
             }
-        assertThat(afterDayChange.messages.messageList.isNotEmpty()).isTrue()
+        assertThat(afterDayChange.messages.list.isNotEmpty()).isTrue()
     }
 }

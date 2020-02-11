@@ -102,8 +102,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        assertThat(messages.messageList).isNotEmpty
-        val unixTimeMilli = messages.messageList.first().time.unixTimeMilli
+        assertThat(messages.list).isNotEmpty
+        val unixTimeMilli = messages.list.first().time.unixTimeMilli
 
         // ## Act ##
         messages = messageDataSource.findMessages(
@@ -115,7 +115,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        assertThat(messages.messageList).`as`("別の日なので取得できない").isEmpty()
+        assertThat(messages.list).`as`("別の日なので取得できない").isEmpty()
 
         // ## Act ##
         messages = messageDataSource.findMessages(
@@ -127,7 +127,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        assertThat(messages.messageList).`as`("通常発言は取得できない").isEmpty()
+        assertThat(messages.list).`as`("通常発言は取得できない").isEmpty()
 
         // ## Act ##
         messages = messageDataSource.findMessages(
@@ -139,7 +139,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        assertThat(messages.messageList).`as`("より新しい発言はないので取得できない").isEmpty()
+        assertThat(messages.list).`as`("より新しい発言はないので取得できない").isEmpty()
 
         // ## Act ##
         messages = messageDataSource.findMessages(
@@ -151,7 +151,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        assertThat(messages.messageList).isNotEmpty
+        assertThat(messages.list).isNotEmpty
     }
 
     @Test
@@ -180,7 +180,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
             participant = null,
             from = null
         )
-        val num = messages.messageList.first().content.num
+        val num = messages.list.first().content.num
 
         // ## Act ##
         val message = messageDataSource.findMessage(village.id, CDef.MessageType.通常発言, num!!)
@@ -257,7 +257,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
             participant = null,
             from = null
         )
-        val after = before.copy(messageList = before.messageList + message)
+        val after = before.copy(list = before.list + message)
 
         // ## Act ##
         messageDataSource.updateDifference(village.id, before, after)
@@ -270,7 +270,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
             participant = null,
             from = null
         )
-        assertThat(messages.messageList.size).isEqualTo(2)
+        assertThat(messages.list.size).isEqualTo(2)
     }
 
     // ===================================================================================
