@@ -26,10 +26,12 @@ class ExecuteTest : HowlingWolfTest() {
         // ## Arrange ##
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyFirstVillageDay(),
-                    DummyDomainModelCreator.createDummyVillageDay().copy(day = 2)
-                ))
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyFirstVillageDay(),
+                        DummyDomainModelCreator.createDummyVillageDay().copy(day = 2)
+                    )
+                )
             )
         )
         val charas = DummyDomainModelCreator.createDummyCharas()
@@ -56,10 +58,12 @@ class ExecuteTest : HowlingWolfTest() {
 
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
-                day = VillageDays(listOf(
-                    yesterday,
-                    latestDay
-                )),
+                day = VillageDays(
+                    listOf(
+                        yesterday,
+                        latestDay
+                    )
+                ),
                 participant = VillageParticipants(
                     count = 12,
                     memberList = listOf(
@@ -78,25 +82,29 @@ class ExecuteTest : HowlingWolfTest() {
                     )
                 )
             ),
-            votes = VillageVotes(listOf(
-                VillageVote(yesterday.id, aliveVillager1.id, aliveVillager2.id),
-                VillageVote(yesterday.id, aliveVillager2.id, aliveVillager1.id),
-                VillageVote(yesterday.id, aliveVillager3.id, aliveVillager1.id),
-                VillageVote(yesterday.id, aliveVillager4.id, aliveVillager1.id),
-                VillageVote(yesterday.id, aliveWolf1.id, aliveVillager1.id),
-                VillageVote(yesterday.id, aliveWolf2.id, aliveVillager1.id),
-                VillageVote(yesterday.id, suddenlyDeathVillager1.id, aliveVillager1.id)
-            ))
+            votes = VillageVotes(
+                listOf(
+                    VillageVote(yesterday.id, aliveVillager1.id, aliveVillager2.id),
+                    VillageVote(yesterday.id, aliveVillager2.id, aliveVillager1.id),
+                    VillageVote(yesterday.id, aliveVillager3.id, aliveVillager1.id),
+                    VillageVote(yesterday.id, aliveVillager4.id, aliveVillager1.id),
+                    VillageVote(yesterday.id, aliveWolf1.id, aliveVillager1.id),
+                    VillageVote(yesterday.id, aliveWolf2.id, aliveVillager1.id),
+                    VillageVote(yesterday.id, suddenlyDeathVillager1.id, aliveVillager1.id)
+                )
+            )
         )
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager2.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager3.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager4.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf2.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager1.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager2.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager3.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager4.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf2.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager1.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Execute.process(dayChange, charas)
@@ -107,14 +115,14 @@ class ExecuteTest : HowlingWolfTest() {
             assertThat(villager.isAlive()).isFalse()
             assertThat(villager.dead?.toCdef()).isEqualTo(CDef.DeadReason.処刑)
         }
-        assertThat(afterDayChange.messages.messageList.size).isEqualTo(2)
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { eachVoteMessage ->
+        assertThat(afterDayChange.messages.list.size).isEqualTo(2)
+        assertThat(afterDayChange.messages.list.first()).satisfies { eachVoteMessage ->
             println(eachVoteMessage.content.text)
             assertThat(eachVoteMessage.content.type.toCdef()).isEqualTo(CDef.MessageType.非公開システムメッセージ)
             assertThat(eachVoteMessage.content.text).`as`("突然死者の票は入らない").contains("5票")
             assertThat(eachVoteMessage.content.text).contains("1票")
         }
-        assertThat(afterDayChange.messages.messageList.last()).satisfies { executeMessage ->
+        assertThat(afterDayChange.messages.list.last()).satisfies { executeMessage ->
             println(executeMessage.content.text)
             assertThat(executeMessage.content.type.toCdef()).isEqualTo(CDef.MessageType.公開システムメッセージ)
             assertThat(executeMessage.content.text).contains(charas.list.first().charaName.name)
@@ -136,10 +144,12 @@ class ExecuteTest : HowlingWolfTest() {
 
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
-                day = VillageDays(listOf(
-                    yesterday,
-                    latestDay
-                )),
+                day = VillageDays(
+                    listOf(
+                        yesterday,
+                        latestDay
+                    )
+                ),
                 participant = VillageParticipants(
                     count = 12,
                     memberList = listOf(
@@ -158,25 +168,29 @@ class ExecuteTest : HowlingWolfTest() {
                     )
                 )
             ),
-            votes = VillageVotes(listOf(
-                VillageVote(yesterday.id, aliveVillager1.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, aliveVillager2.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, aliveVillager3.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, aliveVillager4.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, aliveWolf1.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, aliveWolf2.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, suddenlyDeathVillager1.id, aliveVillager1.id)
-            ))
+            votes = VillageVotes(
+                listOf(
+                    VillageVote(yesterday.id, aliveVillager1.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, aliveVillager2.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, aliveVillager3.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, aliveVillager4.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, aliveWolf1.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, aliveWolf2.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, suddenlyDeathVillager1.id, aliveVillager1.id)
+                )
+            )
         )
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager2.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager3.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager4.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf2.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager1.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager2.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager3.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveVillager4.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = aliveWolf2.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager1.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Execute.process(dayChange, charas)
@@ -187,11 +201,11 @@ class ExecuteTest : HowlingWolfTest() {
             assertThat(villager.isAlive()).isFalse()
             assertThat(villager.dead?.toCdef()).isEqualTo(CDef.DeadReason.突然)
         }
-        assertThat(afterDayChange.messages.messageList.size).isEqualTo(2)
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { eachVoteMessage ->
+        assertThat(afterDayChange.messages.list.size).isEqualTo(2)
+        assertThat(afterDayChange.messages.list.first()).satisfies { eachVoteMessage ->
             println(eachVoteMessage.content.text)
         }
-        assertThat(afterDayChange.messages.messageList.last()).satisfies { executeMessage ->
+        assertThat(afterDayChange.messages.list.last()).satisfies { executeMessage ->
             println(executeMessage.content.text)
         }
     }
@@ -207,10 +221,12 @@ class ExecuteTest : HowlingWolfTest() {
 
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
-                day = VillageDays(listOf(
-                    yesterday,
-                    latestDay
-                )),
+                day = VillageDays(
+                    listOf(
+                        yesterday,
+                        latestDay
+                    )
+                ),
                 participant = VillageParticipants(
                     count = 8,
                     memberList = listOf(
@@ -225,17 +241,21 @@ class ExecuteTest : HowlingWolfTest() {
                     )
                 )
             ),
-            votes = VillageVotes(listOf(
-                VillageVote(yesterday.id, suddenlyDeathVillager1.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, suddenlyDeathVillager2.id, suddenlyDeathVillager1.id),
-                VillageVote(yesterday.id, suddenlyDeathVillager3.id, suddenlyDeathVillager1.id)
-            ))
+            votes = VillageVotes(
+                listOf(
+                    VillageVote(yesterday.id, suddenlyDeathVillager1.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, suddenlyDeathVillager2.id, suddenlyDeathVillager1.id),
+                    VillageVote(yesterday.id, suddenlyDeathVillager3.id, suddenlyDeathVillager1.id)
+                )
+            )
         )
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager1.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager2.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager3.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager2.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = suddenlyDeathVillager3.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Execute.process(dayChange, charas)

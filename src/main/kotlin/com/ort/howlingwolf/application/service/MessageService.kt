@@ -28,6 +28,8 @@ class MessageService(
      * @param messageTypeList 発言種別
      * @param participant 参加情報
      * @param from これ以降の発言を取得する unixtimemilli
+     * @param pageSize pageSize
+     * @param pageNum pageNum
      * @return 発言
      */
     fun findMessages(
@@ -35,9 +37,11 @@ class MessageService(
         villageDayId: Int,
         messageTypeList: List<CDef.MessageType>,
         participant: VillageParticipant? = null,
-        from: Long? = null
+        from: Long? = null,
+        pageSize: Int? = null,
+        pageNum: Int? = null
     ): Messages {
-        return messageDataSource.findMessages(villageId, villageDayId, messageTypeList, participant, from)
+        return messageDataSource.findMessages(villageId, villageDayId, messageTypeList, participant, from, pageSize, pageNum)
     }
 
     /**

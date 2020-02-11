@@ -5,8 +5,12 @@ import com.ort.howlingwolf.api.body.*
 import com.ort.howlingwolf.api.form.VillageListForm
 import com.ort.howlingwolf.api.form.VillageMessageForm
 import com.ort.howlingwolf.api.view.message.MessageView
+import com.ort.howlingwolf.api.view.message.MessagesView
 import com.ort.howlingwolf.api.view.myself.participant.SituationAsParticipantView
-import com.ort.howlingwolf.api.view.village.*
+import com.ort.howlingwolf.api.view.village.VillageAnchorMessageView
+import com.ort.howlingwolf.api.view.village.VillageRegisterView
+import com.ort.howlingwolf.api.view.village.VillageView
+import com.ort.howlingwolf.api.view.village.VillagesView
 import com.ort.howlingwolf.application.coordinator.MessageCoordinator
 import com.ort.howlingwolf.application.coordinator.VillageCoordinator
 import com.ort.howlingwolf.application.service.CharachipService
@@ -117,14 +121,14 @@ class VillageController(
         @PathVariable("day") day: Int,
         @PathVariable("noonnight") noonnight: String,
         @AuthenticationPrincipal user: HowlingWolfUser?,
-        @RequestBody @Validated form: VillageMessageForm?
-    ): VillageMessageView {
+        @Validated form: VillageMessageForm
+    ): MessagesView {
         val village: Village = villageService.findVillage(villageId, false)
-        val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form?.from)
+        val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form.from, form.page_size, form.page_num)
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
-        return VillageMessageView(
-            messageList = messages.messageList,
+        return MessagesView(
+            messages = messages,
             village = village,
             players = players,
             charas = charas
