@@ -35,10 +35,12 @@ class EpilogueTest : HowlingWolfTest() {
                         DummyDomainModelCreator.createDummyAliveWolf()
                     )
                 ),
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyVillageDay(),
-                    latestDay
-                ))
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay(),
+                        latestDay
+                    )
+                )
             )
         )
 
@@ -52,7 +54,7 @@ class EpilogueTest : HowlingWolfTest() {
             assertThat(village.winCamp?.toCdef()).isEqualTo(CDef.Camp.人狼陣営)
             assertThat(village.day.latestDay().dayChangeDatetime).isAfter(latestDay.dayChangeDatetime)
         }
-        assertThat(afterDayChange.messages.messageList).satisfies { messageList ->
+        assertThat(afterDayChange.messages.list).satisfies { messageList ->
             assertThat(messageList.size).isEqualTo(2)
             assertThat(messageList.first()).satisfies { winCampMessage ->
                 assertThat(winCampMessage.content.type.toCdef()).isEqualTo(CDef.MessageType.公開システムメッセージ)
@@ -78,10 +80,12 @@ class EpilogueTest : HowlingWolfTest() {
                         DummyDomainModelCreator.createDummyDeadWolf()
                     )
                 ),
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyVillageDay(),
-                    latestDay
-                ))
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay(),
+                        latestDay
+                    )
+                )
             )
         )
 
@@ -95,7 +99,7 @@ class EpilogueTest : HowlingWolfTest() {
             assertThat(village.winCamp?.toCdef()).isEqualTo(CDef.Camp.村人陣営)
             assertThat(village.day.latestDay().dayChangeDatetime).isAfter(latestDay.dayChangeDatetime)
         }
-        assertThat(afterDayChange.messages.messageList).satisfies { messageList ->
+        assertThat(afterDayChange.messages.list).satisfies { messageList ->
             assertThat(messageList.size).isEqualTo(2)
             assertThat(messageList.first()).satisfies { winCampMessage ->
                 assertThat(winCampMessage.content.type.toCdef()).isEqualTo(CDef.MessageType.公開システムメッセージ)
@@ -121,10 +125,12 @@ class EpilogueTest : HowlingWolfTest() {
                         DummyDomainModelCreator.createDummyDeadWolf()
                     )
                 ),
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyVillageDay(),
-                    latestDay
-                ))
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay(),
+                        latestDay
+                    )
+                )
             )
         )
 
@@ -140,12 +146,14 @@ class EpilogueTest : HowlingWolfTest() {
         // ## Arrange ##
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyVillageDay(),
-                    DummyDomainModelCreator.createDummyVillageDay().copy(
-                        dayChangeDatetime = LocalDateTime.now().plusHours(1L)
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay(),
+                        DummyDomainModelCreator.createDummyVillageDay().copy(
+                            dayChangeDatetime = LocalDateTime.now().plusHours(1L)
+                        )
                     )
-                ))
+                )
             )
         )
 
@@ -161,12 +169,14 @@ class EpilogueTest : HowlingWolfTest() {
         // ## Arrange ##
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
-                day = VillageDays(listOf(
-                    DummyDomainModelCreator.createDummyVillageDay(),
-                    DummyDomainModelCreator.createDummyVillageDay().copy(
-                        dayChangeDatetime = LocalDateTime.now().minusHours(1L)
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay(),
+                        DummyDomainModelCreator.createDummyVillageDay().copy(
+                            dayChangeDatetime = LocalDateTime.now().minusHours(1L)
+                        )
                     )
-                ))
+                )
             )
         )
 

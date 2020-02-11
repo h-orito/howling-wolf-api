@@ -90,18 +90,20 @@ class PsychicTest : HowlingWolfTest() {
                 day = VillageDays(listOf(yesterday, latestDay))
             )
         )
-        val charas = Charas(listOf(
-            DummyDomainModelCreator.createDummyChara().copy(id = alivePsychic.charaId),
-            DummyDomainModelCreator.createDummyChara().copy(id = deadWolf.charaId)
-        ))
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = alivePsychic.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = deadWolf.charaId)
+            )
+        )
 
         // ## Act ##
         val afterDayChange = Psychic.process(dayChange, charas)
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
-        assertThat(afterDayChange.messages.messageList).isNotEmpty
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { message ->
+        assertThat(afterDayChange.messages.list).isNotEmpty
+        assertThat(afterDayChange.messages.list.first()).satisfies { message ->
             assertThat(message.content.type.toCdef()).isEqualTo(CDef.MessageType.白黒霊視結果)
             assertThat(message.content.text).contains("人狼のようだ")
         }

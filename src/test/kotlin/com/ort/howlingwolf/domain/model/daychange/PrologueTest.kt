@@ -244,8 +244,8 @@ class PrologueTest : HowlingWolfTest() {
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
-        assertThat(afterDayChange.messages.messageList.size).isEqualTo(3)
-        afterDayChange.messages.messageList.forEach { println(it.content.text) }
+        assertThat(afterDayChange.messages.list.size).isEqualTo(3)
+        afterDayChange.messages.list.forEach { println(it.content.text) }
         assertThat(afterDayChange.village.participant.memberList.all { it.skill != null }).`as`("役職が割り振られている").isTrue()
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.進行中)
     }

@@ -20,11 +20,19 @@ class MessageCoordinator(
     // ===================================================================================
     //                                                                             Execute
     //                                                                           =========
-    fun findMessageList(village: Village, day: Int, noonnight: String, user: HowlingWolfUser?, from: Long?): Messages {
+    fun findMessageList(
+        village: Village,
+        day: Int,
+        noonnight: String,
+        user: HowlingWolfUser?,
+        from: Long?,
+        pageSize: Int?,
+        pageNum: Int?
+    ): Messages {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
         val messageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, user?.authority)
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
-        val messages: Messages = messageService.findMessages(village.id, villageDayId, messageTypeList, participant, from)
+        val messages: Messages = messageService.findMessages(village.id, villageDayId, messageTypeList, participant, from, pageSize, pageNum)
         dayChangeCoordinator.dayChangeIfNeeded(village)
         return messages
     }

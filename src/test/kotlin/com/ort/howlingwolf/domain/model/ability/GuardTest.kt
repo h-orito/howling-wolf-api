@@ -405,8 +405,8 @@ class GuardTest : HowlingWolfTest() {
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
-        assertThat(afterDayChange.messages.messageList).isNotEmpty()
-        assertThat(afterDayChange.messages.messageList.first()).satisfies { message ->
+        assertThat(afterDayChange.messages.list).isNotEmpty()
+        assertThat(afterDayChange.messages.list.first()).satisfies { message ->
             assertThat(message.content.text).contains("を護衛している")
             assertThat(message.content.type.code).isEqualTo(CDef.MessageType.非公開システムメッセージ.code())
         }
