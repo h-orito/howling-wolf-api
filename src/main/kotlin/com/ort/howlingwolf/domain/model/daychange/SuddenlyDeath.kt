@@ -17,7 +17,7 @@ object SuddenlyDeath {
 
         // 前日に発言していない人が対象
         dayChange.village.notDummyParticipant().filterAlive().memberList.filter { member ->
-            todayMessages.messageList.none { message ->
+            todayMessages.list.none { message ->
                 message.fromVillageParticipantId == member.id
             }
         }.forEach { member ->

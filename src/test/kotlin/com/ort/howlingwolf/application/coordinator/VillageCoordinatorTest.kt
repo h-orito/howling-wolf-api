@@ -72,7 +72,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             null,
             null
         )
-        assertThat(messages.messageList).isNotEmpty
+        assertThat(messages.list).isNotEmpty
     }
 
     @Test(expected = HowlingWolfBusinessException::class)
@@ -254,7 +254,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             null,
             null
         )
-        assertThat(messages.messageList.any {
+        assertThat(messages.list.any {
             it.fromVillageParticipantId == participant?.id
                 && it.content.text == messageText
         }).isTrue()
