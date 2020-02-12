@@ -87,6 +87,8 @@ data class VillageParticipant(
     }
 
     fun isSayableNormalSay(isEpilogue: Boolean): Boolean {
+        // ダミーはOK
+        if (playerId == 1) return true
         // 見学は不可
         if (isSpectator) return false
         // エピローグ以外で死亡している場合は不可
@@ -95,9 +97,13 @@ data class VillageParticipant(
         return true
     }
 
-    fun isViewableWerewolfSay(): Boolean = skill?.toCdef()?.isViewableWerewolfSay ?: false
+    fun isViewableWerewolfSay(): Boolean {
+        return skill?.toCdef()?.isViewableWerewolfSay ?: false
+    }
 
     fun isSayableWerewolfSay(): Boolean {
+        // ダミーはOK
+        if (playerId == 1) return true
         // 死亡していたら不可
         if (!isAlive()) return false
         // 囁ける役職でなければ不可
@@ -111,6 +117,8 @@ data class VillageParticipant(
     }
 
     fun isSayableGraveSay(): Boolean {
+        // ダミーはOK
+        if (playerId == 1) return true
         // 死亡していなかったら不可
         if (isAlive()) return false
         // 見学は不可
@@ -131,7 +139,11 @@ data class VillageParticipant(
         return !isAlive() && CDef.DeadReason.突然.code() != dead?.code
     }
 
-    fun isSayableSpectateSay(): Boolean = isSpectator // 見学していなかったら不可
+    fun isSayableSpectateSay(): Boolean {
+        // ダミーはOK
+        if (playerId == 1) return true
+        return isSpectator // 見学していなかったら不可
+    }
 
     fun isViewableAttackMessage(): Boolean {
         // 生存していて襲撃可能職なら開放
