@@ -7,11 +7,11 @@ import com.ort.howlingwolf.domain.model.village.Village
 
 data class MessagesView(
     val list: List<MessageView>,
+    val allRecordCount: Int?,
     val allPageCount: Int?,
     val isExistPrePage: Boolean?,
     val isExistNextPage: Boolean?,
-    val currentPageNum: Int?,
-    val pageNumList: List<Int>?
+    val currentPageNum: Int?
 ) {
     constructor(
         messages: Messages,
@@ -28,11 +28,11 @@ data class MessagesView(
                 shouldHidePlayer = !village.status.isSolved()
             )
         },
+        allRecordCount = messages.allRecordCount,
         allPageCount = messages.allPageCount,
         isExistPrePage = messages.isExistPrePage,
         isExistNextPage = messages.isExistNextPage,
-        currentPageNum = messages.currentPageNum,
-        pageNumList = messages.pageNumList
+        currentPageNum = messages.currentPageNum
     )
 }
 
