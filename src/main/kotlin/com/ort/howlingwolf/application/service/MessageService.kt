@@ -45,6 +45,22 @@ class MessageService(
     }
 
     /**
+     * 最新発言日時取得
+     *
+     * @param villageId villageId
+     * @param messageTypeList 発言種別
+     * @param participant 参加情報
+     * @return 発言
+     */
+    fun findLatestMessagesUnixTimeMilli(
+        villageId: Int,
+        messageTypeList: List<CDef.MessageType>,
+        participant: VillageParticipant? = null
+    ): Long {
+        return messageDataSource.findLatestMessagesUnixTimeMilli(villageId, messageTypeList, participant)
+    }
+
+    /**
      * アンカー発言取得
      *
      * @param villageId villageId

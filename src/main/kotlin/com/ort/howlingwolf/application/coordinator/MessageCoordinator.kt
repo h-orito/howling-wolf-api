@@ -42,4 +42,13 @@ class MessageCoordinator(
         return if (!village.isViewableMessage(participant, messageType)) null
         else messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
     }
+
+    fun findLatestMessagesUnixTimeMilli(
+        village: Village,
+        user: HowlingWolfUser?
+    ): Long {
+        val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
+        val messageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, village.day.latestDay().day, user?.authority)
+        return messageService.findLatestMessagesUnixTimeMilli(village.id, messageTypeList, participant)
+    }
 }
