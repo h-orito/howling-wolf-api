@@ -62,6 +62,7 @@ class MessageDataSource(
             }
             Messages(
                 list = messageList.map { convertMessageToMessage(it) },
+                allRecordCount = messageList.allRecordCount,
                 allPageCount = messageList.allPageCount,
                 isExistPrePage = messageList.existsPreviousPage(),
                 isExistNextPage = messageList.existsNextPage(),
