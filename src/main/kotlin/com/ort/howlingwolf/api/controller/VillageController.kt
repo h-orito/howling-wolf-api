@@ -7,10 +7,7 @@ import com.ort.howlingwolf.api.form.VillageMessageForm
 import com.ort.howlingwolf.api.view.message.MessageView
 import com.ort.howlingwolf.api.view.message.MessagesView
 import com.ort.howlingwolf.api.view.myself.participant.SituationAsParticipantView
-import com.ort.howlingwolf.api.view.village.VillageAnchorMessageView
-import com.ort.howlingwolf.api.view.village.VillageRegisterView
-import com.ort.howlingwolf.api.view.village.VillageView
-import com.ort.howlingwolf.api.view.village.VillagesView
+import com.ort.howlingwolf.api.view.village.*
 import com.ort.howlingwolf.application.coordinator.MessageCoordinator
 import com.ort.howlingwolf.application.coordinator.VillageCoordinator
 import com.ort.howlingwolf.application.service.CharachipService
@@ -132,6 +129,24 @@ class VillageController(
             village = village,
             players = players,
             charas = charas
+        )
+    }
+
+    /**
+     * 最新発言時間、村日付取得
+     * @param villageId villageId
+     * @param user user
+     */
+    @GetMapping("/village/{villageId}/latest")
+    fun findLatest(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: HowlingWolfUser?
+    ): VillageLatestView {
+        val village: Village = villageService.findVillage(villageId, false)
+        val unixTimeMilli = messageCoordinator.findLatestMessagesUnixTimeMilli(village, user)
+        return VillageLatestView(
+            unixTimeMilli = unixTimeMilli,
+            villageDayId = village.day.latestDay().id
         )
     }
 
