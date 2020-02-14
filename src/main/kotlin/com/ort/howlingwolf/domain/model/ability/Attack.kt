@@ -154,5 +154,5 @@ object Attack {
      * @param targetChara 被襲撃者
      */
     private fun createAttackMessageString(chara: Chara, targetChara: Chara): String =
-        "${chara.charaName.name}達は、${targetChara.charaName.name}を襲撃した。"
+        "${chara.charaName.fullName()}達は、${targetChara.charaName.fullName()}を襲撃した。"
 }

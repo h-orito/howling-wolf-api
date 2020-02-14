@@ -72,12 +72,12 @@ object Execute {
         votedMap: Map<Int, List<VillageVote>>,
         charas: Charas
     ): Message {
-        val executedCharaName = charas.chara(village.participant, participantId).charaName.name
+        val executedCharaName = charas.chara(village.participant, participantId).charaName.fullName()
         val message = votedMap.entries.sortedBy { it.value.size }.reversed().joinToString(
             separator = "\n",
             postfix = "\n\n${executedCharaName}は村人達の手により処刑された。"
         ) { entry ->
-            val votedCharaName = charas.chara(village.participant, entry.key).charaName.name
+            val votedCharaName = charas.chara(village.participant, entry.key).charaName.fullName()
             "${votedCharaName}、${entry.value.size}票"
         }
         return Message.createPublicSystemMessage(

@@ -115,7 +115,7 @@ object Progress {
             separator = "\n",
             prefix = "現在の生存者は以下の${village.participant.filterAlive().count}名。\n"
         ) { member ->
-            charas.chara(member.charaId).charaName.name
+            charas.chara(member.charaId).charaName.fullName()
         }
         return Message.createPublicSystemMessage(text, village.day.latestDay().id)
     }

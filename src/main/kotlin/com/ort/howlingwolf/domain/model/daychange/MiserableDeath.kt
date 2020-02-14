@@ -40,7 +40,7 @@ object MiserableDeath {
             charas.list.shuffled().joinToString(
                 prefix = "次の日の朝、以下の村人が無惨な姿で発見された。\n",
                 separator = "、\n"
-            ) { it.charaName.name }
+            ) { it.charaName.fullName() }
         }
         return Message.createPublicSystemMessage(text, village.day.latestDay().id)
     }

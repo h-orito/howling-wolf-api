@@ -54,5 +54,5 @@ object SuddenlyDeath {
     }
 
     private fun createSuddenlyDeathMessageString(chara: Chara): String =
-        "${chara.charaName.name}は突然死した。"
+        "${chara.charaName.fullName()}は突然死した。"
 }

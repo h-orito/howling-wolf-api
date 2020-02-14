@@ -51,10 +51,10 @@ object Vote {
         votedMap: Map<Int, List<VillageVote>>
     ): Message {
         val maxFromCharaNameLength = votedMap.values.flatten().map { vote ->
-            charas.chara(village.participant, vote.myselfId).charaName.name.length
+            charas.chara(village.participant, vote.myselfId).charaName.fullName().length
         }.max()!!
         val maxToCharaNameLength = votedMap.values.flatten().map { vote ->
-            charas.chara(village.participant, vote.targetId).charaName.name.length
+            charas.chara(village.participant, vote.targetId).charaName.fullName().length
         }.max()!!
 
         val text = votedMap.entries.sortedBy { it.value.size }.reversed().map { entry ->
@@ -100,12 +100,12 @@ object Vote {
         maxToCharaNameLength: Int,
         count: Int
     ): String {
-        return fromChara.charaName.name.padEnd(
+        return fromChara.charaName.fullName().padEnd(
             length = maxFromCharaNameLength,
             padChar = '　'
         ) +
             " → " +
-            toChara.charaName.name.padEnd(
+            toChara.charaName.fullName().padEnd(
                 length = maxToCharaNameLength,
                 padChar = '　'
             ) +
