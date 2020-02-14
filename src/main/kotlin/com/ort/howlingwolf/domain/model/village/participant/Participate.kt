@@ -106,9 +106,9 @@ object Participate {
             village.participant.count
         }
         val text = if (isSpectate) {
-            "（見学）${number}人目、${chara.charaName.name}。"
+            "（見学）${number}人目、${chara.charaName.fullName()}。"
         } else {
-            "${number}人目、${chara.charaName.name}。"
+            "${number}人目、${chara.charaName.fullName()}。"
         }
         return Message.createPublicSystemMessage(text, village.day.prologueDay().id)
     }

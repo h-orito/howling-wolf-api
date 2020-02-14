@@ -38,5 +38,5 @@ object Psychic {
     }
 
     private fun createPsychicPrivateMessageString(chara: Chara, isWolf: Boolean): String =
-        "${chara.charaName.name}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
+        "${chara.charaName.fullName()}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
 }

@@ -106,5 +106,5 @@ object Guard {
     }
 
     private fun createGuardMessageString(myChara: Chara, targetChara: Chara): String =
-        "${myChara.charaName.name}は、${targetChara.charaName.name}を護衛している。"
+        "${myChara.charaName.fullName()}は、${targetChara.charaName.fullName()}を護衛している。"
 }

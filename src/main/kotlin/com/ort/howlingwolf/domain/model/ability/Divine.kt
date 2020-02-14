@@ -106,5 +106,5 @@ object Divine {
     }
 
     private fun createDivineMessageString(chara: Chara, targetChara: Chara, isWolf: Boolean): String =
-        "${chara.charaName.name}は、${targetChara.charaName.name}を占った。\n${targetChara.charaName.name}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
+        "${chara.charaName.fullName()}は、${targetChara.charaName.fullName()}を占った。\n${targetChara.charaName.fullName()}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
 }

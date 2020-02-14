@@ -51,5 +51,5 @@ object Leave {
     //                                                                        Assist Logic
     //                                                                        ============
     private fun createLeaveMessageString(chara: Chara): String =
-        "${chara.charaName.name}は村を去った。"
+        "${chara.charaName.fullName()}は村を去った。"
 }
