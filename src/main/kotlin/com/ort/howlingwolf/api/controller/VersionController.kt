@@ -21,7 +21,7 @@ class VersionController(
     ): Version {
         val version = versionService.findVersion()
         return Version(
-            clientVersion = 1
+            clientVersion = version.clientVersion
         )
     }
 }
