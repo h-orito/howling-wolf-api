@@ -21,7 +21,7 @@ public class DBCurrent {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected final String _projectName = "wolf4busydb";
+    protected final String _projectName = "howlingwolfdb";
     protected final String _projectPrefix = "";
     protected final String _generationGapBasePrefix = "Bs";
 

@@ -20,3 +20,4 @@ data-directory: playsql/data/common/tsv/UTF-8
 12-CHARA.tsv (86)
 13-CHARA_IMAGE.tsv (194)
 14-NOONNIGHT.tsv (2)
+15-APP_VERSION.tsv (1)
