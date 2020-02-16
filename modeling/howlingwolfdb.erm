@@ -509,6 +509,40 @@
 			</table_properties>
 		</table>
 		<table>
+			<physical_name>app_version</physical_name>
+			<logical_name>バージョン</logical_name>
+			<description></description>
+			<height>53</height>
+			<width>320</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>48</x>
+			<y>61</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>client_version</physical_name>
+					<logical_name>クライアントのバージョン</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
 			<physical_name>authority</physical_name>
 			<logical_name>権限</logical_name>
 			<description></description>
