@@ -110,6 +110,15 @@ object Attack {
 
     fun isAvailableNoTarget(village: Village): Boolean = village.day.latestDay().day !== 1 // 1日目はダミー固定
 
+    /**
+     * 能力行使できるか
+     * @param participant 村参加者
+     */
+    fun isUsable(participant: VillageParticipant): Boolean {
+        // 生存していたら行使できる
+        return participant.isAlive()
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============

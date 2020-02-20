@@ -39,7 +39,6 @@ class Ability(
         }
     }
 
-
     // 選択中の対象
     fun getSelectingTarget(
         village: Village,
@@ -76,6 +75,8 @@ class Ability(
         participant?.skill ?: throw HowlingWolfBusinessException("能力セットできません")
         // その能力を持っていない
         if (Abilities(participant.skill).list.none { it.code == code }) throw HowlingWolfBusinessException("能力セットできません")
+        // 使えない状況
+        if (!isUsable(village, participant)) throw HowlingWolfBusinessException("能力セットできません")
         // 対象指定がおかしい
         if (targetId == null && !canNoTarget(village)) throw HowlingWolfBusinessException("能力セットできません")
         if (targetId != null && getSelectableTargetList(
@@ -83,6 +84,18 @@ class Ability(
                 participant
             ).none { it.id == targetId }
         ) throw HowlingWolfBusinessException("能力セットできません")
+    }
+
+    fun isUsable(village: Village, participant: VillageParticipant?): Boolean {
+        participant ?: return false
+        // 進行中でないと使えない
+        if (!village.status.isProgress()) return false
+        return when (code) {
+            CDef.AbilityType.襲撃.code() -> Attack.isUsable(participant)
+            CDef.AbilityType.占い.code() -> Divine.isUsable(participant)
+            CDef.AbilityType.護衛.code() -> Guard.isUsable(village, participant)
+            else -> false
+        }
     }
 
     fun canNoTarget(village: Village): Boolean {

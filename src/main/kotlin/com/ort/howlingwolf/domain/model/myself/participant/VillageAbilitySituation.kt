@@ -21,7 +21,7 @@ data class VillageAbilitySituation(
         type = ability,
         targetList = ability.getSelectableTargetList(village, participant),
         target = ability.getSelectingTarget(village, participant, villageAbilities),
-        usable = ability.getSelectableTargetList(village, participant).isNotEmpty(),
+        usable = ability.isUsable(village, participant),
         isAvailableNoTarget = ability.canNoTarget(village)
     )
 }
