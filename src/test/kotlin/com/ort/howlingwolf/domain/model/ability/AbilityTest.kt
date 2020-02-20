@@ -245,4 +245,42 @@ class AbilityTest : HowlingWolfTest() {
         // ## Assert ##
         ability.assertAbility(village, participant, targetId)
     }
+
+    @Test
+    fun test_isUsable_行使できる() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.襲撃)
+        val participant = DummyDomainModelCreator.createDummyAliveWolf()
+        val village = DummyDomainModelCreator.createDummyVillage().copy(
+            status = VillageStatus(CDef.VillageStatus.進行中),
+            participant = VillageParticipants(
+                count = 1,
+                memberList = listOf(participant)
+            ),
+            day = VillageDays(listOf(DummyDomainModelCreator.createDummyVillageDay()))
+        )
+
+        // ## Act ##
+        // ## Assert ##
+        assertThat(ability.isUsable(village, participant)).isTrue()
+    }
+
+    @Test
+    fun test_isUsable_行使できない() {
+        // ## Arrange ##
+        val ability = Ability(CDef.AbilityType.襲撃)
+        val participant = DummyDomainModelCreator.createDummyDeadWolf()
+        val village = DummyDomainModelCreator.createDummyVillage().copy(
+            status = VillageStatus(CDef.VillageStatus.進行中),
+            participant = VillageParticipants(
+                count = 1,
+                memberList = listOf(participant)
+            ),
+            day = VillageDays(listOf(DummyDomainModelCreator.createDummyVillageDay()))
+        )
+
+        // ## Act ##
+        // ## Assert ##
+        assertThat(ability.isUsable(village, participant)).isFalse()
+    }
 }

@@ -88,6 +88,11 @@ object Divine {
 
     fun isAvailableNoTarget(): Boolean = false
 
+    fun isUsable(participant: VillageParticipant): Boolean {
+        // 生存していたら行使できる
+        return participant.isAlive()
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============

@@ -95,6 +95,11 @@ object Guard {
 
     fun isAvailableNoTarget(): Boolean = false
 
+    fun isUsable(village: Village, participant: VillageParticipant): Boolean {
+        // 2日目以降、生存していたら行使できる
+        return village.day.latestDay().day > 1 && participant.isAlive()
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
