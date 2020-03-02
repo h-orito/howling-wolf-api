@@ -5,10 +5,7 @@ import com.ort.howlingwolf.domain.model.ability.Ability
 import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.commit.Commit
-import com.ort.howlingwolf.domain.model.message.Message
-import com.ort.howlingwolf.domain.model.message.MessageContent
-import com.ort.howlingwolf.domain.model.message.Messages
-import com.ort.howlingwolf.domain.model.message.Say
+import com.ort.howlingwolf.domain.model.message.*
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.Leave
 import com.ort.howlingwolf.domain.model.village.participant.Participate
@@ -25,25 +22,15 @@ class MessageService(
      *
      * @param villageId villageId
      * @param villageDayId 村日付ID
-     * @param messageTypeList 発言種別
-     * @param participant 参加情報
-     * @param from これ以降の発言を取得する unixtimemilli
-     * @param pageSize pageSize
-     * @param pageNum pageNum
-     * @param participantIdList 指定した場合はこの参加者で絞る
+     * @param query query
      * @return 発言
      */
     fun findMessages(
         villageId: Int,
         villageDayId: Int,
-        messageTypeList: List<CDef.MessageType>,
-        participant: VillageParticipant? = null,
-        from: Long? = null,
-        pageSize: Int? = null,
-        pageNum: Int? = null,
-        participantIdList: List<Int>? = null
+        query: MessageQuery
     ): Messages {
-        return messageDataSource.findMessages(villageId, villageDayId, messageTypeList, participant, from, pageSize, pageNum, participantIdList)
+        return messageDataSource.findMessages(villageId, villageDayId, query)
     }
 
     /**

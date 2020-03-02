@@ -9,6 +9,7 @@ import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.howlingwolf.HowlingWolfTest
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
+import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.MessageType
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
@@ -96,9 +97,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         var messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = null
+            query = MessageQuery(listOf(CDef.MessageType.通常発言))
         )
 
         // ## Assert ##
@@ -109,9 +108,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.prologueDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = null
+            query = MessageQuery(listOf(CDef.MessageType.通常発言))
         )
 
         // ## Assert ##
@@ -121,9 +118,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.死者の呻き),
-            participant = null,
-            from = null
+            query = MessageQuery(listOf(CDef.MessageType.死者の呻き))
         )
 
         // ## Assert ##
@@ -133,9 +128,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = unixTimeMilli
+            query = MessageQuery(listOf(CDef.MessageType.通常発言)).copy(from = unixTimeMilli)
         )
 
         // ## Assert ##
@@ -145,13 +138,125 @@ class MessageDataSourceTest : HowlingWolfTest() {
         messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = unixTimeMilli - 1
+            query = MessageQuery(listOf(CDef.MessageType.通常発言))
         )
 
         // ## Assert ##
         assertThat(messages.list).isNotEmpty
+    }
+
+    @Test
+    fun test_findMessages_発言抽出() {
+        // ## Arrange ##
+        var village = villageDataSource.registerVillage(createDummyVillageParam())
+        insertVillagePlayer(village.id)
+        insertVillageDay(village.id)
+        village = villageDataSource.findVillage(village.id)
+        val participant = village.participant.memberList[0]
+        val messageContent = MessageContent(
+            type = MessageType(CDef.MessageType.通常発言),
+            num = 1,
+            text = "dummy message text",
+            faceCode = CDef.FaceType.通常.code()
+        )
+        messageDataSource.registerMessage(village.id, Message.createSayMessage(
+            from = participant,
+            villageDayId = village.day.latestDay().id,
+            messageContent = messageContent
+        ))
+        messageDataSource.registerMessage(village.id, Message.createSayMessage(
+            from = participant,
+            villageDayId = village.day.latestDay().id,
+            messageContent = messageContent.copy(
+                type = MessageType(CDef.MessageType.独り言)
+            )
+        ))
+
+        // ## Act ##
+        var query = MessageQuery.invoke(
+            village = village,
+            participant = participant,
+            day = village.day.latestDay().day,
+            authority = CDef.Authority.プレイヤー,
+            messageTypeList = listOf(),
+            from = null,
+            pageSize = null,
+            pageNum = null,
+            participantIdList = null
+        )
+        var messages = messageDataSource.findMessages(
+            villageId = village.id,
+            villageDayId = village.day.latestDay().id,
+            query = query
+        )
+
+        // ## Assert ##
+        assertThat(messages.list.size).`as`("指定しない場合は全部").isEqualTo(2)
+
+        // ## Act ##
+        query = MessageQuery.invoke(
+            village = village,
+            participant = participant,
+            day = village.day.latestDay().day,
+            authority = CDef.Authority.プレイヤー,
+            messageTypeList = listOf(CDef.MessageType.通常発言),
+            from = null,
+            pageSize = null,
+            pageNum = null,
+            participantIdList = null
+        )
+        messages = messageDataSource.findMessages(
+            villageId = village.id,
+            villageDayId = village.day.latestDay().id,
+            query = query
+        )
+
+        // ## Assert ##
+        assertThat(messages.list.size).`as`("指定した場合はその発言だけ").isEqualTo(1)
+        assertThat(messages.list[0].content.type.code).isEqualTo(CDef.MessageType.通常発言.code())
+
+        // ## Act ##
+        query = MessageQuery.invoke(
+            village = village,
+            participant = participant,
+            day = village.day.latestDay().day,
+            authority = CDef.Authority.プレイヤー,
+            messageTypeList = listOf(CDef.MessageType.通常発言, CDef.MessageType.独り言),
+            from = null,
+            pageSize = null,
+            pageNum = null,
+            participantIdList = null
+        )
+        messages = messageDataSource.findMessages(
+            villageId = village.id,
+            villageDayId = village.day.latestDay().id,
+            query = query
+        )
+
+        // ## Assert ##
+        assertThat(messages.list.size).`as`("両方指定しているので両方").isEqualTo(2)
+
+        // ## Act ##
+        query = MessageQuery.invoke(
+            village = village,
+            participant = participant,
+            day = village.day.latestDay().day,
+            authority = CDef.Authority.プレイヤー,
+            messageTypeList = listOf(CDef.MessageType.独り言),
+            from = null,
+            pageSize = null,
+            pageNum = null,
+            participantIdList = null
+        )
+        messages = messageDataSource.findMessages(
+            villageId = village.id,
+            villageDayId = village.day.latestDay().id,
+            query = query
+        )
+
+        // ## Assert ##
+        assertThat(messages.list.size).`as`("独り言のみ").isEqualTo(1)
+        assertThat(messages.list[0].content.type.code).isEqualTo(CDef.MessageType.独り言.code())
     }
 
     @Test
@@ -163,22 +268,20 @@ class MessageDataSourceTest : HowlingWolfTest() {
         val participant = village.participant.memberList[0]
         messageDataSource.registerMessage(
             village.id, Message.createSayMessage(
-                from = participant,
-                villageDayId = village.day.latestDay().id,
-                messageContent = MessageContent(
-                    type = MessageType(CDef.MessageType.通常発言),
-                    num = 1,
-                    text = "dummy message text",
-                    faceCode = CDef.FaceType.通常.code()
-                )
+            from = participant,
+            villageDayId = village.day.latestDay().id,
+            messageContent = MessageContent(
+                type = MessageType(CDef.MessageType.通常発言),
+                num = 1,
+                text = "dummy message text",
+                faceCode = CDef.FaceType.通常.code()
             )
+        )
         )
         val messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = null
+            query = MessageQuery(listOf(CDef.MessageType.通常発言))
         )
         val num = messages.list.first().content.num
 
@@ -200,15 +303,15 @@ class MessageDataSourceTest : HowlingWolfTest() {
         val participant2 = village.participant.memberList[1]
         messageDataSource.registerMessage(
             village.id, Message.createSayMessage(
-                from = participant,
-                villageDayId = village.day.latestDay().id,
-                messageContent = MessageContent(
-                    type = MessageType(CDef.MessageType.通常発言),
-                    num = 1,
-                    text = "dummy message text",
-                    faceCode = CDef.FaceType.通常.code()
-                )
+            from = participant,
+            villageDayId = village.day.latestDay().id,
+            messageContent = MessageContent(
+                type = MessageType(CDef.MessageType.通常発言),
+                num = 1,
+                text = "dummy message text",
+                faceCode = CDef.FaceType.通常.code()
             )
+        )
         )
 
         // ## Act ##
@@ -253,9 +356,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         val before = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = null
+            query = MessageQuery(listOf(CDef.MessageType.通常発言))
         )
         val after = before.copy(list = before.list + message)
 
@@ -266,9 +367,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         val messages = messageDataSource.findMessages(
             villageId = village.id,
             villageDayId = village.day.latestDay().id,
-            messageTypeList = listOf(CDef.MessageType.通常発言),
-            participant = null,
-            from = null
+            query = MessageQuery(listOf(CDef.MessageType.通常発言))
         )
         assertThat(messages.list.size).isEqualTo(2)
     }
