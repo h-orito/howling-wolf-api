@@ -8,6 +8,7 @@ import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.stereotype.Service
+import org.springframework.util.CollectionUtils
 
 @Service
 class MessageCoordinator(
@@ -27,12 +28,17 @@ class MessageCoordinator(
         user: HowlingWolfUser?,
         from: Long?,
         pageSize: Int?,
-        pageNum: Int?
+        pageNum: Int?,
+        messageTypeList: List<CDef.MessageType>?,
+        participantIdList: List<Int>?
     ): Messages {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        val messageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, user?.authority)
+        val availableMessageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, user?.authority)
+        val requestMessageTypeList = if (CollectionUtils.isEmpty(messageTypeList)) CDef.MessageType.listAll() else messageTypeList!!
+        val messageTypeList = requestMessageTypeList.filter { availableMessageTypeList.contains(it) }
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
-        val messages: Messages = messageService.findMessages(village.id, villageDayId, messageTypeList, participant, from, pageSize, pageNum)
+        val messages: Messages =
+            messageService.findMessages(village.id, villageDayId, messageTypeList, participant, from, pageSize, pageNum, participantIdList)
         dayChangeCoordinator.dayChangeIfNeeded(village)
         return messages
     }
@@ -48,7 +54,8 @@ class MessageCoordinator(
         user: HowlingWolfUser?
     ): Long {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        val messageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, village.day.latestDay().day, user?.authority)
+        val messageTypeList: List<CDef.MessageType> =
+            village.viewableMessageTypeList(participant, village.day.latestDay().day, user?.authority)
         return messageService.findLatestMessagesUnixTimeMilli(village.id, messageTypeList, participant)
     }
 }
