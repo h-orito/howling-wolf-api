@@ -5,10 +5,7 @@ import com.ort.dbflute.cbean.MessageCB
 import com.ort.dbflute.exbhv.MessageBhv
 import com.ort.dbflute.exentity.Message
 import com.ort.howlingwolf.api.controller.VillageController
-import com.ort.howlingwolf.domain.model.message.MessageContent
-import com.ort.howlingwolf.domain.model.message.MessageTime
-import com.ort.howlingwolf.domain.model.message.MessageType
-import com.ort.howlingwolf.domain.model.message.Messages
+import com.ort.howlingwolf.domain.model.message.*
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
@@ -35,37 +32,28 @@ class MessageDataSource(
      *
      * @param villageId villageId
      * @param villageDayId 村日付ID
-     * @param messageTypeList 発言種別
-     * @param participant 参加情報
-     * @param from これ以降の発言を取得
-     * @param pageSize pageSize
-     * @param pageNum pageNum
-     * @param participantIdList 指定した場合この参加者で絞る
+     * @param query query
      * @return 発言
      */
     fun findMessages(
         villageId: Int,
         villageDayId: Int,
-        messageTypeList: List<CDef.MessageType>,
-        participant: VillageParticipant?,
-        from: Long?,
-        pageSize: Int? = null,
-        pageNum: Int? = null,
-        participantIdList: List<Int>? = null
+        query: MessageQuery
     ): Messages {
-        return if (pageSize == null || pageNum == null) {
-            val messageList = messageBhv.selectList {
-                queryMessage(it, villageId, villageDayId, messageTypeList, participant, from, participantIdList)
-                it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
-            }
-            Messages(
-                list = messageList.map { convertMessageToMessage(it) }
-            )
-        } else {
+        if (query.messageTypeList.isEmpty() && !query.includeMonologue && !query.includeSecret) {
+            return Messages(listOf())
+        }
+
+        return if (query.isPaging()) {
             val messageList = messageBhv.selectPage {
-                queryMessage(it, villageId, villageDayId, messageTypeList, participant, from, participantIdList)
+                queryMessage(
+                    cb = it,
+                    villageId = villageId,
+                    villageDayId = villageDayId,
+                    query = query
+                )
                 it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
-                it.paging(pageSize, pageNum)
+                it.paging(query.pageSize!!, query.pageNum!!)
             }
             Messages(
                 list = messageList.map { convertMessageToMessage(it) },
@@ -74,6 +62,20 @@ class MessageDataSource(
                 isExistPrePage = messageList.existsPreviousPage(),
                 isExistNextPage = messageList.existsNextPage(),
                 currentPageNum = messageList.currentPageNumber
+            )
+
+        } else {
+            val messageList = messageBhv.selectList {
+                queryMessage(
+                    cb = it,
+                    villageId = villageId,
+                    villageDayId = villageDayId,
+                    query = query
+                )
+                it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
+            }
+            Messages(
+                list = messageList.map { convertMessageToMessage(it) }
             )
         }
     }
@@ -91,8 +93,18 @@ class MessageDataSource(
         messageTypeList: List<CDef.MessageType>,
         participant: VillageParticipant?
     ): Long {
+        val query = MessageQuery(
+            from = null,
+            pageSize = null,
+            pageNum = null,
+            participant = participant,
+            messageTypeList = messageTypeList,
+            participantIdList = null,
+            includeMonologue = false,
+            includeSecret = false
+        )
         return messageBhv.selectEntityWithDeletedCheck() {
-            queryMessage(it, villageId, null, messageTypeList, participant, null, null)
+            queryMessage(it, villageId, null, query)
             it.query().addOrderBy_MessageUnixtimestampMilli_Desc()
             it.fetchFirst(1)
         }.messageUnixtimestampMilli
@@ -218,25 +230,51 @@ class MessageDataSource(
         cb: MessageCB,
         villageId: Int,
         villageDayId: Int?,
-        messageTypeList: List<CDef.MessageType>,
-        participant: VillageParticipant?,
-        from: Long?,
-        participantIdList: List<Int>?
+        query: MessageQuery
     ) {
-        // TODO フィルターにおける独り言、秘話
-        // TODO request - available が空のとき
         cb.query().setVillageId_Equal(villageId)
         if (villageDayId != null) cb.query().setVillageDayId_Equal(villageDayId)
-        if (participant != null) {
-            cb.orScopeQuery { orCB ->
-                orCB.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
-                orCB.query().setVillagePlayerId_Equal(participant.id)
-                orCB.query().setToVillagePlayerId_Equal(participant.id)
-            }
+        // 参加していない場合は特に考慮不要
+        if (query.participant == null) {
+            cb.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
         } else {
-            cb.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
+            val participantId = query.participant.id
+            // 進行中で独り言や秘話だけを見たい場合
+            if (query.messageTypeList.isEmpty()) {
+                if (query.includeMonologue && query.includeSecret) {
+                    cb.orScopeQuery { orCB ->
+                        orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
+                        orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
+                    }
+                } else {
+                    if (query.includeMonologue) queryMyMonologue(cb, participantId)
+                    if (query.includeSecret) querySecretSayToMe(cb, participantId)
+                }
+            }
+            // エピローグなど、全部見える状況の場合はorでなくて良い
+            else if (!query.includeMonologue && !query.includeSecret) {
+                cb.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
+            }
+            // その他
+            else {
+                cb.orScopeQuery { orCB ->
+                    orCB.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
+                    if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
+                    if (query.includeSecret) orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
+                }
+            }
         }
-        if (from != null) cb.query().setMessageUnixtimestampMilli_GreaterThan(from)
-        if (CollectionUtils.isNotEmpty(participantIdList)) cb.query().setVillagePlayerId_InScope(participantIdList)
+        query.from?.let { cb.query().setMessageUnixtimestampMilli_GreaterThan(it) }
+        if (CollectionUtils.isNotEmpty(query.participantIdList)) cb.query().setVillagePlayerId_InScope(query.participantIdList)
+    }
+
+    private fun queryMyMonologue(cb: MessageCB, id: Int) {
+        cb.query().setVillagePlayerId_Equal(id)
+        cb.query().setMessageTypeCode_Equal(CDef.MessageType.独り言.code())
+    }
+
+    private fun querySecretSayToMe(cb: MessageCB, id: Int) {
+        cb.query().setToVillagePlayerId_Equal(id)
+        cb.query().setMessageTypeCode_Equal(CDef.MessageType.秘話.code())
     }
 }

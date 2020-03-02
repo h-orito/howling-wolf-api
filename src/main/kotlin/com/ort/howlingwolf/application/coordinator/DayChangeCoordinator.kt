@@ -5,6 +5,7 @@ import com.ort.howlingwolf.application.service.*
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.commit.Commits
 import com.ort.howlingwolf.domain.model.daychange.DayChange
+import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
@@ -35,7 +36,7 @@ class DayChangeCoordinator(
         val votes: VillageVotes = voteService.findVillageVotes(village.id)
         val abilities: VillageAbilities = abilityService.findVillageAbilities(village.id)
         val commits: Commits = commitService.findCommits(village.id)
-        val todayMessages = messageService.findMessages(village.id, village.day.latestDay().id, listOf(CDef.MessageType.通常発言))
+        val todayMessages = messageService.findMessages(village.id, village.day.latestDay().id, MessageQuery(listOf(CDef.MessageType.通常発言)))
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(village.id)
 

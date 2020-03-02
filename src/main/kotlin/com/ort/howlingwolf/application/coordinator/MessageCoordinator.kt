@@ -3,12 +3,12 @@ package com.ort.howlingwolf.application.coordinator
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.application.service.MessageService
 import com.ort.howlingwolf.domain.model.message.Message
+import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.stereotype.Service
-import org.springframework.util.CollectionUtils
 
 @Service
 class MessageCoordinator(
@@ -33,12 +33,23 @@ class MessageCoordinator(
         participantIdList: List<Int>?
     ): Messages {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        val availableMessageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, user?.authority)
-        val requestMessageTypeList = if (CollectionUtils.isEmpty(messageTypeList)) CDef.MessageType.listAll() else messageTypeList!!
-        val messageTypeList = requestMessageTypeList.filter { availableMessageTypeList.contains(it) }
+        val query = MessageQuery.invoke(
+            village = village,
+            participant = participant,
+            day = day,
+            authority = user?.authority,
+            messageTypeList = messageTypeList,
+            from = from,
+            pageSize = pageSize,
+            pageNum = pageNum,
+            participantIdList = participantIdList
+        )
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
-        val messages: Messages =
-            messageService.findMessages(village.id, villageDayId, messageTypeList, participant, from, pageSize, pageNum, participantIdList)
+        val messages: Messages = messageService.findMessages(
+            villageId = village.id,
+            villageDayId = villageDayId,
+            query = query
+        )
         dayChangeCoordinator.dayChangeIfNeeded(village)
         return messages
     }

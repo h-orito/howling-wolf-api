@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.howlingwolf.HowlingWolfTest
 import com.ort.howlingwolf.application.service.*
+import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageDays
@@ -68,9 +69,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val messages = messageService.findMessages(
             villageId,
             village.day.latestDay().id,
-            listOf(CDef.MessageType.通常発言),
-            null,
-            null
+            MessageQuery(listOf(CDef.MessageType.通常発言))
         )
         assertThat(messages.list).isNotEmpty
     }
@@ -250,9 +249,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val messages = messageService.findMessages(
             villageId,
             village.day.latestDay().id,
-            listOf(CDef.MessageType.通常発言),
-            null,
-            null
+            MessageQuery(listOf(CDef.MessageType.通常発言))
         )
         assertThat(messages.list.any {
             it.fromVillageParticipantId == participant?.id
