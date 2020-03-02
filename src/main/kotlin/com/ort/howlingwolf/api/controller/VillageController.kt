@@ -121,7 +121,18 @@ class VillageController(
         @Validated form: VillageMessageForm
     ): MessagesView {
         val village: Village = villageService.findVillage(villageId, false)
-        val messages: Messages = messageCoordinator.findMessageList(village, day, noonnight, user, form.from, form.page_size, form.page_num)
+        val messageTypeList = form.message_type_list?.mapNotNull { CDef.MessageType.codeOf(it) }
+        val messages: Messages = messageCoordinator.findMessageList(
+            village = village,
+            day = day,
+            noonnight = noonnight,
+            user = user,
+            from = form.from,
+            pageSize = form.page_size,
+            pageNum = form.page_num,
+            messageTypeList = messageTypeList,
+            participantIdList = form.participant_id_list?.filterNotNull() // [null]で来る問題に対応
+        )
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         return MessagesView(

@@ -12,6 +12,7 @@ import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
+import org.apache.commons.collections4.CollectionUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import java.time.ZoneOffset
@@ -37,6 +38,9 @@ class MessageDataSource(
      * @param messageTypeList 発言種別
      * @param participant 参加情報
      * @param from これ以降の発言を取得
+     * @param pageSize pageSize
+     * @param pageNum pageNum
+     * @param participantIdList 指定した場合この参加者で絞る
      * @return 発言
      */
     fun findMessages(
@@ -46,11 +50,12 @@ class MessageDataSource(
         participant: VillageParticipant?,
         from: Long?,
         pageSize: Int? = null,
-        pageNum: Int? = null
+        pageNum: Int? = null,
+        participantIdList: List<Int>? = null
     ): Messages {
         return if (pageSize == null || pageNum == null) {
             val messageList = messageBhv.selectList {
-                queryMessage(it, villageId, villageDayId, messageTypeList, participant, from)
+                queryMessage(it, villageId, villageDayId, messageTypeList, participant, from, participantIdList)
                 it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
             }
             Messages(
@@ -58,7 +63,7 @@ class MessageDataSource(
             )
         } else {
             val messageList = messageBhv.selectPage {
-                queryMessage(it, villageId, villageDayId, messageTypeList, participant, from)
+                queryMessage(it, villageId, villageDayId, messageTypeList, participant, from, participantIdList)
                 it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
                 it.paging(pageSize, pageNum)
             }
@@ -77,10 +82,8 @@ class MessageDataSource(
      * 最新発言日時取得
      *
      * @param villageId villageId
-     * @param villageDayId 村日付ID
      * @param messageTypeList 発言種別
      * @param participant 参加情報
-     * @param from これ以降の発言を取得
      * @return 最新発言日時(unix_datetime_milli)
      */
     fun findLatestMessagesUnixTimeMilli(
@@ -89,7 +92,7 @@ class MessageDataSource(
         participant: VillageParticipant?
     ): Long {
         return messageBhv.selectEntityWithDeletedCheck() {
-            queryMessage(it, villageId, null, messageTypeList, participant, null)
+            queryMessage(it, villageId, null, messageTypeList, participant, null, null)
             it.query().addOrderBy_MessageUnixtimestampMilli_Desc()
             it.fetchFirst(1)
         }.messageUnixtimestampMilli
@@ -217,8 +220,11 @@ class MessageDataSource(
         villageDayId: Int?,
         messageTypeList: List<CDef.MessageType>,
         participant: VillageParticipant?,
-        from: Long?
+        from: Long?,
+        participantIdList: List<Int>?
     ) {
+        // TODO フィルターにおける独り言、秘話
+        // TODO request - available が空のとき
         cb.query().setVillageId_Equal(villageId)
         if (villageDayId != null) cb.query().setVillageDayId_Equal(villageDayId)
         if (participant != null) {
@@ -231,5 +237,6 @@ class MessageDataSource(
             cb.query().setMessageTypeCode_InScope(messageTypeList.map { type -> type.code() })
         }
         if (from != null) cb.query().setMessageUnixtimestampMilli_GreaterThan(from)
+        if (CollectionUtils.isNotEmpty(participantIdList)) cb.query().setVillagePlayerId_InScope(participantIdList)
     }
 }

@@ -30,6 +30,7 @@ class MessageService(
      * @param from これ以降の発言を取得する unixtimemilli
      * @param pageSize pageSize
      * @param pageNum pageNum
+     * @param participantIdList 指定した場合はこの参加者で絞る
      * @return 発言
      */
     fun findMessages(
@@ -39,9 +40,10 @@ class MessageService(
         participant: VillageParticipant? = null,
         from: Long? = null,
         pageSize: Int? = null,
-        pageNum: Int? = null
+        pageNum: Int? = null,
+        participantIdList: List<Int>? = null
     ): Messages {
-        return messageDataSource.findMessages(villageId, villageDayId, messageTypeList, participant, from, pageSize, pageNum)
+        return messageDataSource.findMessages(villageId, villageDayId, messageTypeList, participant, from, pageSize, pageNum, participantIdList)
     }
 
     /**
