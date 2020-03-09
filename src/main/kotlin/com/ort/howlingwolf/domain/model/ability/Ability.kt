@@ -6,6 +6,7 @@ import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
+import com.ort.howlingwolf.fw.exception.HowlingWolfBadRequestException
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 
 class Ability(
@@ -72,18 +73,18 @@ class Ability(
     }
 
     fun assertAbility(village: Village, participant: VillageParticipant?, targetId: Int?) {
-        participant?.skill ?: throw HowlingWolfBusinessException("能力セットできません")
+        participant?.skill ?: throw HowlingWolfBadRequestException("役職なし")
         // その能力を持っていない
-        if (Abilities(participant.skill).list.none { it.code == code }) throw HowlingWolfBusinessException("能力セットできません")
+        if (Abilities(participant.skill).list.none { it.code == code }) throw HowlingWolfBadRequestException("${name}の能力を持っていません")
         // 使えない状況
-        if (!isUsable(village, participant)) throw HowlingWolfBusinessException("能力セットできません")
+        if (!isUsable(village, participant)) throw HowlingWolfBusinessException("${name}能力を使えない状態です")
         // 対象指定がおかしい
-        if (targetId == null && !canNoTarget(village)) throw HowlingWolfBusinessException("能力セットできません")
+        if (targetId == null && !canNoTarget(village)) throw HowlingWolfBusinessException("対象指定が必要です")
         if (targetId != null && getSelectableTargetList(
                 village,
                 participant
             ).none { it.id == targetId }
-        ) throw HowlingWolfBusinessException("能力セットできません")
+        ) throw HowlingWolfBusinessException("指定できない対象を指定しています")
     }
 
     fun isUsable(village: Village, participant: VillageParticipant?): Boolean {

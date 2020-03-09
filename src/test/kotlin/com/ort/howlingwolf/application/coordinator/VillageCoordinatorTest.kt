@@ -89,6 +89,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         villageCoordinator.assertParticipate(
             villageId = villageId,
             user = user,
+            message = "aa",
             charaId = charas.list[1].id,
             isSpectate = false,
             password = ""
@@ -97,6 +98,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         villageCoordinator.assertParticipate(
             villageId = villageId,
             user = user,
+            message = "aa",
             charaId = charas.list[1].id,
             isSpectate = true,
             password = ""

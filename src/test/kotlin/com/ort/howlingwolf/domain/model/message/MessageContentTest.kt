@@ -2,7 +2,7 @@ package com.ort.howlingwolf.domain.model.message
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.HowlingWolfTest
-import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
+import com.ort.howlingwolf.fw.exception.HowlingWolfBadRequestException
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -16,7 +16,7 @@ class MessageContentTest : HowlingWolfTest() {
     // ===================================================================================
     //                                                                                Test
     //                                                                           =========
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertMessageLength_OK() {
         // ## Arrange ##
         val messageContent = MessageContent(
@@ -53,7 +53,7 @@ class MessageContentTest : HowlingWolfTest() {
         messageContent.assertMessageLength(maxLength)
     }
 
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertMessageLength_行数オーバー() {
         // ## Arrange ##
         val messageContent = MessageContent(
@@ -91,7 +91,7 @@ class MessageContentTest : HowlingWolfTest() {
         messageContent.assertMessageLength(maxLength)
     }
 
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertMessageLength_文字数オーバー() {
         // ## Arrange ##
         val messageContent = MessageContent(
@@ -110,7 +110,7 @@ class MessageContentTest : HowlingWolfTest() {
         messageContent.assertMessageLength(maxLength)
     }
 
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertMessageLength_空() {
         // ## Arrange ##
         val messageContent = MessageContent(
@@ -126,7 +126,7 @@ class MessageContentTest : HowlingWolfTest() {
         messageContent.assertMessageLength(maxLength)
     }
 
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertMessageLength_改行のみ() {
         // ## Arrange ##
         val messageContent = MessageContent(

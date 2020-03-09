@@ -3,6 +3,7 @@ package com.ort.howlingwolf.domain.model.skill
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
+import com.ort.howlingwolf.fw.exception.HowlingWolfBadRequestException
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 
 data class SkillRequest(
@@ -42,8 +43,8 @@ data class SkillRequest(
             secondRequestSkill: String
         ) {
             if (!isAvailableSkillRequest(village, participant)) throw HowlingWolfBusinessException("役職希望変更できません")
-            val first = CDef.Skill.codeOf(firstRequestSkill) ?: throw HowlingWolfBusinessException("第1希望が不正")
-            val second = CDef.Skill.codeOf(secondRequestSkill) ?: throw HowlingWolfBusinessException("第1希望が不正")
+            val first = CDef.Skill.codeOf(firstRequestSkill) ?: throw HowlingWolfBadRequestException("第1希望が不正")
+            val second = CDef.Skill.codeOf(secondRequestSkill) ?: throw HowlingWolfBadRequestException("第1希望が不正")
             village.assertSkillRequest(first, second)
         }
     }
