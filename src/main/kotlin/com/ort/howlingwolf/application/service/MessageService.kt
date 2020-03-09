@@ -5,7 +5,10 @@ import com.ort.howlingwolf.domain.model.ability.Ability
 import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.commit.Commit
-import com.ort.howlingwolf.domain.model.message.*
+import com.ort.howlingwolf.domain.model.message.Message
+import com.ort.howlingwolf.domain.model.message.MessageContent
+import com.ort.howlingwolf.domain.model.message.MessageQuery
+import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.Leave
 import com.ort.howlingwolf.domain.model.village.participant.Participate
@@ -119,7 +122,6 @@ class MessageService(
             message,
             CDef.FaceType.通常.code()
         )
-        Say.assertSay(village, participant, chara, listOf(), messageContent)
         messageDataSource.registerMessage(
             village.id,
             Message.createSayMessage(participant, village.day.prologueDay().id, messageContent)

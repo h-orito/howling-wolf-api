@@ -85,6 +85,7 @@ class VillageCoordinator(
      * @param villageId villageId
      * @param user user
      * @param charaId charaId
+     * @param message 入村発言
      * @param isSpectate 見学か
      * @param firstRequestSkill 役職第1希望
      * @param secondRequestSkill 役職第2希望
@@ -94,6 +95,7 @@ class VillageCoordinator(
         villageId: Int,
         user: HowlingWolfUser,
         charaId: Int,
+        message: String,
         isSpectate: Boolean,
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
@@ -123,6 +125,14 @@ class VillageCoordinator(
                 password
             )
         }
+        // 参加発言
+        val messageContent = MessageContent.invoke(
+            CDef.MessageType.通常発言.code(),
+            message,
+            CDef.FaceType.通常.code()
+        )
+        val chara = charas.chara(charaId)
+        Say.assertParticipateSay(village, chara, messageContent)
     }
 
     /**

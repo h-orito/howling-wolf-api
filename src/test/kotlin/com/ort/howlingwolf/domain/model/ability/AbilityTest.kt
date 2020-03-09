@@ -8,6 +8,7 @@ import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbility
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.dummy.DummyDomainModelCreator
+import com.ort.howlingwolf.fw.exception.HowlingWolfBadRequestException
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -166,7 +167,7 @@ class AbilityTest : HowlingWolfTest() {
         assertThat(message.content.text).isNotEmpty()
     }
 
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertAbility_その能力を持っていない() {
         // ## Arrange ##
         val ability = Ability(CDef.AbilityType.襲撃)

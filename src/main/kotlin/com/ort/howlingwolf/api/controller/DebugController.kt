@@ -63,7 +63,7 @@ class DebugController(
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: AdminParticipateBody
     ) {
-        if ("local" != env) throw HowlingWolfBusinessException("ローカル環境でしか使用できません")
+        if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         val village = villageService.findVillage(villageId)
 
@@ -107,7 +107,7 @@ class DebugController(
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: AdminDummyLoginBody
     ) {
-        if ("local" != env) throw HowlingWolfBusinessException("ローカル環境でしか使用できません")
+        if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         // 現在接続しているユーザのuidと、指定されたプレイヤーのuidを入れ替える
         val currentPlayer = playerBhv.selectEntityWithDeletedCheck {
@@ -137,7 +137,7 @@ class DebugController(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: HowlingWolfUser
     ) {
-        if ("local" != env) throw HowlingWolfBusinessException("ローカル環境でしか使用できません")
+        if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         val latestDay = villageDayBhv.selectEntityWithDeletedCheck {
             it.query().setVillageId_Equal(villageId)
@@ -155,7 +155,7 @@ class DebugController(
      */
     @GetMapping("/admin/village/{villageId}")
     fun village(@PathVariable("villageId") villageId: Int): DebugVillageView {
-        if ("local" != env) throw HowlingWolfBusinessException("ローカル環境でしか使用できません")
+        if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         val village: Village = villageService.findVillage(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
@@ -179,7 +179,7 @@ class DebugController(
         @PathVariable("villageId") villageId: Int,
         @AuthenticationPrincipal user: HowlingWolfUser
     ) {
-        if ("local" != env) throw HowlingWolfBusinessException("ローカル環境でしか使用できません")
+        if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         val setting = VillageSetting()
         setting.villageId = villageId

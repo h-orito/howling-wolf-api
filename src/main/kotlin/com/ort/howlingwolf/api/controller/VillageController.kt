@@ -4,6 +4,8 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.api.body.*
 import com.ort.howlingwolf.api.form.VillageListForm
 import com.ort.howlingwolf.api.form.VillageMessageForm
+import com.ort.howlingwolf.api.view.charachip.CharaView
+import com.ort.howlingwolf.api.view.message.MessageTimeView
 import com.ort.howlingwolf.api.view.message.MessageView
 import com.ort.howlingwolf.api.view.message.MessagesView
 import com.ort.howlingwolf.api.view.myself.participant.SituationAsParticipantView
@@ -13,6 +15,7 @@ import com.ort.howlingwolf.application.coordinator.VillageCoordinator
 import com.ort.howlingwolf.application.service.CharachipService
 import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.VillageService
+import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.message.*
 import com.ort.howlingwolf.domain.model.player.Player
@@ -202,6 +205,54 @@ class VillageController(
     }
 
     /**
+     * 村参加確認
+     * @param villageId villageId
+     * @param user user
+     * @param body 村参加に必要な情報
+     */
+    @PostMapping("/village/{villageId}/participate-confirm")
+    fun participateConfirm(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: HowlingWolfUser,
+        @RequestBody @Validated body: VillageParticipateBody
+    ): MessageView {
+        villageCoordinator.assertParticipate(
+            villageId = villageId,
+            user = user,
+            charaId = body.charaId!!,
+            message = body.joinMessage!!,
+            isSpectate = body.spectator ?: false,
+            firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
+            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
+            password = body.joinPassword
+        )
+        val messageContent = MessageContent.invoke(
+            CDef.MessageType.通常発言.code(),
+            body.joinMessage,
+            CDef.FaceType.通常.code()
+        ).copy(num = 0)
+        val chara: Chara = charachipService.findChara(body.charaId)
+        return MessageView(
+            from = VillageParticipantView(
+                id = 1, // dummy
+                chara = CharaView(chara),
+                player = null,
+                dead = null,
+                isSpectator = body.spectator ?: false,
+                skill = null
+            ),
+            to = null,
+            time = MessageTimeView(
+                villageDayId = 1, // dummy
+                day = 0,
+                datetime = LocalDateTime.now(),
+                unixTimeMilli = LocalDateTime.now().toInstant(ZoneOffset.ofHours(+9)).toEpochMilli()
+            ),
+            content = messageContent
+        )
+    }
+
+    /**
      * 村に参加
      * @param villageId villageId
      * @param user user
@@ -217,6 +268,7 @@ class VillageController(
             villageId = villageId,
             user = user,
             charaId = body.charaId!!,
+            message = body.joinMessage!!,
             isSpectate = body.spectator ?: false,
             firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
             secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
