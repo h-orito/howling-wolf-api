@@ -23,11 +23,12 @@ class HowlingWolfAccessContextInterceptor : HandlerInterceptorAdapter() {
 
         // [アクセスユーザ]
         val userInfo: HowlingWolfUser? = HowlingWolfUserInfoUtil.getUserInfo()
-        val accessUser = userInfo?.username ?: "not login user"
+        val accessUser = userInfo?.username ?: "not_login_user"
+        val ipAddress = request.remoteAddr
 
         val context = AccessContext()
         context.accessLocalDateTime = accessLocalDateTime
-        context.accessUser = accessUser
+        context.accessUser = "$accessUser: $ipAddress"
         AccessContext.setAccessContextOnThread(context)
 
         // Handlerメソッドを呼び出す場合はtrueを返却する
