@@ -6,6 +6,7 @@ import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.dead.Dead
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.skill.Skill
+import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.Village
 
 data class VillageParticipantView(
@@ -14,7 +15,8 @@ data class VillageParticipantView(
     val player: PlayerView?,
     val dead: Dead?,
     val isSpectator: Boolean,
-    val skill: Skill?
+    val skill: Skill?,
+    val skillRequest: SkillRequest?
 ) {
     constructor(
         village: Village,
@@ -29,6 +31,7 @@ data class VillageParticipantView(
         else PlayerView(players.list.find { it.id == village.participant.member(villageParticipantId).playerId }!!),
         dead = village.participant.member(villageParticipantId).dead,
         isSpectator = village.participant.member(villageParticipantId).isSpectator,
-        skill = if (shouldHidePlayer) null else village.participant.member(villageParticipantId).skill
+        skill = if (shouldHidePlayer) null else village.participant.member(villageParticipantId).skill,
+        skillRequest = if (shouldHidePlayer) null else village.participant.member(villageParticipantId).skillRequest
     )
 }
