@@ -33,8 +33,8 @@ class SkillAssignTest : HowlingWolfTest() {
             )
         )
         val skillPersonCountMap = mapOf(
-            Skill(CDef.Skill.村人) to 1,
-            Skill(CDef.Skill.人狼) to 2
+            CDef.Skill.村人 to 1,
+            CDef.Skill.人狼 to 2
         )
 
         // ## Act ##
@@ -66,12 +66,12 @@ class SkillAssignTest : HowlingWolfTest() {
                 + hunterRequestParticipant //
         )
         val skillPersonCountMap = mapOf(
-            Skill(CDef.Skill.村人) to 9,
-            Skill(CDef.Skill.人狼) to 3,
-            Skill(CDef.Skill.占い師) to 1,
-            Skill(CDef.Skill.狂人) to 1,
-            Skill(CDef.Skill.霊能者) to 1,
-            Skill(CDef.Skill.狩人) to 1
+            CDef.Skill.村人 to 9,
+            CDef.Skill.人狼 to 3,
+            CDef.Skill.占い師 to 1,
+            CDef.Skill.狂人 to 1,
+            CDef.Skill.霊能者 to 1,
+            CDef.Skill.狩人 to 1
         )
 
         // ## Act ##
@@ -117,12 +117,12 @@ class SkillAssignTest : HowlingWolfTest() {
                 + hunterRequestParticipant //
         )
         val skillPersonCountMap = mapOf(
-            Skill(CDef.Skill.村人) to 9,
-            Skill(CDef.Skill.人狼) to 3,
-            Skill(CDef.Skill.占い師) to 1,
-            Skill(CDef.Skill.狂人) to 1,
-            Skill(CDef.Skill.霊能者) to 1,
-            Skill(CDef.Skill.狩人) to 1
+            CDef.Skill.村人 to 9,
+            CDef.Skill.人狼 to 3,
+            CDef.Skill.占い師 to 1,
+            CDef.Skill.狂人 to 1,
+            CDef.Skill.霊能者 to 1,
+            CDef.Skill.狩人 to 1
         )
 
         // ## Act ##
@@ -164,12 +164,12 @@ class SkillAssignTest : HowlingWolfTest() {
                 + participant3 //
         )
         val skillPersonCountMap = mapOf(
-            Skill(CDef.Skill.村人) to 9,
-            Skill(CDef.Skill.人狼) to 3,
-            Skill(CDef.Skill.占い師) to 1,
-            Skill(CDef.Skill.狂人) to 1,
-            Skill(CDef.Skill.霊能者) to 1,
-            Skill(CDef.Skill.狩人) to 1
+            CDef.Skill.村人 to 9,
+            CDef.Skill.人狼 to 3,
+            CDef.Skill.占い師 to 1,
+            CDef.Skill.狂人 to 1,
+            CDef.Skill.霊能者 to 1,
+            CDef.Skill.狩人 to 1
         )
 
         // ## Act ##

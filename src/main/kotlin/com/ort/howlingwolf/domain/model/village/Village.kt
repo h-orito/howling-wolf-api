@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.domain.model.village
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.daychange.SkillAssign
 import com.ort.howlingwolf.domain.model.message.*
@@ -16,7 +17,7 @@ data class Village(
     val name: String,
     val creatorPlayerId: Int,
     val status: VillageStatus,
-    val winCamp: VillageWinCamp?,
+    val winCamp: Camp?,
     val setting: VillageSettings,
     val participant: VillageParticipants,
     val spectator: VillageParticipants,
@@ -63,7 +64,7 @@ data class Village(
         val skillCountMap = setting.organizations.mapToSkillCount(participant.count)
         val text = CDef.Skill.listAll().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
             val skill = Skill(cdefSkill)
-            val count = skillCountMap[skill]
+            val count = skillCountMap[cdefSkill]
             if (count == null || count == 0) null else "${skill.name}が${count}人"
         }.joinToString(
             separator = "、\n",
@@ -397,7 +398,7 @@ data class Village(
     // 勝利陣営設定
     fun win(winCamp: CDef.Camp): Village {
         return this.copy(
-            winCamp = VillageWinCamp(winCamp), // 村自体の勝利陣営
+            winCamp = Camp(winCamp), // 村自体の勝利陣営
             participant = this.participant.winLose(winCamp) // 個人ごとの勝敗
         )
     }
