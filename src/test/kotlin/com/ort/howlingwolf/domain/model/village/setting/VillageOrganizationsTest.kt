@@ -2,8 +2,6 @@ package com.ort.howlingwolf.domain.model.village.setting
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.HowlingWolfTest
-import com.ort.howlingwolf.domain.model.skill.Skill
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,12 +24,12 @@ class VillageOrganizationsTest : HowlingWolfTest() {
         val map = villageOrganizations.mapToSkillCount(16)
 
         // ## Assert ##
-        assertThat(map[Skill(CDef.Skill.村人)]).isEqualTo(9)
-        assertThat(map[Skill(CDef.Skill.人狼)]).isEqualTo(3)
-        assertThat(map[Skill(CDef.Skill.霊能者)]).isEqualTo(1)
-        assertThat(map[Skill(CDef.Skill.狩人)]).isEqualTo(1)
-        assertThat(map[Skill(CDef.Skill.狂人)]).isEqualTo(1)
-        assertThat(map[Skill(CDef.Skill.占い師)]).isEqualTo(1)
+        assertThat(map[CDef.Skill.村人]).isEqualTo(9)
+        assertThat(map[CDef.Skill.人狼]).isEqualTo(3)
+        assertThat(map[CDef.Skill.霊能者]).isEqualTo(1)
+        assertThat(map[CDef.Skill.狩人]).isEqualTo(1)
+        assertThat(map[CDef.Skill.狂人]).isEqualTo(1)
+        assertThat(map[CDef.Skill.占い師]).isEqualTo(1)
     }
 
     @Test
@@ -44,12 +42,11 @@ class VillageOrganizationsTest : HowlingWolfTest() {
 
         // ## Assert ##
         assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.村人 }).isTrue()
-        Assertions.assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.人狼 }).isTrue()
-        Assertions.assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.占い師 }).isTrue()
-        Assertions.assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.狂人 }).isTrue()
-        Assertions.assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.狩人 }).isTrue()
-        Assertions.assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.霊能者 }).isTrue()
-        Assertions.assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.おまかせ }).isTrue()
+        assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.人狼 }).isTrue()
+        assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.占い師 }).isTrue()
+        assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.狂人 }).isTrue()
+        assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.狩人 }).isTrue()
+        assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.霊能者 }).isTrue()
+        assertThat(allRequestableSkillList.any { it.toCdef() == CDef.Skill.おまかせ }).isTrue()
     }
-
 }

@@ -9,7 +9,7 @@ object SkillAssign {
 
     fun assign(
         participants: VillageParticipants,
-        skillPersonCountMap: Map<Skill, Int>,
+        skillPersonCountMap: Map<CDef.Skill, Int>,
         dummyChara: VillageParticipant
     ): VillageParticipants {
         // TODO 存在しない役職を自動変更
@@ -38,18 +38,18 @@ object SkillAssign {
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun assignFirstSpecifyRequest(participants: VillageParticipants, skillPersonCountMap: Map<Skill, Int>): VillageParticipants {
+    private fun assignFirstSpecifyRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
-        for ((skill, capacity) in skillPersonCountMap.entries) {
+        for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
             // この役職を希望していてまだ割り当たってない人
             var requestPlayerList = changedParticipants.memberList.filter {
-                it.skillRequest.first.code == skill.code && it.skill == null
+                it.skillRequest.first.code == cdefSkill.code() && it.skill == null
             }
             // 希望している人がいない
             if (requestPlayerList.isEmpty()) continue
 
             // 空いている枠数
-            val left = capacity - changedParticipants.memberList.count { it.skill?.code == skill.code }
+            val left = capacity - changedParticipants.memberList.count { it.skill?.code == cdefSkill.code() }
             // もう空きがない
             if (left <= 0) continue
 
@@ -57,25 +57,25 @@ object SkillAssign {
             var count = 0
             for (requestPlayer in requestPlayerList.shuffled()) {
                 if (count >= left) break
-                changedParticipants = changedParticipants.assignSkill(requestPlayer.id, skill)
+                changedParticipants = changedParticipants.assignSkill(requestPlayer.id, Skill(cdefSkill))
                 count++
             }
         }
         return changedParticipants
     }
 
-    private fun assignSecondSpecifyRequest(participants: VillageParticipants, skillPersonCountMap: Map<Skill, Int>): VillageParticipants {
+    private fun assignSecondSpecifyRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
-        for ((skill, capacity) in skillPersonCountMap.entries) {
+        for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
             // この役職を希望していてまだ割り当たってない人
             var requestPlayerList = changedParticipants.memberList.filter {
-                it.skillRequest.second.code == skill.code && it.skill == null
+                it.skillRequest.second.code == cdefSkill.code() && it.skill == null
             }
             // 希望している人がいない
             if (requestPlayerList.isEmpty()) continue
 
             // 空いている枠数
-            val left = capacity - changedParticipants.memberList.count { it.skill?.code == skill.code }
+            val left = capacity - changedParticipants.memberList.count { it.skill?.code == cdefSkill.code() }
             // もう空きがない
             if (left <= 0) continue
 
@@ -83,36 +83,36 @@ object SkillAssign {
             var count = 0
             for (requestPlayer in requestPlayerList.shuffled()) {
                 if (count >= left) break
-                changedParticipants = changedParticipants.assignSkill(requestPlayer.id, skill)
+                changedParticipants = changedParticipants.assignSkill(requestPlayer.id, Skill(cdefSkill))
                 count++
             }
         }
         return changedParticipants
     }
 
-    private fun assignFirstRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<Skill, Int>): VillageParticipants {
+    private fun assignFirstRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
         // TODO おまかせXxxを復活させたら実装
         return changedParticipants
     }
 
-    private fun assignSecondRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<Skill, Int>): VillageParticipants {
+    private fun assignSecondRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
         // TODO おまかせXxxを復活させたら実装
         return changedParticipants
     }
 
-    private fun assignOther(participants: VillageParticipants, skillPersonCountMap: Map<Skill, Int>): VillageParticipants {
+    private fun assignOther(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
 
         // 役職が決まっていない参加者に
         participants.memberList.filter { it.skill == null }.shuffled().forEach { member ->
             // 枠が余っている役職を割り当てる
-            for ((skill, capacity) in skillPersonCountMap.entries) {
+            for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
                 // 空いている枠数
-                val left = capacity - changedParticipants.memberList.count { it.skill?.code == skill.code }
+                val left = capacity - changedParticipants.memberList.count { it.skill?.code == cdefSkill.code() }
                 if (left <= 0) continue
-                changedParticipants = changedParticipants.assignSkill(member.id, skill)
+                changedParticipants = changedParticipants.assignSkill(member.id, Skill(cdefSkill))
                 break
             }
         }

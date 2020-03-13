@@ -8,6 +8,7 @@ import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
 import com.ort.howlingwolf.dummy.DummyDomainModelCreator
+import com.ort.howlingwolf.fw.exception.HowlingWolfBadRequestException
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -173,7 +174,7 @@ class SayTest : HowlingWolfTest() {
         Say.assertSay(village, participant, chara, latestDayMesasgeList, messageContent)
     }
 
-    @Test(expected = HowlingWolfBusinessException::class)
+    @Test(expected = HowlingWolfBadRequestException::class)
     fun test_assertSay_発言制限NG_長さ() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(

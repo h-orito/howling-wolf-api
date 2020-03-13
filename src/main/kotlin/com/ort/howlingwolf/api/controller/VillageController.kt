@@ -239,7 +239,8 @@ class VillageController(
                 player = null,
                 dead = null,
                 isSpectator = body.spectator ?: false,
-                skill = null
+                skill = null,
+                skillRequest = null
             ),
             to = null,
             time = MessageTimeView(

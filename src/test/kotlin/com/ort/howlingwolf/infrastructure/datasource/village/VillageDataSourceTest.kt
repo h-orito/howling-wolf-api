@@ -4,13 +4,13 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.howlingwolf.HowlingWolfTest
+import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.message.MessageType
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.VillageDay
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
-import com.ort.howlingwolf.domain.model.village.VillageWinCamp
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.*
@@ -417,7 +417,7 @@ class VillageDataSourceTest : HowlingWolfTest() {
                     )
                 )
             ),
-            winCamp = VillageWinCamp(CDef.Camp.人狼陣営)
+            winCamp = Camp(CDef.Camp.人狼陣営)
         )
     }
 

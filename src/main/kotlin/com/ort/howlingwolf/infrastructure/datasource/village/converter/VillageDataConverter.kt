@@ -7,7 +7,6 @@ import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
-import com.ort.howlingwolf.domain.model.village.VillageWinCamp
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
@@ -48,7 +47,7 @@ object VillageDataConverter {
             day = VillageDays(
                 dayList = village.villageDayList.map { convertVillageDayToVillageDay(it) }
             ),
-            winCamp = if (village.winCampCodeAsCamp == null) null else VillageWinCamp(village.winCampCodeAsCamp)
+            winCamp = village.winCampCodeAsCamp?.let { com.ort.howlingwolf.domain.model.camp.Camp(it) }
         )
     }
 
@@ -79,7 +78,7 @@ object VillageDataConverter {
                     listOf(convertVillageDayToVillageDay(it))
                 }.orEmpty()
             ),
-            winCamp = if (village.winCampCodeAsCamp == null) null else VillageWinCamp(village.winCampCodeAsCamp)
+            winCamp = village.winCampCodeAsCamp?.let { com.ort.howlingwolf.domain.model.camp.Camp(it) }
         )
     }
 

@@ -32,13 +32,13 @@ data class VillageOrganizations(
         }
     }
 
-    fun mapToSkillCount(personNum: Int): Map<Skill, Int> {
+    fun mapToSkillCount(personNum: Int): Map<CDef.Skill, Int> {
         val org = checkNotNull(organization[personNum])
-        val map = mutableMapOf<Skill, Int>()
+        val map = mutableMapOf<CDef.Skill, Int>()
         CDef.Skill.listAll().forEach { cdefSkill ->
             val skillShortName = cdefSkill.shortName()
             val count = org.chunked(1).count { char -> char == skillShortName }
-            map[Skill(cdefSkill)] = count
+            map[cdefSkill] = count
         }
         return map
     }
