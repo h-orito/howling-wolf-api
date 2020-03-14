@@ -265,7 +265,7 @@ class VillageDataSourceTest : HowlingWolfTest() {
         assertThat(village.winCamp?.toCdef()).isEqualTo(after.winCamp?.toCdef())
         assertThat(village.participant.count).isEqualTo(2)
         assertThat(village.spectator.count).isEqualTo(2)
-        assertThat(village.day.dayList.size).isEqualTo(3)
+        assertThat(village.day.dayList.size).isEqualTo(2)
     }
 
     // ===================================================================================
