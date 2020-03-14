@@ -212,13 +212,18 @@ class VillageDataSource(
     ) {
         if (!before.day.existsDifference(after.day)) return
         after.day.dayList
-            .filterNot { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
+            .filterNot { afterDay ->
+                before.day.dayList.any {
+                    it.day == afterDay.day && it.noonnight == afterDay.noonnight
+                }
+            }
             .forEach {
                 insertVillageDay(after.id, it)
             }
         after.day.dayList
-            .filter { afterDay -> before.day.dayList.any { it.id == afterDay.id } }
-            .forEach { afterDay ->
+            .filter { afterDay ->
+                before.day.dayList.any { it.id == afterDay.id }
+            }.forEach { afterDay ->
                 val beforeDay = before.day.dayList.first { it.id == afterDay.id }
                 if (afterDay.existsDifference(beforeDay)) updateVillageDay(afterDay)
             }
