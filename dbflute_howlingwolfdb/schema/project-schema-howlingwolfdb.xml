@@ -268,6 +268,9 @@
         <column comment="メッセージ日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="MESSAGE_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
+        <column comment="何回目の発言か : その日のその発言種別において何回目の発言か"
+            dbType="INT UNSIGNED" javaType="Integer"
+            name="MESSAGE_COUNT" size="10" type="INTEGER"/>
         <column comment="変換無効か" dbType="BIT" javaType="Boolean"
             name="IS_CONVERT_DISABLE" required="true" type="BIT"/>
         <column comment="表情種別コード" dbType="VARCHAR" javaType="String"

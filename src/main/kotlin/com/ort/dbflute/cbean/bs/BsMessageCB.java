@@ -343,6 +343,11 @@ public class BsMessageCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnMessageDatetime() { return doColumn("MESSAGE_DATETIME"); }
         /**
+         * MESSAGE_COUNT: {INT UNSIGNED(10)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnMessageCount() { return doColumn("MESSAGE_COUNT"); }
+        /**
          * IS_CONVERT_DISABLE: {NotNull, BIT}
          * @return The information object of specified column. (NotNull)
          */

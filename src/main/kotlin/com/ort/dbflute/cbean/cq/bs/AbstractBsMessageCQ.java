@@ -1281,6 +1281,135 @@ public abstract class AbstractBsMessageCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCount The value of messageCount as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageCount_Equal(Integer messageCount) {
+        doSetMessageCount_Equal(messageCount);
+    }
+
+    protected void doSetMessageCount_Equal(Integer messageCount) {
+        regMessageCount(CK_EQ, messageCount);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCount The value of messageCount as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageCount_NotEqual(Integer messageCount) {
+        doSetMessageCount_NotEqual(messageCount);
+    }
+
+    protected void doSetMessageCount_NotEqual(Integer messageCount) {
+        regMessageCount(CK_NES, messageCount);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCount The value of messageCount as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageCount_GreaterThan(Integer messageCount) {
+        regMessageCount(CK_GT, messageCount);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCount The value of messageCount as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageCount_LessThan(Integer messageCount) {
+        regMessageCount(CK_LT, messageCount);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCount The value of messageCount as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageCount_GreaterEqual(Integer messageCount) {
+        regMessageCount(CK_GE, messageCount);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCount The value of messageCount as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setMessageCount_LessEqual(Integer messageCount) {
+        regMessageCount(CK_LE, messageCount);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param minNumber The min number of messageCount. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of messageCount. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setMessageCount_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setMessageCount_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param minNumber The min number of messageCount. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of messageCount. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setMessageCount_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueMessageCount(), "MESSAGE_COUNT", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCountList The collection of messageCount as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setMessageCount_InScope(Collection<Integer> messageCountList) {
+        doSetMessageCount_InScope(messageCountList);
+    }
+
+    protected void doSetMessageCount_InScope(Collection<Integer> messageCountList) {
+        regINS(CK_INS, cTL(messageCountList), xgetCValueMessageCount(), "MESSAGE_COUNT");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @param messageCountList The collection of messageCount as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setMessageCount_NotInScope(Collection<Integer> messageCountList) {
+        doSetMessageCount_NotInScope(messageCountList);
+    }
+
+    protected void doSetMessageCount_NotInScope(Collection<Integer> messageCountList) {
+        regINS(CK_NINS, cTL(messageCountList), xgetCValueMessageCount(), "MESSAGE_COUNT");
+    }
+
+    /**
+     * IsNull {is null}. And OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     */
+    public void setMessageCount_IsNull() { regMessageCount(CK_ISN, DOBJ); }
+
+    /**
+     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     */
+    public void setMessageCount_IsNotNull() { regMessageCount(CK_ISNN, DOBJ); }
+
+    protected void regMessageCount(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueMessageCount(), "MESSAGE_COUNT"); }
+    protected abstract ConditionValue xgetCValueMessageCount();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
      * IS_CONVERT_DISABLE: {NotNull, BIT}
      * @param isConvertDisable The value of isConvertDisable as equal. (basically NotNull: error as default, or no condition as option)
      */

@@ -1023,6 +1023,13 @@
 					<not_null>true</not_null>
 				</normal_column>
 				<normal_column>
+					<physical_name>message_count</physical_name>
+					<logical_name>何回目の発言か</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<description>その日のその発言種別において何回目の発言か</description>
+				</normal_column>
+				<normal_column>
 					<physical_name>is_convert_disable</physical_name>
 					<logical_name>変換無効か</logical_name>
 					<type>boolean</type>
@@ -2149,7 +2156,7 @@
 			<walker_group_name>commit</walker_group_name>
 		</walker_group>
 		<walker_group>
-			<height>343</height>
+			<height>348</height>
 			<width>488</width>
 			<font_name></font_name>
 			<font_size>9</font_size>

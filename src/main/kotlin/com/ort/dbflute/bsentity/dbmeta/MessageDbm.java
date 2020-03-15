@@ -52,6 +52,7 @@ public class MessageDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((Message)et).getPlayerId(), (et, vl) -> ((Message)et).setPlayerId(cti(vl)), "playerId");
         setupEpg(_epgMap, et -> ((Message)et).getMessageContent(), (et, vl) -> ((Message)et).setMessageContent((String)vl), "messageContent");
         setupEpg(_epgMap, et -> ((Message)et).getMessageDatetime(), (et, vl) -> ((Message)et).setMessageDatetime(ctldt(vl)), "messageDatetime");
+        setupEpg(_epgMap, et -> ((Message)et).getMessageCount(), (et, vl) -> ((Message)et).setMessageCount(cti(vl)), "messageCount");
         setupEpg(_epgMap, et -> ((Message)et).getIsConvertDisable(), (et, vl) -> ((Message)et).setIsConvertDisable((Boolean)vl), "isConvertDisable");
         setupEpg(_epgMap, et -> ((Message)et).getFaceTypeCode(), (et, vl) -> ((Message)et).setFaceTypeCode((String)vl), "faceTypeCode");
         setupEpg(_epgMap, et -> ((Message)et).getRegisterDatetime(), (et, vl) -> ((Message)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
@@ -88,6 +89,7 @@ public class MessageDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, false, false, false, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnMessageContent = cci("MESSAGE_CONTENT", "MESSAGE_CONTENT", null, null, String.class, "messageContent", null, false, false, true, "VARCHAR", 10000, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnMessageDatetime = cci("MESSAGE_DATETIME", "MESSAGE_DATETIME", null, null, java.time.LocalDateTime.class, "messageDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnMessageCount = cci("MESSAGE_COUNT", "MESSAGE_COUNT", null, null, Integer.class, "messageCount", null, false, false, false, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnIsConvertDisable = cci("IS_CONVERT_DISABLE", "IS_CONVERT_DISABLE", null, null, Boolean.class, "isConvertDisable", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnFaceTypeCode = cci("FACE_TYPE_CODE", "FACE_TYPE_CODE", null, null, String.class, "faceTypeCode", null, false, false, false, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -146,6 +148,11 @@ public class MessageDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnMessageDatetime() { return _columnMessageDatetime; }
     /**
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnMessageCount() { return _columnMessageCount; }
+    /**
      * IS_CONVERT_DISABLE: {NotNull, BIT}
      * @return The information object of specified column. (NotNull)
      */
@@ -188,6 +195,7 @@ public class MessageDbm extends AbstractDBMeta {
         ls.add(columnPlayerId());
         ls.add(columnMessageContent());
         ls.add(columnMessageDatetime());
+        ls.add(columnMessageCount());
         ls.add(columnIsConvertDisable());
         ls.add(columnFaceTypeCode());
         ls.add(columnRegisterDatetime());
