@@ -18,7 +18,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE
  *
  * [column]
- *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, MESSAGE_UNIXTIMESTAMP_MILLI, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, MESSAGE_CONTENT, MESSAGE_DATETIME, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, MESSAGE_UNIXTIMESTAMP_MILLI, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, MESSAGE_CONTENT, MESSAGE_DATETIME, MESSAGE_COUNT, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -53,6 +53,7 @@ import com.ort.dbflute.exentity.*;
  * Integer playerId = entity.getPlayerId();
  * String messageContent = entity.getMessageContent();
  * java.time.LocalDateTime messageDatetime = entity.getMessageDatetime();
+ * Integer messageCount = entity.getMessageCount();
  * Boolean isConvertDisable = entity.getIsConvertDisable();
  * String faceTypeCode = entity.getFaceTypeCode();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
@@ -69,6 +70,7 @@ import com.ort.dbflute.exentity.*;
  * entity.setPlayerId(playerId);
  * entity.setMessageContent(messageContent);
  * entity.setMessageDatetime(messageDatetime);
+ * entity.setMessageCount(messageCount);
  * entity.setIsConvertDisable(isConvertDisable);
  * entity.setFaceTypeCode(faceTypeCode);
  * entity.setRegisterDatetime(registerDatetime);
@@ -119,6 +121,9 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
 
     /** MESSAGE_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _messageDatetime;
+
+    /** MESSAGE_COUNT: {INT UNSIGNED(10)} */
+    protected Integer _messageCount;
 
     /** IS_CONVERT_DISABLE: {NotNull, BIT} */
     protected Boolean _isConvertDisable;
@@ -216,6 +221,7 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
         sb.append(dm).append(xfND(_playerId));
         sb.append(dm).append(xfND(_messageContent));
         sb.append(dm).append(xfND(_messageDatetime));
+        sb.append(dm).append(xfND(_messageCount));
         sb.append(dm).append(xfND(_isConvertDisable));
         sb.append(dm).append(xfND(_faceTypeCode));
         sb.append(dm).append(xfND(_registerDatetime));
@@ -440,6 +446,26 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     public void setMessageDatetime(java.time.LocalDateTime messageDatetime) {
         registerModifiedProperty("messageDatetime");
         _messageDatetime = messageDatetime;
+    }
+
+    /**
+     * [get] MESSAGE_COUNT: {INT UNSIGNED(10)} <br>
+     * 何回目の発言か : その日のその発言種別において何回目の発言か
+     * @return The value of the column 'MESSAGE_COUNT'. (NullAllowed even if selected: for no constraint)
+     */
+    public Integer getMessageCount() {
+        checkSpecifiedProperty("messageCount");
+        return _messageCount;
+    }
+
+    /**
+     * [set] MESSAGE_COUNT: {INT UNSIGNED(10)} <br>
+     * 何回目の発言か : その日のその発言種別において何回目の発言か
+     * @param messageCount The value of the column 'MESSAGE_COUNT'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setMessageCount(Integer messageCount) {
+        registerModifiedProperty("messageCount");
+        _messageCount = messageCount;
     }
 
     /**

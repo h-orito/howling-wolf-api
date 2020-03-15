@@ -71,6 +71,7 @@ public class MessageCIQ extends AbstractBsMessageCQ {
     protected ConditionValue xgetCValuePlayerId() { return _myCQ.xdfgetPlayerId(); }
     protected ConditionValue xgetCValueMessageContent() { return _myCQ.xdfgetMessageContent(); }
     protected ConditionValue xgetCValueMessageDatetime() { return _myCQ.xdfgetMessageDatetime(); }
+    protected ConditionValue xgetCValueMessageCount() { return _myCQ.xdfgetMessageCount(); }
     protected ConditionValue xgetCValueIsConvertDisable() { return _myCQ.xdfgetIsConvertDisable(); }
     protected ConditionValue xgetCValueFaceTypeCode() { return _myCQ.xdfgetFaceTypeCode(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }

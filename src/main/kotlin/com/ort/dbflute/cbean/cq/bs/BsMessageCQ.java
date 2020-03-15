@@ -273,6 +273,26 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
      */
     public BsMessageCQ addOrderBy_MessageDatetime_Desc() { regOBD("MESSAGE_DATETIME"); return this; }
 
+    protected ConditionValue _messageCount;
+    public ConditionValue xdfgetMessageCount()
+    { if (_messageCount == null) { _messageCount = nCV(); }
+      return _messageCount; }
+    protected ConditionValue xgetCValueMessageCount() { return xdfgetMessageCount(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @return this. (NotNull)
+     */
+    public BsMessageCQ addOrderBy_MessageCount_Asc() { regOBA("MESSAGE_COUNT"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * MESSAGE_COUNT: {INT UNSIGNED(10)}
+     * @return this. (NotNull)
+     */
+    public BsMessageCQ addOrderBy_MessageCount_Desc() { regOBD("MESSAGE_COUNT"); return this; }
+
     protected ConditionValue _isConvertDisable;
     public ConditionValue xdfgetIsConvertDisable()
     { if (_isConvertDisable == null) { _isConvertDisable = nCV(); }
