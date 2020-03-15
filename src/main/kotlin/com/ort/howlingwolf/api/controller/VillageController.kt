@@ -484,18 +484,22 @@ class VillageController(
                     existRestricts = true,
                     restrictList = listOf(
                         VillageMessageRestrict(
-                            type = MessageType(
-                                code = CDef.MessageType.通常発言.code(),
-                                name = CDef.MessageType.通常発言.alias()
-                            ),
+                            type = MessageType(CDef.MessageType.通常発言),
                             count = 20,
                             length = 200
                         ),
                         VillageMessageRestrict(
-                            type = MessageType(
-                                code = CDef.MessageType.人狼の囁き.code(),
-                                name = CDef.MessageType.人狼の囁き.alias()
-                            ),
+                            type = MessageType(CDef.MessageType.人狼の囁き),
+                            count = 40,
+                            length = 200
+                        ),
+                        VillageMessageRestrict(
+                            type = MessageType(CDef.MessageType.独り言),
+                            count = 40,
+                            length = 200
+                        ),
+                        VillageMessageRestrict(
+                            type = MessageType(CDef.MessageType.死者の呻き),
                             count = 40,
                             length = 200
                         )
