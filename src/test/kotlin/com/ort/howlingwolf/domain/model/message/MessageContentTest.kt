@@ -22,6 +22,7 @@ class MessageContentTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = """
                 1234567890\r\n
                 1234567890\r\n
@@ -59,6 +60,7 @@ class MessageContentTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = """
                 1\r\n
                 2\r\n
@@ -97,6 +99,7 @@ class MessageContentTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = """
                 12345678901234567890
                 12345678901234567890
@@ -116,6 +119,7 @@ class MessageContentTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = "",
             faceCode = CDef.FaceType.通常.code()
         )
@@ -132,6 +136,7 @@ class MessageContentTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = "\r\n\r\n",
             faceCode = CDef.FaceType.通常.code()
         )
