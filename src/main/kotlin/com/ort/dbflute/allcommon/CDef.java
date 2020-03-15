@@ -479,7 +479,7 @@ public interface CDef extends Classification {
             {
                 Map<String, Object> subItemMap = new HashMap<String, Object>();
                 subItemMap.put("shortName", "狩");
-                subItemMap.put("order", "6");
+                subItemMap.put("order", "4");
                 subItemMap.put("campCode", "VILLAGER");
                 subItemMap.put("description", "あなたは狩人です。初日以外の毎晩、自分以外の一人を人狼の襲撃から守ることができます。");
                 _subItemMapMap.put(狩人.code(), Collections.unmodifiableMap(subItemMap));
@@ -495,7 +495,7 @@ public interface CDef extends Classification {
             {
                 Map<String, Object> subItemMap = new HashMap<String, Object>();
                 subItemMap.put("shortName", "狂");
-                subItemMap.put("order", "5");
+                subItemMap.put("order", "6");
                 subItemMap.put("campCode", "WEREWOLF");
                 subItemMap.put("description", "あなたは狂人です。特別な能力はありませんが、人狼の勝利があなたの勝利となります。");
                 _subItemMapMap.put(狂人.code(), Collections.unmodifiableMap(subItemMap));
@@ -503,7 +503,7 @@ public interface CDef extends Classification {
             {
                 Map<String, Object> subItemMap = new HashMap<String, Object>();
                 subItemMap.put("shortName", "霊");
-                subItemMap.put("order", "4");
+                subItemMap.put("order", "3");
                 subItemMap.put("campCode", "VILLAGER");
                 subItemMap.put("description", "あなたは霊能者です。処刑された・突然死した人物が人狼であったかどうかを知ることができます。");
                 _subItemMapMap.put(霊能者.code(), Collections.unmodifiableMap(subItemMap));
@@ -511,7 +511,7 @@ public interface CDef extends Classification {
             {
                 Map<String, Object> subItemMap = new HashMap<String, Object>();
                 subItemMap.put("shortName", "占");
-                subItemMap.put("order", "3");
+                subItemMap.put("order", "2");
                 subItemMap.put("campCode", "VILLAGER");
                 subItemMap.put("description", "あなたは占い師です。毎晩一人を占い、人狼かどうかを知ることができます。");
                 _subItemMapMap.put(占い師.code(), Collections.unmodifiableMap(subItemMap));
@@ -527,7 +527,7 @@ public interface CDef extends Classification {
             {
                 Map<String, Object> subItemMap = new HashMap<String, Object>();
                 subItemMap.put("shortName", "狼");
-                subItemMap.put("order", "2");
+                subItemMap.put("order", "5");
                 subItemMap.put("campCode", "WEREWOLF");
                 subItemMap.put("description", "あなたは人狼です。人狼系役職とC国狂人同士にしか聞こえない会話が可能です。また、毎晩一人を襲撃することができます。");
                 _subItemMapMap.put(人狼.code(), Collections.unmodifiableMap(subItemMap));
