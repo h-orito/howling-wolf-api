@@ -12,6 +12,7 @@ data class Skill(
     val shortName: String,
     val winJudgeCamp: Camp,
     val abilityList: List<Ability>,
+    val manualAbilityList: List<Ability>,
     val isDivineResultWolf: Boolean,
     val isPsychicResultWolf: Boolean,
     val sayableSkillMessageTypeList: List<MessageType>,
@@ -28,6 +29,7 @@ data class Skill(
         shortName = cdefSkill.shortName(),
         winJudgeCamp = Camp(CDef.Camp.codeOf(cdefSkill.campCode())),
         abilityList = Companion.getAbilities(cdefSkill).list,
+        manualAbilityList = getManualAbilities(cdefSkill).list,
         isDivineResultWolf = cdefSkill.isDivineResultWolf,
         isPsychicResultWolf = cdefSkill.isPsychicResultWolf,
         sayableSkillMessageTypeList = getSayableMessageTypeList(cdefSkill),
@@ -45,6 +47,14 @@ data class Skill(
             CDef.Skill.狩人 to listOf(CDef.AbilityType.護衛)
         )
 
+        // 説明書専用
+        private val skillAbilityListMapForManual = mapOf(
+            CDef.Skill.人狼 to listOf(Ability(CDef.AbilityType.襲撃)),
+            CDef.Skill.占い師 to listOf(Ability(CDef.AbilityType.占い)),
+            CDef.Skill.狩人 to listOf(Ability(CDef.AbilityType.護衛)),
+            CDef.Skill.霊能者 to listOf(Ability("PSYCHIC", "霊視"))
+        )
+
         fun skillByShortName(shortName: String): Skill? {
             val cdefSkill: CDef.Skill = CDef.Skill.listAll().firstOrNull {
                 it.shortName() == shortName
@@ -55,6 +65,10 @@ data class Skill(
         fun getAbilities(cdefSkill: CDef.Skill): Abilities {
             val cdefAbilityList = skillAbilityTypeListMap[cdefSkill] ?: return Abilities(listOf())
             return Abilities(cdefAbilityList.map { Ability(it) })
+        }
+
+        fun getManualAbilities(cdefSkill: CDef.Skill): Abilities {
+            return Abilities(skillAbilityListMapForManual[cdefSkill] ?: listOf())
         }
 
         fun getSayableMessageTypeList(cdefSkill: CDef.Skill): List<MessageType> {
