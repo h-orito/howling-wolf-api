@@ -6,6 +6,7 @@ import com.ort.howlingwolf.fw.exception.HowlingWolfBadRequestException
 data class MessageContent(
     val type: MessageType,
     val num: Int?,
+    val count: Int?,
     val text: String,
     val faceCode: String?
 ) {
@@ -23,6 +24,7 @@ data class MessageContent(
             return MessageContent(
                 type = MessageType(cdefMessageType),
                 num = null,
+                count = null,
                 text = removeSurrogate(text.trim()),
                 faceCode = faceCode
             )

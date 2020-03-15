@@ -150,6 +150,7 @@ object DummyDomainModelCreator {
     fun createDummyMessageContent(): MessageContent = MessageContent(
         type = MessageType(CDef.MessageType.公開システムメッセージ),
         num = null,
+        count = null,
         text = "dummy message",
         faceCode = null
     )

@@ -67,6 +67,7 @@ data class Message(
             content = MessageContent(
                 type = messageType,
                 num = 0, // dummy
+                count = 0, // dummy
                 text = text,
                 faceCode = null
             )

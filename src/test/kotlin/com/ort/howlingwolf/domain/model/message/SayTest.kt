@@ -128,6 +128,7 @@ class SayTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = "hoge",
             faceCode = CDef.FaceType.通常.code()
         )
@@ -165,6 +166,7 @@ class SayTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = "hoge",
             faceCode = CDef.FaceType.通常.code()
         )
@@ -216,6 +218,7 @@ class SayTest : HowlingWolfTest() {
         val messageContent = MessageContent(
             type = MessageType(CDef.MessageType.通常発言),
             num = null,
+            count = null,
             text = "12345678901",
             faceCode = CDef.FaceType.通常.code()
         )

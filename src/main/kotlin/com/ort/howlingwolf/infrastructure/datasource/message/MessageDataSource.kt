@@ -154,9 +154,10 @@ class MessageDataSource(
 
     fun registerMessage(villageId: Int, message: com.ort.howlingwolf.domain.model.message.Message) {
         val mes = Message()
+        val messageTypeCode = message.content.type.code
         mes.villageId = villageId
         mes.villageDayId = message.time.villageDayId
-        mes.messageTypeCode = message.content.type.code
+        mes.messageTypeCode = messageTypeCode
         mes.messageContent = message.content.text
         mes.villagePlayerId = message.fromVillageParticipantId
         mes.toVillagePlayerId = message.toVillageParticipantId
@@ -166,6 +167,12 @@ class MessageDataSource(
         val now = HowlingWolfDateUtil.currentLocalDateTime()
         mes.messageDatetime = now
         mes.messageUnixtimestampMilli = now.toInstant(ZoneOffset.ofHours(+9)).toEpochMilli()
+
+        // 何回目の発言か
+        if (message.content.type.shouldSetCount()) {
+            val count: Int = selectMessageTypeCount(villageId, message.time.villageDayId, messageTypeCode, message.fromVillageParticipantId)
+            mes.messageCount = count + 1
+        }
 
         // 発言番号の採番 & insert (3回チャレンジする)
         for (i in 1..3) {
@@ -179,6 +186,7 @@ class MessageDataSource(
         }
         throw HowlingWolfBusinessException("混み合っているため発言に失敗しました。再度発言してください。")
     }
+
 
     /**
      * 差分更新
@@ -205,6 +213,20 @@ class MessageDataSource(
         return maxNumber + 1
     }
 
+    private fun selectMessageTypeCount(
+        villageId: Int,
+        villageDayId: Int,
+        messageTypeCode: String,
+        villageParticipantId: Int?
+    ): Int {
+        return messageBhv.selectCount {
+            it.query().setVillageId_Equal(villageId)
+            it.query().setVillageDayId_Equal(villageDayId)
+            it.query().setMessageTypeCode_Equal(messageTypeCode)
+            it.query().setVillagePlayerId_Equal(villageParticipantId)
+        }
+    }
+
     private fun convertMessageToMessage(message: Message): com.ort.howlingwolf.domain.model.message.Message {
         return com.ort.howlingwolf.domain.model.message.Message(
             fromVillageParticipantId = message.villagePlayerId,
@@ -220,6 +242,7 @@ class MessageDataSource(
                     name = CDef.MessageType.codeOf(message.messageTypeCode).alias()
                 ),
                 num = message.messageNumber,
+                count = message.messageCount,
                 text = message.messageContent,
                 faceCode = message.faceTypeCode
             )
