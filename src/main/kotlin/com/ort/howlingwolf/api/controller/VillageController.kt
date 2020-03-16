@@ -13,6 +13,7 @@ import com.ort.howlingwolf.api.view.village.*
 import com.ort.howlingwolf.application.coordinator.MessageCoordinator
 import com.ort.howlingwolf.application.coordinator.VillageCoordinator
 import com.ort.howlingwolf.application.service.CharachipService
+import com.ort.howlingwolf.application.service.MessageService
 import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.charachip.Chara
@@ -40,7 +41,8 @@ class VillageController(
 
     val villageService: VillageService,
     val playerService: PlayerService,
-    val charachipService: CharachipService
+    val charachipService: CharachipService,
+    val messageService: MessageService
 ) {
     // ===================================================================================
     //                                                                             Execute
@@ -138,11 +140,14 @@ class VillageController(
         )
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
+        val todayMessages = messageService.findMessages(village.id, villageDayId, MessageQuery(listOf(CDef.MessageType.通常発言)))
         return MessagesView(
             messages = messages,
             village = village,
             players = players,
-            charas = charas
+            charas = charas,
+            todayMessages = todayMessages
         )
     }
 

@@ -11,13 +11,15 @@ data class MessagesView(
     val allPageCount: Int?,
     val isExistPrePage: Boolean?,
     val isExistNextPage: Boolean?,
-    val currentPageNum: Int?
+    val currentPageNum: Int?,
+    val todayMessageCountMap: Map<Int, Int>
 ) {
     constructor(
         messages: Messages,
         village: Village,
         players: Players,
-        charas: Charas
+        charas: Charas,
+        todayMessages: Messages
     ) : this(
         list = messages.list.map {
             MessageView(
@@ -32,7 +34,16 @@ data class MessagesView(
         allPageCount = messages.allPageCount,
         isExistPrePage = messages.isExistPrePage,
         isExistNextPage = messages.isExistNextPage,
-        currentPageNum = messages.currentPageNum
+        currentPageNum = messages.currentPageNum,
+        todayMessageCountMap = convertToMessageCountMap(village, todayMessages)
     )
+
+    companion object {
+        private fun convertToMessageCountMap(village: Village, todayMessages: Messages): Map<Int, Int> {
+            return village.participant.memberList.map { member ->
+                member.id to todayMessages.list.count { it.fromVillageParticipantId == member.id }
+            }.toMap()
+        }
+    }
 }
 
