@@ -32,10 +32,10 @@ class DayChangeCoordinator(
      */
     @Transactional(rollbackFor = [Exception::class, HowlingWolfBusinessException::class])
     fun dayChangeIfNeeded(village: Village) {
-        // 最新日の通常発言
         val votes: VillageVotes = voteService.findVillageVotes(village.id)
         val abilities: VillageAbilities = abilityService.findVillageAbilities(village.id)
         val commits: Commits = commitService.findCommits(village.id)
+        // 最新日の通常発言
         val todayMessages = messageService.findMessages(village.id, village.day.latestDay().id, MessageQuery(listOf(CDef.MessageType.通常発言)))
         val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(village.id)
