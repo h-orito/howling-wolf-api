@@ -21,6 +21,6 @@ data class CharachipView(
         name = charachip.name,
         designer = charachip.designer,
         descriptionUrl = charachip.descriptionUrl,
-        charaList = charas.list
+        charaList = charas.list.filter { it.charachipId == charachip.id }
     )
 }
