@@ -160,13 +160,35 @@ public interface CDef extends Classification {
                 _nameClsMap.put(value.name().toLowerCase(), value);
             }
         }
+        private static final Map<String, Map<String, Object>> _subItemMapMap = new HashMap<String, Map<String, Object>>();
+        static {
+            {
+                Map<String, Object> subItemMap = new HashMap<String, Object>();
+                subItemMap.put("order", "3");
+                _subItemMapMap.put(狐陣営.code(), Collections.unmodifiableMap(subItemMap));
+            }
+            {
+                Map<String, Object> subItemMap = new HashMap<String, Object>();
+                subItemMap.put("order", "1");
+                _subItemMapMap.put(村人陣営.code(), Collections.unmodifiableMap(subItemMap));
+            }
+            {
+                Map<String, Object> subItemMap = new HashMap<String, Object>();
+                subItemMap.put("order", "2");
+                _subItemMapMap.put(人狼陣営.code(), Collections.unmodifiableMap(subItemMap));
+            }
+        }
         private String _code; private String _alias; private Set<String> _sisterSet;
         private Camp(String code, String alias, String[] sisters)
         { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
         public String code() { return _code; } public String alias() { return _alias; }
         public Set<String> sisterSet() { return _sisterSet; }
-        public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
+        public Map<String, Object> subItemMap() { return _subItemMapMap.get(code()); }
         public ClassificationMeta meta() { return CDef.DefMeta.Camp; }
+
+        public String order() {
+            return (String)subItemMap().get("order");
+        }
 
         public boolean inGroup(String groupName) {
             return false;

@@ -33,6 +33,13 @@ class VillageService(
     fun findVillages(villageIdList: List<Int>): Villages = villageDataSource.findVillages(villageIdList)
 
     /**
+     * 村一覧（詳細）取得
+     * @param villageIdList 村IDリスト
+     * @return Villages
+     */
+    fun findVillagesAsDetail(villageIdList: List<Int>): Villages = villageDataSource.findVillagesAsDetail(villageIdList)
+
+    /**
      * 村取得
      * @param villageId villageId
      * @return Village

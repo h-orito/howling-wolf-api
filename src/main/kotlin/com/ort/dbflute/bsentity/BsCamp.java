@@ -18,7 +18,7 @@ import com.ort.dbflute.exentity.*;
  *     CAMP_CODE
  *
  * [column]
- *     CAMP_CODE, CAMP_NAME
+ *     CAMP_CODE, CAMP_NAME, DISP_ORDER
  *
  * [sequence]
  *     
@@ -45,8 +45,10 @@ import com.ort.dbflute.exentity.*;
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * String campCode = entity.getCampCode();
  * String campName = entity.getCampName();
+ * Integer dispOrder = entity.getDispOrder();
  * entity.setCampCode(campCode);
  * entity.setCampName(campName);
+ * entity.setDispOrder(dispOrder);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
@@ -67,6 +69,9 @@ public abstract class BsCamp extends AbstractEntity implements DomainEntity {
 
     /** CAMP_NAME: {NotNull, VARCHAR(20)} */
     protected String _campName;
+
+    /** DISP_ORDER: {NotNull, INT UNSIGNED(10)} */
+    protected Integer _dispOrder;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -264,6 +269,7 @@ public abstract class BsCamp extends AbstractEntity implements DomainEntity {
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_campCode));
         sb.append(dm).append(xfND(_campName));
+        sb.append(dm).append(xfND(_dispOrder));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -331,6 +337,26 @@ public abstract class BsCamp extends AbstractEntity implements DomainEntity {
     public void setCampName(String campName) {
         registerModifiedProperty("campName");
         _campName = campName;
+    }
+
+    /**
+     * [get] DISP_ORDER: {NotNull, INT UNSIGNED(10)} <br>
+     * 並び順
+     * @return The value of the column 'DISP_ORDER'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getDispOrder() {
+        checkSpecifiedProperty("dispOrder");
+        return _dispOrder;
+    }
+
+    /**
+     * [set] DISP_ORDER: {NotNull, INT UNSIGNED(10)} <br>
+     * 並び順
+     * @param dispOrder The value of the column 'DISP_ORDER'. (basically NotNull if update: for the constraint)
+     */
+    public void setDispOrder(Integer dispOrder) {
+        registerModifiedProperty("dispOrder");
+        _dispOrder = dispOrder;
     }
 
     /**

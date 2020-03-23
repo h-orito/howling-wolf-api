@@ -1,7 +1,14 @@
 package com.ort.howlingwolf.api.controller
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.api.body.*
+import com.ort.howlingwolf.api.body.VillageAbilityBody
+import com.ort.howlingwolf.api.body.VillageChangeSkillBody
+import com.ort.howlingwolf.api.body.VillageCommitBody
+import com.ort.howlingwolf.api.body.VillageParticipateBody
+import com.ort.howlingwolf.api.body.VillageRegisterBody
+import com.ort.howlingwolf.api.body.VillageSayBody
+import com.ort.howlingwolf.api.body.VillageSettingBody
+import com.ort.howlingwolf.api.body.VillageVoteBody
 import com.ort.howlingwolf.api.form.VillageListForm
 import com.ort.howlingwolf.api.form.VillageMessageForm
 import com.ort.howlingwolf.api.view.charachip.CharaView
@@ -9,7 +16,12 @@ import com.ort.howlingwolf.api.view.message.MessageTimeView
 import com.ort.howlingwolf.api.view.message.MessageView
 import com.ort.howlingwolf.api.view.message.MessagesView
 import com.ort.howlingwolf.api.view.myself.participant.SituationAsParticipantView
-import com.ort.howlingwolf.api.view.village.*
+import com.ort.howlingwolf.api.view.village.VillageAnchorMessageView
+import com.ort.howlingwolf.api.view.village.VillageLatestView
+import com.ort.howlingwolf.api.view.village.VillageParticipantView
+import com.ort.howlingwolf.api.view.village.VillageRegisterView
+import com.ort.howlingwolf.api.view.village.VillageView
+import com.ort.howlingwolf.api.view.village.VillagesView
 import com.ort.howlingwolf.application.coordinator.MessageCoordinator
 import com.ort.howlingwolf.application.coordinator.VillageCoordinator
 import com.ort.howlingwolf.application.service.CharachipService
@@ -18,7 +30,12 @@ import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
-import com.ort.howlingwolf.domain.model.message.*
+import com.ort.howlingwolf.domain.model.message.Message
+import com.ort.howlingwolf.domain.model.message.MessageContent
+import com.ort.howlingwolf.domain.model.message.MessageQuery
+import com.ort.howlingwolf.domain.model.message.MessageTime
+import com.ort.howlingwolf.domain.model.message.MessageType
+import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
@@ -26,11 +43,24 @@ import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -73,7 +103,7 @@ class VillageController(
     @GetMapping("/village/{villageId}")
     fun village(@PathVariable("villageId") villageId: Int): VillageView {
         val village: Village = villageService.findVillage(villageId)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
         val createPlayer: Player = playerService.findPlayer(village.creatorPlayerId)
         return VillageView(
@@ -101,7 +131,7 @@ class VillageController(
         val village: Village = villageService.findVillage(villageId, false)
         val message: Message? = messageCoordinator.findMessage(village, messageType, messageNumber, user)
         val players: Players = playerService.findPlayers(villageId)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         return VillageAnchorMessageView(
             message = message,
             village = village,
@@ -139,7 +169,7 @@ class VillageController(
             participantIdList = form.participant_id_list?.filterNotNull() // [null]で来る問題に対応
         )
         val players: Players = playerService.findPlayers(villageId)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
         val todayMessages = messageService.findMessages(village.id, villageDayId, MessageQuery(listOf(CDef.MessageType.通常発言)))
         return MessagesView(
@@ -199,7 +229,7 @@ class VillageController(
         @AuthenticationPrincipal user: HowlingWolfUser?
     ): SituationAsParticipantView {
         val village: Village = villageService.findVillage(villageId)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
         return SituationAsParticipantView(
             situation = villageCoordinator.findActionSituation(village, user, players, charas),
@@ -245,7 +275,8 @@ class VillageController(
                 dead = null,
                 isSpectator = body.spectator ?: false,
                 skill = null,
-                skillRequest = null
+                skillRequest = null,
+                isWin = null
             ),
             to = null,
             time = MessageTimeView(
@@ -336,7 +367,7 @@ class VillageController(
         villageCoordinator.confirmToSay(villageId, user, body.message!!, body.messageType!!, body.faceType!!)
         val village = villageService.findVillage(villageId)
         val participant = villageCoordinator.findParticipant(village, user)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
         return MessageView(
             message = Message(

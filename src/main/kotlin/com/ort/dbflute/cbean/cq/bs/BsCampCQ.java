@@ -141,6 +141,26 @@ public class BsCampCQ extends AbstractBsCampCQ {
      */
     public BsCampCQ addOrderBy_CampName_Desc() { regOBD("CAMP_NAME"); return this; }
 
+    protected ConditionValue _dispOrder;
+    public ConditionValue xdfgetDispOrder()
+    { if (_dispOrder == null) { _dispOrder = nCV(); }
+      return _dispOrder; }
+    protected ConditionValue xgetCValueDispOrder() { return xdfgetDispOrder(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @return this. (NotNull)
+     */
+    public BsCampCQ addOrderBy_DispOrder_Asc() { regOBA("DISP_ORDER"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @return this. (NotNull)
+     */
+    public BsCampCQ addOrderBy_DispOrder_Desc() { regOBD("DISP_ORDER"); return this; }
+
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
     //                                                             =======================

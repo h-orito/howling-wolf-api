@@ -612,6 +612,13 @@
 					<length>20</length>
 					<not_null>true</not_null>
 				</normal_column>
+				<normal_column>
+					<physical_name>disp_order</physical_name>
+					<logical_name>並び順</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
 			</columns>
 			<indexes>
 			</indexes>

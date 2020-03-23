@@ -47,6 +47,15 @@ class PlayerDataSource(
         return Players(list = playerList.map { convertPlayerToSimplePlayer(it) })
     }
 
+    fun findPlayers(playerIdList: List<Int>): Players {
+        val playerList = playerBhv.selectList {
+            it.query().existsVillagePlayer {
+                it.query().setPlayerId_InScope(playerIdList)
+            }
+        }
+        return Players(list = playerList.map { convertPlayerToSimplePlayer(it) })
+    }
+
     fun update(uid: String, nickname: String, twitterUserName: String) {
         val player = Player()
         player.uniqueBy(uid)
