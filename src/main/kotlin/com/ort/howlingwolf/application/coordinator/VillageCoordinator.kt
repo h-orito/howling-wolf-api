@@ -104,7 +104,7 @@ class VillageCoordinator(
         // 参加できない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val player: Player = playerService.findPlayer(user)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         if (isSpectate) {
             Participate.assertSpectate(
@@ -273,7 +273,7 @@ class VillageCoordinator(
         // 能力セット
         val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, ability)
         abilityService.updateAbility(villageAbility)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         messageService.registerAbilitySetMessage(village, participant, targetId, ability, charas)
     }
 

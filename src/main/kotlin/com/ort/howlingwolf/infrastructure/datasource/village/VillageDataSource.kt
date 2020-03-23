@@ -138,7 +138,48 @@ class VillageDataSource(
             }
             loader.loadMessageRestriction { }
         }
+
         return VillageDataConverter.convertVillageListToVillages(villageList)
+    }
+
+    /**
+     * 村一覧取得（詳細）
+     * @param villageIdList 村IDリスト
+     * @return 村一覧（詳細）
+     */
+    fun findVillagesAsDetail(villageIdList: List<Int>): Villages {
+        if (villageIdList.isEmpty()) return Villages(listOf())
+        val villageList = villageBhv.selectList {
+            it.specify().derivedVillagePlayer().count({ vpCB ->
+                vpCB.specify().columnVillagePlayerId()
+                vpCB.query().setIsGone_Equal(false)
+                vpCB.query().setIsSpectator_Equal(false)
+            }, Village.ALIAS_participantCount)
+            it.specify().derivedVillagePlayer().count({ vpCB ->
+                vpCB.specify().columnVillagePlayerId()
+                vpCB.query().setIsGone_Equal(false)
+                vpCB.query().setIsSpectator_Equal(true)
+            }, Village.ALIAS_visitorCount)
+
+            it.query().setVillageId_InScope(villageIdList)
+            it.query().addOrderBy_VillageId_Desc()
+        }
+        villageBhv.load(villageList) { loader ->
+            loader.loadVillagePlayer { vpCB ->
+                vpCB.setupSelect_VillageDay()
+                vpCB.query().setIsGone_Equal(false)
+            }.withNestedReferrer {
+                it.pulloutChara().loadCharaImage { }
+            }
+            loader.loadVillageSetting { }
+            loader.loadVillageDay {
+                it.query().addOrderBy_Day_Desc()
+                it.query().queryNoonnight().addOrderBy_DispOrder_Desc()
+            }
+            loader.loadMessageRestriction { }
+        }
+
+        return Villages(villageList.map { VillageDataConverter.convertVillageToVillage(it) })
     }
 
     /**

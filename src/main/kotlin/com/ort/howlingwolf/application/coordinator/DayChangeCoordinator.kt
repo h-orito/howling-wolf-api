@@ -37,7 +37,7 @@ class DayChangeCoordinator(
         val commits: Commits = commitService.findCommits(village.id)
         // 最新日の通常発言
         val todayMessages = messageService.findMessages(village.id, village.day.latestDay().id, MessageQuery(listOf(CDef.MessageType.通常発言)))
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(village.id)
 
         val beforeDayChange = DayChange(village.copy(

@@ -82,7 +82,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         val village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         // ## Act ##
         // ## Assert ##
@@ -113,7 +113,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         // ## Act ##
         villageCoordinator.participate(
@@ -137,7 +137,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
             villageId = villageId,
             playerId = 2,
@@ -171,7 +171,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
             villageId = villageId,
             playerId = 2,
@@ -197,7 +197,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         val village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
             villageId = villageId,
             playerId = 2,
@@ -226,7 +226,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
             villageId = villageId,
             playerId = 2,
@@ -267,7 +267,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(
                 villageId = villageId,
@@ -311,7 +311,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(
                 villageId = villageId,
@@ -351,7 +351,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(
                 villageId = villageId,
@@ -394,7 +394,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
         var village = villageService.findVillage(villageId)
         val players: Players = playerService.findPlayers(villageId)
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         // ## Act ##
         // ## Assert ##

@@ -158,7 +158,7 @@ class DebugController(
         if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         val village: Village = villageService.findVillage(villageId)
-        val charas: Charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
         val createPlayer: com.ort.howlingwolf.domain.model.player.Player = playerService.findPlayer(village.creatorPlayerId)
         return DebugVillageView(

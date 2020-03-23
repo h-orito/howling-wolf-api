@@ -63,7 +63,7 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
     fun test_dayChangeIfNeeded_プロローグ_退村者あり() {
         // ## Arrange ##
         var village = registerVillage()
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..4).forEach {
             villageCoordinator.participate(village.id, it, charas.list[it].id, message = "hoge", isSpectate = false)
         }
@@ -91,7 +91,7 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
     fun test_dayChangeIfNeeded_プロローグ_進行中へ() {
         // ## Arrange ##
         var village = registerVillage()
-        val charas = charachipService.findCharaList(village.setting.charachip.charachipId)
+        val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(village.id, it, charas.list[it].id, message = "hoge", isSpectate = false)
         }

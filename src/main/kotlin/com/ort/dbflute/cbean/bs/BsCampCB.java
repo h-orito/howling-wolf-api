@@ -297,6 +297,11 @@ public class BsCampCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCampName() { return doColumn("CAMP_NAME"); }
+        /**
+         * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnDispOrder() { return doColumn("DISP_ORDER"); }
         public void everyColumn() { doEveryColumn(); }
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override

@@ -51,6 +51,7 @@ public class CampDbm extends AbstractDBMeta {
             }
         }, "campCode");
         setupEpg(_epgMap, et -> ((Camp)et).getCampName(), (et, vl) -> ((Camp)et).setCampName((String)vl), "campName");
+        setupEpg(_epgMap, et -> ((Camp)et).getDispOrder(), (et, vl) -> ((Camp)et).setDispOrder(cti(vl)), "dispOrder");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -73,6 +74,7 @@ public class CampDbm extends AbstractDBMeta {
     //                                                                         ===========
     protected final ColumnInfo _columnCampCode = cci("CAMP_CODE", "CAMP_CODE", null, null, String.class, "campCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "skillList,villageList", CDef.DefMeta.Camp, false);
     protected final ColumnInfo _columnCampName = cci("CAMP_NAME", "CAMP_NAME", null, null, String.class, "campName", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnDispOrder = cci("DISP_ORDER", "DISP_ORDER", null, null, Integer.class, "dispOrder", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
 
     /**
      * CAMP_CODE: {PK, NotNull, VARCHAR(20), classification=Camp}
@@ -84,11 +86,17 @@ public class CampDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCampName() { return _columnCampName; }
+    /**
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnDispOrder() { return _columnDispOrder; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnCampCode());
         ls.add(columnCampName());
+        ls.add(columnDispOrder());
         return ls;
     }
 

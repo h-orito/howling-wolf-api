@@ -29,6 +29,16 @@ class CharaDataSource(
         return Charas(charaList.map { convertCharaToChara(it) })
     }
 
+    fun findCharas(charachipIdList: List<Int>): Charas {
+        val charaList = charaBhv.selectList {
+            it.query().setCharaGroupId_InScope(charachipIdList)
+        }
+        charaBhv.loadCharaImage(charaList) {
+            it.query().queryFaceType().addOrderBy_DispOrder_Asc()
+        }
+        return Charas(charaList.map { convertCharaToChara(it) })
+    }
+
     fun findChara(charaId: Int): com.ort.howlingwolf.domain.model.charachip.Chara {
         val chara = charaBhv.selectEntityWithDeletedCheck {
             it.query().setCharaId_Equal(charaId)

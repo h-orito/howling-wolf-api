@@ -80,6 +80,8 @@
             primaryKey="true" required="true" size="20" type="VARCHAR"/>
         <column comment="陣営名" dbType="VARCHAR" javaType="String"
             name="CAMP_NAME" required="true" size="20" type="VARCHAR"/>
+        <column comment="並び順" dbType="INT UNSIGNED" javaType="Integer"
+            name="DISP_ORDER" required="true" size="10" type="INTEGER"/>
     </table>
     <table comment="キャラクター" name="chara"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">

@@ -49,6 +49,9 @@ map:{
         ; map:{
             ; table=CAMP
             ; code=CAMP_CODE; name=CAMP_NAME
+            ; subItemMap=map:{
+            	; order=DISP_ORDER
+			}
         }
     }
     ; VillageStatus = list:{
