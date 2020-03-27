@@ -97,6 +97,7 @@ class MessageDataSource(
             from = null,
             pageSize = null,
             pageNum = null,
+            keyword = null,
             participant = participant,
             messageTypeList = messageTypeList,
             participantIdList = null,
@@ -288,6 +289,7 @@ class MessageDataSource(
             }
         }
         query.from?.let { cb.query().setMessageUnixtimestampMilli_GreaterThan(it) }
+        query.keyword?.let { cb.query().setMessageContent_LikeSearch(it) { op -> op.splitByBlank().likeContain().asOrSplit() } }
         if (CollectionUtils.isNotEmpty(query.participantIdList)) cb.query().setVillagePlayerId_InScope(query.participantIdList)
     }
 

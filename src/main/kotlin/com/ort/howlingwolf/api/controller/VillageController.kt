@@ -165,6 +165,7 @@ class VillageController(
             from = form.from,
             pageSize = form.page_size,
             pageNum = form.page_num,
+            keyword = form.keyword,
             messageTypeList = messageTypeList,
             participantIdList = form.participant_id_list?.filterNotNull() // [null]で来る問題に対応
         )

@@ -29,6 +29,7 @@ class MessageCoordinator(
         from: Long?,
         pageSize: Int?,
         pageNum: Int?,
+        keyword: String?,
         messageTypeList: List<CDef.MessageType>?,
         participantIdList: List<Int>?
     ): Messages {
@@ -42,6 +43,7 @@ class MessageCoordinator(
             from = from,
             pageSize = pageSize,
             pageNum = pageNum,
+            keyword = keyword,
             participantIdList = participantIdList
         )
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
