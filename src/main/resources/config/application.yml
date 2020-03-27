@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:13306/howlingwolfdb?characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/howlingwolfdb?characterEncoding=UTF-8
     username: howlingwolfuser # 本番は起動引数で与える
     password: howlingwolfpass # 本番は起動引数で与える
     driverClassName: com.mysql.jdbc.Driver
