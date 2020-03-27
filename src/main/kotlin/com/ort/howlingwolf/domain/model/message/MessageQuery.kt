@@ -9,6 +9,7 @@ data class MessageQuery(
     val from: Long?,
     val pageSize: Int?,
     val pageNum: Int?,
+    val keyword: String?,
     val participant: VillageParticipant?,
     val messageTypeList: List<CDef.MessageType>,
     val participantIdList: List<Int>?,
@@ -21,6 +22,7 @@ data class MessageQuery(
         from = null,
         pageSize = null,
         pageNum = null,
+        keyword = null,
         participant = null,
         messageTypeList = messageTypeList,
         participantIdList = null,
@@ -38,6 +40,7 @@ data class MessageQuery(
             from: Long?,
             pageSize: Int?,
             pageNum: Int?,
+            keyword: String?,
             participantIdList: List<Int>?
         ): MessageQuery {
             val availableMessageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, authority)
@@ -47,6 +50,7 @@ data class MessageQuery(
                 from = from,
                 pageSize = pageSize,
                 pageNum = pageNum,
+                keyword = if (keyword.isNullOrBlank()) null else keyword,
                 participant = participant,
                 messageTypeList = queryMessageTypeList,
                 participantIdList = participantIdList,
