@@ -4,7 +4,16 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.daychange.SkillAssign
-import com.ort.howlingwolf.domain.model.message.*
+import com.ort.howlingwolf.domain.model.message.AttackMessage
+import com.ort.howlingwolf.domain.model.message.GraveSay
+import com.ort.howlingwolf.domain.model.message.Message
+import com.ort.howlingwolf.domain.model.message.MessageContent
+import com.ort.howlingwolf.domain.model.message.MonologueSay
+import com.ort.howlingwolf.domain.model.message.NormalSay
+import com.ort.howlingwolf.domain.model.message.PsychicMessage
+import com.ort.howlingwolf.domain.model.message.SecretSay
+import com.ort.howlingwolf.domain.model.message.SpectateSay
+import com.ort.howlingwolf.domain.model.message.WerewolfSay
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
@@ -30,7 +39,7 @@ data class Village(
     private val everyoneAllowedMessageTypeList = listOf(CDef.MessageType.公開システムメッセージ, CDef.MessageType.通常発言, CDef.MessageType.村建て発言)
 
     private val initialMessage: String =
-        "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この館に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
+        "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この村に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
 
     private val day1Message: String =
         "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\n例え人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。"
