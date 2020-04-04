@@ -14,7 +14,8 @@ data class MessageQuery(
     val messageTypeList: List<CDef.MessageType>,
     val participantIdList: List<Int>?,
     val includeMonologue: Boolean,
-    val includeSecret: Boolean
+    val includeSecret: Boolean,
+    val includePrivateAbility: Boolean
 ) {
     constructor(
         messageTypeList: List<CDef.MessageType>
@@ -27,10 +28,14 @@ data class MessageQuery(
         messageTypeList = messageTypeList,
         participantIdList = null,
         includeSecret = false,
-        includeMonologue = false
+        includeMonologue = false,
+        includePrivateAbility = false
     )
 
     companion object {
+
+        val personalPrivateAbilityList = listOf(CDef.MessageType.白黒占い結果)
+
         operator fun invoke(
             village: Village,
             participant: VillageParticipant?,
@@ -55,7 +60,8 @@ data class MessageQuery(
                 messageTypeList = queryMessageTypeList,
                 participantIdList = participantIdList,
                 includeMonologue = isIncludeMonologue(participant, participantIdList, requestMessageTypeList, queryMessageTypeList),
-                includeSecret = false // TODO 秘話実装する際に実装
+                includeSecret = false, // TODO 秘話実装する際に実装
+                includePrivateAbility = isIncludePrivateAbility(participant, requestMessageTypeList)
             )
         }
 
@@ -74,6 +80,15 @@ data class MessageQuery(
             if (!requestMessageTypeList.contains(CDef.MessageType.独り言)) return false
 
             return true
+        }
+
+        // 霊視や襲撃でなく、占いなどの個別のが対象
+        private fun isIncludePrivateAbility(
+            participant: VillageParticipant?,
+            requestMessageTypeList: List<CDef.MessageType>
+        ): Boolean {
+            participant ?: return false
+            return requestMessageTypeList.contains(CDef.MessageType.公開システムメッセージ)
         }
     }
 

@@ -5,7 +5,11 @@ import com.ort.dbflute.cbean.MessageCB
 import com.ort.dbflute.exbhv.MessageBhv
 import com.ort.dbflute.exentity.Message
 import com.ort.howlingwolf.api.controller.VillageController
-import com.ort.howlingwolf.domain.model.message.*
+import com.ort.howlingwolf.domain.model.message.MessageContent
+import com.ort.howlingwolf.domain.model.message.MessageQuery
+import com.ort.howlingwolf.domain.model.message.MessageTime
+import com.ort.howlingwolf.domain.model.message.MessageType
+import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
@@ -102,7 +106,8 @@ class MessageDataSource(
             messageTypeList = messageTypeList,
             participantIdList = null,
             includeMonologue = false,
-            includeSecret = false
+            includeSecret = false,
+            includePrivateAbility = false
         )
         return messageBhv.selectEntityWithDeletedCheck() {
             queryMessage(it, villageId, null, query)
@@ -265,18 +270,18 @@ class MessageDataSource(
             val participantId = query.participant.id
             // 進行中で独り言や秘話だけを見たい場合
             if (query.messageTypeList.isEmpty()) {
-                if (query.includeMonologue && query.includeSecret) {
-                    cb.orScopeQuery { orCB ->
-                        orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
-                        orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
-                    }
+                if (!query.includeMonologue && !query.includeSecret && !query.includePrivateAbility) {
+                    // 何もしない
                 } else {
-                    if (query.includeMonologue) queryMyMonologue(cb, participantId)
-                    if (query.includeSecret) querySecretSayToMe(cb, participantId)
+                    cb.orScopeQuery { orCB ->
+                        if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
+                        if (query.includeSecret) orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
+                        if (query.includePrivateAbility) orCB.orScopeQueryAndPart { andCB -> queryMyPrivateAbility(andCB, participantId) }
+                    }
                 }
             }
             // エピローグなど、全部見える状況の場合はorでなくて良い
-            else if (!query.includeMonologue && !query.includeSecret) {
+            else if (!query.includeMonologue && !query.includeSecret && !query.includePrivateAbility) {
                 cb.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
             }
             // その他
@@ -285,6 +290,7 @@ class MessageDataSource(
                     orCB.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
                     if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
                     if (query.includeSecret) orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
+                    if (query.includePrivateAbility) orCB.orScopeQueryAndPart { andCB -> queryMyPrivateAbility(andCB, participantId) }
                 }
             }
         }
@@ -296,6 +302,11 @@ class MessageDataSource(
     private fun queryMyMonologue(cb: MessageCB, id: Int) {
         cb.query().setVillagePlayerId_Equal(id)
         cb.query().setMessageTypeCode_Equal(CDef.MessageType.独り言.code())
+    }
+
+    private fun queryMyPrivateAbility(cb: MessageCB, id: Int) {
+        cb.query().setVillagePlayerId_Equal(id)
+        cb.query().setMessageTypeCode_InScope(MessageQuery.personalPrivateAbilityList.map { it.code() })
     }
 
     private fun querySecretSayToMe(cb: MessageCB, id: Int) {
