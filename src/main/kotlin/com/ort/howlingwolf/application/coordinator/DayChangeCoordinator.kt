@@ -1,7 +1,13 @@
 package com.ort.howlingwolf.application.coordinator
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.application.service.*
+import com.ort.howlingwolf.application.service.AbilityService
+import com.ort.howlingwolf.application.service.CharachipService
+import com.ort.howlingwolf.application.service.CommitService
+import com.ort.howlingwolf.application.service.MessageService
+import com.ort.howlingwolf.application.service.PlayerService
+import com.ort.howlingwolf.application.service.VillageService
+import com.ort.howlingwolf.application.service.VoteService
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.commit.Commits
 import com.ort.howlingwolf.domain.model.daychange.DayChange
@@ -71,6 +77,10 @@ class DayChangeCoordinator(
     //                                                                        Assist Logic
     //                                                                        ============
     private fun update(before: DayChange, after: DayChange) {
+        // player
+        if (before.players.existsDifference(after.players)) {
+            playerService.updateDifference(before.players, after.players)
+        }
         // village
         if (before.village.existsDifference(after.village)) {
             villageService.updateVillageDifference(before.village, after.village)

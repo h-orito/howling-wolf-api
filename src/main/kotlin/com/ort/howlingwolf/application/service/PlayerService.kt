@@ -22,4 +22,6 @@ class PlayerService(
     fun updateNickname(user: HowlingWolfUser, nickname: String, twitterUserName: String) {
         playerDataSource.update(user.uid, nickname, twitterUserName)
     }
+
+    fun updateDifference(before: Players, after: Players) = playerDataSource.updateDifference(before, after)
 }
