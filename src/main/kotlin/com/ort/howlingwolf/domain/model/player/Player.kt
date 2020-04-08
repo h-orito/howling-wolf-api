@@ -56,4 +56,8 @@ data class Player(
 
     // 作成した村の勝敗が決していないか
     private fun isProgressCreateVillage(): Boolean = createProgressVillageIdList.isNotEmpty()
+
+    fun existsDifference(player: Player): Boolean {
+        return id != player.id || isRestrictedParticipation != player.isRestrictedParticipation
+    }
 }

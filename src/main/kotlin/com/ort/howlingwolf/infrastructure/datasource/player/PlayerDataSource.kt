@@ -64,6 +64,19 @@ class PlayerDataSource(
         playerBhv.update(player)
     }
 
+    fun updateDifference(before: Players, after: Players) {
+        // player
+        after.list.forEach {
+            val beforePlayer = before.list.first { bP -> bP.id == it.id }
+            if (it.existsDifference(beforePlayer)) {
+                val player = Player()
+                player.playerId = it.id
+                player.isRestrictedParticipation = it.isRestrictedParticipation
+                playerBhv.update(player)
+            }
+        }
+    }
+
     // ===================================================================================
     //                                                                             Mapping
     //                                                                             =======

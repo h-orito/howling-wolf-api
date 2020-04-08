@@ -12,4 +12,10 @@ data class Players(
             }
         )
     }
+
+    fun existsDifference(players: Players): Boolean {
+        return list.any { player1 ->
+            players.list.none { player2 -> !player1.existsDifference(player2) }
+        }
+    }
 }
