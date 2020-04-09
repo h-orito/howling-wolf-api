@@ -50,7 +50,7 @@ data class VillageOrganizations(
             .distinct()
             .mapNotNull { orgChar -> Skill.skillByShortName(orgChar) } // 略称から役職を取得して
             .toMutableList() // 重複削除
-        skillList.addAll(Skill.skillRequestSomeoneList.map { Skill(it) })
+        skillList.addAll(CDef.Skill.listOfSomeoneSkill().map { Skill(it) })
         return skillList.sortedBy { it.toCdef().order() }
     }
 

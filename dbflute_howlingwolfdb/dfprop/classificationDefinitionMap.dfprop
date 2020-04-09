@@ -117,6 +117,10 @@ map:{
 					; groupComment=勝敗判定時狼にカウントする
 					; elementList= list:{人狼}
 				}
+				; someoneSkill = map:{
+					; groupComment=おまかせ系
+					; elementList= list:{おまかせ;おまかせ村人陣営;おまかせ人狼陣営}
+				}
         	}
         }
         ; map:{

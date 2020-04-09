@@ -111,11 +111,27 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSkillCode_Equal_おまかせ村人陣営() {
+        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_Equal_人狼() {
         setSkillCode_Equal_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSkillCode_Equal_おまかせ人狼陣営() {
+        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetSkillCode_Equal(String skillCode) {
@@ -190,11 +206,27 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
+     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSkillCode_NotEqual_おまかせ村人陣営() {
+        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_NotEqual_人狼() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSkillCode_NotEqual_おまかせ人狼陣営() {
+        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetSkillCode_NotEqual(String skillCode) {
@@ -318,6 +350,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_CountWolf() {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     */
+    public void setSkillCode_InScope_SomeoneSkill() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfSomeoneSkill());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {

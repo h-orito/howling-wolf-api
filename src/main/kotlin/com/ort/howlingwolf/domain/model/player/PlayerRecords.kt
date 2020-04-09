@@ -42,7 +42,7 @@ data class PlayerRecords(
 
         private fun createSkillRecordList(player: Player, villages: Villages): List<SkillRecord> {
             return CDef.Skill.listAll().sortedBy { Integer.parseInt(it.order()) }
-                .filterNot { Skill.skillRequestSomeoneList.contains(it) }
+                .filterNot { CDef.Skill.listOfSomeoneSkill().contains(it) }
                 .map { skill ->
                     val skillVillageList = villages.list.filter { village ->
                         val mySkillCode = village.participant.memberList.first {

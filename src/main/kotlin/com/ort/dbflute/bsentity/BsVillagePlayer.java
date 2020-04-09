@@ -302,11 +302,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of skillCode as おまかせ村人陣営 (VILLAGERS). <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSkillCode_おまかせ村人陣営() {
+        setSkillCodeAsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Set the value of skillCode as 人狼 (WEREWOLF). <br>
      * 人狼
      */
     public void setSkillCode_人狼() {
         setSkillCodeAsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Set the value of skillCode as おまかせ人狼陣営 (WEREWOLFS). <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSkillCode_おまかせ人狼陣営() {
+        setSkillCodeAsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     /**
@@ -358,11 +374,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of requestSkillCode as おまかせ村人陣営 (VILLAGERS). <br>
+     * おまかせ（村人陣営）
+     */
+    public void setRequestSkillCode_おまかせ村人陣営() {
+        setRequestSkillCodeAsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Set the value of requestSkillCode as 人狼 (WEREWOLF). <br>
      * 人狼
      */
     public void setRequestSkillCode_人狼() {
         setRequestSkillCodeAsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Set the value of requestSkillCode as おまかせ人狼陣営 (WEREWOLFS). <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setRequestSkillCode_おまかせ人狼陣営() {
+        setRequestSkillCodeAsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     /**
@@ -414,11 +446,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of secondRequestSkillCode as おまかせ村人陣営 (VILLAGERS). <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSecondRequestSkillCode_おまかせ村人陣営() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Set the value of secondRequestSkillCode as 人狼 (WEREWOLF). <br>
      * 人狼
      */
     public void setSecondRequestSkillCode_人狼() {
         setSecondRequestSkillCodeAsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Set the value of secondRequestSkillCode as おまかせ人狼陣営 (WEREWOLFS). <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSecondRequestSkillCode_おまかせ人狼陣営() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     /**
@@ -523,6 +571,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Is the value of skillCode おまかせ村人陣営? <br>
+     * おまかせ（村人陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCodeおまかせ村人陣営() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ村人陣営) : false;
+    }
+
+    /**
      * Is the value of skillCode 人狼? <br>
      * 人狼
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -531,6 +590,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSkillCode人狼() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.人狼) : false;
+    }
+
+    /**
+     * Is the value of skillCode おまかせ人狼陣営? <br>
+     * おまかせ（人狼陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCodeおまかせ人狼陣営() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ人狼陣営) : false;
     }
 
     /**
@@ -634,6 +704,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_SomeoneSkill() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isSomeoneSkill();
+    }
+
+    /**
      * Is the value of requestSkillCode 狩人? <br>
      * 狩人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -700,6 +780,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Is the value of requestSkillCode おまかせ村人陣営? <br>
+     * おまかせ（村人陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCodeおまかせ村人陣営() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ村人陣営) : false;
+    }
+
+    /**
      * Is the value of requestSkillCode 人狼? <br>
      * 人狼
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -708,6 +799,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCode人狼() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.人狼) : false;
+    }
+
+    /**
+     * Is the value of requestSkillCode おまかせ人狼陣営? <br>
+     * おまかせ（人狼陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCodeおまかせ人狼陣営() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ人狼陣営) : false;
     }
 
     /**
@@ -811,6 +913,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_SomeoneSkill() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isSomeoneSkill();
+    }
+
+    /**
      * Is the value of secondRequestSkillCode 狩人? <br>
      * 狩人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -877,6 +989,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Is the value of secondRequestSkillCode おまかせ村人陣営? <br>
+     * おまかせ（村人陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCodeおまかせ村人陣営() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ村人陣営) : false;
+    }
+
+    /**
      * Is the value of secondRequestSkillCode 人狼? <br>
      * 人狼
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -885,6 +1008,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode人狼() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.人狼) : false;
+    }
+
+    /**
+     * Is the value of secondRequestSkillCode おまかせ人狼陣営? <br>
+     * おまかせ（人狼陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCodeおまかせ人狼陣営() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ人狼陣営) : false;
     }
 
     /**
@@ -985,6 +1119,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode_CountWolf() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null && cdef.isCountWolf();
+    }
+
+    /**
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_SomeoneSkill() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isSomeoneSkill();
     }
 
     /**

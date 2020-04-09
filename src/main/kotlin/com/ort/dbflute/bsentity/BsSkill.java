@@ -209,11 +209,27 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * Set the value of skillCode as おまかせ村人陣営 (VILLAGERS). <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSkillCode_おまかせ村人陣営() {
+        setSkillCodeAsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Set the value of skillCode as 人狼 (WEREWOLF). <br>
      * 人狼
      */
     public void setSkillCode_人狼() {
         setSkillCodeAsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Set the value of skillCode as おまかせ人狼陣営 (WEREWOLFS). <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSkillCode_おまかせ人狼陣営() {
+        setSkillCodeAsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     /**
@@ -310,6 +326,17 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * Is the value of skillCode おまかせ村人陣営? <br>
+     * おまかせ（村人陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCodeおまかせ村人陣営() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ村人陣営) : false;
+    }
+
+    /**
      * Is the value of skillCode 人狼? <br>
      * 人狼
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -318,6 +345,17 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode人狼() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.人狼) : false;
+    }
+
+    /**
+     * Is the value of skillCode おまかせ人狼陣営? <br>
+     * おまかせ（人狼陣営）
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCodeおまかせ人狼陣営() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.おまかせ人狼陣営) : false;
     }
 
     /**
@@ -418,6 +456,16 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode_CountWolf() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null && cdef.isCountWolf();
+    }
+
+    /**
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_SomeoneSkill() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isSomeoneSkill();
     }
 
     /**

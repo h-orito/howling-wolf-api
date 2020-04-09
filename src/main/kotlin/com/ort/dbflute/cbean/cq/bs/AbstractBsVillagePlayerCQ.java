@@ -956,11 +956,27 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSkillCode_Equal_おまかせ村人陣営() {
+        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_Equal_人狼() {
         setSkillCode_Equal_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSkillCode_Equal_おまかせ人狼陣営() {
+        setSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetSkillCode_Equal(String skillCode) {
@@ -1035,11 +1051,27 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
+     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSkillCode_NotEqual_おまかせ村人陣営() {
+        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSkillCode_NotEqual_人狼() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSkillCode_NotEqual_おまかせ人狼陣営() {
+        setSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetSkillCode_NotEqual(String skillCode) {
@@ -1165,6 +1197,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     */
+    public void setSkillCode_InScope_SomeoneSkill() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfSomeoneSkill());
+    }
+
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
         regINS(CK_INS, cTL(skillCodeList), xgetCValueSkillCode(), "SKILL_CODE");
     }
@@ -1281,11 +1323,27 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setRequestSkillCode_Equal_おまかせ村人陣営() {
+        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setRequestSkillCode_Equal_人狼() {
         setRequestSkillCode_Equal_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setRequestSkillCode_Equal_おまかせ人狼陣営() {
+        setRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetRequestSkillCode_Equal(String requestSkillCode) {
@@ -1360,11 +1418,27 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
+     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setRequestSkillCode_NotEqual_おまかせ村人陣営() {
+        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setRequestSkillCode_NotEqual_人狼() {
         setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setRequestSkillCode_NotEqual_おまかせ人狼陣営() {
+        setRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetRequestSkillCode_NotEqual(String requestSkillCode) {
@@ -1490,6 +1564,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
     }
 
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     */
+    public void setRequestSkillCode_InScope_SomeoneSkill() {
+        setRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfSomeoneSkill());
+    }
+
     protected void doSetRequestSkillCode_InScope(Collection<String> requestSkillCodeList) {
         regINS(CK_INS, cTL(requestSkillCodeList), xgetCValueRequestSkillCode(), "REQUEST_SKILL_CODE");
     }
@@ -1606,11 +1690,27 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSecondRequestSkillCode_Equal_おまかせ村人陣営() {
+        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * Equal(=). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSecondRequestSkillCode_Equal_人狼() {
         setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * Equal(=). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSecondRequestSkillCode_Equal_おまかせ人狼陣営() {
+        setSecondRequestSkillCode_Equal_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetSecondRequestSkillCode_Equal(String secondRequestSkillCode) {
@@ -1685,11 +1785,27 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
 
     /**
+     * NotEqual(&lt;&gt;). As おまかせ村人陣営 (VILLAGERS). And OnlyOnceRegistered. <br>
+     * おまかせ（村人陣営）
+     */
+    public void setSecondRequestSkillCode_NotEqual_おまかせ村人陣営() {
+        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ村人陣営);
+    }
+
+    /**
      * NotEqual(&lt;&gt;). As 人狼 (WEREWOLF). And OnlyOnceRegistered. <br>
      * 人狼
      */
     public void setSecondRequestSkillCode_NotEqual_人狼() {
         setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.人狼);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As おまかせ人狼陣営 (WEREWOLFS). And OnlyOnceRegistered. <br>
+     * おまかせ（人狼陣営）
+     */
+    public void setSecondRequestSkillCode_NotEqual_おまかせ人狼陣営() {
+        setSecondRequestSkillCode_NotEqual_AsSkill(CDef.Skill.おまかせ人狼陣営);
     }
 
     protected void doSetSecondRequestSkillCode_NotEqual(String secondRequestSkillCode) {
@@ -1813,6 +1929,16 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
      */
     public void setSecondRequestSkillCode_InScope_CountWolf() {
         setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfCountWolf());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     */
+    public void setSecondRequestSkillCode_InScope_SomeoneSkill() {
+        setSecondRequestSkillCode_InScope_AsSkill(CDef.Skill.listOfSomeoneSkill());
     }
 
     protected void doSetSecondRequestSkillCode_InScope(Collection<String> secondRequestSkillCodeList) {

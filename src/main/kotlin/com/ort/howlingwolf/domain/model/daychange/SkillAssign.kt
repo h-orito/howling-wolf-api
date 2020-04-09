@@ -92,13 +92,53 @@ object SkillAssign {
 
     private fun assignFirstRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
-        // TODO おまかせXxxを復活させたら実装
+        // 範囲指定している人
+        changedParticipants.memberList
+            .filter { it.skill == null && CDef.Skill.listOfSomeoneSkill().contains(it.skillRequest.first.toCdef()) && it.skillRequest.first.toCdef() != CDef.Skill.おまかせ }
+            .shuffled()
+            .forEach {
+                // 役職候補
+                val candidateSkillList = getCandidateSkillList(it.skillRequest.first.toCdef()).sorted()
+                for (skill in candidateSkillList) {
+                    val capacity = skillPersonCountMap[skill] ?: 0
+                    val left = capacity - changedParticipants.memberList.count { member -> member.skill?.toCdef() == skill }
+                    if (left <= 0) continue
+                    changedParticipants = changedParticipants.assignSkill(it.id, Skill(skill))
+                    break
+                }
+            }
         return changedParticipants
+    }
+
+    private fun getCandidateSkillList(cdefSomeoneSkill: CDef.Skill): List<CDef.Skill> {
+        return when (cdefSomeoneSkill) {
+            CDef.Skill.おまかせ村人陣営 -> CDef.Skill.listAll().filter {
+                !CDef.Skill.listOfSomeoneSkill().contains(it) && it.campCode() == CDef.Camp.村人陣営.code()
+            }
+            CDef.Skill.おまかせ人狼陣営 -> CDef.Skill.listAll().filter {
+                !CDef.Skill.listOfSomeoneSkill().contains(it) && it.campCode() == CDef.Camp.人狼陣営.code()
+            }
+            else -> throw IllegalStateException("謎のおまかせ希望")
+        }
     }
 
     private fun assignSecondRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
         var changedParticipants = participants.copy()
-        // TODO おまかせXxxを復活させたら実装
+        // 範囲指定している人
+        changedParticipants.memberList
+            .filter { it.skill == null && CDef.Skill.listOfSomeoneSkill().contains(it.skillRequest.second.toCdef()) && it.skillRequest.second.toCdef() != CDef.Skill.おまかせ }
+            .shuffled()
+            .forEach {
+                // 役職候補
+                val candidateSkillList = getCandidateSkillList(it.skillRequest.second.toCdef()).sorted()
+                for (skill in candidateSkillList) {
+                    val capacity = skillPersonCountMap[skill] ?: 0
+                    val left = capacity - changedParticipants.memberList.count { member -> member.skill?.toCdef() == skill }
+                    if (left <= 0) continue
+                    changedParticipants = changedParticipants.assignSkill(it.id, Skill(skill))
+                    break
+                }
+            }
         return changedParticipants
     }
 

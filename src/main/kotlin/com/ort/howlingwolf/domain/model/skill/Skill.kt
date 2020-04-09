@@ -40,7 +40,6 @@ data class Skill(
 
     companion object {
 
-        val skillRequestSomeoneList = listOf(CDef.Skill.おまかせ)
         private val skillAbilityTypeListMap = mapOf(
             CDef.Skill.人狼 to listOf(CDef.AbilityType.襲撃),
             CDef.Skill.占い師 to listOf(CDef.AbilityType.占い),
