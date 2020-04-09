@@ -11,7 +11,7 @@ class SkillService {
     fun findSkills(): Skills {
         return Skills(
             CDef.Skill.listAll().filterNot {
-                Skill.skillRequestSomeoneList.contains(it)
+                CDef.Skill.listOfSomeoneSkill().contains(it)
             }.sortedBy {
                 it.order()
             }.map { Skill(it) }
