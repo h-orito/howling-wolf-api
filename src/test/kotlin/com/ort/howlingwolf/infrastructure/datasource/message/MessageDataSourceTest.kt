@@ -14,7 +14,14 @@ import com.ort.howlingwolf.domain.model.message.MessageType
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import com.ort.howlingwolf.infrastructure.datasource.village.VillageDataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -165,19 +172,19 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
         messageDataSource.registerMessage(
             village.id, Message.createSayMessage(
-            from = participant,
-            villageDayId = village.day.latestDay().id,
-            messageContent = messageContent
-        )
+                from = participant,
+                villageDayId = village.day.latestDay().id,
+                messageContent = messageContent
+            )
         )
         messageDataSource.registerMessage(
             village.id, Message.createSayMessage(
-            from = participant,
-            villageDayId = village.day.latestDay().id,
-            messageContent = messageContent.copy(
-                type = MessageType(CDef.MessageType.独り言)
+                from = participant,
+                villageDayId = village.day.latestDay().id,
+                messageContent = messageContent.copy(
+                    type = MessageType(CDef.MessageType.独り言)
+                )
             )
-        )
         )
 
         // ## Act ##
@@ -301,16 +308,16 @@ class MessageDataSourceTest : HowlingWolfTest() {
         val participant = village.participant.memberList[0]
         messageDataSource.registerMessage(
             village.id, Message.createSayMessage(
-            from = participant,
-            villageDayId = village.day.latestDay().id,
-            messageContent = MessageContent(
-                type = MessageType(CDef.MessageType.通常発言),
-                num = 1,
-                count = null,
-                text = "dummy message text",
-                faceCode = CDef.FaceType.通常.code()
+                from = participant,
+                villageDayId = village.day.latestDay().id,
+                messageContent = MessageContent(
+                    type = MessageType(CDef.MessageType.通常発言),
+                    num = 1,
+                    count = null,
+                    text = "dummy message text",
+                    faceCode = CDef.FaceType.通常.code()
+                )
             )
-        )
         )
         val messages = messageDataSource.findMessages(
             villageId = village.id,
@@ -337,16 +344,16 @@ class MessageDataSourceTest : HowlingWolfTest() {
         val participant2 = village.participant.memberList[1]
         messageDataSource.registerMessage(
             village.id, Message.createSayMessage(
-            from = participant,
-            villageDayId = village.day.latestDay().id,
-            messageContent = MessageContent(
-                type = MessageType(CDef.MessageType.通常発言),
-                num = 1,
-                count = null,
-                text = "dummy message text",
-                faceCode = CDef.FaceType.通常.code()
+                from = participant,
+                villageDayId = village.day.latestDay().id,
+                messageContent = MessageContent(
+                    type = MessageType(CDef.MessageType.通常発言),
+                    num = 1,
+                    count = null,
+                    text = "dummy message text",
+                    faceCode = CDef.FaceType.通常.code()
+                )
             )
-        )
         )
 
         // ## Act ##
@@ -449,7 +456,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
                     startDatetime = LocalDateTime.now().plusDays(1L).withNano(0),
-                    dayChangeIntervalSeconds = 24 * 60 * 60
+                    dayChangeIntervalSeconds = 24 * 60 * 60,
+                    silentHours = null
                 ),
                 charachip = VillageCharachip(
                     dummyCharaId = 1,

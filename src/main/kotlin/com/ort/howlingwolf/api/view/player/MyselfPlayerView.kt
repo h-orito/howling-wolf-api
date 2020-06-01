@@ -25,17 +25,17 @@ data class MyselfPlayerView(
         nickname = player.nickname,
         twitterUserName = player.twitterUserName,
         isAvailableCreateVillage = player.isAvailableCreateVillage(user),
-        participateProgressVillages = VillagesView(participantVillages.list.filter {
+        participateProgressVillages = VillagesView(Villages(participantVillages.list.filter {
             !it.status.isSolved()
-        }),
-        participateFinishedVillages = VillagesView(participantVillages.list.filter {
+        })),
+        participateFinishedVillages = VillagesView(Villages(participantVillages.list.filter {
             it.status.isSolved()
-        }),
-        createProgressVillages = VillagesView(createVillages.list.filter {
+        })),
+        createProgressVillages = VillagesView(Villages(createVillages.list.filter {
             !it.status.isSolved()
-        }),
-        createFinishedVillages = VillagesView(createVillages.list.filter {
+        })),
+        createFinishedVillages = VillagesView(Villages(createVillages.list.filter {
             it.status.isSolved()
-        })
+        }))
     )
 }

@@ -400,6 +400,33 @@
             <index-column name="AUTHORITY_CODE" position="1"/>
         </index>
     </table>
+    <table comment="予約村" name="reserved_village"
+        schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
+        <column autoIncrement="true" comment="予約村ID"
+            dbType="INT UNSIGNED" javaType="Integer"
+            name="RESERVED_VILLAGE_ID" pkName="PRIMARY" pkPosition="1"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="村作成日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="CREATE_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="村開始日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="START_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="編成" dbType="VARCHAR" javaType="String"
+            name="ORGANIZATION" required="true" size="255" type="VARCHAR"/>
+        <column comment="沈黙時間" dbType="INT UNSIGNED" javaType="Integer"
+            name="SILENT_HOURS" required="true" size="10" type="INTEGER"/>
+        <column comment="登録日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="登録トレース" dbType="VARCHAR" javaType="String"
+            name="REGISTER_TRACE" required="true" size="64" type="VARCHAR"/>
+        <column comment="更新日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="UPDATE_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="更新トレース" dbType="VARCHAR" javaType="String"
+            name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
+    </table>
     <table comment="役職" name="skill"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
         <column comment="役職コード" dbType="VARCHAR" javaType="String"

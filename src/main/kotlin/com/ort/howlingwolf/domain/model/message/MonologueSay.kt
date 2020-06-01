@@ -8,10 +8,7 @@ object MonologueSay {
 
     fun isViewable(village: Village, participant: VillageParticipant?): Boolean {
         // 村として可能か
-        if (!village.isViewableMonologueSay()) return false
-        // 参加者として可能か
-        participant ?: return false
-        return participant.isViewableMonologueSay()
+        return village.isViewableMonologueSay()
     }
 
     fun isSayable(village: Village, participant: VillageParticipant): Boolean {

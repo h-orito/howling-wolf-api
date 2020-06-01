@@ -16,15 +16,15 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of village_setting.
+ * The abstract condition-query of reserved_village.
  * @author DBFlute(AutoGenerator)
  */
-public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery {
+public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery {
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public AbstractBsVillageSettingCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+    public AbstractBsReservedVillageCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
     }
 
     public String asTableDbName() {
-        return "village_setting";
+        return "reserved_village";
     }
 
     // ===================================================================================
@@ -45,680 +45,534 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageId The value of villageId as equal. (basically NotNull: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageId The value of reservedVillageId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_Equal(Integer villageId) {
-        doSetVillageId_Equal(villageId);
+    public void setReservedVillageId_Equal(Integer reservedVillageId) {
+        doSetReservedVillageId_Equal(reservedVillageId);
     }
 
-    protected void doSetVillageId_Equal(Integer villageId) {
-        regVillageId(CK_EQ, villageId);
+    protected void doSetReservedVillageId_Equal(Integer reservedVillageId) {
+        regReservedVillageId(CK_EQ, reservedVillageId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageId The value of villageId as notEqual. (basically NotNull: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageId The value of reservedVillageId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_NotEqual(Integer villageId) {
-        doSetVillageId_NotEqual(villageId);
+    public void setReservedVillageId_NotEqual(Integer reservedVillageId) {
+        doSetReservedVillageId_NotEqual(reservedVillageId);
     }
 
-    protected void doSetVillageId_NotEqual(Integer villageId) {
-        regVillageId(CK_NES, villageId);
+    protected void doSetReservedVillageId_NotEqual(Integer reservedVillageId) {
+        regReservedVillageId(CK_NES, reservedVillageId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageId The value of villageId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageId The value of reservedVillageId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_GreaterThan(Integer villageId) {
-        regVillageId(CK_GT, villageId);
+    public void setReservedVillageId_GreaterThan(Integer reservedVillageId) {
+        regReservedVillageId(CK_GT, reservedVillageId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageId The value of villageId as lessThan. (basically NotNull: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageId The value of reservedVillageId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_LessThan(Integer villageId) {
-        regVillageId(CK_LT, villageId);
+    public void setReservedVillageId_LessThan(Integer reservedVillageId) {
+        regReservedVillageId(CK_LT, reservedVillageId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageId The value of villageId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageId The value of reservedVillageId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_GreaterEqual(Integer villageId) {
-        regVillageId(CK_GE, villageId);
+    public void setReservedVillageId_GreaterEqual(Integer reservedVillageId) {
+        regReservedVillageId(CK_GE, reservedVillageId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageId The value of villageId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageId The value of reservedVillageId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_LessEqual(Integer villageId) {
-        regVillageId(CK_LE, villageId);
+    public void setReservedVillageId_LessEqual(Integer reservedVillageId) {
+        regReservedVillageId(CK_LE, reservedVillageId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setVillageId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setVillageId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setReservedVillageId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setReservedVillageId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setVillageId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueVillageId(), "VILLAGE_ID", rangeOfOption);
+    protected void setReservedVillageId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageIdList The collection of villageId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageIdList The collection of reservedVillageId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageId_InScope(Collection<Integer> villageIdList) {
-        doSetVillageId_InScope(villageIdList);
+    public void setReservedVillageId_InScope(Collection<Integer> reservedVillageIdList) {
+        doSetReservedVillageId_InScope(reservedVillageIdList);
     }
 
-    protected void doSetVillageId_InScope(Collection<Integer> villageIdList) {
-        regINS(CK_INS, cTL(villageIdList), xgetCValueVillageId(), "VILLAGE_ID");
+    protected void doSetReservedVillageId_InScope(Collection<Integer> reservedVillageIdList) {
+        regINS(CK_INS, cTL(reservedVillageIdList), xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
-     * @param villageIdList The collection of villageId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * @param reservedVillageIdList The collection of reservedVillageId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageId_NotInScope(Collection<Integer> villageIdList) {
-        doSetVillageId_NotInScope(villageIdList);
+    public void setReservedVillageId_NotInScope(Collection<Integer> reservedVillageIdList) {
+        doSetReservedVillageId_NotInScope(reservedVillageIdList);
     }
 
-    protected void doSetVillageId_NotInScope(Collection<Integer> villageIdList) {
-        regINS(CK_NINS, cTL(villageIdList), xgetCValueVillageId(), "VILLAGE_ID");
+    protected void doSetReservedVillageId_NotInScope(Collection<Integer> reservedVillageIdList) {
+        regINS(CK_NINS, cTL(reservedVillageIdList), xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      */
-    public void setVillageId_IsNull() { regVillageId(CK_ISN, DOBJ); }
+    public void setReservedVillageId_IsNull() { regReservedVillageId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
+     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
      */
-    public void setVillageId_IsNotNull() { regVillageId(CK_ISNN, DOBJ); }
+    public void setReservedVillageId_IsNotNull() { regReservedVillageId(CK_ISNN, DOBJ); }
 
-    protected void regVillageId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageId(), "VILLAGE_ID"); }
-    protected abstract ConditionValue xgetCValueVillageId();
+    protected void regReservedVillageId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID"); }
+    protected abstract ConditionValue xgetCValueReservedVillageId();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * @param createDatetime The value of createDatetime as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setCreateDatetime_Equal(java.time.LocalDateTime createDatetime) {
+        regCreateDatetime(CK_EQ,  createDatetime);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * @param createDatetime The value of createDatetime as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setCreateDatetime_GreaterThan(java.time.LocalDateTime createDatetime) {
+        regCreateDatetime(CK_GT,  createDatetime);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * @param createDatetime The value of createDatetime as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setCreateDatetime_LessThan(java.time.LocalDateTime createDatetime) {
+        regCreateDatetime(CK_LT,  createDatetime);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * @param createDatetime The value of createDatetime as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setCreateDatetime_GreaterEqual(java.time.LocalDateTime createDatetime) {
+        regCreateDatetime(CK_GE,  createDatetime);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * @param createDatetime The value of createDatetime as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setCreateDatetime_LessEqual(java.time.LocalDateTime createDatetime) {
+        regCreateDatetime(CK_LE, createDatetime);
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * <pre>e.g. setCreateDatetime_FromTo(fromDate, toDate, op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">compareAsDate()</span>);</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of from-to. (NotNull)
+     */
+    public void setCreateDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, ConditionOptionCall<FromToOption> opLambda) {
+        setCreateDatetime_FromTo(fromDatetime, toDatetime, xcFTOP(opLambda));
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_DATETIME: {NotNull, DATETIME(19)}
+     * <pre>e.g. setCreateDatetime_FromTo(fromDate, toDate, new <span style="color: #CC4747">FromToOption</span>().compareAsDate());</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param fromToOption The option of from-to. (NotNull)
+     */
+    protected void setCreateDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, FromToOption fromToOption) {
+        String nm = "CREATE_DATETIME"; FromToOption op = fromToOption;
+        regFTQ(xfFTHD(fromDatetime, nm, op), xfFTHD(toDatetime, nm, op), xgetCValueCreateDatetime(), nm, op);
+    }
+
+    protected void regCreateDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCreateDatetime(), "CREATE_DATETIME"); }
+    protected abstract ConditionValue xgetCValueCreateDatetime();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * @param startDatetime The value of startDatetime as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStartDatetime_Equal(java.time.LocalDateTime startDatetime) {
+        regStartDatetime(CK_EQ,  startDatetime);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * @param startDatetime The value of startDatetime as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStartDatetime_GreaterThan(java.time.LocalDateTime startDatetime) {
+        regStartDatetime(CK_GT,  startDatetime);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * @param startDatetime The value of startDatetime as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStartDatetime_LessThan(java.time.LocalDateTime startDatetime) {
+        regStartDatetime(CK_LT,  startDatetime);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * @param startDatetime The value of startDatetime as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStartDatetime_GreaterEqual(java.time.LocalDateTime startDatetime) {
+        regStartDatetime(CK_GE,  startDatetime);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * @param startDatetime The value of startDatetime as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStartDatetime_LessEqual(java.time.LocalDateTime startDatetime) {
+        regStartDatetime(CK_LE, startDatetime);
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * <pre>e.g. setStartDatetime_FromTo(fromDate, toDate, op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">compareAsDate()</span>);</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of from-to. (NotNull)
+     */
+    public void setStartDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, ConditionOptionCall<FromToOption> opLambda) {
+        setStartDatetime_FromTo(fromDatetime, toDatetime, xcFTOP(opLambda));
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * START_DATETIME: {NotNull, DATETIME(19)}
+     * <pre>e.g. setStartDatetime_FromTo(fromDate, toDate, new <span style="color: #CC4747">FromToOption</span>().compareAsDate());</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param fromToOption The option of from-to. (NotNull)
+     */
+    protected void setStartDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, FromToOption fromToOption) {
+        String nm = "START_DATETIME"; FromToOption op = fromToOption;
+        regFTQ(xfFTHD(fromDatetime, nm, op), xfFTHD(toDatetime, nm, op), xgetCValueStartDatetime(), nm, op);
+    }
+
+    protected void regStartDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueStartDatetime(), "START_DATETIME"); }
+    protected abstract ConditionValue xgetCValueStartDatetime();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
-     * @param villageSettingItemCode The value of villageSettingItemCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    protected void setVillageSettingItemCode_Equal(String villageSettingItemCode) {
-        doSetVillageSettingItemCode_Equal(fRES(villageSettingItemCode));
+    public void setOrganization_Equal(String organization) {
+        doSetOrganization_Equal(fRES(organization));
     }
 
-    /**
-     * Equal(=). As VillageSettingItem. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem} <br>
-     * 村設定項目
-     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem cdef) {
-        doSetVillageSettingItemCode_Equal(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * Equal(=). As キャラクターグループid (character_group_id). And OnlyOnceRegistered. <br>
-     * キャラクターグループID
-     */
-    public void setVillageSettingItemCode_Equal_キャラクターグループid() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.キャラクターグループid);
-    }
-
-    /**
-     * Equal(=). As 更新間隔秒 (day_change_interval_seconds). And OnlyOnceRegistered. <br>
-     * 更新間隔秒
-     */
-    public void setVillageSettingItemCode_Equal_更新間隔秒() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.更新間隔秒);
-    }
-
-    /**
-     * Equal(=). As ダミーキャラid (dummy_chara_id). And OnlyOnceRegistered. <br>
-     * ダミーキャラID
-     */
-    public void setVillageSettingItemCode_Equal_ダミーキャラid() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.ダミーキャラid);
-    }
-
-    /**
-     * Equal(=). As 自動生成村か (is_auto_generated). And OnlyOnceRegistered. <br>
-     * 自動生成村か
-     */
-    public void setVillageSettingItemCode_Equal_自動生成村か() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.自動生成村か);
-    }
-
-    /**
-     * Equal(=). As コミット可能か (is_available_commit). And OnlyOnceRegistered. <br>
-     * コミット可能か
-     */
-    public void setVillageSettingItemCode_Equal_コミット可能か() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.コミット可能か);
-    }
-
-    /**
-     * Equal(=). As 役職希望可能か (is_available_skill_request). And OnlyOnceRegistered. <br>
-     * 役職希望可能か
-     */
-    public void setVillageSettingItemCode_Equal_役職希望可能か() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.役職希望可能か);
-    }
-
-    /**
-     * Equal(=). As 見学可能か (is_available_spectate). And OnlyOnceRegistered. <br>
-     * 見学可能か
-     */
-    public void setVillageSettingItemCode_Equal_見学可能か() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.見学可能か);
-    }
-
-    /**
-     * Equal(=). As 突然死ありか (is_available_suddenly_death). And OnlyOnceRegistered. <br>
-     * 突然死ありか
-     */
-    public void setVillageSettingItemCode_Equal_突然死ありか() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.突然死ありか);
-    }
-
-    /**
-     * Equal(=). As 墓下役職公開ありか (is_open_skill_in_grave). And OnlyOnceRegistered. <br>
-     * 墓下役職公開ありか
-     */
-    public void setVillageSettingItemCode_Equal_墓下役職公開ありか() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.墓下役職公開ありか);
-    }
-
-    /**
-     * Equal(=). As 記名投票か (is_open_vote). And OnlyOnceRegistered. <br>
-     * 記名投票か
-     */
-    public void setVillageSettingItemCode_Equal_記名投票か() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.記名投票か);
-    }
-
-    /**
-     * Equal(=). As 墓下見学発言を生存者が見られるか (is_visible_grave_message). And OnlyOnceRegistered. <br>
-     * 墓下見学発言を生存者が見られるか
-     */
-    public void setVillageSettingItemCode_Equal_墓下見学発言を生存者が見られるか() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.墓下見学発言を生存者が見られるか);
-    }
-
-    /**
-     * Equal(=). As 入村パスワード (join_password). And OnlyOnceRegistered. <br>
-     * 入村パスワード
-     */
-    public void setVillageSettingItemCode_Equal_入村パスワード() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.入村パスワード);
-    }
-
-    /**
-     * Equal(=). As 構成 (organize). And OnlyOnceRegistered. <br>
-     * 構成
-     */
-    public void setVillageSettingItemCode_Equal_構成() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.構成);
-    }
-
-    /**
-     * Equal(=). As 最大人数 (person_max). And OnlyOnceRegistered. <br>
-     * 最大人数
-     */
-    public void setVillageSettingItemCode_Equal_最大人数() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.最大人数);
-    }
-
-    /**
-     * Equal(=). As 最低人数 (person_min). And OnlyOnceRegistered. <br>
-     * 最低人数
-     */
-    public void setVillageSettingItemCode_Equal_最低人数() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.最低人数);
-    }
-
-    /**
-     * Equal(=). As 沈黙時間 (silent_hours). And OnlyOnceRegistered. <br>
-     * 沈黙時間
-     */
-    public void setVillageSettingItemCode_Equal_沈黙時間() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.沈黙時間);
-    }
-
-    /**
-     * Equal(=). As 開始予定日時 (start_datetime). And OnlyOnceRegistered. <br>
-     * 開始予定日時
-     */
-    public void setVillageSettingItemCode_Equal_開始予定日時() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.開始予定日時);
-    }
-
-    /**
-     * Equal(=). As 期間形式 (term_type). And OnlyOnceRegistered. <br>
-     * 期間形式
-     */
-    public void setVillageSettingItemCode_Equal_期間形式() {
-        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.期間形式);
-    }
-
-    protected void doSetVillageSettingItemCode_Equal(String villageSettingItemCode) {
-        regVillageSettingItemCode(CK_EQ, villageSettingItemCode);
+    protected void doSetOrganization_Equal(String organization) {
+        regOrganization(CK_EQ, organization);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
-     * @param villageSettingItemCode The value of villageSettingItemCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    protected void setVillageSettingItemCode_NotEqual(String villageSettingItemCode) {
-        doSetVillageSettingItemCode_NotEqual(fRES(villageSettingItemCode));
+    public void setOrganization_NotEqual(String organization) {
+        doSetOrganization_NotEqual(fRES(organization));
     }
 
-    /**
-     * NotEqual(&lt;&gt;). As VillageSettingItem. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem} <br>
-     * 村設定項目
-     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem cdef) {
-        doSetVillageSettingItemCode_NotEqual(cdef != null ? cdef.code() : null);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As キャラクターグループid (character_group_id). And OnlyOnceRegistered. <br>
-     * キャラクターグループID
-     */
-    public void setVillageSettingItemCode_NotEqual_キャラクターグループid() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.キャラクターグループid);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 更新間隔秒 (day_change_interval_seconds). And OnlyOnceRegistered. <br>
-     * 更新間隔秒
-     */
-    public void setVillageSettingItemCode_NotEqual_更新間隔秒() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.更新間隔秒);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As ダミーキャラid (dummy_chara_id). And OnlyOnceRegistered. <br>
-     * ダミーキャラID
-     */
-    public void setVillageSettingItemCode_NotEqual_ダミーキャラid() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.ダミーキャラid);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 自動生成村か (is_auto_generated). And OnlyOnceRegistered. <br>
-     * 自動生成村か
-     */
-    public void setVillageSettingItemCode_NotEqual_自動生成村か() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.自動生成村か);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As コミット可能か (is_available_commit). And OnlyOnceRegistered. <br>
-     * コミット可能か
-     */
-    public void setVillageSettingItemCode_NotEqual_コミット可能か() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.コミット可能か);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 役職希望可能か (is_available_skill_request). And OnlyOnceRegistered. <br>
-     * 役職希望可能か
-     */
-    public void setVillageSettingItemCode_NotEqual_役職希望可能か() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.役職希望可能か);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 見学可能か (is_available_spectate). And OnlyOnceRegistered. <br>
-     * 見学可能か
-     */
-    public void setVillageSettingItemCode_NotEqual_見学可能か() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.見学可能か);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 突然死ありか (is_available_suddenly_death). And OnlyOnceRegistered. <br>
-     * 突然死ありか
-     */
-    public void setVillageSettingItemCode_NotEqual_突然死ありか() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.突然死ありか);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 墓下役職公開ありか (is_open_skill_in_grave). And OnlyOnceRegistered. <br>
-     * 墓下役職公開ありか
-     */
-    public void setVillageSettingItemCode_NotEqual_墓下役職公開ありか() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.墓下役職公開ありか);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 記名投票か (is_open_vote). And OnlyOnceRegistered. <br>
-     * 記名投票か
-     */
-    public void setVillageSettingItemCode_NotEqual_記名投票か() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.記名投票か);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 墓下見学発言を生存者が見られるか (is_visible_grave_message). And OnlyOnceRegistered. <br>
-     * 墓下見学発言を生存者が見られるか
-     */
-    public void setVillageSettingItemCode_NotEqual_墓下見学発言を生存者が見られるか() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.墓下見学発言を生存者が見られるか);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 入村パスワード (join_password). And OnlyOnceRegistered. <br>
-     * 入村パスワード
-     */
-    public void setVillageSettingItemCode_NotEqual_入村パスワード() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.入村パスワード);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 構成 (organize). And OnlyOnceRegistered. <br>
-     * 構成
-     */
-    public void setVillageSettingItemCode_NotEqual_構成() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.構成);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 最大人数 (person_max). And OnlyOnceRegistered. <br>
-     * 最大人数
-     */
-    public void setVillageSettingItemCode_NotEqual_最大人数() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.最大人数);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 最低人数 (person_min). And OnlyOnceRegistered. <br>
-     * 最低人数
-     */
-    public void setVillageSettingItemCode_NotEqual_最低人数() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.最低人数);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 沈黙時間 (silent_hours). And OnlyOnceRegistered. <br>
-     * 沈黙時間
-     */
-    public void setVillageSettingItemCode_NotEqual_沈黙時間() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.沈黙時間);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 開始予定日時 (start_datetime). And OnlyOnceRegistered. <br>
-     * 開始予定日時
-     */
-    public void setVillageSettingItemCode_NotEqual_開始予定日時() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.開始予定日時);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). As 期間形式 (term_type). And OnlyOnceRegistered. <br>
-     * 期間形式
-     */
-    public void setVillageSettingItemCode_NotEqual_期間形式() {
-        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.期間形式);
-    }
-
-    protected void doSetVillageSettingItemCode_NotEqual(String villageSettingItemCode) {
-        regVillageSettingItemCode(CK_NES, villageSettingItemCode);
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
-     * @param villageSettingItemCodeList The collection of villageSettingItemCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setVillageSettingItemCode_InScope(Collection<String> villageSettingItemCodeList) {
-        doSetVillageSettingItemCode_InScope(villageSettingItemCodeList);
-    }
-
-    /**
-     * InScope {in ('a', 'b')}. As VillageSettingItem. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem} <br>
-     * 村設定項目
-     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVillageSettingItemCode_InScope_AsVillageSettingItem(Collection<CDef.VillageSettingItem> cdefList) {
-        doSetVillageSettingItemCode_InScope(cTStrL(cdefList));
-    }
-
-    protected void doSetVillageSettingItemCode_InScope(Collection<String> villageSettingItemCodeList) {
-        regINS(CK_INS, cTL(villageSettingItemCodeList), xgetCValueVillageSettingItemCode(), "VILLAGE_SETTING_ITEM_CODE");
-    }
-
-    /**
-     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
-     * @param villageSettingItemCodeList The collection of villageSettingItemCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    protected void setVillageSettingItemCode_NotInScope(Collection<String> villageSettingItemCodeList) {
-        doSetVillageSettingItemCode_NotInScope(villageSettingItemCodeList);
-    }
-
-    /**
-     * NotInScope {not in ('a', 'b')}. As VillageSettingItem. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem} <br>
-     * 村設定項目
-     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVillageSettingItemCode_NotInScope_AsVillageSettingItem(Collection<CDef.VillageSettingItem> cdefList) {
-        doSetVillageSettingItemCode_NotInScope(cTStrL(cdefList));
-    }
-
-    protected void doSetVillageSettingItemCode_NotInScope(Collection<String> villageSettingItemCodeList) {
-        regINS(CK_NINS, cTL(villageSettingItemCodeList), xgetCValueVillageSettingItemCode(), "VILLAGE_SETTING_ITEM_CODE");
-    }
-
-    /**
-     * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
-     */
-    public void setVillageSettingItemCode_IsNull() { regVillageSettingItemCode(CK_ISN, DOBJ); }
-
-    /**
-     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
-     */
-    public void setVillageSettingItemCode_IsNotNull() { regVillageSettingItemCode(CK_ISNN, DOBJ); }
-
-    protected void regVillageSettingItemCode(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageSettingItemCode(), "VILLAGE_SETTING_ITEM_CODE"); }
-    protected abstract ConditionValue xgetCValueVillageSettingItemCode();
-
-    /**
-     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVillageSettingText_Equal(String villageSettingText) {
-        doSetVillageSettingText_Equal(fRES(villageSettingText));
-    }
-
-    protected void doSetVillageSettingText_Equal(String villageSettingText) {
-        regVillageSettingText(CK_EQ, villageSettingText);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVillageSettingText_NotEqual(String villageSettingText) {
-        doSetVillageSettingText_NotEqual(fRES(villageSettingText));
-    }
-
-    protected void doSetVillageSettingText_NotEqual(String villageSettingText) {
-        regVillageSettingText(CK_NES, villageSettingText);
+    protected void doSetOrganization_NotEqual(String organization) {
+        regOrganization(CK_NES, organization);
     }
 
     /**
      * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageSettingText_GreaterThan(String villageSettingText) {
-        regVillageSettingText(CK_GT, fRES(villageSettingText));
+    public void setOrganization_GreaterThan(String organization) {
+        regOrganization(CK_GT, fRES(organization));
     }
 
     /**
      * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageSettingText_LessThan(String villageSettingText) {
-        regVillageSettingText(CK_LT, fRES(villageSettingText));
+    public void setOrganization_LessThan(String organization) {
+        regOrganization(CK_LT, fRES(organization));
     }
 
     /**
      * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageSettingText_GreaterEqual(String villageSettingText) {
-        regVillageSettingText(CK_GE, fRES(villageSettingText));
+    public void setOrganization_GreaterEqual(String organization) {
+        regOrganization(CK_GE, fRES(organization));
     }
 
     /**
      * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageSettingText_LessEqual(String villageSettingText) {
-        regVillageSettingText(CK_LE, fRES(villageSettingText));
+    public void setOrganization_LessEqual(String organization) {
+        regOrganization(CK_LE, fRES(organization));
     }
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingTextList The collection of villageSettingText as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organizationList The collection of organization as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageSettingText_InScope(Collection<String> villageSettingTextList) {
-        doSetVillageSettingText_InScope(villageSettingTextList);
+    public void setOrganization_InScope(Collection<String> organizationList) {
+        doSetOrganization_InScope(organizationList);
     }
 
-    protected void doSetVillageSettingText_InScope(Collection<String> villageSettingTextList) {
-        regINS(CK_INS, cTL(villageSettingTextList), xgetCValueVillageSettingText(), "VILLAGE_SETTING_TEXT");
+    protected void doSetOrganization_InScope(Collection<String> organizationList) {
+        regINS(CK_INS, cTL(organizationList), xgetCValueOrganization(), "ORGANIZATION");
     }
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingTextList The collection of villageSettingText as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organizationList The collection of organization as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageSettingText_NotInScope(Collection<String> villageSettingTextList) {
-        doSetVillageSettingText_NotInScope(villageSettingTextList);
+    public void setOrganization_NotInScope(Collection<String> organizationList) {
+        doSetOrganization_NotInScope(organizationList);
     }
 
-    protected void doSetVillageSettingText_NotInScope(Collection<String> villageSettingTextList) {
-        regINS(CK_NINS, cTL(villageSettingTextList), xgetCValueVillageSettingText(), "VILLAGE_SETTING_TEXT");
+    protected void doSetOrganization_NotInScope(Collection<String> organizationList) {
+        regINS(CK_NINS, cTL(organizationList), xgetCValueOrganization(), "ORGANIZATION");
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)} <br>
-     * <pre>e.g. setVillageSettingText_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
-     * @param villageSettingText The value of villageSettingText as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)} <br>
+     * <pre>e.g. setOrganization_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param organization The value of organization as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setVillageSettingText_LikeSearch(String villageSettingText, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setVillageSettingText_LikeSearch(villageSettingText, xcLSOP(opLambda));
+    public void setOrganization_LikeSearch(String organization, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setOrganization_LikeSearch(organization, xcLSOP(opLambda));
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)} <br>
-     * <pre>e.g. setVillageSettingText_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
-     * @param villageSettingText The value of villageSettingText as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)} <br>
+     * <pre>e.g. setOrganization_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param organization The value of organization as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of like-search. (NotNull)
      */
-    protected void setVillageSettingText_LikeSearch(String villageSettingText, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_LS, fRES(villageSettingText), xgetCValueVillageSettingText(), "VILLAGE_SETTING_TEXT", likeSearchOption);
+    protected void setOrganization_LikeSearch(String organization, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(organization), xgetCValueOrganization(), "ORGANIZATION", likeSearchOption);
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setVillageSettingText_NotLikeSearch(String villageSettingText, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setVillageSettingText_NotLikeSearch(villageSettingText, xcLSOP(opLambda));
+    public void setOrganization_NotLikeSearch(String organization, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setOrganization_NotLikeSearch(organization, xcLSOP(opLambda));
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
-     * @param villageSettingText The value of villageSettingText as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * ORGANIZATION: {NotNull, VARCHAR(255)}
+     * @param organization The value of organization as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of not-like-search. (NotNull)
      */
-    protected void setVillageSettingText_NotLikeSearch(String villageSettingText, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_NLS, fRES(villageSettingText), xgetCValueVillageSettingText(), "VILLAGE_SETTING_TEXT", likeSearchOption);
+    protected void setOrganization_NotLikeSearch(String organization, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(organization), xgetCValueOrganization(), "ORGANIZATION", likeSearchOption);
+    }
+
+    protected void regOrganization(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueOrganization(), "ORGANIZATION"); }
+    protected abstract ConditionValue xgetCValueOrganization();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHours The value of silentHours as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setSilentHours_Equal(Integer silentHours) {
+        doSetSilentHours_Equal(silentHours);
+    }
+
+    protected void doSetSilentHours_Equal(Integer silentHours) {
+        regSilentHours(CK_EQ, silentHours);
     }
 
     /**
-     * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHours The value of silentHours as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageSettingText_IsNull() { regVillageSettingText(CK_ISN, DOBJ); }
+    public void setSilentHours_NotEqual(Integer silentHours) {
+        doSetSilentHours_NotEqual(silentHours);
+    }
+
+    protected void doSetSilentHours_NotEqual(Integer silentHours) {
+        regSilentHours(CK_NES, silentHours);
+    }
 
     /**
-     * IsNullOrEmpty {is null or empty}. And OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHours The value of silentHours as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageSettingText_IsNullOrEmpty() { regVillageSettingText(CK_ISNOE, DOBJ); }
+    public void setSilentHours_GreaterThan(Integer silentHours) {
+        regSilentHours(CK_GT, silentHours);
+    }
 
     /**
-     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_SETTING_TEXT: {VARCHAR(1000)}
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHours The value of silentHours as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageSettingText_IsNotNull() { regVillageSettingText(CK_ISNN, DOBJ); }
+    public void setSilentHours_LessThan(Integer silentHours) {
+        regSilentHours(CK_LT, silentHours);
+    }
 
-    protected void regVillageSettingText(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageSettingText(), "VILLAGE_SETTING_TEXT"); }
-    protected abstract ConditionValue xgetCValueVillageSettingText();
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHours The value of silentHours as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setSilentHours_GreaterEqual(Integer silentHours) {
+        regSilentHours(CK_GE, silentHours);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHours The value of silentHours as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setSilentHours_LessEqual(Integer silentHours) {
+        regSilentHours(CK_LE, silentHours);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setSilentHours_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setSilentHours_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setSilentHours_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueSilentHours(), "SILENT_HOURS", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHoursList The collection of silentHours as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSilentHours_InScope(Collection<Integer> silentHoursList) {
+        doSetSilentHours_InScope(silentHoursList);
+    }
+
+    protected void doSetSilentHours_InScope(Collection<Integer> silentHoursList) {
+        regINS(CK_INS, cTL(silentHoursList), xgetCValueSilentHours(), "SILENT_HOURS");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
+     * @param silentHoursList The collection of silentHours as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setSilentHours_NotInScope(Collection<Integer> silentHoursList) {
+        doSetSilentHours_NotInScope(silentHoursList);
+    }
+
+    protected void doSetSilentHours_NotInScope(Collection<Integer> silentHoursList) {
+        regINS(CK_NINS, cTL(silentHoursList), xgetCValueSilentHours(), "SILENT_HOURS");
+    }
+
+    protected void regSilentHours(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueSilentHours(), "SILENT_HOURS"); }
+    protected abstract ConditionValue xgetCValueSilentHours();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -1154,8 +1008,8 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<VillageSettingCB> scalar_Equal() {
-        return xcreateSLCFunction(CK_EQ, VillageSettingCB.class);
+    public HpSLCFunction<ReservedVillageCB> scalar_Equal() {
+        return xcreateSLCFunction(CK_EQ, ReservedVillageCB.class);
     }
 
     /**
@@ -1169,8 +1023,8 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<VillageSettingCB> scalar_NotEqual() {
-        return xcreateSLCFunction(CK_NES, VillageSettingCB.class);
+    public HpSLCFunction<ReservedVillageCB> scalar_NotEqual() {
+        return xcreateSLCFunction(CK_NES, ReservedVillageCB.class);
     }
 
     /**
@@ -1184,8 +1038,8 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<VillageSettingCB> scalar_GreaterThan() {
-        return xcreateSLCFunction(CK_GT, VillageSettingCB.class);
+    public HpSLCFunction<ReservedVillageCB> scalar_GreaterThan() {
+        return xcreateSLCFunction(CK_GT, ReservedVillageCB.class);
     }
 
     /**
@@ -1199,8 +1053,8 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<VillageSettingCB> scalar_LessThan() {
-        return xcreateSLCFunction(CK_LT, VillageSettingCB.class);
+    public HpSLCFunction<ReservedVillageCB> scalar_LessThan() {
+        return xcreateSLCFunction(CK_LT, ReservedVillageCB.class);
     }
 
     /**
@@ -1214,16 +1068,16 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<VillageSettingCB> scalar_GreaterEqual() {
-        return xcreateSLCFunction(CK_GE, VillageSettingCB.class);
+    public HpSLCFunction<ReservedVillageCB> scalar_GreaterEqual() {
+        return xcreateSLCFunction(CK_GE, ReservedVillageCB.class);
     }
 
     /**
      * Prepare ScalarCondition as lessEqual. <br>
      * {where FOO &lt;= (select max(BAR) from ...)}
      * <pre>
-     * cb.query().<span style="color: #CC4747">scalar_LessEqual()</span>.max(new SubQuery&lt;VillageSettingCB&gt;() {
-     *     public void query(VillageSettingCB subCB) {
+     * cb.query().<span style="color: #CC4747">scalar_LessEqual()</span>.max(new SubQuery&lt;ReservedVillageCB&gt;() {
+     *     public void query(ReservedVillageCB subCB) {
      *         subCB.specify().setFoo... <span style="color: #3F7E5E">// derived column for function</span>
      *         subCB.query().setBar...
      *     }
@@ -1231,27 +1085,72 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<VillageSettingCB> scalar_LessEqual() {
-        return xcreateSLCFunction(CK_LE, VillageSettingCB.class);
+    public HpSLCFunction<ReservedVillageCB> scalar_LessEqual() {
+        return xcreateSLCFunction(CK_LE, ReservedVillageCB.class);
     }
 
     @SuppressWarnings("unchecked")
     protected <CB extends ConditionBean> void xscalarCondition(String fn, SubQuery<CB> sq, String rd, HpSLCCustomized<CB> cs, ScalarConditionOption op) {
         assertObjectNotNull("subQuery", sq);
-        VillageSettingCB cb = xcreateScalarConditionCB(); sq.query((CB)cb);
+        ReservedVillageCB cb = xcreateScalarConditionCB(); sq.query((CB)cb);
         String pp = keepScalarCondition(cb.query()); // for saving query-value
         cs.setPartitionByCBean((CB)xcreateScalarConditionPartitionByCB()); // for using partition-by
         registerScalarCondition(fn, cb.query(), pp, rd, cs, op);
     }
-    public abstract String keepScalarCondition(VillageSettingCQ sq);
+    public abstract String keepScalarCondition(ReservedVillageCQ sq);
 
-    protected VillageSettingCB xcreateScalarConditionCB() {
-        VillageSettingCB cb = newMyCB(); cb.xsetupForScalarCondition(this); return cb;
+    protected ReservedVillageCB xcreateScalarConditionCB() {
+        ReservedVillageCB cb = newMyCB(); cb.xsetupForScalarCondition(this); return cb;
     }
 
-    protected VillageSettingCB xcreateScalarConditionPartitionByCB() {
-        VillageSettingCB cb = newMyCB(); cb.xsetupForScalarConditionPartitionBy(this); return cb;
+    protected ReservedVillageCB xcreateScalarConditionPartitionByCB() {
+        ReservedVillageCB cb = newMyCB(); cb.xsetupForScalarConditionPartitionBy(this); return cb;
     }
+
+    // ===================================================================================
+    //                                                                       MyselfDerived
+    //                                                                       =============
+    public void xsmyselfDerive(String fn, SubQuery<ReservedVillageCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepSpecifyMyselfDerived(cb.query()); String pk = "RESERVED_VILLAGE_ID";
+        registerSpecifyMyselfDerived(fn, cb.query(), pk, pk, pp, "myselfDerived", al, op);
+    }
+    public abstract String keepSpecifyMyselfDerived(ReservedVillageCQ sq);
+
+    /**
+     * Prepare for (Query)MyselfDerived (correlated sub-query).
+     * @return The object to set up a function for myself table. (NotNull)
+     */
+    public HpQDRFunction<ReservedVillageCB> myselfDerived() {
+        return xcreateQDRFunctionMyselfDerived(ReservedVillageCB.class);
+    }
+    @SuppressWarnings("unchecked")
+    protected <CB extends ConditionBean> void xqderiveMyselfDerived(String fn, SubQuery<CB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForDerivedReferrer(this); sq.query((CB)cb);
+        String pk = "RESERVED_VILLAGE_ID";
+        String sqpp = keepQueryMyselfDerived(cb.query()); // for saving query-value.
+        String prpp = keepQueryMyselfDerivedParameter(vl);
+        registerQueryMyselfDerived(fn, cb.query(), pk, pk, sqpp, "myselfDerived", rd, vl, prpp, op);
+    }
+    public abstract String keepQueryMyselfDerived(ReservedVillageCQ sq);
+    public abstract String keepQueryMyselfDerivedParameter(Object vl);
+
+    // ===================================================================================
+    //                                                                        MyselfExists
+    //                                                                        ============
+    /**
+     * Prepare for MyselfExists (correlated sub-query).
+     * @param subCBLambda The implementation of sub-query. (NotNull)
+     */
+    public void myselfExists(SubQuery<ReservedVillageCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForMyselfExists(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepMyselfExists(cb.query());
+        registerMyselfExists(cb.query(), pp);
+    }
+    public abstract String keepMyselfExists(ReservedVillageCQ sq);
 
     // ===================================================================================
     //                                                                        Manual Order
@@ -1295,12 +1194,12 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
     // ===================================================================================
     //                                                                       Very Internal
     //                                                                       =============
-    protected VillageSettingCB newMyCB() {
-        return new VillageSettingCB();
+    protected ReservedVillageCB newMyCB() {
+        return new ReservedVillageCB();
     }
     // very internal (for suppressing warn about 'Not Use Import')
     protected String xabUDT() { return Date.class.getName(); }
-    protected String xabCQ() { return VillageSettingCQ.class.getName(); }
+    protected String xabCQ() { return ReservedVillageCQ.class.getName(); }
     protected String xabLSO() { return LikeSearchOption.class.getName(); }
     protected String xabSLCS() { return HpSLCSetupper.class.getName(); }
     protected String xabSCP() { return SubQuery.class.getName(); }

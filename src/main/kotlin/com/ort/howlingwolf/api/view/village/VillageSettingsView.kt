@@ -1,10 +1,14 @@
 package com.ort.howlingwolf.api.view.village
 
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
 
 data class VillageSettingsView(
     val capacity: PersonCapacity,
-    val time: VillageTime,
+    val time: VillageTimeView,
     val charachip: VillageCharachip,
     val organizations: VillageOrganizations,
     val rules: VillageRules,
@@ -14,7 +18,7 @@ data class VillageSettingsView(
         villageSettings: VillageSettings
     ) : this(
         capacity = villageSettings.capacity,
-        time = villageSettings.time,
+        time = VillageTimeView(villageSettings.time),
         charachip = villageSettings.charachip,
         organizations = villageSettings.organizations,
         rules = villageSettings.rules,

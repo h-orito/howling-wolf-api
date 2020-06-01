@@ -243,6 +243,14 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     }
 
     /**
+     * Set the value of villageSettingItemCode as 沈黙時間 (silent_hours). <br>
+     * 沈黙時間
+     */
+    public void setVillageSettingItemCode_沈黙時間() {
+        setVillageSettingItemCodeAsVillageSettingItem(CDef.VillageSettingItem.沈黙時間);
+    }
+
+    /**
      * Set the value of villageSettingItemCode as 開始予定日時 (start_datetime). <br>
      * 開始予定日時
      */
@@ -424,6 +432,17 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     public boolean isVillageSettingItemCode最低人数() {
         CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
         return cdef != null ? cdef.equals(CDef.VillageSettingItem.最低人数) : false;
+    }
+
+    /**
+     * Is the value of villageSettingItemCode 沈黙時間? <br>
+     * 沈黙時間
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isVillageSettingItemCode沈黙時間() {
+        CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
+        return cdef != null ? cdef.equals(CDef.VillageSettingItem.沈黙時間) : false;
     }
 
     /**
