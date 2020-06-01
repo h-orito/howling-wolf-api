@@ -1,7 +1,11 @@
 package com.ort.howlingwolf.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exbhv.*
+import com.ort.dbflute.exbhv.MessageRestrictionBhv
+import com.ort.dbflute.exbhv.VillageBhv
+import com.ort.dbflute.exbhv.VillageDayBhv
+import com.ort.dbflute.exbhv.VillagePlayerBhv
+import com.ort.dbflute.exbhv.VillageSettingBhv
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.howlingwolf.HowlingWolfTest
 import com.ort.howlingwolf.domain.model.camp.Camp
@@ -13,7 +17,15 @@ import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -72,7 +84,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
                     startDatetime = startDatetime,
-                    dayChangeIntervalSeconds = interval
+                    dayChangeIntervalSeconds = interval,
+                    silentHours = null
                 ),
                 charachip = VillageCharachip(
                     dummyCharaId = dummyCharaId,
@@ -285,7 +298,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
                     startDatetime = LocalDateTime.now().plusDays(1L).withNano(0),
-                    dayChangeIntervalSeconds = 24 * 60 * 60
+                    dayChangeIntervalSeconds = 24 * 60 * 60,
+                    silentHours = null
                 ),
                 charachip = VillageCharachip(
                     dummyCharaId = 1,
@@ -337,7 +351,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
                 time = VillageTime(
                     termType = CDef.Term.短期.code(),
                     startDatetime = LocalDateTime.now().plusDays(2L).withNano(0),
-                    dayChangeIntervalSeconds = 48 * 60 * 60
+                    dayChangeIntervalSeconds = 48 * 60 * 60,
+                    silentHours = null
                 ),
                 charachip = VillageCharachip(
                     dummyCharaId = 1,

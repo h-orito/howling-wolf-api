@@ -10,7 +10,14 @@ import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -166,7 +173,8 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
             time = VillageTime(
                 termType = CDef.Term.長期.code(),
                 startDatetime = LocalDateTime.now().plusDays(1L),
-                dayChangeIntervalSeconds = 86400
+                dayChangeIntervalSeconds = 86400,
+                silentHours = null
             ),
             charachip = VillageCharachip(
                 dummyCharaId = 1,

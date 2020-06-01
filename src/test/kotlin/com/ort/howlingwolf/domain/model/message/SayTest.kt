@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.HowlingWolfTest
 import com.ort.howlingwolf.domain.model.charachip.CharaFace
 import com.ort.howlingwolf.domain.model.dead.Dead
+import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
@@ -15,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import java.time.LocalDateTime
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
@@ -109,6 +111,14 @@ class SayTest : HowlingWolfTest() {
                 rules = DummyDomainModelCreator.createDummyVillageRules().copy(
                     messageRestrict = VillageMessageRestricts()
                 )
+            ),
+            day = VillageDays(
+                listOf(
+                    DummyDomainModelCreator.createDummyVillageDay().copy(
+                        dayChangeDatetime = LocalDateTime.now().minusMinutes(30L)
+                    ),
+                    DummyDomainModelCreator.createDummyVillageDay()
+                )
             )
         )
         val participant = DummyDomainModelCreator.createDummyAliveVillager()
@@ -146,6 +156,14 @@ class SayTest : HowlingWolfTest() {
             setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
                 rules = DummyDomainModelCreator.createDummyVillageRules().copy(
                     messageRestrict = VillageMessageRestricts()
+                )
+            ),
+            day = VillageDays(
+                listOf(
+                    DummyDomainModelCreator.createDummyVillageDay().copy(
+                        dayChangeDatetime = LocalDateTime.now().minusMinutes(30L)
+                    ),
+                    DummyDomainModelCreator.createDummyVillageDay()
                 )
             )
         )
@@ -198,6 +216,14 @@ class SayTest : HowlingWolfTest() {
                             )
                         )
                     )
+                )
+            ),
+            day = VillageDays(
+                listOf(
+                    DummyDomainModelCreator.createDummyVillageDay().copy(
+                        dayChangeDatetime = LocalDateTime.now().minusMinutes(30L)
+                    ),
+                    DummyDomainModelCreator.createDummyVillageDay()
                 )
             )
         )

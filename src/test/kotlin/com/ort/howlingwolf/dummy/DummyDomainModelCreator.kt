@@ -1,7 +1,11 @@
 package com.ort.howlingwolf.dummy
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.domain.model.charachip.*
+import com.ort.howlingwolf.domain.model.charachip.Chara
+import com.ort.howlingwolf.domain.model.charachip.CharaDefaultMessage
+import com.ort.howlingwolf.domain.model.charachip.CharaName
+import com.ort.howlingwolf.domain.model.charachip.CharaSize
+import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.commit.Commits
 import com.ort.howlingwolf.domain.model.daychange.DayChange
 import com.ort.howlingwolf.domain.model.dead.Dead
@@ -20,7 +24,13 @@ import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
 import java.time.LocalDateTime
 
@@ -70,7 +80,7 @@ object DummyDomainModelCreator {
 
     fun createDummyVillageCharachip(): VillageCharachip = VillageCharachip(1, 1)
 
-    fun createDummyVillageTime(): VillageTime = VillageTime("dummy", LocalDateTime.now(), 0)
+    fun createDummyVillageTime(): VillageTime = VillageTime("dummy", LocalDateTime.now(), 0, null)
 
     fun createDummyPersonCapacity(): PersonCapacity = PersonCapacity(1, 1)
 

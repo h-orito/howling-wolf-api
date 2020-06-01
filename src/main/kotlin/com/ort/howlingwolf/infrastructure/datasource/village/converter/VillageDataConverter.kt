@@ -1,7 +1,11 @@
 package com.ort.howlingwolf.infrastructure.datasource.village.converter
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exentity.*
+import com.ort.dbflute.exentity.MessageRestriction
+import com.ort.dbflute.exentity.Village
+import com.ort.dbflute.exentity.VillageDay
+import com.ort.dbflute.exentity.VillagePlayer
+import com.ort.dbflute.exentity.VillageSetting
 import com.ort.howlingwolf.domain.model.dead.Dead
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
@@ -10,7 +14,15 @@ import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.*
+import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
+import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
+import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
+import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
+import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
+import com.ort.howlingwolf.domain.model.village.setting.VillageRules
+import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import org.dbflute.cbean.result.ListResultBean
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -99,7 +111,8 @@ object VillageDataConverter {
                         DATETIME_FORMATTER
                     )
                 },
-                dayChangeIntervalSeconds = detectItemText(settingList, CDef.VillageSettingItem.更新間隔秒)?.toInt()
+                dayChangeIntervalSeconds = detectItemText(settingList, CDef.VillageSettingItem.更新間隔秒)?.toInt(),
+                silentHours = detectItemText(settingList, CDef.VillageSettingItem.沈黙時間)?.toInt()
             ),
             charachip = VillageCharachip.invoke(
                 dummyCharaId = detectItemText(settingList, CDef.VillageSettingItem.ダミーキャラid)?.toInt(),

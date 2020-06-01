@@ -1,8 +1,16 @@
 package com.ort.howlingwolf.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exbhv.*
-import com.ort.dbflute.exentity.*
+import com.ort.dbflute.exbhv.MessageRestrictionBhv
+import com.ort.dbflute.exbhv.VillageBhv
+import com.ort.dbflute.exbhv.VillageDayBhv
+import com.ort.dbflute.exbhv.VillagePlayerBhv
+import com.ort.dbflute.exbhv.VillageSettingBhv
+import com.ort.dbflute.exentity.MessageRestriction
+import com.ort.dbflute.exentity.Village
+import com.ort.dbflute.exentity.VillageDay
+import com.ort.dbflute.exentity.VillagePlayer
+import com.ort.dbflute.exentity.VillageSetting
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
@@ -500,6 +508,7 @@ class VillageDataSource(
         insertVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(settings.rules.availableSuddenlyDeath))
         insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
         insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, settings.password.joinPassword ?: "")
+        insertVillageSetting(villageId, CDef.VillageSettingItem.沈黙時間, settings.time.silentHours?.toString() ?: "")
     }
 
     private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {
