@@ -27,4 +27,7 @@
 ### VS Code ###
 .vscode/
 
-/dbflute_sandboxdb/log/
+/dbflute_howlingwolfdb/log/
+/dbflute_howlingwolfdb/output/doc/history-howlingwolfdb.html
+/dbflute_howlingwolfdb/output/doc/schema-howlingwolfdb.html
+/dbflute_howlingwolfdb/schema/project-history-howlingwolfdb.diffmap

@@ -61,8 +61,50 @@ public class VillageDayCIQ extends AbstractBsVillageDayCQ {
     // ===================================================================================
     //                                                                Override about Query
     //                                                                ====================
+    protected ConditionValue xgetCValueVillageDayId() { return _myCQ.xdfgetVillageDayId(); }
+    public String keepVillageDayId_ExistsReferrer_AbilityList(AbilityCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillageDayId_ExistsReferrer_CommitList(CommitCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillageDayId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillageDayId_ExistsReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillageDayId_NotExistsReferrer_AbilityList(AbilityCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillageDayId_NotExistsReferrer_CommitList(CommitCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillageDayId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillageDayId_NotExistsReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillageDayId_SpecifyDerivedReferrer_AbilityList(AbilityCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillageDayId_SpecifyDerivedReferrer_CommitList(CommitCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillageDayId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillageDayId_SpecifyDerivedReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_AbilityList(AbilityCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_AbilityListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_CommitList(CommitCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_CommitListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_VoteList(VoteCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillageDayId_QueryDerivedReferrer_VoteListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueVillageId() { return _myCQ.xdfgetVillageId(); }
     protected ConditionValue xgetCValueDay() { return _myCQ.xdfgetDay(); }
+    protected ConditionValue xgetCValueNoonnightCode() { return _myCQ.xdfgetNoonnightCode(); }
     protected ConditionValue xgetCValueDaychangeDatetime() { return _myCQ.xdfgetDaychangeDatetime(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
@@ -71,6 +113,14 @@ public class VillageDayCIQ extends AbstractBsVillageDayCQ {
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
     public String keepScalarCondition(VillageDayCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }
+    public String keepSpecifyMyselfDerived(VillageDayCQ sq)
+    { throwIICBOE("(Specify)MyselfDerived"); return null;}
+    public String keepQueryMyselfDerived(VillageDayCQ sq)
+    { throwIICBOE("(Query)MyselfDerived"); return null;}
+    public String keepQueryMyselfDerivedParameter(Object vl)
+    { throwIICBOE("(Query)MyselfDerived"); return null;}
+    public String keepMyselfExists(VillageDayCQ sq)
+    { throwIICBOE("MyselfExists"); return null;}
 
     protected void throwIICBOE(String name)
     { throw new IllegalConditionBeanOperationException(name + " at InlineView is unsupported."); }

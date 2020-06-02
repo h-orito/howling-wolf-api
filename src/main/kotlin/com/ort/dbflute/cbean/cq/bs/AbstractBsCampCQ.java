@@ -479,6 +479,123 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
     protected void regCampName(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCampName(), "CAMP_NAME"); }
     protected abstract ConditionValue xgetCValueCampName();
 
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrder The value of dispOrder as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDispOrder_Equal(Integer dispOrder) {
+        doSetDispOrder_Equal(dispOrder);
+    }
+
+    protected void doSetDispOrder_Equal(Integer dispOrder) {
+        regDispOrder(CK_EQ, dispOrder);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrder The value of dispOrder as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDispOrder_NotEqual(Integer dispOrder) {
+        doSetDispOrder_NotEqual(dispOrder);
+    }
+
+    protected void doSetDispOrder_NotEqual(Integer dispOrder) {
+        regDispOrder(CK_NES, dispOrder);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrder The value of dispOrder as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDispOrder_GreaterThan(Integer dispOrder) {
+        regDispOrder(CK_GT, dispOrder);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrder The value of dispOrder as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDispOrder_LessThan(Integer dispOrder) {
+        regDispOrder(CK_LT, dispOrder);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrder The value of dispOrder as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDispOrder_GreaterEqual(Integer dispOrder) {
+        regDispOrder(CK_GE, dispOrder);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrder The value of dispOrder as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDispOrder_LessEqual(Integer dispOrder) {
+        regDispOrder(CK_LE, dispOrder);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of dispOrder. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of dispOrder. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setDispOrder_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setDispOrder_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param minNumber The min number of dispOrder. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of dispOrder. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setDispOrder_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueDispOrder(), "DISP_ORDER", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrderList The collection of dispOrder as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDispOrder_InScope(Collection<Integer> dispOrderList) {
+        doSetDispOrder_InScope(dispOrderList);
+    }
+
+    protected void doSetDispOrder_InScope(Collection<Integer> dispOrderList) {
+        regINS(CK_INS, cTL(dispOrderList), xgetCValueDispOrder(), "DISP_ORDER");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * DISP_ORDER: {NotNull, INT UNSIGNED(10)}
+     * @param dispOrderList The collection of dispOrder as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setDispOrder_NotInScope(Collection<Integer> dispOrderList) {
+        doSetDispOrder_NotInScope(dispOrderList);
+    }
+
+    protected void doSetDispOrder_NotInScope(Collection<Integer> dispOrderList) {
+        regINS(CK_NINS, cTL(dispOrderList), xgetCValueDispOrder(), "DISP_ORDER");
+    }
+
+    protected void regDispOrder(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDispOrder(), "DISP_ORDER"); }
+    protected abstract ConditionValue xgetCValueDispOrder();
+
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============
@@ -490,7 +607,7 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CampCB> scalar_Equal() {
@@ -505,7 +622,7 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CampCB> scalar_NotEqual() {
@@ -520,7 +637,7 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CampCB> scalar_GreaterThan() {
@@ -535,7 +652,7 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CampCB> scalar_LessThan() {
@@ -550,7 +667,7 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<CampCB> scalar_GreaterEqual() {
@@ -653,7 +770,6 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

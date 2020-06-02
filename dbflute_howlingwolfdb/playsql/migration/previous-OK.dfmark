@@ -1,0 +1,28 @@
+[Saved Previous Resources]: 2020/05/31 14:48:25
+playsql/migration/previous/replace-schema-00.sql
+playsql/migration/previous/replace-schema-10-basic.sql
+playsql/migration/previous/replace-schema-10-partition.sql
+playsql/migration/previous/take-finally.sql
+playsql/migration/previous/data/ut/tsv/UTF-8/defaultValueMap.dataprop
+playsql/migration/previous/data/ut/tsv/UTF-8/tsv-data-result.dfmark
+playsql/migration/previous/data/ut/tsv/UTF-8/00-PLAYER.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/06-DEAD_REASON.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/01-AUTHORITY.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/13-CHARA_IMAGE.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/10-FACE_TYPE.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/05-MESSAGE_TYPE.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/defaultValueMap.dataprop
+playsql/migration/previous/data/common/tsv/UTF-8/09-CHARA_GROUP.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/12-CHARA.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/15-APP_VERSION.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/14-NOONNIGHT.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/02-CAMP.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/tsv-data-result.dfmark
+playsql/migration/previous/data/common/tsv/UTF-8/11-VILLAGE_SETTING_ITEM.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/08-DESIGNER.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/07-ABILITY_TYPE.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/03-VILLAGE_STATUS.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/04-SKILL.tsv
+(24 files)
+
+Look at the log for detail.

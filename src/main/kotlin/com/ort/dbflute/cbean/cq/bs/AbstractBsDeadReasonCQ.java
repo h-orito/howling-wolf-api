@@ -87,7 +87,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * Equal(=). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_Equal_突然() {
@@ -142,7 +142,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 突然 (SUDDON). And OnlyOnceRegistered. <br>
+     * NotEqual(&lt;&gt;). As 突然 (SUDDEN). And OnlyOnceRegistered. <br>
      * 突然
      */
     public void setDeadReasonCode_NotEqual_突然() {
@@ -170,6 +170,26 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      */
     public void setDeadReasonCode_InScope_AsDeadReason(Collection<CDef.DeadReason> cdefList) {
         doSetDeadReasonCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As DeadReason. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 死亡理由 <br>
+     * 無惨な死 <br>
+     * The group elements:[襲撃, 呪殺]
+     */
+    public void setDeadReasonCode_InScope_MiserableDeath() {
+        setDeadReasonCode_InScope_AsDeadReason(CDef.DeadReason.listOfMiserableDeath());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As DeadReason. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 死亡理由 <br>
+     * 霊能判定可能な死因 <br>
+     * The group elements:[処刑, 突然]
+     */
+    public void setDeadReasonCode_InScope_PsychicableDeath() {
+        setDeadReasonCode_InScope_AsDeadReason(CDef.DeadReason.listOfPsychicableDeath());
     }
 
     protected void doSetDeadReasonCode_InScope(Collection<String> deadReasonCodeList) {
@@ -433,7 +453,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<DeadReasonCB> scalar_Equal() {
@@ -448,7 +468,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<DeadReasonCB> scalar_NotEqual() {
@@ -463,7 +483,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<DeadReasonCB> scalar_GreaterThan() {
@@ -478,7 +498,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<DeadReasonCB> scalar_LessThan() {
@@ -493,7 +513,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<DeadReasonCB> scalar_GreaterEqual() {
@@ -596,7 +616,6 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

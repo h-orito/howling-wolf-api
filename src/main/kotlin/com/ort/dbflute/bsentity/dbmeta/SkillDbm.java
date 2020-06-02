@@ -52,6 +52,7 @@ public class SkillDbm extends AbstractDBMeta {
             }
         }, "skillCode");
         setupEpg(_epgMap, et -> ((Skill)et).getSkillName(), (et, vl) -> ((Skill)et).setSkillName((String)vl), "skillName");
+        setupEpg(_epgMap, et -> ((Skill)et).getSkillShortName(), (et, vl) -> ((Skill)et).setSkillShortName((String)vl), "skillShortName");
         setupEpg(_epgMap, et -> ((Skill)et).getCampCode(), (et, vl) -> {
             CDef.Camp cls = (CDef.Camp)gcls(et, columnCampCode(), vl);
             if (cls != null) {
@@ -61,6 +62,7 @@ public class SkillDbm extends AbstractDBMeta {
             }
         }, "campCode");
         setupEpg(_epgMap, et -> ((Skill)et).getDispOrder(), (et, vl) -> ((Skill)et).setDispOrder(cti(vl)), "dispOrder");
+        setupEpg(_epgMap, et -> ((Skill)et).getDescription(), (et, vl) -> ((Skill)et).setDescription((String)vl), "description");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -93,10 +95,12 @@ public class SkillDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "messageRestrictionList,villagePlayerByRequestSkillCodeList,villagePlayerBySecondRequestSkillCodeList,villagePlayerBySkillCodeList", CDef.DefMeta.Skill, false);
+    protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "villagePlayerByRequestSkillCodeList,villagePlayerBySecondRequestSkillCodeList,villagePlayerBySkillCodeList", CDef.DefMeta.Skill, false);
     protected final ColumnInfo _columnSkillName = cci("SKILL_NAME", "SKILL_NAME", null, null, String.class, "skillName", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnSkillShortName = cci("SKILL_SHORT_NAME", "SKILL_SHORT_NAME", null, null, String.class, "skillShortName", null, false, false, true, "CHAR", 1, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCampCode = cci("CAMP_CODE", "CAMP_CODE", null, null, String.class, "campCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "camp", null, CDef.DefMeta.Camp, false);
     protected final ColumnInfo _columnDispOrder = cci("DISP_ORDER", "DISP_ORDER", null, null, Integer.class, "dispOrder", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnDescription = cci("DESCRIPTION", "DESCRIPTION", null, null, String.class, "description", null, false, false, true, "TEXT", 65535, 0, null, null, false, null, null, null, null, null, false);
 
     /**
      * SKILL_CODE: {PK, NotNull, VARCHAR(20), classification=Skill}
@@ -109,6 +113,11 @@ public class SkillDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnSkillName() { return _columnSkillName; }
     /**
+     * SKILL_SHORT_NAME: {NotNull, CHAR(1)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnSkillShortName() { return _columnSkillShortName; }
+    /**
      * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp}
      * @return The information object of specified column. (NotNull)
      */
@@ -118,13 +127,20 @@ public class SkillDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnDispOrder() { return _columnDispOrder; }
+    /**
+     * DESCRIPTION: {NotNull, TEXT(65535)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnDescription() { return _columnDescription; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnSkillCode());
         ls.add(columnSkillName());
+        ls.add(columnSkillShortName());
         ls.add(columnCampCode());
         ls.add(columnDispOrder());
+        ls.add(columnDescription());
         return ls;
     }
 
@@ -160,14 +176,6 @@ public class SkillDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
-    /**
-     * MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'.
-     * @return The information object of referrer property. (NotNull)
-     */
-    public ReferrerInfo referrerMessageRestrictionList() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnSkillCode(), MessageRestrictionDbm.getInstance().columnSkillCode());
-        return cri("FK_MESSAGE_RESTRICTION_SKILL", "messageRestrictionList", this, MessageRestrictionDbm.getInstance(), mp, false, "skill");
-    }
     /**
      * VILLAGE_PLAYER by REQUEST_SKILL_CODE, named 'villagePlayerByRequestSkillCodeList'.
      * @return The information object of referrer property. (NotNull)

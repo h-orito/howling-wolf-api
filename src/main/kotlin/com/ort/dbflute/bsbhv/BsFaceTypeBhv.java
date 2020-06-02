@@ -110,7 +110,7 @@ public abstract class BsFaceTypeBhv extends AbstractBehaviorWritable<FaceType, F
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">faceType</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">faceTypeBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -863,8 +863,8 @@ public abstract class BsFaceTypeBhv extends AbstractBehaviorWritable<FaceType, F
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * faceTypeBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * faceTypeBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * faceTypeBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * faceTypeBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * faceTypeBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -872,7 +872,7 @@ public abstract class BsFaceTypeBhv extends AbstractBehaviorWritable<FaceType, F
      * faceTypeBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * faceTypeBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * faceTypeBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * faceTypeBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * faceTypeBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -880,7 +880,7 @@ public abstract class BsFaceTypeBhv extends AbstractBehaviorWritable<FaceType, F
      * faceTypeBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * faceTypeBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * faceTypeBhv.outideSql().removeBlockComment().selectList()
      * faceTypeBhv.outideSql().removeLineComment().selectList()
      * faceTypeBhv.outideSql().formatSql().selectList()

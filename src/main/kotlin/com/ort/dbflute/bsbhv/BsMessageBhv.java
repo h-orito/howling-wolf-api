@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE
  *
  * [column]
- *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, DAY, MESSAGE_CONTENT, MESSAGE_DATETIME, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, MESSAGE_NUMBER, MESSAGE_TYPE_CODE, MESSAGE_UNIXTIMESTAMP_MILLI, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TO_VILLAGE_PLAYER_ID, PLAYER_ID, MESSAGE_CONTENT, MESSAGE_DATETIME, MESSAGE_COUNT, IS_CONVERT_DISABLE, FACE_TYPE_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -109,7 +109,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">message</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">messageBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -159,9 +159,9 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
 
     /**
      * Select the entity by the primary-key value.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
+     * @param villageId : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageNumber : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageTypeCode : PK, IX, NotNull, VARCHAR(20). (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
@@ -186,33 +186,6 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
     protected MessageCB xprepareCBAsPK(Integer villageId, Integer messageNumber, String messageTypeCode) {
         assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageNumber", messageNumber);assertObjectNotNull("messageTypeCode", messageTypeCode);
         return newConditionBean().acceptPK(villageId, messageNumber, messageTypeCode);
-    }
-
-    /**
-     * Select the entity by the unique-key value.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
-     * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
-     * @throws EntityDuplicatedException When the entity has been duplicated.
-     * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
-     */
-    public OptionalEntity<Message> selectByUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        return facadeSelectByUniqueOf(villageId, messageTypeCode, messageNumber);
-    }
-
-    protected OptionalEntity<Message> facadeSelectByUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        return doSelectByUniqueOf(villageId, messageTypeCode, messageNumber, typeOfSelectedEntity());
-    }
-
-    protected <ENTITY extends Message> OptionalEntity<ENTITY> doSelectByUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(villageId, messageTypeCode, messageNumber), tp), villageId, messageTypeCode, messageNumber);
-    }
-
-    protected MessageCB xprepareCBAsUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageTypeCode", messageTypeCode);assertObjectNotNull("messageNumber", messageNumber);
-        return newConditionBean().acceptUniqueOf(villageId, messageTypeCode, messageNumber);
     }
 
     // ===================================================================================
@@ -819,8 +792,8 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * messageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * messageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * messageBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * messageBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * messageBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -828,7 +801,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
      * messageBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * messageBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * messageBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * messageBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * messageBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -836,7 +809,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
      * messageBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * messageBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * messageBhv.outideSql().removeBlockComment().selectList()
      * messageBhv.outideSql().removeLineComment().selectList()
      * messageBhv.outideSql().formatSql().selectList()

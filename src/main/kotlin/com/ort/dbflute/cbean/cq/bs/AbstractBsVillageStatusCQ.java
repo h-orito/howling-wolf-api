@@ -87,14 +87,6 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 募集中 (IN_PREPARATION). And OnlyOnceRegistered. <br>
-     * 募集中
-     */
-    public void setVillageStatusCode_Equal_募集中() {
-        setVillageStatusCode_Equal_AsVillageStatus(CDef.VillageStatus.募集中);
-    }
-
-    /**
      * Equal(=). As 進行中 (IN_PROGRESS). And OnlyOnceRegistered. <br>
      * 進行中
      */
@@ -103,11 +95,11 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 開始待ち (WAITING). And OnlyOnceRegistered. <br>
-     * 開始待ち
+     * Equal(=). As プロローグ (PROLOGUE). And OnlyOnceRegistered. <br>
+     * プロローグ
      */
-    public void setVillageStatusCode_Equal_開始待ち() {
-        setVillageStatusCode_Equal_AsVillageStatus(CDef.VillageStatus.開始待ち);
+    public void setVillageStatusCode_Equal_プロローグ() {
+        setVillageStatusCode_Equal_AsVillageStatus(CDef.VillageStatus.プロローグ);
     }
 
     protected void doSetVillageStatusCode_Equal(String villageStatusCode) {
@@ -158,14 +150,6 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 募集中 (IN_PREPARATION). And OnlyOnceRegistered. <br>
-     * 募集中
-     */
-    public void setVillageStatusCode_NotEqual_募集中() {
-        setVillageStatusCode_NotEqual_AsVillageStatus(CDef.VillageStatus.募集中);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 進行中 (IN_PROGRESS). And OnlyOnceRegistered. <br>
      * 進行中
      */
@@ -174,11 +158,11 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 開始待ち (WAITING). And OnlyOnceRegistered. <br>
-     * 開始待ち
+     * NotEqual(&lt;&gt;). As プロローグ (PROLOGUE). And OnlyOnceRegistered. <br>
+     * プロローグ
      */
-    public void setVillageStatusCode_NotEqual_開始待ち() {
-        setVillageStatusCode_NotEqual_AsVillageStatus(CDef.VillageStatus.開始待ち);
+    public void setVillageStatusCode_NotEqual_プロローグ() {
+        setVillageStatusCode_NotEqual_AsVillageStatus(CDef.VillageStatus.プロローグ);
     }
 
     protected void doSetVillageStatusCode_NotEqual(String villageStatusCode) {
@@ -202,6 +186,26 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      */
     public void setVillageStatusCode_InScope_AsVillageStatus(Collection<CDef.VillageStatus> cdefList) {
         doSetVillageStatusCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As VillageStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 村ステータス <br>
+     * 決着がついた村 <br>
+     * The group elements:[エピローグ, 廃村, 終了]
+     */
+    public void setVillageStatusCode_InScope_SolvedVillage() {
+        setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfSolvedVillage());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As VillageStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 村ステータス <br>
+     * 終了した村 <br>
+     * The group elements:[廃村, 終了]
+     */
+    public void setVillageStatusCode_InScope_FinishedVillage() {
+        setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfFinishedVillage());
     }
 
     protected void doSetVillageStatusCode_InScope(Collection<String> villageStatusCodeList) {
@@ -465,7 +469,7 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageStatusCB> scalar_Equal() {
@@ -480,7 +484,7 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageStatusCB> scalar_NotEqual() {
@@ -495,7 +499,7 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageStatusCB> scalar_GreaterThan() {
@@ -510,7 +514,7 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageStatusCB> scalar_LessThan() {
@@ -525,7 +529,7 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageStatusCB> scalar_GreaterEqual() {
@@ -628,7 +632,6 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

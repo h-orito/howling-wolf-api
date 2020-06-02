@@ -15,7 +15,7 @@ import com.ort.dbflute.cbean.*;
  *     CAMP_CODE
  *
  * [column]
- *     CAMP_CODE, CAMP_NAME
+ *     CAMP_CODE, CAMP_NAME, DISP_ORDER
  *
  * [sequence]
  *     

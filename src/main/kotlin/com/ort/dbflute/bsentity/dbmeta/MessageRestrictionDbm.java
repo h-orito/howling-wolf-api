@@ -44,14 +44,6 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
     { xsetupEpg(); }
     protected void xsetupEpg() {
         setupEpg(_epgMap, et -> ((MessageRestriction)et).getVillageId(), (et, vl) -> ((MessageRestriction)et).setVillageId(cti(vl)), "villageId");
-        setupEpg(_epgMap, et -> ((MessageRestriction)et).getSkillCode(), (et, vl) -> {
-            CDef.Skill cls = (CDef.Skill)gcls(et, columnSkillCode(), vl);
-            if (cls != null) {
-                ((MessageRestriction)et).setSkillCodeAsSkill(cls);
-            } else {
-                ((MessageRestriction)et).mynativeMappingSkillCode((String)vl);
-            }
-        }, "skillCode");
         setupEpg(_epgMap, et -> ((MessageRestriction)et).getMessageTypeCode(), (et, vl) -> {
             CDef.MessageType cls = (CDef.MessageType)gcls(et, columnMessageTypeCode(), vl);
             if (cls != null) {
@@ -78,7 +70,6 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
     @SuppressWarnings("unchecked")
     protected void xsetupEfpg() {
         setupEfpg(_efpgMap, et -> ((MessageRestriction)et).getMessageType(), (et, vl) -> ((MessageRestriction)et).setMessageType((OptionalEntity<MessageType>)vl), "messageType");
-        setupEfpg(_efpgMap, et -> ((MessageRestriction)et).getSkill(), (et, vl) -> ((MessageRestriction)et).setSkill((OptionalEntity<Skill>)vl), "skill");
         setupEfpg(_efpgMap, et -> ((MessageRestriction)et).getVillage(), (et, vl) -> ((MessageRestriction)et).setVillage((OptionalEntity<Village>)vl), "village");
     }
     public PropertyGateway findForeignPropertyGateway(String prop)
@@ -101,7 +92,6 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
     //                                                                         Column Info
     //                                                                         ===========
     protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "village", null, null, false);
-    protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "skill", null, CDef.DefMeta.Skill, false);
     protected final ColumnInfo _columnMessageTypeCode = cci("MESSAGE_TYPE_CODE", "MESSAGE_TYPE_CODE", null, null, String.class, "messageTypeCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "messageType", null, CDef.DefMeta.MessageType, false);
     protected final ColumnInfo _columnMessageMaxNum = cci("MESSAGE_MAX_NUM", "MESSAGE_MAX_NUM", null, null, Integer.class, "messageMaxNum", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnMessageMaxLength = cci("MESSAGE_MAX_LENGTH", "MESSAGE_MAX_LENGTH", null, null, Integer.class, "messageMaxLength", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
@@ -115,11 +105,6 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageId() { return _columnVillageId; }
-    /**
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnSkillCode() { return _columnSkillCode; }
     /**
      * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType}
      * @return The information object of specified column. (NotNull)
@@ -159,7 +144,6 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnVillageId());
-        ls.add(columnSkillCode());
         ls.add(columnMessageTypeCode());
         ls.add(columnMessageMaxNum());
         ls.add(columnMessageMaxLength());
@@ -181,7 +165,6 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
     protected UniqueInfo cpui() {
         List<ColumnInfo> ls = newArrayListSized(4);
         ls.add(columnVillageId());
-        ls.add(columnSkillCode());
         ls.add(columnMessageTypeCode());
         return hpcpui(ls);
     }
@@ -205,20 +188,12 @@ public class MessageRestrictionDbm extends AbstractDBMeta {
         return cfi("FK_MESSAGE_RESTRICTION_MESSAGE_TYPE", "messageType", this, MessageTypeDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "messageRestrictionList", false);
     }
     /**
-     * SKILL by my SKILL_CODE, named 'skill'.
-     * @return The information object of foreign property. (NotNull)
-     */
-    public ForeignInfo foreignSkill() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnSkillCode(), SkillDbm.getInstance().columnSkillCode());
-        return cfi("FK_MESSAGE_RESTRICTION_SKILL", "skill", this, SkillDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "messageRestrictionList", false);
-    }
-    /**
      * VILLAGE by my VILLAGE_ID, named 'village'.
      * @return The information object of foreign property. (NotNull)
      */
     public ForeignInfo foreignVillage() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageId(), VillageDbm.getInstance().columnVillageId());
-        return cfi("FK_MESSAGE_RESTRICTION_VILLAGE", "village", this, VillageDbm.getInstance(), mp, 2, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "messageRestrictionList", false);
+        return cfi("FK_MESSAGE_RESTRICTION_VILLAGE", "village", this, VillageDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "messageRestrictionList", false);
     }
 
     // -----------------------------------------------------

@@ -20,7 +20,7 @@ import com.ort.dbflute.exentity.*;
  *     SKILL_CODE
  *
  * [column]
- *     SKILL_CODE, SKILL_NAME, CAMP_CODE, DISP_ORDER
+ *     SKILL_CODE, SKILL_NAME, SKILL_SHORT_NAME, CAMP_CODE, DISP_ORDER, DESCRIPTION
  *
  * [sequence]
  *     
@@ -35,24 +35,28 @@ import com.ort.dbflute.exentity.*;
  *     CAMP
  *
  * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_PLAYER
+ *     VILLAGE_PLAYER
  *
  * [foreign property]
  *     camp
  *
  * [referrer property]
- *     messageRestrictionList, villagePlayerByRequestSkillCodeList, villagePlayerBySecondRequestSkillCodeList, villagePlayerBySkillCodeList
+ *     villagePlayerByRequestSkillCodeList, villagePlayerBySecondRequestSkillCodeList, villagePlayerBySkillCodeList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * String skillCode = entity.getSkillCode();
  * String skillName = entity.getSkillName();
+ * String skillShortName = entity.getSkillShortName();
  * String campCode = entity.getCampCode();
  * Integer dispOrder = entity.getDispOrder();
+ * String description = entity.getDescription();
  * entity.setSkillCode(skillCode);
  * entity.setSkillName(skillName);
+ * entity.setSkillShortName(skillShortName);
  * entity.setCampCode(campCode);
  * entity.setDispOrder(dispOrder);
+ * entity.setDescription(description);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
@@ -74,11 +78,17 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     /** SKILL_NAME: {NotNull, VARCHAR(20)} */
     protected String _skillName;
 
+    /** SKILL_SHORT_NAME: {NotNull, CHAR(1)} */
+    protected String _skillShortName;
+
     /** CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp} */
     protected String _campCode;
 
     /** DISP_ORDER: {NotNull, INT UNSIGNED(10)} */
     protected Integer _dispOrder;
+
+    /** DESCRIPTION: {NotNull, TEXT(65535)} */
+    protected String _description;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -151,70 +161,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     //                                                              Classification Setting
     //                                                              ======================
     /**
-     * Set the value of skillCode as C国狂人 (CMADMAN). <br>
-     * C国狂人
-     */
-    public void setSkillCode_C国狂人() {
-        setSkillCodeAsSkill(CDef.Skill.C国狂人);
-    }
-
-    /**
-     * Set the value of skillCode as 探偵 (DETECTIVE). <br>
-     * 探偵
-     */
-    public void setSkillCode_探偵() {
-        setSkillCodeAsSkill(CDef.Skill.探偵);
-    }
-
-    /**
-     * Set the value of skillCode as 魔神官 (EVILMEDIUM). <br>
-     * 魔神官
-     */
-    public void setSkillCode_魔神官() {
-        setSkillCodeAsSkill(CDef.Skill.魔神官);
-    }
-
-    /**
-     * Set the value of skillCode as 狂信者 (FANATIC). <br>
-     * 狂信者
-     */
-    public void setSkillCode_狂信者() {
-        setSkillCodeAsSkill(CDef.Skill.狂信者);
-    }
-
-    /**
-     * Set the value of skillCode as おまかせ足音職 (FOOTSTEPS). <br>
-     * おまかせ（足音職）
-     */
-    public void setSkillCode_おまかせ足音職() {
-        setSkillCodeAsSkill(CDef.Skill.おまかせ足音職);
-    }
-
-    /**
-     * Set the value of skillCode as 妖狐 (FOX). <br>
-     * 妖狐
-     */
-    public void setSkillCode_妖狐() {
-        setSkillCodeAsSkill(CDef.Skill.妖狐);
-    }
-
-    /**
-     * Set the value of skillCode as おまかせ役職窓あり (FRIENDS). <br>
-     * おまかせ（役職窓あり）
-     */
-    public void setSkillCode_おまかせ役職窓あり() {
-        setSkillCodeAsSkill(CDef.Skill.おまかせ役職窓あり);
-    }
-
-    /**
-     * Set the value of skillCode as 導師 (GURU). <br>
-     * 導師
-     */
-    public void setSkillCode_導師() {
-        setSkillCodeAsSkill(CDef.Skill.導師);
-    }
-
-    /**
      * Set the value of skillCode as 狩人 (HUNTER). <br>
      * 狩人
      */
@@ -239,27 +185,11 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
-     * Set the value of skillCode as 共鳴者 (MASON). <br>
-     * 共鳴者
-     */
-    public void setSkillCode_共鳴者() {
-        setSkillCodeAsSkill(CDef.Skill.共鳴者);
-    }
-
-    /**
      * Set the value of skillCode as 霊能者 (MEDIUM). <br>
      * 霊能者
      */
     public void setSkillCode_霊能者() {
         setSkillCodeAsSkill(CDef.Skill.霊能者);
-    }
-
-    /**
-     * Set the value of skillCode as おまかせ人外 (NOVILLAGERS). <br>
-     * おまかせ（人外）
-     */
-    public void setSkillCode_おまかせ人外() {
-        setSkillCodeAsSkill(CDef.Skill.おまかせ人外);
     }
 
     /**
@@ -303,14 +233,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
-     * Set the value of skillCode as 賢者 (WISE). <br>
-     * 賢者
-     */
-    public void setSkillCode_賢者() {
-        setSkillCodeAsSkill(CDef.Skill.賢者);
-    }
-
-    /**
      * Set the value of campCode as 狐陣営 (FOX). <br>
      * 狐陣営
      */
@@ -337,94 +259,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     // ===================================================================================
     //                                                        Classification Determination
     //                                                        ============================
-    /**
-     * Is the value of skillCode C国狂人? <br>
-     * C国狂人
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCodeC国狂人() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.C国狂人) : false;
-    }
-
-    /**
-     * Is the value of skillCode 探偵? <br>
-     * 探偵
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode探偵() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.探偵) : false;
-    }
-
-    /**
-     * Is the value of skillCode 魔神官? <br>
-     * 魔神官
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode魔神官() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.魔神官) : false;
-    }
-
-    /**
-     * Is the value of skillCode 狂信者? <br>
-     * 狂信者
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode狂信者() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.狂信者) : false;
-    }
-
-    /**
-     * Is the value of skillCode おまかせ足音職? <br>
-     * おまかせ（足音職）
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCodeおまかせ足音職() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.おまかせ足音職) : false;
-    }
-
-    /**
-     * Is the value of skillCode 妖狐? <br>
-     * 妖狐
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode妖狐() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.妖狐) : false;
-    }
-
-    /**
-     * Is the value of skillCode おまかせ役職窓あり? <br>
-     * おまかせ（役職窓あり）
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCodeおまかせ役職窓あり() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.おまかせ役職窓あり) : false;
-    }
-
-    /**
-     * Is the value of skillCode 導師? <br>
-     * 導師
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode導師() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.導師) : false;
-    }
-
     /**
      * Is the value of skillCode 狩人? <br>
      * 狩人
@@ -459,17 +293,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
-     * Is the value of skillCode 共鳴者? <br>
-     * 共鳴者
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCode共鳴者() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.共鳴者) : false;
-    }
-
-    /**
      * Is the value of skillCode 霊能者? <br>
      * 霊能者
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -478,17 +301,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode霊能者() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.霊能者) : false;
-    }
-
-    /**
-     * Is the value of skillCode おまかせ人外? <br>
-     * おまかせ（人外）
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isSkillCodeおまかせ人外() {
-        CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.おまかせ人外) : false;
     }
 
     /**
@@ -547,14 +359,113 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
-     * Is the value of skillCode 賢者? <br>
-     * 賢者
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * 囁きを見られる <br>
+     * The group elements:[人狼]
      * @return The determination, true or false.
      */
-    public boolean isSkillCode賢者() {
+    public boolean isSkillCode_ViewableWerewolfSay() {
         CDef.Skill cdef = getSkillCodeAsSkill();
-        return cdef != null ? cdef.equals(CDef.Skill.賢者) : false;
+        return cdef != null && cdef.isViewableWerewolfSay();
+    }
+
+    /**
+     * 囁き可能 <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_AvailableWerewolfSay() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isAvailableWerewolfSay();
+    }
+
+    /**
+     * 襲撃対象に選べない <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_NotSelectableAttack() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isNotSelectableAttack();
+    }
+
+    /**
+     * 占い結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_DivineResultWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isDivineResultWolf();
+    }
+
+    /**
+     * 霊能結果が人狼になる <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_PsychicResultWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isPsychicResultWolf();
+    }
+
+    /**
+     * 襲撃能力を持つ <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasAttackAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasAttackAbility();
+    }
+
+    /**
+     * 占い能力を持つ <br>
+     * The group elements:[占い師]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasDivineAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasDivineAbility();
+    }
+
+    /**
+     * 護衛能力を持つ <br>
+     * The group elements:[狩人]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasGuardAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasGuardAbility();
+    }
+
+    /**
+     * 霊能能力を持つ <br>
+     * The group elements:[霊能者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_HasPsychicAbility() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isHasPsychicAbility();
+    }
+
+    /**
+     * 勝敗判定時狼にカウントする <br>
+     * The group elements:[人狼]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_CountWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isCountWolf();
+    }
+
+    /**
+     * おまかせ系 <br>
+     * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_SomeoneSkill() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isSomeoneSkill();
     }
 
     /**
@@ -617,26 +528,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
-    /** MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'. */
-    protected List<MessageRestriction> _messageRestrictionList;
-
-    /**
-     * [get] MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'.
-     * @return The entity list of referrer property 'messageRestrictionList'. (NotNull: even if no loading, returns empty list)
-     */
-    public List<MessageRestriction> getMessageRestrictionList() {
-        if (_messageRestrictionList == null) { _messageRestrictionList = newReferrerList(); }
-        return _messageRestrictionList;
-    }
-
-    /**
-     * [set] MESSAGE_RESTRICTION by SKILL_CODE, named 'messageRestrictionList'.
-     * @param messageRestrictionList The entity list of referrer property 'messageRestrictionList'. (NullAllowed)
-     */
-    public void setMessageRestrictionList(List<MessageRestriction> messageRestrictionList) {
-        _messageRestrictionList = messageRestrictionList;
-    }
-
     /** VILLAGE_PLAYER by REQUEST_SKILL_CODE, named 'villagePlayerByRequestSkillCodeList'. */
     protected List<VillagePlayer> _villagePlayerByRequestSkillCodeList;
 
@@ -728,8 +619,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
         StringBuilder sb = new StringBuilder();
         if (_camp != null && _camp.isPresent())
         { sb.append(li).append(xbRDS(_camp, "camp")); }
-        if (_messageRestrictionList != null) { for (MessageRestriction et : _messageRestrictionList)
-        { if (et != null) { sb.append(li).append(xbRDS(et, "messageRestrictionList")); } } }
         if (_villagePlayerByRequestSkillCodeList != null) { for (VillagePlayer et : _villagePlayerByRequestSkillCodeList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerByRequestSkillCodeList")); } } }
         if (_villagePlayerBySecondRequestSkillCodeList != null) { for (VillagePlayer et : _villagePlayerBySecondRequestSkillCodeList)
@@ -747,8 +636,10 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_skillCode));
         sb.append(dm).append(xfND(_skillName));
+        sb.append(dm).append(xfND(_skillShortName));
         sb.append(dm).append(xfND(_campCode));
         sb.append(dm).append(xfND(_dispOrder));
+        sb.append(dm).append(xfND(_description));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -761,8 +652,6 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
         StringBuilder sb = new StringBuilder();
         if (_camp != null && _camp.isPresent())
         { sb.append(dm).append("camp"); }
-        if (_messageRestrictionList != null && !_messageRestrictionList.isEmpty())
-        { sb.append(dm).append("messageRestrictionList"); }
         if (_villagePlayerByRequestSkillCodeList != null && !_villagePlayerByRequestSkillCodeList.isEmpty())
         { sb.append(dm).append("villagePlayerByRequestSkillCodeList"); }
         if (_villagePlayerBySecondRequestSkillCodeList != null && !_villagePlayerBySecondRequestSkillCodeList.isEmpty())
@@ -825,6 +714,26 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * [get] SKILL_SHORT_NAME: {NotNull, CHAR(1)} <br>
+     * 役職略称
+     * @return The value of the column 'SKILL_SHORT_NAME'. (basically NotNull if selected: for the constraint)
+     */
+    public String getSkillShortName() {
+        checkSpecifiedProperty("skillShortName");
+        return convertEmptyToNull(_skillShortName);
+    }
+
+    /**
+     * [set] SKILL_SHORT_NAME: {NotNull, CHAR(1)} <br>
+     * 役職略称
+     * @param skillShortName The value of the column 'SKILL_SHORT_NAME'. (basically NotNull if update: for the constraint)
+     */
+    public void setSkillShortName(String skillShortName) {
+        registerModifiedProperty("skillShortName");
+        _skillShortName = skillShortName;
+    }
+
+    /**
      * [get] CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp} <br>
      * 陣営コード
      * @return The value of the column 'CAMP_CODE'. (basically NotNull if selected: for the constraint)
@@ -863,6 +772,26 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public void setDispOrder(Integer dispOrder) {
         registerModifiedProperty("dispOrder");
         _dispOrder = dispOrder;
+    }
+
+    /**
+     * [get] DESCRIPTION: {NotNull, TEXT(65535)} <br>
+     * 説明
+     * @return The value of the column 'DESCRIPTION'. (basically NotNull if selected: for the constraint)
+     */
+    public String getDescription() {
+        checkSpecifiedProperty("description");
+        return convertEmptyToNull(_description);
+    }
+
+    /**
+     * [set] DESCRIPTION: {NotNull, TEXT(65535)} <br>
+     * 説明
+     * @param description The value of the column 'DESCRIPTION'. (basically NotNull if update: for the constraint)
+     */
+    public void setDescription(String description) {
+        registerModifiedProperty("description");
+        _description = description;
     }
 
     /**

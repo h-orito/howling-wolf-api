@@ -47,6 +47,10 @@ public class BsVillageCB extends AbstractConditionBean {
         if (DBFluteConfig.getInstance().isSpecifyColumnRequired()) {
             enableSpecifyColumnRequired();
         }
+        xsetSpecifyColumnRequiredExceptDeterminer(DBFluteConfig.getInstance().getSpecifyColumnRequiredExceptDeterminer());
+        if (DBFluteConfig.getInstance().isSpecifyColumnRequiredWarningOnly()) {
+            xenableSpecifyColumnRequiredWarningOnly();
+        }
         if (DBFluteConfig.getInstance().isQueryUpdateCountPreCheck()) {
             enableQueryUpdateCountPreCheck();
         }
@@ -128,33 +132,33 @@ public class BsVillageCB extends AbstractConditionBean {
      * <span style="color: #3F7E5E">// {fromDate &lt;= BIRTHDATE &lt; toDate + 1 day}</span>
      * cb.query().setBirthdate_IsNull();    <span style="color: #3F7E5E">// is null</span>
      * cb.query().setBirthdate_IsNotNull(); <span style="color: #3F7E5E">// is not null</span>
-     * 
+     *
      * <span style="color: #3F7E5E">// ExistsReferrer: (correlated sub-query)</span>
      * <span style="color: #3F7E5E">// {where exists (select PURCHASE_ID from PURCHASE where ...)}</span>
      * cb.query().existsPurchase(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * });
      * cb.query().notExistsPurchase...
-     * 
+     *
      * <span style="color: #3F7E5E">// (Query)DerivedReferrer: (correlated sub-query)</span>
      * cb.query().derivedPurchaseList().max(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.specify().columnPurchasePrice(); <span style="color: #3F7E5E">// derived column for function</span>
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * }).greaterEqual(value);
-     * 
+     *
      * <span style="color: #3F7E5E">// ScalarCondition: (self-table sub-query)</span>
      * cb.query().scalar_Equal().max(scalarCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     scalarCB.specify().columnBirthdate(); <span style="color: #3F7E5E">// derived column for function</span>
      *     scalarCB.query().set... <span style="color: #3F7E5E">// scalar sub-query condition</span>
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// OrderBy</span>
      * cb.query().addOrderBy_MemberName_Asc();
      * cb.query().addOrderBy_MemberName_Desc().withManualOrder(option);
      * cb.query().addOrderBy_MemberName_Desc().withNullsFirst();
      * cb.query().addOrderBy_MemberName_Desc().withNullsLast();
      * cb.query().addSpecifiedDerivedOrderBy_Desc(aliasName);
-     * 
+     *
      * <span style="color: #3F7E5E">// Query(Relation)</span>
      * cb.query().queryMemberStatus()...;
      * cb.query().queryMemberAddressAsValid(targetDate)...;
@@ -162,7 +166,7 @@ public class BsVillageCB extends AbstractConditionBean {
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
     public VillageCQ query() {
-        assertQueryPurpose(); // assert only when user-public query 
+        assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
@@ -213,7 +217,7 @@ public class BsVillageCB extends AbstractConditionBean {
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
     public void union(UnionQuery<VillageCB> unionCBLambda) {
-        final VillageCB cb = new VillageCB(); cb.xsetupForUnion(this); xsyncUQ(cb); 
+        final VillageCB cb = new VillageCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
         final VillageCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
@@ -238,6 +242,35 @@ public class BsVillageCB extends AbstractConditionBean {
     // ===================================================================================
     //                                                                         SetupSelect
     //                                                                         ===========
+    protected PlayerNss _nssPlayer;
+    public PlayerNss xdfgetNssPlayer() {
+        if (_nssPlayer == null) { _nssPlayer = new PlayerNss(null); }
+        return _nssPlayer;
+    }
+    /**
+     * Set up relation columns to select clause. <br>
+     * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * <pre>
+     * <span style="color: #0000C0">villageBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_Player()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">village</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">village</span>.<span style="color: #CC4747">getPlayer()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
+     */
+    public PlayerNss setupSelect_Player() {
+        assertSetupSelectPurpose("player");
+        if (hasSpecifiedLocalColumn()) {
+            specify().columnCreatePlayerId();
+        }
+        doSetupSelect(() -> query().queryPlayer());
+        if (_nssPlayer == null || !_nssPlayer.hasConditionQuery())
+        { _nssPlayer = new PlayerNss(query().queryPlayer()); }
+        return _nssPlayer;
+    }
+
     /**
      * Set up relation columns to select clause. <br>
      * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.
@@ -276,32 +309,6 @@ public class BsVillageCB extends AbstractConditionBean {
             specify().columnWinCampCode();
         }
         doSetupSelect(() -> query().queryCamp());
-    }
-
-    protected VillageSettingsNss _nssVillageSettingsAsOne;
-    public VillageSettingsNss xdfgetNssVillageSettingsAsOne() {
-        if (_nssVillageSettingsAsOne == null) { _nssVillageSettingsAsOne = new VillageSettingsNss(null); }
-        return _nssVillageSettingsAsOne;
-    }
-    /**
-     * Set up relation columns to select clause. <br>
-     * village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-     * <pre>
-     * <span style="color: #0000C0">villageBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_VillageSettingsAsOne()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
-     *     <span style="color: #553000">cb</span>.query().set...
-     * }).alwaysPresent(<span style="color: #553000">village</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     ... = <span style="color: #553000">village</span>.<span style="color: #CC4747">getVillageSettingsAsOne()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
-     * });
-     * </pre>
-     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
-     */
-    public VillageSettingsNss setupSelect_VillageSettingsAsOne() {
-        assertSetupSelectPurpose("villageSettingsAsOne");
-        doSetupSelect(() -> query().queryVillageSettingsAsOne());
-        if (_nssVillageSettingsAsOne == null || !_nssVillageSettingsAsOne.hasConditionQuery())
-        { _nssVillageSettingsAsOne = new VillageSettingsNss(query().queryVillageSettingsAsOne()); }
-        return _nssVillageSettingsAsOne;
     }
 
     // [DBFlute-0.7.4]
@@ -345,9 +352,9 @@ public class BsVillageCB extends AbstractConditionBean {
     }
 
     public static class HpSpecification extends HpAbstractSpecification<VillageCQ> {
+        protected PlayerCB.HpSpecification _player;
         protected VillageStatusCB.HpSpecification _villageStatus;
         protected CampCB.HpSpecification _camp;
-        protected VillageSettingsCB.HpSpecification _villageSettingsAsOne;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<VillageCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
@@ -363,10 +370,10 @@ public class BsVillageCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnVillageDisplayName() { return doColumn("VILLAGE_DISPLAY_NAME"); }
         /**
-         * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
+         * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnCreatePlayerName() { return doColumn("CREATE_PLAYER_NAME"); }
+        public SpecifiedColumn columnCreatePlayerId() { return doColumn("CREATE_PLAYER_ID"); }
         /**
          * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
          * @return The information object of specified column. (NotNull)
@@ -407,6 +414,10 @@ public class BsVillageCB extends AbstractConditionBean {
         @Override
         protected void doSpecifyRequiredColumn() {
             columnVillageId(); // PK
+            if (qyCall().qy().hasConditionQueryPlayer()
+                    || qyCall().qy().xgetReferrerQuery() instanceof PlayerCQ) {
+                columnCreatePlayerId(); // FK or one-to-one referrer
+            }
             if (qyCall().qy().hasConditionQueryVillageStatus()
                     || qyCall().qy().xgetReferrerQuery() instanceof VillageStatusCQ) {
                 columnVillageStatusCode(); // FK or one-to-one referrer
@@ -418,6 +429,26 @@ public class BsVillageCB extends AbstractConditionBean {
         }
         @Override
         protected String getTableDbName() { return "village"; }
+        /**
+         * Prepare to specify functions about relation table. <br>
+         * PLAYER by my CREATE_PLAYER_ID, named 'player'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public PlayerCB.HpSpecification specifyPlayer() {
+            assertRelation("player");
+            if (_player == null) {
+                _player = new PlayerCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryPlayer()
+                                    , () -> _qyCall.qy().queryPlayer())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _player.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryPlayer()
+                      , () -> xsyncQyCall().qy().queryPlayer()));
+                }
+            }
+            return _player;
+        }
         /**
          * Prepare to specify functions about relation table. <br>
          * VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'.
@@ -457,26 +488,6 @@ public class BsVillageCB extends AbstractConditionBean {
                 }
             }
             return _camp;
-        }
-        /**
-         * Prepare to specify functions about relation table. <br>
-         * village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-         * @return The instance for specification for relation table to specify. (NotNull)
-         */
-        public VillageSettingsCB.HpSpecification specifyVillageSettingsAsOne() {
-            assertRelation("villageSettingsAsOne");
-            if (_villageSettingsAsOne == null) {
-                _villageSettingsAsOne = new VillageSettingsCB.HpSpecification(_baseCB
-                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryVillageSettingsAsOne()
-                                    , () -> _qyCall.qy().queryVillageSettingsAsOne())
-                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
-                if (xhasSyncQyCall()) { // inherits it
-                    _villageSettingsAsOne.xsetSyncQyCall(xcreateSpQyCall(
-                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryVillageSettingsAsOne()
-                      , () -> xsyncQyCall().qy().queryVillageSettingsAsOne()));
-                }
-            }
-            return _villageSettingsAsOne;
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
@@ -528,6 +539,23 @@ public class BsVillageCB extends AbstractConditionBean {
             assertDerived("villagePlayerList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
             return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VillagePlayerCB> sq, VillageCQ cq, String al, DerivedReferrerOption op)
                     -> cq.xsderiveVillagePlayerList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from village_setting where ...) as FOO_MAX} <br>
+         * VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     settingCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     settingCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, VillageSetting.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<VillageSettingCB, VillageCQ> derivedVillageSetting() {
+            assertDerived("villageSettingList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VillageSettingCB> sq, VillageCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveVillageSettingList(fn, sq, al, op), _dbmetaProvider);
         }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).

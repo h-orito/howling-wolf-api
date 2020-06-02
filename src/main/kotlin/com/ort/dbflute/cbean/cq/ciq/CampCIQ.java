@@ -83,6 +83,7 @@ public class CampCIQ extends AbstractBsCampCQ {
     public String keepCampCode_QueryDerivedReferrer_VillageListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueCampName() { return _myCQ.xdfgetCampName(); }
+    protected ConditionValue xgetCValueDispOrder() { return _myCQ.xdfgetDispOrder(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
     public String keepScalarCondition(CampCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }

@@ -21,7 +21,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_ID
  *
  * [column]
- *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_NAME, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_ID, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -33,22 +33,22 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     VILLAGE_STATUS, CAMP, VILLAGE_SETTINGS(AsOne)
+ *     PLAYER, VILLAGE_STATUS, CAMP
  *
  * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTINGS
+ *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
  *
  * [foreign property]
- *     villageStatus, camp, villageSettingsAsOne
+ *     player, villageStatus, camp
  *
  * [referrer property]
- *     messageRestrictionList, villageDayList, villagePlayerList
+ *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * Integer villageId = entity.getVillageId();
  * String villageDisplayName = entity.getVillageDisplayName();
- * String createPlayerName = entity.getCreatePlayerName();
+ * Integer createPlayerId = entity.getCreatePlayerId();
  * String villageStatusCode = entity.getVillageStatusCode();
  * Integer epilogueDay = entity.getEpilogueDay();
  * String winCampCode = entity.getWinCampCode();
@@ -58,7 +58,7 @@ import com.ort.dbflute.exentity.*;
  * String updateTrace = entity.getUpdateTrace();
  * entity.setVillageId(villageId);
  * entity.setVillageDisplayName(villageDisplayName);
- * entity.setCreatePlayerName(createPlayerName);
+ * entity.setCreatePlayerId(createPlayerId);
  * entity.setVillageStatusCode(villageStatusCode);
  * entity.setEpilogueDay(epilogueDay);
  * entity.setWinCampCode(winCampCode);
@@ -87,8 +87,8 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     /** VILLAGE_DISPLAY_NAME: {NotNull, VARCHAR(40)} */
     protected String _villageDisplayName;
 
-    /** CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} */
-    protected String _createPlayerName;
+    /** CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player} */
+    protected Integer _createPlayerId;
 
     /** VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus} */
     protected String _villageStatusCode;
@@ -206,14 +206,6 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * Set the value of villageStatusCode as 募集中 (IN_PREPARATION). <br>
-     * 募集中
-     */
-    public void setVillageStatusCode_募集中() {
-        setVillageStatusCodeAsVillageStatus(CDef.VillageStatus.募集中);
-    }
-
-    /**
      * Set the value of villageStatusCode as 進行中 (IN_PROGRESS). <br>
      * 進行中
      */
@@ -222,11 +214,11 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * Set the value of villageStatusCode as 開始待ち (WAITING). <br>
-     * 開始待ち
+     * Set the value of villageStatusCode as プロローグ (PROLOGUE). <br>
+     * プロローグ
      */
-    public void setVillageStatusCode_開始待ち() {
-        setVillageStatusCodeAsVillageStatus(CDef.VillageStatus.開始待ち);
+    public void setVillageStatusCode_プロローグ() {
+        setVillageStatusCodeAsVillageStatus(CDef.VillageStatus.プロローグ);
     }
 
     /**
@@ -290,17 +282,6 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * Is the value of villageStatusCode 募集中? <br>
-     * 募集中
-     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
-     * @return The determination, true or false.
-     */
-    public boolean isVillageStatusCode募集中() {
-        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
-        return cdef != null ? cdef.equals(CDef.VillageStatus.募集中) : false;
-    }
-
-    /**
      * Is the value of villageStatusCode 進行中? <br>
      * 進行中
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -312,14 +293,34 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * Is the value of villageStatusCode 開始待ち? <br>
-     * 開始待ち
+     * Is the value of villageStatusCode プロローグ? <br>
+     * プロローグ
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
      * @return The determination, true or false.
      */
-    public boolean isVillageStatusCode開始待ち() {
+    public boolean isVillageStatusCodeプロローグ() {
         CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
-        return cdef != null ? cdef.equals(CDef.VillageStatus.開始待ち) : false;
+        return cdef != null ? cdef.equals(CDef.VillageStatus.プロローグ) : false;
+    }
+
+    /**
+     * 決着がついた村 <br>
+     * The group elements:[エピローグ, 廃村, 終了]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_SolvedVillage() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isSolvedVillage();
+    }
+
+    /**
+     * 終了した村 <br>
+     * The group elements:[廃村, 終了]
+     * @return The determination, true or false.
+     */
+    public boolean isVillageStatusCode_FinishedVillage() {
+        CDef.VillageStatus cdef = getVillageStatusCodeAsVillageStatus();
+        return cdef != null && cdef.isFinishedVillage();
     }
 
     /**
@@ -358,6 +359,27 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
+    /** PLAYER by my CREATE_PLAYER_ID, named 'player'. */
+    protected OptionalEntity<Player> _player;
+
+    /**
+     * [get] PLAYER by my CREATE_PLAYER_ID, named 'player'. <br>
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return The entity of foreign property 'player'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     */
+    public OptionalEntity<Player> getPlayer() {
+        if (_player == null) { _player = OptionalEntity.relationEmpty(this, "player"); }
+        return _player;
+    }
+
+    /**
+     * [set] PLAYER by my CREATE_PLAYER_ID, named 'player'.
+     * @param player The entity of foreign property 'player'. (NullAllowed)
+     */
+    public void setPlayer(OptionalEntity<Player> player) {
+        _player = player;
+    }
+
     /** VILLAGE_STATUS by my VILLAGE_STATUS_CODE, named 'villageStatus'. */
     protected OptionalEntity<VillageStatus> _villageStatus;
 
@@ -398,27 +420,6 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
      */
     public void setCamp(OptionalEntity<Camp> camp) {
         _camp = camp;
-    }
-
-    /** village_settings by VILLAGE_ID, named 'villageSettingsAsOne'. */
-    protected OptionalEntity<VillageSettings> _villageSettingsAsOne;
-
-    /**
-     * [get] village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
-     * @return the entity of foreign property(referrer-as-one) 'villageSettingsAsOne'. (NotNull, EmptyAllowed: when e.g. no data, no setupSelect)
-     */
-    public OptionalEntity<VillageSettings> getVillageSettingsAsOne() {
-        if (_villageSettingsAsOne == null) { _villageSettingsAsOne = OptionalEntity.relationEmpty(this, "villageSettingsAsOne"); }
-        return _villageSettingsAsOne;
-    }
-
-    /**
-     * [set] village_settings by VILLAGE_ID, named 'villageSettingsAsOne'.
-     * @param villageSettingsAsOne The entity of foreign property(referrer-as-one) 'villageSettingsAsOne'. (NullAllowed)
-     */
-    public void setVillageSettingsAsOne(OptionalEntity<VillageSettings> villageSettingsAsOne) {
-        _villageSettingsAsOne = villageSettingsAsOne;
     }
 
     // ===================================================================================
@@ -484,6 +485,26 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         _villagePlayerList = villagePlayerList;
     }
 
+    /** VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'. */
+    protected List<VillageSetting> _villageSettingList;
+
+    /**
+     * [get] VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * @return The entity list of referrer property 'villageSettingList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<VillageSetting> getVillageSettingList() {
+        if (_villageSettingList == null) { _villageSettingList = newReferrerList(); }
+        return _villageSettingList;
+    }
+
+    /**
+     * [set] VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * @param villageSettingList The entity list of referrer property 'villageSettingList'. (NullAllowed)
+     */
+    public void setVillageSettingList(List<VillageSetting> villageSettingList) {
+        _villageSettingList = villageSettingList;
+    }
+
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -513,18 +534,20 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     @Override
     protected String doBuildStringWithRelation(String li) {
         StringBuilder sb = new StringBuilder();
+        if (_player != null && _player.isPresent())
+        { sb.append(li).append(xbRDS(_player, "player")); }
         if (_villageStatus != null && _villageStatus.isPresent())
         { sb.append(li).append(xbRDS(_villageStatus, "villageStatus")); }
         if (_camp != null && _camp.isPresent())
         { sb.append(li).append(xbRDS(_camp, "camp")); }
-        if (_villageSettingsAsOne != null && _villageSettingsAsOne.isPresent())
-        { sb.append(li).append(xbRDS(_villageSettingsAsOne, "villageSettingsAsOne")); }
         if (_messageRestrictionList != null) { for (MessageRestriction et : _messageRestrictionList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "messageRestrictionList")); } } }
         if (_villageDayList != null) { for (VillageDay et : _villageDayList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villageDayList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerList")); } } }
+        if (_villageSettingList != null) { for (VillageSetting et : _villageSettingList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "villageSettingList")); } } }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -536,7 +559,7 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_villageId));
         sb.append(dm).append(xfND(_villageDisplayName));
-        sb.append(dm).append(xfND(_createPlayerName));
+        sb.append(dm).append(xfND(_createPlayerId));
         sb.append(dm).append(xfND(_villageStatusCode));
         sb.append(dm).append(xfND(_epilogueDay));
         sb.append(dm).append(xfND(_winCampCode));
@@ -554,18 +577,20 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     @Override
     protected String doBuildRelationString(String dm) {
         StringBuilder sb = new StringBuilder();
+        if (_player != null && _player.isPresent())
+        { sb.append(dm).append("player"); }
         if (_villageStatus != null && _villageStatus.isPresent())
         { sb.append(dm).append("villageStatus"); }
         if (_camp != null && _camp.isPresent())
         { sb.append(dm).append("camp"); }
-        if (_villageSettingsAsOne != null && _villageSettingsAsOne.isPresent())
-        { sb.append(dm).append("villageSettingsAsOne"); }
         if (_messageRestrictionList != null && !_messageRestrictionList.isEmpty())
         { sb.append(dm).append("messageRestrictionList"); }
         if (_villageDayList != null && !_villageDayList.isEmpty())
         { sb.append(dm).append("villageDayList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
         { sb.append(dm).append("villagePlayerList"); }
+        if (_villageSettingList != null && !_villageSettingList.isEmpty())
+        { sb.append(dm).append("villageSettingList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }
@@ -621,23 +646,23 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
     }
 
     /**
-     * [get] CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} <br>
-     * 村作成プレイヤー名
-     * @return The value of the column 'CREATE_PLAYER_NAME'. (basically NotNull if selected: for the constraint)
+     * [get] CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * 村作成プレイヤーID
+     * @return The value of the column 'CREATE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
-    public String getCreatePlayerName() {
-        checkSpecifiedProperty("createPlayerName");
-        return convertEmptyToNull(_createPlayerName);
+    public Integer getCreatePlayerId() {
+        checkSpecifiedProperty("createPlayerId");
+        return _createPlayerId;
     }
 
     /**
-     * [set] CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} <br>
-     * 村作成プレイヤー名
-     * @param createPlayerName The value of the column 'CREATE_PLAYER_NAME'. (basically NotNull if update: for the constraint)
+     * [set] CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * 村作成プレイヤーID
+     * @param createPlayerId The value of the column 'CREATE_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */
-    public void setCreatePlayerName(String createPlayerName) {
-        registerModifiedProperty("createPlayerName");
-        _createPlayerName = createPlayerName;
+    public void setCreatePlayerId(Integer createPlayerId) {
+        registerModifiedProperty("createPlayerId");
+        _createPlayerId = createPlayerId;
     }
 
     /**

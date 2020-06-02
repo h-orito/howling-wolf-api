@@ -93,7 +93,7 @@ public class BsAuthorityCQ extends AbstractBsAuthorityCQ {
     public Map<String, Object> xdfgetAuthorityCode_QueryDerivedReferrer_PlayerListParameter() { return xgetSQuePmMap("authorityCode_QueryDerivedReferrer_PlayerList"); }
     public String keepAuthorityCode_QueryDerivedReferrer_PlayerListParameter(Object pm) { return xkeepSQuePm("authorityCode_QueryDerivedReferrer_PlayerList", pm); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * AUTHORITY_CODE: {PK, NotNull, VARCHAR(20), classification=Authority}
      * @return this. (NotNull)
@@ -113,7 +113,7 @@ public class BsAuthorityCQ extends AbstractBsAuthorityCQ {
       return _authorityName; }
     protected ConditionValue xgetCValueAuthorityName() { return xdfgetAuthorityName(); }
 
-    /** 
+    /**
      * Add order-by as ascend. <br>
      * AUTHORITY_NAME: {NotNull, VARCHAR(20)}
      * @return this. (NotNull)

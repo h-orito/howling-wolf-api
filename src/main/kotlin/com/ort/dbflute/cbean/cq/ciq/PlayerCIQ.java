@@ -62,18 +62,29 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     //                                                                Override about Query
     //                                                                ====================
     protected ConditionValue xgetCValuePlayerId() { return _myCQ.xdfgetPlayerId(); }
+    public String keepPlayerId_ExistsReferrer_VillageList(VillageCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepPlayerId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepPlayerId_NotExistsReferrer_VillageList(VillageCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepPlayerId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepPlayerId_SpecifyDerivedReferrer_VillageList(VillageCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepPlayerId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_VillageList(VillageCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_VillageListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepPlayerId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepPlayerId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    protected ConditionValue xgetCValuePlayerName() { return _myCQ.xdfgetPlayerName(); }
-    protected ConditionValue xgetCValuePlayerPassword() { return _myCQ.xdfgetPlayerPassword(); }
+    protected ConditionValue xgetCValueUid() { return _myCQ.xdfgetUid(); }
+    protected ConditionValue xgetCValueNickname() { return _myCQ.xdfgetNickname(); }
+    protected ConditionValue xgetCValueTwitterUserName() { return _myCQ.xdfgetTwitterUserName(); }
     protected ConditionValue xgetCValueAuthorityCode() { return _myCQ.xdfgetAuthorityCode(); }
     protected ConditionValue xgetCValueIsRestrictedParticipation() { return _myCQ.xdfgetIsRestrictedParticipation(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }

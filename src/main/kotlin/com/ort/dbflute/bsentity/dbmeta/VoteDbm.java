@@ -43,10 +43,9 @@ public class VoteDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
-        setupEpg(_epgMap, et -> ((Vote)et).getVillageId(), (et, vl) -> ((Vote)et).setVillageId(cti(vl)), "villageId");
-        setupEpg(_epgMap, et -> ((Vote)et).getDay(), (et, vl) -> ((Vote)et).setDay(cti(vl)), "day");
-        setupEpg(_epgMap, et -> ((Vote)et).getCharaId(), (et, vl) -> ((Vote)et).setCharaId(cti(vl)), "charaId");
-        setupEpg(_epgMap, et -> ((Vote)et).getVoteCharaId(), (et, vl) -> ((Vote)et).setVoteCharaId(cti(vl)), "voteCharaId");
+        setupEpg(_epgMap, et -> ((Vote)et).getVillageDayId(), (et, vl) -> ((Vote)et).setVillageDayId(cti(vl)), "villageDayId");
+        setupEpg(_epgMap, et -> ((Vote)et).getVillagePlayerId(), (et, vl) -> ((Vote)et).setVillagePlayerId(cti(vl)), "villagePlayerId");
+        setupEpg(_epgMap, et -> ((Vote)et).getTargetVillagePlayerId(), (et, vl) -> ((Vote)et).setTargetVillagePlayerId(cti(vl)), "targetVillagePlayerId");
         setupEpg(_epgMap, et -> ((Vote)et).getRegisterDatetime(), (et, vl) -> ((Vote)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((Vote)et).getRegisterTrace(), (et, vl) -> ((Vote)et).setRegisterTrace((String)vl), "registerTrace");
         setupEpg(_epgMap, et -> ((Vote)et).getUpdateDatetime(), (et, vl) -> ((Vote)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -62,9 +61,9 @@ public class VoteDbm extends AbstractDBMeta {
     { xsetupEfpg(); }
     @SuppressWarnings("unchecked")
     protected void xsetupEfpg() {
-        setupEfpg(_efpgMap, et -> ((Vote)et).getCharaByCharaId(), (et, vl) -> ((Vote)et).setCharaByCharaId((OptionalEntity<Chara>)vl), "charaByCharaId");
+        setupEfpg(_efpgMap, et -> ((Vote)et).getVillagePlayerByTargetVillagePlayerId(), (et, vl) -> ((Vote)et).setVillagePlayerByTargetVillagePlayerId((OptionalEntity<VillagePlayer>)vl), "villagePlayerByTargetVillagePlayerId");
         setupEfpg(_efpgMap, et -> ((Vote)et).getVillageDay(), (et, vl) -> ((Vote)et).setVillageDay((OptionalEntity<VillageDay>)vl), "villageDay");
-        setupEfpg(_efpgMap, et -> ((Vote)et).getCharaByVoteCharaId(), (et, vl) -> ((Vote)et).setCharaByVoteCharaId((OptionalEntity<Chara>)vl), "charaByVoteCharaId");
+        setupEfpg(_efpgMap, et -> ((Vote)et).getVillagePlayerByVillagePlayerId(), (et, vl) -> ((Vote)et).setVillagePlayerByVillagePlayerId((OptionalEntity<VillagePlayer>)vl), "villagePlayerByVillagePlayerId");
     }
     public PropertyGateway findForeignPropertyGateway(String prop)
     { return doFindEfpg(_efpgMap, prop); }
@@ -85,35 +84,29 @@ public class VoteDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
-    protected final ColumnInfo _columnDay = cci("DAY", "DAY", null, null, Integer.class, "day", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
-    protected final ColumnInfo _columnCharaId = cci("CHARA_ID", "CHARA_ID", null, null, Integer.class, "charaId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "charaByCharaId", null, null, false);
-    protected final ColumnInfo _columnVoteCharaId = cci("VOTE_CHARA_ID", "VOTE_CHARA_ID", null, null, Integer.class, "voteCharaId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "charaByVoteCharaId", null, null, false);
+    protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villageDay", null, null, false);
+    protected final ColumnInfo _columnVillagePlayerId = cci("VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", null, null, Integer.class, "villagePlayerId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villagePlayerByVillagePlayerId", null, null, false);
+    protected final ColumnInfo _columnTargetVillagePlayerId = cci("TARGET_VILLAGE_PLAYER_ID", "TARGET_VILLAGE_PLAYER_ID", null, null, Integer.class, "targetVillagePlayerId", null, false, false, false, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villagePlayerByTargetVillagePlayerId", null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnVillageId() { return _columnVillageId; }
+    public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
     /**
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnDay() { return _columnDay; }
+    public ColumnInfo columnVillagePlayerId() { return _columnVillagePlayerId; }
     /**
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnCharaId() { return _columnCharaId; }
-    /**
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnVoteCharaId() { return _columnVoteCharaId; }
+    public ColumnInfo columnTargetVillagePlayerId() { return _columnTargetVillagePlayerId; }
     /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
@@ -137,10 +130,9 @@ public class VoteDbm extends AbstractDBMeta {
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
-        ls.add(columnVillageId());
-        ls.add(columnDay());
-        ls.add(columnCharaId());
-        ls.add(columnVoteCharaId());
+        ls.add(columnVillageDayId());
+        ls.add(columnVillagePlayerId());
+        ls.add(columnTargetVillagePlayerId());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());
@@ -158,9 +150,8 @@ public class VoteDbm extends AbstractDBMeta {
     //                                       ---------------
     protected UniqueInfo cpui() {
         List<ColumnInfo> ls = newArrayListSized(4);
-        ls.add(columnVillageId());
-        ls.add(columnDay());
-        ls.add(columnCharaId());
+        ls.add(columnVillageDayId());
+        ls.add(columnVillagePlayerId());
         return hpcpui(ls);
     }
     public boolean hasPrimaryKey() { return true; }
@@ -175,30 +166,28 @@ public class VoteDbm extends AbstractDBMeta {
     //                                      Foreign Property
     //                                      ----------------
     /**
-     * CHARA by my CHARA_ID, named 'charaByCharaId'.
+     * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
      * @return The information object of foreign property. (NotNull)
      */
-    public ForeignInfo foreignCharaByCharaId() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCharaId(), CharaDbm.getInstance().columnCharaId());
-        return cfi("FK_VOTE_CHARA", "charaByCharaId", this, CharaDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "voteByCharaIdList", false);
+    public ForeignInfo foreignVillagePlayerByTargetVillagePlayerId() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnTargetVillagePlayerId(), VillagePlayerDbm.getInstance().columnVillagePlayerId());
+        return cfi("FK_VOTE_TARGET_VILLAGE_PLAYER", "villagePlayerByTargetVillagePlayerId", this, VillagePlayerDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "voteByTargetVillagePlayerIdList", false);
     }
     /**
-     * VILLAGE_DAY by my VILLAGE_ID, DAY, named 'villageDay'.
+     * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.
      * @return The information object of foreign property. (NotNull)
      */
     public ForeignInfo foreignVillageDay() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
-        mp.put(columnVillageId(), VillageDayDbm.getInstance().columnVillageId());
-        mp.put(columnDay(), VillageDayDbm.getInstance().columnDay());
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillageDayId(), VillageDayDbm.getInstance().columnVillageDayId());
         return cfi("FK_VOTE_VILLAGE_DAY", "villageDay", this, VillageDayDbm.getInstance(), mp, 1, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "voteList", false);
     }
     /**
-     * CHARA by my VOTE_CHARA_ID, named 'charaByVoteCharaId'.
+     * VILLAGE_PLAYER by my VILLAGE_PLAYER_ID, named 'villagePlayerByVillagePlayerId'.
      * @return The information object of foreign property. (NotNull)
      */
-    public ForeignInfo foreignCharaByVoteCharaId() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVoteCharaId(), CharaDbm.getInstance().columnCharaId());
-        return cfi("FK_VOTE_CHARA_TO", "charaByVoteCharaId", this, CharaDbm.getInstance(), mp, 2, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "voteByVoteCharaIdList", false);
+    public ForeignInfo foreignVillagePlayerByVillagePlayerId() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnVillagePlayerId(), VillagePlayerDbm.getInstance().columnVillagePlayerId());
+        return cfi("FK_VOTE_VILLAGE_PLAYER", "villagePlayerByVillagePlayerId", this, VillagePlayerDbm.getInstance(), mp, 2, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "voteByVillagePlayerIdList", false);
     }
 
     // -----------------------------------------------------

@@ -215,6 +215,25 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     public abstract String keepVillageId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
 
     /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select VILLAGE_ID from village_setting where ...)} <br>
+     * village_setting by VILLAGE_ID, named 'villageSettingAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsVillageSetting</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     settingCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillageSettingList for 'exists'. (NotNull)
+     */
+    public void existsVillageSetting(SubQuery<VillageSettingCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VillageSettingCB cb = new VillageSettingCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillageId_ExistsReferrer_VillageSettingList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_ID", "VILLAGE_ID", pp, "villageSettingList");
+    }
+    public abstract String keepVillageId_ExistsReferrer_VillageSettingList(VillageSettingCQ sq);
+
+    /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
      * {not exists (select VILLAGE_ID from message_restriction where ...)} <br>
      * message_restriction by VILLAGE_ID, named 'messageRestrictionAsOne'.
@@ -271,6 +290,25 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillageId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
 
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select VILLAGE_ID from village_setting where ...)} <br>
+     * village_setting by VILLAGE_ID, named 'villageSettingAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsVillageSetting</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     settingCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillageId_NotExistsReferrer_VillageSettingList for 'not exists'. (NotNull)
+     */
+    public void notExistsVillageSetting(SubQuery<VillageSettingCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        VillageSettingCB cb = new VillageSettingCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillageId_NotExistsReferrer_VillageSettingList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_ID", "VILLAGE_ID", pp, "villageSettingList");
+    }
+    public abstract String keepVillageId_NotExistsReferrer_VillageSettingList(VillageSettingCQ sq);
+
     public void xsderiveMessageRestrictionList(String fn, SubQuery<MessageRestrictionCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         MessageRestrictionCB cb = new MessageRestrictionCB(); cb.xsetupForDerivedReferrer(this);
@@ -294,6 +332,14 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_ID", "VILLAGE_ID", pp, "villagePlayerList", al, op);
     }
     public abstract String keepVillageId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
+
+    public void xsderiveVillageSettingList(String fn, SubQuery<VillageSettingCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VillageSettingCB cb = new VillageSettingCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillageId_SpecifyDerivedReferrer_VillageSettingList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_ID", "VILLAGE_ID", pp, "villageSettingList", al, op);
+    }
+    public abstract String keepVillageId_SpecifyDerivedReferrer_VillageSettingList(VillageSettingCQ sq);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
@@ -375,6 +421,33 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillageId_QueryDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
     public abstract String keepVillageId_QueryDerivedReferrer_VillagePlayerListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from village_setting where ...)} <br>
+     * village_setting by VILLAGE_ID, named 'villageSettingAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedVillageSetting()</span>.<span style="color: #CC4747">max</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     settingCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     settingCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<VillageSettingCB> derivedVillageSetting() {
+        return xcreateQDRFunctionVillageSettingList();
+    }
+    protected HpQDRFunction<VillageSettingCB> xcreateQDRFunctionVillageSettingList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveVillageSettingList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveVillageSettingList(String fn, SubQuery<VillageSettingCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        VillageSettingCB cb = new VillageSettingCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillageId_QueryDerivedReferrer_VillageSettingList(cb.query()); String prpp = keepVillageId_QueryDerivedReferrer_VillageSettingListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_ID", "VILLAGE_ID", sqpp, "villageSettingList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillageId_QueryDerivedReferrer_VillageSettingList(VillageSettingCQ sq);
+    public abstract String keepVillageId_QueryDerivedReferrer_VillageSettingListParameter(Object vl);
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
@@ -527,139 +600,121 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     protected abstract ConditionValue xgetCValueVillageDisplayName();
 
     /**
-     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerId The value of createPlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_Equal(String createPlayerName) {
-        doSetCreatePlayerName_Equal(fRES(createPlayerName));
+    public void setCreatePlayerId_Equal(Integer createPlayerId) {
+        doSetCreatePlayerId_Equal(createPlayerId);
     }
 
-    protected void doSetCreatePlayerName_Equal(String createPlayerName) {
-        regCreatePlayerName(CK_EQ, createPlayerName);
+    protected void doSetCreatePlayerId_Equal(Integer createPlayerId) {
+        regCreatePlayerId(CK_EQ, createPlayerId);
     }
 
     /**
-     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerId The value of createPlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_NotEqual(String createPlayerName) {
-        doSetCreatePlayerName_NotEqual(fRES(createPlayerName));
+    public void setCreatePlayerId_NotEqual(Integer createPlayerId) {
+        doSetCreatePlayerId_NotEqual(createPlayerId);
     }
 
-    protected void doSetCreatePlayerName_NotEqual(String createPlayerName) {
-        regCreatePlayerName(CK_NES, createPlayerName);
+    protected void doSetCreatePlayerId_NotEqual(Integer createPlayerId) {
+        regCreatePlayerId(CK_NES, createPlayerId);
     }
 
     /**
-     * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerId The value of createPlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_GreaterThan(String createPlayerName) {
-        regCreatePlayerName(CK_GT, fRES(createPlayerName));
+    public void setCreatePlayerId_GreaterThan(Integer createPlayerId) {
+        regCreatePlayerId(CK_GT, createPlayerId);
     }
 
     /**
-     * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerId The value of createPlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_LessThan(String createPlayerName) {
-        regCreatePlayerName(CK_LT, fRES(createPlayerName));
+    public void setCreatePlayerId_LessThan(Integer createPlayerId) {
+        regCreatePlayerId(CK_LT, createPlayerId);
     }
 
     /**
-     * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerId The value of createPlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_GreaterEqual(String createPlayerName) {
-        regCreatePlayerName(CK_GE, fRES(createPlayerName));
+    public void setCreatePlayerId_GreaterEqual(Integer createPlayerId) {
+        regCreatePlayerId(CK_GE, createPlayerId);
     }
 
     /**
-     * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerId The value of createPlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_LessEqual(String createPlayerName) {
-        regCreatePlayerName(CK_LE, fRES(createPlayerName));
+    public void setCreatePlayerId_LessEqual(Integer createPlayerId) {
+        regCreatePlayerId(CK_LE, createPlayerId);
     }
 
     /**
-     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerNameList The collection of createPlayerName as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param minNumber The min number of createPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of createPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setCreatePlayerName_InScope(Collection<String> createPlayerNameList) {
-        doSetCreatePlayerName_InScope(createPlayerNameList);
-    }
-
-    protected void doSetCreatePlayerName_InScope(Collection<String> createPlayerNameList) {
-        regINS(CK_INS, cTL(createPlayerNameList), xgetCValueCreatePlayerName(), "CREATE_PLAYER_NAME");
+    public void setCreatePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setCreatePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
-     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerNameList The collection of createPlayerName as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param minNumber The min number of createPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of createPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
      */
-    public void setCreatePlayerName_NotInScope(Collection<String> createPlayerNameList) {
-        doSetCreatePlayerName_NotInScope(createPlayerNameList);
-    }
-
-    protected void doSetCreatePlayerName_NotInScope(Collection<String> createPlayerNameList) {
-        regINS(CK_NINS, cTL(createPlayerNameList), xgetCValueCreatePlayerName(), "CREATE_PLAYER_NAME");
+    protected void setCreatePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueCreatePlayerId(), "CREATE_PLAYER_ID", rangeOfOption);
     }
 
     /**
-     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} <br>
-     * <pre>e.g. setCreatePlayerName_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
-     * @param createPlayerName The value of createPlayerName as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param opLambda The callback for option of like-search. (NotNull)
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerIdList The collection of createPlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setCreatePlayerName_LikeSearch(String createPlayerName, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setCreatePlayerName_LikeSearch(createPlayerName, xcLSOP(opLambda));
+    public void setCreatePlayerId_InScope(Collection<Integer> createPlayerIdList) {
+        doSetCreatePlayerId_InScope(createPlayerIdList);
+    }
+
+    protected void doSetCreatePlayerId_InScope(Collection<Integer> createPlayerIdList) {
+        regINS(CK_INS, cTL(createPlayerIdList), xgetCValueCreatePlayerId(), "CREATE_PLAYER_ID");
     }
 
     /**
-     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)} <br>
-     * <pre>e.g. setCreatePlayerName_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
-     * @param createPlayerName The value of createPlayerName as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param likeSearchOption The option of like-search. (NotNull)
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
+     * @param createPlayerIdList The collection of createPlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    protected void setCreatePlayerName_LikeSearch(String createPlayerName, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_LS, fRES(createPlayerName), xgetCValueCreatePlayerName(), "CREATE_PLAYER_NAME", likeSearchOption);
+    public void setCreatePlayerId_NotInScope(Collection<Integer> createPlayerIdList) {
+        doSetCreatePlayerId_NotInScope(createPlayerIdList);
     }
 
-    /**
-     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
-     * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param opLambda The callback for option of like-search. (NotNull)
-     */
-    public void setCreatePlayerName_NotLikeSearch(String createPlayerName, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setCreatePlayerName_NotLikeSearch(createPlayerName, xcLSOP(opLambda));
+    protected void doSetCreatePlayerId_NotInScope(Collection<Integer> createPlayerIdList) {
+        regINS(CK_NINS, cTL(createPlayerIdList), xgetCValueCreatePlayerId(), "CREATE_PLAYER_ID");
     }
 
-    /**
-     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
-     * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * CREATE_PLAYER_NAME: {NotNull, VARCHAR(12)}
-     * @param createPlayerName The value of createPlayerName as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     * @param likeSearchOption The option of not-like-search. (NotNull)
-     */
-    protected void setCreatePlayerName_NotLikeSearch(String createPlayerName, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_NLS, fRES(createPlayerName), xgetCValueCreatePlayerName(), "CREATE_PLAYER_NAME", likeSearchOption);
-    }
-
-    protected void regCreatePlayerName(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCreatePlayerName(), "CREATE_PLAYER_NAME"); }
-    protected abstract ConditionValue xgetCValueCreatePlayerName();
+    protected void regCreatePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCreatePlayerId(), "CREATE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueCreatePlayerId();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
@@ -705,14 +760,6 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 募集中 (IN_PREPARATION). And OnlyOnceRegistered. <br>
-     * 募集中
-     */
-    public void setVillageStatusCode_Equal_募集中() {
-        setVillageStatusCode_Equal_AsVillageStatus(CDef.VillageStatus.募集中);
-    }
-
-    /**
      * Equal(=). As 進行中 (IN_PROGRESS). And OnlyOnceRegistered. <br>
      * 進行中
      */
@@ -721,11 +768,11 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     }
 
     /**
-     * Equal(=). As 開始待ち (WAITING). And OnlyOnceRegistered. <br>
-     * 開始待ち
+     * Equal(=). As プロローグ (PROLOGUE). And OnlyOnceRegistered. <br>
+     * プロローグ
      */
-    public void setVillageStatusCode_Equal_開始待ち() {
-        setVillageStatusCode_Equal_AsVillageStatus(CDef.VillageStatus.開始待ち);
+    public void setVillageStatusCode_Equal_プロローグ() {
+        setVillageStatusCode_Equal_AsVillageStatus(CDef.VillageStatus.プロローグ);
     }
 
     protected void doSetVillageStatusCode_Equal(String villageStatusCode) {
@@ -776,14 +823,6 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 募集中 (IN_PREPARATION). And OnlyOnceRegistered. <br>
-     * 募集中
-     */
-    public void setVillageStatusCode_NotEqual_募集中() {
-        setVillageStatusCode_NotEqual_AsVillageStatus(CDef.VillageStatus.募集中);
-    }
-
-    /**
      * NotEqual(&lt;&gt;). As 進行中 (IN_PROGRESS). And OnlyOnceRegistered. <br>
      * 進行中
      */
@@ -792,11 +831,11 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
     }
 
     /**
-     * NotEqual(&lt;&gt;). As 開始待ち (WAITING). And OnlyOnceRegistered. <br>
-     * 開始待ち
+     * NotEqual(&lt;&gt;). As プロローグ (PROLOGUE). And OnlyOnceRegistered. <br>
+     * プロローグ
      */
-    public void setVillageStatusCode_NotEqual_開始待ち() {
-        setVillageStatusCode_NotEqual_AsVillageStatus(CDef.VillageStatus.開始待ち);
+    public void setVillageStatusCode_NotEqual_プロローグ() {
+        setVillageStatusCode_NotEqual_AsVillageStatus(CDef.VillageStatus.プロローグ);
     }
 
     protected void doSetVillageStatusCode_NotEqual(String villageStatusCode) {
@@ -820,6 +859,26 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      */
     public void setVillageStatusCode_InScope_AsVillageStatus(Collection<CDef.VillageStatus> cdefList) {
         doSetVillageStatusCode_InScope(cTStrL(cdefList));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As VillageStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 村ステータス <br>
+     * 決着がついた村 <br>
+     * The group elements:[エピローグ, 廃村, 終了]
+     */
+    public void setVillageStatusCode_InScope_SolvedVillage() {
+        setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfSolvedVillage());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As VillageStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 村ステータス <br>
+     * 終了した村 <br>
+     * The group elements:[廃村, 終了]
+     */
+    public void setVillageStatusCode_InScope_FinishedVillage() {
+        setVillageStatusCode_InScope_AsVillageStatus(CDef.VillageStatus.listOfFinishedVillage());
     }
 
     protected void doSetVillageStatusCode_InScope(Collection<String> villageStatusCodeList) {
@@ -1573,7 +1632,7 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageCB> scalar_Equal() {
@@ -1588,7 +1647,7 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageCB> scalar_NotEqual() {
@@ -1603,7 +1662,7 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageCB> scalar_GreaterThan() {
@@ -1618,7 +1677,7 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageCB> scalar_LessThan() {
@@ -1633,7 +1692,7 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VillageCB> scalar_GreaterEqual() {
@@ -1736,7 +1795,6 @@ public abstract class AbstractBsVillageCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

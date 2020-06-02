@@ -45,507 +45,390 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageId The value of villageId as equal. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayId The value of villageDayId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_Equal(Integer villageId) {
-        doSetVillageId_Equal(villageId);
+    public void setVillageDayId_Equal(Integer villageDayId) {
+        doSetVillageDayId_Equal(villageDayId);
     }
 
-    protected void doSetVillageId_Equal(Integer villageId) {
-        regVillageId(CK_EQ, villageId);
+    protected void doSetVillageDayId_Equal(Integer villageDayId) {
+        regVillageDayId(CK_EQ, villageDayId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageId The value of villageId as notEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayId The value of villageDayId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_NotEqual(Integer villageId) {
-        doSetVillageId_NotEqual(villageId);
+    public void setVillageDayId_NotEqual(Integer villageDayId) {
+        doSetVillageDayId_NotEqual(villageDayId);
     }
 
-    protected void doSetVillageId_NotEqual(Integer villageId) {
-        regVillageId(CK_NES, villageId);
+    protected void doSetVillageDayId_NotEqual(Integer villageDayId) {
+        regVillageDayId(CK_NES, villageDayId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageId The value of villageId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayId The value of villageDayId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_GreaterThan(Integer villageId) {
-        regVillageId(CK_GT, villageId);
+    public void setVillageDayId_GreaterThan(Integer villageDayId) {
+        regVillageDayId(CK_GT, villageDayId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageId The value of villageId as lessThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayId The value of villageDayId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_LessThan(Integer villageId) {
-        regVillageId(CK_LT, villageId);
+    public void setVillageDayId_LessThan(Integer villageDayId) {
+        regVillageDayId(CK_LT, villageDayId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageId The value of villageId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayId The value of villageDayId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_GreaterEqual(Integer villageId) {
-        regVillageId(CK_GE, villageId);
+    public void setVillageDayId_GreaterEqual(Integer villageDayId) {
+        regVillageDayId(CK_GE, villageDayId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageId The value of villageId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayId The value of villageDayId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setVillageId_LessEqual(Integer villageId) {
-        regVillageId(CK_LE, villageId);
+    public void setVillageDayId_LessEqual(Integer villageDayId) {
+        regVillageDayId(CK_LE, villageDayId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setVillageId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setVillageId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setVillageDayId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setVillageId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueVillageId(), "VILLAGE_ID", rangeOfOption);
+    protected void setVillageDayId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueVillageDayId(), "VILLAGE_DAY_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageIdList The collection of villageId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayIdList The collection of villageDayId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageId_InScope(Collection<Integer> villageIdList) {
-        doSetVillageId_InScope(villageIdList);
+    public void setVillageDayId_InScope(Collection<Integer> villageDayIdList) {
+        doSetVillageDayId_InScope(villageDayIdList);
     }
 
-    protected void doSetVillageId_InScope(Collection<Integer> villageIdList) {
-        regINS(CK_INS, cTL(villageIdList), xgetCValueVillageId(), "VILLAGE_ID");
+    protected void doSetVillageDayId_InScope(Collection<Integer> villageDayIdList) {
+        regINS(CK_INS, cTL(villageDayIdList), xgetCValueVillageDayId(), "VILLAGE_DAY_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param villageIdList The collection of villageId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * @param villageDayIdList The collection of villageDayId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setVillageId_NotInScope(Collection<Integer> villageIdList) {
-        doSetVillageId_NotInScope(villageIdList);
+    public void setVillageDayId_NotInScope(Collection<Integer> villageDayIdList) {
+        doSetVillageDayId_NotInScope(villageDayIdList);
     }
 
-    protected void doSetVillageId_NotInScope(Collection<Integer> villageIdList) {
-        regINS(CK_NINS, cTL(villageIdList), xgetCValueVillageId(), "VILLAGE_ID");
+    protected void doSetVillageDayId_NotInScope(Collection<Integer> villageDayIdList) {
+        regINS(CK_NINS, cTL(villageDayIdList), xgetCValueVillageDayId(), "VILLAGE_DAY_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
      */
-    public void setVillageId_IsNull() { regVillageId(CK_ISN, DOBJ); }
+    public void setVillageDayId_IsNull() { regVillageDayId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
      */
-    public void setVillageId_IsNotNull() { regVillageId(CK_ISNN, DOBJ); }
+    public void setVillageDayId_IsNotNull() { regVillageDayId(CK_ISNN, DOBJ); }
 
-    protected void regVillageId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageId(), "VILLAGE_ID"); }
-    protected abstract ConditionValue xgetCValueVillageId();
+    protected void regVillageDayId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageDayId(), "VILLAGE_DAY_ID"); }
+    protected abstract ConditionValue xgetCValueVillageDayId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param day The value of day as equal. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDay_Equal(Integer day) {
-        doSetDay_Equal(day);
+    public void setVillagePlayerId_Equal(Integer villagePlayerId) {
+        doSetVillagePlayerId_Equal(villagePlayerId);
     }
 
-    protected void doSetDay_Equal(Integer day) {
-        regDay(CK_EQ, day);
+    protected void doSetVillagePlayerId_Equal(Integer villagePlayerId) {
+        regVillagePlayerId(CK_EQ, villagePlayerId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param day The value of day as notEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDay_NotEqual(Integer day) {
-        doSetDay_NotEqual(day);
+    public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
+        doSetVillagePlayerId_NotEqual(villagePlayerId);
     }
 
-    protected void doSetDay_NotEqual(Integer day) {
-        regDay(CK_NES, day);
+    protected void doSetVillagePlayerId_NotEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_NES, villagePlayerId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param day The value of day as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDay_GreaterThan(Integer day) {
-        regDay(CK_GT, day);
+    public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
+        regVillagePlayerId(CK_GT, villagePlayerId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param day The value of day as lessThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDay_LessThan(Integer day) {
-        regDay(CK_LT, day);
+    public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
+        regVillagePlayerId(CK_LT, villagePlayerId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param day The value of day as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDay_GreaterEqual(Integer day) {
-        regDay(CK_GE, day);
+    public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_GE, villagePlayerId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param day The value of day as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setDay_LessEqual(Integer day) {
-        regDay(CK_LE, day);
+    public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
+        regVillagePlayerId(CK_LE, villagePlayerId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param minNumber The min number of day. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of day. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setDay_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setDay_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param minNumber The min number of day. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of day. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setDay_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueDay(), "DAY", rangeOfOption);
+    protected void setVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param dayList The collection of day as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDay_InScope(Collection<Integer> dayList) {
-        doSetDay_InScope(dayList);
+    public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
+        doSetVillagePlayerId_InScope(villagePlayerIdList);
     }
 
-    protected void doSetDay_InScope(Collection<Integer> dayList) {
-        regINS(CK_INS, cTL(dayList), xgetCValueDay(), "DAY");
+    protected void doSetVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
+        regINS(CK_INS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
-     * @param dayList The collection of day as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDay_NotInScope(Collection<Integer> dayList) {
-        doSetDay_NotInScope(dayList);
+    public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
+        doSetVillagePlayerId_NotInScope(villagePlayerIdList);
     }
 
-    protected void doSetDay_NotInScope(Collection<Integer> dayList) {
-        regINS(CK_NINS, cTL(dayList), xgetCValueDay(), "DAY");
+    protected void doSetVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
+        regINS(CK_NINS, cTL(villagePlayerIdList), xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      */
-    public void setDay_IsNull() { regDay(CK_ISN, DOBJ); }
+    public void setVillagePlayerId_IsNull() { regVillagePlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * DAY: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      */
-    public void setDay_IsNotNull() { regDay(CK_ISNN, DOBJ); }
+    public void setVillagePlayerId_IsNotNull() { regVillagePlayerId(CK_ISNN, DOBJ); }
 
-    protected void regDay(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDay(), "DAY"); }
-    protected abstract ConditionValue xgetCValueDay();
+    protected void regVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillagePlayerId(), "VILLAGE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueVillagePlayerId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as equal. (basically NotNull: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_Equal(Integer charaId) {
-        doSetCharaId_Equal(charaId);
+    public void setTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
+        doSetTargetVillagePlayerId_Equal(targetVillagePlayerId);
     }
 
-    protected void doSetCharaId_Equal(Integer charaId) {
-        regCharaId(CK_EQ, charaId);
+    protected void doSetTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_EQ, targetVillagePlayerId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as notEqual. (basically NotNull: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_NotEqual(Integer charaId) {
-        doSetCharaId_NotEqual(charaId);
+    public void setTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
+        doSetTargetVillagePlayerId_NotEqual(targetVillagePlayerId);
     }
 
-    protected void doSetCharaId_NotEqual(Integer charaId) {
-        regCharaId(CK_NES, charaId);
+    protected void doSetTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_NES, targetVillagePlayerId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_GreaterThan(Integer charaId) {
-        regCharaId(CK_GT, charaId);
+    public void setTargetVillagePlayerId_GreaterThan(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_GT, targetVillagePlayerId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as lessThan. (basically NotNull: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_LessThan(Integer charaId) {
-        regCharaId(CK_LT, charaId);
+    public void setTargetVillagePlayerId_LessThan(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_LT, targetVillagePlayerId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_GreaterEqual(Integer charaId) {
-        regCharaId(CK_GE, charaId);
+    public void setTargetVillagePlayerId_GreaterEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_GE, targetVillagePlayerId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaId The value of charaId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerId The value of targetVillagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setCharaId_LessEqual(Integer charaId) {
-        regCharaId(CK_LE, charaId);
+    public void setTargetVillagePlayerId_LessEqual(Integer targetVillagePlayerId) {
+        regTargetVillagePlayerId(CK_LE, targetVillagePlayerId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setCharaId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setCharaId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setTargetVillagePlayerId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setCharaId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueCharaId(), "CHARA_ID", rangeOfOption);
+    protected void setTargetVillagePlayerId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaIdList The collection of charaId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setCharaId_InScope(Collection<Integer> charaIdList) {
-        doSetCharaId_InScope(charaIdList);
+    public void setTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
+        doSetTargetVillagePlayerId_InScope(targetVillagePlayerIdList);
     }
 
-    protected void doSetCharaId_InScope(Collection<Integer> charaIdList) {
-        regINS(CK_INS, cTL(charaIdList), xgetCValueCharaId(), "CHARA_ID");
+    protected void doSetTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
+        regINS(CK_INS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param charaIdList The collection of charaId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setCharaId_NotInScope(Collection<Integer> charaIdList) {
-        doSetCharaId_NotInScope(charaIdList);
+    public void setTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
+        doSetTargetVillagePlayerId_NotInScope(targetVillagePlayerIdList);
     }
 
-    protected void doSetCharaId_NotInScope(Collection<Integer> charaIdList) {
-        regINS(CK_NINS, cTL(charaIdList), xgetCValueCharaId(), "CHARA_ID");
+    protected void doSetTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
+        regINS(CK_NINS, cTL(targetVillagePlayerIdList), xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      */
-    public void setCharaId_IsNull() { regCharaId(CK_ISN, DOBJ); }
+    public void setTargetVillagePlayerId_IsNull() { regTargetVillagePlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to chara}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      */
-    public void setCharaId_IsNotNull() { regCharaId(CK_ISNN, DOBJ); }
+    public void setTargetVillagePlayerId_IsNotNull() { regTargetVillagePlayerId(CK_ISNN, DOBJ); }
 
-    protected void regCharaId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCharaId(), "CHARA_ID"); }
-    protected abstract ConditionValue xgetCValueCharaId();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaId The value of voteCharaId as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_Equal(Integer voteCharaId) {
-        doSetVoteCharaId_Equal(voteCharaId);
-    }
-
-    protected void doSetVoteCharaId_Equal(Integer voteCharaId) {
-        regVoteCharaId(CK_EQ, voteCharaId);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaId The value of voteCharaId as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_NotEqual(Integer voteCharaId) {
-        doSetVoteCharaId_NotEqual(voteCharaId);
-    }
-
-    protected void doSetVoteCharaId_NotEqual(Integer voteCharaId) {
-        regVoteCharaId(CK_NES, voteCharaId);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaId The value of voteCharaId as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_GreaterThan(Integer voteCharaId) {
-        regVoteCharaId(CK_GT, voteCharaId);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaId The value of voteCharaId as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_LessThan(Integer voteCharaId) {
-        regVoteCharaId(CK_LT, voteCharaId);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaId The value of voteCharaId as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_GreaterEqual(Integer voteCharaId) {
-        regVoteCharaId(CK_GE, voteCharaId);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaId The value of voteCharaId as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_LessEqual(Integer voteCharaId) {
-        regVoteCharaId(CK_LE, voteCharaId);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of voteCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of voteCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setVoteCharaId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setVoteCharaId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param minNumber The min number of voteCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of voteCharaId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setVoteCharaId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueVoteCharaId(), "VOTE_CHARA_ID", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaIdList The collection of voteCharaId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_InScope(Collection<Integer> voteCharaIdList) {
-        doSetVoteCharaId_InScope(voteCharaIdList);
-    }
-
-    protected void doSetVoteCharaId_InScope(Collection<Integer> voteCharaIdList) {
-        regINS(CK_INS, cTL(voteCharaIdList), xgetCValueVoteCharaId(), "VOTE_CHARA_ID");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VOTE_CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
-     * @param voteCharaIdList The collection of voteCharaId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setVoteCharaId_NotInScope(Collection<Integer> voteCharaIdList) {
-        doSetVoteCharaId_NotInScope(voteCharaIdList);
-    }
-
-    protected void doSetVoteCharaId_NotInScope(Collection<Integer> voteCharaIdList) {
-        regINS(CK_NINS, cTL(voteCharaIdList), xgetCValueVoteCharaId(), "VOTE_CHARA_ID");
-    }
-
-    protected void regVoteCharaId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVoteCharaId(), "VOTE_CHARA_ID"); }
-    protected abstract ConditionValue xgetCValueVoteCharaId();
+    protected void regTargetVillagePlayerId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueTargetVillagePlayerId(), "TARGET_VILLAGE_PLAYER_ID"); }
+    protected abstract ConditionValue xgetCValueTargetVillagePlayerId();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -978,7 +861,7 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VoteCB> scalar_Equal() {
@@ -993,7 +876,7 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VoteCB> scalar_NotEqual() {
@@ -1008,7 +891,7 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VoteCB> scalar_GreaterThan() {
@@ -1023,7 +906,7 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VoteCB> scalar_LessThan() {
@@ -1038,7 +921,7 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
      *     <span style="color: #553000">purchaseCB</span>.specify().<span style="color: #CC4747">columnPurchasePrice</span>(); <span style="color: #3F7E5E">// *Point!</span>
      *     <span style="color: #553000">purchaseCB</span>.query().setPaymentCompleteFlg_Equal_True();
      * });
-     * </pre> 
+     * </pre>
      * @return The object to set up a function. (NotNull)
      */
     public HpSLCFunction<VoteCB> scalar_GreaterEqual() {
@@ -1096,7 +979,6 @@ public abstract class AbstractBsVoteCQ extends AbstractConditionQuery {
      * <span style="color: #3F7E5E">//   end asc, ...</span>
      *
      * cb.query().addOrderBy_MemberStatusCode_Asc().<span style="color: #CC4747">withManualOrder</span>(<span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_GreaterEqual</span>(priorityDate); <span style="color: #3F7E5E">// e.g. 2000/01/01</span>
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Withdrawal);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Formalized);
      *     <span style="color: #553000">op</span>.<span style="color: #CC4747">when_Equal</span>(CDef.MemberStatus.Provisional);

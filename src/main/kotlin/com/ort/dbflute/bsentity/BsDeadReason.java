@@ -142,7 +142,7 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * Set the value of deadReasonCode as 突然 (SUDDON). <br>
+     * Set the value of deadReasonCode as 突然 (SUDDEN). <br>
      * 突然
      */
     public void setDeadReasonCode_突然() {
@@ -194,6 +194,26 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
     public boolean isDeadReasonCode突然() {
         CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
         return cdef != null ? cdef.equals(CDef.DeadReason.突然) : false;
+    }
+
+    /**
+     * 無惨な死 <br>
+     * The group elements:[襲撃, 呪殺]
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode_MiserableDeath() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null && cdef.isMiserableDeath();
+    }
+
+    /**
+     * 霊能判定可能な死因 <br>
+     * The group elements:[処刑, 突然]
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode_PsychicableDeath() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null && cdef.isPsychicableDeath();
     }
 
     // ===================================================================================

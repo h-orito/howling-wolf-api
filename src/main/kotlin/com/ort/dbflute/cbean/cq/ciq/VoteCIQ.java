@@ -61,10 +61,9 @@ public class VoteCIQ extends AbstractBsVoteCQ {
     // ===================================================================================
     //                                                                Override about Query
     //                                                                ====================
-    protected ConditionValue xgetCValueVillageId() { return _myCQ.xdfgetVillageId(); }
-    protected ConditionValue xgetCValueDay() { return _myCQ.xdfgetDay(); }
-    protected ConditionValue xgetCValueCharaId() { return _myCQ.xdfgetCharaId(); }
-    protected ConditionValue xgetCValueVoteCharaId() { return _myCQ.xdfgetVoteCharaId(); }
+    protected ConditionValue xgetCValueVillageDayId() { return _myCQ.xdfgetVillageDayId(); }
+    protected ConditionValue xgetCValueVillagePlayerId() { return _myCQ.xdfgetVillagePlayerId(); }
+    protected ConditionValue xgetCValueTargetVillagePlayerId() { return _myCQ.xdfgetTargetVillagePlayerId(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }

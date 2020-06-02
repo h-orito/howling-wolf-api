@@ -110,7 +110,7 @@ public abstract class BsAbilityTypeBhv extends AbstractBehaviorWritable<AbilityT
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">abilityType</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">abilityTypeBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -863,8 +863,8 @@ public abstract class BsAbilityTypeBhv extends AbstractBehaviorWritable<AbilityT
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * abilityTypeBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * abilityTypeBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * abilityTypeBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * abilityTypeBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * abilityTypeBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -872,7 +872,7 @@ public abstract class BsAbilityTypeBhv extends AbstractBehaviorWritable<AbilityT
      * abilityTypeBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * abilityTypeBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * abilityTypeBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * abilityTypeBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * abilityTypeBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -880,7 +880,7 @@ public abstract class BsAbilityTypeBhv extends AbstractBehaviorWritable<AbilityT
      * abilityTypeBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * abilityTypeBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * abilityTypeBhv.outideSql().removeBlockComment().selectList()
      * abilityTypeBhv.outideSql().removeLineComment().selectList()
      * abilityTypeBhv.outideSql().formatSql().selectList()

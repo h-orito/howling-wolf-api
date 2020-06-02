@@ -44,8 +44,9 @@ public class PlayerDbm extends AbstractDBMeta {
     { xsetupEpg(); }
     protected void xsetupEpg() {
         setupEpg(_epgMap, et -> ((Player)et).getPlayerId(), (et, vl) -> ((Player)et).setPlayerId(cti(vl)), "playerId");
-        setupEpg(_epgMap, et -> ((Player)et).getPlayerName(), (et, vl) -> ((Player)et).setPlayerName((String)vl), "playerName");
-        setupEpg(_epgMap, et -> ((Player)et).getPlayerPassword(), (et, vl) -> ((Player)et).setPlayerPassword((String)vl), "playerPassword");
+        setupEpg(_epgMap, et -> ((Player)et).getUid(), (et, vl) -> ((Player)et).setUid((String)vl), "uid");
+        setupEpg(_epgMap, et -> ((Player)et).getNickname(), (et, vl) -> ((Player)et).setNickname((String)vl), "nickname");
+        setupEpg(_epgMap, et -> ((Player)et).getTwitterUserName(), (et, vl) -> ((Player)et).setTwitterUserName((String)vl), "twitterUserName");
         setupEpg(_epgMap, et -> ((Player)et).getAuthorityCode(), (et, vl) -> {
             CDef.Authority cls = (CDef.Authority)gcls(et, columnAuthorityCode(), vl);
             if (cls != null) {
@@ -91,9 +92,10 @@ public class PlayerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "villagePlayerList", null, false);
-    protected final ColumnInfo _columnPlayerName = cci("PLAYER_NAME", "PLAYER_NAME", null, null, String.class, "playerName", null, false, false, true, "VARCHAR", 12, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnPlayerPassword = cci("PLAYER_PASSWORD", "PLAYER_PASSWORD", null, null, String.class, "playerPassword", null, false, false, true, "CHAR", 60, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "villageList,villagePlayerList", null, false);
+    protected final ColumnInfo _columnUid = cci("UID", "UID", null, null, String.class, "uid", null, false, false, true, "VARCHAR", 100, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnNickname = cci("NICKNAME", "NICKNAME", null, null, String.class, "nickname", null, false, false, true, "VARCHAR", 50, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnTwitterUserName = cci("TWITTER_USER_NAME", "TWITTER_USER_NAME", null, null, String.class, "twitterUserName", null, false, false, true, "VARCHAR", 15, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnAuthorityCode = cci("AUTHORITY_CODE", "AUTHORITY_CODE", null, null, String.class, "authorityCode", null, false, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "authority", null, CDef.DefMeta.Authority, false);
     protected final ColumnInfo _columnIsRestrictedParticipation = cci("IS_RESTRICTED_PARTICIPATION", "IS_RESTRICTED_PARTICIPATION", null, null, Boolean.class, "isRestrictedParticipation", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -107,15 +109,20 @@ public class PlayerDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnPlayerId() { return _columnPlayerId; }
     /**
-     * PLAYER_NAME: {UQ, NotNull, VARCHAR(12)}
+     * UID: {UQ, NotNull, VARCHAR(100)}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnPlayerName() { return _columnPlayerName; }
+    public ColumnInfo columnUid() { return _columnUid; }
     /**
-     * PLAYER_PASSWORD: {NotNull, CHAR(60)}
+     * NICKNAME: {NotNull, VARCHAR(50)}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnPlayerPassword() { return _columnPlayerPassword; }
+    public ColumnInfo columnNickname() { return _columnNickname; }
+    /**
+     * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnTwitterUserName() { return _columnTwitterUserName; }
     /**
      * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
      * @return The information object of specified column. (NotNull)
@@ -150,8 +157,9 @@ public class PlayerDbm extends AbstractDBMeta {
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnPlayerId());
-        ls.add(columnPlayerName());
-        ls.add(columnPlayerPassword());
+        ls.add(columnUid());
+        ls.add(columnNickname());
+        ls.add(columnTwitterUserName());
         ls.add(columnAuthorityCode());
         ls.add(columnIsRestrictedParticipation());
         ls.add(columnRegisterDatetime());
@@ -176,7 +184,7 @@ public class PlayerDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                        Unique Element
     //                                        --------------
-    public UniqueInfo uniqueOf() { return hpcui(columnPlayerName()); }
+    public UniqueInfo uniqueOf() { return hpcui(columnUid()); }
 
     // ===================================================================================
     //                                                                       Relation Info
@@ -198,6 +206,14 @@ public class PlayerDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
+    /**
+     * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerVillageList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnPlayerId(), VillageDbm.getInstance().columnCreatePlayerId());
+        return cri("FK_VILLAGE_PLAYER", "villageList", this, VillageDbm.getInstance(), mp, false, "player");
+    }
     /**
      * VILLAGE_PLAYER by PLAYER_ID, named 'villagePlayerList'.
      * @return The information object of referrer property. (NotNull)

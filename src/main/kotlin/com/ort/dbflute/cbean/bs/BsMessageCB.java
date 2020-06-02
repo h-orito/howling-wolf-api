@@ -46,6 +46,10 @@ public class BsMessageCB extends AbstractConditionBean {
         if (DBFluteConfig.getInstance().isSpecifyColumnRequired()) {
             enableSpecifyColumnRequired();
         }
+        xsetSpecifyColumnRequiredExceptDeterminer(DBFluteConfig.getInstance().getSpecifyColumnRequiredExceptDeterminer());
+        if (DBFluteConfig.getInstance().isSpecifyColumnRequiredWarningOnly()) {
+            xenableSpecifyColumnRequiredWarningOnly();
+        }
         if (DBFluteConfig.getInstance().isQueryUpdateCountPreCheck()) {
             enableQueryUpdateCountPreCheck();
         }
@@ -80,29 +84,15 @@ public class BsMessageCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
+     * @param villageId : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageNumber : PK, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param messageTypeCode : PK, IX, NotNull, VARCHAR(20). (NotNull)
      * @return this. (NotNull)
      */
     public MessageCB acceptPK(Integer villageId, Integer messageNumber, String messageTypeCode) {
         assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageNumber", messageNumber);assertObjectNotNull("messageTypeCode", messageTypeCode);
         BsMessageCB cb = this;
         cb.query().setVillageId_Equal(villageId);cb.query().setMessageNumber_Equal(messageNumber);cb.query().setMessageTypeCode_Equal(messageTypeCode);
-        return (MessageCB)this;
-    }
-
-    /**
-     * Accept the query condition of unique key as equal.
-     * @param villageId : PK, UQ+, IX+, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param messageTypeCode : PK, +UQ, IX, NotNull, VARCHAR(20). (NotNull)
-     * @param messageNumber : PK, +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @return this. (NotNull)
-     */
-    public MessageCB acceptUniqueOf(Integer villageId, String messageTypeCode, Integer messageNumber) {
-        assertObjectNotNull("villageId", villageId);assertObjectNotNull("messageTypeCode", messageTypeCode);assertObjectNotNull("messageNumber", messageNumber);
-        BsMessageCB cb = this;
-        cb.query().setVillageId_Equal(villageId);cb.query().setMessageTypeCode_Equal(messageTypeCode);cb.query().setMessageNumber_Equal(messageNumber);
         return (MessageCB)this;
     }
 
@@ -147,33 +137,33 @@ public class BsMessageCB extends AbstractConditionBean {
      * <span style="color: #3F7E5E">// {fromDate &lt;= BIRTHDATE &lt; toDate + 1 day}</span>
      * cb.query().setBirthdate_IsNull();    <span style="color: #3F7E5E">// is null</span>
      * cb.query().setBirthdate_IsNotNull(); <span style="color: #3F7E5E">// is not null</span>
-     * 
+     *
      * <span style="color: #3F7E5E">// ExistsReferrer: (correlated sub-query)</span>
      * <span style="color: #3F7E5E">// {where exists (select PURCHASE_ID from PURCHASE where ...)}</span>
      * cb.query().existsPurchase(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * });
      * cb.query().notExistsPurchase...
-     * 
+     *
      * <span style="color: #3F7E5E">// (Query)DerivedReferrer: (correlated sub-query)</span>
      * cb.query().derivedPurchaseList().max(purchaseCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     purchaseCB.specify().columnPurchasePrice(); <span style="color: #3F7E5E">// derived column for function</span>
      *     purchaseCB.query().set... <span style="color: #3F7E5E">// referrer sub-query condition</span>
      * }).greaterEqual(value);
-     * 
+     *
      * <span style="color: #3F7E5E">// ScalarCondition: (self-table sub-query)</span>
      * cb.query().scalar_Equal().max(scalarCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     scalarCB.specify().columnBirthdate(); <span style="color: #3F7E5E">// derived column for function</span>
      *     scalarCB.query().set... <span style="color: #3F7E5E">// scalar sub-query condition</span>
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// OrderBy</span>
      * cb.query().addOrderBy_MemberName_Asc();
      * cb.query().addOrderBy_MemberName_Desc().withManualOrder(option);
      * cb.query().addOrderBy_MemberName_Desc().withNullsFirst();
      * cb.query().addOrderBy_MemberName_Desc().withNullsLast();
      * cb.query().addSpecifiedDerivedOrderBy_Desc(aliasName);
-     * 
+     *
      * <span style="color: #3F7E5E">// Query(Relation)</span>
      * cb.query().queryMemberStatus()...;
      * cb.query().queryMemberAddressAsValid(targetDate)...;
@@ -181,7 +171,7 @@ public class BsMessageCB extends AbstractConditionBean {
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
     public MessageCQ query() {
-        assertQueryPurpose(); // assert only when user-public query 
+        assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
@@ -232,7 +222,7 @@ public class BsMessageCB extends AbstractConditionBean {
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
     public void union(UnionQuery<MessageCB> unionCBLambda) {
-        final MessageCB cb = new MessageCB(); cb.xsetupForUnion(this); xsyncUQ(cb); 
+        final MessageCB cb = new MessageCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
         final MessageCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
@@ -303,20 +293,30 @@ public class BsMessageCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_ID: {PK, UQ+, IX+, NotNull, INT UNSIGNED(10)}
+         * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
         /**
-         * MESSAGE_NUMBER: {PK, +UQ, NotNull, INT UNSIGNED(10)}
+         * MESSAGE_NUMBER: {PK, NotNull, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnMessageNumber() { return doColumn("MESSAGE_NUMBER"); }
         /**
-         * MESSAGE_TYPE_CODE: {PK, +UQ, IX, NotNull, VARCHAR(20)}
+         * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnMessageTypeCode() { return doColumn("MESSAGE_TYPE_CODE"); }
+        /**
+         * MESSAGE_UNIXTIMESTAMP_MILLI: {IX, NotNull, BIGINT UNSIGNED(20)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnMessageUnixtimestampMilli() { return doColumn("MESSAGE_UNIXTIMESTAMP_MILLI"); }
+        /**
+         * VILLAGE_DAY_ID: {IX, NotNull, INT UNSIGNED(10)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
          * VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
@@ -333,11 +333,6 @@ public class BsMessageCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnPlayerId() { return doColumn("PLAYER_ID"); }
         /**
-         * DAY: {NotNull, INT UNSIGNED(10)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnDay() { return doColumn("DAY"); }
-        /**
          * MESSAGE_CONTENT: {NotNull, VARCHAR(10000)}
          * @return The information object of specified column. (NotNull)
          */
@@ -347,6 +342,11 @@ public class BsMessageCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnMessageDatetime() { return doColumn("MESSAGE_DATETIME"); }
+        /**
+         * MESSAGE_COUNT: {INT UNSIGNED(10)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnMessageCount() { return doColumn("MESSAGE_COUNT"); }
         /**
          * IS_CONVERT_DISABLE: {NotNull, BIT}
          * @return The information object of specified column. (NotNull)

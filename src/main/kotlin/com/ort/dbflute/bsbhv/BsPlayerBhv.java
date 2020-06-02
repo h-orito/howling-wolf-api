@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     PLAYER_ID
  *
  * [column]
- *     PLAYER_ID, PLAYER_NAME, PLAYER_PASSWORD, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     PLAYER_ID, UID, NICKNAME, TWITTER_USER_NAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -43,13 +43,13 @@ import com.ort.dbflute.cbean.*;
  *     AUTHORITY
  *
  * [referrer table]
- *     VILLAGE_PLAYER
+ *     VILLAGE, VILLAGE_PLAYER
  *
  * [foreign property]
  *     authority
  *
  * [referrer property]
- *     villagePlayerList
+ *     villageList, villagePlayerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -109,7 +109,7 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
      *     ... = <span style="color: #553000">player</span>.get...
      * });
-     * 
+     *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
      * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
@@ -188,27 +188,27 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
 
     /**
      * Select the entity by the unique-key value.
-     * @param playerName : UQ, NotNull, VARCHAR(12). (NotNull)
+     * @param uid : UQ, NotNull, VARCHAR(100). (NotNull)
      * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Player> selectByUniqueOf(String playerName) {
-        return facadeSelectByUniqueOf(playerName);
+    public OptionalEntity<Player> selectByUniqueOf(String uid) {
+        return facadeSelectByUniqueOf(uid);
     }
 
-    protected OptionalEntity<Player> facadeSelectByUniqueOf(String playerName) {
-        return doSelectByUniqueOf(playerName, typeOfSelectedEntity());
+    protected OptionalEntity<Player> facadeSelectByUniqueOf(String uid) {
+        return doSelectByUniqueOf(uid, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Player> OptionalEntity<ENTITY> doSelectByUniqueOf(String playerName, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(playerName), tp), playerName);
+    protected <ENTITY extends Player> OptionalEntity<ENTITY> doSelectByUniqueOf(String uid, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(uid), tp), uid);
     }
 
-    protected PlayerCB xprepareCBAsUniqueOf(String playerName) {
-        assertObjectNotNull("playerName", playerName);
-        return newConditionBean().acceptUniqueOf(playerName);
+    protected PlayerCB xprepareCBAsUniqueOf(String uid) {
+        assertObjectNotNull("uid", uid);
+        return newConditionBean().acceptUniqueOf(uid);
     }
 
     // ===================================================================================
@@ -387,6 +387,70 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     }
 
     /**
+     * Load referrer of villageList by the set-upper of referrer. <br>
+     * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">loadVillage</span>(<span style="color: #553000">playerList</span>, <span style="color: #553000">villageCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">villageCB</span>.setupSelect...
+     *     <span style="color: #553000">villageCB</span>.query().set...
+     *     <span style="color: #553000">villageCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Player player : <span style="color: #553000">playerList</span>) {
+     *     ... = player.<span style="color: #CC4747">getVillageList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setCreatePlayerId_InScope(pkList);
+     * cb.query().addOrderBy_CreatePlayerId_Asc();
+     * </pre>
+     * @param playerList The entity list of player. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Village> loadVillage(List<Player> playerList, ReferrerConditionSetupper<VillageCB> refCBLambda) {
+        xassLRArg(playerList, refCBLambda);
+        return doLoadVillage(playerList, new LoadReferrerOption<VillageCB, Village>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of villageList by the set-upper of referrer. <br>
+     * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">loadVillage</span>(<span style="color: #553000">player</span>, <span style="color: #553000">villageCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">villageCB</span>.setupSelect...
+     *     <span style="color: #553000">villageCB</span>.query().set...
+     *     <span style="color: #553000">villageCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">player</span>.<span style="color: #CC4747">getVillageList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setCreatePlayerId_InScope(pkList);
+     * cb.query().addOrderBy_CreatePlayerId_Asc();
+     * </pre>
+     * @param player The entity of player. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Village> loadVillage(Player player, ReferrerConditionSetupper<VillageCB> refCBLambda) {
+        xassLRArg(player, refCBLambda);
+        return doLoadVillage(xnewLRLs(player), new LoadReferrerOption<VillageCB, Village>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<Village> doLoadVillage(List<Player> playerList, LoadReferrerOption<VillageCB, Village> option) {
+        return helpLoadReferrerInternally(playerList, option, "villageList");
+    }
+
+    /**
      * Load referrer of villagePlayerList by the set-upper of referrer. <br>
      * VILLAGE_PLAYER by PLAYER_ID, named 'villagePlayerList'.
      * <pre>
@@ -473,12 +537,12 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     { return helpExtractListInternally(playerList, "playerId"); }
 
     /**
-     * Extract the value list of (single) unique key playerName.
+     * Extract the value list of (single) unique key uid.
      * @param playerList The list of player. (NotNull, EmptyAllowed)
      * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<String> extractPlayerNameList(List<Player> playerList)
-    { return helpExtractListInternally(playerList, "playerName"); }
+    public List<String> extractUidList(List<Player> playerList)
+    { return helpExtractListInternally(playerList, "uid"); }
 
     // ===================================================================================
     //                                                                       Entity Update
@@ -903,8 +967,8 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     /**
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
-     * <span style="color: #3F7E5E">// main style</span> 
-     * playerBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span> 
+     * <span style="color: #3F7E5E">// main style</span>
+     * playerBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
      * playerBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
      * playerBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
      * playerBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
@@ -912,7 +976,7 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
      * playerBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
      * playerBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
-     * <span style="color: #3F7E5E">// traditional style</span> 
+     * <span style="color: #3F7E5E">// traditional style</span>
      * playerBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
      * playerBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
      * playerBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
@@ -920,7 +984,7 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
      * playerBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
      * playerBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
-     * <span style="color: #3F7E5E">// options</span> 
+     * <span style="color: #3F7E5E">// options</span>
      * playerBhv.outideSql().removeBlockComment().selectList()
      * playerBhv.outideSql().removeLineComment().selectList()
      * playerBhv.outideSql().formatSql().selectList()

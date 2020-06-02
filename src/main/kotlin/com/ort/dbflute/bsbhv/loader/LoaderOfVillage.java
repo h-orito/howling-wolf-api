@@ -15,7 +15,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_ID
  *
  * [column]
- *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_NAME, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_ID, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -27,16 +27,16 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     VILLAGE_STATUS, CAMP, VILLAGE_SETTINGS(AsOne)
+ *     PLAYER, VILLAGE_STATUS, CAMP
  *
  * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTINGS
+ *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
  *
  * [foreign property]
- *     villageStatus, camp, villageSettingsAsOne
+ *     player, villageStatus, camp
  *
  * [referrer property]
- *     messageRestrictionList, villageDayList, villagePlayerList
+ *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -163,9 +163,50 @@ public class LoaderOfVillage {
         return hd -> hd.handle(new LoaderOfVillagePlayer().ready(_referrerVillagePlayer, _selector));
     }
 
+    protected List<VillageSetting> _referrerVillageSetting;
+
+    /**
+     * Load referrer of villageSettingList by the set-upper of referrer. <br>
+     * VILLAGE_SETTING by VILLAGE_ID, named 'villageSettingList'.
+     * <pre>
+     * <span style="color: #0000C0">villageBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">villageList</span>, <span style="color: #553000">villageLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">villageLoader</span>.<span style="color: #CC4747">loadVillageSetting</span>(<span style="color: #553000">settingCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *         <span style="color: #553000">settingCB</span>.setupSelect...
+     *         <span style="color: #553000">settingCB</span>.query().set...
+     *         <span style="color: #553000">settingCB</span>.query().addOrderBy...
+     *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">settingLoader</span> -&gt; {</span>
+     *     <span style="color: #3F7E5E">//    settingLoader.load...</span>
+     *     <span style="color: #3F7E5E">//});</span>
+     * });
+     * for (Village village : <span style="color: #553000">villageList</span>) {
+     *     ... = village.<span style="color: #CC4747">getVillageSettingList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillageId_InScope(pkList);
+     * cb.query().addOrderBy_VillageId_Asc();
+     * </pre>
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerLoaderGateway<LoaderOfVillageSetting> loadVillageSetting(ReferrerConditionSetupper<VillageSettingCB> refCBLambda) {
+        myBhv().loadVillageSetting(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerVillageSetting = refLs);
+        return hd -> hd.handle(new LoaderOfVillageSetting().ready(_referrerVillageSetting, _selector));
+    }
+
     // ===================================================================================
     //                                                                    Pull out Foreign
     //                                                                    ================
+    protected LoaderOfPlayer _foreignPlayerLoader;
+    public LoaderOfPlayer pulloutPlayer() {
+        if (_foreignPlayerLoader == null)
+        { _foreignPlayerLoader = new LoaderOfPlayer().ready(myBhv().pulloutPlayer(_selectedList), _selector); }
+        return _foreignPlayerLoader;
+    }
+
     protected LoaderOfVillageStatus _foreignVillageStatusLoader;
     public LoaderOfVillageStatus pulloutVillageStatus() {
         if (_foreignVillageStatusLoader == null)
@@ -178,13 +219,6 @@ public class LoaderOfVillage {
         if (_foreignCampLoader == null)
         { _foreignCampLoader = new LoaderOfCamp().ready(myBhv().pulloutCamp(_selectedList), _selector); }
         return _foreignCampLoader;
-    }
-
-    protected LoaderOfVillageSettings _foreignVillageSettingsAsOneLoader;
-    public LoaderOfVillageSettings pulloutVillageSettingsAsOne() {
-        if (_foreignVillageSettingsAsOneLoader == null)
-        { _foreignVillageSettingsAsOneLoader = new LoaderOfVillageSettings().ready(myBhv().pulloutVillageSettingsAsOne(_selectedList), _selector); }
-        return _foreignVillageSettingsAsOneLoader;
     }
 
     // ===================================================================================

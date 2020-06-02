@@ -35,13 +35,13 @@ import com.ort.dbflute.exentity.*;
  *     CHARA_GROUP
  *
  * [referrer table]
- *     ABILITY, CHARA_IMAGE, VILLAGE_PLAYER, VOTE
+ *     CHARA_IMAGE, VILLAGE_PLAYER
  *
  * [foreign property]
  *     charaGroup
  *
  * [referrer property]
- *     abilityByCharaIdList, abilityByTargetCharaIdList, charaImageList, villagePlayerList, voteByCharaIdList, voteByVoteCharaIdList
+ *     charaImageList, villagePlayerList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -169,46 +169,6 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
-    /** ABILITY by CHARA_ID, named 'abilityByCharaIdList'. */
-    protected List<Ability> _abilityByCharaIdList;
-
-    /**
-     * [get] ABILITY by CHARA_ID, named 'abilityByCharaIdList'.
-     * @return The entity list of referrer property 'abilityByCharaIdList'. (NotNull: even if no loading, returns empty list)
-     */
-    public List<Ability> getAbilityByCharaIdList() {
-        if (_abilityByCharaIdList == null) { _abilityByCharaIdList = newReferrerList(); }
-        return _abilityByCharaIdList;
-    }
-
-    /**
-     * [set] ABILITY by CHARA_ID, named 'abilityByCharaIdList'.
-     * @param abilityByCharaIdList The entity list of referrer property 'abilityByCharaIdList'. (NullAllowed)
-     */
-    public void setAbilityByCharaIdList(List<Ability> abilityByCharaIdList) {
-        _abilityByCharaIdList = abilityByCharaIdList;
-    }
-
-    /** ABILITY by TARGET_CHARA_ID, named 'abilityByTargetCharaIdList'. */
-    protected List<Ability> _abilityByTargetCharaIdList;
-
-    /**
-     * [get] ABILITY by TARGET_CHARA_ID, named 'abilityByTargetCharaIdList'.
-     * @return The entity list of referrer property 'abilityByTargetCharaIdList'. (NotNull: even if no loading, returns empty list)
-     */
-    public List<Ability> getAbilityByTargetCharaIdList() {
-        if (_abilityByTargetCharaIdList == null) { _abilityByTargetCharaIdList = newReferrerList(); }
-        return _abilityByTargetCharaIdList;
-    }
-
-    /**
-     * [set] ABILITY by TARGET_CHARA_ID, named 'abilityByTargetCharaIdList'.
-     * @param abilityByTargetCharaIdList The entity list of referrer property 'abilityByTargetCharaIdList'. (NullAllowed)
-     */
-    public void setAbilityByTargetCharaIdList(List<Ability> abilityByTargetCharaIdList) {
-        _abilityByTargetCharaIdList = abilityByTargetCharaIdList;
-    }
-
     /** CHARA_IMAGE by CHARA_ID, named 'charaImageList'. */
     protected List<CharaImage> _charaImageList;
 
@@ -249,46 +209,6 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
         _villagePlayerList = villagePlayerList;
     }
 
-    /** VOTE by CHARA_ID, named 'voteByCharaIdList'. */
-    protected List<Vote> _voteByCharaIdList;
-
-    /**
-     * [get] VOTE by CHARA_ID, named 'voteByCharaIdList'.
-     * @return The entity list of referrer property 'voteByCharaIdList'. (NotNull: even if no loading, returns empty list)
-     */
-    public List<Vote> getVoteByCharaIdList() {
-        if (_voteByCharaIdList == null) { _voteByCharaIdList = newReferrerList(); }
-        return _voteByCharaIdList;
-    }
-
-    /**
-     * [set] VOTE by CHARA_ID, named 'voteByCharaIdList'.
-     * @param voteByCharaIdList The entity list of referrer property 'voteByCharaIdList'. (NullAllowed)
-     */
-    public void setVoteByCharaIdList(List<Vote> voteByCharaIdList) {
-        _voteByCharaIdList = voteByCharaIdList;
-    }
-
-    /** VOTE by VOTE_CHARA_ID, named 'voteByVoteCharaIdList'. */
-    protected List<Vote> _voteByVoteCharaIdList;
-
-    /**
-     * [get] VOTE by VOTE_CHARA_ID, named 'voteByVoteCharaIdList'.
-     * @return The entity list of referrer property 'voteByVoteCharaIdList'. (NotNull: even if no loading, returns empty list)
-     */
-    public List<Vote> getVoteByVoteCharaIdList() {
-        if (_voteByVoteCharaIdList == null) { _voteByVoteCharaIdList = newReferrerList(); }
-        return _voteByVoteCharaIdList;
-    }
-
-    /**
-     * [set] VOTE by VOTE_CHARA_ID, named 'voteByVoteCharaIdList'.
-     * @param voteByVoteCharaIdList The entity list of referrer property 'voteByVoteCharaIdList'. (NullAllowed)
-     */
-    public void setVoteByVoteCharaIdList(List<Vote> voteByVoteCharaIdList) {
-        _voteByVoteCharaIdList = voteByVoteCharaIdList;
-    }
-
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -320,18 +240,10 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
         StringBuilder sb = new StringBuilder();
         if (_charaGroup != null && _charaGroup.isPresent())
         { sb.append(li).append(xbRDS(_charaGroup, "charaGroup")); }
-        if (_abilityByCharaIdList != null) { for (Ability et : _abilityByCharaIdList)
-        { if (et != null) { sb.append(li).append(xbRDS(et, "abilityByCharaIdList")); } } }
-        if (_abilityByTargetCharaIdList != null) { for (Ability et : _abilityByTargetCharaIdList)
-        { if (et != null) { sb.append(li).append(xbRDS(et, "abilityByTargetCharaIdList")); } } }
         if (_charaImageList != null) { for (CharaImage et : _charaImageList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "charaImageList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerList")); } } }
-        if (_voteByCharaIdList != null) { for (Vote et : _voteByCharaIdList)
-        { if (et != null) { sb.append(li).append(xbRDS(et, "voteByCharaIdList")); } } }
-        if (_voteByVoteCharaIdList != null) { for (Vote et : _voteByVoteCharaIdList)
-        { if (et != null) { sb.append(li).append(xbRDS(et, "voteByVoteCharaIdList")); } } }
         return sb.toString();
     }
     protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
@@ -365,18 +277,10 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
         StringBuilder sb = new StringBuilder();
         if (_charaGroup != null && _charaGroup.isPresent())
         { sb.append(dm).append("charaGroup"); }
-        if (_abilityByCharaIdList != null && !_abilityByCharaIdList.isEmpty())
-        { sb.append(dm).append("abilityByCharaIdList"); }
-        if (_abilityByTargetCharaIdList != null && !_abilityByTargetCharaIdList.isEmpty())
-        { sb.append(dm).append("abilityByTargetCharaIdList"); }
         if (_charaImageList != null && !_charaImageList.isEmpty())
         { sb.append(dm).append("charaImageList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
         { sb.append(dm).append("villagePlayerList"); }
-        if (_voteByCharaIdList != null && !_voteByCharaIdList.isEmpty())
-        { sb.append(dm).append("voteByCharaIdList"); }
-        if (_voteByVoteCharaIdList != null && !_voteByVoteCharaIdList.isEmpty())
-        { sb.append(dm).append("voteByVoteCharaIdList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }

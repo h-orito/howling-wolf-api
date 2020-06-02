@@ -1,0 +1,199 @@
+# /---------------------------------------------------------------------------
+# classificationDefinitionMap: (NotRequired - Default map:{})
+#
+# The definition of classification.
+#
+# Specification:
+# map: {
+#     [classification-name] = list:{
+#         ; map:{
+#             ; topComment=[comment]; codeType=[String(default) or Number or Boolean]
+#             ; undefinedHandlingType=[EXCEPTION or LOGGING(default) or ALLOWED]
+#             ; isUseDocumentOnly=[true or false(default)]
+#             ; isSuppressAutoDeploy=[true or false(default)]
+#             ; groupingMap = map:{
+#                 ; [group-name] = map:{
+#                     ; groupComment=[comment]
+#                     ; elementList=list:{[the list of classification element's name]}
+#                 }
+#             }
+#         }
+#         # classification elements for implicit classification
+#         ; map:{
+#             ; code=[code]; name=[name]; alias=[alias]; comment=[comment]
+#             ; sisterCode=[code or code-list]; subItemMap=map:{[free-map]}
+#         }
+#         # settings for table classification
+#         ; map:{
+#             ; table=[table-name]
+#             ; code=[column-name for code]; name=[column-name for name]
+#             ; alias=[column-name for alias]; comment=[column-name for comment]}
+#             ; where=[condition for select]; orderBy=[column-name for ordering]
+#             ; exceptCodeList=[the list of except code]
+#         }
+#     }
+# }
+#
+# *The line that starts with '#' means comment-out.
+#
+map:{
+    ; Authority = list:{
+        ; map:{topComment=権限; codeType=String}
+        ; map:{
+            ; table=AUTHORITY
+            ; code=AUTHORITY_CODE; name=AUTHORITY_NAME
+        }
+    }
+    ; Camp = list:{
+        ; map:{topComment=陣営; codeType=String}
+        ; map:{
+            ; table=CAMP
+            ; code=CAMP_CODE; name=CAMP_NAME
+            ; subItemMap=map:{
+            	; order=DISP_ORDER
+			}
+        }
+    }
+    ; VillageStatus = list:{
+        ; map:{
+        	; topComment=村ステータス; codeType=String
+        	; groupingMap = map:{
+        		; solvedVillage = map:{
+        			; groupComment=決着がついた村
+        			; elementList= list:{エピローグ;廃村;終了}
+        		}
+        		; finishedVillage = map:{
+					; groupComment=終了した村
+					; elementList= list:{廃村;終了}
+				}
+        	}
+        }
+        ; map:{
+            ; table=VILLAGE_STATUS
+            ; code=VILLAGE_STATUS_CODE; name=VILLAGE_STATUS_NAME
+        }
+    }
+    ; Skill = list:{
+        ; map:{
+        	; topComment=役職; codeType=String
+        	; groupingMap = map:{
+        		; viewableWerewolfSay = map:{
+        			; groupComment=囁きを見られる
+        			; elementList= list:{人狼}
+        		}
+        		; availableWerewolfSay = map:{
+        			; groupComment=囁き可能
+        			; elementList= list:{人狼}
+        		}
+        		; notSelectableAttack = map:{
+					; groupComment=襲撃対象に選べない
+					; elementList= list:{人狼}
+				}
+				; divineResultWolf = map:{
+					; groupComment=占い結果が人狼になる
+					; elementList= list:{人狼}
+				}
+				; psychicResultWolf = map:{
+					; groupComment=霊能結果が人狼になる
+					; elementList= list:{人狼}
+				}
+				; hasAttackAbility = map:{
+					; groupComment=襲撃能力を持つ
+					; elementList= list:{人狼}
+				}
+				; hasDivineAbility = map:{
+					; groupComment=占い能力を持つ
+					; elementList= list:{占い師}
+				}
+				; hasGuardAbility = map:{
+					; groupComment=護衛能力を持つ
+					; elementList= list:{狩人}
+				}
+				; hasPsychicAbility = map:{
+					; groupComment=霊能能力を持つ
+					; elementList= list:{霊能者}
+				}
+				; countWolf = map:{
+					; groupComment=勝敗判定時狼にカウントする
+					; elementList= list:{人狼}
+				}
+				; someoneSkill = map:{
+					; groupComment=おまかせ系
+					; elementList= list:{おまかせ;おまかせ村人陣営;おまかせ人狼陣営}
+				}
+        	}
+        }
+        ; map:{
+            ; table=SKILL
+            ; code=SKILL_CODE; name=SKILL_NAME
+            ; subItemMap=map:{
+            	; shortName=SKILL_SHORT_NAME
+            	; order=DISP_ORDER
+            	; campCode=CAMP_CODE
+            	; description=DESCRIPTION
+			}
+		}
+    }
+    ; MessageType = list:{
+        ; map:{topComment=メッセージ種別; codeType=String}
+        ; map:{
+            ; table=MESSAGE_TYPE
+            ; code=MESSAGE_TYPE_CODE; name=MESSAGE_TYPE_NAME
+        }
+    }
+    ; DeadReason = list:{
+        ; map:{
+        	; topComment=死亡理由; codeType=String
+        	; groupingMap = map:{
+				; miserableDeath = map:{
+					; groupComment=無惨な死
+					; elementList= list:{襲撃;呪殺}
+				}
+				; psychicableDeath = map:{
+					; groupComment=霊能判定可能な死因
+					; elementList= list:{処刑;突然}
+				}
+			}
+        }
+        ; map:{
+            ; table=DEAD_REASON
+            ; code=DEAD_REASON_CODE; name=DEAD_REASON_NAME
+        }
+    }
+    ; AbilityType = list:{
+        ; map:{topComment=能力種別; codeType=String}
+        ; map:{
+            ; table=ABILITY_TYPE
+            ; code=ABILITY_TYPE_CODE; name=ABILITY_TYPE_NAME
+        }
+    }
+    ; FaceType = list:{
+        ; map:{topComment=表情種別; codeType=String}
+        ; map:{
+            ; table=FACE_TYPE
+            ; code=FACE_TYPE_CODE; name=FACE_TYPE_NAME
+        }
+    }
+    ; VillageSettingItem = list:{
+        ; map:{topComment=村設定項目; codeType=String}
+        ; map:{
+            ; table=VILLAGE_SETTING_ITEM
+            ; code=VILLAGE_SETTING_ITEM_CODE; name=VILLAGE_SETTING_ITEM_NAME
+        }
+    }
+    ; Noonnight = list:{
+        ; map:{topComment=昼夜; codeType=String}
+        ; map:{
+            ; table=NOONNIGHT
+            ; code=NOONNIGHT_CODE; name=NOONNIGHT_NAME
+        }
+    }
+
+	# アプリ定義
+    ; Term = list:{
+        ; map:{topComment=期間; codeType=String}
+        ; map:{code=LONG; name=長期; comment=長期人狼}
+        ; map:{code=SHORT; name=短期; comment=短期人狼}
+    }
+}
+# ----------------/
