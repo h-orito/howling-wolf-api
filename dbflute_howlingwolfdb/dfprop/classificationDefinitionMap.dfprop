@@ -79,11 +79,11 @@ map:{
         	; groupingMap = map:{
         		; viewableWerewolfSay = map:{
         			; groupComment=囁きを見られる
-        			; elementList= list:{人狼}
+        			; elementList= list:{人狼;C国狂人}
         		}
         		; availableWerewolfSay = map:{
         			; groupComment=囁き可能
-        			; elementList= list:{人狼}
+        			; elementList= list:{人狼;C国狂人}
         		}
         		; notSelectableAttack = map:{
 					; groupComment=襲撃対象に選べない
