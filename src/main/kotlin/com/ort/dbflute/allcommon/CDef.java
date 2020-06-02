@@ -466,6 +466,9 @@ public interface CDef extends Classification {
      * 役職
      */
     public enum Skill implements CDef {
+        /** C国狂人 */
+        C国狂人("CMADMAN", "C国狂人", emptyStrings())
+        ,
         /** 狩人 */
         狩人("HUNTER", "狩人", emptyStrings())
         ,
@@ -504,6 +507,14 @@ public interface CDef extends Classification {
         }
         private static final Map<String, Map<String, Object>> _subItemMapMap = new HashMap<String, Map<String, Object>>();
         static {
+            {
+                Map<String, Object> subItemMap = new HashMap<String, Object>();
+                subItemMap.put("shortName", "Ｃ");
+                subItemMap.put("order", "7");
+                subItemMap.put("campCode", "WEREWOLF");
+                subItemMap.put("description", "あなたはC国狂人です。人狼系役職とC国狂人同士にしか聞こえない会話が可能で、人狼の勝利があなたの勝利となります。");
+                _subItemMapMap.put(C国狂人.code(), Collections.unmodifiableMap(subItemMap));
+            }
             {
                 Map<String, Object> subItemMap = new HashMap<String, Object>();
                 subItemMap.put("shortName", "狩");
@@ -604,21 +615,21 @@ public interface CDef extends Classification {
         /**
          * Is the classification in the group? <br>
          * 囁きを見られる <br>
-         * The group elements:[人狼]
+         * The group elements:[人狼, C国狂人]
          * @return The determination, true or false.
          */
         public boolean isViewableWerewolfSay() {
-            return 人狼.equals(this);
+            return 人狼.equals(this) || C国狂人.equals(this);
         }
 
         /**
          * Is the classification in the group? <br>
          * 囁き可能 <br>
-         * The group elements:[人狼]
+         * The group elements:[人狼, C国狂人]
          * @return The determination, true or false.
          */
         public boolean isAvailableWerewolfSay() {
-            return 人狼.equals(this);
+            return 人狼.equals(this) || C国狂人.equals(this);
         }
 
         /**
@@ -819,21 +830,21 @@ public interface CDef extends Classification {
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 囁きを見られる <br>
-         * The group elements:[人狼]
+         * The group elements:[人狼, C国狂人]
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfViewableWerewolfSay() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<Skill>(Arrays.asList(人狼, C国狂人));
         }
 
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 囁き可能 <br>
-         * The group elements:[人狼]
+         * The group elements:[人狼, C国狂人]
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfAvailableWerewolfSay() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<Skill>(Arrays.asList(人狼, C国狂人));
         }
 
         /**
