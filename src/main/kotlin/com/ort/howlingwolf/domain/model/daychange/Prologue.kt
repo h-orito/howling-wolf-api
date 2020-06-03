@@ -53,6 +53,10 @@ object Prologue {
         var village = dayChange.village.assignSkill()
         // 役職構成メッセージ追加
         messages = messages.add(village.createOrganizationMessage())
+        // 人狼系役職メッセージ追加
+        messages = messages.add(village.createWolfsConfirmMessage(charas))
+        // 共有がいれば役職メッセージ追加
+        village.createMasonsConfirmMessage(charas)?.let { messages = messages.add(it) }
         // ステータス変更
         village = village.changeStatus(CDef.VillageStatus.進行中)
         // デフォルト能力行使指定

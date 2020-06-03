@@ -200,6 +200,14 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     }
 
     /**
+     * Set the value of messageTypeCode as 共有相互確認メッセージ (PRIVATE_MASON). <br>
+     * 共有相互確認メッセージ
+     */
+    public void setMessageTypeCode_共有相互確認メッセージ() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.共有相互確認メッセージ);
+    }
+
+    /**
      * Set the value of messageTypeCode as 白黒霊視結果 (PRIVATE_PSYCHIC). <br>
      * 白黒霊視結果
      */
@@ -330,6 +338,17 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     public boolean isMessageTypeCode参加者一覧() {
         CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
         return cdef != null ? cdef.equals(CDef.MessageType.参加者一覧) : false;
+    }
+
+    /**
+     * Is the value of messageTypeCode 共有相互確認メッセージ? <br>
+     * 共有相互確認メッセージ
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isMessageTypeCode共有相互確認メッセージ() {
+        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
+        return cdef != null ? cdef.equals(CDef.MessageType.共有相互確認メッセージ) : false;
     }
 
     /**

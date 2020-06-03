@@ -193,6 +193,14 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * Set the value of skillCode as 共有者 (MASON). <br>
+     * 共有者
+     */
+    public void setSkillCode_共有者() {
+        setSkillCodeAsSkill(CDef.Skill.共有者);
+    }
+
+    /**
      * Set the value of skillCode as 霊能者 (MEDIUM). <br>
      * 霊能者
      */
@@ -309,6 +317,17 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode狂人() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狂人) : false;
+    }
+
+    /**
+     * Is the value of skillCode 共有者? <br>
+     * 共有者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode共有者() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.共有者) : false;
     }
 
     /**
@@ -485,6 +504,16 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode_SomeoneSkill() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null && cdef.isSomeoneSkill();
+    }
+
+    /**
+     * 共有系としてお互いに認知できる <br>
+     * The group elements:[共有者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_RecognizableEachMason() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableEachMason();
     }
 
     /**
