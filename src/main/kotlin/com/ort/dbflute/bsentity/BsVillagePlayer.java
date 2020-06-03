@@ -286,6 +286,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of skillCode as 共有者 (MASON). <br>
+     * 共有者
+     */
+    public void setSkillCode_共有者() {
+        setSkillCodeAsSkill(CDef.Skill.共有者);
+    }
+
+    /**
      * Set the value of skillCode as 霊能者 (MEDIUM). <br>
      * 霊能者
      */
@@ -366,6 +374,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of requestSkillCode as 共有者 (MASON). <br>
+     * 共有者
+     */
+    public void setRequestSkillCode_共有者() {
+        setRequestSkillCodeAsSkill(CDef.Skill.共有者);
+    }
+
+    /**
      * Set the value of requestSkillCode as 霊能者 (MEDIUM). <br>
      * 霊能者
      */
@@ -443,6 +459,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
      */
     public void setSecondRequestSkillCode_狂人() {
         setSecondRequestSkillCodeAsSkill(CDef.Skill.狂人);
+    }
+
+    /**
+     * Set the value of secondRequestSkillCode as 共有者 (MASON). <br>
+     * 共有者
+     */
+    public void setSecondRequestSkillCode_共有者() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.共有者);
     }
 
     /**
@@ -570,6 +594,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSkillCode狂人() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狂人) : false;
+    }
+
+    /**
+     * Is the value of skillCode 共有者? <br>
+     * 共有者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode共有者() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.共有者) : false;
     }
 
     /**
@@ -749,6 +784,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 共有系としてお互いに認知できる <br>
+     * The group elements:[共有者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_RecognizableEachMason() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableEachMason();
+    }
+
+    /**
      * Is the value of requestSkillCode C国狂人? <br>
      * C国狂人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -790,6 +835,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCode狂人() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狂人) : false;
+    }
+
+    /**
+     * Is the value of requestSkillCode 共有者? <br>
+     * 共有者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode共有者() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.共有者) : false;
     }
 
     /**
@@ -969,6 +1025,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 共有系としてお互いに認知できる <br>
+     * The group elements:[共有者]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_RecognizableEachMason() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableEachMason();
+    }
+
+    /**
      * Is the value of secondRequestSkillCode C国狂人? <br>
      * C国狂人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -1010,6 +1076,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode狂人() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狂人) : false;
+    }
+
+    /**
+     * Is the value of secondRequestSkillCode 共有者? <br>
+     * 共有者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode共有者() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.共有者) : false;
     }
 
     /**
@@ -1186,6 +1263,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode_SomeoneSkill() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null && cdef.isSomeoneSkill();
+    }
+
+    /**
+     * 共有系としてお互いに認知できる <br>
+     * The group elements:[共有者]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_RecognizableEachMason() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableEachMason();
     }
 
     /**

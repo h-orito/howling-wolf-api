@@ -111,6 +111,14 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As 共有相互確認メッセージ (PRIVATE_MASON). And OnlyOnceRegistered. <br>
+     * 共有相互確認メッセージ
+     */
+    public void setMessageTypeCode_Equal_共有相互確認メッセージ() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.共有相互確認メッセージ);
+    }
+
+    /**
      * Equal(=). As 白黒霊視結果 (PRIVATE_PSYCHIC). And OnlyOnceRegistered. <br>
      * 白黒霊視結果
      */
@@ -243,6 +251,14 @@ public abstract class AbstractBsMessageTypeCQ extends AbstractConditionQuery {
      */
     public void setMessageTypeCode_NotEqual_参加者一覧() {
         setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.参加者一覧);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 共有相互確認メッセージ (PRIVATE_MASON). And OnlyOnceRegistered. <br>
+     * 共有相互確認メッセージ
+     */
+    public void setMessageTypeCode_NotEqual_共有相互確認メッセージ() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.共有相互確認メッセージ);
     }
 
     /**

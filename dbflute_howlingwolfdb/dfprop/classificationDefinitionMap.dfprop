@@ -121,6 +121,10 @@ map:{
 					; groupComment=おまかせ系
 					; elementList= list:{おまかせ;おまかせ村人陣営;おまかせ人狼陣営}
 				}
+				; recognizableEachMason = map:{
+					; groupComment=共有系としてお互いに認知できる
+					; elementList= list:{共有者}
+				}
         	}
         }
         ; map:{

@@ -95,6 +95,14 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As 共有者 (MASON). And OnlyOnceRegistered. <br>
+     * 共有者
+     */
+    public void setSkillCode_Equal_共有者() {
+        setSkillCode_Equal_AsSkill(CDef.Skill.共有者);
+    }
+
+    /**
      * Equal(=). As 霊能者 (MEDIUM). And OnlyOnceRegistered. <br>
      * 霊能者
      */
@@ -195,6 +203,14 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_NotEqual_狂人() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.狂人);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 共有者 (MASON). And OnlyOnceRegistered. <br>
+     * 共有者
+     */
+    public void setSkillCode_NotEqual_共有者() {
+        setSkillCode_NotEqual_AsSkill(CDef.Skill.共有者);
     }
 
     /**
@@ -376,6 +392,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_SomeoneSkill() {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfSomeoneSkill());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 共有系としてお互いに認知できる <br>
+     * The group elements:[共有者]
+     */
+    public void setSkillCode_InScope_RecognizableEachMason() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfRecognizableEachMason());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
