@@ -6,6 +6,7 @@ import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.daychange.SkillAssign
 import com.ort.howlingwolf.domain.model.message.AttackMessage
 import com.ort.howlingwolf.domain.model.message.GraveSay
+import com.ort.howlingwolf.domain.model.message.MasonMessage
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.message.MonologueSay
@@ -82,6 +83,41 @@ data class Village(
             postfix = "\nいるようだ。"
         )
         return Message.createPublicSystemMessage(text, day.latestDay().id)
+    }
+
+    /** 人狼系の役職相互確認メッセージ */
+    fun createWolfsConfirmMessage(charas: Charas): Message {
+        val text = CDef.Skill.listOfAvailableWerewolfSay().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
+            val memberList = participant.memberList.filter { it.skill!!.toCdef() == cdefSkill }
+            if (memberList.isEmpty()) null
+            else "${Skill(cdefSkill).name}は${memberList.joinToString(separator = "、") {
+                charas.chara(it.charaId).charaName.fullName()
+            }}"
+        }.joinToString(
+            separator = "、\n",
+            prefix = "この村の",
+            postfix = "のようだ。"
+        )
+        return Message.createAttackPrivateMessage(text, day.latestDay().id)
+    }
+
+    /** 共有系の役職相互確認メッセージ */
+    fun createMasonsConfirmMessage(charas: Charas): Message? {
+        // 共有がいなければなし
+        if (participant.memberList.none { it.skill!!.toCdef().isRecognizableEachMason }) return null
+        // 共有が存在する
+        val text = CDef.Skill.listOfRecognizableEachMason().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
+            val memberList = participant.memberList.filter { it.skill!!.toCdef() == cdefSkill }
+            if (memberList.isEmpty()) null
+            else "${Skill(cdefSkill).name}は${memberList.joinToString(separator = "、") {
+                charas.chara(it.charaId).charaName.fullName()
+            }}"
+        }.joinToString(
+            separator = "、\n",
+            prefix = "この村の",
+            postfix = "のようだ。"
+        )
+        return Message.createMasonPrivateMessage(text, day.latestDay().id)
     }
 
     /**
@@ -260,6 +296,9 @@ data class Village(
     /** 村として襲撃メッセージを見られるか */
     fun isViewableAttackMessage(): Boolean = status.isSolved() // 終了していたら全て見られる
 
+    /** 村として共有メッセージを見られるか */
+    fun isViewableMasonMessage(): Boolean = status.isSolved() // 終了していたら全て見られる
+
     /** 村として白黒霊能結果を見られるか */
     fun isViewablePsychicMessage(): Boolean = status.isSolved()// 終了していたら全て見られる
 
@@ -306,11 +345,16 @@ data class Village(
         val allowedTypeList: MutableList<CDef.MessageType> = mutableListOf()
         allowedTypeList.addAll(everyoneAllowedMessageTypeList)
         // 権限に応じて追加していく（独り言と秘話はここでは追加しない）
-        if (isViewableMessage(participant, CDef.MessageType.死者の呻き.code())) allowedTypeList.add(CDef.MessageType.死者の呻き)
-        if (isViewableMessage(participant, CDef.MessageType.見学発言.code(), day)) allowedTypeList.add(CDef.MessageType.見学発言)
-        if (isViewableMessage(participant, CDef.MessageType.人狼の囁き.code())) allowedTypeList.add(CDef.MessageType.人狼の囁き)
-        if (isViewableMessage(participant, CDef.MessageType.白黒霊視結果.code())) allowedTypeList.add(CDef.MessageType.白黒霊視結果)
-        if (isViewableMessage(participant, CDef.MessageType.襲撃結果.code())) allowedTypeList.add(CDef.MessageType.襲撃結果)
+        listOf(
+            CDef.MessageType.死者の呻き,
+            CDef.MessageType.見学発言,
+            CDef.MessageType.人狼の囁き,
+            CDef.MessageType.白黒霊視結果,
+            CDef.MessageType.襲撃結果,
+            CDef.MessageType.共有相互確認メッセージ
+        ).forEach {
+            if (isViewableMessage(participant, it.code())) allowedTypeList.add(it)
+        }
         return allowedTypeList
     }
 
@@ -332,6 +376,7 @@ data class Village(
             CDef.MessageType.秘話 -> SecretSay.isViewable(this, participant)
             CDef.MessageType.白黒霊視結果 -> PsychicMessage.isViewable(this, participant)
             CDef.MessageType.襲撃結果 -> AttackMessage.isViewable(this, participant)
+            CDef.MessageType.共有相互確認メッセージ -> MasonMessage.isViewable(this, participant)
             else -> return false
         }
     }

@@ -48,6 +48,9 @@ data class Message(
         fun createAttackPrivateMessage(text: String, villageDayId: Int): Message =
             createSystemMessage(MessageType(CDef.MessageType.襲撃結果), text, villageDayId)
 
+        fun createMasonPrivateMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.共有相互確認メッセージ), text, villageDayId)
+
         // ===================================================================================
         //                                                                        Assist Logic
         //                                                                        ============

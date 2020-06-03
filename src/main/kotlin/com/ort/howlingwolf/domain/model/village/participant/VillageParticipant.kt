@@ -151,6 +151,12 @@ data class VillageParticipant(
         return skill?.toCdef()?.isHasAttackAbility ?: false
     }
 
+    fun isViewableMasonMessage(): Boolean {
+        // 生存していて共有職なら開放
+        if (!isAlive()) return false
+        return skill?.toCdef()?.isRecognizableEachMason ?: false
+    }
+
     fun isViewablePsychicMessage(): Boolean {
         // 生存していて霊能者なら開放
         if (!isAlive()) return false
