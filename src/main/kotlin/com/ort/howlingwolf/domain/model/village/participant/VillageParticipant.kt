@@ -146,9 +146,9 @@ data class VillageParticipant(
     }
 
     fun isViewableAttackMessage(): Boolean {
-        // 生存していて襲撃可能職なら開放
+        // 生存していて囁き可能なら開放
         if (!isAlive()) return false
-        return skill?.toCdef()?.isHasAttackAbility ?: false
+        return skill?.toCdef()?.isAvailableWerewolfSay ?: false
     }
 
     fun isViewableMasonMessage(): Boolean {
