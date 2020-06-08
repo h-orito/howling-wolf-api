@@ -81,6 +81,15 @@ data class VillageParticipants(
         )
     }
 
+    // 呪殺
+    fun divineKill(participantId: Int, villageDay: VillageDay): VillageParticipants {
+        return this.copy(
+            memberList= this.memberList.map {
+                if (it.id == participantId) it.divineKill(villageDay) else it.copy()
+            }
+        )
+    }
+
     // 勝敗設定
     fun winLose(cdefWinCamp: CDef.Camp): VillageParticipants = this.copy(memberList = this.memberList.map { it.winLose(cdefWinCamp) })
 

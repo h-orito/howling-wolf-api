@@ -117,6 +117,10 @@ map:{
 					; groupComment=勝敗判定時狼にカウントする
 					; elementList= list:{人狼}
 				}
+				; noCount = map:{
+					; groupComment=勝敗判定時に人間としてカウントしない
+					; elementList= list:{妖狐}
+				}
 				; someoneSkill = map:{
 					; groupComment=おまかせ系
 					; elementList= list:{おまかせ;おまかせ村人陣営;おまかせ人狼陣営}
@@ -124,6 +128,14 @@ map:{
 				; recognizableEachMason = map:{
 					; groupComment=共有系としてお互いに認知できる
 					; elementList= list:{共有者}
+				}
+				; noDeadByAttack= map:{
+					; groupComment=襲撃耐性を持つ
+					; elementList= list:{妖狐}
+				}
+				; deadByDivine= map:{
+					; groupComment=占いにより死亡する
+					; elementList= list:{妖狐}
 				}
         	}
         }

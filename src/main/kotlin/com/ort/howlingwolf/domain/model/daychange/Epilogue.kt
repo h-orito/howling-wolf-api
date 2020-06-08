@@ -12,15 +12,11 @@ object Epilogue {
     //                                                                             Execute
     //                                                                           =========
     fun transitionToEpilogueIfNeeded(dayChange: DayChange): DayChange {
-        val villagerCount = dayChange.village.participant.memberList.count { it.isAlive() && !it.skill!!.toCdef().isCountWolf }
-        val wolfCount = dayChange.village.participant.memberList.count { it.isAlive() && it.skill!!.toCdef().isCountWolf }
-
-        // 狼勝利
-        if (villagerCount <= wolfCount) return epilogueVillage(dayChange, CDef.Camp.人狼陣営).setIsChange(dayChange)
-        // 村勝利
-        else if (wolfCount <= 0) return epilogueVillage(dayChange, CDef.Camp.村人陣営).setIsChange(dayChange)
+        val settlement = Settlement(dayChange.village)
         // まだ決着がついていない
-        return dayChange
+        if (!settlement.isSettled()) return dayChange
+        // 決着がついた
+        return epilogueVillage(dayChange, settlement.winCamp()!!.toCdef()).setIsChange(dayChange)
     }
 
     fun addDayIfNeeded(dayChange: DayChange): DayChange {

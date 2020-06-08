@@ -134,8 +134,8 @@ object Attack {
             }) {
             return false
         }
-        // TODO 襲撃を耐える役職
-        return true
+        // 対象が襲撃を耐える役職なら失敗
+        return !dayChange.village.participant.member(targetId).skill!!.toCdef().isNoDeadByAttack
     }
 
     /**
