@@ -71,6 +71,14 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
+     * 妖狐
+     */
+    public void setSkillCode_Equal_妖狐() {
+        setSkillCode_Equal_AsSkill(CDef.Skill.妖狐);
+    }
+
+    /**
      * Equal(=). As 狩人 (HUNTER). And OnlyOnceRegistered. <br>
      * 狩人
      */
@@ -179,6 +187,14 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_NotEqual_C国狂人() {
         setSkillCode_NotEqual_AsSkill(CDef.Skill.C国狂人);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 妖狐 (FOX). And OnlyOnceRegistered. <br>
+     * 妖狐
+     */
+    public void setSkillCode_NotEqual_妖狐() {
+        setSkillCode_NotEqual_AsSkill(CDef.Skill.妖狐);
     }
 
     /**
@@ -387,6 +403,16 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
     /**
      * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
      * 役職 <br>
+     * 勝敗判定時に人間としてカウントしない <br>
+     * The group elements:[妖狐]
+     */
+    public void setSkillCode_InScope_NoCount() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfNoCount());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
      * おまかせ系 <br>
      * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
      */
@@ -402,6 +428,26 @@ public abstract class AbstractBsSkillCQ extends AbstractConditionQuery {
      */
     public void setSkillCode_InScope_RecognizableEachMason() {
         setSkillCode_InScope_AsSkill(CDef.Skill.listOfRecognizableEachMason());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 襲撃耐性を持つ <br>
+     * The group elements:[妖狐]
+     */
+    public void setSkillCode_InScope_NoDeadByAttack() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfNoDeadByAttack());
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As Skill. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * 役職 <br>
+     * 占いにより死亡する <br>
+     * The group elements:[妖狐]
+     */
+    public void setSkillCode_InScope_DeadByDivine() {
+        setSkillCode_InScope_AsSkill(CDef.Skill.listOfDeadByDivine());
     }
 
     protected void doSetSkillCode_InScope(Collection<String> skillCodeList) {
