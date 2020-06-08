@@ -69,6 +69,7 @@ object Divine {
     fun process(dayChange: DayChange, charas: Charas): DayChange {
         val latestDay = dayChange.village.day.latestDay()
         var messages = dayChange.messages.copy()
+        var village = dayChange.village.copy()
 
         dayChange.village.participant.memberList.filter {
             it.isAlive() && it.skill!!.toCdef().isHasDivineAbility
@@ -77,12 +78,14 @@ object Divine {
                 it.myselfId == seer.id && it.villageDayId == dayChange.village.day.yesterday().id
             }?.let { ability ->
                 messages = messages.add(createDivineMessage(dayChange.village, charas, ability, seer))
+                // 呪殺対象なら死亡
+                if (isDivineKill(dayChange, ability.targetId!!)) village = village.divineKillParticipant(ability.targetId, latestDay)
             }
         }
-        // TODO 呪殺、逆呪殺
 
         return dayChange.copy(
-            messages = messages
+            messages = messages,
+            village = village
         ).setIsChange(dayChange)
     }
 
@@ -112,4 +115,11 @@ object Divine {
 
     private fun createDivineMessageString(chara: Chara, targetChara: Chara, isWolf: Boolean): String =
         "${chara.charaName.fullName()}は、${targetChara.charaName.fullName()}を占った。\n${targetChara.charaName.fullName()}は人狼${if (isWolf) "の" else "ではない"}ようだ。"
+
+    private fun isDivineKill(dayChange: DayChange, targetId: Int): Boolean {
+        // 対象が既に死亡していたら呪殺ではない
+        if (!dayChange.village.participant.member(targetId).isAlive()) return false
+        // 対象が呪殺対象でなければ呪殺ではない
+        return dayChange.village.participant.member(targetId).skill!!.toCdef().isDeadByDivine
+    }
 }
