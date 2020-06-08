@@ -446,6 +446,11 @@ data class Village(
     fun attackParticipant(participantId: Int, latestDay: VillageDay): Village =
         this.copy(participant = this.participant.attack(participantId, latestDay))
 
+    // 呪殺
+    fun divineKillParticipant(participantId: Int, latestDay: VillageDay): Village =
+        this.copy(participant = this.participant.divineKill(participantId, latestDay))
+
+
     // 役職割り当て
     fun assignSkill(): Village {
         val assignedParticipants = SkillAssign.assign(

@@ -87,9 +87,11 @@ data class Skill(
         }
 
         private fun getCountCamp(cdefSkill: CDef.Skill): Camp? {
-            // TODO 妖狐実装時に「なし」になりえる
-            return if (cdefSkill.isCountWolf) return Camp(CDef.Camp.人狼陣営)
-            else Camp(CDef.Camp.村人陣営)
+            return when {
+                cdefSkill.isCountWolf -> return Camp(CDef.Camp.人狼陣営)
+                cdefSkill.isNoCount -> return null
+                else -> Camp(CDef.Camp.村人陣営)
+            }
         }
     }
 
