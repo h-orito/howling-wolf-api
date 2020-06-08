@@ -169,6 +169,14 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * Set the value of skillCode as 妖狐 (FOX). <br>
+     * 妖狐
+     */
+    public void setSkillCode_妖狐() {
+        setSkillCodeAsSkill(CDef.Skill.妖狐);
+    }
+
+    /**
      * Set the value of skillCode as 狩人 (HUNTER). <br>
      * 狩人
      */
@@ -284,6 +292,17 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCodeC国狂人() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.C国狂人) : false;
+    }
+
+    /**
+     * Is the value of skillCode 妖狐? <br>
+     * 妖狐
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode妖狐() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.妖狐) : false;
     }
 
     /**
@@ -497,6 +516,16 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     }
 
     /**
+     * 勝敗判定時に人間としてカウントしない <br>
+     * The group elements:[妖狐]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_NoCount() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isNoCount();
+    }
+
+    /**
      * おまかせ系 <br>
      * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
      * @return The determination, true or false.
@@ -514,6 +543,26 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
     public boolean isSkillCode_RecognizableEachMason() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null && cdef.isRecognizableEachMason();
+    }
+
+    /**
+     * 襲撃耐性を持つ <br>
+     * The group elements:[妖狐]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_NoDeadByAttack() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isNoDeadByAttack();
+    }
+
+    /**
+     * 占いにより死亡する <br>
+     * The group elements:[妖狐]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_DeadByDivine() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isDeadByDivine();
     }
 
     /**

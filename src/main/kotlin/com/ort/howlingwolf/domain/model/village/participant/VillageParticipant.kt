@@ -52,6 +52,9 @@ data class VillageParticipant(
     // 襲撃
     fun attack(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.襲撃, villageDay))
 
+    // 呪殺
+    fun divineKill(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.呪殺, villageDay))
+
     // 役職割り当て
     fun assignSkill(skill: Skill): VillageParticipant = this.copy(skill = skill)
 
@@ -146,9 +149,9 @@ data class VillageParticipant(
     }
 
     fun isViewableAttackMessage(): Boolean {
-        // 生存していて襲撃可能職なら開放
+        // 生存していて囁き可能なら開放
         if (!isAlive()) return false
-        return skill?.toCdef()?.isHasAttackAbility ?: false
+        return skill?.toCdef()?.isAvailableWerewolfSay ?: false
     }
 
     fun isViewableMasonMessage(): Boolean {
