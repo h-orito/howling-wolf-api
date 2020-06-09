@@ -55,13 +55,11 @@ class ReservedVillageController(
      *
      * @param reservedVillageId 予約村ID
      * @param user user
-     * @param body body
      */
     @DeleteMapping("/reserved-village/{reservedVillageId}")
     fun register(
         @PathVariable("reservedVillageId") reservedVillageId: Int,
-        @AuthenticationPrincipal user: HowlingWolfUser,
-        @RequestBody @Validated body: ReservedVillageRegisterBody
+        @AuthenticationPrincipal user: HowlingWolfUser
     ) {
         if (user.authority != CDef.Authority.管理者) throw HowlingWolfBusinessException("管理者のみ可能な操作です")
         reservedVillageService.deleteReservedVillage(reservedVillageId)
