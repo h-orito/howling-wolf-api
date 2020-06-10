@@ -147,7 +147,7 @@ object VillageDataConverter {
         )
     }
 
-    fun convertVillagePlayerToParticipant(vp: VillagePlayer, village: Village? = null): VillageParticipant {
+    private fun convertVillagePlayerToParticipant(vp: VillagePlayer, village: Village? = null): VillageParticipant {
         return VillageParticipant(
             id = vp.villagePlayerId,
             charaId = vp.charaId,

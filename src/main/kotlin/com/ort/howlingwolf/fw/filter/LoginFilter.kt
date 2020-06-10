@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.ByteArrayInputStream
-import java.io.InputStream
 import java.security.Key
 import java.security.cert.CertificateFactory
 import java.util.*
@@ -104,7 +103,7 @@ class LoginFilter(
                     .replace("-----BEGIN CERTIFICATE-----\n", "")
                     .replace("-----END CERTIFICATE-----\n", "")
                     .replace("\n", "")
-                val inputStream: InputStream = ByteArrayInputStream(Base64.getDecoder().decode(keyValue.toByteArray()))
+                val inputStream = ByteArrayInputStream(Base64.getDecoder().decode(keyValue.toByteArray()))
                 val certificate = CertificateFactory.getInstance("X.509")
                     .generateCertificate(inputStream)
                 return certificate.publicKey
