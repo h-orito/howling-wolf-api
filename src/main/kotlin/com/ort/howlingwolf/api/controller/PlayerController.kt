@@ -13,6 +13,7 @@ import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
+import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -68,6 +69,7 @@ class PlayerController(
         playerService.updateDetail(user.uid, body.otherSiteName, body.introduction)
     }
 
+    private val logger = LoggerFactory.getLogger(PlayerController::class.java)
     @GetMapping("/player/{playerId}/record")
     fun stats(
         @PathVariable("playerId") playerId: Int

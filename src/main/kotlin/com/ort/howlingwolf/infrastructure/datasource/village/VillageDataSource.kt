@@ -181,8 +181,8 @@ class VillageDataSource(
             }
             loader.loadVillageSetting { }
             loader.loadVillageDay {
-                it.query().addOrderBy_Day_Desc()
-                it.query().queryNoonnight().addOrderBy_DispOrder_Desc()
+                it.query().addOrderBy_Day_Asc()
+                it.query().queryNoonnight().addOrderBy_DispOrder_Asc()
             }
             loader.loadMessageRestriction { }
         }
