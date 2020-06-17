@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of app_version. (Singleton)
+ * The DB meta of APP_VERSION. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class AppVersionDbm extends AbstractDBMeta {
@@ -50,7 +50,7 @@ public class AppVersionDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "app_version";
+    protected final String _tableDbName = "APP_VERSION";
     protected final String _tableDispName = "APP_VERSION";
     protected final String _tablePropertyName = "appVersion";
     protected final TableSqlName _tableSqlName = new TableSqlName("APP_VERSION", _tableDbName);

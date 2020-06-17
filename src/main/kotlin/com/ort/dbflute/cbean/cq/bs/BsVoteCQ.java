@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of vote.
+ * The base condition-query of VOTE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVoteCQ extends AbstractBsVoteCQ {
@@ -35,7 +35,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from vote) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from VOTE) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join vote on ... and FOO = [value] ...}
+     * {select ... from ... left outer join VOTE on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -81,14 +81,14 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
@@ -101,14 +101,14 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
@@ -121,14 +121,14 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_TargetVillagePlayerId_Asc() { regOBA("TARGET_VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsVoteCQ addOrderBy_TargetVillagePlayerId_Desc() { regOBD("TARGET_VILLAGE_PLAYER_ID"); return this; }
@@ -282,7 +282,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
         return xgetQueRlMap(prop);
     }
     protected VillagePlayerCQ xcreateQueryVillagePlayerByTargetVillagePlayerId() {
-        String nrp = xresolveNRP("vote", "villagePlayerByTargetVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("VOTE", "villagePlayerByTargetVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByTargetVillagePlayerId", nrp);
     }
     protected void xsetupOuterJoinVillagePlayerByTargetVillagePlayerId() { xregOutJo("villagePlayerByTargetVillagePlayerId"); }
@@ -302,7 +302,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
         return xgetQueRlMap(prop);
     }
     protected VillageDayCQ xcreateQueryVillageDay() {
-        String nrp = xresolveNRP("vote", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("VOTE", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillageDayCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villageDay", nrp);
     }
     protected void xsetupOuterJoinVillageDay() { xregOutJo("villageDay"); }
@@ -322,7 +322,7 @@ public class BsVoteCQ extends AbstractBsVoteCQ {
         return xgetQueRlMap(prop);
     }
     protected VillagePlayerCQ xcreateQueryVillagePlayerByVillagePlayerId() {
-        String nrp = xresolveNRP("vote", "villagePlayerByVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("VOTE", "villagePlayerByVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByVillagePlayerId", nrp);
     }
     protected void xsetupOuterJoinVillagePlayerByVillagePlayerId() { xregOutJo("villagePlayerByVillagePlayerId"); }

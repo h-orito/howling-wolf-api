@@ -67,7 +67,7 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
     /** {@inheritDoc} */
     public MessageDbm asDBMeta() { return MessageDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "message"; }
+    public String asTableDbName() { return "MESSAGE"; }
 
     // ===================================================================================
     //                                                                        New Instance

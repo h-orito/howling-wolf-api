@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of authority.
+ * The abstract condition-query of AUTHORITY.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsAuthorityCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsAuthorityCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "authority";
+        return "AUTHORITY";
     }
 
     // ===================================================================================
@@ -169,8 +169,8 @@ public abstract class AbstractBsAuthorityCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select AUTHORITY_CODE from player where ...)} <br>
-     * player by AUTHORITY_CODE, named 'playerAsOne'.
+     * {exists (select AUTHORITY_CODE from PLAYER where ...)} <br>
+     * PLAYER by AUTHORITY_CODE, named 'playerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsPlayer</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.query().set...
@@ -188,8 +188,8 @@ public abstract class AbstractBsAuthorityCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select AUTHORITY_CODE from player where ...)} <br>
-     * player by AUTHORITY_CODE, named 'playerAsOne'.
+     * {not exists (select AUTHORITY_CODE from PLAYER where ...)} <br>
+     * PLAYER by AUTHORITY_CODE, named 'playerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsPlayer</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.query().set...
@@ -215,8 +215,8 @@ public abstract class AbstractBsAuthorityCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from player where ...)} <br>
-     * player by AUTHORITY_CODE, named 'playerAsOne'.
+     * {FOO &lt;= (select max(BAR) from PLAYER where ...)} <br>
+     * PLAYER by AUTHORITY_CODE, named 'playerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedPlayer()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

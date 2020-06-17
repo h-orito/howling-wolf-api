@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of village_setting_item.
+ * The condition-query for in-line of VILLAGE_SETTING_ITEM.
  * @author DBFlute(AutoGenerator)
  */
 public class VillageSettingItemCIQ extends AbstractBsVillageSettingItemCQ {

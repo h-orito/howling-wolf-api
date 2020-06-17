@@ -68,7 +68,7 @@ public abstract class BsNoonnightBhv extends AbstractBehaviorWritable<Noonnight,
     /** {@inheritDoc} */
     public NoonnightDbm asDBMeta() { return NoonnightDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "noonnight"; }
+    public String asTableDbName() { return "NOONNIGHT"; }
 
     // ===================================================================================
     //                                                                        New Instance

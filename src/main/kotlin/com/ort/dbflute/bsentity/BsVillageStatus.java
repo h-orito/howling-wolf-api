@@ -78,7 +78,7 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "village_status";
+        return "VILLAGE_STATUS";
     }
 
     // ===================================================================================

@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of chara_image. (Singleton)
+ * The DB meta of CHARA_IMAGE. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class CharaImageDbm extends AbstractDBMeta {
@@ -73,7 +73,7 @@ public class CharaImageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "chara_image";
+    protected final String _tableDbName = "CHARA_IMAGE";
     protected final String _tableDispName = "CHARA_IMAGE";
     protected final String _tablePropertyName = "charaImage";
     protected final TableSqlName _tableSqlName = new TableSqlName("CHARA_IMAGE", _tableDbName);
@@ -91,12 +91,12 @@ public class CharaImageDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnCharaImgUrl = cci("CHARA_IMG_URL", "CHARA_IMG_URL", null, null, String.class, "charaImgUrl", null, false, false, true, "VARCHAR", 100, 0, null, null, false, null, null, null, null, null, false);
 
     /**
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCharaId() { return _columnCharaId; }
     /**
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnFaceTypeCode() { return _columnFaceTypeCode; }

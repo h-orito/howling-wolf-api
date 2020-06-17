@@ -68,7 +68,7 @@ public abstract class BsSkillBhv extends AbstractBehaviorWritable<Skill, SkillCB
     /** {@inheritDoc} */
     public SkillDbm asDBMeta() { return SkillDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "skill"; }
+    public String asTableDbName() { return "SKILL"; }
 
     // ===================================================================================
     //                                                                        New Instance

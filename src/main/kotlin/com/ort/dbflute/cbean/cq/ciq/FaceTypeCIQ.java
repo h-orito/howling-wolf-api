@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of face_type.
+ * The condition-query for in-line of FACE_TYPE.
  * @author DBFlute(AutoGenerator)
  */
 public class FaceTypeCIQ extends AbstractBsFaceTypeCQ {

@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of camp. (Singleton)
+ * The DB meta of CAMP. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class CampDbm extends AbstractDBMeta {
@@ -59,7 +59,7 @@ public class CampDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "camp";
+    protected final String _tableDbName = "CAMP";
     protected final String _tableDispName = "CAMP";
     protected final String _tablePropertyName = "camp";
     protected final TableSqlName _tableSqlName = new TableSqlName("CAMP", _tableDbName);

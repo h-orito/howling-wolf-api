@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of app_version.
+ * The abstract condition-query of APP_VERSION.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsAppVersionCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsAppVersionCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "app_version";
+        return "APP_VERSION";
     }
 
     // ===================================================================================
