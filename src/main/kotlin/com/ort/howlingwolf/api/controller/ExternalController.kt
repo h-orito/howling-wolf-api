@@ -2,10 +2,13 @@ package com.ort.howlingwolf.api.controller
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.api.view.external.RecruitingVillagesView
+import com.ort.howlingwolf.api.view.external.VillageRecordsView
 import com.ort.howlingwolf.application.service.CharachipService
+import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.ReservedVillageService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.village.VillageStatus
+import com.ort.howlingwolf.domain.model.village.Villages
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -13,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController
 class ExternalController(
     val villageService: VillageService,
     val reservedVillageService: ReservedVillageService,
-    val charachipService: CharachipService
+    val charachipService: CharachipService,
+    val playerService: PlayerService
 ) {
 
     @GetMapping("/recruiting-village-list")
@@ -33,6 +37,28 @@ class ExternalController(
             villageList = villageList,
             reservedVillageList = reservedVillageList,
             charachips = charachips
+        )
+    }
+
+    @GetMapping("/village-record/list")
+    fun villageRecordList(
+    ): VillageRecordsView {
+        val villageIdList = villageService.findVillages(
+            villageStatusList = listOf(
+                VillageStatus(CDef.VillageStatus.エピローグ),
+                VillageStatus(CDef.VillageStatus.終了)
+            )
+        ).list.map { it.id }
+        if (villageIdList.isEmpty()) return VillageRecordsView(listOf())
+        val villageList = villageService.findVillagesAsDetail(villageIdList).list.sortedBy { it.id }
+        val charas = charachipService.findCharas(villageList.map { it.setting.charachip.charachipId }.distinct())
+        val players = playerService.findPlayers(
+            playerIdList = villageList.flatMap { it.participant.memberList.map { member -> member.playerId!! } }.distinct()
+        )
+        return VillageRecordsView(
+            villages = Villages(villageList),
+            charas = charas,
+            players = players
         )
     }
 }

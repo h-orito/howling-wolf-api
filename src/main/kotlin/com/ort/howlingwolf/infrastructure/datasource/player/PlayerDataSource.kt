@@ -54,6 +54,7 @@ class PlayerDataSource(
     }
 
     fun findPlayers(playerIdList: List<Int>): Players {
+        if (playerIdList.isEmpty()) return Players(listOf())
         val playerList = playerBhv.selectList {
             it.setupSelect_PlayerDetailAsOne()
             it.query().existsVillagePlayer {
