@@ -68,7 +68,7 @@ public abstract class BsCampBhv extends AbstractBehaviorWritable<Camp, CampCB> {
     /** {@inheritDoc} */
     public CampDbm asDBMeta() { return CampDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "camp"; }
+    public String asTableDbName() { return "CAMP"; }
 
     // ===================================================================================
     //                                                                        New Instance

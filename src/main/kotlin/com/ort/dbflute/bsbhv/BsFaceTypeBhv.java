@@ -68,7 +68,7 @@ public abstract class BsFaceTypeBhv extends AbstractBehaviorWritable<FaceType, F
     /** {@inheritDoc} */
     public FaceTypeDbm asDBMeta() { return FaceTypeDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "face_type"; }
+    public String asTableDbName() { return "FACE_TYPE"; }
 
     // ===================================================================================
     //                                                                        New Instance

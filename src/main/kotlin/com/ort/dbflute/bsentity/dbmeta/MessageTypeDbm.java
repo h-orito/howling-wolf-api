@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of message_type. (Singleton)
+ * The DB meta of MESSAGE_TYPE. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class MessageTypeDbm extends AbstractDBMeta {
@@ -58,7 +58,7 @@ public class MessageTypeDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "message_type";
+    protected final String _tableDbName = "MESSAGE_TYPE";
     protected final String _tableDispName = "MESSAGE_TYPE";
     protected final String _tablePropertyName = "messageType";
     protected final TableSqlName _tableSqlName = new TableSqlName("MESSAGE_TYPE", _tableDbName);

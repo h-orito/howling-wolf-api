@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of chara_image.
+ * The abstract condition-query of CHARA_IMAGE.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "chara_image";
+        return "CHARA_IMAGE";
     }
 
     // ===================================================================================
@@ -45,7 +45,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaId The value of charaId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaId_Equal(Integer charaId) {
@@ -58,7 +58,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaId The value of charaId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaId_NotEqual(Integer charaId) {
@@ -71,7 +71,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaId The value of charaId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaId_GreaterThan(Integer charaId) {
@@ -80,7 +80,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaId The value of charaId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaId_LessThan(Integer charaId) {
@@ -89,7 +89,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaId The value of charaId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaId_GreaterEqual(Integer charaId) {
@@ -98,7 +98,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaId The value of charaId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaId_LessEqual(Integer charaId) {
@@ -109,7 +109,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param minNumber The min number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -122,7 +122,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param minNumber The min number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of charaId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -133,7 +133,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaIdList The collection of charaId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setCharaId_InScope(Collection<Integer> charaIdList) {
@@ -146,7 +146,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      * @param charaIdList The collection of charaId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setCharaId_NotInScope(Collection<Integer> charaIdList) {
@@ -159,13 +159,13 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      */
     public void setCharaId_IsNull() { regCharaId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
      */
     public void setCharaId_IsNotNull() { regCharaId(CK_ISNN, DOBJ); }
 
@@ -174,7 +174,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      * @param faceTypeCode The value of faceTypeCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setFaceTypeCode_Equal(String faceTypeCode) {
@@ -183,7 +183,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). As FaceType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
      * 表情種別
      * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
@@ -245,7 +245,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      * @param faceTypeCode The value of faceTypeCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setFaceTypeCode_NotEqual(String faceTypeCode) {
@@ -254,7 +254,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). As FaceType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
      * 表情種別
      * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
@@ -316,7 +316,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      * @param faceTypeCodeList The collection of faceTypeCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setFaceTypeCode_InScope(Collection<String> faceTypeCodeList) {
@@ -325,7 +325,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. As FaceType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
      * 表情種別
      * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
@@ -339,7 +339,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      * @param faceTypeCodeList The collection of faceTypeCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setFaceTypeCode_NotInScope(Collection<String> faceTypeCodeList) {
@@ -348,7 +348,7 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. As FaceType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
      * 表情種別
      * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
@@ -362,13 +362,13 @@ public abstract class AbstractBsCharaImageCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      */
     public void setFaceTypeCode_IsNull() { regFaceTypeCode(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
      */
     public void setFaceTypeCode_IsNotNull() { regFaceTypeCode(CK_ISNN, DOBJ); }
 

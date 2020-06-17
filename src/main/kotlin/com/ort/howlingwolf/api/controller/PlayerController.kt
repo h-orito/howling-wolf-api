@@ -1,5 +1,6 @@
 package com.ort.howlingwolf.api.controller
 
+import com.ort.howlingwolf.api.body.PlayerUpdateDetailBody
 import com.ort.howlingwolf.api.body.PlayerUpdateNicknameBody
 import com.ort.howlingwolf.api.view.player.MyselfPlayerView
 import com.ort.howlingwolf.api.view.player.PlayerRecordsView
@@ -57,6 +58,14 @@ class PlayerController(
         @RequestBody @Validated body: PlayerUpdateNicknameBody
     ) {
         playerService.updateNickname(user, body.nickname!!, body.twitterUserName!!)
+    }
+
+    @PostMapping("/player/detail")
+    fun updateDetail(
+        @AuthenticationPrincipal user: HowlingWolfUser,
+        @RequestBody @Validated body: PlayerUpdateDetailBody
+    ) {
+        playerService.updateDetail(user.uid, body.otherSiteName, body.introduction)
     }
 
     @GetMapping("/player/{playerId}/record")

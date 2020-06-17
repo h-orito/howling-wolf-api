@@ -20,7 +20,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of app_version.
+ * The base condition-bean of APP_VERSION.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAppVersionCB extends AbstractConditionBean {
@@ -76,7 +76,7 @@ public class BsAppVersionCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "app_version";
+        return "APP_VERSION";
     }
 
     // ===================================================================================
@@ -298,7 +298,7 @@ public class BsAppVersionCB extends AbstractConditionBean {
             columnClientVersion(); // PK
         }
         @Override
-        protected String getTableDbName() { return "app_version"; }
+        protected String getTableDbName() { return "APP_VERSION"; }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)

@@ -27,13 +27,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     AUTHORITY
+ *     AUTHORITY, PLAYER_DETAIL(AsOne)
  *
  * [referrer table]
- *     VILLAGE, VILLAGE_PLAYER
+ *     VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
  *
  * [foreign property]
- *     authority
+ *     authority, playerDetailAsOne
  *
  * [referrer property]
  *     villageList, villagePlayerList
@@ -137,6 +137,13 @@ public class LoaderOfPlayer {
         if (_foreignAuthorityLoader == null)
         { _foreignAuthorityLoader = new LoaderOfAuthority().ready(myBhv().pulloutAuthority(_selectedList), _selector); }
         return _foreignAuthorityLoader;
+    }
+
+    protected LoaderOfPlayerDetail _foreignPlayerDetailAsOneLoader;
+    public LoaderOfPlayerDetail pulloutPlayerDetailAsOne() {
+        if (_foreignPlayerDetailAsOneLoader == null)
+        { _foreignPlayerDetailAsOneLoader = new LoaderOfPlayerDetail().ready(myBhv().pulloutPlayerDetailAsOne(_selectedList), _selector); }
+        return _foreignPlayerDetailAsOneLoader;
     }
 
     // ===================================================================================

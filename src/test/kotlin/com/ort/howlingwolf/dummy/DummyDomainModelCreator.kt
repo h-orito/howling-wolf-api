@@ -130,6 +130,8 @@ object DummyDomainModelCreator {
         id = randomNumber(),
         nickname = "dummy",
         twitterUserName = "dummy",
+        otherSiteName = null,
+        introduction = null,
         isRestrictedParticipation = false
     )
 

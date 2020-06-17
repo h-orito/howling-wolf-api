@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of player.
+ * The condition-query for in-line of PLAYER.
  * @author DBFlute(AutoGenerator)
  */
 public class PlayerCIQ extends AbstractBsPlayerCQ {

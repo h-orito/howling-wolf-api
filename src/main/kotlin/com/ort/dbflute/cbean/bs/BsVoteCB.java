@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of vote.
+ * The base condition-bean of VOTE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVoteCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsVoteCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "vote";
+        return "VOTE";
     }
 
     // ===================================================================================
@@ -85,8 +85,8 @@ public class BsVoteCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villageDayId : PK, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
-     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
+     * @param villageDayId : PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY. (NotNull)
+     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER. (NotNull)
      * @return this. (NotNull)
      */
     public VoteCB acceptPK(Integer villageDayId, Integer villagePlayerId) {
@@ -375,17 +375,17 @@ public class BsVoteCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+         * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
-         * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+         * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnTargetVillagePlayerId() { return doColumn("TARGET_VILLAGE_PLAYER_ID"); }
@@ -421,7 +421,7 @@ public class BsVoteCB extends AbstractConditionBean {
             }
         }
         @Override
-        protected String getTableDbName() { return "vote"; }
+        protected String getTableDbName() { return "VOTE"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * VILLAGE_PLAYER by my TARGET_VILLAGE_PLAYER_ID, named 'villagePlayerByTargetVillagePlayerId'.
