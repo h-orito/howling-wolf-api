@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.api.controller
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.api.form.VillageRecordListForm
 import com.ort.howlingwolf.api.view.external.RecruitingVillagesView
 import com.ort.howlingwolf.api.view.external.VillageRecordsView
 import com.ort.howlingwolf.application.service.CharachipService
@@ -42,13 +43,15 @@ class ExternalController(
 
     @GetMapping("/village-record/list")
     fun villageRecordList(
+        form: VillageRecordListForm
     ): VillageRecordsView {
-        val villageIdList = villageService.findVillages(
+        var villageIdList = villageService.findVillages(
             villageStatusList = listOf(
                 VillageStatus(CDef.VillageStatus.エピローグ),
                 VillageStatus(CDef.VillageStatus.終了)
             )
         ).list.map { it.id }
+        form.vid?.let { vid -> villageIdList = villageIdList.filter { vid.contains(it) } }
         if (villageIdList.isEmpty()) return VillageRecordsView(listOf())
         val villageList = villageService.findVillagesAsDetail(villageIdList).list.sortedBy { it.id }
         val charas = charachipService.findCharas(villageList.map { it.setting.charachip.charachipId }.distinct())
