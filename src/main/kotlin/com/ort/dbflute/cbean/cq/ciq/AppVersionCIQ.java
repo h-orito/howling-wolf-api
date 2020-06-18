@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of app_version.
+ * The condition-query for in-line of APP_VERSION.
  * @author DBFlute(AutoGenerator)
  */
 public class AppVersionCIQ extends AbstractBsAppVersionCQ {

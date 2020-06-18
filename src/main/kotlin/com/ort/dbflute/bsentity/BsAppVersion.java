@@ -72,7 +72,7 @@ public abstract class BsAppVersion extends AbstractEntity implements DomainEntit
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "app_version";
+        return "APP_VERSION";
     }
 
     // ===================================================================================

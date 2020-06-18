@@ -33,13 +33,13 @@ import com.ort.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     AUTHORITY
+ *     AUTHORITY, PLAYER_DETAIL(AsOne)
  *
  * [referrer table]
- *     VILLAGE, VILLAGE_PLAYER
+ *     VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
  *
  * [foreign property]
- *     authority
+ *     authority, playerDetailAsOne
  *
  * [referrer property]
  *     villageList, villagePlayerList
@@ -93,7 +93,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     /** TWITTER_USER_NAME: {NotNull, VARCHAR(15)} */
     protected String _twitterUserName;
 
-    /** AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} */
+    /** AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority} */
     protected String _authorityCode;
 
     /** IS_RESTRICTED_PARTICIPATION: {NotNull, BIT} */
@@ -121,7 +121,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "player";
+        return "PLAYER";
     }
 
     // ===================================================================================
@@ -149,7 +149,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     //                                                             =======================
     /**
      * Get the value of authorityCode as the classification of Authority. <br>
-     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} <br>
+     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority} <br>
      * 権限
      * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
@@ -160,7 +160,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
 
     /**
      * Set the value of authorityCode as the classification of Authority. <br>
-     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} <br>
+     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority} <br>
      * 権限
      * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
      */
@@ -234,6 +234,27 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
      */
     public void setAuthority(OptionalEntity<Authority> authority) {
         _authority = authority;
+    }
+
+    /** PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'. */
+    protected OptionalEntity<PlayerDetail> _playerDetailAsOne;
+
+    /**
+     * [get] PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return the entity of foreign property(referrer-as-one) 'playerDetailAsOne'. (NotNull, EmptyAllowed: when e.g. no data, no setupSelect)
+     */
+    public OptionalEntity<PlayerDetail> getPlayerDetailAsOne() {
+        if (_playerDetailAsOne == null) { _playerDetailAsOne = OptionalEntity.relationEmpty(this, "playerDetailAsOne"); }
+        return _playerDetailAsOne;
+    }
+
+    /**
+     * [set] PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
+     * @param playerDetailAsOne The entity of foreign property(referrer-as-one) 'playerDetailAsOne'. (NullAllowed)
+     */
+    public void setPlayerDetailAsOne(OptionalEntity<PlayerDetail> playerDetailAsOne) {
+        _playerDetailAsOne = playerDetailAsOne;
     }
 
     // ===================================================================================
@@ -310,6 +331,8 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         StringBuilder sb = new StringBuilder();
         if (_authority != null && _authority.isPresent())
         { sb.append(li).append(xbRDS(_authority, "authority")); }
+        if (_playerDetailAsOne != null && _playerDetailAsOne.isPresent())
+        { sb.append(li).append(xbRDS(_playerDetailAsOne, "playerDetailAsOne")); }
         if (_villageList != null) { for (Village et : _villageList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villageList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
@@ -345,6 +368,8 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         StringBuilder sb = new StringBuilder();
         if (_authority != null && _authority.isPresent())
         { sb.append(dm).append("authority"); }
+        if (_playerDetailAsOne != null && _playerDetailAsOne.isPresent())
+        { sb.append(dm).append("playerDetailAsOne"); }
         if (_villageList != null && !_villageList.isEmpty())
         { sb.append(dm).append("villageList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
@@ -444,7 +469,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     }
 
     /**
-     * [get] AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} <br>
+     * [get] AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority} <br>
      * 権限コード
      * @return The value of the column 'AUTHORITY_CODE'. (basically NotNull if selected: for the constraint)
      */
@@ -454,7 +479,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     }
 
     /**
-     * [set] AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority} <br>
+     * [set] AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority} <br>
      * 権限コード
      * @param authorityCode The value of the column 'AUTHORITY_CODE'. (basically NotNull if update: for the constraint)
      */

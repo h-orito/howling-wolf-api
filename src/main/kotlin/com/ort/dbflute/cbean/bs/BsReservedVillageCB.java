@@ -20,7 +20,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of reserved_village.
+ * The base condition-bean of RESERVED_VILLAGE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsReservedVillageCB extends AbstractConditionBean {
@@ -76,7 +76,7 @@ public class BsReservedVillageCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "reserved_village";
+        return "RESERVED_VILLAGE";
     }
 
     // ===================================================================================
@@ -338,7 +338,7 @@ public class BsReservedVillageCB extends AbstractConditionBean {
             columnReservedVillageId(); // PK
         }
         @Override
-        protected String getTableDbName() { return "reserved_village"; }
+        protected String getTableDbName() { return "RESERVED_VILLAGE"; }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)

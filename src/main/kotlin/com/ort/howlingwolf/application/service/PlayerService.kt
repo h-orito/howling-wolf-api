@@ -23,5 +23,9 @@ class PlayerService(
         playerDataSource.update(user.uid, nickname, twitterUserName)
     }
 
+    fun updateDetail(uid: String, otherSiteName: String?, introduction: String?) {
+        playerDataSource.updateDetail(uid, otherSiteName, introduction)
+    }
+
     fun updateDifference(before: Players, after: Players) = playerDataSource.updateDifference(before, after)
 }

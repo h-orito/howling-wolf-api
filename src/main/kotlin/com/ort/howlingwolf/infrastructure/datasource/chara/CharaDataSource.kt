@@ -30,6 +30,7 @@ class CharaDataSource(
     }
 
     fun findCharas(charachipIdList: List<Int>): Charas {
+        if (charachipIdList.isEmpty()) return Charas(listOf())
         val charaList = charaBhv.selectList {
             it.query().setCharaGroupId_InScope(charachipIdList)
         }
