@@ -84,7 +84,8 @@ class PlayerDataSource(
                 it.query().queryPlayer().setUid_Equal(uid)
             }
         } else {
-            detail.playerId = entity.get().playerId
+            val player = playerBhv.selectByUniqueOf(uid)
+            detail.playerId = player.get().playerId
             playerDetailBhv.insert(detail)
         }
     }
