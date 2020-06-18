@@ -76,8 +76,16 @@ class PlayerDataSource(
         val detail = PlayerDetail()
         detail.otherSiteName = otherSiteName
         detail.introduction = introduction
-        playerDetailBhv.queryUpdate(detail) {
+        val entity = playerDetailBhv.selectEntity {
             it.query().queryPlayer().setUid_Equal(uid)
+        }
+        if (entity.isPresent) {
+            playerDetailBhv.queryUpdate(detail) {
+                it.query().queryPlayer().setUid_Equal(uid)
+            }
+        } else {
+            detail.playerId = entity.get().playerId
+            playerDetailBhv.insert(detail)
         }
     }
 
