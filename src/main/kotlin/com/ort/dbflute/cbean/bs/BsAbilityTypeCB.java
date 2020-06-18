@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of ability_type.
+ * The base condition-bean of ABILITY_TYPE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAbilityTypeCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsAbilityTypeCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "ability_type";
+        return "ABILITY_TYPE";
     }
 
     // ===================================================================================
@@ -304,10 +304,10 @@ public class BsAbilityTypeCB extends AbstractConditionBean {
             columnAbilityTypeCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "ability_type"; }
+        protected String getTableDbName() { return "ABILITY_TYPE"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from ability where ...) as FOO_MAX} <br>
+         * {select max(FOO) from ABILITY where ...) as FOO_MAX} <br>
          * ABILITY by ABILITY_TYPE_CODE, named 'abilityList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

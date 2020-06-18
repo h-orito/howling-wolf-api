@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of chara.
+ * The abstract condition-query of CHARA.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "chara";
+        return "CHARA";
     }
 
     // ===================================================================================
@@ -159,8 +159,8 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select CHARA_ID from chara_image where ...)} <br>
-     * chara_image by CHARA_ID, named 'charaImageAsOne'.
+     * {exists (select CHARA_ID from CHARA_IMAGE where ...)} <br>
+     * CHARA_IMAGE by CHARA_ID, named 'charaImageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsCharaImage</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     imageCB.query().set...
@@ -178,8 +178,8 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select CHARA_ID from village_player where ...)} <br>
-     * village_player by CHARA_ID, named 'villagePlayerAsOne'.
+     * {exists (select CHARA_ID from VILLAGE_PLAYER where ...)} <br>
+     * VILLAGE_PLAYER by CHARA_ID, named 'villagePlayerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsVillagePlayer</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.query().set...
@@ -197,8 +197,8 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select CHARA_ID from chara_image where ...)} <br>
-     * chara_image by CHARA_ID, named 'charaImageAsOne'.
+     * {not exists (select CHARA_ID from CHARA_IMAGE where ...)} <br>
+     * CHARA_IMAGE by CHARA_ID, named 'charaImageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsCharaImage</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     imageCB.query().set...
@@ -216,8 +216,8 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select CHARA_ID from village_player where ...)} <br>
-     * village_player by CHARA_ID, named 'villagePlayerAsOne'.
+     * {not exists (select CHARA_ID from VILLAGE_PLAYER where ...)} <br>
+     * VILLAGE_PLAYER by CHARA_ID, named 'villagePlayerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsVillagePlayer</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.query().set...
@@ -251,8 +251,8 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from chara_image where ...)} <br>
-     * chara_image by CHARA_ID, named 'charaImageAsOne'.
+     * {FOO &lt;= (select max(BAR) from CHARA_IMAGE where ...)} <br>
+     * CHARA_IMAGE by CHARA_ID, named 'charaImageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedCharaImage()</span>.<span style="color: #CC4747">max</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     imageCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
@@ -278,8 +278,8 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from village_player where ...)} <br>
-     * village_player by CHARA_ID, named 'villagePlayerAsOne'.
+     * {FOO &lt;= (select max(BAR) from VILLAGE_PLAYER where ...)} <br>
+     * VILLAGE_PLAYER by CHARA_ID, named 'villagePlayerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedVillagePlayer()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
@@ -590,7 +590,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupId The value of charaGroupId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaGroupId_Equal(Integer charaGroupId) {
@@ -603,7 +603,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupId The value of charaGroupId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaGroupId_NotEqual(Integer charaGroupId) {
@@ -616,7 +616,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupId The value of charaGroupId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaGroupId_GreaterThan(Integer charaGroupId) {
@@ -625,7 +625,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupId The value of charaGroupId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaGroupId_LessThan(Integer charaGroupId) {
@@ -634,7 +634,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupId The value of charaGroupId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaGroupId_GreaterEqual(Integer charaGroupId) {
@@ -643,7 +643,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupId The value of charaGroupId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setCharaGroupId_LessEqual(Integer charaGroupId) {
@@ -654,7 +654,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param minNumber The min number of charaGroupId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of charaGroupId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -667,7 +667,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param minNumber The min number of charaGroupId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of charaGroupId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -678,7 +678,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupIdList The collection of charaGroupId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setCharaGroupId_InScope(Collection<Integer> charaGroupIdList) {
@@ -691,7 +691,7 @@ public abstract class AbstractBsCharaCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group}
+     * CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP}
      * @param charaGroupIdList The collection of charaGroupId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setCharaGroupId_NotInScope(Collection<Integer> charaGroupIdList) {

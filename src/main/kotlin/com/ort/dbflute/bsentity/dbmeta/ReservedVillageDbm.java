@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of reserved_village. (Singleton)
+ * The DB meta of RESERVED_VILLAGE. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class ReservedVillageDbm extends AbstractDBMeta {
@@ -58,7 +58,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "reserved_village";
+    protected final String _tableDbName = "RESERVED_VILLAGE";
     protected final String _tableDispName = "RESERVED_VILLAGE";
     protected final String _tablePropertyName = "reservedVillage";
     protected final TableSqlName _tableSqlName = new TableSqlName("RESERVED_VILLAGE", _tableDbName);

@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of designer.
+ * The base condition-query of DESIGNER.
  * @author DBFlute(AutoGenerator)
  */
 public class BsDesignerCQ extends AbstractBsDesignerCQ {
@@ -35,7 +35,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from designer) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from DESIGNER) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsDesignerCQ extends AbstractBsDesignerCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join designer on ... and FOO = [value] ...}
+     * {select ... from ... left outer join DESIGNER on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

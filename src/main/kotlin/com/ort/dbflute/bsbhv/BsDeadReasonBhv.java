@@ -68,7 +68,7 @@ public abstract class BsDeadReasonBhv extends AbstractBehaviorWritable<DeadReaso
     /** {@inheritDoc} */
     public DeadReasonDbm asDBMeta() { return DeadReasonDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "dead_reason"; }
+    public String asTableDbName() { return "DEAD_REASON"; }
 
     // ===================================================================================
     //                                                                        New Instance

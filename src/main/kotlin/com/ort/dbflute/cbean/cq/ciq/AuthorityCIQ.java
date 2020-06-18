@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of authority.
+ * The condition-query for in-line of AUTHORITY.
  * @author DBFlute(AutoGenerator)
  */
 public class AuthorityCIQ extends AbstractBsAuthorityCQ {

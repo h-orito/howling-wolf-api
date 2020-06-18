@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of designer.
+ * The abstract condition-query of DESIGNER.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsDesignerCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsDesignerCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "designer";
+        return "DESIGNER";
     }
 
     // ===================================================================================
@@ -159,8 +159,8 @@ public abstract class AbstractBsDesignerCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select DESIGNER_ID from chara_group where ...)} <br>
-     * chara_group by DESIGNER_ID, named 'charaGroupAsOne'.
+     * {exists (select DESIGNER_ID from CHARA_GROUP where ...)} <br>
+     * CHARA_GROUP by DESIGNER_ID, named 'charaGroupAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsCharaGroup</span>(groupCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     groupCB.query().set...
@@ -178,8 +178,8 @@ public abstract class AbstractBsDesignerCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select DESIGNER_ID from chara_group where ...)} <br>
-     * chara_group by DESIGNER_ID, named 'charaGroupAsOne'.
+     * {not exists (select DESIGNER_ID from CHARA_GROUP where ...)} <br>
+     * CHARA_GROUP by DESIGNER_ID, named 'charaGroupAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsCharaGroup</span>(groupCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     groupCB.query().set...
@@ -205,8 +205,8 @@ public abstract class AbstractBsDesignerCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from chara_group where ...)} <br>
-     * chara_group by DESIGNER_ID, named 'charaGroupAsOne'.
+     * {FOO &lt;= (select max(BAR) from CHARA_GROUP where ...)} <br>
+     * CHARA_GROUP by DESIGNER_ID, named 'charaGroupAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedCharaGroup()</span>.<span style="color: #CC4747">max</span>(groupCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     groupCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

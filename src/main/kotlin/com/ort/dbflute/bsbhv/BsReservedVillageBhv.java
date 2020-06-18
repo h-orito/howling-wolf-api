@@ -67,7 +67,7 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     /** {@inheritDoc} */
     public ReservedVillageDbm asDBMeta() { return ReservedVillageDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "reserved_village"; }
+    public String asTableDbName() { return "RESERVED_VILLAGE"; }
 
     // ===================================================================================
     //                                                                        New Instance

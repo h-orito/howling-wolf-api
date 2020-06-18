@@ -68,7 +68,7 @@ public abstract class BsVillageStatusBhv extends AbstractBehaviorWritable<Villag
     /** {@inheritDoc} */
     public VillageStatusDbm asDBMeta() { return VillageStatusDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "village_status"; }
+    public String asTableDbName() { return "VILLAGE_STATUS"; }
 
     // ===================================================================================
     //                                                                        New Instance

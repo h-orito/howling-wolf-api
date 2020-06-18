@@ -18,9 +18,10 @@ import com.ort.dbflute.allcommon.ImplementedInvokerAssistant;
 import com.ort.dbflute.allcommon.ImplementedSqlClauseCreator;
 import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
+import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of player.
+ * The base condition-bean of PLAYER.
  * @author DBFlute(AutoGenerator)
  */
 public class BsPlayerCB extends AbstractConditionBean {
@@ -76,7 +77,7 @@ public class BsPlayerCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "player";
+        return "PLAYER";
     }
 
     // ===================================================================================
@@ -273,6 +274,32 @@ public class BsPlayerCB extends AbstractConditionBean {
         doSetupSelect(() -> query().queryAuthority());
     }
 
+    protected PlayerDetailNss _nssPlayerDetailAsOne;
+    public PlayerDetailNss xdfgetNssPlayerDetailAsOne() {
+        if (_nssPlayerDetailAsOne == null) { _nssPlayerDetailAsOne = new PlayerDetailNss(null); }
+        return _nssPlayerDetailAsOne;
+    }
+    /**
+     * Set up relation columns to select clause. <br>
+     * PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_PlayerDetailAsOne()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">player</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">player</span>.<span style="color: #CC4747">getPlayerDetailAsOne()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
+     */
+    public PlayerDetailNss setupSelect_PlayerDetailAsOne() {
+        assertSetupSelectPurpose("playerDetailAsOne");
+        doSetupSelect(() -> query().queryPlayerDetailAsOne());
+        if (_nssPlayerDetailAsOne == null || !_nssPlayerDetailAsOne.hasConditionQuery())
+        { _nssPlayerDetailAsOne = new PlayerDetailNss(query().queryPlayerDetailAsOne()); }
+        return _nssPlayerDetailAsOne;
+    }
+
     // [DBFlute-0.7.4]
     // ===================================================================================
     //                                                                             Specify
@@ -315,6 +342,7 @@ public class BsPlayerCB extends AbstractConditionBean {
 
     public static class HpSpecification extends HpAbstractSpecification<PlayerCQ> {
         protected AuthorityCB.HpSpecification _authority;
+        protected PlayerDetailCB.HpSpecification _playerDetailAsOne;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<PlayerCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
@@ -340,7 +368,7 @@ public class BsPlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnTwitterUserName() { return doColumn("TWITTER_USER_NAME"); }
         /**
-         * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
+         * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnAuthorityCode() { return doColumn("AUTHORITY_CODE"); }
@@ -380,7 +408,7 @@ public class BsPlayerCB extends AbstractConditionBean {
             }
         }
         @Override
-        protected String getTableDbName() { return "player"; }
+        protected String getTableDbName() { return "PLAYER"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * AUTHORITY by my AUTHORITY_CODE, named 'authority'.
@@ -402,8 +430,28 @@ public class BsPlayerCB extends AbstractConditionBean {
             return _authority;
         }
         /**
+         * Prepare to specify functions about relation table. <br>
+         * PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public PlayerDetailCB.HpSpecification specifyPlayerDetailAsOne() {
+            assertRelation("playerDetailAsOne");
+            if (_playerDetailAsOne == null) {
+                _playerDetailAsOne = new PlayerDetailCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryPlayerDetailAsOne()
+                                    , () -> _qyCall.qy().queryPlayerDetailAsOne())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _playerDetailAsOne.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryPlayerDetailAsOne()
+                      , () -> xsyncQyCall().qy().queryPlayerDetailAsOne()));
+                }
+            }
+            return _playerDetailAsOne;
+        }
+        /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from village where ...) as FOO_MAX} <br>
+         * {select max(FOO) from VILLAGE where ...) as FOO_MAX} <br>
          * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -420,7 +468,7 @@ public class BsPlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from village_player where ...) as FOO_MAX} <br>
+         * {select max(FOO) from VILLAGE_PLAYER where ...) as FOO_MAX} <br>
          * VILLAGE_PLAYER by PLAYER_ID, named 'villagePlayerList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

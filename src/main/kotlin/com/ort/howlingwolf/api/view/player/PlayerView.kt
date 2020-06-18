@@ -5,13 +5,17 @@ import com.ort.howlingwolf.domain.model.player.Player
 data class PlayerView(
     val id: Int,
     val nickname: String,
-    val twitterUserName: String
+    val twitterUserName: String,
+    val otherSiteName: String?,
+    val introduction: String?
 ) {
     constructor(
         player: Player
     ) : this(
         id = player.id,
         nickname = player.nickname,
-        twitterUserName = player.twitterUserName
+        twitterUserName = player.twitterUserName,
+        otherSiteName = player.otherSiteName,
+        introduction = player.introduction
     )
 }
