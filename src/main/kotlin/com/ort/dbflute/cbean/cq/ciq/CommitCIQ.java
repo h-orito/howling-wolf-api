@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of commit.
+ * The condition-query for in-line of COMMIT.
  * @author DBFlute(AutoGenerator)
  */
 public class CommitCIQ extends AbstractBsCommitCQ {

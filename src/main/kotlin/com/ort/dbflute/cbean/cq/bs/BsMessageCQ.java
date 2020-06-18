@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of message.
+ * The base condition-query of MESSAGE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsMessageCQ extends AbstractBsMessageCQ {
@@ -35,7 +35,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from message) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from MESSAGE) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join message on ... and FOO = [value] ...}
+     * {select ... from ... left outer join MESSAGE on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

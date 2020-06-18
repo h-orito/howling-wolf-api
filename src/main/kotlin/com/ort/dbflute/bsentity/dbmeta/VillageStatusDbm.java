@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of village_status. (Singleton)
+ * The DB meta of VILLAGE_STATUS. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class VillageStatusDbm extends AbstractDBMeta {
@@ -58,7 +58,7 @@ public class VillageStatusDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "village_status";
+    protected final String _tableDbName = "VILLAGE_STATUS";
     protected final String _tableDispName = "VILLAGE_STATUS";
     protected final String _tablePropertyName = "villageStatus";
     protected final TableSqlName _tableSqlName = new TableSqlName("VILLAGE_STATUS", _tableDbName);

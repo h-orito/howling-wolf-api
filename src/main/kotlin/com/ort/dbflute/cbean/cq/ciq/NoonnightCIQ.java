@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of noonnight.
+ * The condition-query for in-line of NOONNIGHT.
  * @author DBFlute(AutoGenerator)
  */
 public class NoonnightCIQ extends AbstractBsNoonnightCQ {

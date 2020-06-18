@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of camp.
+ * The base condition-bean of CAMP.
  * @author DBFlute(AutoGenerator)
  */
 public class BsCampCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsCampCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "camp";
+        return "CAMP";
     }
 
     // ===================================================================================
@@ -309,10 +309,10 @@ public class BsCampCB extends AbstractConditionBean {
             columnCampCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "camp"; }
+        protected String getTableDbName() { return "CAMP"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from skill where ...) as FOO_MAX} <br>
+         * {select max(FOO) from SKILL where ...) as FOO_MAX} <br>
          * SKILL by CAMP_CODE, named 'skillList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(skillCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -329,7 +329,7 @@ public class BsCampCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from village where ...) as FOO_MAX} <br>
+         * {select max(FOO) from VILLAGE where ...) as FOO_MAX} <br>
          * VILLAGE by WIN_CAMP_CODE, named 'villageList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

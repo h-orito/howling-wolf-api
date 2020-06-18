@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/howling-wolf-api/dbflute_howlingwolfdb/playsql/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -351,12 +351,12 @@
 			<physical_name>RESERVED_VILLAGE</physical_name>
 			<logical_name>予約村</logical_name>
 			<description></description>
-			<height>125</height>
+			<height>143</height>
 			<width>251</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1383</x>
-			<y>203</y>
+			<x>1642</x>
+			<y>236</y>
 			<color>
 				<r>4</r>
 				<g>50</g>
@@ -1389,6 +1389,66 @@
 			</table_properties>
 		</table>
 		<table>
+			<physical_name>player_detail</physical_name>
+			<logical_name>プレイヤー詳細</logical_name>
+			<description></description>
+			<height>89</height>
+			<width>264</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1308</x>
+			<y>145</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+				<relationship>
+					<name>FK_player_detail_player</name>
+					<source>table.player</source>
+					<target>table.player_detail</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..1</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>player_id</physical_name>
+					<referred_column>table.player.player_id</referred_column>
+					<relationship>FK_player_detail_player</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>other_site_name</physical_name>
+					<logical_name>他サイトでの名前</logical_name>
+					<type>varchar(n)</type>
+					<length>20</length>
+				</normal_column>
+				<normal_column>
+					<physical_name>introduction</physical_name>
+					<logical_name>自己紹介</logical_name>
+					<type>varchar(n)</type>
+					<length>2000</length>
+				</normal_column>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
 			<physical_name>skill</physical_name>
 			<logical_name>役職</logical_name>
 			<description></description>
@@ -2246,8 +2306,8 @@
 			<diagram_walker>table.message</diagram_walker>
 		</walker_group>
 		<walker_group>
-			<height>204</height>
-			<width>362</width>
+			<height>194</height>
+			<width>664</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
 			<x>923</x>
@@ -2266,8 +2326,8 @@
 			<width>322</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
-			<x>1349</x>
-			<y>173</y>
+			<x>1608</x>
+			<y>199</y>
 			<color>
 				<r>128</r>
 				<g>128</g>

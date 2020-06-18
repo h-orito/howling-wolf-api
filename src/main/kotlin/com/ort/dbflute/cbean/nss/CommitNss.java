@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.CommitCQ;
 
 /**
- * The nest select set-upper of commit.
+ * The nest select set-upper of COMMIT.
  * @author DBFlute(AutoGenerator)
  */
 public class CommitNss {

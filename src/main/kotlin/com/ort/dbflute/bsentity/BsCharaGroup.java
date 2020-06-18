@@ -82,7 +82,7 @@ public abstract class BsCharaGroup extends AbstractEntity implements DomainEntit
     /** CHARA_GROUP_NAME: {NotNull, VARCHAR(40)} */
     protected String _charaGroupName;
 
-    /** DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer} */
+    /** DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER} */
     protected Integer _designerId;
 
     /** DESCRIPTION_URL: {TEXT(65535)} */
@@ -110,7 +110,7 @@ public abstract class BsCharaGroup extends AbstractEntity implements DomainEntit
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "chara_group";
+        return "CHARA_GROUP";
     }
 
     // ===================================================================================
@@ -288,7 +288,7 @@ public abstract class BsCharaGroup extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [get] DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer} <br>
+     * [get] DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER} <br>
      * デザイナーID
      * @return The value of the column 'DESIGNER_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -298,7 +298,7 @@ public abstract class BsCharaGroup extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [set] DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer} <br>
+     * [set] DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER} <br>
      * デザイナーID
      * @param designerId The value of the column 'DESIGNER_ID'. (basically NotNull if update: for the constraint)
      */
