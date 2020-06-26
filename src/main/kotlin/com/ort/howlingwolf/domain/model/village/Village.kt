@@ -20,6 +20,7 @@ import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
+import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import java.time.LocalDateTime
 
@@ -216,7 +217,12 @@ data class Village(
     }
 
     /** 村として退村可能か */
-    fun isAvailableLeave(): Boolean = status.isPrologue() // プロローグなら退村できる
+    fun isAvailableLeave(): Boolean {
+        // プロローグでない
+        if (!status.isPrologue()) return false
+        // 開始まで2時間を切っていたら退村できない
+        return setting.time.startDatetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime())
+    }
 
     /** 村として役職希望可能か */
     fun isAvailableSkillRequest(): Boolean {
