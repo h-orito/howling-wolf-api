@@ -179,7 +179,16 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_leave() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
+        val paramVillage = createVillageRegisterParam().copy(
+            setting = createVillageSettingsParam().copy(
+                time = VillageTime(
+                    termType = CDef.Term.長期.code(),
+                    startDatetime = LocalDateTime.now().plusHours(3L),
+                    dayChangeIntervalSeconds = 86400,
+                    silentHours = null
+                )
+            )
+        )
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
         val villageId = villageCoordinator.registerVillage(paramVillage, user)
