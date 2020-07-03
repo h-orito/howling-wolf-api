@@ -221,7 +221,7 @@ data class Village(
         // プロローグでない
         if (!status.isPrologue()) return false
         // 開始まで2時間を切っていたら退村できない
-        return setting.time.startDatetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime())
+        return setting.time.startDatetime.minusHours(2L).isAfter(HowlingWolfDateUtil.currentLocalDateTime())
     }
 
     /** 村として役職希望可能か */
