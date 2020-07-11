@@ -63,7 +63,12 @@ data class VillageParticipant(
         this.copy(skillRequest = SkillRequest(Skill(first), Skill(second)))
 
     // 勝敗
-    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant = this.copy(isWin = skill?.toCdef()?.campCode() == cdefWinCamp.code())
+    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant {
+        val isSuddenlyDeath = dead?.toCdef() == CDef.DeadReason.突然
+        return this.copy(
+            isWin = !isSuddenlyDeath && skill?.toCdef()?.campCode() == cdefWinCamp.code()
+        )
+    }
 
     // ===================================================================================
     //                                                                                権限
