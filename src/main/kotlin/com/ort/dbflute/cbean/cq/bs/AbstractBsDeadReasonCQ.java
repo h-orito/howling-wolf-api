@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of DEAD_REASON.
+ * The abstract condition-query of dead_reason.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "DEAD_REASON";
+        return "dead_reason";
     }
 
     // ===================================================================================
@@ -221,8 +221,8 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select DEAD_REASON_CODE from VILLAGE_PLAYER where ...)} <br>
-     * VILLAGE_PLAYER by DEAD_REASON_CODE, named 'villagePlayerAsOne'.
+     * {exists (select DEAD_REASON_CODE from village_player where ...)} <br>
+     * village_player by DEAD_REASON_CODE, named 'villagePlayerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsVillagePlayer</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.query().set...
@@ -240,8 +240,8 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select DEAD_REASON_CODE from VILLAGE_PLAYER where ...)} <br>
-     * VILLAGE_PLAYER by DEAD_REASON_CODE, named 'villagePlayerAsOne'.
+     * {not exists (select DEAD_REASON_CODE from village_player where ...)} <br>
+     * village_player by DEAD_REASON_CODE, named 'villagePlayerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsVillagePlayer</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.query().set...
@@ -267,8 +267,8 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from VILLAGE_PLAYER where ...)} <br>
-     * VILLAGE_PLAYER by DEAD_REASON_CODE, named 'villagePlayerAsOne'.
+     * {FOO &lt;= (select max(BAR) from village_player where ...)} <br>
+     * village_player by DEAD_REASON_CODE, named 'villagePlayerAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedVillagePlayer()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     playerCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of VILLAGE_STATUS.
+ * The abstract condition-query of village_status.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "VILLAGE_STATUS";
+        return "village_status";
     }
 
     // ===================================================================================
@@ -237,8 +237,8 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select VILLAGE_STATUS_CODE from VILLAGE where ...)} <br>
-     * VILLAGE by VILLAGE_STATUS_CODE, named 'villageAsOne'.
+     * {exists (select VILLAGE_STATUS_CODE from village where ...)} <br>
+     * village by VILLAGE_STATUS_CODE, named 'villageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsVillage</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     villageCB.query().set...
@@ -256,8 +256,8 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select VILLAGE_STATUS_CODE from VILLAGE where ...)} <br>
-     * VILLAGE by VILLAGE_STATUS_CODE, named 'villageAsOne'.
+     * {not exists (select VILLAGE_STATUS_CODE from village where ...)} <br>
+     * village by VILLAGE_STATUS_CODE, named 'villageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsVillage</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     villageCB.query().set...
@@ -283,8 +283,8 @@ public abstract class AbstractBsVillageStatusCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from VILLAGE where ...)} <br>
-     * VILLAGE by VILLAGE_STATUS_CODE, named 'villageAsOne'.
+     * {FOO &lt;= (select max(BAR) from village where ...)} <br>
+     * village by VILLAGE_STATUS_CODE, named 'villageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedVillage()</span>.<span style="color: #CC4747">max</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     villageCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

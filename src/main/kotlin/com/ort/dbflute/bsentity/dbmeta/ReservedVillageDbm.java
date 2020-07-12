@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of RESERVED_VILLAGE. (Singleton)
+ * The DB meta of reserved_village. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class ReservedVillageDbm extends AbstractDBMeta {
@@ -47,6 +47,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getStartDatetime(), (et, vl) -> ((ReservedVillage)et).setStartDatetime(ctldt(vl)), "startDatetime");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getOrganization(), (et, vl) -> ((ReservedVillage)et).setOrganization((String)vl), "organization");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getSilentHours(), (et, vl) -> ((ReservedVillage)et).setSilentHours(cti(vl)), "silentHours");
+        setupEpg(_epgMap, et -> ((ReservedVillage)et).getIsAvailableDummySkill(), (et, vl) -> ((ReservedVillage)et).setIsAvailableDummySkill((Boolean)vl), "isAvailableDummySkill");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getRegisterDatetime(), (et, vl) -> ((ReservedVillage)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getRegisterTrace(), (et, vl) -> ((ReservedVillage)et).setRegisterTrace((String)vl), "registerTrace");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getUpdateDatetime(), (et, vl) -> ((ReservedVillage)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -58,7 +59,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "RESERVED_VILLAGE";
+    protected final String _tableDbName = "reserved_village";
     protected final String _tableDispName = "RESERVED_VILLAGE";
     protected final String _tablePropertyName = "reservedVillage";
     protected final TableSqlName _tableSqlName = new TableSqlName("RESERVED_VILLAGE", _tableDbName);
@@ -76,6 +77,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnStartDatetime = cci("START_DATETIME", "START_DATETIME", null, null, java.time.LocalDateTime.class, "startDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnOrganization = cci("ORGANIZATION", "ORGANIZATION", null, null, String.class, "organization", null, false, false, true, "VARCHAR", 255, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnSilentHours = cci("SILENT_HOURS", "SILENT_HOURS", null, null, Integer.class, "silentHours", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnIsAvailableDummySkill = cci("IS_AVAILABLE_DUMMY_SKILL", "IS_AVAILABLE_DUMMY_SKILL", null, null, Boolean.class, "isAvailableDummySkill", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -107,6 +109,11 @@ public class ReservedVillageDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnSilentHours() { return _columnSilentHours; }
     /**
+     * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnIsAvailableDummySkill() { return _columnIsAvailableDummySkill; }
+    /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
      */
@@ -134,6 +141,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
         ls.add(columnStartDatetime());
         ls.add(columnOrganization());
         ls.add(columnSilentHours());
+        ls.add(columnIsAvailableDummySkill());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());

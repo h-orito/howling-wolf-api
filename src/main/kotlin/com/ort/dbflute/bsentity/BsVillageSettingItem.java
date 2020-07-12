@@ -83,7 +83,7 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "VILLAGE_SETTING_ITEM";
+        return "village_setting_item";
     }
 
     // ===================================================================================
@@ -160,6 +160,14 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
      */
     public void setVillageSettingItemCode_コミット可能か() {
         setVillageSettingItemCodeAsVillageSettingItem(CDef.VillageSettingItem.コミット可能か);
+    }
+
+    /**
+     * Set the value of villageSettingItemCode as 役欠けありか (is_available_dummy_skill). <br>
+     * 役欠けありか
+     */
+    public void setVillageSettingItemCode_役欠けありか() {
+        setVillageSettingItemCodeAsVillageSettingItem(CDef.VillageSettingItem.役欠けありか);
     }
 
     /**
@@ -322,6 +330,17 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     public boolean isVillageSettingItemCodeコミット可能か() {
         CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
         return cdef != null ? cdef.equals(CDef.VillageSettingItem.コミット可能か) : false;
+    }
+
+    /**
+     * Is the value of villageSettingItemCode 役欠けありか? <br>
+     * 役欠けありか
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isVillageSettingItemCode役欠けありか() {
+        CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
+        return cdef != null ? cdef.equals(CDef.VillageSettingItem.役欠けありか) : false;
     }
 
     /**

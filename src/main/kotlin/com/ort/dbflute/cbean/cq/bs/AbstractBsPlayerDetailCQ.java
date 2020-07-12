@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of PLAYER_DETAIL.
+ * The abstract condition-query of player_detail.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "PLAYER_DETAIL";
+        return "player_detail";
     }
 
     // ===================================================================================
@@ -45,7 +45,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerId The value of playerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setPlayerId_Equal(Integer playerId) {
@@ -58,7 +58,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerId The value of playerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setPlayerId_NotEqual(Integer playerId) {
@@ -71,7 +71,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerId The value of playerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setPlayerId_GreaterThan(Integer playerId) {
@@ -80,7 +80,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerId The value of playerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setPlayerId_LessThan(Integer playerId) {
@@ -89,7 +89,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerId The value of playerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setPlayerId_GreaterEqual(Integer playerId) {
@@ -98,7 +98,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerId The value of playerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setPlayerId_LessEqual(Integer playerId) {
@@ -109,7 +109,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param minNumber The min number of playerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of playerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -122,7 +122,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param minNumber The min number of playerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of playerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -133,7 +133,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerIdList The collection of playerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setPlayerId_InScope(Collection<Integer> playerIdList) {
@@ -146,7 +146,7 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @param playerIdList The collection of playerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setPlayerId_NotInScope(Collection<Integer> playerIdList) {
@@ -159,13 +159,13 @@ public abstract class AbstractBsPlayerDetailCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      */
     public void setPlayerId_IsNull() { regPlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      */
     public void setPlayerId_IsNotNull() { regPlayerId(CK_ISNN, DOBJ); }
 

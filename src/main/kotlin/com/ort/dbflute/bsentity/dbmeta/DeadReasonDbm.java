@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of DEAD_REASON. (Singleton)
+ * The DB meta of dead_reason. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class DeadReasonDbm extends AbstractDBMeta {
@@ -58,7 +58,7 @@ public class DeadReasonDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "DEAD_REASON";
+    protected final String _tableDbName = "dead_reason";
     protected final String _tableDispName = "DEAD_REASON";
     protected final String _tablePropertyName = "deadReason";
     protected final TableSqlName _tableSqlName = new TableSqlName("DEAD_REASON", _tableDbName);

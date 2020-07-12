@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of VILLAGE_STATUS.
+ * The base condition-bean of village_status.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVillageStatusCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsVillageStatusCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "VILLAGE_STATUS";
+        return "village_status";
     }
 
     // ===================================================================================
@@ -304,10 +304,10 @@ public class BsVillageStatusCB extends AbstractConditionBean {
             columnVillageStatusCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "VILLAGE_STATUS"; }
+        protected String getTableDbName() { return "village_status"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from VILLAGE where ...) as FOO_MAX} <br>
+         * {select max(FOO) from village where ...) as FOO_MAX} <br>
          * VILLAGE by VILLAGE_STATUS_CODE, named 'villageList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

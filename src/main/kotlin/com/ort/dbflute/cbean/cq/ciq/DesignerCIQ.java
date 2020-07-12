@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of DESIGNER.
+ * The condition-query for in-line of designer.
  * @author DBFlute(AutoGenerator)
  */
 public class DesignerCIQ extends AbstractBsDesignerCQ {

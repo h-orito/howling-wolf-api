@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/howling-wolf-api/dbflute_howlingwolfdb/playsql/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -400,6 +400,12 @@
 					<unsigned>true</unsigned>
 					<not_null>true</not_null>
 				</normal_column>
+				<normal_column>
+					<physical_name>is_available_dummy_skill</physical_name>
+					<logical_name>役欠けありか</logical_name>
+					<type>boolean</type>
+					<not_null>true</not_null>
+				</normal_column>
 				<column_group>共通カラム</column_group>
 			</columns>
 			<indexes>
@@ -515,6 +521,7 @@
 					<referred_column>table.village_player.village_player_id</referred_column>
 					<relationship>FK_ability_village_player</relationship>
 					<not_null>true</not_null>
+					<primary_key>true</primary_key>
 				</normal_column>
 				<normal_column>
 					<physical_name>target_village_player_id</physical_name>
@@ -2322,7 +2329,7 @@
 			<walker_group_name>player</walker_group_name>
 		</walker_group>
 		<walker_group>
-			<height>196</height>
+			<height>216</height>
 			<width>322</width>
 			<font_name></font_name>
 			<font_size>9</font_size>

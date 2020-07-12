@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of SKILL. (Singleton)
+ * The DB meta of skill. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class SkillDbm extends AbstractDBMeta {
@@ -82,7 +82,7 @@ public class SkillDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "SKILL";
+    protected final String _tableDbName = "skill";
     protected final String _tableDispName = "SKILL";
     protected final String _tablePropertyName = "skill";
     protected final TableSqlName _tableSqlName = new TableSqlName("SKILL", _tableDbName);
@@ -118,7 +118,7 @@ public class SkillDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnSkillShortName() { return _columnSkillShortName; }
     /**
-     * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to CAMP, classification=Camp}
+     * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCampCode() { return _columnCampCode; }

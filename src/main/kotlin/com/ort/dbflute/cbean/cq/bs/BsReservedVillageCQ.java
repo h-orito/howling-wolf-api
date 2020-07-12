@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of RESERVED_VILLAGE.
+ * The base condition-query of reserved_village.
  * @author DBFlute(AutoGenerator)
  */
 public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
@@ -35,7 +35,7 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from RESERVED_VILLAGE) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from reserved_village) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join RESERVED_VILLAGE on ... and FOO = [value] ...}
+     * {select ... from ... left outer join reserved_village on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -172,6 +172,26 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * @return this. (NotNull)
      */
     public BsReservedVillageCQ addOrderBy_SilentHours_Desc() { regOBD("SILENT_HOURS"); return this; }
+
+    protected ConditionValue _isAvailableDummySkill;
+    public ConditionValue xdfgetIsAvailableDummySkill()
+    { if (_isAvailableDummySkill == null) { _isAvailableDummySkill = nCV(); }
+      return _isAvailableDummySkill; }
+    protected ConditionValue xgetCValueIsAvailableDummySkill() { return xdfgetIsAvailableDummySkill(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
+     * @return this. (NotNull)
+     */
+    public BsReservedVillageCQ addOrderBy_IsAvailableDummySkill_Asc() { regOBA("IS_AVAILABLE_DUMMY_SKILL"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
+     * @return this. (NotNull)
+     */
+    public BsReservedVillageCQ addOrderBy_IsAvailableDummySkill_Desc() { regOBD("IS_AVAILABLE_DUMMY_SKILL"); return this; }
 
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()

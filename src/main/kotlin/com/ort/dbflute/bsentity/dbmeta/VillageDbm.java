@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of VILLAGE. (Singleton)
+ * The DB meta of village. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class VillageDbm extends AbstractDBMeta {
@@ -88,7 +88,7 @@ public class VillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "VILLAGE";
+    protected final String _tableDbName = "village";
     protected final String _tableDispName = "VILLAGE";
     protected final String _tablePropertyName = "village";
     protected final TableSqlName _tableSqlName = new TableSqlName("VILLAGE", _tableDbName);
@@ -123,12 +123,12 @@ public class VillageDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnVillageDisplayName() { return _columnVillageDisplayName; }
     /**
-     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCreatePlayerId() { return _columnCreatePlayerId; }
     /**
-     * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to VILLAGE_STATUS, classification=VillageStatus}
+     * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageStatusCode() { return _columnVillageStatusCode; }
@@ -138,7 +138,7 @@ public class VillageDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnEpilogueDay() { return _columnEpilogueDay; }
     /**
-     * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to CAMP, classification=Camp}
+     * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to camp, classification=Camp}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnWinCampCode() { return _columnWinCampCode; }

@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of AUTHORITY. (Singleton)
+ * The DB meta of authority. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class AuthorityDbm extends AbstractDBMeta {
@@ -58,7 +58,7 @@ public class AuthorityDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "AUTHORITY";
+    protected final String _tableDbName = "authority";
     protected final String _tableDispName = "AUTHORITY";
     protected final String _tablePropertyName = "authority";
     protected final TableSqlName _tableSqlName = new TableSqlName("AUTHORITY", _tableDbName);

@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of APP_VERSION.
+ * The base condition-query of app_version.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAppVersionCQ extends AbstractBsAppVersionCQ {
@@ -35,7 +35,7 @@ public class BsAppVersionCQ extends AbstractBsAppVersionCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from APP_VERSION) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from app_version) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsAppVersionCQ extends AbstractBsAppVersionCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join APP_VERSION on ... and FOO = [value] ...}
+     * {select ... from ... left outer join app_version on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

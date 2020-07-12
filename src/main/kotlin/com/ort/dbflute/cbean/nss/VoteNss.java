@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.VoteCQ;
 
 /**
- * The nest select set-upper of VOTE.
+ * The nest select set-upper of vote.
  * @author DBFlute(AutoGenerator)
  */
 public class VoteNss {

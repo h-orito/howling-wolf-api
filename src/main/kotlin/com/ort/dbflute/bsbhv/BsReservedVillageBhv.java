@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     RESERVED_VILLAGE_ID
  *
  * [column]
- *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, IS_AVAILABLE_DUMMY_SKILL, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -67,7 +67,7 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     /** {@inheritDoc} */
     public ReservedVillageDbm asDBMeta() { return ReservedVillageDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "RESERVED_VILLAGE"; }
+    public String asTableDbName() { return "reserved_village"; }
 
     // ===================================================================================
     //                                                                        New Instance

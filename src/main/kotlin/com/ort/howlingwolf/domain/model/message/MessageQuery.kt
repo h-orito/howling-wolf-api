@@ -3,7 +3,6 @@ package com.ort.howlingwolf.domain.model.message
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
-import org.apache.commons.collections4.CollectionUtils
 
 data class MessageQuery(
     val from: Long?,
@@ -49,7 +48,7 @@ data class MessageQuery(
             participantIdList: List<Int>?
         ): MessageQuery {
             val availableMessageTypeList: List<CDef.MessageType> = village.viewableMessageTypeList(participant, day, authority)
-            val requestMessageTypeList = if (CollectionUtils.isEmpty(messageTypeList)) CDef.MessageType.listAll() else messageTypeList!!
+            val requestMessageTypeList = if (messageTypeList.isNullOrEmpty()) CDef.MessageType.listAll() else messageTypeList
             val queryMessageTypeList = requestMessageTypeList.filter { availableMessageTypeList.contains(it) }
             return MessageQuery(
                 from = from,

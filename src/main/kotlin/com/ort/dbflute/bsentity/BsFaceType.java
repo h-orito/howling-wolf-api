@@ -83,7 +83,7 @@ public abstract class BsFaceType extends AbstractEntity implements DomainEntity 
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "FACE_TYPE";
+        return "face_type";
     }
 
     // ===================================================================================

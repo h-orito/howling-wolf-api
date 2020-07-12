@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of ABILITY.
+ * The condition-query for in-line of ability.
  * @author DBFlute(AutoGenerator)
  */
 public class AbilityCIQ extends AbstractBsAbilityCQ {
