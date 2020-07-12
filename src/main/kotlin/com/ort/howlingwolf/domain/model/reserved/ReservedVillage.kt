@@ -8,7 +8,8 @@ data class ReservedVillage(
     val villageCreateDatetime: LocalDateTime,
     val villageStartDatetime: LocalDateTime,
     val organization: String,
-    val silentHours: Int
+    val silentHours: Int,
+    val availableDummySkill: Boolean
 ) {
     fun shouldCreate(): Boolean = villageCreateDatetime.isBefore(HowlingWolfDateUtil.currentLocalDateTime())
 }

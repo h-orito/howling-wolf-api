@@ -78,7 +78,7 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "DEAD_REASON";
+        return "dead_reason";
     }
 
     // ===================================================================================

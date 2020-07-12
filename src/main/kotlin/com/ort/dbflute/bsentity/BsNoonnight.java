@@ -83,7 +83,7 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "NOONNIGHT";
+        return "noonnight";
     }
 
     // ===================================================================================

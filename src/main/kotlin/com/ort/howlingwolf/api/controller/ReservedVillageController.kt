@@ -45,7 +45,8 @@ class ReservedVillageController(
                 villageCreateDatetime = body.createDatetime!!,
                 villageStartDatetime = body.startDatetime!!,
                 organization = body.organization!!,
-                silentHours = body.silentHours!!
+                silentHours = body.silentHours!!,
+                availableDummySkill = body.availableDummySkill!!
             )
         )
     }

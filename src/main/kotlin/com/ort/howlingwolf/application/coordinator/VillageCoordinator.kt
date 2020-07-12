@@ -109,7 +109,8 @@ class VillageCoordinator(
                     playerId = 1, // masterアカウントで作成
                     organization = it.organization,
                     startDatetime = it.villageStartDatetime,
-                    silentHours = it.silentHours
+                    silentHours = it.silentHours,
+                    availableDummySkill = it.availableDummySkill
                 )
             )
             reservedVillageService.deleteReservedVillage(it.id)

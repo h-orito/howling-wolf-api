@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of NOONNIGHT.
+ * The abstract condition-query of noonnight.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsNoonnightCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsNoonnightCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "NOONNIGHT";
+        return "noonnight";
     }
 
     // ===================================================================================
@@ -169,8 +169,8 @@ public abstract class AbstractBsNoonnightCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select NOONNIGHT_CODE from VILLAGE_DAY where ...)} <br>
-     * VILLAGE_DAY by NOONNIGHT_CODE, named 'villageDayAsOne'.
+     * {exists (select NOONNIGHT_CODE from village_day where ...)} <br>
+     * village_day by NOONNIGHT_CODE, named 'villageDayAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsVillageDay</span>(dayCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     dayCB.query().set...
@@ -188,8 +188,8 @@ public abstract class AbstractBsNoonnightCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select NOONNIGHT_CODE from VILLAGE_DAY where ...)} <br>
-     * VILLAGE_DAY by NOONNIGHT_CODE, named 'villageDayAsOne'.
+     * {not exists (select NOONNIGHT_CODE from village_day where ...)} <br>
+     * village_day by NOONNIGHT_CODE, named 'villageDayAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsVillageDay</span>(dayCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     dayCB.query().set...
@@ -215,8 +215,8 @@ public abstract class AbstractBsNoonnightCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from VILLAGE_DAY where ...)} <br>
-     * VILLAGE_DAY by NOONNIGHT_CODE, named 'villageDayAsOne'.
+     * {FOO &lt;= (select max(BAR) from village_day where ...)} <br>
+     * village_day by NOONNIGHT_CODE, named 'villageDayAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedVillageDay()</span>.<span style="color: #CC4747">max</span>(dayCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     dayCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

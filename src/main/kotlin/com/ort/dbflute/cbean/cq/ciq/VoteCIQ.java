@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of VOTE.
+ * The condition-query for in-line of vote.
  * @author DBFlute(AutoGenerator)
  */
 public class VoteCIQ extends AbstractBsVoteCQ {

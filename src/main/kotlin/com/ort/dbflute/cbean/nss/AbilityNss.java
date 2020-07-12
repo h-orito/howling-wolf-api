@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.AbilityCQ;
 
 /**
- * The nest select set-upper of ABILITY.
+ * The nest select set-upper of ability.
  * @author DBFlute(AutoGenerator)
  */
 public class AbilityNss {

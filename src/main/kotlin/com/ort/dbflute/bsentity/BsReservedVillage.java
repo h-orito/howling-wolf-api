@@ -18,7 +18,7 @@ import com.ort.dbflute.exentity.*;
  *     RESERVED_VILLAGE_ID
  *
  * [column]
- *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, IS_AVAILABLE_DUMMY_SKILL, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -48,6 +48,7 @@ import com.ort.dbflute.exentity.*;
  * java.time.LocalDateTime startDatetime = entity.getStartDatetime();
  * String organization = entity.getOrganization();
  * Integer silentHours = entity.getSilentHours();
+ * Boolean isAvailableDummySkill = entity.getIsAvailableDummySkill();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
@@ -57,6 +58,7 @@ import com.ort.dbflute.exentity.*;
  * entity.setStartDatetime(startDatetime);
  * entity.setOrganization(organization);
  * entity.setSilentHours(silentHours);
+ * entity.setIsAvailableDummySkill(isAvailableDummySkill);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -91,6 +93,9 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     /** SILENT_HOURS: {NotNull, INT UNSIGNED(10)} */
     protected Integer _silentHours;
 
+    /** IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} */
+    protected Boolean _isAvailableDummySkill;
+
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
 
@@ -113,7 +118,7 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "RESERVED_VILLAGE";
+        return "reserved_village";
     }
 
     // ===================================================================================
@@ -170,6 +175,7 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
         sb.append(dm).append(xfND(_startDatetime));
         sb.append(dm).append(xfND(_organization));
         sb.append(dm).append(xfND(_silentHours));
+        sb.append(dm).append(xfND(_isAvailableDummySkill));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -292,6 +298,26 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     public void setSilentHours(Integer silentHours) {
         registerModifiedProperty("silentHours");
         _silentHours = silentHours;
+    }
+
+    /**
+     * [get] IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} <br>
+     * 役欠けありか
+     * @return The value of the column 'IS_AVAILABLE_DUMMY_SKILL'. (basically NotNull if selected: for the constraint)
+     */
+    public Boolean getIsAvailableDummySkill() {
+        checkSpecifiedProperty("isAvailableDummySkill");
+        return _isAvailableDummySkill;
+    }
+
+    /**
+     * [set] IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} <br>
+     * 役欠けありか
+     * @param isAvailableDummySkill The value of the column 'IS_AVAILABLE_DUMMY_SKILL'. (basically NotNull if update: for the constraint)
+     */
+    public void setIsAvailableDummySkill(Boolean isAvailableDummySkill) {
+        registerModifiedProperty("isAvailableDummySkill");
+        _isAvailableDummySkill = isAvailableDummySkill;
     }
 
     /**

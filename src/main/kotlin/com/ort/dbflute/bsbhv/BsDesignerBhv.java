@@ -67,7 +67,7 @@ public abstract class BsDesignerBhv extends AbstractBehaviorWritable<Designer, D
     /** {@inheritDoc} */
     public DesignerDbm asDBMeta() { return DesignerDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "DESIGNER"; }
+    public String asTableDbName() { return "designer"; }
 
     // ===================================================================================
     //                                                                        New Instance

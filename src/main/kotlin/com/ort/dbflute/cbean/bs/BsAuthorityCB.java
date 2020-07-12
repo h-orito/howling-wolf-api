@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of AUTHORITY.
+ * The base condition-bean of authority.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAuthorityCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsAuthorityCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "AUTHORITY";
+        return "authority";
     }
 
     // ===================================================================================
@@ -304,10 +304,10 @@ public class BsAuthorityCB extends AbstractConditionBean {
             columnAuthorityCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "AUTHORITY"; }
+        protected String getTableDbName() { return "authority"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from PLAYER where ...) as FOO_MAX} <br>
+         * {select max(FOO) from player where ...) as FOO_MAX} <br>
          * PLAYER by AUTHORITY_CODE, named 'playerList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

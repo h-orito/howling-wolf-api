@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.PlayerCQ;
 
 /**
- * The nest select set-upper of PLAYER.
+ * The nest select set-upper of player.
  * @author DBFlute(AutoGenerator)
  */
 public class PlayerNss {
@@ -27,7 +27,7 @@ public class PlayerNss {
     }
     /**
      * With nested relation columns to select clause. <br>
-     * PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
+     * player_detail by PLAYER_ID, named 'playerDetailAsOne'.
      * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
      */
     public PlayerDetailNss withPlayerDetailAsOne() {

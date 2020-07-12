@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of FACE_TYPE.
+ * The base condition-bean of face_type.
  * @author DBFlute(AutoGenerator)
  */
 public class BsFaceTypeCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsFaceTypeCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "FACE_TYPE";
+        return "face_type";
     }
 
     // ===================================================================================
@@ -309,10 +309,10 @@ public class BsFaceTypeCB extends AbstractConditionBean {
             columnFaceTypeCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "FACE_TYPE"; }
+        protected String getTableDbName() { return "face_type"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from CHARA_IMAGE where ...) as FOO_MAX} <br>
+         * {select max(FOO) from chara_image where ...) as FOO_MAX} <br>
          * CHARA_IMAGE by FACE_TYPE_CODE, named 'charaImageList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

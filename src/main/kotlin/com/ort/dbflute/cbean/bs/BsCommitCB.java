@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of COMMIT.
+ * The base condition-bean of commit.
  * @author DBFlute(AutoGenerator)
  */
 public class BsCommitCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsCommitCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "COMMIT";
+        return "commit";
     }
 
     // ===================================================================================
@@ -85,8 +85,8 @@ public class BsCommitCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villagePlayerId : PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER. (NotNull)
-     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY. (NotNull)
+     * @param villagePlayerId : PK, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
      * @return this. (NotNull)
      */
     public CommitCB acceptPK(Integer villagePlayerId, Integer villageDayId) {
@@ -345,12 +345,12 @@ public class BsCommitCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+         * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+         * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
@@ -382,7 +382,7 @@ public class BsCommitCB extends AbstractConditionBean {
             columnVillageDayId(); // PK
         }
         @Override
-        protected String getTableDbName() { return "COMMIT"; }
+        protected String getTableDbName() { return "commit"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * VILLAGE_DAY by my VILLAGE_DAY_ID, named 'villageDay'.

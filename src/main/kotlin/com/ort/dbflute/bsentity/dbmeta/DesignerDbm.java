@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of DESIGNER. (Singleton)
+ * The DB meta of designer. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class DesignerDbm extends AbstractDBMeta {
@@ -55,7 +55,7 @@ public class DesignerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "DESIGNER";
+    protected final String _tableDbName = "designer";
     protected final String _tableDispName = "DESIGNER";
     protected final String _tablePropertyName = "designer";
     protected final TableSqlName _tableSqlName = new TableSqlName("DESIGNER", _tableDbName);

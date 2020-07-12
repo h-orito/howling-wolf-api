@@ -22,7 +22,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of VILLAGE_SETTING.
+ * The base condition-bean of village_setting.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVillageSettingCB extends AbstractConditionBean {
@@ -78,7 +78,7 @@ public class BsVillageSettingCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "VILLAGE_SETTING";
+        return "village_setting";
     }
 
     // ===================================================================================
@@ -86,8 +86,8 @@ public class BsVillageSettingCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to VILLAGE. (NotNull)
-     * @param villageSettingItemCode : PK, IX, NotNull, VARCHAR(100), FK to VILLAGE_SETTING_ITEM, classification=VillageSettingItem. (NotNull)
+     * @param villageId : PK, NotNull, INT UNSIGNED(10), FK to village. (NotNull)
+     * @param villageSettingItemCode : PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem. (NotNull)
      * @return this. (NotNull)
      */
     public VillageSettingCB acceptPK(Integer villageId, CDef.VillageSettingItem villageSettingItemCode) {
@@ -337,12 +337,12 @@ public class BsVillageSettingCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE}
+         * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
         /**
-         * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to VILLAGE_SETTING_ITEM, classification=VillageSettingItem}
+         * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageSettingItemCode() { return doColumn("VILLAGE_SETTING_ITEM_CODE"); }
@@ -379,7 +379,7 @@ public class BsVillageSettingCB extends AbstractConditionBean {
             columnVillageSettingItemCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "VILLAGE_SETTING"; }
+        protected String getTableDbName() { return "village_setting"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * VILLAGE by my VILLAGE_ID, named 'village'.

@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of ABILITY_TYPE.
+ * The base condition-query of ability_type.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAbilityTypeCQ extends AbstractBsAbilityTypeCQ {
@@ -35,7 +35,7 @@ public class BsAbilityTypeCQ extends AbstractBsAbilityTypeCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from ABILITY_TYPE) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from ability_type) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsAbilityTypeCQ extends AbstractBsAbilityTypeCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join ABILITY_TYPE on ... and FOO = [value] ...}
+     * {select ... from ... left outer join ability_type on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

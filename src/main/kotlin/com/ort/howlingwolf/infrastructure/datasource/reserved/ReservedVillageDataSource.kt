@@ -37,6 +37,7 @@ class ReservedVillageDataSource(
         entity.startDatetime = reservedVillage.villageStartDatetime
         entity.organization = reservedVillage.organization
         entity.silentHours = reservedVillage.silentHours
+        entity.isAvailableDummySkill = reservedVillage.availableDummySkill
         reservedVillageBhv.insert(entity)
         return findReservedVillage(entity.reservedVillageId)!!
     }
@@ -54,7 +55,8 @@ class ReservedVillageDataSource(
             villageCreateDatetime = reservedVillage.createDatetime,
             villageStartDatetime = reservedVillage.startDatetime,
             organization = reservedVillage.organization,
-            silentHours = reservedVillage.silentHours
+            silentHours = reservedVillage.silentHours,
+            availableDummySkill = reservedVillage.isAvailableDummySkill
         )
     }
 }

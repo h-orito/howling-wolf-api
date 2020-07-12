@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of COMMIT.
+ * The base condition-query of commit.
  * @author DBFlute(AutoGenerator)
  */
 public class BsCommitCQ extends AbstractBsCommitCQ {
@@ -35,7 +35,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from COMMIT) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from commit) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join COMMIT on ... and FOO = [value] ...}
+     * {select ... from ... left outer join commit on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -81,14 +81,14 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
      */
     public BsCommitCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
      */
     public BsCommitCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
@@ -101,14 +101,14 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
      */
     public BsCommitCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @return this. (NotNull)
      */
     public BsCommitCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
@@ -259,7 +259,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
         return xgetQueRlMap(prop);
     }
     protected VillageDayCQ xcreateQueryVillageDay() {
-        String nrp = xresolveNRP("COMMIT", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("commit", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillageDayCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villageDay", nrp);
     }
     protected void xsetupOuterJoinVillageDay() { xregOutJo("villageDay"); }
@@ -279,7 +279,7 @@ public class BsCommitCQ extends AbstractBsCommitCQ {
         return xgetQueRlMap(prop);
     }
     protected VillagePlayerCQ xcreateQueryVillagePlayer() {
-        String nrp = xresolveNRP("COMMIT", "villagePlayer"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("commit", "villagePlayer"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayer", nrp);
     }
     protected void xsetupOuterJoinVillagePlayer() { xregOutJo("villagePlayer"); }

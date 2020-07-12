@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.VillageDayCQ;
 
 /**
- * The nest select set-upper of VILLAGE_DAY.
+ * The nest select set-upper of village_day.
  * @author DBFlute(AutoGenerator)
  */
 public class VillageDayNss {
