@@ -23,6 +23,7 @@ import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class Village(
     val id: Int,
@@ -137,6 +138,21 @@ data class Village(
             villageDayId = day.latestDay().id,
             messageContent = messageContent
         )
+    }
+
+    fun createTweetMessage(): String {
+        val organization = setting.organizations.organization[setting.capacity.max]!!
+        val startDatetime = setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm"))
+        val silentHoursStr = setting.time.silentHours?.let {
+            if (it == 0) "" else "更新後沈黙時間：${it}時間\r\n"
+        } ?: ""
+
+        return "新しい村が作成されました。\r\n" +
+            "村名：$name\r\n" +
+            "編成：$organization\r\n" +
+            "開始予定：$startDatetime\r\n" +
+            silentHoursStr +
+            "https://howling-wolf.com/village?id=$id"
     }
 
     // ===================================================================================
