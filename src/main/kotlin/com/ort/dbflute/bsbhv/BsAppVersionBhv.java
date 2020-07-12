@@ -67,7 +67,7 @@ public abstract class BsAppVersionBhv extends AbstractBehaviorWritable<AppVersio
     /** {@inheritDoc} */
     public AppVersionDbm asDBMeta() { return AppVersionDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "APP_VERSION"; }
+    public String asTableDbName() { return "app_version"; }
 
     // ===================================================================================
     //                                                                        New Instance

@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of RESERVED_VILLAGE.
+ * The condition-query for in-line of reserved_village.
  * @author DBFlute(AutoGenerator)
  */
 public class ReservedVillageCIQ extends AbstractBsReservedVillageCQ {
@@ -66,6 +66,7 @@ public class ReservedVillageCIQ extends AbstractBsReservedVillageCQ {
     protected ConditionValue xgetCValueStartDatetime() { return _myCQ.xdfgetStartDatetime(); }
     protected ConditionValue xgetCValueOrganization() { return _myCQ.xdfgetOrganization(); }
     protected ConditionValue xgetCValueSilentHours() { return _myCQ.xdfgetSilentHours(); }
+    protected ConditionValue xgetCValueIsAvailableDummySkill() { return _myCQ.xdfgetIsAvailableDummySkill(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }

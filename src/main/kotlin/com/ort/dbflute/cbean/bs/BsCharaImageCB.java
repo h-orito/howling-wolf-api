@@ -22,7 +22,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of CHARA_IMAGE.
+ * The base condition-bean of chara_image.
  * @author DBFlute(AutoGenerator)
  */
 public class BsCharaImageCB extends AbstractConditionBean {
@@ -78,7 +78,7 @@ public class BsCharaImageCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "CHARA_IMAGE";
+        return "chara_image";
     }
 
     // ===================================================================================
@@ -86,8 +86,8 @@ public class BsCharaImageCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to CHARA. (NotNull)
-     * @param faceTypeCode : PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType. (NotNull)
+     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
+     * @param faceTypeCode : PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType. (NotNull)
      * @return this. (NotNull)
      */
     public CharaImageCB acceptPK(Integer charaId, CDef.FaceType faceTypeCode) {
@@ -337,12 +337,12 @@ public class BsCharaImageCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
+         * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCharaId() { return doColumn("CHARA_ID"); }
         /**
-         * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
+         * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnFaceTypeCode() { return doColumn("FACE_TYPE_CODE"); }
@@ -359,7 +359,7 @@ public class BsCharaImageCB extends AbstractConditionBean {
             columnFaceTypeCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "CHARA_IMAGE"; }
+        protected String getTableDbName() { return "chara_image"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * CHARA by my CHARA_ID, named 'chara'.

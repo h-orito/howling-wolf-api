@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of CHARA_IMAGE.
+ * The base condition-query of chara_image.
  * @author DBFlute(AutoGenerator)
  */
 public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
@@ -35,7 +35,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from CHARA_IMAGE) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from chara_image) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join CHARA_IMAGE on ... and FOO = [value] ...}
+     * {select ... from ... left outer join chara_image on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -81,14 +81,14 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
      * @return this. (NotNull)
      */
     public BsCharaImageCQ addOrderBy_CharaId_Asc() { regOBA("CHARA_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA}
+     * CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara}
      * @return this. (NotNull)
      */
     public BsCharaImageCQ addOrderBy_CharaId_Desc() { regOBD("CHARA_ID"); return this; }
@@ -101,14 +101,14 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
      * @return this. (NotNull)
      */
     public BsCharaImageCQ addOrderBy_FaceTypeCode_Asc() { regOBA("FACE_TYPE_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType}
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType}
      * @return this. (NotNull)
      */
     public BsCharaImageCQ addOrderBy_FaceTypeCode_Desc() { regOBD("FACE_TYPE_CODE"); return this; }
@@ -199,7 +199,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
         return xgetQueRlMap(prop);
     }
     protected CharaCQ xcreateQueryChara() {
-        String nrp = xresolveNRP("CHARA_IMAGE", "chara"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("chara_image", "chara"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new CharaCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "chara", nrp);
     }
     protected void xsetupOuterJoinChara() { xregOutJo("chara"); }
@@ -219,7 +219,7 @@ public class BsCharaImageCQ extends AbstractBsCharaImageCQ {
         return xgetQueRlMap(prop);
     }
     protected FaceTypeCQ xcreateQueryFaceType() {
-        String nrp = xresolveNRP("CHARA_IMAGE", "faceType"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("chara_image", "faceType"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new FaceTypeCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "faceType", nrp);
     }
     protected void xsetupOuterJoinFaceType() { xregOutJo("faceType"); }

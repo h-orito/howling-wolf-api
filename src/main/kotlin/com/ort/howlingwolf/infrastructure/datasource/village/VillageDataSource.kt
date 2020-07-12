@@ -346,6 +346,7 @@ class VillageDataSource(
             updateVillageSetting(villageId, CDef.VillageSettingItem.墓下見学発言を生存者が見られるか, toFlg(afterRules.visibleGraveMessage))
             updateVillageSetting(villageId, CDef.VillageSettingItem.突然死ありか, toFlg(afterRules.availableSuddenlyDeath))
             updateVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(afterRules.availableCommit))
+            updateVillageSetting(villageId, CDef.VillageSettingItem.役欠けありか, toFlg(afterRules.availableDummySkill))
         })
         after.setting.password.let(fun(afterPassword) {
             if (!before.setting.password.existsDifference(afterPassword)) return
@@ -509,6 +510,7 @@ class VillageDataSource(
         insertVillageSetting(villageId, CDef.VillageSettingItem.コミット可能か, toFlg(settings.rules.availableCommit))
         insertVillageSetting(villageId, CDef.VillageSettingItem.入村パスワード, settings.password.joinPassword ?: "")
         insertVillageSetting(villageId, CDef.VillageSettingItem.沈黙時間, settings.time.silentHours?.toString() ?: "")
+        insertVillageSetting(villageId, CDef.VillageSettingItem.役欠けありか, toFlg(settings.rules.availableDummySkill))
     }
 
     private fun insertVillageSetting(villageId: Int, item: CDef.VillageSettingItem, value: String) {

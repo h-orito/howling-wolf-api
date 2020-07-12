@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.PlayerDetailCQ;
 
 /**
- * The nest select set-upper of PLAYER_DETAIL.
+ * The nest select set-upper of player_detail.
  * @author DBFlute(AutoGenerator)
  */
 public class PlayerDetailNss {

@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of SKILL.
+ * The base condition-query of skill.
  * @author DBFlute(AutoGenerator)
  */
 public class BsSkillCQ extends AbstractBsSkillCQ {
@@ -35,7 +35,7 @@ public class BsSkillCQ extends AbstractBsSkillCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from SKILL) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from skill) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsSkillCQ extends AbstractBsSkillCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join SKILL on ... and FOO = [value] ...}
+     * {select ... from ... left outer join skill on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -183,14 +183,14 @@ public class BsSkillCQ extends AbstractBsSkillCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to CAMP, classification=Camp}
+     * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp}
      * @return this. (NotNull)
      */
     public BsSkillCQ addOrderBy_CampCode_Asc() { regOBA("CAMP_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to CAMP, classification=Camp}
+     * CAMP_CODE: {IX, NotNull, VARCHAR(20), FK to camp, classification=Camp}
      * @return this. (NotNull)
      */
     public BsSkillCQ addOrderBy_CampCode_Desc() { regOBD("CAMP_CODE"); return this; }
@@ -298,7 +298,7 @@ public class BsSkillCQ extends AbstractBsSkillCQ {
         return xgetQueRlMap(prop);
     }
     protected CampCQ xcreateQueryCamp() {
-        String nrp = xresolveNRP("SKILL", "camp"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("skill", "camp"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new CampCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "camp", nrp);
     }
     protected void xsetupOuterJoinCamp() { xregOutJo("camp"); }

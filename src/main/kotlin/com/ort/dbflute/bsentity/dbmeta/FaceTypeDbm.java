@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of FACE_TYPE. (Singleton)
+ * The DB meta of face_type. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class FaceTypeDbm extends AbstractDBMeta {
@@ -59,7 +59,7 @@ public class FaceTypeDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "FACE_TYPE";
+    protected final String _tableDbName = "face_type";
     protected final String _tableDispName = "FACE_TYPE";
     protected final String _tablePropertyName = "faceType";
     protected final TableSqlName _tableSqlName = new TableSqlName("FACE_TYPE", _tableDbName);

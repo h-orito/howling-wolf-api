@@ -66,10 +66,10 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA} */
+    /** CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} */
     protected Integer _charaId;
 
-    /** FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} */
+    /** FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} */
     protected String _faceTypeCode;
 
     /** CHARA_IMG_URL: {NotNull, VARCHAR(100)} */
@@ -85,7 +85,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "CHARA_IMAGE";
+        return "chara_image";
     }
 
     // ===================================================================================
@@ -103,7 +103,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     //                                                             =======================
     /**
      * Get the value of faceTypeCode as the classification of FaceType. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
      * 表情種別
      * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
@@ -114,7 +114,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
 
     /**
      * Set the value of faceTypeCode as the classification of FaceType. <br>
-     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
+     * FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
      * 表情種別
      * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
      */
@@ -366,7 +366,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA} <br>
+     * [get] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
      * キャラクターID
      * @return The value of the column 'CHARA_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -376,7 +376,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [set] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to CHARA} <br>
+     * [set] CHARA_ID: {PK, NotNull, INT UNSIGNED(10), FK to chara} <br>
      * キャラクターID
      * @param charaId The value of the column 'CHARA_ID'. (basically NotNull if update: for the constraint)
      */
@@ -386,7 +386,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [get] FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
+     * [get] FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
      * 表情種別コード
      * @return The value of the column 'FACE_TYPE_CODE'. (basically NotNull if selected: for the constraint)
      */
@@ -396,7 +396,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [set] FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType} <br>
+     * [set] FACE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType} <br>
      * 表情種別コード
      * @param faceTypeCode The value of the column 'FACE_TYPE_CODE'. (basically NotNull if update: for the constraint)
      */

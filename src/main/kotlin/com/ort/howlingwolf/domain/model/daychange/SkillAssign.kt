@@ -10,12 +10,11 @@ object SkillAssign {
     fun assign(
         participants: VillageParticipants,
         skillPersonCountMap: Map<CDef.Skill, Int>,
-        dummyChara: VillageParticipant
+        dummyChara: VillageParticipant,
+        isAvailableDummySkill: Boolean
     ): VillageParticipants {
-        // TODO 存在しない役職を自動変更
-
         // ダミー配役
-        var changedParticipants = participants.assignSkill(dummyChara.id, Skill(CDef.Skill.村人))
+        var changedParticipants = assignDummy(participants, skillPersonCountMap, dummyChara, isAvailableDummySkill)
 
         // 第1希望で役職希望した人を割り当て
         changedParticipants = assignFirstSpecifyRequest(changedParticipants, skillPersonCountMap)
@@ -38,7 +37,30 @@ object SkillAssign {
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
-    private fun assignFirstSpecifyRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
+    private fun assignDummy(
+        participants: VillageParticipants,
+        skillPersonCountMap: Map<CDef.Skill, Int>,
+        dummyChara: VillageParticipant,
+        availableDummySkill: Boolean
+    ): VillageParticipants {
+        // 役欠け無しの場合は村人固定
+        if (!availableDummySkill) return participants.assignSkill(dummyChara.id, Skill(CDef.Skill.村人))
+        // ありの場合は2日目に襲撃死できる役職を割り当て
+        val availableSkillList = mutableListOf<CDef.Skill>()
+        for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
+            if (cdefSkill.isNoDeadByAttack || cdefSkill.isNotSelectableAttack) continue
+            repeat(capacity) {
+                availableSkillList.add(cdefSkill)
+            }
+        }
+        val assignedSkill = availableSkillList.shuffled().first()
+        return participants.assignSkill(dummyChara.id, Skill(assignedSkill))
+    }
+
+    private fun assignFirstSpecifyRequest(
+        participants: VillageParticipants,
+        skillPersonCountMap: Map<CDef.Skill, Int>
+    ): VillageParticipants {
         var changedParticipants = participants.copy()
         for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
             // この役職を希望していてまだ割り当たってない人
@@ -64,7 +86,10 @@ object SkillAssign {
         return changedParticipants
     }
 
-    private fun assignSecondSpecifyRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
+    private fun assignSecondSpecifyRequest(
+        participants: VillageParticipants,
+        skillPersonCountMap: Map<CDef.Skill, Int>
+    ): VillageParticipants {
         var changedParticipants = participants.copy()
         for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
             // この役職を希望していてまだ割り当たってない人
@@ -122,7 +147,10 @@ object SkillAssign {
         }
     }
 
-    private fun assignSecondRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
+    private fun assignSecondRangeRequest(
+        participants: VillageParticipants,
+        skillPersonCountMap: Map<CDef.Skill, Int>
+    ): VillageParticipants {
         var changedParticipants = participants.copy()
         // 範囲指定している人
         changedParticipants.memberList

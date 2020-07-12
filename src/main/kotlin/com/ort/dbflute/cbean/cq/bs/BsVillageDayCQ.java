@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of VILLAGE_DAY.
+ * The base condition-query of village_day.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
@@ -35,7 +35,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from VILLAGE_DAY) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from village_day) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join VILLAGE_DAY on ... and FOO = [value] ...}
+     * {select ... from ... left outer join village_day on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -157,14 +157,14 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to VILLAGE}
+     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to VILLAGE}
+     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
@@ -197,14 +197,14 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_NoonnightCode_Asc() { regOBA("NOONNIGHT_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight}
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_NoonnightCode_Desc() { regOBD("NOONNIGHT_CODE"); return this; }
@@ -375,7 +375,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
         return xgetQueRlMap(prop);
     }
     protected NoonnightCQ xcreateQueryNoonnight() {
-        String nrp = xresolveNRP("VILLAGE_DAY", "noonnight"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("village_day", "noonnight"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new NoonnightCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "noonnight", nrp);
     }
     protected void xsetupOuterJoinNoonnight() { xregOutJo("noonnight"); }
@@ -395,7 +395,7 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
         return xgetQueRlMap(prop);
     }
     protected VillageCQ xcreateQueryVillage() {
-        String nrp = xresolveNRP("VILLAGE_DAY", "village"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("village_day", "village"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillageCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "village", nrp);
     }
     protected void xsetupOuterJoinVillage() { xregOutJo("village"); }

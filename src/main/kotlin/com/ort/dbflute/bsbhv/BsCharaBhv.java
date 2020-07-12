@@ -67,7 +67,7 @@ public abstract class BsCharaBhv extends AbstractBehaviorWritable<Chara, CharaCB
     /** {@inheritDoc} */
     public CharaDbm asDBMeta() { return CharaDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "CHARA"; }
+    public String asTableDbName() { return "chara"; }
 
     // ===================================================================================
     //                                                                        New Instance

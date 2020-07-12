@@ -13,7 +13,6 @@ import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
-import org.apache.commons.collections4.CollectionUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import java.time.ZoneOffset
@@ -296,7 +295,7 @@ class MessageDataSource(
         }
         query.from?.let { cb.query().setMessageUnixtimestampMilli_GreaterThan(it) }
         query.keyword?.let { cb.query().setMessageContent_LikeSearch(it) { op -> op.splitByBlank().likeContain().asOrSplit() } }
-        if (CollectionUtils.isNotEmpty(query.participantIdList)) cb.query().setVillagePlayerId_InScope(query.participantIdList)
+        if (!query.participantIdList.isNullOrEmpty()) cb.query().setVillagePlayerId_InScope(query.participantIdList)
     }
 
     private fun queryMyMonologue(cb: MessageCB, id: Int) {

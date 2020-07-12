@@ -1687,6 +1687,9 @@ public interface CDef extends Classification {
         /** コミット可能か */
         コミット可能か("is_available_commit", "コミット可能か", emptyStrings())
         ,
+        /** 役欠けありか */
+        役欠けありか("is_available_dummy_skill", "役欠けありか", emptyStrings())
+        ,
         /** 役職希望可能か */
         役職希望可能か("is_available_skill_request", "役職希望可能か", emptyStrings())
         ,

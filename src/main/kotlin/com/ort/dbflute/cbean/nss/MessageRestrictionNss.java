@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.MessageRestrictionCQ;
 
 /**
- * The nest select set-upper of MESSAGE_RESTRICTION.
+ * The nest select set-upper of message_restriction.
  * @author DBFlute(AutoGenerator)
  */
 public class MessageRestrictionNss {

@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of NOONNIGHT.
+ * The base condition-query of noonnight.
  * @author DBFlute(AutoGenerator)
  */
 public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
@@ -35,7 +35,7 @@ public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from NOONNIGHT) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from noonnight) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsNoonnightCQ extends AbstractBsNoonnightCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join NOONNIGHT on ... and FOO = [value] ...}
+     * {select ... from ... left outer join noonnight on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

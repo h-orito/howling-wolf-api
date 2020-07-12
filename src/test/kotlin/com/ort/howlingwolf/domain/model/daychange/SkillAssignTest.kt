@@ -38,7 +38,7 @@ class SkillAssignTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara)
+        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara, false)
 
         // ## Assert ##
         assertThat(assign.memberList.count { it.skill?.toCdef() == CDef.Skill.村人 }).isEqualTo(1)
@@ -75,7 +75,7 @@ class SkillAssignTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara)
+        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara, false)
 
         // ## Assert ##
         // assign.memberList.forEach { println("${it.skillRequest.first.code}_${it.skillRequest.second.code}_${it.skill?.code}") }
@@ -126,10 +126,9 @@ class SkillAssignTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara)
+        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara, false)
 
         // ## Assert ##
-        // assign.memberList.forEach { println("${it.skillRequest.first.code}_${it.skillRequest.second.code}_${it.skill?.code}") }
         assertThat(
             assign.memberList.filter { member ->
                 wolfRequestParticipants.any { it.id == member.id }
@@ -173,7 +172,7 @@ class SkillAssignTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara)
+        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara, false)
 
         // ## Assert ##
         // assign.memberList.forEach { println("${it.skillRequest.first.code}_${it.skillRequest.second.code}_${it.skill?.code}") }
@@ -183,6 +182,29 @@ class SkillAssignTest : HowlingWolfTest() {
         assertThat(participant2Skill == CDef.Skill.占い師 || participant2Skill == CDef.Skill.霊能者)
         val participant3Skill = assign.memberList.first { it.id == participant3.id }.skill?.toCdef()
         assertThat(participant3Skill == CDef.Skill.占い師 || participant3Skill == CDef.Skill.狩人)
+    }
+
+    @Test
+    fun test_assign_役欠けあり() {
+        // ## Arrange ##
+        val dummyChara = DummyDomainModelCreator.createDummyVillageParticipant()
+        val someoneRequestParticipants = (1..15).toList().map { createDummySkillRequestParticipant(CDef.Skill.おまかせ, CDef.Skill.人狼) }
+        val participants = VillageParticipants(
+            count = 16,
+            memberList = someoneRequestParticipants //
+                + dummyChara //
+        )
+        val skillPersonCountMap = mapOf(
+            CDef.Skill.人狼 to 3,
+            CDef.Skill.占い師 to 1,
+            CDef.Skill.妖狐 to 12
+        )
+
+        // ## Act ##
+        val assign = SkillAssign.assign(participants, skillPersonCountMap, dummyChara, true)
+
+        // ## Assert ##
+        assertThat(assign.memberList.first { it.id == dummyChara.id }.skill?.toCdef()).isEqualTo(CDef.Skill.占い師)
     }
 
     // ===================================================================================

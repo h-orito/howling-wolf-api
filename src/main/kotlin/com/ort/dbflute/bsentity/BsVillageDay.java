@@ -82,13 +82,13 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     /** VILLAGE_DAY_ID: {PK, ID, NotNull, INT UNSIGNED(10)} */
     protected Integer _villageDayId;
 
-    /** VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to VILLAGE} */
+    /** VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village} */
     protected Integer _villageId;
 
     /** DAY: {NotNull, INT UNSIGNED(10)} */
     protected Integer _day;
 
-    /** NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight} */
+    /** NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} */
     protected String _noonnightCode;
 
     /** DAYCHANGE_DATETIME: {NotNull, DATETIME(19)} */
@@ -116,7 +116,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "VILLAGE_DAY";
+        return "village_day";
     }
 
     // ===================================================================================
@@ -133,7 +133,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     //                                                             =======================
     /**
      * Get the value of noonnightCode as the classification of Noonnight. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight} <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜
      * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
@@ -144,7 +144,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
 
     /**
      * Set the value of noonnightCode as the classification of Noonnight. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight} <br>
+     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜
      * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
      */
@@ -440,7 +440,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [get] VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to VILLAGE} <br>
+     * [get] VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village} <br>
      * 村ID
      * @return The value of the column 'VILLAGE_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -450,7 +450,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [set] VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to VILLAGE} <br>
+     * [set] VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village} <br>
      * 村ID
      * @param villageId The value of the column 'VILLAGE_ID'. (basically NotNull if update: for the constraint)
      */
@@ -480,7 +480,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [get] NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight} <br>
+     * [get] NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜コード
      * @return The value of the column 'NOONNIGHT_CODE'. (basically NotNull if selected: for the constraint)
      */
@@ -490,7 +490,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
     }
 
     /**
-     * [set] NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight} <br>
+     * [set] NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜コード
      * @param noonnightCode The value of the column 'NOONNIGHT_CODE'. (basically NotNull if update: for the constraint)
      */

@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of PLAYER_DETAIL. (Singleton)
+ * The DB meta of player_detail. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class PlayerDetailDbm extends AbstractDBMeta {
@@ -65,7 +65,7 @@ public class PlayerDetailDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "PLAYER_DETAIL";
+    protected final String _tableDbName = "player_detail";
     protected final String _tableDispName = "PLAYER_DETAIL";
     protected final String _tablePropertyName = "playerDetail";
     protected final TableSqlName _tableSqlName = new TableSqlName("PLAYER_DETAIL", _tableDbName);
@@ -83,7 +83,7 @@ public class PlayerDetailDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnIntroduction = cci("INTRODUCTION", "INTRODUCTION", null, null, String.class, "introduction", null, false, false, false, "VARCHAR", 2000, 0, null, null, false, null, null, null, null, null, false);
 
     /**
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnPlayerId() { return _columnPlayerId; }

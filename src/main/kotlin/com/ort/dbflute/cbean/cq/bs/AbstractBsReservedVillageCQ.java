@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of RESERVED_VILLAGE.
+ * The abstract condition-query of reserved_village.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
     }
 
     public String asTableDbName() {
-        return "RESERVED_VILLAGE";
+        return "reserved_village";
     }
 
     // ===================================================================================
@@ -573,6 +573,18 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
 
     protected void regSilentHours(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueSilentHours(), "SILENT_HOURS"); }
     protected abstract ConditionValue xgetCValueSilentHours();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
+     * @param isAvailableDummySkill The value of isAvailableDummySkill as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIsAvailableDummySkill_Equal(Boolean isAvailableDummySkill) {
+        regIsAvailableDummySkill(CK_EQ, isAvailableDummySkill);
+    }
+
+    protected void regIsAvailableDummySkill(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIsAvailableDummySkill(), "IS_AVAILABLE_DUMMY_SKILL"); }
+    protected abstract ConditionValue xgetCValueIsAvailableDummySkill();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
