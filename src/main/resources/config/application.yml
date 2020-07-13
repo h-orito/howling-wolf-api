@@ -31,7 +31,7 @@ server:
       prefix: access_log
       file-date-format: .yyyy-MM-dd
       max-days: 30
-      pattern: '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %{X-Forwarded-For}i %D %S %I'
+      pattern: '%t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %{X-Forwarded-For}i %D %S %I'
     remote-ip-header: true
   use-forward-headers: true
 logging:
