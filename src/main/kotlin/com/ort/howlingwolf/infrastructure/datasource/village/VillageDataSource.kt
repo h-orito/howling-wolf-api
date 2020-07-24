@@ -403,6 +403,7 @@ class VillageDataSource(
         village.villageDisplayName = villageModel.name
         village.villageStatusCodeAsVillageStatus = villageModel.status.toCdef()
         village.winCampCodeAsCamp = villageModel.winCamp?.toCdef()
+        village.epilogueDay = villageModel.setting.time.epilogueDay
         villageBhv.update(village)
     }
 

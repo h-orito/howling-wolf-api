@@ -6,6 +6,9 @@ import java.time.LocalDateTime
 
 data class VillageTime(
     val termType: String,
+    val prologueStartDatetime: LocalDateTime,
+    val epilogueDay: Int?,
+    val epilogueStartDatetime: LocalDateTime?,
     val startDatetime: LocalDateTime,
     val dayChangeIntervalSeconds: Int,
     val silentHours: Int?
@@ -17,17 +20,24 @@ data class VillageTime(
 
         operator fun invoke(
             termType: String?,
+            prologueStartDatetime: LocalDateTime?,
+            epilogueDay: Int?,
+            epilogueStartDatetime: LocalDateTime?,
             startDatetime: LocalDateTime?,
             dayChangeIntervalSeconds: Int?,
             silentHours: Int?
         ): VillageTime {
             require(termType == null || CDef.Term.codeOf(termType) != null)
             requireNotNull(startDatetime)
+            requireNotNull(prologueStartDatetime)
             if (dayChangeIntervalSeconds != null) {
                 require(INTERVAL_MIN <= dayChangeIntervalSeconds && dayChangeIntervalSeconds <= INTERVAL_MAX)
             }
             return VillageTime(
                 termType = termType ?: CDef.Term.長期.code(),
+                prologueStartDatetime = prologueStartDatetime,
+                epilogueDay = epilogueDay,
+                epilogueStartDatetime = epilogueStartDatetime,
                 startDatetime = startDatetime,
                 dayChangeIntervalSeconds = dayChangeIntervalSeconds ?: DEFAULT_INTERVAL,
                 silentHours = silentHours

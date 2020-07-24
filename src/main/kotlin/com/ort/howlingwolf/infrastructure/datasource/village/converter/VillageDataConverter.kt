@@ -1,7 +1,6 @@
 package com.ort.howlingwolf.infrastructure.datasource.village.converter
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exentity.MessageRestriction
 import com.ort.dbflute.exentity.Village
 import com.ort.dbflute.exentity.VillageDay
 import com.ort.dbflute.exentity.VillagePlayer
@@ -26,6 +25,7 @@ import com.ort.howlingwolf.domain.model.village.setting.VillageTime
 import org.dbflute.cbean.result.ListResultBean
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 object VillageDataConverter {
 
@@ -47,7 +47,7 @@ object VillageDataConverter {
             name = village.villageDisplayName,
             creatorPlayerId = village.createPlayerId,
             status = VillageStatus(village.villageStatusCodeAsVillageStatus),
-            setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
+            setting = convertVillageSettingListToVillageSetting(village),
             participant = VillageParticipants(
                 count = participantList.size,
                 memberList = participantList.map { convertVillagePlayerToParticipant(it, village) }
@@ -82,7 +82,7 @@ object VillageDataConverter {
             name = village.villageDisplayName,
             creatorPlayerId = village.createPlayerId,
             status = VillageStatus(village.villageStatusCodeAsVillageStatus),
-            setting = convertVillageSettingListToVillageSetting(village.villageSettingList, village.messageRestrictionList),
+            setting = convertVillageSettingListToVillageSetting(village),
             participant = VillageParticipants(count = village.participantCount),
             spectator = VillageParticipants(count = village.visitorCount),
             day = VillageDays( // 最新の1日だけ
@@ -95,9 +95,10 @@ object VillageDataConverter {
     }
 
     private fun convertVillageSettingListToVillageSetting(
-        settingList: List<VillageSetting>,
-        restrictList: List<MessageRestriction>
+        village: Village
     ): VillageSettings {
+        val settingList = village.villageSettingList
+        val restrictList = village.messageRestrictionList
         return VillageSettings(
             capacity = PersonCapacity.invoke(
                 min = detectItemText(settingList, CDef.VillageSettingItem.最低人数)?.toInt(),
@@ -105,6 +106,12 @@ object VillageDataConverter {
             ),
             time = VillageTime.invoke(
                 termType = detectItemText(settingList, CDef.VillageSettingItem.期間形式),
+                prologueStartDatetime = LocalDateTime.parse(detectItemText(settingList, CDef.VillageSettingItem.開始予定日時), DATETIME_FORMATTER)
+                    .minusDays(1L),
+                epilogueDay = village.epilogueDay,
+                epilogueStartDatetime = Optional.ofNullable(village.epilogueDay).map { epilogueDay ->
+                    village.villageDayList.firstOrNull { it.day == epilogueDay - 1 }?.daychangeDatetime
+                }.orElse(null),
                 startDatetime = detectItemText(settingList, CDef.VillageSettingItem.開始予定日時)?.let {
                     LocalDateTime.parse(
                         it,

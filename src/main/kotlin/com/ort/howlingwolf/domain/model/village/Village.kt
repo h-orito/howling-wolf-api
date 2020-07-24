@@ -491,7 +491,13 @@ data class Village(
     fun win(winCamp: CDef.Camp): Village {
         return this.copy(
             winCamp = Camp(winCamp), // 村自体の勝利陣営
-            participant = this.participant.winLose(winCamp) // 個人ごとの勝敗
+            participant = this.participant.winLose(winCamp), // 個人ごとの勝敗
+            setting = this.setting.copy(
+                time = this.setting.time.copy(
+                    epilogueDay = day.latestDay().day,
+                    epilogueStartDatetime = day.yesterday().dayChangeDatetime
+                )
+            )
         )
     }
 

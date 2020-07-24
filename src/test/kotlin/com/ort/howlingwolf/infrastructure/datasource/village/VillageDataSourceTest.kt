@@ -83,6 +83,9 @@ class VillageDataSourceTest : HowlingWolfTest() {
                 ),
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
+                    prologueStartDatetime = LocalDateTime.now(),
+                    epilogueStartDatetime = null,
+                    epilogueDay = null,
                     startDatetime = startDatetime,
                     dayChangeIntervalSeconds = interval,
                     silentHours = null
@@ -297,6 +300,9 @@ class VillageDataSourceTest : HowlingWolfTest() {
                 ),
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
+                    prologueStartDatetime = LocalDateTime.now(),
+                    epilogueStartDatetime = null,
+                    epilogueDay = null,
                     startDatetime = LocalDateTime.now().plusDays(1L).withNano(0),
                     dayChangeIntervalSeconds = 24 * 60 * 60,
                     silentHours = null
@@ -350,6 +356,9 @@ class VillageDataSourceTest : HowlingWolfTest() {
                 ),
                 time = VillageTime(
                     termType = CDef.Term.短期.code(),
+                    prologueStartDatetime = LocalDateTime.now(),
+                    epilogueStartDatetime = null,
+                    epilogueDay = null,
                     startDatetime = LocalDateTime.now().plusDays(2L).withNano(0),
                     dayChangeIntervalSeconds = 48 * 60 * 60,
                     silentHours = null
