@@ -2,6 +2,7 @@ package com.ort.howlingwolf.api.controller
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.api.form.VillageRecordListForm
+import com.ort.howlingwolf.api.view.external.LatestVillageRecordView
 import com.ort.howlingwolf.api.view.external.RecruitingVillagesView
 import com.ort.howlingwolf.api.view.external.VillageRecordsView
 import com.ort.howlingwolf.application.service.CharachipService
@@ -62,6 +63,19 @@ class ExternalController(
             villages = Villages(villageList),
             charas = charas,
             players = players
+        )
+    }
+
+    @GetMapping("/village-record/latest-vid")
+    fun latestvillageRecord(): LatestVillageRecordView {
+        val maxVillageId = villageService.findVillages(
+            villageStatusList = listOf(
+                VillageStatus(CDef.VillageStatus.エピローグ),
+                VillageStatus(CDef.VillageStatus.終了)
+            )
+        ).list.map { it.id }.max() ?: 0
+        return LatestVillageRecordView(
+            vid = maxVillageId
         )
     }
 }

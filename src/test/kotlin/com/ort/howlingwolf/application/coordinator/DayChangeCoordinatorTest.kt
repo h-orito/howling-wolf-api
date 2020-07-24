@@ -172,6 +172,9 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
             ),
             time = VillageTime(
                 termType = CDef.Term.長期.code(),
+                prologueStartDatetime = LocalDateTime.now(),
+                epilogueStartDatetime = null,
+                epilogueDay = null,
                 startDatetime = LocalDateTime.now().plusDays(1L),
                 dayChangeIntervalSeconds = 86400,
                 silentHours = null

@@ -455,6 +455,9 @@ class MessageDataSourceTest : HowlingWolfTest() {
                 ),
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
+                    prologueStartDatetime = LocalDateTime.now(),
+                    epilogueStartDatetime = null,
+                    epilogueDay = null,
                     startDatetime = LocalDateTime.now().plusDays(1L).withNano(0),
                     dayChangeIntervalSeconds = 24 * 60 * 60,
                     silentHours = null

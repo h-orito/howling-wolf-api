@@ -183,6 +183,9 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             setting = createVillageSettingsParam().copy(
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
+                    prologueStartDatetime = LocalDateTime.now(),
+                    epilogueStartDatetime = null,
+                    epilogueDay = null,
                     startDatetime = LocalDateTime.now().plusHours(3L),
                     dayChangeIntervalSeconds = 86400,
                     silentHours = null
@@ -526,6 +529,9 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             ),
             time = VillageTime(
                 termType = CDef.Term.長期.code(),
+                prologueStartDatetime = LocalDateTime.now(),
+                epilogueStartDatetime = null,
+                epilogueDay = null,
                 startDatetime = LocalDateTime.now(),
                 dayChangeIntervalSeconds = 86400,
                 silentHours = null

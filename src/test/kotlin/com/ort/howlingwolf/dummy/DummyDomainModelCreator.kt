@@ -80,7 +80,7 @@ object DummyDomainModelCreator {
 
     fun createDummyVillageCharachip(): VillageCharachip = VillageCharachip(1, 1)
 
-    fun createDummyVillageTime(): VillageTime = VillageTime("dummy", LocalDateTime.now(), 0, null)
+    fun createDummyVillageTime(): VillageTime = VillageTime("dummy", LocalDateTime.now(), null, null, LocalDateTime.now(), 0, null)
 
     fun createDummyPersonCapacity(): PersonCapacity = PersonCapacity(1, 1)
 

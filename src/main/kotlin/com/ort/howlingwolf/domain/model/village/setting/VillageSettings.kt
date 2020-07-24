@@ -29,6 +29,9 @@ data class VillageSettings(
                 ),
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
+                    prologueStartDatetime = LocalDateTime.now(),
+                    epilogueDay = null,
+                    epilogueStartDatetime = null,
                     startDatetime = startDatetime,
                     dayChangeIntervalSeconds = 86400,
                     silentHours = silentHours

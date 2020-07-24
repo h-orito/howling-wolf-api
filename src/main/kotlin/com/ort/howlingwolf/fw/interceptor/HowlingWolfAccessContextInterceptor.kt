@@ -13,11 +13,6 @@ class HowlingWolfAccessContextInterceptor : HandlerInterceptorAdapter() {
 
     @Throws(Exception::class)
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        if (AccessContext.isExistAccessContextOnThread()) {
-            // 既に設定されていたら何もしないで次へ
-            // (二度呼び出しされたときのために念のため)
-            return true
-        }
         // [アクセス日時]
         val accessLocalDateTime = HowlingWolfDateUtil.currentLocalDateTime()
 
