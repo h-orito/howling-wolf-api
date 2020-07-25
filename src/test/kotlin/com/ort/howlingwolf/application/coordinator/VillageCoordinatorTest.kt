@@ -12,18 +12,9 @@ import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.application.service.VoteService
 import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.player.Players
-import com.ort.howlingwolf.domain.model.village.Village
-import com.ort.howlingwolf.domain.model.village.VillageDays
-import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
-import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
-import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
-import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
-import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
-import com.ort.howlingwolf.domain.model.village.setting.VillageRules
-import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
-import com.ort.howlingwolf.domain.model.village.setting.VillageTime
+import com.ort.howlingwolf.dummy.DummyDomainModelCreator
+import com.ort.howlingwolf.dummy.DummyVillageService
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.assertj.core.api.Assertions.assertThat
@@ -33,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
@@ -62,13 +52,16 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Autowired
     lateinit var commitService: CommitService
 
+    @Autowired
+    lateinit var dummyVillageService: DummyVillageService
+
     // ===================================================================================
     //                                                                                Test
     //                                                                           =========
     @Test
     fun test_registerVillage() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
+        val paramVillage = DummyDomainModelCreator.createDummyVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
 
@@ -90,17 +83,15 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test(expected = HowlingWolfBusinessException::class)
     fun test_assertParticipate() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        val village = villageService.findVillage(villageId)
+        val village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         // ## Act ##
         // ## Assert ##
         villageCoordinator.assertParticipate(
-            villageId = villageId,
+            villageId = village.id,
             user = user,
             message = "aa",
             charaId = charas.list[1].id,
@@ -109,7 +100,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         )
         // 見学不可設定なので見学はできない
         villageCoordinator.assertParticipate(
-            villageId = villageId,
+            villageId = village.id,
             user = user,
             message = "aa",
             charaId = charas.list[1].id,
@@ -121,16 +112,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_participate() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
-        val player = playerBhv.selectByPK(2).get()
-        val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         // ## Act ##
         villageCoordinator.participate(
-            villageId = villageId,
+            villageId = village.id,
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
@@ -138,21 +125,19 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         assertThat(village.participant.memberList.any { it.charaId == charas.list[1].id })
     }
 
     @Test
     fun test_changeSkillRequest() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
-            villageId = villageId,
+            villageId = village.id,
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
@@ -163,14 +148,14 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Act ##
         villageCoordinator.changeSkillRequest(
-            villageId,
+            village.id,
             user,
             first.code(),
             second.code()
         )
 
         // ## Assert ##
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         val participant = villageCoordinator.findParticipant(village, user)
         assertThat(participant?.skillRequest?.first?.toCdef()).isEqualTo(first)
         assertThat(participant?.skillRequest?.second?.toCdef()).isEqualTo(second)
@@ -179,26 +164,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_leave() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam().copy(
-            setting = createVillageSettingsParam().copy(
-                time = VillageTime(
-                    termType = CDef.Term.長期.code(),
-                    prologueStartDatetime = LocalDateTime.now(),
-                    epilogueStartDatetime = null,
-                    epilogueDay = null,
-                    startDatetime = LocalDateTime.now().plusHours(3L),
-                    dayChangeIntervalSeconds = 86400,
-                    silentHours = null
-                )
-            )
-        )
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
-            villageId = villageId,
+            villageId = village.id,
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
@@ -206,10 +177,10 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        villageCoordinator.leave(villageId, user)
+        villageCoordinator.leave(village.id, user)
 
         // ## Assert ##
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         val participant = villageCoordinator.findParticipant(village, user)
         assertThat(participant).isNull()
     }
@@ -217,14 +188,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_confirmToSay() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        val village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
-            villageId = villageId,
+            villageId = village.id,
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
@@ -235,7 +204,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         // ## Act ##
         // ## Assert ##
         villageCoordinator.confirmToSay(
-            villageId,
+            village.id,
             user,
             messageText,
             CDef.MessageType.通常発言.code(),
@@ -246,14 +215,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_say() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         villageCoordinator.participate(
-            villageId = villageId,
+            villageId = village.id,
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
@@ -263,7 +230,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Act ##
         villageCoordinator.say(
-            villageId,
+            village.id,
             user,
             messageText,
             CDef.MessageType.通常発言.code(),
@@ -271,10 +238,10 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         )
 
         // ## Assert ##
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         val participant = villageCoordinator.findParticipant(village, user)
         val messages = messageService.findMessages(
-            villageId,
+            village.id,
             village.day.latestDay().id,
             MessageQuery(listOf(CDef.MessageType.通常発言))
         )
@@ -287,15 +254,13 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_setAbility() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(
-                villageId = villageId,
+                villageId = village.id,
                 playerId = it,
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
@@ -303,7 +268,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 isSpectate = false
             )
         }
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         village = villageService.updateVillageDifference(
             village,
             village.addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill(
@@ -318,14 +283,14 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Act ##
         villageCoordinator.setAbility(
-            villageId,
+            village.id,
             user,
             dummy.id,
             CDef.AbilityType.占い.code()
         )
 
         // ## Assert ##
-        val abilities = abilityService.findVillageAbilities(villageId)
+        val abilities = abilityService.findVillageAbilities(village.id)
         assertThat(abilities.list.any {
             it.abilityType.toCdef() == CDef.AbilityType.占い
                 && it.myselfId == participant?.id
@@ -336,15 +301,13 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_setVote() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(
-                villageId = villageId,
+                villageId = village.id,
                 playerId = it,
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
@@ -352,7 +315,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 isSpectate = false
             )
         }
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         village = villageService.updateVillageDifference(
             village,
             village.addNewDay().addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill(
@@ -367,11 +330,11 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Act ##
         villageCoordinator.setVote(
-            villageId, user, dummy.id
+            village.id, user, dummy.id
         )
 
         // ## Assert ##
-        val votes = voteService.findVillageVotes(villageId)
+        val votes = voteService.findVillageVotes(village.id)
         assertThat(votes.list.any {
             it.myselfId == participant?.id
                 && it.targetId == village.dummyChara().id
@@ -381,15 +344,13 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_setCommit() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
             villageCoordinator.participate(
-                villageId = villageId,
+                villageId = village.id,
                 playerId = it,
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
@@ -397,7 +358,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 isSpectate = false
             )
         }
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         village = villageService.updateVillageDifference(
             village,
             village.addNewDay().changeStatus(CDef.VillageStatus.進行中).copy(
@@ -410,11 +371,11 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Act ##
         villageCoordinator.setCommit(
-            villageId, user, true
+            village.id, user, true
         )
 
         // ## Assert ##
-        val commits = commitService.findCommits(villageId)
+        val commits = commitService.findCommits(village.id)
         assertThat(commits.list.any {
             it.myselfId == participant?.id && it.isCommitting
         }).isTrue()
@@ -423,12 +384,10 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     @Test
     fun test_findActionSituation_エラーが起きないこと() {
         // ## Arrange ##
-        val paramVillage = createVillageRegisterParam()
         val player = playerBhv.selectByPK(2).get()
         val user = HowlingWolfUser(player.uid, player.authorityCodeAsAuthority)
-        val villageId = villageCoordinator.registerVillage(paramVillage, user)
-        var village = villageService.findVillage(villageId)
-        val players: Players = playerService.findPlayers(villageId)
+        var village = dummyVillageService.createG16PrologueVillage()
+        val players: Players = playerService.findPlayers(village.id)
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         // ## Act ##
@@ -438,7 +397,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         // ## Arrange ##
         (2..11).forEach {
             villageCoordinator.participate(
-                villageId = villageId,
+                villageId = village.id,
                 playerId = it,
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
@@ -452,7 +411,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
-        village = villageService.findVillage(villageId)
+        village = villageService.findVillage(village.id)
         village = villageService.updateVillageDifference(
             village,
             village.addNewDay().addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill(
@@ -473,7 +432,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Arrange ##
         villageCoordinator.say(
-            villageId,
+            village.id,
             user,
             "hoge",
             CDef.MessageType.通常発言.code(),
@@ -486,7 +445,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
 
         // ## Arrange ##
         villageCoordinator.setAbility(
-            villageId,
+            village.id,
             user,
             village.dummyChara().id,
             CDef.AbilityType.占い.code()
@@ -497,79 +456,17 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
-        villageCoordinator.setVote(villageId, user, village.dummyChara().id)
+        villageCoordinator.setVote(village.id, user, village.dummyChara().id)
 
         // ## Act ##
         // ## Assert ##
         villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
-        villageCoordinator.setCommit(villageId, user, true)
+        villageCoordinator.setCommit(village.id, user, true)
 
         // ## Act ##
         // ## Assert ##
         villageCoordinator.findActionSituation(village, user, players, charas)
-    }
-
-    // ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-    private fun createVillageRegisterParam(): Village {
-        return Village(
-            id = 1, // dummy
-            name = "dummy village name",
-            creatorPlayerId = 1,
-            status = VillageStatus(CDef.VillageStatus.プロローグ),
-            setting = createVillageSettingsParam(),
-            participant = VillageParticipants(
-                count = 1, // dummy
-                memberList = listOf()
-            ),
-            spectator = VillageParticipants(
-                count = 0, // dummy
-                memberList = listOf() // dummy
-            ),
-            day = VillageDays(
-                dayList = listOf() // dummy
-            ),
-            winCamp = null
-        )
-    }
-
-    private fun createVillageSettingsParam(): VillageSettings {
-        return VillageSettings(
-            capacity = PersonCapacity(
-                min = 10,
-                max = 16
-            ),
-            time = VillageTime(
-                termType = CDef.Term.長期.code(),
-                prologueStartDatetime = LocalDateTime.now(),
-                epilogueStartDatetime = null,
-                epilogueDay = null,
-                startDatetime = LocalDateTime.now(),
-                dayChangeIntervalSeconds = 86400,
-                silentHours = null
-            ),
-            charachip = VillageCharachip(
-                dummyCharaId = 1,
-                charachipId = 1
-            ),
-            organizations = VillageOrganizations(),
-            rules = VillageRules(
-                openVote = false,
-                availableSkillRequest = true,
-                availableSpectate = false,
-                openSkillInGrave = false,
-                visibleGraveMessage = false,
-                availableSuddenlyDeath = true,
-                availableCommit = false,
-                messageRestrict = VillageMessageRestricts()
-            ),
-            password = VillagePassword(
-                joinPasswordRequired = false,
-                joinPassword = null
-            )
-        )
     }
 }
