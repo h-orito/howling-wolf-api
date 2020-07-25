@@ -22,7 +22,11 @@ import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 
 
 /**
@@ -186,6 +190,18 @@ class DebugController(
         setting.setVillageSettingItemCode_突然死ありか()
         setting.villageSettingText = "0"
         villageSettingBhv.update(setting)
+    }
+
+    @PostMapping("/admin/village/{villageId}/multiple-say")
+    fun multiSay(
+        @PathVariable("villageId") villageId: Int,
+        @AuthenticationPrincipal user: HowlingWolfUser
+    ) {
+        if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
+
+        repeat(100) {
+            villageCoordinator.say(villageId, user, "${it}回目の発言", "NORMAL_SAY", "NORMAL")
+        }
     }
 
     // ===================================================================================

@@ -1,14 +1,14 @@
 package com.ort.howlingwolf.api.view.myself.participant
 
 import com.ort.howlingwolf.api.view.village.VillageParticipantView
-import com.ort.howlingwolf.domain.model.ability.Ability
+import com.ort.howlingwolf.domain.model.ability.AbilityType
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.myself.participant.VillageAbilitySituation
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 
 data class VillageAbilitySituationView(
-    val type: Ability,
+    val type: AbilityType,
     val targetList: List<VillageParticipantView>,
     val target: VillageParticipantView?,
     val usable: Boolean,

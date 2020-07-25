@@ -22,50 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner
 class DayChangeTest : HowlingWolfTest() {
 
     @Test
-    fun test_leaveParticipantIfNeeded_プロローグ() {
-        // ## Arrange ##
-        val village = DummyDomainModelCreator.createDummyVillage().copy(
-            status = VillageStatus(CDef.VillageStatus.進行中)
-        )
-        val dayChange = DayChange(
-            village = village,
-            votes = DummyDomainModelCreator.createDummyVillageVotes(),
-            abilities = DummyDomainModelCreator.createDummyVillageAbilities(),
-            players = DummyDomainModelCreator.createDummyPlayers()
-        )
-        val todayMessages = Messages(listOf())
-        val charas = DummyDomainModelCreator.createDummyCharas()
-
-        // ## Act ##
-        val afterDayChange = dayChange.leaveParticipantIfNeeded(todayMessages, charas)
-
-        // ## Assert ##
-        assertThat(afterDayChange.isChange).`as`("プロローグでないので何もしない").isFalse()
-    }
-
-    @Test
-    fun test_process_終了後() {
-        // ## Arrange ##
-        val village = DummyDomainModelCreator.createDummyVillage().copy(
-            status = VillageStatus(CDef.VillageStatus.終了)
-        )
-        val dayChange = DayChange(
-            village = village,
-            votes = DummyDomainModelCreator.createDummyVillageVotes(),
-            abilities = DummyDomainModelCreator.createDummyVillageAbilities(),
-            players = DummyDomainModelCreator.createDummyPlayers()
-        )
-        val todayMessages = Messages(listOf())
-        val charas = DummyDomainModelCreator.createDummyCharas()
-
-        // ## Act ##
-        val afterDayChange = dayChange.process(todayMessages, charas)
-
-        // ## Assert ##
-        assertThat(afterDayChange.isChange).`as`("終了後は何もしない").isFalse()
-    }
-
-    @Test
     fun test_setIsChange_最初から変更あり() {
         // ## Arrange ##
         val village = DummyDomainModelCreator.createDummyVillage().copy(

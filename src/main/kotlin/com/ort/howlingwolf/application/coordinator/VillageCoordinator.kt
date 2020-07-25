@@ -10,13 +10,12 @@ import com.ort.howlingwolf.application.service.ReservedVillageService
 import com.ort.howlingwolf.application.service.TweetService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.application.service.VoteService
-import com.ort.howlingwolf.domain.model.ability.Ability
+import com.ort.howlingwolf.domain.model.ability.AbilityType
 import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.commit.Commit
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
-import com.ort.howlingwolf.domain.model.message.Say
 import com.ort.howlingwolf.domain.model.myself.participant.SituationAsParticipant
 import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
@@ -24,12 +23,15 @@ import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbility
-import com.ort.howlingwolf.domain.model.village.participant.Leave
-import com.ort.howlingwolf.domain.model.village.participant.Participate
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.vote.VillageVote
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
-import com.ort.howlingwolf.domain.model.vote.Vote
+import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
+import com.ort.howlingwolf.domain.service.commit.CommitDomainService
+import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
+import com.ort.howlingwolf.domain.service.say.SayDomainService
+import com.ort.howlingwolf.domain.service.skill.SkillRequestDomainService
+import com.ort.howlingwolf.domain.service.vote.VoteDomainService
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.stereotype.Service
@@ -38,17 +40,24 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class VillageCoordinator(
-    val dayChangeCoordinator: DayChangeCoordinator,
-
-    val villageService: VillageService,
-    val playerService: PlayerService,
-    val messageService: MessageService,
-    val charachipService: CharachipService,
-    val abilityService: AbilityService,
-    val voteService: VoteService,
-    val commitService: CommitService,
-    val reservedVillageService: ReservedVillageService,
-    val tweetService: TweetService
+    // application service
+    private val dayChangeCoordinator: DayChangeCoordinator,
+    private val villageService: VillageService,
+    private val playerService: PlayerService,
+    private val messageService: MessageService,
+    private val charachipService: CharachipService,
+    private val abilityService: AbilityService,
+    private val voteService: VoteService,
+    private val commitService: CommitService,
+    private val reservedVillageService: ReservedVillageService,
+    private val tweetService: TweetService,
+    // domain service
+    private val participateDomainService: ParticipateDomainService,
+    private val skillRequestDomainService: SkillRequestDomainService,
+    private val commitDomainService: CommitDomainService,
+    private val sayDomainService: SayDomainService,
+    private val abilityDomainService: AbilityDomainService,
+    private val voteDomainService: VoteDomainService
 ) {
 
     /**
@@ -148,7 +157,7 @@ class VillageCoordinator(
         val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
 
         if (isSpectate) {
-            Participate.assertSpectate(
+            participateDomainService.assertSpectate(
                 player,
                 village,
                 charaId,
@@ -156,13 +165,12 @@ class VillageCoordinator(
                 password
             )
         } else {
-            Participate.assertParticipate(
+            participateDomainService.assertParticipate(
                 player,
                 village,
                 charaId,
                 firstRequestSkill,
                 secondRequestSkill,
-                isSpectate,
                 password
             )
         }
@@ -173,7 +181,7 @@ class VillageCoordinator(
             CDef.FaceType.通常.code()
         )
         val chara = charas.chara(charaId)
-        Say.assertParticipateSay(village, chara, messageContent)
+        sayDomainService.assertParticipateSay(village, chara, messageContent)
     }
 
     /**
@@ -229,7 +237,7 @@ class VillageCoordinator(
         // 役職希望変更できない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
-        SkillRequest.assertSkillRequest(village, participant, firstRequestSkill, secondRequestSkill)
+        skillRequestDomainService.assertSkillRequest(village, participant, firstRequestSkill, secondRequestSkill)
         // 役職希望変更
         val changedVillage: Village = village.changeSkillRequest(
             participant!!.id,
@@ -249,7 +257,7 @@ class VillageCoordinator(
         // 退村できない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
-        Leave.assertLeave(village, participant)
+        participateDomainService.assertLeave(village, participant)
         // 退村
         val updatedVillage: Village = villageService.updateVillageDifference(
             village,
@@ -302,20 +310,20 @@ class VillageCoordinator(
      * @param villageId villageId
      * @param user user
      * @param targetId 対象村参加者ID
-     * @param abilityType 能力種別
+     * @param abilityTypeCode 能力種別
      */
     @Transactional(rollbackFor = [Exception::class, HowlingWolfBusinessException::class])
-    fun setAbility(villageId: Int, user: HowlingWolfUser, targetId: Int?, abilityType: String) {
+    fun setAbility(villageId: Int, user: HowlingWolfUser, targetId: Int?, abilityTypeCode: String) {
         // 能力セットできない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
-        val ability = Ability(abilityType)
-        ability.assertAbility(village, participant, targetId)
+        val abilityType = AbilityType(abilityTypeCode)
+        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
         // 能力セット
-        val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, ability)
+        val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, abilityType)
         abilityService.updateAbility(villageAbility)
         val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
-        messageService.registerAbilitySetMessage(village, participant, targetId, ability, charas)
+        messageService.registerAbilitySetMessage(village, participant, targetId, abilityType, charas)
     }
 
     /**
@@ -330,7 +338,7 @@ class VillageCoordinator(
         // 投票セットできない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
-        Vote.assertVote(village, participant, targetId)
+        voteDomainService.assertVote(village, participant, targetId)
         // 投票
         val villageVote = VillageVote(
             village.day.latestDay().id,
@@ -352,7 +360,7 @@ class VillageCoordinator(
         // コミットできない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
         val participant: VillageParticipant? = findParticipant(village, user)
-        Commit.assertCommit(village, participant)
+        commitDomainService.assertCommit(village, participant)
         // コミット
         val commit = Commit(village.day.latestDay().id, participant!!.id, doCommit)
         commitService.updateCommit(commit)
@@ -385,15 +393,14 @@ class VillageCoordinator(
             messageService.findParticipateDayMessageList(village.id, village.day.latestDay(), participant)
 
         return SituationAsParticipant(
-            village,
-            player,
-            participant,
-            charas,
-            skillRequest,
-            abilities,
-            votes,
-            commit,
-            latestDayMessageList
+            participate = participateDomainService.convertToSituation(
+                village, participant, player, charas
+            ),
+            skillRequest = skillRequestDomainService.convertToSituation(village, participant, skillRequest),
+            commit = commitDomainService.convertToSituation(village, participant, commit),
+            say = sayDomainService.convertToSituation(village, participant, charas, latestDayMessageList),
+            ability = abilityDomainService.convertToSituationList(village, participant, abilities),
+            vote = voteDomainService.convertToSituation(village, participant, votes)
         )
     }
 
@@ -418,6 +425,6 @@ class VillageCoordinator(
         val chara: Chara? = if (participant == null) null else charachipService.findChara(participant.charaId)
         val latestDayMessageList: List<Message> =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
-        Say.assertSay(village, participant, chara, latestDayMessageList, messageContent)
+        sayDomainService.assertSay(village, participant, chara, latestDayMessageList, messageContent)
     }
 }

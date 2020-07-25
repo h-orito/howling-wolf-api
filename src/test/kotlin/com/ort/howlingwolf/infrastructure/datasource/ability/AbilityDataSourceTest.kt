@@ -71,7 +71,7 @@ class AbilityDataSourceTest : HowlingWolfTest() {
             villageDayId = villageDayId,
             myselfId = villagePlayerId2,
             targetId = villagePlayerId,
-            ability = com.ort.howlingwolf.domain.model.ability.Ability(CDef.AbilityType.襲撃)
+            abilityType = com.ort.howlingwolf.domain.model.ability.AbilityType(CDef.AbilityType.襲撃)
         )
         abilityDataSource.updateAbility(villageAbility)
 
@@ -96,7 +96,7 @@ class AbilityDataSourceTest : HowlingWolfTest() {
                 villageDayId = villageDayId,
                 myselfId = villagePlayerId2,
                 targetId = villagePlayerId,
-                ability = com.ort.howlingwolf.domain.model.ability.Ability(CDef.AbilityType.占い)
+                abilityType = com.ort.howlingwolf.domain.model.ability.AbilityType(CDef.AbilityType.占い)
             )
         )
 

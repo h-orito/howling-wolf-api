@@ -22,6 +22,7 @@ import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
 import com.ort.howlingwolf.domain.model.village.setting.VillageRules
 import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
 import com.ort.howlingwolf.domain.model.village.setting.VillageTime
+import com.ort.howlingwolf.domain.service.message.MessageDomainService
 import com.ort.howlingwolf.infrastructure.datasource.village.VillageDataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -50,6 +51,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
     lateinit var messageDataSource: MessageDataSource
     @Autowired
     lateinit var villageDataSource: VillageDataSource
+    @Autowired
+    lateinit var messageDomainService: MessageDomainService
 
     // ===================================================================================
     //                                                                                Test
@@ -188,7 +191,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        var query = MessageQuery.invoke(
+        var query = messageDomainService.createQuery(
             village = village,
             participant = participant,
             day = village.day.latestDay().day,
@@ -210,7 +213,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         assertThat(messages.list.size).`as`("指定しない場合は全部").isEqualTo(2)
 
         // ## Act ##
-        query = MessageQuery.invoke(
+        query = messageDomainService.createQuery(
             village = village,
             participant = participant,
             day = village.day.latestDay().day,
@@ -233,7 +236,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         assertThat(messages.list[0].content.type.code).isEqualTo(CDef.MessageType.通常発言.code())
 
         // ## Act ##
-        query = MessageQuery.invoke(
+        query = messageDomainService.createQuery(
             village = village,
             participant = participant,
             day = village.day.latestDay().day,
@@ -255,7 +258,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         assertThat(messages.list.size).`as`("両方指定しているので両方").isEqualTo(2)
 
         // ## Act ##
-        query = MessageQuery.invoke(
+        query = messageDomainService.createQuery(
             village = village,
             participant = participant,
             day = village.day.latestDay().day,
@@ -277,7 +280,7 @@ class MessageDataSourceTest : HowlingWolfTest() {
         assertThat(messages.list.size).`as`("独り言のみ").isEqualTo(1)
         assertThat(messages.list[0].content.type.code).isEqualTo(CDef.MessageType.独り言.code())
 
-        query = MessageQuery.invoke(
+        query = messageDomainService.createQuery(
             village = village,
             participant = participant,
             day = village.day.latestDay().day,
