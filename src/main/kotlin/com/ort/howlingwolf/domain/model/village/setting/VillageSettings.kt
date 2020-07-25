@@ -2,6 +2,7 @@ package com.ort.howlingwolf.domain.model.village.setting
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.domain.model.message.MessageType
+import com.ort.howlingwolf.domain.model.village.VillageDays
 import java.time.LocalDateTime
 
 data class VillageSettings(
@@ -90,5 +91,12 @@ data class VillageSettings(
             || organizations.existsDifference(setting.organizations)
             || rules.existsDifference(setting.rules)
             || password.existsDifference(setting.password)
+    }
+
+    fun toEpilogue(villageDays: VillageDays): VillageSettings {
+        return this.copy(
+            time = time.toEpilogue(villageDays)
+        )
+
     }
 }

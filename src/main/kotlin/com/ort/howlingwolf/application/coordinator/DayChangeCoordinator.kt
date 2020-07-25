@@ -16,6 +16,7 @@ import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
+import com.ort.howlingwolf.domain.service.daychange.DayChangeDomainService
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +29,9 @@ class DayChangeCoordinator(
     val commitService: CommitService,
     val messageService: MessageService,
     val charachipService: CharachipService,
-    val playerService: PlayerService
+    val playerService: PlayerService,
+    // domain service
+    val dayChangeDomainService: DayChangeDomainService
 ) {
 
     /**
@@ -54,28 +57,36 @@ class DayChangeCoordinator(
         ), votes, abilities, players)
 
         // プロローグで長時間発言していない人を退村させる
-        var dayChange: DayChange = beforeDayChange.leaveParticipantIfNeeded(todayMessages, charas).let {
-            if (it.isChange) update(beforeDayChange, it)
-            it.copy(isChange = false)
-        }
+        var dayChange = dayChangeDomainService.leaveParticipantIfNeeded(
+            dayChange = beforeDayChange,
+            todayMessages = todayMessages,
+            charas = charas
+        ).let { updateIfNeeded(beforeDayChange, it) }
 
         // 必要あれば日付追加
-        dayChange = dayChange.addDayIfNeeded(commits).let {
+        dayChange = dayChangeDomainService.addDayIfNeeded(dayChange, commits).let {
             if (!it.isChange) return
-            update(beforeDayChange, it)
-            it.copy(isChange = false)
+            updateIfNeeded(dayChange, it)
         }
 
         // 登録後の村日付idが必要になるので取得し直す
         dayChange = dayChange.copy(village = villageService.findVillage(village.id))
 
         // 日付更新
-        dayChange.process(todayMessages, charas).let { if (it.isChange) update(dayChange, it) }
+        dayChangeDomainService.process(dayChange, todayMessages, charas).also {
+            updateIfNeeded(dayChange, it)
+        }
     }
 
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
+    private fun updateIfNeeded(before: DayChange, after: DayChange): DayChange {
+        if (!after.isChange) return after
+        update(before, after)
+        return after.copy(isChange = false)
+    }
+
     private fun update(before: DayChange, after: DayChange) {
         // player
         if (before.players.existsDifference(after.players)) {

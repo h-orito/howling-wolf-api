@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.domain.model.village.participant
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.VillageDay
@@ -91,7 +92,7 @@ data class VillageParticipants(
     }
 
     // 勝敗設定
-    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipants = this.copy(memberList = this.memberList.map { it.winLose(cdefWinCamp) })
+    fun winLose(winCamo: Camp): VillageParticipants = this.copy(memberList = this.memberList.map { it.winLose(winCamo) })
 
     fun member(id: Int): VillageParticipant = memberList.first { it.id == id }
 

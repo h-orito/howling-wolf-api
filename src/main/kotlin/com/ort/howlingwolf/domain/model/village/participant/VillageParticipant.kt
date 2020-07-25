@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.domain.model.village.participant
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.dead.Dead
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
@@ -63,10 +64,10 @@ data class VillageParticipant(
         this.copy(skillRequest = SkillRequest(Skill(first), Skill(second)))
 
     // 勝敗
-    fun winLose(cdefWinCamp: CDef.Camp): VillageParticipant {
+    fun winLose(winCamp: Camp): VillageParticipant {
         val isSuddenlyDeath = dead?.toCdef() == CDef.DeadReason.突然
         return this.copy(
-            isWin = !isSuddenlyDeath && skill?.toCdef()?.campCode() == cdefWinCamp.code()
+            isWin = !isSuddenlyDeath && skill?.toCdef()?.campCode() == winCamp.code
         )
     }
 

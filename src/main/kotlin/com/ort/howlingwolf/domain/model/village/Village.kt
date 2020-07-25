@@ -3,18 +3,8 @@ package com.ort.howlingwolf.domain.model.village
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.charachip.Charas
-import com.ort.howlingwolf.domain.model.daychange.SkillAssign
-import com.ort.howlingwolf.domain.model.message.AttackMessage
-import com.ort.howlingwolf.domain.model.message.GraveSay
-import com.ort.howlingwolf.domain.model.message.MasonMessage
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
-import com.ort.howlingwolf.domain.model.message.MonologueSay
-import com.ort.howlingwolf.domain.model.message.NormalSay
-import com.ort.howlingwolf.domain.model.message.PsychicMessage
-import com.ort.howlingwolf.domain.model.message.SecretSay
-import com.ort.howlingwolf.domain.model.message.SpectateSay
-import com.ort.howlingwolf.domain.model.message.WerewolfSay
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
@@ -40,8 +30,6 @@ data class Village(
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
-    private val everyoneAllowedMessageTypeList = listOf(CDef.MessageType.公開システムメッセージ, CDef.MessageType.通常発言, CDef.MessageType.村建て発言)
-
     private val initialMessage: String =
         "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この村に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
 
@@ -185,6 +173,12 @@ data class Village(
             || participant.existsDifference(village.participant)
             || day.existsDifference(village.day)
             || setting.existsDifference(village.setting)
+    }
+
+    // 決着がついたか
+    fun isSettled(): Boolean {
+        val wolfCount = wolfCount()
+        return wolfCount <= 0 || villagerCount() <= wolfCount
     }
 
     // ===================================================================================
@@ -346,63 +340,6 @@ data class Village(
         return day.latestDay().day > 1
     }
 
-    /**
-     * 閲覧できる発言種別リスト
-     *
-     * @param participant 参加情報
-     * @param day 何日目か
-     * @param authority ユーザの権限
-     * @return 閲覧できる発言種別
-     */
-    fun viewableMessageTypeList(
-        participant: VillageParticipant?,
-        day: Int,
-        authority: CDef.Authority?
-    ): List<CDef.MessageType> {
-        // 管理者は全て見られる
-        if (authority == CDef.Authority.管理者) return CDef.MessageType.listAll()
-        // 村が終了していたら全て見られる
-        if (status.isSolved()) return CDef.MessageType.listAll()
-
-        val allowedTypeList: MutableList<CDef.MessageType> = mutableListOf()
-        allowedTypeList.addAll(everyoneAllowedMessageTypeList)
-        // 権限に応じて追加していく（独り言と秘話はここでは追加しない）
-        listOf(
-            CDef.MessageType.死者の呻き,
-            CDef.MessageType.見学発言,
-            CDef.MessageType.人狼の囁き,
-            CDef.MessageType.白黒霊視結果,
-            CDef.MessageType.襲撃結果,
-            CDef.MessageType.共有相互確認メッセージ
-        ).forEach {
-            if (isViewableMessage(participant, it.code())) allowedTypeList.add(it)
-        }
-        return allowedTypeList
-    }
-
-    /**
-     * 閲覧できるか
-     *
-     * @param participant 参加情報
-     * @param messageType 発言種別
-     * @param day 何日目か
-     * @return 閲覧できるか
-     */
-    fun isViewableMessage(participant: VillageParticipant?, messageType: String, day: Int = 1): Boolean {
-        return when (CDef.MessageType.codeOf(messageType) ?: return false) {
-            CDef.MessageType.通常発言 -> NormalSay.isViewable(this, participant)
-            CDef.MessageType.人狼の囁き -> WerewolfSay.isViewable(this, participant)
-            CDef.MessageType.死者の呻き -> GraveSay.isViewable(this, participant)
-            CDef.MessageType.見学発言 -> SpectateSay.isViewable(this, participant, day)
-            CDef.MessageType.独り言 -> MonologueSay.isViewable(this, participant)
-            CDef.MessageType.秘話 -> SecretSay.isViewable(this, participant)
-            CDef.MessageType.白黒霊視結果 -> PsychicMessage.isViewable(this, participant)
-            CDef.MessageType.襲撃結果 -> AttackMessage.isViewable(this, participant)
-            CDef.MessageType.共有相互確認メッセージ -> MasonMessage.isViewable(this, participant)
-            else -> return false
-        }
-    }
-
     // ===================================================================================
     //                                                                              update
     //                                                                        ============
@@ -474,31 +411,20 @@ data class Village(
 
 
     // 役職割り当て
-    fun assignSkill(): Village {
-        val assignedParticipants = SkillAssign.assign(
-            participant,
-            setting.organizations.mapToSkillCount(participant.count),
-            dummyChara(),
-            setting.rules.availableDummySkill
-        )
-        return this.copy(participant = assignedParticipants)
+    fun assignSkill(participants: VillageParticipants): Village {
+        return this.copy(participant = participants)
     }
 
     // ステータス変更
     fun changeStatus(cdefVillageStatus: CDef.VillageStatus): Village = this.copy(status = VillageStatus(cdefVillageStatus))
 
-    // 勝利陣営設定
-    fun win(winCamp: CDef.Camp): Village {
-        return this.copy(
-            winCamp = Camp(winCamp), // 村自体の勝利陣営
-            participant = this.participant.winLose(winCamp), // 個人ごとの勝敗
-            setting = this.setting.copy(
-                time = this.setting.time.copy(
-                    epilogueDay = day.latestDay().day,
-                    epilogueStartDatetime = day.yesterday().dayChangeDatetime
-                )
-            )
-        )
+    // エピローグ遷移
+    fun toEpilogue(): Village {
+        return this
+            .changeStatus(CDef.VillageStatus.エピローグ) // エピローグへ
+            .winLose() // 勝敗陣営設定
+            .setEpilogueTime() // エピローグ日時、エピローグ日
+            .extendLatestDay() // エピローグは固定で24時間にするので、最新日を差し替える
     }
 
     // 最新の日を24時間にする
@@ -515,6 +441,35 @@ data class Village(
     private fun assertPassword(password: String?) {
         if (!setting.password.joinPasswordRequired) return
         if (setting.password.joinPassword != password) throw HowlingWolfBusinessException("入村パスワードが誤っています")
+    }
+
+    private fun villagerCount(): Int =
+        participant.filterAlive().memberList.count { !it.skill!!.toCdef().isCountWolf && !it.skill.toCdef().isNoCount }
+
+    private fun wolfCount(): Int = participant.filterAlive().memberList.count { it.skill!!.toCdef().isCountWolf }
+
+    private fun isFoxAlive(): Boolean = participant.filterAlive().memberList.any { it.skill!!.toCdef().isNoCount }
+
+    // 勝利陣営設定
+    private fun winLose(): Village {
+        if (!isSettled()) return this
+        return this.copy(
+            winCamp = judgeWinCamp(), // 村自体の勝利陣営
+            participant = this.participant.winLose(judgeWinCamp()!!) // 個人ごとの勝敗
+        )
+    }
+
+    private fun setEpilogueTime(): Village {
+        return this.copy(
+            setting = setting.toEpilogue(day)
+        )
+    }
+
+    private fun judgeWinCamp(): Camp? {
+        if (!this.isSettled()) return null
+        if (isFoxAlive()) return Camp(CDef.Camp.狐陣営)
+        if (wolfCount() > 0) return Camp(CDef.Camp.人狼陣営)
+        return Camp(CDef.Camp.村人陣営)
     }
 
     // ===================================================================================
