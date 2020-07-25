@@ -1,8 +1,8 @@
 package com.ort.howlingwolf.domain.model.skill
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.domain.model.ability.Abilities
-import com.ort.howlingwolf.domain.model.ability.Ability
+import com.ort.howlingwolf.domain.model.ability.AbilityTypes
+import com.ort.howlingwolf.domain.model.ability.AbilityType
 import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.message.MessageType
 
@@ -11,8 +11,8 @@ data class Skill(
     val name: String,
     val shortName: String,
     val winJudgeCamp: Camp,
-    val abilityList: List<Ability>,
-    val manualAbilityList: List<Ability>,
+    val abilityList: List<AbilityType>,
+    val manualAbilityList: List<AbilityType>,
     val isDivineResultWolf: Boolean,
     val isPsychicResultWolf: Boolean,
     val sayableSkillMessageTypeList: List<MessageType>,
@@ -48,10 +48,10 @@ data class Skill(
 
         // 説明書専用
         private val skillAbilityListMapForManual = mapOf(
-            CDef.Skill.人狼 to listOf(Ability(CDef.AbilityType.襲撃)),
-            CDef.Skill.占い師 to listOf(Ability(CDef.AbilityType.占い)),
-            CDef.Skill.狩人 to listOf(Ability(CDef.AbilityType.護衛)),
-            CDef.Skill.霊能者 to listOf(Ability("PSYCHIC", "霊視"))
+            CDef.Skill.人狼 to listOf(AbilityType(CDef.AbilityType.襲撃)),
+            CDef.Skill.占い師 to listOf(AbilityType(CDef.AbilityType.占い)),
+            CDef.Skill.狩人 to listOf(AbilityType(CDef.AbilityType.護衛)),
+            CDef.Skill.霊能者 to listOf(AbilityType("PSYCHIC", "霊視"))
         )
 
         fun skillByShortName(shortName: String): Skill? {
@@ -61,13 +61,13 @@ data class Skill(
             return Skill(cdefSkill)
         }
 
-        fun getAbilities(cdefSkill: CDef.Skill): Abilities {
-            val cdefAbilityList = skillAbilityTypeListMap[cdefSkill] ?: return Abilities(listOf())
-            return Abilities(cdefAbilityList.map { Ability(it) })
+        fun getAbilities(cdefSkill: CDef.Skill): AbilityTypes {
+            val cdefAbilityList = skillAbilityTypeListMap[cdefSkill] ?: return AbilityTypes(listOf())
+            return AbilityTypes(cdefAbilityList.map { AbilityType(it) })
         }
 
-        fun getManualAbilities(cdefSkill: CDef.Skill): Abilities {
-            return Abilities(skillAbilityListMapForManual[cdefSkill] ?: listOf())
+        fun getManualAbilities(cdefSkill: CDef.Skill): AbilityTypes {
+            return AbilityTypes(skillAbilityListMapForManual[cdefSkill] ?: listOf())
         }
 
         fun getSayableMessageTypeList(cdefSkill: CDef.Skill): List<MessageType> {
@@ -95,8 +95,8 @@ data class Skill(
         }
     }
 
-    fun getAbilities(): Abilities {
-        val cdefSkill = CDef.Skill.codeOf(code) ?: return Abilities(listOf())
+    fun getAbilities(): AbilityTypes {
+        val cdefSkill = CDef.Skill.codeOf(code) ?: return AbilityTypes(listOf())
         return Companion.getAbilities(cdefSkill)
     }
 

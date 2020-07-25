@@ -42,10 +42,10 @@ class AbilityDataSource(
     private fun deleteAbility(villageAbility: VillageAbility) {
         abilityBhv.queryDelete {
             it.query().setVillageDayId_Equal(villageAbility.villageDayId)
-            if (villageAbility.ability.toCdef() != CDef.AbilityType.襲撃) {
+            if (villageAbility.abilityType.toCdef() != CDef.AbilityType.襲撃) {
                 it.query().setVillagePlayerId_Equal(villageAbility.myselfId)
             }
-            it.query().setAbilityTypeCode_Equal_AsAbilityType(villageAbility.ability.toCdef())
+            it.query().setAbilityTypeCode_Equal_AsAbilityType(villageAbility.abilityType.toCdef())
         }
     }
 
@@ -54,7 +54,7 @@ class AbilityDataSource(
         ability.villageDayId = villageAbility.villageDayId
         ability.villagePlayerId = villageAbility.myselfId
         ability.targetVillagePlayerId = villageAbility.targetId
-        ability.abilityTypeCodeAsAbilityType = villageAbility.ability.toCdef()
+        ability.abilityTypeCodeAsAbilityType = villageAbility.abilityType.toCdef()
         abilityBhv.insert(ability)
     }
 
@@ -66,7 +66,7 @@ class AbilityDataSource(
             villageDayId = ability.villageDayId,
             myselfId = ability.villagePlayerId,
             targetId = ability.targetVillagePlayerId,
-            ability = com.ort.howlingwolf.domain.model.ability.Ability(ability.abilityTypeCodeAsAbilityType)
+            abilityType = com.ort.howlingwolf.domain.model.ability.AbilityType(ability.abilityTypeCodeAsAbilityType)
         )
     }
 }

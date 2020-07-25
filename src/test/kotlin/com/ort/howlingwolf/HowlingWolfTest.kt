@@ -15,7 +15,6 @@ open class HowlingWolfTest {
     @MockBean
     lateinit var firebaseConfig: FirebaseConfig
 
-
     @Before
     fun setUp() {
         // firebase関連はmockにする

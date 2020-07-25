@@ -1,8 +1,5 @@
 package com.ort.howlingwolf.domain.model.daychange
 
-import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.domain.model.charachip.Charas
-import com.ort.howlingwolf.domain.model.commit.Commits
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
@@ -33,39 +30,6 @@ data class DayChange(
         abilities = abilities,
         players = players
     )
-
-    fun leaveParticipantIfNeeded(todayMessages: Messages, charas: Charas): DayChange {
-        return if (!village.status.isPrologue()) this
-        else Prologue.leaveParticipantIfNeeded(this, todayMessages, charas)
-    }
-
-    // コミットや時間経過で次の日に遷移させる場合は村日付を追加
-    fun addDayIfNeeded(commits: Commits): DayChange {
-        return when {
-            // プロローグ
-            village.status.isPrologue() -> Prologue.addDayIfNeeded(this)
-            // 進行中
-            village.status.isProgress() -> Progress.addDayIfNeeded(this, commits)
-            // エピローグ
-            village.status.code == CDef.VillageStatus.エピローグ.code() -> Epilogue.addDayIfNeeded(this)
-            // 終了後
-            else -> this
-        }
-    }
-
-    // 日付変更処理
-    fun process(todayMessages: Messages, charas: Charas): DayChange {
-        return when {
-            // プロローグ
-            village.status.isPrologue() -> Prologue.dayChange(this, charas)
-            // 進行中
-            village.status.isProgress() -> Progress.dayChange(this, todayMessages, charas)
-            // エピローグ
-            village.status.code == CDef.VillageStatus.エピローグ.code() -> Epilogue.dayChange(this)
-            // 終了後
-            else -> this
-        }
-    }
 
     fun setIsChange(beforeDayChange: DayChange): DayChange {
         return if (isChange) this

@@ -1,24 +1,27 @@
 package com.ort.howlingwolf.application.service
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.domain.model.ability.Ability
+import com.ort.howlingwolf.domain.model.ability.AbilityType
 import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
-import com.ort.howlingwolf.domain.model.commit.Commit
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.Village
-import com.ort.howlingwolf.domain.model.village.participant.Leave
-import com.ort.howlingwolf.domain.model.village.participant.Participate
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
+import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
+import com.ort.howlingwolf.domain.service.commit.CommitDomainService
+import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
 import com.ort.howlingwolf.infrastructure.datasource.message.MessageDataSource
 import org.springframework.stereotype.Service
 
 @Service
 class MessageService(
-    val messageDataSource: MessageDataSource
+    private val messageDataSource: MessageDataSource,
+    private val abilityDomainService: AbilityDomainService,
+    private val participateDomainService: ParticipateDomainService,
+    private val commitDomainService: CommitDomainService
 ) {
     /**
      * 発言取得
@@ -114,7 +117,7 @@ class MessageService(
         // {N}人目、{キャラ名}。
         messageDataSource.registerMessage(
             village.id,
-            Participate.createParticipateMessage(village, chara, isSpectate)
+            participateDomainService.createParticipateMessage(village, chara, isSpectate)
         )
         // 参加発言
         val messageContent = MessageContent.invoke(
@@ -134,26 +137,29 @@ class MessageService(
      * @param chara chara
      */
     fun registerLeaveMessage(village: Village, chara: Chara) =
-        messageDataSource.registerMessage(village.id, Leave.createLeaveMessage(village, chara))
+        messageDataSource.registerMessage(
+            village.id,
+            participateDomainService.createLeaveMessage(village, chara)
+        )
 
     /**
      * 能力セットする際のシステムメッセージを登録
      * @param village village
      * @param participant 村参加者
      * @param targetId 対象の村参加者ID
-     * @param ability ability
+     * @param abilityType abilityType
      * @param charas キャラ
      */
     fun registerAbilitySetMessage(
         village: Village,
         participant: VillageParticipant,
         targetId: Int?,
-        ability: Ability,
+        abilityType: AbilityType,
         charas: Charas
     ) {
         val myChara: Chara = charas.chara(participant.charaId)
         val targetChara: Chara? = if (targetId == null) null else charas.chara(village.participant, targetId)
-        val message: Message = ability.createAbilitySetMessage(village, myChara, targetChara)
+        val message: Message = abilityDomainService.createAbilitySetMessage(village, myChara, targetChara, abilityType)
         messageDataSource.registerMessage(village.id, message)
     }
 
@@ -167,7 +173,7 @@ class MessageService(
     fun registerCommitMessage(village: Village, chara: Chara, doCommit: Boolean) {
         messageDataSource.registerMessage(
             village.id,
-            Commit.createCommitMessage(chara, doCommit, village.day.latestDay().id)
+            commitDomainService.createCommitMessage(chara, doCommit, village.day.latestDay().id)
         )
     }
 

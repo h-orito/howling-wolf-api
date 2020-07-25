@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.domain.model.village.setting
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import java.time.LocalDateTime
 
@@ -56,5 +57,12 @@ data class VillageTime(
         silentHours ?: return false
         val now = HowlingWolfDateUtil.currentLocalDateTime()
         return now.isBefore(dayStartDatetime.plusHours(silentHours.toLong()))
+    }
+
+    fun toEpilogue(villageDays: VillageDays): VillageTime {
+        return this.copy(
+            epilogueDay = villageDays.latestDay().day,
+            epilogueStartDatetime = villageDays.yesterday().dayChangeDatetime
+        )
     }
 }

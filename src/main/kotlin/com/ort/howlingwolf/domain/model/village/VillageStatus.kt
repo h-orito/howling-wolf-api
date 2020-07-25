@@ -23,6 +23,8 @@ data class VillageStatus(
 
     fun isProgress(): Boolean = this.toCdef() == CDef.VillageStatus.進行中
 
+    fun isEpilogue(): Boolean = this.toCdef() == CDef.VillageStatus.エピローグ
+
     fun isFinished(): Boolean = this.toCdef().isFinishedVillage
 
     fun toCdef(): CDef.VillageStatus = CDef.VillageStatus.codeOf(code)

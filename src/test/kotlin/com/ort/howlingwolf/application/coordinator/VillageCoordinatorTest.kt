@@ -306,7 +306,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         village = villageService.findVillage(villageId)
         village = villageService.updateVillageDifference(
             village,
-            village.addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill()
+            village.addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill(
+                participants = VillageParticipants(
+                    count = village.participant.count,
+                    memberList = village.participant.memberList.map { it.assignSkill(it.skillRequest.first) }
+                )
+            )
         )
         val dummy = village.dummyChara()
         val participant = villageCoordinator.findParticipant(village, user)
@@ -322,7 +327,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         // ## Assert ##
         val abilities = abilityService.findVillageAbilities(villageId)
         assertThat(abilities.list.any {
-            it.ability.toCdef() == CDef.AbilityType.占い
+            it.abilityType.toCdef() == CDef.AbilityType.占い
                 && it.myselfId == participant?.id
                 && it.targetId == village.dummyChara().id
         }).isTrue()
@@ -350,7 +355,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         village = villageService.findVillage(villageId)
         village = villageService.updateVillageDifference(
             village,
-            village.addNewDay().addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill()
+            village.addNewDay().addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill(
+                participants = VillageParticipants(
+                    count = village.participant.count,
+                    memberList = village.participant.memberList.map { it.assignSkill(it.skillRequest.first) }
+                )
+            )
         )
         val dummy = village.dummyChara()
         val participant = villageCoordinator.findParticipant(village, user)
@@ -445,7 +455,12 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         village = villageService.findVillage(villageId)
         village = villageService.updateVillageDifference(
             village,
-            village.addNewDay().addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill().copy(
+            village.addNewDay().addNewDay().changeStatus(CDef.VillageStatus.進行中).assignSkill(
+                participants = VillageParticipants(
+                    count = village.participant.count,
+                    memberList = village.participant.memberList.map { it.assignSkill(it.skillRequest.first) }
+                )
+            ).copy(
                 setting = village.setting.copy(
                     rules = village.setting.rules.copy(availableCommit = true)
                 )

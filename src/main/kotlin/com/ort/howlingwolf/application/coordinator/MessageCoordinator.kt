@@ -3,10 +3,10 @@ package com.ort.howlingwolf.application.coordinator
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.application.service.MessageService
 import com.ort.howlingwolf.domain.model.message.Message
-import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
+import com.ort.howlingwolf.domain.service.message.MessageDomainService
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.stereotype.Service
 
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service
 class MessageCoordinator(
     val dayChangeCoordinator: DayChangeCoordinator,
     val villageCoordinator: VillageCoordinator,
-
-    val messageService: MessageService
+    val messageService: MessageService,
+    val messageDomainService: MessageDomainService
 ) {
 
     // ===================================================================================
@@ -34,7 +34,7 @@ class MessageCoordinator(
         participantIdList: List<Int>?
     ): Messages {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        val query = MessageQuery.invoke(
+        val query = messageDomainService.createQuery(
             village = village,
             participant = participant,
             day = day,
@@ -58,7 +58,7 @@ class MessageCoordinator(
 
     fun findMessage(village: Village, messageType: String, messageNumber: Int, user: HowlingWolfUser?): Message? {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        return if (!village.isViewableMessage(participant, messageType)) null
+        return if (!messageDomainService.isViewableMessage(village, participant, messageType)) null
         else messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
     }
 
@@ -68,7 +68,7 @@ class MessageCoordinator(
     ): Long {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
         val messageTypeList: List<CDef.MessageType> =
-            village.viewableMessageTypeList(participant, village.day.latestDay().day, user?.authority)
+            messageDomainService.viewableMessageTypeList(village, participant, village.day.latestDay().day, user?.authority)
         return messageService.findLatestMessagesUnixTimeMilli(village.id, messageTypeList, participant)
     }
 }
