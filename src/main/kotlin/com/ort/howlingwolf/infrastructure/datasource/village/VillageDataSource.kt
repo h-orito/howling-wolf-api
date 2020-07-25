@@ -250,7 +250,9 @@ class VillageDataSource(
         before: com.ort.howlingwolf.domain.model.village.Village,
         after: com.ort.howlingwolf.domain.model.village.Village
     ) {
-        if (before.status.code != after.status.code || before.winCamp?.code != after.winCamp?.code) {
+        if (before.status.code != after.status.code
+            || before.winCamp?.code != after.winCamp?.code
+        ) {
             updateVillage(after)
         }
     }
