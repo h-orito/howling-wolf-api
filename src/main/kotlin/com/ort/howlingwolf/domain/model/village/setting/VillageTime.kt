@@ -59,6 +59,12 @@ data class VillageTime(
         return now.isBefore(dayStartDatetime.plusHours(silentHours.toLong()))
     }
 
+    fun extendPrologue(): VillageTime {
+        return this.copy(
+            startDatetime = startDatetime.plusDays(1L)
+        )
+    }
+
     fun toEpilogue(villageDays: VillageDays): VillageTime {
         return this.copy(
             epilogueDay = villageDays.latestDay().day,
