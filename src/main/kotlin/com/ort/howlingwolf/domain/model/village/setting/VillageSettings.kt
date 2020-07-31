@@ -93,6 +93,10 @@ data class VillageSettings(
             || password.existsDifference(setting.password)
     }
 
+    fun extendPrologue(): VillageSettings {
+        return this.copy(time = time.extendPrologue())
+    }
+
     fun toEpilogue(villageDays: VillageDays): VillageSettings {
         return this.copy(
             time = time.toEpilogue(villageDays)

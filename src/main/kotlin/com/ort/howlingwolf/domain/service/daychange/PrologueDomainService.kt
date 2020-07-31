@@ -41,13 +41,22 @@ class PrologueDomainService(
         ).setIsChange(dayChange)
     }
 
+    fun cancelOrExtendIfNeeded(dayChange: DayChange, isExistOtherPrologueVillage: Boolean): DayChange {
+        // 開始時刻になっていない場合は何もしない
+        if (!shouldForward(dayChange.village)) return dayChange
+        // 参加人数が足りている場合は何もしない
+        if (!isNotEnoughMemberCount(dayChange.village)) return dayChange
+        // 他に村が建っていたら廃村
+        return if (isExistOtherPrologueVillage) cancelVillage(dayChange).setIsChange(dayChange)
+        // 建っていなかったら延長
+        else extendPrologue(dayChange).setIsChange(dayChange)
+    }
+
     fun addDayIfNeeded(
         dayChange: DayChange
     ): DayChange {
         // 開始時刻になっていない場合は何もしない
         if (!shouldForward(dayChange.village)) return dayChange
-        // 開始時刻になっているが参加者数が不足している場合は廃村にする
-        if (isNotEnoughMemberCount(dayChange.village)) return cancelVillage(dayChange).setIsChange(dayChange)
         // 新しい日付追加
         return dayChange.copy(village = dayChange.village.addNewDay()).setIsChange(dayChange)
     }
@@ -88,6 +97,13 @@ class PrologueDomainService(
         return dayChange.copy(
             village = dayChange.village.changeStatus(CDef.VillageStatus.廃村),
             messages = dayChange.messages.add(dayChange.village.createCancelVillageMessage())
+        )
+    }
+
+    private fun extendPrologue(dayChange: DayChange): DayChange {
+        return dayChange.copy(
+            village = dayChange.village.extendPrologue(),
+            messages = dayChange.messages.add(dayChange.village.createExtendPrologueMessage())
         )
     }
 

@@ -14,6 +14,7 @@ import com.ort.howlingwolf.domain.model.daychange.DayChange
 import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
+import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
 import com.ort.howlingwolf.domain.service.daychange.DayChangeDomainService
@@ -62,6 +63,18 @@ class DayChangeCoordinator(
             todayMessages = todayMessages,
             charas = charas
         ).let { updateIfNeeded(beforeDayChange, it) }
+
+        // 廃村やプロローグ延長処理
+        val isExistOtherPrologueVillage = villageService.findVillages(
+            villageStatusList = listOf(VillageStatus(CDef.VillageStatus.プロローグ))
+        ).list.any { it.id != village.id }
+        dayChange = updateIfNeeded(
+            dayChange,
+            dayChangeDomainService.cancelOrExtendVillageIfNeeded(dayChange, isExistOtherPrologueVillage)
+        )
+
+        // 廃村になっていたらここで終了
+        if (dayChange.village.status.toCdef() == CDef.VillageStatus.廃村) return
 
         // 必要あれば日付追加
         dayChange = dayChangeDomainService.addDayIfNeeded(dayChange, commits).let {

@@ -158,7 +158,7 @@ class PrologueDomainServiceTest : HowlingWolfTest() {
     }
 
     @Test
-    fun test_addDayIfNeeded_人数不足() {
+    fun test_cancelOrExtendIfNeeded_人数不足_他に村が建っていない() {
         // ## Arrange ##
         val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
             village = DummyDomainModelCreator.createDummyVillage().copy(
@@ -173,7 +173,31 @@ class PrologueDomainServiceTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val afterDayChange = prologueDomainService.addDayIfNeeded(dayChange)
+        val afterDayChange = prologueDomainService.cancelOrExtendIfNeeded(dayChange, false)
+
+        // ## Assert ##
+        assertThat(afterDayChange.isChange).isTrue()
+        assertThat(afterDayChange.village.setting.time.startDatetime).isAfter(dayChange.village.setting.time.startDatetime)
+        assertThat(afterDayChange.village.day.latestDay().dayChangeDatetime).isAfter(dayChange.village.day.latestDay().dayChangeDatetime)
+    }
+
+    @Test
+    fun test_cancelOrExtendIfNeeded_人数不足_他に村が建っている() {
+        // ## Arrange ##
+        val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
+            village = DummyDomainModelCreator.createDummyVillage().copy(
+                day = VillageDays(
+                    listOf(
+                        DummyDomainModelCreator.createDummyVillageDay().copy(
+                            dayChangeDatetime = LocalDateTime.now().minusSeconds(1L)
+                        )
+                    )
+                )
+            )
+        )
+
+        // ## Act ##
+        val afterDayChange = prologueDomainService.cancelOrExtendIfNeeded(dayChange, true)
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()

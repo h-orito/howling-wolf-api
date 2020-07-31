@@ -18,6 +18,11 @@ class DayChangeDomainService(
         else prologueDomainService.leaveParticipantIfNeeded(dayChange, todayMessages, charas)
     }
 
+    fun cancelOrExtendVillageIfNeeded(dayChange: DayChange, isExistOtherPrologueVillage: Boolean): DayChange {
+        return if (!dayChange.village.status.isPrologue()) dayChange
+        else prologueDomainService.cancelOrExtendIfNeeded(dayChange, isExistOtherPrologueVillage)
+    }
+
     // コミットや時間経過で次の日に遷移させる場合は村日付を追加
     fun addDayIfNeeded(dayChange: DayChange, commits: Commits): DayChange {
         val status = dayChange.village.status

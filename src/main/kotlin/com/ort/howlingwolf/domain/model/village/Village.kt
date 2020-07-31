@@ -41,6 +41,8 @@ data class Village(
 
     private val cancelMessage: String = "人数が不足しているため廃村しました。"
 
+    private val extendPrologueMessage: String = "まだ村人達は揃っていないようだ。"
+
     // ===================================================================================
     //                                                                             message
     //                                                                           =========
@@ -59,6 +61,9 @@ data class Village(
     /** 廃村メッセージ */
     fun createCancelVillageMessage(): Message =
         Message.createPublicSystemMessage(cancelMessage, day.latestDay().id)
+
+    fun createExtendPrologueMessage(): Message =
+        Message.createPublicSystemMessage(extendPrologueMessage, day.latestDay().id)
 
     /** 構成メッセージ */
     fun createOrganizationMessage(): Message {
@@ -429,6 +434,11 @@ data class Village(
 
     // 最新の日を24時間にする
     fun extendLatestDay(): Village = this.copy(day = this.day.extendLatestDay())
+
+    fun extendPrologue(): Village = this.copy(
+        setting = setting.extendPrologue(),
+        day = day.extendPrologue()
+    )
 
     // ===================================================================================
     //                                                                        Assist Logic
