@@ -68,7 +68,7 @@ data class VillageTime(
     fun toEpilogue(villageDays: VillageDays): VillageTime {
         return this.copy(
             epilogueDay = villageDays.latestDay().day,
-            epilogueStartDatetime = villageDays.yesterday().dayChangeDatetime
+            epilogueStartDatetime = HowlingWolfDateUtil.currentLocalDateTime()
         )
     }
 }
