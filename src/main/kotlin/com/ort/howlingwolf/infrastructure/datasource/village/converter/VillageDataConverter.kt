@@ -106,8 +106,7 @@ object VillageDataConverter {
             ),
             time = VillageTime.invoke(
                 termType = detectItemText(settingList, CDef.VillageSettingItem.期間形式),
-                prologueStartDatetime = LocalDateTime.parse(detectItemText(settingList, CDef.VillageSettingItem.開始予定日時), DATETIME_FORMATTER)
-                    .minusDays(1L),
+                prologueStartDatetime = village.registerDatetime,
                 epilogueDay = village.epilogueDay,
                 epilogueStartDatetime = Optional.ofNullable(village.epilogueDay).map { epilogueDay ->
                     village.villageDayList.firstOrNull { it.day == epilogueDay - 1 }?.daychangeDatetime
