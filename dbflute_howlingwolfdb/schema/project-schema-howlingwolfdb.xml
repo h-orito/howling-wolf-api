@@ -176,6 +176,26 @@
             <index-column name="FACE_TYPE_CODE" position="1"/>
         </index>
     </table>
+    <table comment="カミングアウト" name="coming_out"
+        schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
+        <column comment="村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="VILLAGE_PLAYER_ID" pkName="PRIMARY"
+            pkPosition="1" primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="役職コード" dbType="VARCHAR" javaType="String"
+            name="SKILL_CODE" pkName="PRIMARY" pkPosition="2"
+            primaryKey="true" required="true" size="20" type="VARCHAR"/>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="skill" name="FK_COMING_OUT_SKILL">
+            <reference foreign="SKILL_CODE" local="SKILL_CODE"/>
+        </foreign-key>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="village_player" name="FK_COMING_OUT_VILLAGE_PLAYER">
+            <reference foreign="VILLAGE_PLAYER_ID" local="VILLAGE_PLAYER_ID"/>
+        </foreign-key>
+        <index name="FK_COMING_OUT_SKILL">
+            <index-column name="SKILL_CODE" position="1"/>
+        </index>
+    </table>
     <table comment="コミット" name="commit"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
         <column comment="村参加者ID" dbType="INT UNSIGNED"

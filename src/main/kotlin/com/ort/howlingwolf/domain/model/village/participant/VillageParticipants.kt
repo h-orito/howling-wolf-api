@@ -5,6 +5,7 @@ import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.VillageDay
+import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
 
 data class VillageParticipants(
     val count: Int, // 退村した人は含まない
@@ -31,7 +32,8 @@ data class VillageParticipants(
                 isGone = false,
                 skill = null,
                 skillRequest = skillRequest,
-                isWin = null
+                isWin = null,
+                comingOuts = ComingOuts()
             )
         )
     }
@@ -85,7 +87,7 @@ data class VillageParticipants(
     // 呪殺
     fun divineKill(participantId: Int, villageDay: VillageDay): VillageParticipants {
         return this.copy(
-            memberList= this.memberList.map {
+            memberList = this.memberList.map {
                 if (it.id == participantId) it.divineKill(villageDay) else it.copy()
             }
         )

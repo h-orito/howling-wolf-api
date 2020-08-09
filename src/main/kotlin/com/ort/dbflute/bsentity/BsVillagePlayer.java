@@ -36,13 +36,13 @@ import com.ort.dbflute.exentity.*;
  *     CHARA, DEAD_REASON, VILLAGE_DAY, PLAYER, SKILL, VILLAGE
  *
  * [referrer table]
- *     ABILITY, COMMIT, VOTE
+ *     ABILITY, COMING_OUT, COMMIT, VOTE
  *
  * [foreign property]
  *     chara, deadReason, villageDay, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
  *
  * [referrer property]
- *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, commitList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
+ *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, comingOutList, commitList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -1700,6 +1700,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         _abilityByVillagePlayerIdList = abilityByVillagePlayerIdList;
     }
 
+    /** COMING_OUT by VILLAGE_PLAYER_ID, named 'comingOutList'. */
+    protected List<ComingOut> _comingOutList;
+
+    /**
+     * [get] COMING_OUT by VILLAGE_PLAYER_ID, named 'comingOutList'.
+     * @return The entity list of referrer property 'comingOutList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<ComingOut> getComingOutList() {
+        if (_comingOutList == null) { _comingOutList = newReferrerList(); }
+        return _comingOutList;
+    }
+
+    /**
+     * [set] COMING_OUT by VILLAGE_PLAYER_ID, named 'comingOutList'.
+     * @param comingOutList The entity list of referrer property 'comingOutList'. (NullAllowed)
+     */
+    public void setComingOutList(List<ComingOut> comingOutList) {
+        _comingOutList = comingOutList;
+    }
+
     /** COMMIT by VILLAGE_PLAYER_ID, named 'commitList'. */
     protected List<Commit> _commitList;
 
@@ -1809,6 +1829,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         { if (et != null) { sb.append(li).append(xbRDS(et, "abilityByTargetVillagePlayerIdList")); } } }
         if (_abilityByVillagePlayerIdList != null) { for (Ability et : _abilityByVillagePlayerIdList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "abilityByVillagePlayerIdList")); } } }
+        if (_comingOutList != null) { for (ComingOut et : _comingOutList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "comingOutList")); } } }
         if (_commitList != null) { for (Commit et : _commitList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "commitList")); } } }
         if (_voteByTargetVillagePlayerIdList != null) { for (Vote et : _voteByTargetVillagePlayerIdList)
@@ -1870,6 +1892,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         { sb.append(dm).append("abilityByTargetVillagePlayerIdList"); }
         if (_abilityByVillagePlayerIdList != null && !_abilityByVillagePlayerIdList.isEmpty())
         { sb.append(dm).append("abilityByVillagePlayerIdList"); }
+        if (_comingOutList != null && !_comingOutList.isEmpty())
+        { sb.append(dm).append("comingOutList"); }
         if (_commitList != null && !_commitList.isEmpty())
         { sb.append(dm).append("commitList"); }
         if (_voteByTargetVillagePlayerIdList != null && !_voteByTargetVillagePlayerIdList.isEmpty())

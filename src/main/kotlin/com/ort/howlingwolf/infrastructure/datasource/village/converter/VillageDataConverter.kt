@@ -13,6 +13,8 @@ import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
+import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOut
+import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
 import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
 import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
@@ -167,7 +169,12 @@ object VillageDataConverter {
                 first = Skill(vp.requestSkillCodeAsSkill),
                 second = Skill(vp.secondRequestSkillCodeAsSkill)
             ),
-            isWin = if (village?.winCampCode == null || vp.skillCodeAsSkill == null) null else village.winCampCode == vp.skillCodeAsSkill.campCode()
+            isWin = if (village?.winCampCode == null || vp.skillCodeAsSkill == null) null else village.winCampCode == vp.skillCodeAsSkill.campCode(),
+            comingOuts = ComingOuts(
+                list = vp.comingOutList.map {
+                    ComingOut(Skill(it.skillCodeAsSkill))
+                }
+            )
         )
     }
 

@@ -18,6 +18,7 @@ import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
+import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
 import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
 import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
@@ -364,7 +365,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
             isGone = false,
             skill = null,
             skillRequest = SkillRequest(Skill(CDef.Skill.おまかせ), Skill(CDef.Skill.おまかせ)),
-            isWin = null
+            isWin = null,
+            comingOuts = ComingOuts()
         )
     }
 

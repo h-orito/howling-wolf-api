@@ -269,6 +269,76 @@
 			</table_properties>
 		</table>
 		<table>
+			<physical_name>COMING_OUT</physical_name>
+			<logical_name>カミングアウト</logical_name>
+			<description></description>
+			<height>75</height>
+			<width>247</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1328</x>
+			<y>813</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+				<relationship>
+					<name>FK_COMING_OUT_skill</name>
+					<source>table.skill</source>
+					<target>table.COMING_OUT</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>skill_code</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
+				<relationship>
+					<name>FK_COMING_OUT_village_player</name>
+					<source>table.village_player</source>
+					<target>table.COMING_OUT</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>village_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>village_player_id</physical_name>
+					<referred_column>table.village_player.village_player_id</referred_column>
+					<relationship>FK_COMING_OUT_village_player</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>skill_code</physical_name>
+					<referred_column>table.skill.skill_code</referred_column>
+					<relationship>FK_COMING_OUT_skill</relationship>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
 			<physical_name>COMMIT</physical_name>
 			<logical_name>コミット</logical_name>
 			<description></description>
@@ -1818,6 +1888,8 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<target_xp>100</target_xp>
+					<target_yp>91</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_village_player_dead_reason</name>
@@ -1848,6 +1920,8 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<target_xp>100</target_xp>
+					<target_yp>83</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_village_player_second_skill_req</name>
@@ -1863,6 +1937,8 @@
 					<reference_for_pk>true</reference_for_pk>
 					<on_delete_action>RESTRICT</on_delete_action>
 					<on_update_action>RESTRICT</on_update_action>
+					<target_xp>100</target_xp>
+					<target_yp>75</target_yp>
 				</relationship>
 				<relationship>
 					<name>FK_village_player_village_day</name>

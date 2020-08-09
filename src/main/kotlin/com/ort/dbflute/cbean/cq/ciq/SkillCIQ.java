@@ -62,24 +62,34 @@ public class SkillCIQ extends AbstractBsSkillCQ {
     //                                                                Override about Query
     //                                                                ====================
     protected ConditionValue xgetCValueSkillCode() { return _myCQ.xdfgetSkillCode(); }
+    public String keepSkillCode_ExistsReferrer_ComingOutList(ComingOutCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepSkillCode_ExistsReferrer_VillagePlayerByRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepSkillCode_ExistsReferrer_VillagePlayerBySecondRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepSkillCode_ExistsReferrer_VillagePlayerBySkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepSkillCode_NotExistsReferrer_ComingOutList(ComingOutCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepSkillCode_NotExistsReferrer_VillagePlayerByRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepSkillCode_NotExistsReferrer_VillagePlayerBySecondRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepSkillCode_NotExistsReferrer_VillagePlayerBySkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepSkillCode_SpecifyDerivedReferrer_ComingOutList(ComingOutCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepSkillCode_SpecifyDerivedReferrer_VillagePlayerByRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepSkillCode_SpecifyDerivedReferrer_VillagePlayerBySecondRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepSkillCode_SpecifyDerivedReferrer_VillagePlayerBySkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepSkillCode_QueryDerivedReferrer_ComingOutList(ComingOutCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepSkillCode_QueryDerivedReferrer_ComingOutListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepSkillCode_QueryDerivedReferrer_VillagePlayerByRequestSkillCodeList(VillagePlayerCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepSkillCode_QueryDerivedReferrer_VillagePlayerByRequestSkillCodeListParameter(Object vl)
