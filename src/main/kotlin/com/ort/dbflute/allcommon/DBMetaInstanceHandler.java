@@ -39,6 +39,7 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
         tmpMap.put("chara", "com.ort.dbflute.bsentity.dbmeta.CharaDbm");
         tmpMap.put("chara_group", "com.ort.dbflute.bsentity.dbmeta.CharaGroupDbm");
         tmpMap.put("chara_image", "com.ort.dbflute.bsentity.dbmeta.CharaImageDbm");
+        tmpMap.put("coming_out", "com.ort.dbflute.bsentity.dbmeta.ComingOutDbm");
         tmpMap.put("commit", "com.ort.dbflute.bsentity.dbmeta.CommitDbm");
         tmpMap.put("dead_reason", "com.ort.dbflute.bsentity.dbmeta.DeadReasonDbm");
         tmpMap.put("designer", "com.ort.dbflute.bsentity.dbmeta.DesignerDbm");

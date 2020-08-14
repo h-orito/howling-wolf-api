@@ -197,6 +197,25 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select VILLAGE_PLAYER_ID from coming_out where ...)} <br>
+     * coming_out by VILLAGE_PLAYER_ID, named 'comingOutAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsComingOut</span>(outCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     outCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of ComingOutList for 'exists'. (NotNull)
+     */
+    public void existsComingOut(SubQuery<ComingOutCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        ComingOutCB cb = new ComingOutCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_ExistsReferrer_ComingOutList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "comingOutList");
+    }
+    public abstract String keepVillagePlayerId_ExistsReferrer_ComingOutList(ComingOutCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
      * {exists (select VILLAGE_PLAYER_ID from commit where ...)} <br>
      * commit by VILLAGE_PLAYER_ID, named 'commitAsOne'.
      * <pre>
@@ -292,6 +311,25 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select VILLAGE_PLAYER_ID from coming_out where ...)} <br>
+     * coming_out by VILLAGE_PLAYER_ID, named 'comingOutAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsComingOut</span>(outCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     outCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of VillagePlayerId_NotExistsReferrer_ComingOutList for 'not exists'. (NotNull)
+     */
+    public void notExistsComingOut(SubQuery<ComingOutCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        ComingOutCB cb = new ComingOutCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepVillagePlayerId_NotExistsReferrer_ComingOutList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "comingOutList");
+    }
+    public abstract String keepVillagePlayerId_NotExistsReferrer_ComingOutList(ComingOutCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
      * {not exists (select VILLAGE_PLAYER_ID from commit where ...)} <br>
      * commit by VILLAGE_PLAYER_ID, named 'commitAsOne'.
      * <pre>
@@ -362,6 +400,14 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "abilityByVillagePlayerIdList", al, op);
     }
     public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_AbilityByVillagePlayerIdList(AbilityCQ sq);
+
+    public void xsderiveComingOutList(String fn, SubQuery<ComingOutCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        ComingOutCB cb = new ComingOutCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepVillagePlayerId_SpecifyDerivedReferrer_ComingOutList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", pp, "comingOutList", al, op);
+    }
+    public abstract String keepVillagePlayerId_SpecifyDerivedReferrer_ComingOutList(ComingOutCQ sq);
 
     public void xsderiveCommitList(String fn, SubQuery<CommitCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
@@ -440,6 +486,33 @@ public abstract class AbstractBsVillagePlayerCQ extends AbstractConditionQuery {
     }
     public abstract String keepVillagePlayerId_QueryDerivedReferrer_AbilityByVillagePlayerIdList(AbilityCQ sq);
     public abstract String keepVillagePlayerId_QueryDerivedReferrer_AbilityByVillagePlayerIdListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from coming_out where ...)} <br>
+     * coming_out by VILLAGE_PLAYER_ID, named 'comingOutAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedComingOut()</span>.<span style="color: #CC4747">max</span>(outCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     outCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     outCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<ComingOutCB> derivedComingOut() {
+        return xcreateQDRFunctionComingOutList();
+    }
+    protected HpQDRFunction<ComingOutCB> xcreateQDRFunctionComingOutList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveComingOutList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveComingOutList(String fn, SubQuery<ComingOutCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        ComingOutCB cb = new ComingOutCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepVillagePlayerId_QueryDerivedReferrer_ComingOutList(cb.query()); String prpp = keepVillagePlayerId_QueryDerivedReferrer_ComingOutListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", sqpp, "comingOutList", rd, vl, prpp, op);
+    }
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_ComingOutList(ComingOutCQ sq);
+    public abstract String keepVillagePlayerId_QueryDerivedReferrer_ComingOutListParameter(Object vl);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>

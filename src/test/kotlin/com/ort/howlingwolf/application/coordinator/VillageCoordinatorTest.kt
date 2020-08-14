@@ -395,7 +395,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         villageCoordinator.findActionSituation(village, user, players, charas)
 
         // ## Arrange ##
-        (2..11).forEach {
+        (2..16).forEach {
             villageCoordinator.participate(
                 villageId = village.id,
                 playerId = it,

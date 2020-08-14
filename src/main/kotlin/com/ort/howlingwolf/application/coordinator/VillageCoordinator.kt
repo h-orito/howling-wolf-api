@@ -3,6 +3,7 @@ package com.ort.howlingwolf.application.coordinator
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.application.service.AbilityService
 import com.ort.howlingwolf.application.service.CharachipService
+import com.ort.howlingwolf.application.service.ComingOutService
 import com.ort.howlingwolf.application.service.CommitService
 import com.ort.howlingwolf.application.service.MessageService
 import com.ort.howlingwolf.application.service.PlayerService
@@ -20,6 +21,7 @@ import com.ort.howlingwolf.domain.model.myself.participant.SituationAsParticipan
 import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
+import com.ort.howlingwolf.domain.model.skill.Skills
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbility
@@ -27,6 +29,7 @@ import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.vote.VillageVote
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
 import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
+import com.ort.howlingwolf.domain.service.coming_out.ComingOutDomainService
 import com.ort.howlingwolf.domain.service.commit.CommitDomainService
 import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
 import com.ort.howlingwolf.domain.service.say.SayDomainService
@@ -49,12 +52,14 @@ class VillageCoordinator(
     private val abilityService: AbilityService,
     private val voteService: VoteService,
     private val commitService: CommitService,
+    private val comingOutService: ComingOutService,
     private val reservedVillageService: ReservedVillageService,
     private val tweetService: TweetService,
     // domain service
     private val participateDomainService: ParticipateDomainService,
     private val skillRequestDomainService: SkillRequestDomainService,
     private val commitDomainService: CommitDomainService,
+    private val comingOutDomainService: ComingOutDomainService,
     private val sayDomainService: SayDomainService,
     private val abilityDomainService: AbilityDomainService,
     private val voteDomainService: VoteDomainService
@@ -371,6 +376,30 @@ class VillageCoordinator(
     }
 
     /**
+     * カミングアウトセット
+     *
+     * @param villageId villageId
+     * @param user user
+     * @param skills
+     */
+    @Transactional(rollbackFor = [Exception::class, HowlingWolfBusinessException::class])
+    fun setComingOut(villageId: Int, user: HowlingWolfUser, skills: Skills) {
+        // カミングアウトできない状況ならエラー
+        val village: Village = villageService.findVillage(villageId)
+        val participant: VillageParticipant? = findParticipant(village, user)
+        comingOutDomainService.assertComingOut(village, participant)
+        // カミングアウト
+        if (skills.list.isEmpty()) {
+            comingOutService.deleteComingOut(participant!!.id)
+        } else comingOutService.registerComingOut(
+            participant!!.id,
+            skills.list
+        )
+        val chara: Chara = charachipService.findChara(participant.charaId)
+        messageService.registerComingOutMessage(village, chara, skills)
+    }
+
+    /**
      * 参加状況や可能なアクションを取得
      * @param village village
      * @param user user
@@ -398,6 +427,7 @@ class VillageCoordinator(
             ),
             skillRequest = skillRequestDomainService.convertToSituation(village, participant, skillRequest),
             commit = commitDomainService.convertToSituation(village, participant, commit),
+            comingOut = comingOutDomainService.convertToSituation(village, participant),
             say = sayDomainService.convertToSituation(village, participant, charas, latestDayMessageList),
             ability = abilityDomainService.convertToSituationList(village, participant, abilities),
             vote = voteDomainService.convertToSituation(village, participant, votes)

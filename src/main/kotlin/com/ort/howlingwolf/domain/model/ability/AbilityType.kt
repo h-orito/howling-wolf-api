@@ -2,7 +2,7 @@ package com.ort.howlingwolf.domain.model.ability
 
 import com.ort.dbflute.allcommon.CDef
 
-class AbilityType(
+data class AbilityType(
     val code: String,
     val name: String
 ) {

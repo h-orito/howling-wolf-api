@@ -6,6 +6,7 @@ import com.ort.howlingwolf.domain.model.dead.Dead
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.VillageDay
+import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
 
 data class VillageParticipant(
     val id: Int,
@@ -16,7 +17,8 @@ data class VillageParticipant(
     val isGone: Boolean,
     val skill: Skill?,
     val skillRequest: SkillRequest,
-    val isWin: Boolean?
+    val isWin: Boolean?,
+    val comingOuts: ComingOuts
 ) {
     // ===================================================================================
     //                                                                                read
@@ -85,6 +87,13 @@ data class VillageParticipant(
         // ダミーはコミットできない
         if (id == dummyParticipantId) return false
 
+        return true
+    }
+
+    fun isAvailableComingOut(): Boolean {
+        // 参加していなかったり死亡していたらNG
+        if (isSpectator) return false
+        if (!isAlive()) return false
         return true
     }
 

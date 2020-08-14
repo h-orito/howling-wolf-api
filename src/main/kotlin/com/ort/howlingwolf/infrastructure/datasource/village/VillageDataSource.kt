@@ -206,6 +206,7 @@ class VillageDataSource(
                     vpCB.query().setIsGone_Equal(false)
                 }
             }.withNestedReferrer {
+                it.loadComingOut { }
                 it.pulloutChara().loadCharaImage { }
             }
             loader.loadVillageSetting { }

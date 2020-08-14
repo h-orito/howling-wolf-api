@@ -8,9 +8,11 @@ import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.Messages
+import com.ort.howlingwolf.domain.model.skill.Skills
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
+import com.ort.howlingwolf.domain.service.coming_out.ComingOutDomainService
 import com.ort.howlingwolf.domain.service.commit.CommitDomainService
 import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
 import com.ort.howlingwolf.infrastructure.datasource.message.MessageDataSource
@@ -21,7 +23,8 @@ class MessageService(
     private val messageDataSource: MessageDataSource,
     private val abilityDomainService: AbilityDomainService,
     private val participateDomainService: ParticipateDomainService,
-    private val commitDomainService: CommitDomainService
+    private val commitDomainService: CommitDomainService,
+    private val comingOutDomainService: ComingOutDomainService
 ) {
     /**
      * 発言取得
@@ -174,6 +177,13 @@ class MessageService(
         messageDataSource.registerMessage(
             village.id,
             commitDomainService.createCommitMessage(chara, doCommit, village.day.latestDay().id)
+        )
+    }
+
+    fun registerComingOutMessage(village: Village, chara: Chara, skills: Skills) {
+        messageDataSource.registerMessage(
+            village.id,
+            comingOutDomainService.createComingOutMessage(chara, skills, village.day.latestDay().id)
         )
     }
 
