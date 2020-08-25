@@ -10,8 +10,8 @@ class ReservedVillageService(
     val reservedVillageDataSource: ReservedVillageDataSource
 ) {
 
-    fun findReservedVillages(): ReservedVillages {
-        return reservedVillageDataSource.findReservedVillages(true)
+    fun findReservedVillages(limit: Int? = null): ReservedVillages {
+        return reservedVillageDataSource.findReservedVillages(true, limit)
     }
 
     fun findReservedVillagesIncludePast(): ReservedVillages {
