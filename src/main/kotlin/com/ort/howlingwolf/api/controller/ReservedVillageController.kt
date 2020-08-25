@@ -2,6 +2,7 @@ package com.ort.howlingwolf.api.controller
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.api.body.ReservedVillageRegisterBody
+import com.ort.howlingwolf.api.form.ReservedVillageListForm
 import com.ort.howlingwolf.api.view.reserved.ReservedVillagesView
 import com.ort.howlingwolf.application.service.ReservedVillageService
 import com.ort.howlingwolf.domain.model.reserved.ReservedVillage
@@ -25,7 +26,12 @@ class ReservedVillageController(
      * 予約村一覧取得
      */
     @GetMapping("/reserved-village/list")
-    fun list(): ReservedVillagesView = ReservedVillagesView(reservedVillageService.findReservedVillages())
+    fun list(
+        @Validated form: ReservedVillageListForm
+    ): ReservedVillagesView {
+        val reservedVillages = reservedVillageService.findReservedVillages(limit = form.limit)
+        return ReservedVillagesView(reservedVillages)
+    }
 
     /**
      * 予約村登録

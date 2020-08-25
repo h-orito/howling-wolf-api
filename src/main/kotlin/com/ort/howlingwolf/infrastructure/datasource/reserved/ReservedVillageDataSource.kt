@@ -11,13 +11,14 @@ class ReservedVillageDataSource(
     val reservedVillageBhv: ReservedVillageBhv
 ) {
 
-    fun findReservedVillages(excludePast: Boolean = true): ReservedVillages {
+    fun findReservedVillages(excludePast: Boolean = true, limit: Int? = null): ReservedVillages {
         val reservedVillageList = reservedVillageBhv.selectList {
             if (excludePast) {
                 it.query().setCreateDatetime_GreaterThan(HowlingWolfDateUtil.currentLocalDateTime())
             }
             it.query().addOrderBy_CreateDatetime_Asc()
             it.query().addOrderBy_StartDatetime_Asc()
+            if (limit != null) it.fetchFirst(limit)
         }
         return ReservedVillages(
             list = reservedVillageList.map { convertToReservedVillage(it) }

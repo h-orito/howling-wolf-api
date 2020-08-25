@@ -31,7 +31,7 @@ class ExternalController(
                 VillageStatus(CDef.VillageStatus.エピローグ)
             )
         ).list.sortedBy { it.id }
-        val reservedVillageList = reservedVillageService.findReservedVillages().list
+        val reservedVillageList = reservedVillageService.findReservedVillages(limit = 3).list
 
         val charachips = charachipService.findCharaChips()
 
