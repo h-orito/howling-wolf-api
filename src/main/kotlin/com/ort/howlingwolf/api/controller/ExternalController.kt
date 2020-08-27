@@ -48,6 +48,7 @@ class ExternalController(
     ): VillageRecordsView {
         var villageIdList = villageService.findVillages(
             villageStatusList = listOf(
+                VillageStatus(CDef.VillageStatus.廃村),
                 VillageStatus(CDef.VillageStatus.エピローグ),
                 VillageStatus(CDef.VillageStatus.終了)
             )

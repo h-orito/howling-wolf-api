@@ -23,13 +23,14 @@ data class VillageRecordsView(
 data class VillageRecordView(
     val id: Int,
     val name: String,
+    val status: String,
     val organization: String,
-    val startDatetime: String,
+    val startDatetime: String?,
     val prologueDatetime: String,
-    val epilogueDatetime: String,
-    val epilogueDay: Int,
+    val epilogueDatetime: String?,
+    val epilogueDay: Int?,
     val url: String,
-    val winCampName: String,
+    val winCampName: String?,
     val participantList: List<VillageParticipantRecordView>
 ) {
     companion object {
@@ -43,13 +44,18 @@ data class VillageRecordView(
     ) : this(
         id = village.id,
         name = village.name,
+        status = village.status.name,
         organization = village.setting.organizations.organization[village.setting.capacity.max] ?: "",
-        startDatetime = village.setting.time.startDatetime.format(datetimePattern),
+        startDatetime = if (village.status.isCanceled()) null
+        else village.setting.time.startDatetime.format(datetimePattern),
         prologueDatetime = village.setting.time.prologueStartDatetime.format(datetimePattern),
-        epilogueDatetime = village.setting.time.epilogueStartDatetime!!.format(datetimePattern),
-        epilogueDay = village.setting.time.epilogueDay!!,
+        epilogueDatetime = if (village.status.isCanceled()) null
+        else village.setting.time.epilogueStartDatetime!!.format(datetimePattern),
+        epilogueDay = if (village.status.isCanceled()) null
+        else village.setting.time.epilogueDay!!,
         url = "https://howling-wolf.com/village?id=${village.id}",
-        winCampName = village.winCamp!!.name,
+        winCampName = if (village.status.isCanceled()) null
+        else village.winCamp!!.name,
         participantList = village.participant.memberList.map {
             val charaList = charas.list.filter { chara -> chara.charachipId == village.setting.charachip.charachipId }
             VillageParticipantRecordView(it, charaList, players)
@@ -61,8 +67,8 @@ data class VillageParticipantRecordView(
     val twitterUserId: String,
     val otherSiteUserId: String?,
     val characterName: String,
-    val skillName: String,
-    val isWin: Boolean,
+    val skillName: String?,
+    val isWin: Boolean?,
     val isDead: Boolean,
     val deadDay: Int?,
     val deadReason: String?
@@ -75,8 +81,8 @@ data class VillageParticipantRecordView(
         twitterUserId = players.list.first { it.id == participant.playerId }.twitterUserName,
         otherSiteUserId = players.list.first { it.id == participant.playerId }.otherSiteName,
         characterName = charaList.first { it.id == participant.charaId }.charaName.name,
-        skillName = participant.skill!!.name,
-        isWin = participant.isWin!!,
+        skillName = participant.skill?.name,
+        isWin = participant.isWin,
         isDead = participant.dead != null,
         deadDay = participant.dead?.villageDay?.day,
         deadReason = participant.dead?.let { it.reason + "死" }
