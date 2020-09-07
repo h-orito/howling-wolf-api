@@ -567,11 +567,13 @@
             foreignTable="village" name="FK_VILLAGE_DAY_VILLAGE">
             <reference foreign="VILLAGE_ID" local="VILLAGE_ID"/>
         </foreign-key>
+        <unique name="UQ_village_day">
+            <unique-column name="VILLAGE_ID" position="1"/>
+            <unique-column name="DAY" position="2"/>
+            <unique-column name="NOONNIGHT_CODE" position="3"/>
+        </unique>
         <index name="FK_VILLAGE_DAY_NOONNIGHT">
             <index-column name="NOONNIGHT_CODE" position="1"/>
-        </index>
-        <index name="FK_VILLAGE_DAY_VILLAGE">
-            <index-column name="VILLAGE_ID" position="1"/>
         </index>
     </table>
     <table comment="村参加者" name="village_player"

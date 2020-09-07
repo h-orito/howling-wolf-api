@@ -15,6 +15,7 @@ import org.dbflute.exception.*;
 import org.dbflute.hook.CommonColumnAutoSetupper;
 import org.dbflute.optional.OptionalEntity;
 import org.dbflute.outsidesql.executor.*;
+import com.ort.dbflute.allcommon.CDef;
 import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.bsbhv.loader.*;
 import com.ort.dbflute.exentity.*;
@@ -184,6 +185,33 @@ public abstract class BsVillageDayBhv extends AbstractBehaviorWritable<VillageDa
     protected VillageDayCB xprepareCBAsPK(Integer villageDayId) {
         assertObjectNotNull("villageDayId", villageDayId);
         return newConditionBean().acceptPK(villageDayId);
+    }
+
+    /**
+     * Select the entity by the unique-key value.
+     * @param villageId : UQ+, NotNull, INT UNSIGNED(10), FK to village. (NotNull)
+     * @param day : +UQ, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param noonnightCode : +UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight. (NotNull)
+     * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
+     * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
+     * @throws EntityDuplicatedException When the entity has been duplicated.
+     * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
+     */
+    public OptionalEntity<VillageDay> selectByUniqueOf(Integer villageId, Integer day, CDef.Noonnight noonnightCode) {
+        return facadeSelectByUniqueOf(villageId, day, noonnightCode);
+    }
+
+    protected OptionalEntity<VillageDay> facadeSelectByUniqueOf(Integer villageId, Integer day, CDef.Noonnight noonnightCode) {
+        return doSelectByUniqueOf(villageId, day, noonnightCode, typeOfSelectedEntity());
+    }
+
+    protected <ENTITY extends VillageDay> OptionalEntity<ENTITY> doSelectByUniqueOf(Integer villageId, Integer day, CDef.Noonnight noonnightCode, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(villageId, day, noonnightCode), tp), villageId, day, noonnightCode);
+    }
+
+    protected VillageDayCB xprepareCBAsUniqueOf(Integer villageId, Integer day, CDef.Noonnight noonnightCode) {
+        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("noonnightCode", noonnightCode);
+        return newConditionBean().acceptUniqueOf(villageId, day, noonnightCode);
     }
 
     // ===================================================================================

@@ -12,6 +12,7 @@ import org.dbflute.cbean.scoping.*;
 import org.dbflute.dbmeta.DBMetaProvider;
 import org.dbflute.twowaysql.factory.SqlAnalyzerFactory;
 import org.dbflute.twowaysql.style.BoundDateDisplayTimeZoneProvider;
+import com.ort.dbflute.allcommon.CDef;
 import com.ort.dbflute.allcommon.DBFluteConfig;
 import com.ort.dbflute.allcommon.DBMetaInstanceHandler;
 import com.ort.dbflute.allcommon.ImplementedInvokerAssistant;
@@ -92,6 +93,20 @@ public class BsVillageDayCB extends AbstractConditionBean {
         assertObjectNotNull("villageDayId", villageDayId);
         BsVillageDayCB cb = this;
         cb.query().setVillageDayId_Equal(villageDayId);
+        return (VillageDayCB)this;
+    }
+
+    /**
+     * Accept the query condition of unique key as equal.
+     * @param villageId : UQ+, NotNull, INT UNSIGNED(10), FK to village. (NotNull)
+     * @param day : +UQ, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param noonnightCode : +UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight. (NotNull)
+     * @return this. (NotNull)
+     */
+    public VillageDayCB acceptUniqueOf(Integer villageId, Integer day, CDef.Noonnight noonnightCode) {
+        assertObjectNotNull("villageId", villageId);assertObjectNotNull("day", day);assertObjectNotNull("noonnightCode", noonnightCode);
+        BsVillageDayCB cb = this;
+        cb.query().setVillageId_Equal(villageId);cb.query().setDay_Equal(day);cb.query().setNoonnightCode_Equal_AsNoonnight(noonnightCode);
         return (VillageDayCB)this;
     }
 
@@ -344,17 +359,17 @@ public class BsVillageDayCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
-         * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+         * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
         /**
-         * DAY: {NotNull, INT UNSIGNED(10)}
+         * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnDay() { return doColumn("DAY"); }
         /**
-         * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+         * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnNoonnightCode() { return doColumn("NOONNIGHT_CODE"); }

@@ -157,14 +157,14 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_VillageId_Asc() { regOBA("VILLAGE_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_VillageId_Desc() { regOBD("VILLAGE_ID"); return this; }
@@ -177,14 +177,14 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_Day_Asc() { regOBA("DAY"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_Day_Desc() { regOBD("DAY"); return this; }
@@ -197,14 +197,14 @@ public class BsVillageDayCQ extends AbstractBsVillageDayCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_NoonnightCode_Asc() { regOBA("NOONNIGHT_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return this. (NotNull)
      */
     public BsVillageDayCQ addOrderBy_NoonnightCode_Desc() { regOBD("NOONNIGHT_CODE"); return this; }

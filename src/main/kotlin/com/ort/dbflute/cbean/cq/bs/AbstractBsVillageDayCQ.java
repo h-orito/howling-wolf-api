@@ -466,7 +466,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageId The value of villageId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_Equal(Integer villageId) {
@@ -479,7 +479,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageId The value of villageId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_NotEqual(Integer villageId) {
@@ -492,7 +492,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageId The value of villageId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_GreaterThan(Integer villageId) {
@@ -501,7 +501,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageId The value of villageId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_LessThan(Integer villageId) {
@@ -510,7 +510,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageId The value of villageId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_GreaterEqual(Integer villageId) {
@@ -519,7 +519,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageId The value of villageId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageId_LessEqual(Integer villageId) {
@@ -530,7 +530,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -543,7 +543,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param minNumber The min number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -554,7 +554,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageIdList The collection of villageId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageId_InScope(Collection<Integer> villageIdList) {
@@ -567,7 +567,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @param villageIdList The collection of villageId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageId_NotInScope(Collection<Integer> villageIdList) {
@@ -583,7 +583,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param day The value of day as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setDay_Equal(Integer day) {
@@ -596,7 +596,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param day The value of day as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setDay_NotEqual(Integer day) {
@@ -609,7 +609,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param day The value of day as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setDay_GreaterThan(Integer day) {
@@ -618,7 +618,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param day The value of day as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setDay_LessThan(Integer day) {
@@ -627,7 +627,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param day The value of day as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setDay_GreaterEqual(Integer day) {
@@ -636,7 +636,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param day The value of day as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setDay_LessEqual(Integer day) {
@@ -647,7 +647,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param minNumber The min number of day. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of day. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -660,7 +660,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param minNumber The min number of day. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of day. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -671,7 +671,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param dayList The collection of day as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setDay_InScope(Collection<Integer> dayList) {
@@ -684,7 +684,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @param dayList The collection of day as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setDay_NotInScope(Collection<Integer> dayList) {
@@ -700,7 +700,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCode The value of noonnightCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setNoonnightCode_Equal(String noonnightCode) {
@@ -709,7 +709,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). As Noonnight. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜
      * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
@@ -739,7 +739,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCode The value of noonnightCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setNoonnightCode_NotEqual(String noonnightCode) {
@@ -748,7 +748,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). As Noonnight. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜
      * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
@@ -778,7 +778,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCodeList The collection of noonnightCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setNoonnightCode_InScope(Collection<String> noonnightCodeList) {
@@ -787,7 +787,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. As Noonnight. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜
      * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
@@ -801,7 +801,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @param noonnightCodeList The collection of noonnightCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setNoonnightCode_NotInScope(Collection<String> noonnightCodeList) {
@@ -810,7 +810,7 @@ public abstract class AbstractBsVillageDayCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. As Noonnight. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight} <br>
      * 昼夜
      * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
