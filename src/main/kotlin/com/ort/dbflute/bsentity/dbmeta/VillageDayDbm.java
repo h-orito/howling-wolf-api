@@ -108,17 +108,17 @@ public class VillageDayDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
     /**
-     * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageId() { return _columnVillageId; }
     /**
-     * DAY: {NotNull, INT UNSIGNED(10)}
+     * DAY: {+UQ, NotNull, INT UNSIGNED(10)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnDay() { return _columnDay; }
     /**
-     * NOONNIGHT_CODE: {IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnNoonnightCode() { return _columnNoonnightCode; }
@@ -173,6 +173,17 @@ public class VillageDayDbm extends AbstractDBMeta {
     protected UniqueInfo cpui() { return hpcpui(columnVillageDayId()); }
     public boolean hasPrimaryKey() { return true; }
     public boolean hasCompoundPrimaryKey() { return false; }
+
+    // -----------------------------------------------------
+    //                                        Unique Element
+    //                                        --------------
+    public UniqueInfo uniqueOf() {
+        List<ColumnInfo> ls = newArrayListSized(4);
+        ls.add(columnVillageId());
+        ls.add(columnDay());
+        ls.add(columnNoonnightCode());
+        return hpcui(ls);
+    }
 
     // ===================================================================================
     //                                                                       Relation Info

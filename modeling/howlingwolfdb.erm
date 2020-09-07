@@ -1803,6 +1803,20 @@
 			<indexes>
 			</indexes>
 			<compound_unique_key_list>
+				<compound_unique_key>
+					<name>UQ_village_day</name>
+					<columns>
+						<column>
+							<column_id>table.village_day.village_id</column_id>
+						</column>
+						<column>
+							<column_id>table.village_day.day</column_id>
+						</column>
+						<column>
+							<column_id>table.village_day.noonnight_code</column_id>
+						</column>
+					</columns>
+				</compound_unique_key>
 			</compound_unique_key_list>
 			<table_properties>
 			</table_properties>
@@ -2421,12 +2435,12 @@
 			<walker_group_name>reserved_village</walker_group_name>
 		</walker_group>
 		<walker_group>
-			<height>765</height>
-			<width>1122</width>
+			<height>764</height>
+			<width>1121</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
-			<x>923</x>
-			<y>479</y>
+			<x>924</x>
+			<y>480</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
