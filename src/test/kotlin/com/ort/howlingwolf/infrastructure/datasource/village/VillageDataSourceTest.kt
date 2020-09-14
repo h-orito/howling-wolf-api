@@ -76,7 +76,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
             organization = organization,
             startDatetime = startDatetime,
             silentHours = null,
-            availableDummySkill = false
+            availableDummySkill = false,
+            forBeginner = false
         )
 
         // ## Act ##

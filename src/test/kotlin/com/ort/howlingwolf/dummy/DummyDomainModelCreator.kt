@@ -56,7 +56,8 @@ object DummyDomainModelCreator {
         organization = "狼狼狼狂占霊狩村村村村村村村村村",
         startDatetime = LocalDateTime.now().plusDays(1L),
         silentHours = null,
-        availableDummySkill = false
+        availableDummySkill = false,
+        forBeginner = false
     )
 
     fun createDummyVillageDays(): VillageDays = VillageDays(listOf())

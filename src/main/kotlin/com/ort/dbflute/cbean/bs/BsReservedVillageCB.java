@@ -317,6 +317,11 @@ public class BsReservedVillageCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnIsAvailableDummySkill() { return doColumn("IS_AVAILABLE_DUMMY_SKILL"); }
         /**
+         * IS_FOR_BEGINNER: {NotNull, BIT}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnIsForBeginner() { return doColumn("IS_FOR_BEGINNER"); }
+        /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)
          */

@@ -452,6 +452,8 @@
             name="SILENT_HOURS" required="true" size="10" type="INTEGER"/>
         <column comment="役欠けありか" dbType="BIT" javaType="Boolean"
             name="IS_AVAILABLE_DUMMY_SKILL" required="true" type="BIT"/>
+        <column comment="初心者村か" dbType="BIT" javaType="Boolean"
+            name="IS_FOR_BEGINNER" required="true" type="BIT"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>

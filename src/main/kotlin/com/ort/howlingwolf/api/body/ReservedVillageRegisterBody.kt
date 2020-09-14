@@ -17,7 +17,10 @@ data class ReservedVillageRegisterBody(
     val silentHours: Int?,
 
     @field:NotNull(message = "役欠け有無は必須")
-    val availableDummySkill: Boolean?
+    val availableDummySkill: Boolean?,
+
+    @field:NotNull(message = "初心者村かは必須")
+    val forBeginner: Boolean?
 ) {
-    constructor() : this(null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null)
 }

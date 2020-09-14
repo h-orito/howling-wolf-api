@@ -67,6 +67,7 @@ public class ReservedVillageCIQ extends AbstractBsReservedVillageCQ {
     protected ConditionValue xgetCValueOrganization() { return _myCQ.xdfgetOrganization(); }
     protected ConditionValue xgetCValueSilentHours() { return _myCQ.xdfgetSilentHours(); }
     protected ConditionValue xgetCValueIsAvailableDummySkill() { return _myCQ.xdfgetIsAvailableDummySkill(); }
+    protected ConditionValue xgetCValueIsForBeginner() { return _myCQ.xdfgetIsForBeginner(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }

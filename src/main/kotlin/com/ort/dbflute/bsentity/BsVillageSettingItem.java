@@ -195,6 +195,14 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     }
 
     /**
+     * Set the value of villageSettingItemCode as 初心者村か (is_for_beginner). <br>
+     * 初心者村か
+     */
+    public void setVillageSettingItemCode_初心者村か() {
+        setVillageSettingItemCodeAsVillageSettingItem(CDef.VillageSettingItem.初心者村か);
+    }
+
+    /**
      * Set the value of villageSettingItemCode as 墓下役職公開ありか (is_open_skill_in_grave). <br>
      * 墓下役職公開ありか
      */
@@ -374,6 +382,17 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
     public boolean isVillageSettingItemCode突然死ありか() {
         CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
         return cdef != null ? cdef.equals(CDef.VillageSettingItem.突然死ありか) : false;
+    }
+
+    /**
+     * Is the value of villageSettingItemCode 初心者村か? <br>
+     * 初心者村か
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isVillageSettingItemCode初心者村か() {
+        CDef.VillageSettingItem cdef = getVillageSettingItemCodeAsVillageSettingItem();
+        return cdef != null ? cdef.equals(CDef.VillageSettingItem.初心者村か) : false;
     }
 
     /**

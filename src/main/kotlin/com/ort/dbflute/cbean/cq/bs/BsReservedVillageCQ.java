@@ -193,6 +193,26 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      */
     public BsReservedVillageCQ addOrderBy_IsAvailableDummySkill_Desc() { regOBD("IS_AVAILABLE_DUMMY_SKILL"); return this; }
 
+    protected ConditionValue _isForBeginner;
+    public ConditionValue xdfgetIsForBeginner()
+    { if (_isForBeginner == null) { _isForBeginner = nCV(); }
+      return _isForBeginner; }
+    protected ConditionValue xgetCValueIsForBeginner() { return xdfgetIsForBeginner(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * IS_FOR_BEGINNER: {NotNull, BIT}
+     * @return this. (NotNull)
+     */
+    public BsReservedVillageCQ addOrderBy_IsForBeginner_Asc() { regOBA("IS_FOR_BEGINNER"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * IS_FOR_BEGINNER: {NotNull, BIT}
+     * @return this. (NotNull)
+     */
+    public BsReservedVillageCQ addOrderBy_IsForBeginner_Desc() { regOBD("IS_FOR_BEGINNER"); return this; }
+
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
     { if (_registerDatetime == null) { _registerDatetime = nCV(); }

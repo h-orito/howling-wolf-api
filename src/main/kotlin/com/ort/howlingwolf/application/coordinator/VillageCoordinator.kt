@@ -128,7 +128,8 @@ class VillageCoordinator(
                     organization = it.organization,
                     startDatetime = it.villageStartDatetime,
                     silentHours = it.silentHours,
-                    availableDummySkill = it.availableDummySkill
+                    availableDummySkill = it.availableDummySkill,
+                    forBeginner = it.forBeginner
                 )
             )
             reservedVillageService.deleteReservedVillage(it.id)
