@@ -2,6 +2,7 @@ package com.ort.howlingwolf.api.view.myself.participant
 
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.myself.participant.SituationAsParticipant
+import com.ort.howlingwolf.domain.model.myself.participant.VillageAdminSituation
 import com.ort.howlingwolf.domain.model.myself.participant.VillageComingOutSituation
 import com.ort.howlingwolf.domain.model.myself.participant.VillageCommitSituation
 import com.ort.howlingwolf.domain.model.myself.participant.VillageSkillRequestSituation
@@ -15,7 +16,8 @@ data class SituationAsParticipantView(
     val comingOut: VillageComingOutSituation,
     val say: VillageSaySituationView,
     val ability: VillageAbilitySituationsView,
-    val vote: VillageVoteSituationView
+    val vote: VillageVoteSituationView,
+    val admin: VillageAdminSituation
 ) {
 
     constructor(
@@ -53,6 +55,7 @@ data class SituationAsParticipantView(
             players = players,
             charas = charas,
             shouldHidePlayer = !village.status.isSolved()
-        )
+        ),
+        admin = situation.admin
     )
 }

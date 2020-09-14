@@ -29,6 +29,7 @@ import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.vote.VillageVote
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
 import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
+import com.ort.howlingwolf.domain.service.admin.AdminDomainService
 import com.ort.howlingwolf.domain.service.coming_out.ComingOutDomainService
 import com.ort.howlingwolf.domain.service.commit.CommitDomainService
 import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
@@ -62,7 +63,8 @@ class VillageCoordinator(
     private val comingOutDomainService: ComingOutDomainService,
     private val sayDomainService: SayDomainService,
     private val abilityDomainService: AbilityDomainService,
-    private val voteDomainService: VoteDomainService
+    private val voteDomainService: VoteDomainService,
+    private val adminDomainService: AdminDomainService
 ) {
 
     /**
@@ -430,7 +432,8 @@ class VillageCoordinator(
             comingOut = comingOutDomainService.convertToSituation(village, participant),
             say = sayDomainService.convertToSituation(village, participant, charas, latestDayMessageList),
             ability = abilityDomainService.convertToSituationList(village, participant, abilities),
-            vote = voteDomainService.convertToSituation(village, participant, votes)
+            vote = voteDomainService.convertToSituation(village, participant, votes),
+            admin = adminDomainService.convertToSituation(village, participant, players, charas)
         )
     }
 

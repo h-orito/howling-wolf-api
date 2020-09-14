@@ -118,11 +118,7 @@ class DebugController(
             it.query().setUid_Equal(user.uid)
         }
         val toPlayer = playerBhv.selectEntityWithDeletedCheck {
-            it.query().existsVillagePlayer { vpCB ->
-                vpCB.query().setVillageId_Equal(villageId)
-                vpCB.query().setVillagePlayerId_Equal(body.targetId!!)
-                vpCB.query().setIsGone_Equal(false)
-            }
+            it.query().setPlayerId_Equal(body.targetId!!)
         }
         val current = currentPlayer.uid
         val to = toPlayer.uid
