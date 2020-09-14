@@ -1,5 +1,6 @@
 package com.ort.howlingwolf.infrastructure.datasource.player
 
+import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.dbflute.exbhv.PlayerDetailBhv
 import com.ort.dbflute.exentity.Player
@@ -118,7 +119,8 @@ class PlayerDataSource(
                 !it.village.get().villageStatusCodeAsVillageStatus.isSolvedVillage
             }.map { it.villageId },
             participateFinishedVillageIdList = player.villagePlayerList.filter {
-                it.village.get().villageStatusCodeAsVillageStatus.isSolvedVillage
+                val status = it.village.get().villageStatusCodeAsVillageStatus
+                status == CDef.VillageStatus.エピローグ || status == CDef.VillageStatus.終了
             }.map { it.villageId },
             createProgressVillageIdList = player.villageList.filter {
                 !it.villageStatusCodeAsVillageStatus.isSolvedVillage

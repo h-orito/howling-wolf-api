@@ -18,3 +18,4 @@ organize	構成	16
 is_auto_generated	自動生成村か	17
 silent_hours	沈黙時間	18
 is_available_dummy_skill	役欠けありか	19
+is_for_beginner	初心者村か	20

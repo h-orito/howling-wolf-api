@@ -1699,6 +1699,9 @@ public interface CDef extends Classification {
         /** 突然死ありか */
         突然死ありか("is_available_suddenly_death", "突然死ありか", emptyStrings())
         ,
+        /** 初心者村か */
+        初心者村か("is_for_beginner", "初心者村か", emptyStrings())
+        ,
         /** 墓下役職公開ありか */
         墓下役職公開ありか("is_open_skill_in_grave", "墓下役職公開ありか", emptyStrings())
         ,

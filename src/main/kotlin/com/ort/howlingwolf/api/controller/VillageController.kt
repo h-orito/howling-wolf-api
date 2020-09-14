@@ -207,7 +207,8 @@ class VillageController(
             body.organization!!,
             body.startDatetime!!,
             body.silentHours,
-            body.availableDummySkill!!
+            body.availableDummySkill!!,
+            body.forBeginner!!
         )
         val villageId: Int = villageCoordinator.registerVillage(village, user)
         return VillageRegisterView(villageId = villageId)

@@ -20,7 +20,8 @@ data class VillageSettings(
             organization: String,
             startDatetime: LocalDateTime,
             silentHours: Int?,
-            availableDummySkill: Boolean
+            availableDummySkill: Boolean,
+            forBeginner: Boolean
         ): VillageSettings {
             val personNum = organization.length
             return VillageSettings(
@@ -51,6 +52,7 @@ data class VillageSettings(
                     availableSuddenlyDeath = true,
                     availableCommit = false,
                     availableDummySkill = availableDummySkill,
+                    forBeginner = forBeginner,
                     messageRestrict = VillageMessageRestricts(
                         existRestricts = true,
                         restrictList = listOf(

@@ -421,12 +421,12 @@
 			<physical_name>RESERVED_VILLAGE</physical_name>
 			<logical_name>予約村</logical_name>
 			<description></description>
-			<height>143</height>
-			<width>251</width>
+			<height>179</height>
+			<width>272</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1642</x>
-			<y>236</y>
+			<x>1628</x>
+			<y>226</y>
 			<color>
 				<r>4</r>
 				<g>50</g>
@@ -473,6 +473,12 @@
 				<normal_column>
 					<physical_name>is_available_dummy_skill</physical_name>
 					<logical_name>役欠けありか</logical_name>
+					<type>boolean</type>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>is_for_beginner</physical_name>
+					<logical_name>初心者村か</logical_name>
 					<type>boolean</type>
 					<not_null>true</not_null>
 				</normal_column>

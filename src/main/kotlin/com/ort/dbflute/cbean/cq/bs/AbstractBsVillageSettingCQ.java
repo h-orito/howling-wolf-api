@@ -264,6 +264,14 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
     }
 
     /**
+     * Equal(=). As 初心者村か (is_for_beginner). And OnlyOnceRegistered. <br>
+     * 初心者村か
+     */
+    public void setVillageSettingItemCode_Equal_初心者村か() {
+        setVillageSettingItemCode_Equal_AsVillageSettingItem(CDef.VillageSettingItem.初心者村か);
+    }
+
+    /**
      * Equal(=). As 墓下役職公開ありか (is_open_skill_in_grave). And OnlyOnceRegistered. <br>
      * 墓下役職公開ありか
      */
@@ -436,6 +444,14 @@ public abstract class AbstractBsVillageSettingCQ extends AbstractConditionQuery 
      */
     public void setVillageSettingItemCode_NotEqual_突然死ありか() {
         setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.突然死ありか);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 初心者村か (is_for_beginner). And OnlyOnceRegistered. <br>
+     * 初心者村か
+     */
+    public void setVillageSettingItemCode_NotEqual_初心者村か() {
+        setVillageSettingItemCode_NotEqual_AsVillageSettingItem(CDef.VillageSettingItem.初心者村か);
     }
 
     /**

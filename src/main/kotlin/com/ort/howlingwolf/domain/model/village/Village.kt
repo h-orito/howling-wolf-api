@@ -139,9 +139,10 @@ data class Village(
         val silentHoursStr = setting.time.silentHours?.let {
             if (it == 0) "" else "更新後沈黙時間：${it}時間\r\n"
         } ?: ""
+        val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
 
         return "新しい村が作成されました。\r\n" +
-            "村名：$name\r\n" +
+            "村名：$name$forBeginner\r\n" +
             "編成：$organization\r\n" +
             "開始予定：$startDatetime\r\n" +
             silentHoursStr +
@@ -494,7 +495,8 @@ data class Village(
             organization: String,
             startDatetime: LocalDateTime,
             silentHours: Int?,
-            availableDummySkill: Boolean
+            availableDummySkill: Boolean,
+            forBeginner: Boolean
         ): Village {
             return Village(
                 id = 1, // dummy
@@ -505,7 +507,8 @@ data class Village(
                     organization,
                     startDatetime,
                     silentHours,
-                    availableDummySkill
+                    availableDummySkill,
+                    forBeginner
                 ),
                 participant = VillageParticipants(
                     count = 0,

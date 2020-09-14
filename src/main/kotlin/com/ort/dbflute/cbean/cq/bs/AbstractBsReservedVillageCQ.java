@@ -588,6 +588,18 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * IS_FOR_BEGINNER: {NotNull, BIT}
+     * @param isForBeginner The value of isForBeginner as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIsForBeginner_Equal(Boolean isForBeginner) {
+        regIsForBeginner(CK_EQ, isForBeginner);
+    }
+
+    protected void regIsForBeginner(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIsForBeginner(), "IS_FOR_BEGINNER"); }
+    protected abstract ConditionValue xgetCValueIsForBeginner();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @param registerDatetime The value of registerDatetime as equal. (basically NotNull: error as default, or no condition as option)
      */

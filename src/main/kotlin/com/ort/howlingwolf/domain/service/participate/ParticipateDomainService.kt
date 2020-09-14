@@ -8,6 +8,7 @@ import com.ort.howlingwolf.domain.model.myself.participant.VillageParticipateSit
 import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
+import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import org.springframework.stereotype.Service
 
@@ -166,7 +167,16 @@ class ParticipateDomainService {
         player ?: return false
         if (!player.isAvailableParticipate()) return false
         // 村として参加可能か
-        return village.isAvailableParticipate()
+        if (!village.isAvailableParticipate()) return false
+        // 複合条件：初心者村かつ1戦以上経験ありかつ1回目の更新時間を迎えていない場合NG
+        if (village.setting.rules.forBeginner
+            && player.participateFinishedVillageIdList.isNotEmpty()
+            && village.setting.time.prologueStartDatetime.plusDays(1L).isAfter(HowlingWolfDateUtil.currentLocalDateTime())
+        ) {
+            return false
+        }
+
+        return true
     }
 
     /**

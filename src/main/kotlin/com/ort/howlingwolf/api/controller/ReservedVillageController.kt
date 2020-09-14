@@ -52,7 +52,8 @@ class ReservedVillageController(
                 villageStartDatetime = body.startDatetime!!,
                 organization = body.organization!!,
                 silentHours = body.silentHours!!,
-                availableDummySkill = body.availableDummySkill!!
+                availableDummySkill = body.availableDummySkill!!,
+                forBeginner = body.forBeginner!!
             )
         )
     }

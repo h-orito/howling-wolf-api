@@ -48,6 +48,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getOrganization(), (et, vl) -> ((ReservedVillage)et).setOrganization((String)vl), "organization");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getSilentHours(), (et, vl) -> ((ReservedVillage)et).setSilentHours(cti(vl)), "silentHours");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getIsAvailableDummySkill(), (et, vl) -> ((ReservedVillage)et).setIsAvailableDummySkill((Boolean)vl), "isAvailableDummySkill");
+        setupEpg(_epgMap, et -> ((ReservedVillage)et).getIsForBeginner(), (et, vl) -> ((ReservedVillage)et).setIsForBeginner((Boolean)vl), "isForBeginner");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getRegisterDatetime(), (et, vl) -> ((ReservedVillage)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getRegisterTrace(), (et, vl) -> ((ReservedVillage)et).setRegisterTrace((String)vl), "registerTrace");
         setupEpg(_epgMap, et -> ((ReservedVillage)et).getUpdateDatetime(), (et, vl) -> ((ReservedVillage)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -78,6 +79,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnOrganization = cci("ORGANIZATION", "ORGANIZATION", null, null, String.class, "organization", null, false, false, true, "VARCHAR", 255, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnSilentHours = cci("SILENT_HOURS", "SILENT_HOURS", null, null, Integer.class, "silentHours", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnIsAvailableDummySkill = cci("IS_AVAILABLE_DUMMY_SKILL", "IS_AVAILABLE_DUMMY_SKILL", null, null, Boolean.class, "isAvailableDummySkill", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnIsForBeginner = cci("IS_FOR_BEGINNER", "IS_FOR_BEGINNER", null, null, Boolean.class, "isForBeginner", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -114,6 +116,11 @@ public class ReservedVillageDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnIsAvailableDummySkill() { return _columnIsAvailableDummySkill; }
     /**
+     * IS_FOR_BEGINNER: {NotNull, BIT}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnIsForBeginner() { return _columnIsForBeginner; }
+    /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
      */
@@ -142,6 +149,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
         ls.add(columnOrganization());
         ls.add(columnSilentHours());
         ls.add(columnIsAvailableDummySkill());
+        ls.add(columnIsForBeginner());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());

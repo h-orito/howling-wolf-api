@@ -18,7 +18,7 @@ import com.ort.dbflute.exentity.*;
  *     RESERVED_VILLAGE_ID
  *
  * [column]
- *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, IS_AVAILABLE_DUMMY_SKILL, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, IS_AVAILABLE_DUMMY_SKILL, IS_FOR_BEGINNER, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -49,6 +49,7 @@ import com.ort.dbflute.exentity.*;
  * String organization = entity.getOrganization();
  * Integer silentHours = entity.getSilentHours();
  * Boolean isAvailableDummySkill = entity.getIsAvailableDummySkill();
+ * Boolean isForBeginner = entity.getIsForBeginner();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
@@ -59,6 +60,7 @@ import com.ort.dbflute.exentity.*;
  * entity.setOrganization(organization);
  * entity.setSilentHours(silentHours);
  * entity.setIsAvailableDummySkill(isAvailableDummySkill);
+ * entity.setIsForBeginner(isForBeginner);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -95,6 +97,9 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
 
     /** IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} */
     protected Boolean _isAvailableDummySkill;
+
+    /** IS_FOR_BEGINNER: {NotNull, BIT} */
+    protected Boolean _isForBeginner;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -176,6 +181,7 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
         sb.append(dm).append(xfND(_organization));
         sb.append(dm).append(xfND(_silentHours));
         sb.append(dm).append(xfND(_isAvailableDummySkill));
+        sb.append(dm).append(xfND(_isForBeginner));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -318,6 +324,26 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     public void setIsAvailableDummySkill(Boolean isAvailableDummySkill) {
         registerModifiedProperty("isAvailableDummySkill");
         _isAvailableDummySkill = isAvailableDummySkill;
+    }
+
+    /**
+     * [get] IS_FOR_BEGINNER: {NotNull, BIT} <br>
+     * 初心者村か
+     * @return The value of the column 'IS_FOR_BEGINNER'. (basically NotNull if selected: for the constraint)
+     */
+    public Boolean getIsForBeginner() {
+        checkSpecifiedProperty("isForBeginner");
+        return _isForBeginner;
+    }
+
+    /**
+     * [set] IS_FOR_BEGINNER: {NotNull, BIT} <br>
+     * 初心者村か
+     * @param isForBeginner The value of the column 'IS_FOR_BEGINNER'. (basically NotNull if update: for the constraint)
+     */
+    public void setIsForBeginner(Boolean isForBeginner) {
+        registerModifiedProperty("isForBeginner");
+        _isForBeginner = isForBeginner;
     }
 
     /**

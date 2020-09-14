@@ -92,7 +92,12 @@ class PrologueDomainServiceTest : HowlingWolfTest() {
                         participant1, participant2
                     )
                 ),
-                day = VillageDays(listOf(latestDay))
+                day = VillageDays(listOf(latestDay)),
+                setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
+                    time = DummyDomainModelCreator.createDummyVillageTime().copy(
+                        startDatetime = LocalDateTime.now().plusHours(3L)
+                    )
+                )
             )
         )
         val todayMessages = Messages(
@@ -133,6 +138,66 @@ class PrologueDomainServiceTest : HowlingWolfTest() {
         assertThat(afterDayChange.isChange).isTrue()
         assertThat(afterDayChange.village.participant.member(participant1.id).isGone).isFalse()
         assertThat(afterDayChange.village.participant.member(participant2.id).isGone).isTrue()
+    }
+
+    @Test
+    fun test_leaveParticipantIfNeeded_退村ありだが開始2時間以内() {
+        // ## Arrange ##
+        val participant1 = DummyDomainModelCreator.createDummyVillageParticipant()
+        val participant2 = DummyDomainModelCreator.createDummyVillageParticipant()
+        val latestDay = DummyDomainModelCreator.createDummyVillageDay()
+        val dayChange = DummyDomainModelCreator.createDummyDayChange().copy(
+            village = DummyDomainModelCreator.createDummyVillage().copy(
+                participant = VillageParticipants(
+                    count = 2,
+                    memberList = listOf(
+                        participant1, participant2
+                    )
+                ),
+                day = VillageDays(listOf(latestDay)),
+                setting = DummyDomainModelCreator.createDummyVillageSettings().copy(
+                    time = DummyDomainModelCreator.createDummyVillageTime().copy(
+                        startDatetime = LocalDateTime.now().plusHours(1L)
+                    )
+                )
+            )
+        )
+        val todayMessages = Messages(
+            listOf(
+                DummyDomainModelCreator.createDummyMessage().copy(
+                    fromVillageParticipantId = participant1.id,
+                    content = DummyDomainModelCreator.createDummyMessageContent().copy(
+                        type = MessageType(CDef.MessageType.通常発言)
+                    ),
+                    time = DummyDomainModelCreator.createDummyMessageTime().copy(
+                        villageDayId = latestDay.id,
+                        datetime = LocalDateTime.now().minusHours(1L)
+                    )
+                ),
+                DummyDomainModelCreator.createDummyMessage().copy(
+                    fromVillageParticipantId = participant2.id,
+                    content = DummyDomainModelCreator.createDummyMessageContent().copy(
+                        type = MessageType(CDef.MessageType.通常発言)
+                    ),
+                    time = DummyDomainModelCreator.createDummyMessageTime().copy(
+                        villageDayId = latestDay.id,
+                        datetime = LocalDateTime.now().minusHours(25L)
+                    )
+                )
+            )
+        )
+        val charas = Charas(
+            listOf(
+                DummyDomainModelCreator.createDummyChara().copy(id = participant1.charaId),
+                DummyDomainModelCreator.createDummyChara().copy(id = participant2.charaId)
+            )
+        )
+
+        // ## Act ##
+        val afterDayChange = prologueDomainService.leaveParticipantIfNeeded(dayChange, todayMessages, charas)
+
+        // ## Assert ##
+        assertThat(afterDayChange.isChange).isFalse()
     }
 
     @Test
