@@ -23,6 +23,10 @@ class PrologueDomainService(
         todayMessages: Messages,
         charas: Charas
     ): DayChange {
+        // 開始2時間を切っていたら退村させない
+        if (HowlingWolfDateUtil.currentLocalDateTime().isAfter(dayChange.village.setting.time.startDatetime.minusHours(2L))) {
+            return dayChange
+        }
         // 24時間以内の発言
         val recentMessageList =
             todayMessages.list.filter { it.time.datetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime().minusDays(1L)) }
