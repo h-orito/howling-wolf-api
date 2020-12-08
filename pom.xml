@@ -113,6 +113,11 @@
             <version>2.1.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.slack.api</groupId>
+            <artifactId>slack-api-client</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
