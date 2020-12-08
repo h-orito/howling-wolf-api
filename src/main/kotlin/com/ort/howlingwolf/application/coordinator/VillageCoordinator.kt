@@ -8,6 +8,7 @@ import com.ort.howlingwolf.application.service.CommitService
 import com.ort.howlingwolf.application.service.MessageService
 import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.ReservedVillageService
+import com.ort.howlingwolf.application.service.SlackService
 import com.ort.howlingwolf.application.service.TweetService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.application.service.VoteService
@@ -56,6 +57,7 @@ class VillageCoordinator(
     private val comingOutService: ComingOutService,
     private val reservedVillageService: ReservedVillageService,
     private val tweetService: TweetService,
+    private val slackService: SlackService,
     // domain service
     private val participateDomainService: ParticipateDomainService,
     private val skillRequestDomainService: SkillRequestDomainService,
@@ -310,6 +312,10 @@ class VillageCoordinator(
         val participant: VillageParticipant = findParticipant(village, user)!!
         val message: Message = Message.createSayMessage(participant, village.day.latestDay().id, messageContent)
         messageService.registerSayMessage(villageId, message)
+        // 特定の文字列が含まれていたら通知
+        if (messageText.contains("@国主") || messageText.contains("＠国主")) {
+            slackService.postToSlack(villageId, messageText)
+        }
     }
 
     /**
