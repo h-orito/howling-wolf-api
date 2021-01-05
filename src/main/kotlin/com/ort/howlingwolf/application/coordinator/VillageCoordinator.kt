@@ -108,10 +108,12 @@ class VillageCoordinator(
         val village: Village = villageService.registerVillage(paramVillage)
         // 村作成時のシステムメッセージを登録
         messageService.registerInitialMessage(village)
+        // 初心者村の場合専用メッセージを登録
+        if (village.setting.rules.forBeginner) messageService.registerBeginnerMessage(village)
         // ダミーキャラを参加させる
         val chara: Chara = charachipService.findChara(village.setting.charachip.dummyCharaId)
-        participateDummyChara(village.id, village, chara)
 
+        participateDummyChara(village.id, village, chara)
         return village
     }
 

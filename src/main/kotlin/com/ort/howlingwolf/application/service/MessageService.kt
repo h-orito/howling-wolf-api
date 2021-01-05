@@ -102,6 +102,8 @@ class MessageService(
      */
     fun registerInitialMessage(village: Village) = messageDataSource.registerMessage(village.id, village.createVillagePrologueMessage())
 
+    fun registerBeginnerMessage(village: Village) = messageDataSource.registerMessage(village.id, village.createBeginnerVillageMessage())
+
     /**
      * 村に参加する際の発言を登録
      * @param village village
