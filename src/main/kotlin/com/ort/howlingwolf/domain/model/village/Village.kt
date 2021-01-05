@@ -33,6 +33,12 @@ data class Village(
     private val initialMessage: String =
         "昼間は人間のふりをして、夜に正体を現すという人狼。\nその人狼が、この村に紛れ込んでいるという噂が広がった。\n\n村人達は半信半疑ながらも、村はずれの宿に集められることになった。"
 
+    private val beginnerMessage: String =
+        "この村は初心者村です。\n\n・村建てから24時間経過するまでは1戦以上参加したことがある方の参加が制限されます\n" +
+            "・初心者の方は初心者COしてもOKです\n・初心者でない方は初心者に優しく教えながら参加してください\n" +
+            "・他のサイトや対面などで何戦かやったことがあるけど自信がない、という方も大歓迎です\n" +
+            "　（どの程度経験があるか記載しておくとサポートを受けやすくなると思います。）"
+
     private val day1Message: String =
         "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\nたとえ人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。"
 
@@ -49,6 +55,10 @@ data class Village(
     /** 村作成時のメッセージ */
     fun createVillagePrologueMessage(): Message =
         Message.createPublicSystemMessage(initialMessage, day.latestDay().id)
+
+    /** 初心者村のメッセージ */
+    fun createBeginnerVillageMessage(): Message =
+        Message.createPublicSystemMessage(beginnerMessage, day.latestDay().id)
 
     /** 1日目のメッセージ */
     fun createVillageDay1Message(): Message =
