@@ -9,13 +9,15 @@ import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
 import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
 import com.ort.howlingwolf.domain.service.skill.SkillAssignDomainService
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
+import com.ort.howlingwolf.infrastructure.repository.TweetRepository
 import org.springframework.stereotype.Service
 
 @Service
 class PrologueDomainService(
     private val abilityDomainService: AbilityDomainService,
     private val skillAssignDomainService: SkillAssignDomainService,
-    private val participateDomainService: ParticipateDomainService
+    private val participateDomainService: ParticipateDomainService,
+    private val tweetRepository: TweetRepository
 ) {
 
     fun leaveParticipantIfNeeded(
@@ -85,6 +87,8 @@ class PrologueDomainService(
         dayChange = abilityDomainService.addDefaultAbilities(dayChange)
         // ダミーキャラ発言
         dayChange = addDummyCharaFirstDayMessageIfNeeded(dayChange, charas)
+        // 開始ツイート
+        tweetRepository.tweet(dayChange.village.createStartVillageMessage())
 
         return dayChange.setIsChange(beforeDayChange)
     }

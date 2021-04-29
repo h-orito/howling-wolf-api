@@ -143,7 +143,7 @@ data class Village(
         )
     }
 
-    fun createTweetMessage(): String {
+    fun createNewVillageMessage(): String {
         val organization = setting.organizations.organization[setting.capacity.max]!!
         val startDatetime = setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm"))
         val silentHoursStr = setting.time.silentHours?.let {
@@ -152,6 +152,22 @@ data class Village(
         val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
 
         return "新しい村が作成されました。\r\n" +
+            "村名：$name$forBeginner\r\n" +
+            "編成：$organization\r\n" +
+            "開始予定：$startDatetime\r\n" +
+            silentHoursStr +
+            "https://howling-wolf.com/village?id=$id"
+    }
+
+    fun createStartVillageMessage(): String {
+        val organization = setting.organizations.organization[setting.capacity.max]!!
+        val startDatetime = setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm"))
+        val silentHoursStr = setting.time.silentHours?.let {
+            if (it == 0) "" else "更新後沈黙時間：${it}時間\r\n"
+        } ?: ""
+        val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
+
+        return "村が開始されました。\r\n" +
             "村名：$name$forBeginner\r\n" +
             "編成：$organization\r\n" +
             "開始予定：$startDatetime\r\n" +
