@@ -175,6 +175,8 @@ class ParticipateDomainService {
         ) {
             return false
         }
+        // 複合条件：誰かにblacklist登録されている
+        if (village.blacklistPlayers.list.any { it == player.id }) return false
 
         return true
     }

@@ -62,18 +62,38 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     //                                                                Override about Query
     //                                                                ====================
     protected ConditionValue xgetCValuePlayerId() { return _myCQ.xdfgetPlayerId(); }
+    public String keepPlayerId_ExistsReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepPlayerId_ExistsReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepPlayerId_ExistsReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepPlayerId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepPlayerId_NotExistsReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepPlayerId_NotExistsReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepPlayerId_NotExistsReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepPlayerId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepPlayerId_SpecifyDerivedReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepPlayerId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByFromPlayerIdListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepPlayerId_QueryDerivedReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepPlayerId_QueryDerivedReferrer_VillageListParameter(Object vl)

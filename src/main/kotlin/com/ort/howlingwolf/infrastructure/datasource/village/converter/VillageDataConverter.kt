@@ -11,6 +11,7 @@ import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOut
@@ -61,7 +62,8 @@ object VillageDataConverter {
             day = VillageDays(
                 dayList = village.villageDayList.map { convertVillageDayToVillageDay(it) }
             ),
-            winCamp = village.winCampCodeAsCamp?.let { com.ort.howlingwolf.domain.model.camp.Camp(it) }
+            winCamp = village.winCampCodeAsCamp?.let { com.ort.howlingwolf.domain.model.camp.Camp(it) },
+            blacklistPlayers = convertToBlacklistPlayers(village)
         )
     }
 
@@ -74,6 +76,7 @@ object VillageDataConverter {
             dayChangeDatetime = villageDay.daychangeDatetime
         )
     }
+
 
     // ===================================================================================
     //                                                                        Assist Logic
@@ -92,7 +95,8 @@ object VillageDataConverter {
                     listOf(convertVillageDayToVillageDay(it))
                 }.orEmpty()
             ),
-            winCamp = village.winCampCodeAsCamp?.let { com.ort.howlingwolf.domain.model.camp.Camp(it) }
+            winCamp = village.winCampCodeAsCamp?.let { com.ort.howlingwolf.domain.model.camp.Camp(it) },
+            blacklistPlayers = BlacklistPlayers(listOf())
         )
     }
 
@@ -181,6 +185,13 @@ object VillageDataConverter {
 
     private fun convertToDeadReasonToDead(vp: VillagePlayer): Dead {
         return Dead(vp.deadReasonCodeAsDeadReason, convertVillageDayToVillageDay(vp.villageDay.get()))
+    }
+
+    private fun convertToBlacklistPlayers(village: Village): BlacklistPlayers {
+        val blacklistedPlayerIdList = village.villagePlayerList.flatMap { vp ->
+            vp.player.get().blacklistPlayerByFromPlayerIdList.map { it.toPlayerId }
+        }.distinct()
+        return BlacklistPlayers(blacklistedPlayerIdList)
     }
 
     private fun detectItemText(settingList: List<VillageSetting>, item: CDef.VillageSettingItem): String? {

@@ -7,6 +7,7 @@ import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
@@ -24,7 +25,8 @@ data class Village(
     val setting: VillageSettings,
     val participant: VillageParticipants,
     val spectator: VillageParticipants,
-    val day: VillageDays
+    val day: VillageDays,
+    val blacklistPlayers: BlacklistPlayers
 ) {
 
     // ===================================================================================
@@ -547,7 +549,8 @@ data class Village(
                 day = VillageDays(
                     dayList = listOf()
                 ),
-                winCamp = null
+                winCamp = null,
+                blacklistPlayers = BlacklistPlayers(listOf())
             )
         }
     }

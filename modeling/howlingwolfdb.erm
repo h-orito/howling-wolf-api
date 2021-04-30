@@ -422,11 +422,11 @@
 			<logical_name>予約村</logical_name>
 			<description></description>
 			<height>179</height>
-			<width>272</width>
+			<width>276</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1628</x>
-			<y>226</y>
+			<x>1749</x>
+			<y>137</y>
 			<color>
 				<r>4</r>
 				<g>50</g>
@@ -693,8 +693,8 @@
 			<description></description>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>942</x>
-			<y>34</y>
+			<x>941</x>
+			<y>-19</y>
 			<color>
 				<r>254</r>
 				<g>251</g>
@@ -722,6 +722,96 @@
 			<indexes>
 			</indexes>
 			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
+			<physical_name>blacklist_player</physical_name>
+			<logical_name>ブラックリストプレイヤー</logical_name>
+			<description></description>
+			<height>107</height>
+			<width>329</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1295</x>
+			<y>201</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+				<relationship>
+					<name>FK_blacklist_player_player</name>
+					<source>table.player</source>
+					<target>table.blacklist_player</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>from_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
+				<relationship>
+					<name>FK_blacklist_to_player_player</name>
+					<source>table.player</source>
+					<target>table.blacklist_player</target>
+					<fk_columns>
+						<fk_column>
+							<fk_column_name>to_player_id</fk_column_name>
+						</fk_column>
+					</fk_columns>
+					<parent_cardinality>1</parent_cardinality>
+					<child_cardinality>0..n</child_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+				</relationship>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>blacklist_player_id</physical_name>
+					<logical_name>ブラックリストプレイヤーID</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+					<auto_increment>true</auto_increment>
+				</normal_column>
+				<normal_column>
+					<physical_name>from_player_id</physical_name>
+					<referred_column>table.player.player_id</referred_column>
+					<relationship>FK_blacklist_player_player</relationship>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>to_player_id</physical_name>
+					<logical_name>ブラックリスト対象プレイヤーID</logical_name>
+					<referred_column>table.player.player_id</referred_column>
+					<relationship>FK_blacklist_to_player_player</relationship>
+					<not_null>true</not_null>
+				</normal_column>
+				<column_group>共通カラム</column_group>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+				<compound_unique_key>
+					<name>UQ_blacklist_player</name>
+					<columns>
+						<column>
+							<column_id>table.blacklist_player.from_player_id</column_id>
+						</column>
+						<column>
+							<column_id>table.blacklist_player.to_player_id</column_id>
+						</column>
+					</columns>
+				</compound_unique_key>
 			</compound_unique_key_list>
 			<table_properties>
 			</table_properties>
@@ -1476,11 +1566,11 @@
 			<logical_name>プレイヤー詳細</logical_name>
 			<description></description>
 			<height>89</height>
-			<width>264</width>
+			<width>266</width>
 			<font_name>.AppleSystemUIFont</font_name>
 			<font_size>9</font_size>
-			<x>1308</x>
-			<y>145</y>
+			<x>1293</x>
+			<y>104</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -2409,12 +2499,12 @@
 			<diagram_walker>table.message</diagram_walker>
 		</walker_group>
 		<walker_group>
-			<height>194</height>
-			<width>664</width>
+			<height>255</height>
+			<width>720</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
 			<x>923</x>
-			<y>130</y>
+			<y>69</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -2429,8 +2519,8 @@
 			<width>322</width>
 			<font_name></font_name>
 			<font_size>9</font_size>
-			<x>1608</x>
-			<y>199</y>
+			<x>1729</x>
+			<y>110</y>
 			<color>
 				<r>128</r>
 				<g>128</g>

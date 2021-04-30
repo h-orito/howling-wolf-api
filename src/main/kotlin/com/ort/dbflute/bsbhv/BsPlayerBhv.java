@@ -43,13 +43,13 @@ import com.ort.dbflute.cbean.*;
  *     AUTHORITY, PLAYER_DETAIL(AsOne)
  *
  * [referrer table]
- *     VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
+ *     BLACKLIST_PLAYER, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
  *
  * [foreign property]
  *     authority, playerDetailAsOne
  *
  * [referrer property]
- *     villageList, villagePlayerList
+ *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, villageList, villagePlayerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -384,6 +384,134 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     public void load(Player player, ReferrerLoaderHandler<LoaderOfPlayer> loaderLambda) {
         xassLRArg(player, loaderLambda);
         loaderLambda.handle(new LoaderOfPlayer().ready(xnewLRAryLs(player), _behaviorSelector));
+    }
+
+    /**
+     * Load referrer of blacklistPlayerByFromPlayerIdList by the set-upper of referrer. <br>
+     * BLACKLIST_PLAYER by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">loadBlacklistPlayerByFromPlayerId</span>(<span style="color: #553000">playerList</span>, <span style="color: #553000">playerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">playerCB</span>.setupSelect...
+     *     <span style="color: #553000">playerCB</span>.query().set...
+     *     <span style="color: #553000">playerCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Player player : <span style="color: #553000">playerList</span>) {
+     *     ... = player.<span style="color: #CC4747">getBlacklistPlayerByFromPlayerIdList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setFromPlayerId_InScope(pkList);
+     * cb.query().addOrderBy_FromPlayerId_Asc();
+     * </pre>
+     * @param playerList The entity list of player. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<BlacklistPlayer> loadBlacklistPlayerByFromPlayerId(List<Player> playerList, ReferrerConditionSetupper<BlacklistPlayerCB> refCBLambda) {
+        xassLRArg(playerList, refCBLambda);
+        return doLoadBlacklistPlayerByFromPlayerId(playerList, new LoadReferrerOption<BlacklistPlayerCB, BlacklistPlayer>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of blacklistPlayerByFromPlayerIdList by the set-upper of referrer. <br>
+     * BLACKLIST_PLAYER by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">loadBlacklistPlayerByFromPlayerId</span>(<span style="color: #553000">player</span>, <span style="color: #553000">playerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">playerCB</span>.setupSelect...
+     *     <span style="color: #553000">playerCB</span>.query().set...
+     *     <span style="color: #553000">playerCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">player</span>.<span style="color: #CC4747">getBlacklistPlayerByFromPlayerIdList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setFromPlayerId_InScope(pkList);
+     * cb.query().addOrderBy_FromPlayerId_Asc();
+     * </pre>
+     * @param player The entity of player. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<BlacklistPlayer> loadBlacklistPlayerByFromPlayerId(Player player, ReferrerConditionSetupper<BlacklistPlayerCB> refCBLambda) {
+        xassLRArg(player, refCBLambda);
+        return doLoadBlacklistPlayerByFromPlayerId(xnewLRLs(player), new LoadReferrerOption<BlacklistPlayerCB, BlacklistPlayer>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<BlacklistPlayer> doLoadBlacklistPlayerByFromPlayerId(List<Player> playerList, LoadReferrerOption<BlacklistPlayerCB, BlacklistPlayer> option) {
+        return helpLoadReferrerInternally(playerList, option, "blacklistPlayerByFromPlayerIdList");
+    }
+
+    /**
+     * Load referrer of blacklistPlayerByToPlayerIdList by the set-upper of referrer. <br>
+     * BLACKLIST_PLAYER by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">loadBlacklistPlayerByToPlayerId</span>(<span style="color: #553000">playerList</span>, <span style="color: #553000">playerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">playerCB</span>.setupSelect...
+     *     <span style="color: #553000">playerCB</span>.query().set...
+     *     <span style="color: #553000">playerCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Player player : <span style="color: #553000">playerList</span>) {
+     *     ... = player.<span style="color: #CC4747">getBlacklistPlayerByToPlayerIdList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setToPlayerId_InScope(pkList);
+     * cb.query().addOrderBy_ToPlayerId_Asc();
+     * </pre>
+     * @param playerList The entity list of player. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<BlacklistPlayer> loadBlacklistPlayerByToPlayerId(List<Player> playerList, ReferrerConditionSetupper<BlacklistPlayerCB> refCBLambda) {
+        xassLRArg(playerList, refCBLambda);
+        return doLoadBlacklistPlayerByToPlayerId(playerList, new LoadReferrerOption<BlacklistPlayerCB, BlacklistPlayer>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of blacklistPlayerByToPlayerIdList by the set-upper of referrer. <br>
+     * BLACKLIST_PLAYER by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">loadBlacklistPlayerByToPlayerId</span>(<span style="color: #553000">player</span>, <span style="color: #553000">playerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">playerCB</span>.setupSelect...
+     *     <span style="color: #553000">playerCB</span>.query().set...
+     *     <span style="color: #553000">playerCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">player</span>.<span style="color: #CC4747">getBlacklistPlayerByToPlayerIdList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setToPlayerId_InScope(pkList);
+     * cb.query().addOrderBy_ToPlayerId_Asc();
+     * </pre>
+     * @param player The entity of player. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<BlacklistPlayer> loadBlacklistPlayerByToPlayerId(Player player, ReferrerConditionSetupper<BlacklistPlayerCB> refCBLambda) {
+        xassLRArg(player, refCBLambda);
+        return doLoadBlacklistPlayerByToPlayerId(xnewLRLs(player), new LoadReferrerOption<BlacklistPlayerCB, BlacklistPlayer>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<BlacklistPlayer> doLoadBlacklistPlayerByToPlayerId(List<Player> playerList, LoadReferrerOption<BlacklistPlayerCB, BlacklistPlayer> option) {
+        return helpLoadReferrerInternally(playerList, option, "blacklistPlayerByToPlayerIdList");
     }
 
     /**

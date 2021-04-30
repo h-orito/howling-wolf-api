@@ -45,10 +45,12 @@ class PlayerController(
         val createVillages: Villages = villageService.findVillages(
             player.createProgressVillageIdList + player.createFinishedVillageIdList
         )
+        val blacklistPlayers: Players = playerService.findPlayers(player.blacklistPlayers.list)
         return MyselfPlayerView(
             player,
             participantVillages,
             createVillages,
+            blacklistPlayers,
             user
         )
     }
@@ -67,6 +69,24 @@ class PlayerController(
         @RequestBody @Validated body: PlayerUpdateDetailBody
     ) {
         playerService.updateDetail(user.uid, body.otherSiteName, body.introduction)
+    }
+
+    @PostMapping("/player/blacklist-player/register/{playerId}")
+    fun registerBlacklistPlayer(
+        @AuthenticationPrincipal user: HowlingWolfUser,
+        @PathVariable("playerId") targetPlayerId: Int
+    ) {
+        val target: Player = playerService.findPlayer(targetPlayerId)
+        playerService.registerBlacklist(user.uid, target.id)
+    }
+
+    @PostMapping("/player/blacklist-player/remove/{playerId}")
+    fun removeBlacklistPlayer(
+        @AuthenticationPrincipal user: HowlingWolfUser,
+        @PathVariable("playerId") targetPlayerId: Int
+    ) {
+        val target: Player = playerService.findPlayer(targetPlayerId)
+        playerService.deleteBlacklist(user.uid, target.id)
     }
 
     private val logger = LoggerFactory.getLogger(PlayerController::class.java)

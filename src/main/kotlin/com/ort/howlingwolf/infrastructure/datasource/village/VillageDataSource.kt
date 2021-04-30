@@ -175,6 +175,7 @@ class VillageDataSource(
         villageBhv.load(villageList) { loader ->
             loader.loadVillagePlayer { vpCB ->
                 vpCB.setupSelect_VillageDay()
+                vpCB.setupSelect_Player()
                 vpCB.query().setIsGone_Equal(false)
             }.withNestedReferrer {
                 it.pulloutChara().loadCharaImage { }
@@ -202,12 +203,14 @@ class VillageDataSource(
         villageBhv.load(village) { loader ->
             loader.loadVillagePlayer { vpCB ->
                 vpCB.setupSelect_VillageDay()
+                vpCB.setupSelect_Player()
                 if (excludeGonePlayer) {
                     vpCB.query().setIsGone_Equal(false)
                 }
             }.withNestedReferrer {
                 it.loadComingOut { }
                 it.pulloutChara().loadCharaImage { }
+                it.pulloutPlayer().loadBlacklistPlayerByFromPlayerId { }
             }
             loader.loadVillageSetting { }
             loader.loadVillageDay {

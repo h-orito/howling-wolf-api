@@ -22,6 +22,7 @@ import com.ort.howlingwolf.domain.model.village.VillageDay
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
@@ -47,7 +48,8 @@ object DummyDomainModelCreator {
             setting = createDummyVillageSettings(),
             participant = createDummyVillageParticipants(),
             spectator = createDummyVillageParticipants(),
-            day = createDummyVillageDays()
+            day = createDummyVillageDays(),
+            blacklistPlayers = BlacklistPlayers(listOf())
         )
     }
 

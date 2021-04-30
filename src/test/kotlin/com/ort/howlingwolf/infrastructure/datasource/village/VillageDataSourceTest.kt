@@ -16,6 +16,7 @@ import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageDay
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
@@ -352,7 +353,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
                     )
                 )
             ),
-            winCamp = Camp(CDef.Camp.人狼陣営)
+            winCamp = Camp(CDef.Camp.人狼陣営),
+            blacklistPlayers = BlacklistPlayers(listOf())
         )
     }
 

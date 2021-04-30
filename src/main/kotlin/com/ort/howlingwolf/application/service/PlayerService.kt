@@ -27,5 +27,13 @@ class PlayerService(
         playerDataSource.updateDetail(uid, otherSiteName, introduction)
     }
 
+    fun registerBlacklist(uid: String, targetPlayerId: Int) {
+        playerDataSource.registerBlacklist(uid, targetPlayerId)
+    }
+
+    fun deleteBlacklist(uid: String, targetPlayerId: Int) {
+        playerDataSource.deleteBlacklist(uid, targetPlayerId)
+    }
+
     fun updateDifference(before: Players, after: Players) = playerDataSource.updateDifference(before, after)
 }

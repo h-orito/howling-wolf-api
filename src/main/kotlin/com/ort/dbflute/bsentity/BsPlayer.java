@@ -36,13 +36,13 @@ import com.ort.dbflute.exentity.*;
  *     AUTHORITY, PLAYER_DETAIL(AsOne)
  *
  * [referrer table]
- *     VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
+ *     BLACKLIST_PLAYER, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
  *
  * [foreign property]
  *     authority, playerDetailAsOne
  *
  * [referrer property]
- *     villageList, villagePlayerList
+ *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, villageList, villagePlayerList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -260,6 +260,46 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
+    /** BLACKLIST_PLAYER by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdList'. */
+    protected List<BlacklistPlayer> _blacklistPlayerByFromPlayerIdList;
+
+    /**
+     * [get] BLACKLIST_PLAYER by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdList'.
+     * @return The entity list of referrer property 'blacklistPlayerByFromPlayerIdList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<BlacklistPlayer> getBlacklistPlayerByFromPlayerIdList() {
+        if (_blacklistPlayerByFromPlayerIdList == null) { _blacklistPlayerByFromPlayerIdList = newReferrerList(); }
+        return _blacklistPlayerByFromPlayerIdList;
+    }
+
+    /**
+     * [set] BLACKLIST_PLAYER by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdList'.
+     * @param blacklistPlayerByFromPlayerIdList The entity list of referrer property 'blacklistPlayerByFromPlayerIdList'. (NullAllowed)
+     */
+    public void setBlacklistPlayerByFromPlayerIdList(List<BlacklistPlayer> blacklistPlayerByFromPlayerIdList) {
+        _blacklistPlayerByFromPlayerIdList = blacklistPlayerByFromPlayerIdList;
+    }
+
+    /** BLACKLIST_PLAYER by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdList'. */
+    protected List<BlacklistPlayer> _blacklistPlayerByToPlayerIdList;
+
+    /**
+     * [get] BLACKLIST_PLAYER by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdList'.
+     * @return The entity list of referrer property 'blacklistPlayerByToPlayerIdList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<BlacklistPlayer> getBlacklistPlayerByToPlayerIdList() {
+        if (_blacklistPlayerByToPlayerIdList == null) { _blacklistPlayerByToPlayerIdList = newReferrerList(); }
+        return _blacklistPlayerByToPlayerIdList;
+    }
+
+    /**
+     * [set] BLACKLIST_PLAYER by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdList'.
+     * @param blacklistPlayerByToPlayerIdList The entity list of referrer property 'blacklistPlayerByToPlayerIdList'. (NullAllowed)
+     */
+    public void setBlacklistPlayerByToPlayerIdList(List<BlacklistPlayer> blacklistPlayerByToPlayerIdList) {
+        _blacklistPlayerByToPlayerIdList = blacklistPlayerByToPlayerIdList;
+    }
+
     /** VILLAGE by CREATE_PLAYER_ID, named 'villageList'. */
     protected List<Village> _villageList;
 
@@ -333,6 +373,10 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         { sb.append(li).append(xbRDS(_authority, "authority")); }
         if (_playerDetailAsOne != null && _playerDetailAsOne.isPresent())
         { sb.append(li).append(xbRDS(_playerDetailAsOne, "playerDetailAsOne")); }
+        if (_blacklistPlayerByFromPlayerIdList != null) { for (BlacklistPlayer et : _blacklistPlayerByFromPlayerIdList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "blacklistPlayerByFromPlayerIdList")); } } }
+        if (_blacklistPlayerByToPlayerIdList != null) { for (BlacklistPlayer et : _blacklistPlayerByToPlayerIdList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "blacklistPlayerByToPlayerIdList")); } } }
         if (_villageList != null) { for (Village et : _villageList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villageList")); } } }
         if (_villagePlayerList != null) { for (VillagePlayer et : _villagePlayerList)
@@ -370,6 +414,10 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
         { sb.append(dm).append("authority"); }
         if (_playerDetailAsOne != null && _playerDetailAsOne.isPresent())
         { sb.append(dm).append("playerDetailAsOne"); }
+        if (_blacklistPlayerByFromPlayerIdList != null && !_blacklistPlayerByFromPlayerIdList.isEmpty())
+        { sb.append(dm).append("blacklistPlayerByFromPlayerIdList"); }
+        if (_blacklistPlayerByToPlayerIdList != null && !_blacklistPlayerByToPlayerIdList.isEmpty())
+        { sb.append(dm).append("blacklistPlayerByToPlayerIdList"); }
         if (_villageList != null && !_villageList.isEmpty())
         { sb.append(dm).append("villageList"); }
         if (_villagePlayerList != null && !_villagePlayerList.isEmpty())
