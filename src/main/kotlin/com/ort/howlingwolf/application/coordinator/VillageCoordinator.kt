@@ -8,8 +8,8 @@ import com.ort.howlingwolf.application.service.CommitService
 import com.ort.howlingwolf.application.service.MessageService
 import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.application.service.ReservedVillageService
-import com.ort.howlingwolf.application.service.SlackService
-import com.ort.howlingwolf.application.service.TweetService
+import com.ort.howlingwolf.infrastructure.repository.SlackRepository
+import com.ort.howlingwolf.infrastructure.repository.TweetRepository
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.application.service.VoteService
 import com.ort.howlingwolf.domain.model.ability.AbilityType
@@ -56,8 +56,8 @@ class VillageCoordinator(
     private val commitService: CommitService,
     private val comingOutService: ComingOutService,
     private val reservedVillageService: ReservedVillageService,
-    private val tweetService: TweetService,
-    private val slackService: SlackService,
+    private val tweetRepository: TweetRepository,
+    private val slackRepository: SlackRepository,
     // domain service
     private val participateDomainService: ParticipateDomainService,
     private val skillRequestDomainService: SkillRequestDomainService,
@@ -138,7 +138,7 @@ class VillageCoordinator(
             )
             reservedVillageService.deleteReservedVillage(it.id)
             // ツイート
-            tweetService.tweet(village.createTweetMessage())
+            tweetRepository.tweet(village.createNewVillageMessage())
         }
     }
 
@@ -316,7 +316,7 @@ class VillageCoordinator(
         messageService.registerSayMessage(villageId, message)
         // 特定の文字列が含まれていたら通知
         if (messageText.contains("@国主") || messageText.contains("＠国主")) {
-            slackService.postToSlack(villageId, messageText)
+            slackRepository.postToSlack(villageId, messageText)
         }
     }
 

@@ -9,6 +9,7 @@ import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
 import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
@@ -160,7 +161,8 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
             day = VillageDays(
                 dayList = listOf() // dummy
             ),
-            winCamp = null
+            winCamp = null,
+            blacklistPlayers = BlacklistPlayers(listOf())
         )
     }
 

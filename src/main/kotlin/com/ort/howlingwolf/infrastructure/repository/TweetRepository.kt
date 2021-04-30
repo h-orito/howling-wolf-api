@@ -1,4 +1,4 @@
-package com.ort.howlingwolf.application.service
+package com.ort.howlingwolf.infrastructure.repository
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -9,9 +9,9 @@ import twitter4j.conf.ConfigurationBuilder
 
 
 @Service
-class TweetService {
+class TweetRepository {
 
-    private val logger = LoggerFactory.getLogger(TweetService::class.java)
+    private val logger = LoggerFactory.getLogger(TweetRepository::class.java)
 
     @Value("\${twitter.oauth.consumer-key:}")
     private val consumerKey: String? = null

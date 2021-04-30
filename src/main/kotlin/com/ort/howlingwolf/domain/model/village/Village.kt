@@ -7,6 +7,7 @@ import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
@@ -24,7 +25,8 @@ data class Village(
     val setting: VillageSettings,
     val participant: VillageParticipants,
     val spectator: VillageParticipants,
-    val day: VillageDays
+    val day: VillageDays,
+    val blacklistPlayers: BlacklistPlayers
 ) {
 
     // ===================================================================================
@@ -143,7 +145,7 @@ data class Village(
         )
     }
 
-    fun createTweetMessage(): String {
+    fun createNewVillageMessage(): String {
         val organization = setting.organizations.organization[setting.capacity.max]!!
         val startDatetime = setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm"))
         val silentHoursStr = setting.time.silentHours?.let {
@@ -152,6 +154,22 @@ data class Village(
         val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
 
         return "新しい村が作成されました。\r\n" +
+            "村名：$name$forBeginner\r\n" +
+            "編成：$organization\r\n" +
+            "開始予定：$startDatetime\r\n" +
+            silentHoursStr +
+            "https://howling-wolf.com/village?id=$id"
+    }
+
+    fun createStartVillageMessage(): String {
+        val organization = setting.organizations.organization[setting.capacity.max]!!
+        val startDatetime = setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm"))
+        val silentHoursStr = setting.time.silentHours?.let {
+            if (it == 0) "" else "更新後沈黙時間：${it}時間\r\n"
+        } ?: ""
+        val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
+
+        return "村が開始されました。\r\n" +
             "村名：$name$forBeginner\r\n" +
             "編成：$organization\r\n" +
             "開始予定：$startDatetime\r\n" +
@@ -531,7 +549,8 @@ data class Village(
                 day = VillageDays(
                     dayList = listOf()
                 ),
-                winCamp = null
+                winCamp = null,
+                blacklistPlayers = BlacklistPlayers(listOf())
             )
         }
     }

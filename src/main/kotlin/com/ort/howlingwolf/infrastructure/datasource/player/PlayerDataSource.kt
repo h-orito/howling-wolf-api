@@ -1,17 +1,21 @@
 package com.ort.howlingwolf.infrastructure.datasource.player
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.dbflute.exbhv.BlacklistPlayerBhv
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.dbflute.exbhv.PlayerDetailBhv
+import com.ort.dbflute.exentity.BlacklistPlayer
 import com.ort.dbflute.exentity.Player
 import com.ort.dbflute.exentity.PlayerDetail
 import com.ort.howlingwolf.domain.model.player.Players
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import org.springframework.stereotype.Repository
 
 @Repository
 class PlayerDataSource(
     private val playerBhv: PlayerBhv,
-    private val playerDetailBhv: PlayerDetailBhv
+    private val playerDetailBhv: PlayerDetailBhv,
+    private val blacklistPlayerBhv: BlacklistPlayerBhv
 ) {
 
     fun findPlayer(id: Int): com.ort.howlingwolf.domain.model.player.Player {
@@ -25,6 +29,7 @@ class PlayerDataSource(
                 vpCB.setupSelect_Village()
                 vpCB.query().setIsGone_Equal(false) // participant village
             }
+            it.loadBlacklistPlayerByFromPlayerId { }
         }
         return convertPlayerToPlayer(player)
     }
@@ -40,6 +45,7 @@ class PlayerDataSource(
                 vpCB.setupSelect_Village()
                 vpCB.query().setIsGone_Equal(false) // participant village
             }
+            it.loadBlacklistPlayerByFromPlayerId { }
         }
         return convertPlayerToPlayer(player)
     }
@@ -91,6 +97,29 @@ class PlayerDataSource(
         }
     }
 
+    fun registerBlacklist(uid: String, targetPlayerId: Int) {
+        val entity = blacklistPlayerBhv.selectEntity {
+            it.query().queryPlayerByFromPlayerId().setUid_Equal(uid)
+            it.query().setToPlayerId_Equal(targetPlayerId)
+        }
+        if (entity.isPresent) return
+        val player = playerBhv.selectEntity {
+            it.query().setUid_Equal(uid)
+        }
+        if (!player.isPresent) return
+        val blacklist = BlacklistPlayer()
+        blacklist.fromPlayerId = player.get().playerId
+        blacklist.toPlayerId = targetPlayerId
+        blacklistPlayerBhv.insert(blacklist)
+    }
+
+    fun deleteBlacklist(uid: String, targetPlayerId: Int) {
+        blacklistPlayerBhv.queryDelete {
+            it.query().queryPlayerByFromPlayerId().setUid_Equal(uid)
+            it.query().setToPlayerId_Equal(targetPlayerId)
+        }
+    }
+
     fun updateDifference(before: Players, after: Players) {
         // player
         after.list.forEach {
@@ -127,7 +156,8 @@ class PlayerDataSource(
             }.map { it.villageId },
             createFinishedVillageIdList = player.villageList.filter {
                 it.villageStatusCodeAsVillageStatus.isSolvedVillage
-            }.map { it.villageId }
+            }.map { it.villageId },
+            blacklistPlayers = BlacklistPlayers(player.blacklistPlayerByFromPlayerIdList.map { it.toPlayerId })
         )
     }
 

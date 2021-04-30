@@ -13,6 +13,7 @@ import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.MessageType
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
 import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
@@ -496,7 +497,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
             day = VillageDays(
                 dayList = listOf()
             ),
-            winCamp = null
+            winCamp = null,
+            blacklistPlayers = BlacklistPlayers(listOf())
         )
     }
 }

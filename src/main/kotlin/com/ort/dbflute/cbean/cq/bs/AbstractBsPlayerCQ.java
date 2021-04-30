@@ -159,6 +159,44 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select FROM_PLAYER_ID from blacklist_player where ...)} <br>
+     * blacklist_player by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsBlacklistPlayerByFromPlayerId</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     playerCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of BlacklistPlayerByFromPlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsBlacklistPlayerByFromPlayerId(SubQuery<BlacklistPlayerCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_ExistsReferrer_BlacklistPlayerByFromPlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", pp, "blacklistPlayerByFromPlayerIdList");
+    }
+    public abstract String keepPlayerId_ExistsReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select TO_PLAYER_ID from blacklist_player where ...)} <br>
+     * blacklist_player by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsBlacklistPlayerByToPlayerId</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     playerCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of BlacklistPlayerByToPlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsBlacklistPlayerByToPlayerId(SubQuery<BlacklistPlayerCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_ExistsReferrer_BlacklistPlayerByToPlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "blacklistPlayerByToPlayerIdList");
+    }
+    public abstract String keepPlayerId_ExistsReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
      * {exists (select CREATE_PLAYER_ID from village where ...)} <br>
      * village by CREATE_PLAYER_ID, named 'villageAsOne'.
      * <pre>
@@ -194,6 +232,44 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
         registerExistsReferrer(cb.query(), "PLAYER_ID", "PLAYER_ID", pp, "villagePlayerList");
     }
     public abstract String keepPlayerId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select FROM_PLAYER_ID from blacklist_player where ...)} <br>
+     * blacklist_player by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsBlacklistPlayerByFromPlayerId</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     playerCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of PlayerId_NotExistsReferrer_BlacklistPlayerByFromPlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsBlacklistPlayerByFromPlayerId(SubQuery<BlacklistPlayerCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_NotExistsReferrer_BlacklistPlayerByFromPlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", pp, "blacklistPlayerByFromPlayerIdList");
+    }
+    public abstract String keepPlayerId_NotExistsReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select TO_PLAYER_ID from blacklist_player where ...)} <br>
+     * blacklist_player by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsBlacklistPlayerByToPlayerId</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     playerCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of PlayerId_NotExistsReferrer_BlacklistPlayerByToPlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsBlacklistPlayerByToPlayerId(SubQuery<BlacklistPlayerCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_NotExistsReferrer_BlacklistPlayerByToPlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "blacklistPlayerByToPlayerIdList");
+    }
+    public abstract String keepPlayerId_NotExistsReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq);
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
@@ -233,6 +309,22 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
     }
     public abstract String keepPlayerId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq);
 
+    public void xsderiveBlacklistPlayerByFromPlayerIdList(String fn, SubQuery<BlacklistPlayerCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByFromPlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", pp, "blacklistPlayerByFromPlayerIdList", al, op);
+    }
+    public abstract String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq);
+
+    public void xsderiveBlacklistPlayerByToPlayerIdList(String fn, SubQuery<BlacklistPlayerCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByToPlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "blacklistPlayerByToPlayerIdList", al, op);
+    }
+    public abstract String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq);
+
     public void xsderiveVillageList(String fn, SubQuery<VillageCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         VillageCB cb = new VillageCB(); cb.xsetupForDerivedReferrer(this);
@@ -248,6 +340,60 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "PLAYER_ID", "PLAYER_ID", pp, "villagePlayerList", al, op);
     }
     public abstract String keepPlayerId_SpecifyDerivedReferrer_VillagePlayerList(VillagePlayerCQ sq);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from blacklist_player where ...)} <br>
+     * blacklist_player by FROM_PLAYER_ID, named 'blacklistPlayerByFromPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedBlacklistPlayerByFromPlayerId()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     playerCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     playerCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<BlacklistPlayerCB> derivedBlacklistPlayerByFromPlayerId() {
+        return xcreateQDRFunctionBlacklistPlayerByFromPlayerIdList();
+    }
+    protected HpQDRFunction<BlacklistPlayerCB> xcreateQDRFunctionBlacklistPlayerByFromPlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveBlacklistPlayerByFromPlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveBlacklistPlayerByFromPlayerIdList(String fn, SubQuery<BlacklistPlayerCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByFromPlayerIdList(cb.query()); String prpp = keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByFromPlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", sqpp, "blacklistPlayerByFromPlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq);
+    public abstract String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByFromPlayerIdListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from blacklist_player where ...)} <br>
+     * blacklist_player by TO_PLAYER_ID, named 'blacklistPlayerByToPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedBlacklistPlayerByToPlayerId()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     playerCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     playerCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<BlacklistPlayerCB> derivedBlacklistPlayerByToPlayerId() {
+        return xcreateQDRFunctionBlacklistPlayerByToPlayerIdList();
+    }
+    protected HpQDRFunction<BlacklistPlayerCB> xcreateQDRFunctionBlacklistPlayerByToPlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveBlacklistPlayerByToPlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveBlacklistPlayerByToPlayerIdList(String fn, SubQuery<BlacklistPlayerCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        BlacklistPlayerCB cb = new BlacklistPlayerCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdList(cb.query()); String prpp = keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "PLAYER_ID", "TO_PLAYER_ID", sqpp, "blacklistPlayerByToPlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq);
+    public abstract String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdListParameter(Object vl);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>

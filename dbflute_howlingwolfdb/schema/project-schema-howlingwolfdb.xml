@@ -73,6 +73,44 @@
         <column comment="権限名" dbType="VARCHAR" javaType="String"
             name="AUTHORITY_NAME" required="true" size="20" type="VARCHAR"/>
     </table>
+    <table comment="ブラックリストプレイヤー" name="blacklist_player"
+        schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
+        <column autoIncrement="true" comment="ブラックリストプレイヤーID"
+            dbType="INT UNSIGNED" javaType="Integer"
+            name="BLACKLIST_PLAYER_ID" pkName="PRIMARY" pkPosition="1"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="プレイヤーID" dbType="INT UNSIGNED"
+            javaType="Integer" name="FROM_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="ブラックリスト対象プレイヤーID" dbType="INT UNSIGNED"
+            javaType="Integer" name="TO_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="登録日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="登録トレース" dbType="VARCHAR" javaType="String"
+            name="REGISTER_TRACE" required="true" size="64" type="VARCHAR"/>
+        <column comment="更新日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="UPDATE_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="更新トレース" dbType="VARCHAR" javaType="String"
+            name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="player" name="FK_BLACKLIST_PLAYER_PLAYER">
+            <reference foreign="PLAYER_ID" local="FROM_PLAYER_ID"/>
+        </foreign-key>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="player" name="FK_BLACKLIST_TO_PLAYER_PLAYER">
+            <reference foreign="PLAYER_ID" local="TO_PLAYER_ID"/>
+        </foreign-key>
+        <unique name="UQ_blacklist_player">
+            <unique-column name="FROM_PLAYER_ID" position="1"/>
+            <unique-column name="TO_PLAYER_ID" position="2"/>
+        </unique>
+        <index name="FK_BLACKLIST_TO_PLAYER_PLAYER">
+            <index-column name="TO_PLAYER_ID" position="1"/>
+        </index>
+    </table>
     <table comment="陣営" name="camp"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
         <column comment="陣営コード" dbType="VARCHAR" javaType="String"

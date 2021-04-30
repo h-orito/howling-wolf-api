@@ -12,6 +12,7 @@ import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.howlingwolf.HowlingWolfTest
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
 import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
@@ -209,7 +210,8 @@ class CommitDataSourceTest : HowlingWolfTest() {
             day = VillageDays(
                 dayList = listOf()
             ),
-            winCamp = null
+            winCamp = null,
+            blacklistPlayers = BlacklistPlayers(listOf())
         )
     }
 }

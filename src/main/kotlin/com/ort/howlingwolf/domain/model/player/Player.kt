@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.domain.model.player
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 
@@ -14,7 +15,8 @@ data class Player(
     val participateProgressVillageIdList: List<Int> = listOf(),
     val participateFinishedVillageIdList: List<Int> = listOf(),
     val createProgressVillageIdList: List<Int> = listOf(),
-    val createFinishedVillageIdList: List<Int> = listOf()
+    val createFinishedVillageIdList: List<Int> = listOf(),
+    val blacklistPlayers: BlacklistPlayers = BlacklistPlayers(listOf())
 ) {
     fun restrictParticipation(): Player {
         return this.copy(isRestrictedParticipation = true)

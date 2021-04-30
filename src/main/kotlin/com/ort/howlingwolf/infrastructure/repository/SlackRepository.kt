@@ -1,4 +1,4 @@
-package com.ort.howlingwolf.application.service
+package com.ort.howlingwolf.infrastructure.repository
 
 import com.slack.api.Slack
 import org.springframework.beans.factory.annotation.Value
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class SlackService {
+class SlackRepository {
 
     @Value("\${slack.token:}")
     private val slackToken: String? = null
