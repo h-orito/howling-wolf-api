@@ -174,7 +174,8 @@ object VillageDataConverter {
                 first = Skill(vp.requestSkillCodeAsSkill),
                 second = Skill(vp.secondRequestSkillCodeAsSkill)
             ),
-            isWin = if (village?.winCampCode == null || vp.skillCodeAsSkill == null) null else village.winCampCode == vp.skillCodeAsSkill.campCode(),
+            isWin = if (village?.winCampCode == null || vp.skillCodeAsSkill == null) null
+            else village.winCampCode == vp.skillCodeAsSkill.campCode() && (vp.deadReason == null || !vp.isDeadReasonCode突然),
             comingOuts = ComingOuts(
                 list = vp.comingOutList.map {
                     ComingOut(Skill(it.skillCodeAsSkill))
