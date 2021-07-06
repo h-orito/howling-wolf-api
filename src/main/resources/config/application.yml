@@ -23,20 +23,19 @@ server:
   compression:
     enabled: true
   tomcat:
-    basedir: /var/log/howling-wolf
+    basedir: /var/log/
     accesslog:
       enabled: true
-      directory: access
       suffix: .log
-      prefix: access_log
+      prefix: howling-wolf-access_log
       file-date-format: .yyyy-MM-dd
       max-days: 30
       pattern: '%t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %{X-Forwarded-For}i %D %S %I'
-    remote-ip-header: true
-  use-forward-headers: true
+    remoteip.remote-ip-header: true
+    use-forward-headers: true
 logging:
   level:
     org.springframework: INFO
     root: INFO
     org.seasar.dbflute: ERROR
-  file: /var/log/howling-wolf/tomcat.log
+  file.name: /var/log/howling-wolf.log
