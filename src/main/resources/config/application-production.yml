@@ -50,6 +50,6 @@ twitter:
 firebase:
   adminsdk:
     secretkey:
-      path: ${FIREBASE_ADMINSDK_PATH}
+      path: ${HOWLING_WOLF_FIREBASE_ADMINSDK_PATH}
   database:
-    url: ${FIREBASE_DATABASE_URL}
+    url: ${HOWLING_WOLF_FIREBASE_DATABASE_URL}
