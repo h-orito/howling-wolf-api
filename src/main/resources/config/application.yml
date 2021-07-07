@@ -39,3 +39,16 @@ logging:
     root: INFO
     org.seasar.dbflute: ERROR
   file.name: /var/log/howling-wolf.log
+twitter:
+  oauth:
+    consumer-key: ""
+    consumer-secret: ""
+    access-token: ""
+    access-token-secret: ""
+
+firebase:
+  adminsdk:
+    secretkey:
+      path: ""
+  database:
+    url: ""
