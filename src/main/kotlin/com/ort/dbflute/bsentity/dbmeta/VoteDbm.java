@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of vote. (Singleton)
+ * The DB meta of VOTE. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class VoteDbm extends AbstractDBMeta {
@@ -71,7 +71,7 @@ public class VoteDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "vote";
+    protected final String _tableDbName = "VOTE";
     protected final String _tableDispName = "VOTE";
     protected final String _tablePropertyName = "vote";
     protected final TableSqlName _tableSqlName = new TableSqlName("VOTE", _tableDbName);
@@ -93,17 +93,17 @@ public class VoteDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
     /**
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillagePlayerId() { return _columnVillagePlayerId; }
     /**
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnTargetVillagePlayerId() { return _columnTargetVillagePlayerId; }

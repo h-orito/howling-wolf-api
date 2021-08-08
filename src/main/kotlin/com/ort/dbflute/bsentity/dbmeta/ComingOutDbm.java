@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of coming_out. (Singleton)
+ * The DB meta of COMING_OUT. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class ComingOutDbm extends AbstractDBMeta {
@@ -72,7 +72,7 @@ public class ComingOutDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "coming_out";
+    protected final String _tableDbName = "COMING_OUT";
     protected final String _tableDispName = "COMING_OUT";
     protected final String _tablePropertyName = "comingOut";
     protected final TableSqlName _tableSqlName = new TableSqlName("COMING_OUT", _tableDbName);
@@ -89,12 +89,12 @@ public class ComingOutDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnSkillCode = cci("SKILL_CODE", "SKILL_CODE", null, null, String.class, "skillCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, "skill", null, CDef.DefMeta.Skill, false);
 
     /**
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillagePlayerId() { return _columnVillagePlayerId; }
     /**
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
+     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to SKILL, classification=Skill}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnSkillCode() { return _columnSkillCode; }

@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of message_restriction.
+ * The condition-query for in-line of MESSAGE_RESTRICTION.
  * @author DBFlute(AutoGenerator)
  */
 public class MessageRestrictionCIQ extends AbstractBsMessageRestrictionCQ {

@@ -74,13 +74,13 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} */
+    /** VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY} */
     protected Integer _villageDayId;
 
-    /** VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player} */
+    /** VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER} */
     protected Integer _villagePlayerId;
 
-    /** TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} */
+    /** TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER} */
     protected Integer _targetVillagePlayerId;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
@@ -105,7 +105,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "vote";
+        return "VOTE";
     }
 
     // ===================================================================================
@@ -271,7 +271,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
+     * [get] VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY} <br>
      * 村日付ID
      * @return The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -281,7 +281,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [set] VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_day} <br>
+     * [set] VILLAGE_DAY_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY} <br>
      * 村日付ID
      * @param villageDayId The value of the column 'VILLAGE_DAY_ID'. (basically NotNull if update: for the constraint)
      */
@@ -291,7 +291,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [get] VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * [get] VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER} <br>
      * 投票元村参加者ID
      * @return The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -301,7 +301,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [set] VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * [set] VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER} <br>
      * 投票元村参加者ID
      * @param villagePlayerId The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */
@@ -311,7 +311,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [get] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * [get] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER} <br>
      * 投票先村参加者ID
      * @return The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed even if selected: for no constraint)
      */
@@ -321,7 +321,7 @@ public abstract class BsVote extends AbstractEntity implements DomainEntity, Ent
     }
 
     /**
-     * [set] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player} <br>
+     * [set] TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER} <br>
      * 投票先村参加者ID
      * @param targetVillagePlayerId The value of the column 'TARGET_VILLAGE_PLAYER_ID'. (NullAllowed: null update allowed for no constraint)
      */

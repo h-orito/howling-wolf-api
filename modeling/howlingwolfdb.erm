@@ -36,7 +36,7 @@
 		<use_view_object>false</use_view_object>
 		<export_settings>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>/howling-wolf-api/dbflute_howlingwolfdb/playsql/replace-schema-10-basic.sql</ddl_output>
+			<ddl_output>/modeling/replace-schema-10-basic.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -418,80 +418,6 @@
 			</table_properties>
 		</table>
 		<table>
-			<physical_name>RESERVED_VILLAGE</physical_name>
-			<logical_name>予約村</logical_name>
-			<description></description>
-			<height>179</height>
-			<width>276</width>
-			<font_name>.AppleSystemUIFont</font_name>
-			<font_size>9</font_size>
-			<x>1749</x>
-			<y>137</y>
-			<color>
-				<r>4</r>
-				<g>50</g>
-				<b>255</b>
-			</color>
-			<connections>
-			</connections>
-			<columns>
-				<normal_column>
-					<physical_name>reserved_village_id</physical_name>
-					<logical_name>予約村ID</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-					<auto_increment>true</auto_increment>
-				</normal_column>
-				<normal_column>
-					<physical_name>create_datetime</physical_name>
-					<logical_name>村作成日時</logical_name>
-					<type>datetime</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>start_datetime</physical_name>
-					<logical_name>村開始日時</logical_name>
-					<type>datetime</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>organization</physical_name>
-					<logical_name>編成</logical_name>
-					<type>varchar(n)</type>
-					<length>255</length>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>silent_hours</physical_name>
-					<logical_name>沈黙時間</logical_name>
-					<type>integer</type>
-					<unsigned>true</unsigned>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_available_dummy_skill</physical_name>
-					<logical_name>役欠けありか</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<normal_column>
-					<physical_name>is_for_beginner</physical_name>
-					<logical_name>初心者村か</logical_name>
-					<type>boolean</type>
-					<not_null>true</not_null>
-				</normal_column>
-				<column_group>共通カラム</column_group>
-			</columns>
-			<indexes>
-			</indexes>
-			<compound_unique_key_list>
-			</compound_unique_key_list>
-			<table_properties>
-			</table_properties>
-		</table>
-		<table>
 			<physical_name>ability</physical_name>
 			<logical_name>能力行使</logical_name>
 			<description></description>
@@ -718,6 +644,101 @@
 					<length>20</length>
 					<not_null>true</not_null>
 				</normal_column>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
+			<physical_name>autogenerate_organize</physical_name>
+			<logical_name>自動生成編成</logical_name>
+			<description></description>
+			<height>106</height>
+			<width>303</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1669</x>
+			<y>109</y>
+			<color>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>village_id_mod</physical_name>
+					<logical_name>余り</logical_name>
+					<type>integer</type>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>organization</physical_name>
+					<logical_name>編成</logical_name>
+					<type>varchar(n)</type>
+					<length>255</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>is_available_dummy_skill</physical_name>
+					<logical_name>役欠けありか</logical_name>
+					<type>boolean</type>
+					<not_null>true</not_null>
+				</normal_column>
+				<column_group>共通カラム</column_group>
+			</columns>
+			<indexes>
+			</indexes>
+			<compound_unique_key_list>
+			</compound_unique_key_list>
+			<table_properties>
+			</table_properties>
+		</table>
+		<table>
+			<physical_name>autogenerate_time</physical_name>
+			<logical_name>自動生成編成</logical_name>
+			<description></description>
+			<height>107</height>
+			<width>303</width>
+			<font_name>.AppleSystemUIFont</font_name>
+			<font_size>9</font_size>
+			<x>1669</x>
+			<y>223</y>
+			<color>
+				<r>4</r>
+				<g>50</g>
+				<b>255</b>
+			</color>
+			<connections>
+			</connections>
+			<columns>
+				<normal_column>
+					<physical_name>village_id_mod</physical_name>
+					<logical_name>余り</logical_name>
+					<type>integer</type>
+					<not_null>true</not_null>
+					<primary_key>true</primary_key>
+				</normal_column>
+				<normal_column>
+					<physical_name>start_time</physical_name>
+					<logical_name>開始時間</logical_name>
+					<type>character(n)</type>
+					<length>4</length>
+					<not_null>true</not_null>
+				</normal_column>
+				<normal_column>
+					<physical_name>silent_hours</physical_name>
+					<logical_name>沈黙時間</logical_name>
+					<type>integer</type>
+					<unsigned>true</unsigned>
+					<not_null>true</not_null>
+				</normal_column>
+				<column_group>共通カラム</column_group>
 			</columns>
 			<indexes>
 			</indexes>
@@ -2430,6 +2451,22 @@
 			<diagram_walker>table.ability</diagram_walker>
 		</walker_group>
 		<walker_group>
+			<height>274</height>
+			<width>317</width>
+			<font_name></font_name>
+			<font_size>9</font_size>
+			<x>1660</x>
+			<y>69</y>
+			<color>
+				<r>128</r>
+				<g>128</g>
+				<b>192</b>
+			</color>
+			<connections>
+			</connections>
+			<walker_group_name>autogenerate_village</walker_group_name>
+		</walker_group>
+		<walker_group>
 			<height>232</height>
 			<width>701</width>
 			<font_name></font_name>
@@ -2513,22 +2550,6 @@
 			<connections>
 			</connections>
 			<walker_group_name>player</walker_group_name>
-		</walker_group>
-		<walker_group>
-			<height>216</height>
-			<width>322</width>
-			<font_name></font_name>
-			<font_size>9</font_size>
-			<x>1729</x>
-			<y>110</y>
-			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
-			</color>
-			<connections>
-			</connections>
-			<walker_group_name>reserved_village</walker_group_name>
 		</walker_group>
 		<walker_group>
 			<height>764</height>

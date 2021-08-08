@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of player_detail.
+ * The base condition-bean of PLAYER_DETAIL.
  * @author DBFlute(AutoGenerator)
  */
 public class BsPlayerDetailCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsPlayerDetailCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "player_detail";
+        return "PLAYER_DETAIL";
     }
 
     // ===================================================================================
@@ -85,7 +85,7 @@ public class BsPlayerDetailCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param playerId : PK, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
+     * @param playerId : PK, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
      * @return this. (NotNull)
      */
     public PlayerDetailCB acceptPK(Integer playerId) {
@@ -315,7 +315,7 @@ public class BsPlayerDetailCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
+         * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnPlayerId() { return doColumn("PLAYER_ID"); }
@@ -336,7 +336,7 @@ public class BsPlayerDetailCB extends AbstractConditionBean {
             columnPlayerId(); // PK
         }
         @Override
-        protected String getTableDbName() { return "player_detail"; }
+        protected String getTableDbName() { return "PLAYER_DETAIL"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * PLAYER by my PLAYER_ID, named 'player'.

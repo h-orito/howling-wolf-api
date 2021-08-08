@@ -78,7 +78,7 @@ public abstract class BsAuthority extends AbstractEntity implements DomainEntity
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "authority";
+        return "AUTHORITY";
     }
 
     // ===================================================================================

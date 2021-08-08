@@ -67,7 +67,7 @@ public abstract class BsVillagePlayerBhv extends AbstractBehaviorWritable<Villag
     /** {@inheritDoc} */
     public VillagePlayerDbm asDBMeta() { return VillagePlayerDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "village_player"; }
+    public String asTableDbName() { return "VILLAGE_PLAYER"; }
 
     // ===================================================================================
     //                                                                        New Instance

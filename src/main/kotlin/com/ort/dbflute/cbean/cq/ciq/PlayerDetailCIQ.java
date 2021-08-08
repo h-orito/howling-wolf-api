@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of player_detail.
+ * The condition-query for in-line of PLAYER_DETAIL.
  * @author DBFlute(AutoGenerator)
  */
 public class PlayerDetailCIQ extends AbstractBsPlayerDetailCQ {

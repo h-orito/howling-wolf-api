@@ -77,10 +77,10 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
     /** BLACKLIST_PLAYER_ID: {PK, ID, NotNull, INT UNSIGNED(10)} */
     protected Integer _blacklistPlayerId;
 
-    /** FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player} */
+    /** FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER} */
     protected Integer _fromPlayerId;
 
-    /** TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player} */
+    /** TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER} */
     protected Integer _toPlayerId;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
@@ -105,7 +105,7 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "blacklist_player";
+        return "BLACKLIST_PLAYER";
     }
 
     // ===================================================================================
@@ -120,8 +120,8 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
     /**
      * To be unique by the unique column. <br>
      * You can update the entity by the key when entity update (NOT batch update).
-     * @param fromPlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
-     * @param toPlayerId : +UQ, IX, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
+     * @param fromPlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
+     * @param toPlayerId : +UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
      */
     public void uniqueBy(Integer fromPlayerId, Integer toPlayerId) {
         __uniqueDrivenProperties.clear();
@@ -276,7 +276,7 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
     }
 
     /**
-     * [get] FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * [get] FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER} <br>
      * プレイヤーID
      * @return The value of the column 'FROM_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -286,7 +286,7 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
     }
 
     /**
-     * [set] FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * [set] FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER} <br>
      * プレイヤーID
      * @param fromPlayerId The value of the column 'FROM_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */
@@ -296,7 +296,7 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
     }
 
     /**
-     * [get] TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * [get] TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER} <br>
      * ブラックリスト対象プレイヤーID
      * @return The value of the column 'TO_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -306,7 +306,7 @@ public abstract class BsBlacklistPlayer extends AbstractEntity implements Domain
     }
 
     /**
-     * [set] TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player} <br>
+     * [set] TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER} <br>
      * ブラックリスト対象プレイヤーID
      * @param toPlayerId The value of the column 'TO_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */

@@ -1,4 +1,4 @@
-[Saved Previous Resources]: 2020/09/14 22:23:03
+[Saved Previous Resources]: 2021/08/09 02:03:26
 playsql/migration/previous/replace-schema-00.sql
 playsql/migration/previous/replace-schema-10-basic.sql
 playsql/migration/previous/replace-schema-10-partition.sql
@@ -7,6 +7,7 @@ playsql/migration/previous/data/ut/tsv/UTF-8/defaultValueMap.dataprop
 playsql/migration/previous/data/ut/tsv/UTF-8/tsv-data-result.dfmark
 playsql/migration/previous/data/ut/tsv/UTF-8/00-PLAYER.tsv
 playsql/migration/previous/data/ut/tsv/UTF-8/01-PLAYER_DETAIL.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/17-AUTOGENERATE_TIME.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/06-DEAD_REASON.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/01-AUTHORITY.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/13-CHARA_IMAGE.tsv
@@ -23,7 +24,8 @@ playsql/migration/previous/data/common/tsv/UTF-8/11-VILLAGE_SETTING_ITEM.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/08-DESIGNER.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/07-ABILITY_TYPE.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/03-VILLAGE_STATUS.tsv
+playsql/migration/previous/data/common/tsv/UTF-8/16-AUTOGENERATE_ORGANIZE.tsv
 playsql/migration/previous/data/common/tsv/UTF-8/04-SKILL.tsv
-(25 files)
+(27 files)
 
 Look at the log for detail.

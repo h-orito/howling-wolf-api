@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of player. (Singleton)
+ * The DB meta of PLAYER. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class PlayerDbm extends AbstractDBMeta {
@@ -80,7 +80,7 @@ public class PlayerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "player";
+    protected final String _tableDbName = "PLAYER";
     protected final String _tableDispName = "PLAYER";
     protected final String _tablePropertyName = "player";
     protected final TableSqlName _tableSqlName = new TableSqlName("PLAYER", _tableDbName);
@@ -125,7 +125,7 @@ public class PlayerDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnTwitterUserName() { return _columnTwitterUserName; }
     /**
-     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
+     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnAuthorityCode() { return _columnAuthorityCode; }
@@ -204,7 +204,7 @@ public class PlayerDbm extends AbstractDBMeta {
         return cfi("FK_PLAYER_AUTHORITY", "authority", this, AuthorityDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, false, null, null, false, "playerList", false);
     }
     /**
-     * player_detail by PLAYER_ID, named 'playerDetailAsOne'.
+     * PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
      * @return The information object of foreign property(referrer-as-one). (NotNull)
      */
     public ForeignInfo foreignPlayerDetailAsOne() {

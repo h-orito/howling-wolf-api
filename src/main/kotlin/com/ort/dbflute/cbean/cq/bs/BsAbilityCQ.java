@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of ability.
+ * The base condition-query of ABILITY.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAbilityCQ extends AbstractBsAbilityCQ {
@@ -35,7 +35,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from ability) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from ABILITY) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join ability on ... and FOO = [value] ...}
+     * {select ... from ... left outer join ABILITY on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -81,14 +81,14 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_AbilityTypeCode_Asc() { regOBA("ABILITY_TYPE_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_AbilityTypeCode_Desc() { regOBD("ABILITY_TYPE_CODE"); return this; }
@@ -101,14 +101,14 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_VillageDayId_Asc() { regOBA("VILLAGE_DAY_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_VillageDayId_Desc() { regOBD("VILLAGE_DAY_ID"); return this; }
@@ -121,14 +121,14 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
@@ -141,14 +141,14 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_TargetVillagePlayerId_Asc() { regOBA("TARGET_VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsAbilityCQ addOrderBy_TargetVillagePlayerId_Desc() { regOBD("TARGET_VILLAGE_PLAYER_ID"); return this; }
@@ -305,7 +305,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
         return xgetQueRlMap(prop);
     }
     protected AbilityTypeCQ xcreateQueryAbilityType() {
-        String nrp = xresolveNRP("ability", "abilityType"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("ABILITY", "abilityType"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new AbilityTypeCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "abilityType", nrp);
     }
     protected void xsetupOuterJoinAbilityType() { xregOutJo("abilityType"); }
@@ -325,7 +325,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
         return xgetQueRlMap(prop);
     }
     protected VillagePlayerCQ xcreateQueryVillagePlayerByTargetVillagePlayerId() {
-        String nrp = xresolveNRP("ability", "villagePlayerByTargetVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("ABILITY", "villagePlayerByTargetVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByTargetVillagePlayerId", nrp);
     }
     protected void xsetupOuterJoinVillagePlayerByTargetVillagePlayerId() { xregOutJo("villagePlayerByTargetVillagePlayerId"); }
@@ -345,7 +345,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
         return xgetQueRlMap(prop);
     }
     protected VillageDayCQ xcreateQueryVillageDay() {
-        String nrp = xresolveNRP("ability", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("ABILITY", "villageDay"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillageDayCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villageDay", nrp);
     }
     protected void xsetupOuterJoinVillageDay() { xregOutJo("villageDay"); }
@@ -365,7 +365,7 @@ public class BsAbilityCQ extends AbstractBsAbilityCQ {
         return xgetQueRlMap(prop);
     }
     protected VillagePlayerCQ xcreateQueryVillagePlayerByVillagePlayerId() {
-        String nrp = xresolveNRP("ability", "villagePlayerByVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("ABILITY", "villagePlayerByVillagePlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayerByVillagePlayerId", nrp);
     }
     protected void xsetupOuterJoinVillagePlayerByVillagePlayerId() { xregOutJo("villagePlayerByVillagePlayerId"); }

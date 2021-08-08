@@ -68,7 +68,7 @@ public abstract class BsAbilityTypeBhv extends AbstractBehaviorWritable<AbilityT
     /** {@inheritDoc} */
     public AbilityTypeDbm asDBMeta() { return AbilityTypeDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "ability_type"; }
+    public String asTableDbName() { return "ABILITY_TYPE"; }
 
     // ===================================================================================
     //                                                                        New Instance

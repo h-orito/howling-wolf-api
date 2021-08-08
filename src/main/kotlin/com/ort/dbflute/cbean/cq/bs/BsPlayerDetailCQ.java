@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of player_detail.
+ * The base condition-query of PLAYER_DETAIL.
  * @author DBFlute(AutoGenerator)
  */
 public class BsPlayerDetailCQ extends AbstractBsPlayerDetailCQ {
@@ -35,7 +35,7 @@ public class BsPlayerDetailCQ extends AbstractBsPlayerDetailCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from player_detail) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from PLAYER_DETAIL) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsPlayerDetailCQ extends AbstractBsPlayerDetailCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join player_detail on ... and FOO = [value] ...}
+     * {select ... from ... left outer join PLAYER_DETAIL on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -81,14 +81,14 @@ public class BsPlayerDetailCQ extends AbstractBsPlayerDetailCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
      * @return this. (NotNull)
      */
     public BsPlayerDetailCQ addOrderBy_PlayerId_Asc() { regOBA("PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to player}
+     * PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to PLAYER}
      * @return this. (NotNull)
      */
     public BsPlayerDetailCQ addOrderBy_PlayerId_Desc() { regOBD("PLAYER_ID"); return this; }
@@ -196,7 +196,7 @@ public class BsPlayerDetailCQ extends AbstractBsPlayerDetailCQ {
         return xgetQueRlMap(prop);
     }
     protected PlayerCQ xcreateQueryPlayer() {
-        String nrp = xresolveNRP("player_detail", "player"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("PLAYER_DETAIL", "player"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new PlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "player", nrp);
     }
     protected void xsetupOuterJoinPlayer() { xregOutJo("player"); }

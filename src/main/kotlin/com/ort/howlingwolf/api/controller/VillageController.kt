@@ -80,10 +80,10 @@ class VillageController(
         @Validated form: VillageListForm
     ): VillagesView {
         val villageStatusList = form.village_status?.map { VillageStatus(CDef.VillageStatus.codeOf(it)) } ?: listOf()
+        villageCoordinator.registerVillageFromReservedIfNeeded()
         val villages: Villages = villageService.findVillages(
             villageStatusList = villageStatusList
         )
-        villageCoordinator.registerVillageFromReservedIfNeeded()
         return VillagesView(villages)
     }
 

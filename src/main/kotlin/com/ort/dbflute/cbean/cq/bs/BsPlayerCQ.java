@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of player.
+ * The base condition-query of PLAYER.
  * @author DBFlute(AutoGenerator)
  */
 public class BsPlayerCQ extends AbstractBsPlayerCQ {
@@ -35,7 +35,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from player) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from PLAYER) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join player on ... and FOO = [value] ...}
+     * {select ... from ... left outer join PLAYER on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -217,14 +217,14 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
+     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority}
      * @return this. (NotNull)
      */
     public BsPlayerCQ addOrderBy_AuthorityCode_Asc() { regOBA("AUTHORITY_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
+     * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to AUTHORITY, classification=Authority}
      * @return this. (NotNull)
      */
     public BsPlayerCQ addOrderBy_AuthorityCode_Desc() { regOBD("AUTHORITY_CODE"); return this; }
@@ -395,7 +395,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
         return xgetQueRlMap(prop);
     }
     protected AuthorityCQ xcreateQueryAuthority() {
-        String nrp = xresolveNRP("player", "authority"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("PLAYER", "authority"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new AuthorityCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "authority", nrp);
     }
     protected void xsetupOuterJoinAuthority() { xregOutJo("authority"); }
@@ -403,7 +403,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
 
     /**
      * Get the condition-query for relation table. <br>
-     * player_detail by PLAYER_ID, named 'playerDetailAsOne'.
+     * PLAYER_DETAIL by PLAYER_ID, named 'playerDetailAsOne'.
      * @return The instance of condition-query. (NotNull)
      */
     public PlayerDetailCQ queryPlayerDetailAsOne() { return xdfgetConditionQueryPlayerDetailAsOne(); }
@@ -413,7 +413,7 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
         return xgetQueRlMap(prop);
     }
     protected PlayerDetailCQ xcreateQueryPlayerDetailAsOne() {
-        String nrp = xresolveNRP("player", "playerDetailAsOne"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("PLAYER", "playerDetailAsOne"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new PlayerDetailCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "playerDetailAsOne", nrp);
     }
     protected void xsetupOuterJoinPlayerDetailAsOne() { xregOutJo("playerDetailAsOne"); }

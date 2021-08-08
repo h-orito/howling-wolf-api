@@ -68,7 +68,7 @@ public abstract class BsAuthorityBhv extends AbstractBehaviorWritable<Authority,
     /** {@inheritDoc} */
     public AuthorityDbm asDBMeta() { return AuthorityDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "authority"; }
+    public String asTableDbName() { return "AUTHORITY"; }
 
     // ===================================================================================
     //                                                                        New Instance

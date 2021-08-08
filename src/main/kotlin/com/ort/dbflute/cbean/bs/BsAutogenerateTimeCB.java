@@ -20,20 +20,20 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of reserved_village.
+ * The base condition-bean of AUTOGENERATE_TIME.
  * @author DBFlute(AutoGenerator)
  */
-public class BsReservedVillageCB extends AbstractConditionBean {
+public class BsAutogenerateTimeCB extends AbstractConditionBean {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected ReservedVillageCQ _conditionQuery;
+    protected AutogenerateTimeCQ _conditionQuery;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public BsReservedVillageCB() {
+    public BsAutogenerateTimeCB() {
         if (DBFluteConfig.getInstance().isPagingCountLater()) {
             enablePagingCountLater();
         }
@@ -76,7 +76,7 @@ public class BsReservedVillageCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "reserved_village";
+        return "AUTOGENERATE_TIME";
     }
 
     // ===================================================================================
@@ -84,23 +84,23 @@ public class BsReservedVillageCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param reservedVillageId : PK, ID, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param villageIdMod : PK, NotNull, INT(10). (NotNull)
      * @return this. (NotNull)
      */
-    public ReservedVillageCB acceptPK(Integer reservedVillageId) {
-        assertObjectNotNull("reservedVillageId", reservedVillageId);
-        BsReservedVillageCB cb = this;
-        cb.query().setReservedVillageId_Equal(reservedVillageId);
-        return (ReservedVillageCB)this;
+    public AutogenerateTimeCB acceptPK(Integer villageIdMod) {
+        assertObjectNotNull("villageIdMod", villageIdMod);
+        BsAutogenerateTimeCB cb = this;
+        cb.query().setVillageIdMod_Equal(villageIdMod);
+        return (AutogenerateTimeCB)this;
     }
 
     public ConditionBean addOrderBy_PK_Asc() {
-        query().addOrderBy_ReservedVillageId_Asc();
+        query().addOrderBy_VillageIdMod_Asc();
         return this;
     }
 
     public ConditionBean addOrderBy_PK_Desc() {
-        query().addOrderBy_ReservedVillageId_Desc();
+        query().addOrderBy_VillageIdMod_Desc();
         return this;
     }
 
@@ -164,34 +164,34 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * </pre>
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
-    public ReservedVillageCQ query() {
+    public AutogenerateTimeCQ query() {
         assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
-    public ReservedVillageCQ xdfgetConditionQuery() { // public for parameter comment and internal
+    public AutogenerateTimeCQ xdfgetConditionQuery() { // public for parameter comment and internal
         return doGetConditionQuery();
     }
 
-    protected ReservedVillageCQ doGetConditionQuery() {
+    protected AutogenerateTimeCQ doGetConditionQuery() {
         if (_conditionQuery == null) {
             _conditionQuery = createLocalCQ();
         }
         return _conditionQuery;
     }
 
-    protected ReservedVillageCQ createLocalCQ() {
+    protected AutogenerateTimeCQ createLocalCQ() {
         return xcreateCQ(null, getSqlClause(), getSqlClause().getBasePointAliasName(), 0);
     }
 
-    protected ReservedVillageCQ xcreateCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
-        ReservedVillageCQ cq = xnewCQ(childQuery, sqlClause, aliasName, nestLevel);
+    protected AutogenerateTimeCQ xcreateCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+        AutogenerateTimeCQ cq = xnewCQ(childQuery, sqlClause, aliasName, nestLevel);
         cq.xsetBaseCB(this);
         return cq;
     }
 
-    protected ReservedVillageCQ xnewCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
-        return new ReservedVillageCQ(childQuery, sqlClause, aliasName, nestLevel);
+    protected AutogenerateTimeCQ xnewCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+        return new AutogenerateTimeCQ(childQuery, sqlClause, aliasName, nestLevel);
     }
 
     /**
@@ -215,10 +215,10 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * </pre>
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
-    public void union(UnionQuery<ReservedVillageCB> unionCBLambda) {
-        final ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
+    public void union(UnionQuery<AutogenerateTimeCB> unionCBLambda) {
+        final AutogenerateTimeCB cb = new AutogenerateTimeCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
-        final ReservedVillageCQ cq = cb.query(); query().xsetUnionQuery(cq);
+        final AutogenerateTimeCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
 
     /**
@@ -232,10 +232,10 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * </pre>
      * @param unionCBLambda The callback for query of 'union all'. (NotNull)
      */
-    public void unionAll(UnionQuery<ReservedVillageCB> unionCBLambda) {
-        final ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
+    public void unionAll(UnionQuery<AutogenerateTimeCB> unionCBLambda) {
+        final AutogenerateTimeCB cb = new AutogenerateTimeCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
-        final ReservedVillageCQ cq = cb.query(); query().xsetUnionAllQuery(cq);
+        final AutogenerateTimeCQ cq = cb.query(); query().xsetUnionAllQuery(cq);
     }
 
     // ===================================================================================
@@ -281,46 +281,26 @@ public class BsReservedVillageCB extends AbstractConditionBean {
         return _specification != null && _specification.hasSpecifiedColumn();
     }
 
-    public static class HpSpecification extends HpAbstractSpecification<ReservedVillageCQ> {
-        public HpSpecification(ConditionBean baseCB, HpSpQyCall<ReservedVillageCQ> qyCall
+    public static class HpSpecification extends HpAbstractSpecification<AutogenerateTimeCQ> {
+        public HpSpecification(ConditionBean baseCB, HpSpQyCall<AutogenerateTimeCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+         * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnReservedVillageId() { return doColumn("RESERVED_VILLAGE_ID"); }
+        public SpecifiedColumn columnVillageIdMod() { return doColumn("VILLAGE_ID_MOD"); }
         /**
-         * CREATE_DATETIME: {NotNull, DATETIME(19)}
+         * START_TIME: {NotNull, CHAR(4)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnCreateDatetime() { return doColumn("CREATE_DATETIME"); }
-        /**
-         * START_DATETIME: {NotNull, DATETIME(19)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnStartDatetime() { return doColumn("START_DATETIME"); }
-        /**
-         * ORGANIZATION: {NotNull, VARCHAR(255)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnOrganization() { return doColumn("ORGANIZATION"); }
+        public SpecifiedColumn columnStartTime() { return doColumn("START_TIME"); }
         /**
          * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnSilentHours() { return doColumn("SILENT_HOURS"); }
-        /**
-         * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnIsAvailableDummySkill() { return doColumn("IS_AVAILABLE_DUMMY_SKILL"); }
-        /**
-         * IS_FOR_BEGINNER: {NotNull, BIT}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnIsForBeginner() { return doColumn("IS_FOR_BEGINNER"); }
         /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)
@@ -345,17 +325,17 @@ public class BsReservedVillageCB extends AbstractConditionBean {
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override
         protected void doSpecifyRequiredColumn() {
-            columnReservedVillageId(); // PK
+            columnVillageIdMod(); // PK
         }
         @Override
-        protected String getTableDbName() { return "reserved_village"; }
+        protected String getTableDbName() { return "AUTOGENERATE_TIME"; }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)
          */
-        public HpSDRFunction<ReservedVillageCB, ReservedVillageCQ> myselfDerived() {
+        public HpSDRFunction<AutogenerateTimeCB, AutogenerateTimeCQ> myselfDerived() {
             assertDerived("myselfDerived"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
-            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<ReservedVillageCB> sq, ReservedVillageCQ cq, String al, DerivedReferrerOption op)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<AutogenerateTimeCB> sq, AutogenerateTimeCQ cq, String al, DerivedReferrerOption op)
                     -> cq.xsmyselfDerive(fn, sq, al, op), _dbmetaProvider);
         }
     }
@@ -368,9 +348,9 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * This is very specialty so you can get the frontier spirit. Bon voyage!
      * @return The condition-bean for dream cruise, which is linked to main condition-bean.
      */
-    public ReservedVillageCB dreamCruiseCB() {
-        ReservedVillageCB cb = new ReservedVillageCB();
-        cb.xsetupForDreamCruise((ReservedVillageCB) this);
+    public AutogenerateTimeCB dreamCruiseCB() {
+        AutogenerateTimeCB cb = new AutogenerateTimeCB();
+        cb.xsetupForDreamCruise((AutogenerateTimeCB) this);
         return cb;
     }
 
@@ -395,15 +375,15 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * @param colCBLambda The callback for specify-query of left column. (NotNull)
      * @return The object for setting up operand and right column. (NotNull)
      */
-    public HpColQyOperand<ReservedVillageCB> columnQuery(final SpecifyQuery<ReservedVillageCB> colCBLambda) {
+    public HpColQyOperand<AutogenerateTimeCB> columnQuery(final SpecifyQuery<AutogenerateTimeCB> colCBLambda) {
         return xcreateColQyOperand((rightSp, operand) -> {
             return xcolqy(xcreateColumnQueryCB(), xcreateColumnQueryCB(), colCBLambda, rightSp, operand);
         });
     }
 
-    protected ReservedVillageCB xcreateColumnQueryCB() {
-        ReservedVillageCB cb = new ReservedVillageCB();
-        cb.xsetupForColumnQuery((ReservedVillageCB)this);
+    protected AutogenerateTimeCB xcreateColumnQueryCB() {
+        AutogenerateTimeCB cb = new AutogenerateTimeCB();
+        cb.xsetupForColumnQuery((AutogenerateTimeCB)this);
         return cb;
     }
 
@@ -423,8 +403,8 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * </pre>
      * @param orCBLambda The callback for query of or-condition. (NotNull)
      */
-    public void orScopeQuery(OrQuery<ReservedVillageCB> orCBLambda) {
-        xorSQ((ReservedVillageCB)this, orCBLambda);
+    public void orScopeQuery(OrQuery<AutogenerateTimeCB> orCBLambda) {
+        xorSQ((AutogenerateTimeCB)this, orCBLambda);
     }
 
     /**
@@ -442,8 +422,8 @@ public class BsReservedVillageCB extends AbstractConditionBean {
      * </pre>
      * @param andCBLambda The callback for query of and-condition. (NotNull)
      */
-    public void orScopeQueryAndPart(AndQuery<ReservedVillageCB> andCBLambda) {
-        xorSQAP((ReservedVillageCB)this, andCBLambda);
+    public void orScopeQueryAndPart(AndQuery<AutogenerateTimeCB> andCBLambda) {
+        xorSQAP((AutogenerateTimeCB)this, andCBLambda);
     }
 
     // ===================================================================================
@@ -473,11 +453,11 @@ public class BsReservedVillageCB extends AbstractConditionBean {
     //                                                                        ============
     @Override
     protected void xprepareSyncQyCall(ConditionBean mainCB) {
-        final ReservedVillageCB cb;
+        final AutogenerateTimeCB cb;
         if (mainCB != null) {
-            cb = (ReservedVillageCB)mainCB;
+            cb = (AutogenerateTimeCB)mainCB;
         } else {
-            cb = new ReservedVillageCB();
+            cb = new AutogenerateTimeCB();
         }
         specify().xsetSyncQyCall(xcreateSpQyCall(() -> true, () -> cb.query()));
     }
@@ -486,8 +466,8 @@ public class BsReservedVillageCB extends AbstractConditionBean {
     //                                                                            Internal
     //                                                                            ========
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xgetConditionBeanClassNameInternally() { return ReservedVillageCB.class.getName(); }
-    protected String xgetConditionQueryClassNameInternally() { return ReservedVillageCQ.class.getName(); }
+    protected String xgetConditionBeanClassNameInternally() { return AutogenerateTimeCB.class.getName(); }
+    protected String xgetConditionQueryClassNameInternally() { return AutogenerateTimeCQ.class.getName(); }
     protected String xgetSubQueryClassNameInternally() { return SubQuery.class.getName(); }
     protected String xgetConditionOptionClassNameInternally() { return ConditionOption.class.getName(); }
 }

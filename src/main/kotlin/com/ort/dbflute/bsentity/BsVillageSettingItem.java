@@ -83,7 +83,7 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "village_setting_item";
+        return "VILLAGE_SETTING_ITEM";
     }
 
     // ===================================================================================

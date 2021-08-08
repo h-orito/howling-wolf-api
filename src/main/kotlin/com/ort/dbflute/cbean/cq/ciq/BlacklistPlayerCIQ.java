@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of blacklist_player.
+ * The condition-query for in-line of BLACKLIST_PLAYER.
  * @author DBFlute(AutoGenerator)
  */
 public class BlacklistPlayerCIQ extends AbstractBsBlacklistPlayerCQ {

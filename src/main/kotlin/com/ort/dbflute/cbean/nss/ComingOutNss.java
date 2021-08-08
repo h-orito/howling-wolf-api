@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.ComingOutCQ;
 
 /**
- * The nest select set-upper of coming_out.
+ * The nest select set-upper of COMING_OUT.
  * @author DBFlute(AutoGenerator)
  */
 public class ComingOutNss {

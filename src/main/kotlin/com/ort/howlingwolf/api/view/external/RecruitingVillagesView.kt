@@ -42,7 +42,8 @@ data class RecruitingVillageView(
         status = village.status.name,
         participantCount = village.participant.count,
         participantCapacity = village.setting.capacity.max,
-        dayChangeTime = village.day.latestDay().dayChangeDatetime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+        dayChangeTime = village.day.latestDay().dayChangeDatetime.toLocalTime()
+            .format(DateTimeFormatter.ofPattern("HH:mm")),
         startDatetime = village.setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm")),
         charachipName = charachips.list.first { it.id == village.setting.charachip.charachipId }.name,
         sayableTime =
@@ -51,7 +52,13 @@ data class RecruitingVillageView(
             val start = it.startDatetime.plusHours(it.silentHours!!.toLong()).toLocalTime()
             val end = it.startDatetime.toLocalTime()
             val endPrefix = if (start.isAfter(end)) "翌" else ""
-            "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${end.format(DateTimeFormatter.ofPattern("HH:mm"))}"
+            "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${
+                end.format(
+                    DateTimeFormatter.ofPattern(
+                        "HH:mm"
+                    )
+                )
+            }"
         },
         url = "https://howling-wolf.com/village?id=${village.id}",
         organization = village.setting.organizations.organization[village.setting.capacity.max] ?: ""
@@ -71,18 +78,24 @@ data class RecruitingReservedVillageView(
     constructor(
         reservedVillage: ReservedVillage
     ) : this(
-        name = "${reservedVillage.villageCreateDatetime.format(DateTimeFormatter.ofPattern("MM/dd HH:mm"))}作成予定",
+        name = "${reservedVillage.startTime.format(DateTimeFormatter.ofPattern("HH:mm"))}開始予定",
         participantCapacity = reservedVillage.organization.length,
-        dayChangeTime = reservedVillage.villageStartDatetime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-        startDatetime = reservedVillage.villageStartDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm")),
+        dayChangeTime = reservedVillage.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+        startDatetime = reservedVillage.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
         charachipName = "城下町の酒場",
         sayableTime =
         if (reservedVillage.silentHours == 0) "24時間"
         else reservedVillage.let {
-            val start = it.villageStartDatetime.plusHours(it.silentHours.toLong()).toLocalTime()
-            val end = it.villageStartDatetime.toLocalTime()
+            val start = it.startTime.plusHours(it.silentHours.toLong())
+            val end = it.startTime
             val endPrefix = if (start.isAfter(end)) "翌" else ""
-            "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${end.format(DateTimeFormatter.ofPattern("HH:mm"))}"
+            "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${
+                end.format(
+                    DateTimeFormatter.ofPattern(
+                        "HH:mm"
+                    )
+                )
+            }"
         },
         url = "https://howling-wolf.com",
         organization = reservedVillage.organization

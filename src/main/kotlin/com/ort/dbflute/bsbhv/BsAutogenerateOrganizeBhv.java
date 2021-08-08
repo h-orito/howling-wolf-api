@@ -22,19 +22,19 @@ import com.ort.dbflute.bsentity.dbmeta.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The behavior of RESERVED_VILLAGE as TABLE. <br>
+ * The behavior of AUTOGENERATE_ORGANIZE as TABLE. <br>
  * <pre>
  * [primary key]
- *     RESERVED_VILLAGE_ID
+ *     VILLAGE_ID_MOD
  *
  * [column]
- *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, IS_AVAILABLE_DUMMY_SKILL, IS_FOR_BEGINNER, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID_MOD, ORGANIZATION, IS_AVAILABLE_DUMMY_SKILL, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
  *
  * [identity]
- *     RESERVED_VILLAGE_ID
+ *     
  *
  * [version-no]
  *     
@@ -53,7 +53,7 @@ import com.ort.dbflute.cbean.*;
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
-public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<ReservedVillage, ReservedVillageCB> {
+public abstract class BsAutogenerateOrganizeBhv extends AbstractBehaviorWritable<AutogenerateOrganize, AutogenerateOrganizeCB> {
 
     // ===================================================================================
     //                                                                          Definition
@@ -65,15 +65,15 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     //                                                                             DB Meta
     //                                                                             =======
     /** {@inheritDoc} */
-    public ReservedVillageDbm asDBMeta() { return ReservedVillageDbm.getInstance(); }
+    public AutogenerateOrganizeDbm asDBMeta() { return AutogenerateOrganizeDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "reserved_village"; }
+    public String asTableDbName() { return "AUTOGENERATE_ORGANIZE"; }
 
     // ===================================================================================
     //                                                                        New Instance
     //                                                                        ============
     /** {@inheritDoc} */
-    public ReservedVillageCB newConditionBean() { return new ReservedVillageCB(); }
+    public AutogenerateOrganizeCB newConditionBean() { return new AutogenerateOrganizeCB(); }
 
     // ===================================================================================
     //                                                                        Count Select
@@ -82,14 +82,14 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * Select the count of uniquely-selected records by the condition-bean. {IgnorePagingCondition, IgnoreSpecifyColumn}<br>
      * SpecifyColumn is ignored but you can use it only to remove text type column for union's distinct.
      * <pre>
-     * <span style="color: #70226C">int</span> count = <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectCount</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #70226C">int</span> count = <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectCount</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The count for the condition. (NotMinus)
      */
-    public int selectCount(CBCall<ReservedVillageCB> cbLambda) {
+    public int selectCount(CBCall<AutogenerateOrganizeCB> cbLambda) {
         return facadeSelectCount(createCB(cbLambda));
     }
 
@@ -103,38 +103,38 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * <span style="color: #AD4747; font-size: 120%">If it might be no data, isPresent() and orElse(), ...</span>
      * <pre>
      * <span style="color: #3F7E5E">// if the data always exists as your business rule</span>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
-     * }).<span style="color: #CC4747">alwaysPresent</span>(<span style="color: #553000">reservedVillage</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * }).<span style="color: #CC4747">alwaysPresent</span>(<span style="color: #553000">autogenerateOrganize</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
-     *     ... = <span style="color: #553000">reservedVillage</span>.get...
+     *     ... = <span style="color: #553000">autogenerateOrganize</span>.get...
      * });
      *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
-     * }).<span style="color: #CC4747">ifPresent</span>(<span style="color: #553000">reservedVillage</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * }).<span style="color: #CC4747">ifPresent</span>(<span style="color: #553000">autogenerateOrganize</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if present</span>
-     *     ... = <span style="color: #553000">reservedVillage</span>.get...
+     *     ... = <span style="color: #553000">autogenerateOrganize</span>.get...
      * }).<span style="color: #994747">orElse</span>(() <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if not present</span>
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The optional entity selected by the condition. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<ReservedVillage> selectEntity(CBCall<ReservedVillageCB> cbLambda) {
+    public OptionalEntity<AutogenerateOrganize> selectEntity(CBCall<AutogenerateOrganizeCB> cbLambda) {
         return facadeSelectEntity(createCB(cbLambda));
     }
 
-    protected OptionalEntity<ReservedVillage> facadeSelectEntity(ReservedVillageCB cb) {
+    protected OptionalEntity<AutogenerateOrganize> facadeSelectEntity(AutogenerateOrganizeCB cb) {
         return doSelectOptionalEntity(cb, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends ReservedVillage> OptionalEntity<ENTITY> doSelectOptionalEntity(ReservedVillageCB cb, Class<? extends ENTITY> tp) {
+    protected <ENTITY extends AutogenerateOrganize> OptionalEntity<ENTITY> doSelectOptionalEntity(AutogenerateOrganizeCB cb, Class<? extends ENTITY> tp) {
         return createOptionalEntity(doSelectEntity(cb, tp), cb);
     }
 
@@ -144,46 +144,46 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * Select the entity by the condition-bean with deleted check. <br>
      * <span style="color: #AD4747; font-size: 120%">If the data is always present as your business rule, this method is good.</span>
      * <pre>
-     * ReservedVillage <span style="color: #553000">reservedVillage</span> = <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectEntityWithDeletedCheck</span>(cb <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> cb.acceptPK(1));
-     * ... = <span style="color: #553000">reservedVillage</span>.get...(); <span style="color: #3F7E5E">// the entity always be not null</span>
+     * AutogenerateOrganize <span style="color: #553000">autogenerateOrganize</span> = <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectEntityWithDeletedCheck</span>(cb <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> cb.acceptPK(1));
+     * ... = <span style="color: #553000">autogenerateOrganize</span>.get...(); <span style="color: #3F7E5E">// the entity always be not null</span>
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The entity selected by the condition. (NotNull: if no data, throws exception)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public ReservedVillage selectEntityWithDeletedCheck(CBCall<ReservedVillageCB> cbLambda) {
+    public AutogenerateOrganize selectEntityWithDeletedCheck(CBCall<AutogenerateOrganizeCB> cbLambda) {
         return facadeSelectEntityWithDeletedCheck(createCB(cbLambda));
     }
 
     /**
      * Select the entity by the primary-key value.
-     * @param reservedVillageId : PK, ID, NotNull, INT UNSIGNED(10). (NotNull)
+     * @param villageIdMod : PK, NotNull, INT(10). (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<ReservedVillage> selectByPK(Integer reservedVillageId) {
-        return facadeSelectByPK(reservedVillageId);
+    public OptionalEntity<AutogenerateOrganize> selectByPK(Integer villageIdMod) {
+        return facadeSelectByPK(villageIdMod);
     }
 
-    protected OptionalEntity<ReservedVillage> facadeSelectByPK(Integer reservedVillageId) {
-        return doSelectOptionalByPK(reservedVillageId, typeOfSelectedEntity());
+    protected OptionalEntity<AutogenerateOrganize> facadeSelectByPK(Integer villageIdMod) {
+        return doSelectOptionalByPK(villageIdMod, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends ReservedVillage> ENTITY doSelectByPK(Integer reservedVillageId, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(reservedVillageId), tp);
+    protected <ENTITY extends AutogenerateOrganize> ENTITY doSelectByPK(Integer villageIdMod, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(villageIdMod), tp);
     }
 
-    protected <ENTITY extends ReservedVillage> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer reservedVillageId, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(reservedVillageId, tp), reservedVillageId);
+    protected <ENTITY extends AutogenerateOrganize> OptionalEntity<ENTITY> doSelectOptionalByPK(Integer villageIdMod, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(villageIdMod, tp), villageIdMod);
     }
 
-    protected ReservedVillageCB xprepareCBAsPK(Integer reservedVillageId) {
-        assertObjectNotNull("reservedVillageId", reservedVillageId);
-        return newConditionBean().acceptPK(reservedVillageId);
+    protected AutogenerateOrganizeCB xprepareCBAsPK(Integer villageIdMod) {
+        assertObjectNotNull("villageIdMod", villageIdMod);
+        return newConditionBean().acceptPK(villageIdMod);
     }
 
     // ===================================================================================
@@ -192,19 +192,19 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     /**
      * Select the list as result bean.
      * <pre>
-     * ListResultBean&lt;ReservedVillage&gt; <span style="color: #553000">reservedVillageList</span> = <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectList</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * ListResultBean&lt;AutogenerateOrganize&gt; <span style="color: #553000">autogenerateOrganizeList</span> = <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectList</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...;
      *     <span style="color: #553000">cb</span>.query().addOrderBy...;
      * });
-     * <span style="color: #70226C">for</span> (ReservedVillage <span style="color: #553000">reservedVillage</span> : <span style="color: #553000">reservedVillageList</span>) {
-     *     ... = <span style="color: #553000">reservedVillage</span>.get...;
+     * <span style="color: #70226C">for</span> (AutogenerateOrganize <span style="color: #553000">autogenerateOrganize</span> : <span style="color: #553000">autogenerateOrganizeList</span>) {
+     *     ... = <span style="color: #553000">autogenerateOrganize</span>.get...;
      * }
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The result bean of selected list. (NotNull: if no data, returns empty list)
      * @throws DangerousResultSizeException When the result size is over the specified safety size.
      */
-    public ListResultBean<ReservedVillage> selectList(CBCall<ReservedVillageCB> cbLambda) {
+    public ListResultBean<AutogenerateOrganize> selectList(CBCall<AutogenerateOrganizeCB> cbLambda) {
         return facadeSelectList(createCB(cbLambda));
     }
 
@@ -218,7 +218,7 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * Select the page as result bean. <br>
      * (both count-select and paging-select are executed)
      * <pre>
-     * PagingResultBean&lt;ReservedVillage&gt; <span style="color: #553000">page</span> = <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectPage</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * PagingResultBean&lt;AutogenerateOrganize&gt; <span style="color: #553000">page</span> = <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectPage</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      *     <span style="color: #553000">cb</span>.query().addOrderBy...
      *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">paging</span>(20, 3); <span style="color: #3F7E5E">// 20 records per a page and current page number is 3</span>
@@ -228,15 +228,15 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * <span style="color: #70226C">boolean</span> isExistPrePage = <span style="color: #553000">page</span>.isExistPrePage();
      * <span style="color: #70226C">boolean</span> isExistNextPage = <span style="color: #553000">page</span>.isExistNextPage();
      * ...
-     * <span style="color: #70226C">for</span> (ReservedVillage reservedVillage : <span style="color: #553000">page</span>) {
-     *     ... = reservedVillage.get...;
+     * <span style="color: #70226C">for</span> (AutogenerateOrganize autogenerateOrganize : <span style="color: #553000">page</span>) {
+     *     ... = autogenerateOrganize.get...;
      * }
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The result bean of selected page. (NotNull: if no data, returns bean as empty list)
      * @throws DangerousResultSizeException When the result size is over the specified safety size.
      */
-    public PagingResultBean<ReservedVillage> selectPage(CBCall<ReservedVillageCB> cbLambda) {
+    public PagingResultBean<AutogenerateOrganize> selectPage(CBCall<AutogenerateOrganizeCB> cbLambda) {
         return facadeSelectPage(createCB(cbLambda));
     }
 
@@ -246,16 +246,16 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     /**
      * Select the cursor by the condition-bean.
      * <pre>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectCursor</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectCursor</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      * }, <span style="color: #553000">member</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     ... = <span style="color: #553000">member</span>.getMemberName();
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
-     * @param entityLambda The handler of entity row of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
+     * @param entityLambda The handler of entity row of AutogenerateOrganize. (NotNull)
      */
-    public void selectCursor(CBCall<ReservedVillageCB> cbLambda, EntityRowHandler<ReservedVillage> entityLambda) {
+    public void selectCursor(CBCall<AutogenerateOrganizeCB> cbLambda, EntityRowHandler<AutogenerateOrganize> entityLambda) {
         facadeSelectCursor(createCB(cbLambda), entityLambda);
     }
 
@@ -266,7 +266,7 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * Select the scalar value derived by a function from uniquely-selected records. <br>
      * You should call a function method after this method called like as follows:
      * <pre>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">selectScalar</span>(Date.class).max(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">selectScalar</span>(Date.class).max(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.specify().<span style="color: #CC4747">column...</span>; <span style="color: #3F7E5E">// required for the function</span>
      *     <span style="color: #553000">cb</span>.query().set...
      * });
@@ -275,7 +275,7 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * @param resultType The type of result. (NotNull)
      * @return The scalar function object to specify function for scalar value. (NotNull)
      */
-    public <RESULT> HpSLSFunction<ReservedVillageCB, RESULT> selectScalar(Class<RESULT> resultType) {
+    public <RESULT> HpSLSFunction<AutogenerateOrganizeCB, RESULT> selectScalar(Class<RESULT> resultType) {
         return facadeScalarSelect(resultType);
     }
 
@@ -320,12 +320,12 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has order by FK before callback.
-     * @param reservedVillageList The entity list of reservedVillage. (NotNull)
+     * @param autogenerateOrganizeList The entity list of autogenerateOrganize. (NotNull)
      * @param loaderLambda The callback to handle the referrer loader for actually loading referrer. (NotNull)
      */
-    public void load(List<ReservedVillage> reservedVillageList, ReferrerLoaderHandler<LoaderOfReservedVillage> loaderLambda) {
-        xassLRArg(reservedVillageList, loaderLambda);
-        loaderLambda.handle(new LoaderOfReservedVillage().ready(reservedVillageList, _behaviorSelector));
+    public void load(List<AutogenerateOrganize> autogenerateOrganizeList, ReferrerLoaderHandler<LoaderOfAutogenerateOrganize> loaderLambda) {
+        xassLRArg(autogenerateOrganizeList, loaderLambda);
+        loaderLambda.handle(new LoaderOfAutogenerateOrganize().ready(autogenerateOrganizeList, _behaviorSelector));
     }
 
     /**
@@ -353,12 +353,12 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has order by FK before callback.
-     * @param reservedVillage The entity of reservedVillage. (NotNull)
+     * @param autogenerateOrganize The entity of autogenerateOrganize. (NotNull)
      * @param loaderLambda The callback to handle the referrer loader for actually loading referrer. (NotNull)
      */
-    public void load(ReservedVillage reservedVillage, ReferrerLoaderHandler<LoaderOfReservedVillage> loaderLambda) {
-        xassLRArg(reservedVillage, loaderLambda);
-        loaderLambda.handle(new LoaderOfReservedVillage().ready(xnewLRAryLs(reservedVillage), _behaviorSelector));
+    public void load(AutogenerateOrganize autogenerateOrganize, ReferrerLoaderHandler<LoaderOfAutogenerateOrganize> loaderLambda) {
+        xassLRArg(autogenerateOrganize, loaderLambda);
+        loaderLambda.handle(new LoaderOfAutogenerateOrganize().ready(xnewLRAryLs(autogenerateOrganize), _behaviorSelector));
     }
 
     // ===================================================================================
@@ -368,12 +368,12 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     //                                                                      Extract Column
     //                                                                      ==============
     /**
-     * Extract the value list of (single) primary key reservedVillageId.
-     * @param reservedVillageList The list of reservedVillage. (NotNull, EmptyAllowed)
+     * Extract the value list of (single) primary key villageIdMod.
+     * @param autogenerateOrganizeList The list of autogenerateOrganize. (NotNull, EmptyAllowed)
      * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<Integer> extractReservedVillageIdList(List<ReservedVillage> reservedVillageList)
-    { return helpExtractListInternally(reservedVillageList, "reservedVillageId"); }
+    public List<Integer> extractVillageIdModList(List<AutogenerateOrganize> autogenerateOrganizeList)
+    { return helpExtractListInternally(autogenerateOrganizeList, "villageIdMod"); }
 
     // ===================================================================================
     //                                                                       Entity Update
@@ -381,80 +381,80 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     /**
      * Insert the entity modified-only. (DefaultConstraintsEnabled)
      * <pre>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
      * <span style="color: #3F7E5E">// if auto-increment, you don't need to set the PK value</span>
-     * reservedVillage.setFoo...(value);
-     * reservedVillage.setBar...(value);
+     * autogenerateOrganize.setFoo...(value);
+     * autogenerateOrganize.setBar...(value);
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//reservedVillage.set...;</span>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">insert</span>(reservedVillage);
-     * ... = reservedVillage.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.set...;</span>
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">insert</span>(autogenerateOrganize);
+     * ... = autogenerateOrganize.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
      * </pre>
      * <p>While, when the entity is created by select, all columns are registered.</p>
-     * @param reservedVillage The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
+     * @param autogenerateOrganize The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void insert(ReservedVillage reservedVillage) {
-        doInsert(reservedVillage, null);
+    public void insert(AutogenerateOrganize autogenerateOrganize) {
+        doInsert(autogenerateOrganize, null);
     }
 
     /**
      * Update the entity modified-only. (ZeroUpdateException, NonExclusiveControl) <br>
      * By PK as default, and also you can update by unique keys using entity's uniqueOf().
      * <pre>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
-     * reservedVillage.setPK...(value); <span style="color: #3F7E5E">// required</span>
-     * reservedVillage.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
+     * autogenerateOrganize.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * autogenerateOrganize.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//reservedVillage.set...;</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.set...;</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * reservedVillage.<span style="color: #CC4747">setVersionNo</span>(value);
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">update</span>(reservedVillage);
+     * autogenerateOrganize.<span style="color: #CC4747">setVersionNo</span>(value);
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">update</span>(autogenerateOrganize);
      * </pre>
-     * @param reservedVillage The entity of update. (NotNull, PrimaryKeyNotNull)
+     * @param autogenerateOrganize The entity of update. (NotNull, PrimaryKeyNotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void update(ReservedVillage reservedVillage) {
-        doUpdate(reservedVillage, null);
+    public void update(AutogenerateOrganize autogenerateOrganize) {
+        doUpdate(autogenerateOrganize, null);
     }
 
     /**
      * Insert or update the entity modified-only. (DefaultConstraintsEnabled, NonExclusiveControl) <br>
      * if (the entity has no PK) { insert() } else { update(), but no data, insert() } <br>
      * <p><span style="color: #994747; font-size: 120%">Also you can update by unique keys using entity's uniqueOf().</span></p>
-     * @param reservedVillage The entity of insert or update. (NotNull, ...depends on insert or update)
+     * @param autogenerateOrganize The entity of insert or update. (NotNull, ...depends on insert or update)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void insertOrUpdate(ReservedVillage reservedVillage) {
-        doInsertOrUpdate(reservedVillage, null, null);
+    public void insertOrUpdate(AutogenerateOrganize autogenerateOrganize) {
+        doInsertOrUpdate(autogenerateOrganize, null, null);
     }
 
     /**
      * Delete the entity. (ZeroUpdateException, NonExclusiveControl) <br>
      * By PK as default, and also you can delete by unique keys using entity's uniqueOf().
      * <pre>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
-     * reservedVillage.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
+     * autogenerateOrganize.setPK...(value); <span style="color: #3F7E5E">// required</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * reservedVillage.<span style="color: #CC4747">setVersionNo</span>(value);
+     * autogenerateOrganize.<span style="color: #CC4747">setVersionNo</span>(value);
      * <span style="color: #70226C">try</span> {
-     *     <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">delete</span>(reservedVillage);
+     *     <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">delete</span>(autogenerateOrganize);
      * } <span style="color: #70226C">catch</span> (EntityAlreadyUpdatedException e) { <span style="color: #3F7E5E">// if concurrent update</span>
      *     ...
      * }
      * </pre>
-     * @param reservedVillage The entity of delete. (NotNull, PrimaryKeyNotNull)
+     * @param autogenerateOrganize The entity of delete. (NotNull, PrimaryKeyNotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      */
-    public void delete(ReservedVillage reservedVillage) {
-        doDelete(reservedVillage, null);
+    public void delete(AutogenerateOrganize autogenerateOrganize) {
+        doDelete(autogenerateOrganize, null);
     }
 
     // ===================================================================================
@@ -466,26 +466,26 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * <p><span style="color: #CC4747; font-size: 120%">The columns of least common multiple are registered like this:</span></p>
      * <pre>
      * <span style="color: #70226C">for</span> (... : ...) {
-     *     ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
-     *     reservedVillage.setFooName("foo");
+     *     AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
+     *     autogenerateOrganize.setFooName("foo");
      *     <span style="color: #70226C">if</span> (...) {
-     *         reservedVillage.setFooPrice(123);
+     *         autogenerateOrganize.setFooPrice(123);
      *     }
      *     <span style="color: #3F7E5E">// FOO_NAME and FOO_PRICE (and record meta columns) are registered</span>
      *     <span style="color: #3F7E5E">// FOO_PRICE not-called in any entities are registered as null without default value</span>
      *     <span style="color: #3F7E5E">// columns not-called in all entities are registered as null or default value</span>
-     *     reservedVillageList.add(reservedVillage);
+     *     autogenerateOrganizeList.add(autogenerateOrganize);
      * }
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">batchInsert</span>(reservedVillageList);
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">batchInsert</span>(autogenerateOrganizeList);
      * </pre>
      * <p>While, when the entities are created by select, all columns are registered.</p>
      * <p>And if the table has an identity, entities after the process don't have incremented values.
      * (When you use the (normal) insert(), you can get the incremented value from your entity)</p>
-     * @param reservedVillageList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNullAllowed: when auto-increment)
+     * @param autogenerateOrganizeList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNullAllowed: when auto-increment)
      * @return The array of inserted count. (NotNull, EmptyAllowed)
      */
-    public int[] batchInsert(List<ReservedVillage> reservedVillageList) {
-        return doBatchInsert(reservedVillageList, null);
+    public int[] batchInsert(List<AutogenerateOrganize> autogenerateOrganizeList) {
+        return doBatchInsert(autogenerateOrganizeList, null);
     }
 
     /**
@@ -494,37 +494,37 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * <span style="color: #CC4747; font-size: 120%">You should specify same-set columns to all entities like this:</span>
      * <pre>
      * for (... : ...) {
-     *     ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
-     *     reservedVillage.setFooName("foo");
+     *     AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
+     *     autogenerateOrganize.setFooName("foo");
      *     <span style="color: #70226C">if</span> (...) {
-     *         reservedVillage.setFooPrice(123);
+     *         autogenerateOrganize.setFooPrice(123);
      *     } <span style="color: #70226C">else</span> {
-     *         reservedVillage.setFooPrice(null); <span style="color: #3F7E5E">// updated as null</span>
-     *         <span style="color: #3F7E5E">//reservedVillage.setFooDate(...); // *not allowed, fragmented</span>
+     *         autogenerateOrganize.setFooPrice(null); <span style="color: #3F7E5E">// updated as null</span>
+     *         <span style="color: #3F7E5E">//autogenerateOrganize.setFooDate(...); // *not allowed, fragmented</span>
      *     }
      *     <span style="color: #3F7E5E">// FOO_NAME and FOO_PRICE (and record meta columns) are updated</span>
      *     <span style="color: #3F7E5E">// (others are not updated: their values are kept)</span>
-     *     reservedVillageList.add(reservedVillage);
+     *     autogenerateOrganizeList.add(autogenerateOrganize);
      * }
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">batchUpdate</span>(reservedVillageList);
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">batchUpdate</span>(autogenerateOrganizeList);
      * </pre>
-     * @param reservedVillageList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param autogenerateOrganizeList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      */
-    public int[] batchUpdate(List<ReservedVillage> reservedVillageList) {
-        return doBatchUpdate(reservedVillageList, null);
+    public int[] batchUpdate(List<AutogenerateOrganize> autogenerateOrganizeList) {
+        return doBatchUpdate(autogenerateOrganizeList, null);
     }
 
     /**
      * Batch-delete the entity list. (NonExclusiveControl) <br>
      * This method uses executeBatch() of java.sql.PreparedStatement.
-     * @param reservedVillageList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param autogenerateOrganizeList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @return The array of deleted count. (NotNull, EmptyAllowed)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      */
-    public int[] batchDelete(List<ReservedVillage> reservedVillageList) {
-        return doBatchDelete(reservedVillageList, null);
+    public int[] batchDelete(List<AutogenerateOrganize> autogenerateOrganizeList) {
+        return doBatchDelete(autogenerateOrganizeList, null);
     }
 
     // ===================================================================================
@@ -533,8 +533,8 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
     /**
      * Insert the several entities by query (modified-only for fixed value).
      * <pre>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">queryInsert</span>(new QueryInsertSetupper&lt;ReservedVillage, ReservedVillageCB&gt;() {
-     *     public ConditionBean setup(ReservedVillage entity, ReservedVillageCB intoCB) {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">queryInsert</span>(new QueryInsertSetupper&lt;AutogenerateOrganize, AutogenerateOrganizeCB&gt;() {
+     *     public ConditionBean setup(AutogenerateOrganize entity, AutogenerateOrganizeCB intoCB) {
      *         FooCB cb = FooCB();
      *         cb.setupSelect_Bar();
      *
@@ -556,48 +556,48 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * @param manyArgLambda The callback to set up query-insert. (NotNull)
      * @return The inserted count.
      */
-    public int queryInsert(QueryInsertSetupper<ReservedVillage, ReservedVillageCB> manyArgLambda) {
+    public int queryInsert(QueryInsertSetupper<AutogenerateOrganize, AutogenerateOrganizeCB> manyArgLambda) {
         return doQueryInsert(manyArgLambda, null);
     }
 
     /**
      * Update the several entities by query non-strictly modified-only. (NonExclusiveControl)
      * <pre>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
      * <span style="color: #3F7E5E">// you don't need to set PK value</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setPK...(value);</span>
-     * reservedVillage.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setPK...(value);</span>
+     * autogenerateOrganize.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//reservedVillage.set...;</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.set...;</span>
      * <span style="color: #3F7E5E">// you don't need to set a value of concurrency column</span>
      * <span style="color: #3F7E5E">// (auto-increment for version number is valid though non-exclusive control)</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setVersionNo(value);</span>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">queryUpdate</span>(reservedVillage, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setVersionNo(value);</span>
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">queryUpdate</span>(autogenerateOrganize, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
-     * @param reservedVillage The entity that contains update values. (NotNull, PrimaryKeyNullAllowed)
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param autogenerateOrganize The entity that contains update values. (NotNull, PrimaryKeyNullAllowed)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The updated count.
      * @throws NonQueryUpdateNotAllowedException When the query has no condition.
      */
-    public int queryUpdate(ReservedVillage reservedVillage, CBCall<ReservedVillageCB> cbLambda) {
-        return doQueryUpdate(reservedVillage, createCB(cbLambda), null);
+    public int queryUpdate(AutogenerateOrganize autogenerateOrganize, CBCall<AutogenerateOrganizeCB> cbLambda) {
+        return doQueryUpdate(autogenerateOrganize, createCB(cbLambda), null);
     }
 
     /**
      * Delete the several entities by query. (NonExclusiveControl)
      * <pre>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">queryDelete</span>(reservedVillage, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">queryDelete</span>(autogenerateOrganize, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @return The deleted count.
      * @throws NonQueryDeleteNotAllowedException When the query has no condition.
      */
-    public int queryDelete(CBCall<ReservedVillageCB> cbLambda) {
+    public int queryDelete(CBCall<AutogenerateOrganizeCB> cbLambda) {
         return doQueryDelete(createCB(cbLambda), null);
     }
 
@@ -612,22 +612,22 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * For example, disableCommonColumnAutoSetup(), disablePrimaryKeyIdentity(). <br>
      * Other specifications are same as insert(entity).
      * <pre>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
      * <span style="color: #3F7E5E">// if auto-increment, you don't need to set the PK value</span>
-     * reservedVillage.setFoo...(value);
-     * reservedVillage.setBar...(value);
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">varyingInsert</span>(reservedVillage, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * autogenerateOrganize.setFoo...(value);
+     * autogenerateOrganize.setBar...(value);
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">varyingInsert</span>(autogenerateOrganize, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// you can insert by your values for common columns</span>
      *     <span style="color: #553000">op</span>.disableCommonColumnAutoSetup();
      * });
-     * ... = reservedVillage.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
+     * ... = autogenerateOrganize.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
      * </pre>
-     * @param reservedVillage The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
+     * @param autogenerateOrganize The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingInsert(ReservedVillage reservedVillage, WritableOptionCall<ReservedVillageCB, InsertOption<ReservedVillageCB>> opLambda) {
-        doInsert(reservedVillage, createInsertOption(opLambda));
+    public void varyingInsert(AutogenerateOrganize autogenerateOrganize, WritableOptionCall<AutogenerateOrganizeCB, InsertOption<AutogenerateOrganizeCB>> opLambda) {
+        doInsert(autogenerateOrganize, createInsertOption(opLambda));
     }
 
     /**
@@ -635,53 +635,53 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * For example, self(selfCalculationSpecification), specify(updateColumnSpecification), disableCommonColumnAutoSetup(). <br>
      * Other specifications are same as update(entity).
      * <pre>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
-     * reservedVillage.setPK...(value); <span style="color: #3F7E5E">// required</span>
-     * reservedVillage.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
+     * autogenerateOrganize.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * autogenerateOrganize.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * reservedVillage.<span style="color: #CC4747">setVersionNo</span>(value);
+     * autogenerateOrganize.<span style="color: #CC4747">setVersionNo</span>(value);
      * <span style="color: #3F7E5E">// you can update by self calculation values</span>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">varyingUpdate</span>(reservedVillage, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">varyingUpdate</span>(autogenerateOrganize, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>.self(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *         <span style="color: #553000">cb</span>.specify().<span style="color: #CC4747">columnXxxCount()</span>;
      *     }).plus(1); <span style="color: #3F7E5E">// XXX_COUNT = XXX_COUNT + 1</span>
      * });
      * </pre>
-     * @param reservedVillage The entity of update. (NotNull, PrimaryKeyNotNull)
+     * @param autogenerateOrganize The entity of update. (NotNull, PrimaryKeyNotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingUpdate(ReservedVillage reservedVillage, WritableOptionCall<ReservedVillageCB, UpdateOption<ReservedVillageCB>> opLambda) {
-        doUpdate(reservedVillage, createUpdateOption(opLambda));
+    public void varyingUpdate(AutogenerateOrganize autogenerateOrganize, WritableOptionCall<AutogenerateOrganizeCB, UpdateOption<AutogenerateOrganizeCB>> opLambda) {
+        doUpdate(autogenerateOrganize, createUpdateOption(opLambda));
     }
 
     /**
      * Insert or update the entity with varying requests. (ExclusiveControl: when update) <br>
      * Other specifications are same as insertOrUpdate(entity).
-     * @param reservedVillage The entity of insert or update. (NotNull)
+     * @param autogenerateOrganize The entity of insert or update. (NotNull)
      * @param insertOpLambda The callback for option of insert for varying requests. (NotNull)
      * @param updateOpLambda The callback for option of update for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingInsertOrUpdate(ReservedVillage reservedVillage, WritableOptionCall<ReservedVillageCB, InsertOption<ReservedVillageCB>> insertOpLambda, WritableOptionCall<ReservedVillageCB, UpdateOption<ReservedVillageCB>> updateOpLambda) {
-        doInsertOrUpdate(reservedVillage, createInsertOption(insertOpLambda), createUpdateOption(updateOpLambda));
+    public void varyingInsertOrUpdate(AutogenerateOrganize autogenerateOrganize, WritableOptionCall<AutogenerateOrganizeCB, InsertOption<AutogenerateOrganizeCB>> insertOpLambda, WritableOptionCall<AutogenerateOrganizeCB, UpdateOption<AutogenerateOrganizeCB>> updateOpLambda) {
+        doInsertOrUpdate(autogenerateOrganize, createInsertOption(insertOpLambda), createUpdateOption(updateOpLambda));
     }
 
     /**
      * Delete the entity with varying requests. (ZeroUpdateException, NonExclusiveControl) <br>
      * Now a valid option does not exist. <br>
      * Other specifications are same as delete(entity).
-     * @param reservedVillage The entity of delete. (NotNull, PrimaryKeyNotNull, ConcurrencyColumnNotNull)
+     * @param autogenerateOrganize The entity of delete. (NotNull, PrimaryKeyNotNull, ConcurrencyColumnNotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      */
-    public void varyingDelete(ReservedVillage reservedVillage, WritableOptionCall<ReservedVillageCB, DeleteOption<ReservedVillageCB>> opLambda) {
-        doDelete(reservedVillage, createDeleteOption(opLambda));
+    public void varyingDelete(AutogenerateOrganize autogenerateOrganize, WritableOptionCall<AutogenerateOrganizeCB, DeleteOption<AutogenerateOrganizeCB>> opLambda) {
+        doDelete(autogenerateOrganize, createDeleteOption(opLambda));
     }
 
     // -----------------------------------------------------
@@ -692,12 +692,12 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * For example, disableCommonColumnAutoSetup()
      * , disablePrimaryKeyIdentity(), limitBatchInsertLogging(). <br>
      * Other specifications are same as batchInsert(entityList).
-     * @param reservedVillageList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param autogenerateOrganizeList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchInsert(List<ReservedVillage> reservedVillageList, WritableOptionCall<ReservedVillageCB, InsertOption<ReservedVillageCB>> opLambda) {
-        return doBatchInsert(reservedVillageList, createInsertOption(opLambda));
+    public int[] varyingBatchInsert(List<AutogenerateOrganize> autogenerateOrganizeList, WritableOptionCall<AutogenerateOrganizeCB, InsertOption<AutogenerateOrganizeCB>> opLambda) {
+        return doBatchInsert(autogenerateOrganizeList, createInsertOption(opLambda));
     }
 
     /**
@@ -705,24 +705,24 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * For example, self(selfCalculationSpecification), specify(updateColumnSpecification)
      * , disableCommonColumnAutoSetup(), limitBatchUpdateLogging(). <br>
      * Other specifications are same as batchUpdate(entityList).
-     * @param reservedVillageList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param autogenerateOrganizeList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchUpdate(List<ReservedVillage> reservedVillageList, WritableOptionCall<ReservedVillageCB, UpdateOption<ReservedVillageCB>> opLambda) {
-        return doBatchUpdate(reservedVillageList, createUpdateOption(opLambda));
+    public int[] varyingBatchUpdate(List<AutogenerateOrganize> autogenerateOrganizeList, WritableOptionCall<AutogenerateOrganizeCB, UpdateOption<AutogenerateOrganizeCB>> opLambda) {
+        return doBatchUpdate(autogenerateOrganizeList, createUpdateOption(opLambda));
     }
 
     /**
      * Batch-delete the list with varying requests. <br>
      * For example, limitBatchDeleteLogging(). <br>
      * Other specifications are same as batchDelete(entityList).
-     * @param reservedVillageList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param autogenerateOrganizeList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @return The array of deleted count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchDelete(List<ReservedVillage> reservedVillageList, WritableOptionCall<ReservedVillageCB, DeleteOption<ReservedVillageCB>> opLambda) {
-        return doBatchDelete(reservedVillageList, createDeleteOption(opLambda));
+    public int[] varyingBatchDelete(List<AutogenerateOrganize> autogenerateOrganizeList, WritableOptionCall<AutogenerateOrganizeCB, DeleteOption<AutogenerateOrganizeCB>> opLambda) {
+        return doBatchDelete(autogenerateOrganizeList, createDeleteOption(opLambda));
     }
 
     // -----------------------------------------------------
@@ -736,7 +736,7 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @return The inserted count.
      */
-    public int varyingQueryInsert(QueryInsertSetupper<ReservedVillage, ReservedVillageCB> manyArgLambda, WritableOptionCall<ReservedVillageCB, InsertOption<ReservedVillageCB>> opLambda) {
+    public int varyingQueryInsert(QueryInsertSetupper<AutogenerateOrganize, AutogenerateOrganizeCB> manyArgLambda, WritableOptionCall<AutogenerateOrganizeCB, InsertOption<AutogenerateOrganizeCB>> opLambda) {
         return doQueryInsert(manyArgLambda, createInsertOption(opLambda));
     }
 
@@ -747,14 +747,14 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * Other specifications are same as queryUpdate(entity, cb).
      * <pre>
      * <span style="color: #3F7E5E">// ex) you can update by self calculation values</span>
-     * ReservedVillage reservedVillage = <span style="color: #70226C">new</span> ReservedVillage();
+     * AutogenerateOrganize autogenerateOrganize = <span style="color: #70226C">new</span> AutogenerateOrganize();
      * <span style="color: #3F7E5E">// you don't need to set PK value</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setPK...(value);</span>
-     * reservedVillage.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setPK...(value);</span>
+     * autogenerateOrganize.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set a value of concurrency column</span>
      * <span style="color: #3F7E5E">// (auto-increment for version number is valid though non-exclusive control)</span>
-     * <span style="color: #3F7E5E">//reservedVillage.setVersionNo(value);</span>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">varyingQueryUpdate</span>(reservedVillage, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #3F7E5E">//autogenerateOrganize.setVersionNo(value);</span>
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">varyingQueryUpdate</span>(autogenerateOrganize, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * }, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>.self(<span style="color: #553000">colCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -762,14 +762,14 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      *     }).plus(1); <span style="color: #3F7E5E">// FOO_COUNT = FOO_COUNT + 1</span>
      * });
      * </pre>
-     * @param reservedVillage The entity that contains update values. (NotNull) {PrimaryKeyNotRequired}
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param autogenerateOrganize The entity that contains update values. (NotNull) {PrimaryKeyNotRequired}
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @return The updated count.
      * @throws NonQueryUpdateNotAllowedException When the query has no condition (if not allowed).
      */
-    public int varyingQueryUpdate(ReservedVillage reservedVillage, CBCall<ReservedVillageCB> cbLambda, WritableOptionCall<ReservedVillageCB, UpdateOption<ReservedVillageCB>> opLambda) {
-        return doQueryUpdate(reservedVillage, createCB(cbLambda), createUpdateOption(opLambda));
+    public int varyingQueryUpdate(AutogenerateOrganize autogenerateOrganize, CBCall<AutogenerateOrganizeCB> cbLambda, WritableOptionCall<AutogenerateOrganizeCB, UpdateOption<AutogenerateOrganizeCB>> opLambda) {
+        return doQueryUpdate(autogenerateOrganize, createCB(cbLambda), createUpdateOption(opLambda));
     }
 
     /**
@@ -777,18 +777,18 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * For example, allowNonQueryDelete(). <br>
      * Other specifications are same as queryDelete(cb).
      * <pre>
-     * <span style="color: #0000C0">reservedVillageBhv</span>.<span style="color: #CC4747">queryDelete</span>(reservedVillage, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">autogenerateOrganizeBhv</span>.<span style="color: #CC4747">queryDelete</span>(autogenerateOrganize, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * }, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of ReservedVillage. (NotNull)
+     * @param cbLambda The callback for condition-bean of AutogenerateOrganize. (NotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @return The deleted count.
      * @throws NonQueryDeleteNotAllowedException When the query has no condition (if not allowed).
      */
-    public int varyingQueryDelete(CBCall<ReservedVillageCB> cbLambda, WritableOptionCall<ReservedVillageCB, DeleteOption<ReservedVillageCB>> opLambda) {
+    public int varyingQueryDelete(CBCall<AutogenerateOrganizeCB> cbLambda, WritableOptionCall<AutogenerateOrganizeCB, DeleteOption<AutogenerateOrganizeCB>> opLambda) {
         return doQueryDelete(createCB(cbLambda), createDeleteOption(opLambda));
     }
 
@@ -799,40 +799,40 @@ public abstract class BsReservedVillageBhv extends AbstractBehaviorWritable<Rese
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
      * <span style="color: #3F7E5E">// main style</span>
-     * reservedVillageBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
-     * reservedVillageBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
-     * reservedVillageBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
-     * reservedVillageBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
-     * reservedVillageBhv.outideSql().selectCursor(pmb, handler); <span style="color: #3F7E5E">// (by handler)</span>
-     * reservedVillageBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
-     * reservedVillageBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
+     * autogenerateOrganizeBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
+     * autogenerateOrganizeBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
+     * autogenerateOrganizeBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
+     * autogenerateOrganizeBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
+     * autogenerateOrganizeBhv.outideSql().selectCursor(pmb, handler); <span style="color: #3F7E5E">// (by handler)</span>
+     * autogenerateOrganizeBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
+     * autogenerateOrganizeBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
      * <span style="color: #3F7E5E">// traditional style</span>
-     * reservedVillageBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
-     * reservedVillageBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
-     * reservedVillageBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
-     * reservedVillageBhv.outideSql().traditionalStyle().selectPagedListOnly(path, pmb, entityType);
-     * reservedVillageBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
-     * reservedVillageBhv.outideSql().traditionalStyle().execute(path, pmb);
+     * autogenerateOrganizeBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
+     * autogenerateOrganizeBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
+     * autogenerateOrganizeBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
+     * autogenerateOrganizeBhv.outideSql().traditionalStyle().selectPagedListOnly(path, pmb, entityType);
+     * autogenerateOrganizeBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
+     * autogenerateOrganizeBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
      * <span style="color: #3F7E5E">// options</span>
-     * reservedVillageBhv.outideSql().removeBlockComment().selectList()
-     * reservedVillageBhv.outideSql().removeLineComment().selectList()
-     * reservedVillageBhv.outideSql().formatSql().selectList()
+     * autogenerateOrganizeBhv.outideSql().removeBlockComment().selectList()
+     * autogenerateOrganizeBhv.outideSql().removeLineComment().selectList()
+     * autogenerateOrganizeBhv.outideSql().formatSql().selectList()
      * </pre>
      * <p>The invoker of behavior command should be not null when you call this method.</p>
      * @return The new-created all facade executor of outside-SQL. (NotNull)
      */
-    public OutsideSqlAllFacadeExecutor<ReservedVillageBhv> outsideSql() {
+    public OutsideSqlAllFacadeExecutor<AutogenerateOrganizeBhv> outsideSql() {
         return doOutsideSql();
     }
 
     // ===================================================================================
     //                                                                         Type Helper
     //                                                                         ===========
-    protected Class<? extends ReservedVillage> typeOfSelectedEntity() { return ReservedVillage.class; }
-    protected Class<ReservedVillage> typeOfHandlingEntity() { return ReservedVillage.class; }
-    protected Class<ReservedVillageCB> typeOfHandlingConditionBean() { return ReservedVillageCB.class; }
+    protected Class<? extends AutogenerateOrganize> typeOfSelectedEntity() { return AutogenerateOrganize.class; }
+    protected Class<AutogenerateOrganize> typeOfHandlingEntity() { return AutogenerateOrganize.class; }
+    protected Class<AutogenerateOrganizeCB> typeOfHandlingConditionBean() { return AutogenerateOrganizeCB.class; }
 
     // ===================================================================================
     //                                                                            Accessor

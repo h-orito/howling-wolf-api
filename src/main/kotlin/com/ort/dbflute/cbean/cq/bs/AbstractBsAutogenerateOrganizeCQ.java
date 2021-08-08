@@ -16,15 +16,15 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of reserved_village.
+ * The abstract condition-query of AUTOGENERATE_ORGANIZE.
  * @author DBFlute(AutoGenerator)
  */
-public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery {
+public abstract class AbstractBsAutogenerateOrganizeCQ extends AbstractConditionQuery {
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public AbstractBsReservedVillageCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+    public AbstractBsAutogenerateOrganizeCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
     }
 
     public String asTableDbName() {
-        return "reserved_village";
+        return "AUTOGENERATE_ORGANIZE";
     }
 
     // ===================================================================================
@@ -45,282 +45,132 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageId The value of reservedVillageId as equal. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdMod The value of villageIdMod as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setReservedVillageId_Equal(Integer reservedVillageId) {
-        doSetReservedVillageId_Equal(reservedVillageId);
+    public void setVillageIdMod_Equal(Integer villageIdMod) {
+        doSetVillageIdMod_Equal(villageIdMod);
     }
 
-    protected void doSetReservedVillageId_Equal(Integer reservedVillageId) {
-        regReservedVillageId(CK_EQ, reservedVillageId);
+    protected void doSetVillageIdMod_Equal(Integer villageIdMod) {
+        regVillageIdMod(CK_EQ, villageIdMod);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageId The value of reservedVillageId as notEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdMod The value of villageIdMod as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setReservedVillageId_NotEqual(Integer reservedVillageId) {
-        doSetReservedVillageId_NotEqual(reservedVillageId);
+    public void setVillageIdMod_NotEqual(Integer villageIdMod) {
+        doSetVillageIdMod_NotEqual(villageIdMod);
     }
 
-    protected void doSetReservedVillageId_NotEqual(Integer reservedVillageId) {
-        regReservedVillageId(CK_NES, reservedVillageId);
+    protected void doSetVillageIdMod_NotEqual(Integer villageIdMod) {
+        regVillageIdMod(CK_NES, villageIdMod);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageId The value of reservedVillageId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdMod The value of villageIdMod as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setReservedVillageId_GreaterThan(Integer reservedVillageId) {
-        regReservedVillageId(CK_GT, reservedVillageId);
+    public void setVillageIdMod_GreaterThan(Integer villageIdMod) {
+        regVillageIdMod(CK_GT, villageIdMod);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageId The value of reservedVillageId as lessThan. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdMod The value of villageIdMod as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setReservedVillageId_LessThan(Integer reservedVillageId) {
-        regReservedVillageId(CK_LT, reservedVillageId);
+    public void setVillageIdMod_LessThan(Integer villageIdMod) {
+        regVillageIdMod(CK_LT, villageIdMod);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageId The value of reservedVillageId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdMod The value of villageIdMod as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setReservedVillageId_GreaterEqual(Integer reservedVillageId) {
-        regReservedVillageId(CK_GE, reservedVillageId);
+    public void setVillageIdMod_GreaterEqual(Integer villageIdMod) {
+        regVillageIdMod(CK_GE, villageIdMod);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageId The value of reservedVillageId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdMod The value of villageIdMod as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setReservedVillageId_LessEqual(Integer reservedVillageId) {
-        regReservedVillageId(CK_LE, reservedVillageId);
+    public void setVillageIdMod_LessEqual(Integer villageIdMod) {
+        regVillageIdMod(CK_LE, villageIdMod);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param minNumber The min number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param minNumber The min number of villageIdMod. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villageIdMod. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setReservedVillageId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setReservedVillageId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setVillageIdMod_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setVillageIdMod_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param minNumber The min number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of reservedVillageId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param minNumber The min number of villageIdMod. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of villageIdMod. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setReservedVillageId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID", rangeOfOption);
+    protected void setVillageIdMod_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueVillageIdMod(), "VILLAGE_ID_MOD", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageIdList The collection of reservedVillageId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdModList The collection of villageIdMod as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setReservedVillageId_InScope(Collection<Integer> reservedVillageIdList) {
-        doSetReservedVillageId_InScope(reservedVillageIdList);
+    public void setVillageIdMod_InScope(Collection<Integer> villageIdModList) {
+        doSetVillageIdMod_InScope(villageIdModList);
     }
 
-    protected void doSetReservedVillageId_InScope(Collection<Integer> reservedVillageIdList) {
-        regINS(CK_INS, cTL(reservedVillageIdList), xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID");
+    protected void doSetVillageIdMod_InScope(Collection<Integer> villageIdModList) {
+        regINS(CK_INS, cTL(villageIdModList), xgetCValueVillageIdMod(), "VILLAGE_ID_MOD");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
-     * @param reservedVillageIdList The collection of reservedVillageId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
+     * @param villageIdModList The collection of villageIdMod as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setReservedVillageId_NotInScope(Collection<Integer> reservedVillageIdList) {
-        doSetReservedVillageId_NotInScope(reservedVillageIdList);
+    public void setVillageIdMod_NotInScope(Collection<Integer> villageIdModList) {
+        doSetVillageIdMod_NotInScope(villageIdModList);
     }
 
-    protected void doSetReservedVillageId_NotInScope(Collection<Integer> reservedVillageIdList) {
-        regINS(CK_NINS, cTL(reservedVillageIdList), xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID");
+    protected void doSetVillageIdMod_NotInScope(Collection<Integer> villageIdModList) {
+        regINS(CK_NINS, cTL(villageIdModList), xgetCValueVillageIdMod(), "VILLAGE_ID_MOD");
     }
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
      */
-    public void setReservedVillageId_IsNull() { regReservedVillageId(CK_ISN, DOBJ); }
+    public void setVillageIdMod_IsNull() { regVillageIdMod(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
      */
-    public void setReservedVillageId_IsNotNull() { regReservedVillageId(CK_ISNN, DOBJ); }
+    public void setVillageIdMod_IsNotNull() { regVillageIdMod(CK_ISNN, DOBJ); }
 
-    protected void regReservedVillageId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueReservedVillageId(), "RESERVED_VILLAGE_ID"); }
-    protected abstract ConditionValue xgetCValueReservedVillageId();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @param createDatetime The value of createDatetime as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setCreateDatetime_Equal(java.time.LocalDateTime createDatetime) {
-        regCreateDatetime(CK_EQ,  createDatetime);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @param createDatetime The value of createDatetime as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setCreateDatetime_GreaterThan(java.time.LocalDateTime createDatetime) {
-        regCreateDatetime(CK_GT,  createDatetime);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @param createDatetime The value of createDatetime as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setCreateDatetime_LessThan(java.time.LocalDateTime createDatetime) {
-        regCreateDatetime(CK_LT,  createDatetime);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @param createDatetime The value of createDatetime as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setCreateDatetime_GreaterEqual(java.time.LocalDateTime createDatetime) {
-        regCreateDatetime(CK_GE,  createDatetime);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @param createDatetime The value of createDatetime as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setCreateDatetime_LessEqual(java.time.LocalDateTime createDatetime) {
-        regCreateDatetime(CK_LE, createDatetime);
-    }
-
-    /**
-     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * <pre>e.g. setCreateDatetime_FromTo(fromDate, toDate, op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">compareAsDate()</span>);</pre>
-     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of from-to. (NotNull)
-     */
-    public void setCreateDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, ConditionOptionCall<FromToOption> opLambda) {
-        setCreateDatetime_FromTo(fromDatetime, toDatetime, xcFTOP(opLambda));
-    }
-
-    /**
-     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * <pre>e.g. setCreateDatetime_FromTo(fromDate, toDate, new <span style="color: #CC4747">FromToOption</span>().compareAsDate());</pre>
-     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of createDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param fromToOption The option of from-to. (NotNull)
-     */
-    protected void setCreateDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, FromToOption fromToOption) {
-        String nm = "CREATE_DATETIME"; FromToOption op = fromToOption;
-        regFTQ(xfFTHD(fromDatetime, nm, op), xfFTHD(toDatetime, nm, op), xgetCValueCreateDatetime(), nm, op);
-    }
-
-    protected void regCreateDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCreateDatetime(), "CREATE_DATETIME"); }
-    protected abstract ConditionValue xgetCValueCreateDatetime();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @param startDatetime The value of startDatetime as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setStartDatetime_Equal(java.time.LocalDateTime startDatetime) {
-        regStartDatetime(CK_EQ,  startDatetime);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @param startDatetime The value of startDatetime as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setStartDatetime_GreaterThan(java.time.LocalDateTime startDatetime) {
-        regStartDatetime(CK_GT,  startDatetime);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @param startDatetime The value of startDatetime as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setStartDatetime_LessThan(java.time.LocalDateTime startDatetime) {
-        regStartDatetime(CK_LT,  startDatetime);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @param startDatetime The value of startDatetime as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setStartDatetime_GreaterEqual(java.time.LocalDateTime startDatetime) {
-        regStartDatetime(CK_GE,  startDatetime);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @param startDatetime The value of startDatetime as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setStartDatetime_LessEqual(java.time.LocalDateTime startDatetime) {
-        regStartDatetime(CK_LE, startDatetime);
-    }
-
-    /**
-     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * <pre>e.g. setStartDatetime_FromTo(fromDate, toDate, op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">compareAsDate()</span>);</pre>
-     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of from-to. (NotNull)
-     */
-    public void setStartDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, ConditionOptionCall<FromToOption> opLambda) {
-        setStartDatetime_FromTo(fromDatetime, toDatetime, xcFTOP(opLambda));
-    }
-
-    /**
-     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * <pre>e.g. setStartDatetime_FromTo(fromDate, toDate, new <span style="color: #CC4747">FromToOption</span>().compareAsDate());</pre>
-     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of startDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param fromToOption The option of from-to. (NotNull)
-     */
-    protected void setStartDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, FromToOption fromToOption) {
-        String nm = "START_DATETIME"; FromToOption op = fromToOption;
-        regFTQ(xfFTHD(fromDatetime, nm, op), xfFTHD(toDatetime, nm, op), xgetCValueStartDatetime(), nm, op);
-    }
-
-    protected void regStartDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueStartDatetime(), "START_DATETIME"); }
-    protected abstract ConditionValue xgetCValueStartDatetime();
+    protected void regVillageIdMod(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueVillageIdMod(), "VILLAGE_ID_MOD"); }
+    protected abstract ConditionValue xgetCValueVillageIdMod();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
@@ -459,123 +309,6 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHours The value of silentHours as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSilentHours_Equal(Integer silentHours) {
-        doSetSilentHours_Equal(silentHours);
-    }
-
-    protected void doSetSilentHours_Equal(Integer silentHours) {
-        regSilentHours(CK_EQ, silentHours);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHours The value of silentHours as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSilentHours_NotEqual(Integer silentHours) {
-        doSetSilentHours_NotEqual(silentHours);
-    }
-
-    protected void doSetSilentHours_NotEqual(Integer silentHours) {
-        regSilentHours(CK_NES, silentHours);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHours The value of silentHours as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSilentHours_GreaterThan(Integer silentHours) {
-        regSilentHours(CK_GT, silentHours);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHours The value of silentHours as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSilentHours_LessThan(Integer silentHours) {
-        regSilentHours(CK_LT, silentHours);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHours The value of silentHours as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSilentHours_GreaterEqual(Integer silentHours) {
-        regSilentHours(CK_GE, silentHours);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHours The value of silentHours as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setSilentHours_LessEqual(Integer silentHours) {
-        regSilentHours(CK_LE, silentHours);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param minNumber The min number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setSilentHours_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setSilentHours_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param minNumber The min number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of silentHours. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setSilentHours_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueSilentHours(), "SILENT_HOURS", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHoursList The collection of silentHours as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setSilentHours_InScope(Collection<Integer> silentHoursList) {
-        doSetSilentHours_InScope(silentHoursList);
-    }
-
-    protected void doSetSilentHours_InScope(Collection<Integer> silentHoursList) {
-        regINS(CK_INS, cTL(silentHoursList), xgetCValueSilentHours(), "SILENT_HOURS");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @param silentHoursList The collection of silentHours as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setSilentHours_NotInScope(Collection<Integer> silentHoursList) {
-        doSetSilentHours_NotInScope(silentHoursList);
-    }
-
-    protected void doSetSilentHours_NotInScope(Collection<Integer> silentHoursList) {
-        regINS(CK_NINS, cTL(silentHoursList), xgetCValueSilentHours(), "SILENT_HOURS");
-    }
-
-    protected void regSilentHours(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueSilentHours(), "SILENT_HOURS"); }
-    protected abstract ConditionValue xgetCValueSilentHours();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
      * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
      * @param isAvailableDummySkill The value of isAvailableDummySkill as equal. (basically NotNull: error as default, or no condition as option)
      */
@@ -585,18 +318,6 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
 
     protected void regIsAvailableDummySkill(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIsAvailableDummySkill(), "IS_AVAILABLE_DUMMY_SKILL"); }
     protected abstract ConditionValue xgetCValueIsAvailableDummySkill();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * IS_FOR_BEGINNER: {NotNull, BIT}
-     * @param isForBeginner The value of isForBeginner as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setIsForBeginner_Equal(Boolean isForBeginner) {
-        regIsForBeginner(CK_EQ, isForBeginner);
-    }
-
-    protected void regIsForBeginner(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIsForBeginner(), "IS_FOR_BEGINNER"); }
-    protected abstract ConditionValue xgetCValueIsForBeginner();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -1032,8 +753,8 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<ReservedVillageCB> scalar_Equal() {
-        return xcreateSLCFunction(CK_EQ, ReservedVillageCB.class);
+    public HpSLCFunction<AutogenerateOrganizeCB> scalar_Equal() {
+        return xcreateSLCFunction(CK_EQ, AutogenerateOrganizeCB.class);
     }
 
     /**
@@ -1047,8 +768,8 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<ReservedVillageCB> scalar_NotEqual() {
-        return xcreateSLCFunction(CK_NES, ReservedVillageCB.class);
+    public HpSLCFunction<AutogenerateOrganizeCB> scalar_NotEqual() {
+        return xcreateSLCFunction(CK_NES, AutogenerateOrganizeCB.class);
     }
 
     /**
@@ -1062,8 +783,8 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<ReservedVillageCB> scalar_GreaterThan() {
-        return xcreateSLCFunction(CK_GT, ReservedVillageCB.class);
+    public HpSLCFunction<AutogenerateOrganizeCB> scalar_GreaterThan() {
+        return xcreateSLCFunction(CK_GT, AutogenerateOrganizeCB.class);
     }
 
     /**
@@ -1077,8 +798,8 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<ReservedVillageCB> scalar_LessThan() {
-        return xcreateSLCFunction(CK_LT, ReservedVillageCB.class);
+    public HpSLCFunction<AutogenerateOrganizeCB> scalar_LessThan() {
+        return xcreateSLCFunction(CK_LT, AutogenerateOrganizeCB.class);
     }
 
     /**
@@ -1092,16 +813,16 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<ReservedVillageCB> scalar_GreaterEqual() {
-        return xcreateSLCFunction(CK_GE, ReservedVillageCB.class);
+    public HpSLCFunction<AutogenerateOrganizeCB> scalar_GreaterEqual() {
+        return xcreateSLCFunction(CK_GE, AutogenerateOrganizeCB.class);
     }
 
     /**
      * Prepare ScalarCondition as lessEqual. <br>
      * {where FOO &lt;= (select max(BAR) from ...)}
      * <pre>
-     * cb.query().<span style="color: #CC4747">scalar_LessEqual()</span>.max(new SubQuery&lt;ReservedVillageCB&gt;() {
-     *     public void query(ReservedVillageCB subCB) {
+     * cb.query().<span style="color: #CC4747">scalar_LessEqual()</span>.max(new SubQuery&lt;AutogenerateOrganizeCB&gt;() {
+     *     public void query(AutogenerateOrganizeCB subCB) {
      *         subCB.specify().setFoo... <span style="color: #3F7E5E">// derived column for function</span>
      *         subCB.query().setBar...
      *     }
@@ -1109,56 +830,56 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * </pre>
      * @return The object to set up a function. (NotNull)
      */
-    public HpSLCFunction<ReservedVillageCB> scalar_LessEqual() {
-        return xcreateSLCFunction(CK_LE, ReservedVillageCB.class);
+    public HpSLCFunction<AutogenerateOrganizeCB> scalar_LessEqual() {
+        return xcreateSLCFunction(CK_LE, AutogenerateOrganizeCB.class);
     }
 
     @SuppressWarnings("unchecked")
     protected <CB extends ConditionBean> void xscalarCondition(String fn, SubQuery<CB> sq, String rd, HpSLCCustomized<CB> cs, ScalarConditionOption op) {
         assertObjectNotNull("subQuery", sq);
-        ReservedVillageCB cb = xcreateScalarConditionCB(); sq.query((CB)cb);
+        AutogenerateOrganizeCB cb = xcreateScalarConditionCB(); sq.query((CB)cb);
         String pp = keepScalarCondition(cb.query()); // for saving query-value
         cs.setPartitionByCBean((CB)xcreateScalarConditionPartitionByCB()); // for using partition-by
         registerScalarCondition(fn, cb.query(), pp, rd, cs, op);
     }
-    public abstract String keepScalarCondition(ReservedVillageCQ sq);
+    public abstract String keepScalarCondition(AutogenerateOrganizeCQ sq);
 
-    protected ReservedVillageCB xcreateScalarConditionCB() {
-        ReservedVillageCB cb = newMyCB(); cb.xsetupForScalarCondition(this); return cb;
+    protected AutogenerateOrganizeCB xcreateScalarConditionCB() {
+        AutogenerateOrganizeCB cb = newMyCB(); cb.xsetupForScalarCondition(this); return cb;
     }
 
-    protected ReservedVillageCB xcreateScalarConditionPartitionByCB() {
-        ReservedVillageCB cb = newMyCB(); cb.xsetupForScalarConditionPartitionBy(this); return cb;
+    protected AutogenerateOrganizeCB xcreateScalarConditionPartitionByCB() {
+        AutogenerateOrganizeCB cb = newMyCB(); cb.xsetupForScalarConditionPartitionBy(this); return cb;
     }
 
     // ===================================================================================
     //                                                                       MyselfDerived
     //                                                                       =============
-    public void xsmyselfDerive(String fn, SubQuery<ReservedVillageCB> sq, String al, DerivedReferrerOption op) {
+    public void xsmyselfDerive(String fn, SubQuery<AutogenerateOrganizeCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
-        ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForDerivedReferrer(this);
-        lockCall(() -> sq.query(cb)); String pp = keepSpecifyMyselfDerived(cb.query()); String pk = "RESERVED_VILLAGE_ID";
+        AutogenerateOrganizeCB cb = new AutogenerateOrganizeCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepSpecifyMyselfDerived(cb.query()); String pk = "VILLAGE_ID_MOD";
         registerSpecifyMyselfDerived(fn, cb.query(), pk, pk, pp, "myselfDerived", al, op);
     }
-    public abstract String keepSpecifyMyselfDerived(ReservedVillageCQ sq);
+    public abstract String keepSpecifyMyselfDerived(AutogenerateOrganizeCQ sq);
 
     /**
      * Prepare for (Query)MyselfDerived (correlated sub-query).
      * @return The object to set up a function for myself table. (NotNull)
      */
-    public HpQDRFunction<ReservedVillageCB> myselfDerived() {
-        return xcreateQDRFunctionMyselfDerived(ReservedVillageCB.class);
+    public HpQDRFunction<AutogenerateOrganizeCB> myselfDerived() {
+        return xcreateQDRFunctionMyselfDerived(AutogenerateOrganizeCB.class);
     }
     @SuppressWarnings("unchecked")
     protected <CB extends ConditionBean> void xqderiveMyselfDerived(String fn, SubQuery<CB> sq, String rd, Object vl, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
-        ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForDerivedReferrer(this); sq.query((CB)cb);
-        String pk = "RESERVED_VILLAGE_ID";
+        AutogenerateOrganizeCB cb = new AutogenerateOrganizeCB(); cb.xsetupForDerivedReferrer(this); sq.query((CB)cb);
+        String pk = "VILLAGE_ID_MOD";
         String sqpp = keepQueryMyselfDerived(cb.query()); // for saving query-value.
         String prpp = keepQueryMyselfDerivedParameter(vl);
         registerQueryMyselfDerived(fn, cb.query(), pk, pk, sqpp, "myselfDerived", rd, vl, prpp, op);
     }
-    public abstract String keepQueryMyselfDerived(ReservedVillageCQ sq);
+    public abstract String keepQueryMyselfDerived(AutogenerateOrganizeCQ sq);
     public abstract String keepQueryMyselfDerivedParameter(Object vl);
 
     // ===================================================================================
@@ -1168,13 +889,13 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
      * Prepare for MyselfExists (correlated sub-query).
      * @param subCBLambda The implementation of sub-query. (NotNull)
      */
-    public void myselfExists(SubQuery<ReservedVillageCB> subCBLambda) {
+    public void myselfExists(SubQuery<AutogenerateOrganizeCB> subCBLambda) {
         assertObjectNotNull("subCBLambda", subCBLambda);
-        ReservedVillageCB cb = new ReservedVillageCB(); cb.xsetupForMyselfExists(this);
+        AutogenerateOrganizeCB cb = new AutogenerateOrganizeCB(); cb.xsetupForMyselfExists(this);
         lockCall(() -> subCBLambda.query(cb)); String pp = keepMyselfExists(cb.query());
         registerMyselfExists(cb.query(), pp);
     }
-    public abstract String keepMyselfExists(ReservedVillageCQ sq);
+    public abstract String keepMyselfExists(AutogenerateOrganizeCQ sq);
 
     // ===================================================================================
     //                                                                        Manual Order
@@ -1218,12 +939,12 @@ public abstract class AbstractBsReservedVillageCQ extends AbstractConditionQuery
     // ===================================================================================
     //                                                                       Very Internal
     //                                                                       =============
-    protected ReservedVillageCB newMyCB() {
-        return new ReservedVillageCB();
+    protected AutogenerateOrganizeCB newMyCB() {
+        return new AutogenerateOrganizeCB();
     }
     // very internal (for suppressing warn about 'Not Use Import')
     protected String xabUDT() { return Date.class.getName(); }
-    protected String xabCQ() { return ReservedVillageCQ.class.getName(); }
+    protected String xabCQ() { return AutogenerateOrganizeCQ.class.getName(); }
     protected String xabLSO() { return LikeSearchOption.class.getName(); }
     protected String xabSLCS() { return HpSLCSetupper.class.getName(); }
     protected String xabSCP() { return SubQuery.class.getName(); }
