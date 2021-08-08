@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of chara_group.
+ * The abstract condition-query of CHARA_GROUP.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "chara_group";
+        return "CHARA_GROUP";
     }
 
     // ===================================================================================
@@ -159,8 +159,8 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select CHARA_GROUP_ID from chara where ...)} <br>
-     * chara by CHARA_GROUP_ID, named 'charaAsOne'.
+     * {exists (select CHARA_GROUP_ID from CHARA where ...)} <br>
+     * CHARA by CHARA_GROUP_ID, named 'charaAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsChara</span>(charaCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     charaCB.query().set...
@@ -178,8 +178,8 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select CHARA_GROUP_ID from chara where ...)} <br>
-     * chara by CHARA_GROUP_ID, named 'charaAsOne'.
+     * {not exists (select CHARA_GROUP_ID from CHARA where ...)} <br>
+     * CHARA by CHARA_GROUP_ID, named 'charaAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsChara</span>(charaCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     charaCB.query().set...
@@ -205,8 +205,8 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from chara where ...)} <br>
-     * chara by CHARA_GROUP_ID, named 'charaAsOne'.
+     * {FOO &lt;= (select max(BAR) from CHARA where ...)} <br>
+     * CHARA by CHARA_GROUP_ID, named 'charaAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedChara()</span>.<span style="color: #CC4747">max</span>(charaCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     charaCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
@@ -382,7 +382,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerId The value of designerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setDesignerId_Equal(Integer designerId) {
@@ -395,7 +395,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerId The value of designerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setDesignerId_NotEqual(Integer designerId) {
@@ -408,7 +408,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerId The value of designerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setDesignerId_GreaterThan(Integer designerId) {
@@ -417,7 +417,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerId The value of designerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setDesignerId_LessThan(Integer designerId) {
@@ -426,7 +426,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerId The value of designerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setDesignerId_GreaterEqual(Integer designerId) {
@@ -435,7 +435,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerId The value of designerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setDesignerId_LessEqual(Integer designerId) {
@@ -446,7 +446,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param minNumber The min number of designerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of designerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -459,7 +459,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param minNumber The min number of designerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of designerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -470,7 +470,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerIdList The collection of designerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setDesignerId_InScope(Collection<Integer> designerIdList) {
@@ -483,7 +483,7 @@ public abstract class AbstractBsCharaGroupCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to designer}
+     * DESIGNER_ID: {IX, NotNull, INT UNSIGNED(10), FK to DESIGNER}
      * @param designerIdList The collection of designerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setDesignerId_NotInScope(Collection<Integer> designerIdList) {

@@ -68,7 +68,7 @@ public abstract class BsCharaImageBhv extends AbstractBehaviorWritable<CharaImag
     /** {@inheritDoc} */
     public CharaImageDbm asDBMeta() { return CharaImageDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "chara_image"; }
+    public String asTableDbName() { return "CHARA_IMAGE"; }
 
     // ===================================================================================
     //                                                                        New Instance
@@ -160,8 +160,8 @@ public abstract class BsCharaImageBhv extends AbstractBehaviorWritable<CharaImag
 
     /**
      * Select the entity by the primary-key value.
-     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to chara. (NotNull)
-     * @param faceTypeCode : PK, IX, NotNull, VARCHAR(20), FK to face_type, classification=FaceType. (NotNull)
+     * @param charaId : PK, NotNull, INT UNSIGNED(10), FK to CHARA. (NotNull)
+     * @param faceTypeCode : PK, IX, NotNull, VARCHAR(20), FK to FACE_TYPE, classification=FaceType. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.

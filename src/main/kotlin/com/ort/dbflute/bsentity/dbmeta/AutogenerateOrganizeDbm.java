@@ -13,17 +13,17 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of reserved_village. (Singleton)
+ * The DB meta of AUTOGENERATE_ORGANIZE. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
-public class ReservedVillageDbm extends AbstractDBMeta {
+public class AutogenerateOrganizeDbm extends AbstractDBMeta {
 
     // ===================================================================================
     //                                                                           Singleton
     //                                                                           =========
-    private static final ReservedVillageDbm _instance = new ReservedVillageDbm();
-    private ReservedVillageDbm() {}
-    public static ReservedVillageDbm getInstance() { return _instance; }
+    private static final AutogenerateOrganizeDbm _instance = new AutogenerateOrganizeDbm();
+    private AutogenerateOrganizeDbm() {}
+    public static AutogenerateOrganizeDbm getInstance() { return _instance; }
 
     // ===================================================================================
     //                                                                       Current DBDef
@@ -42,17 +42,13 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getReservedVillageId(), (et, vl) -> ((ReservedVillage)et).setReservedVillageId(cti(vl)), "reservedVillageId");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getCreateDatetime(), (et, vl) -> ((ReservedVillage)et).setCreateDatetime(ctldt(vl)), "createDatetime");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getStartDatetime(), (et, vl) -> ((ReservedVillage)et).setStartDatetime(ctldt(vl)), "startDatetime");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getOrganization(), (et, vl) -> ((ReservedVillage)et).setOrganization((String)vl), "organization");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getSilentHours(), (et, vl) -> ((ReservedVillage)et).setSilentHours(cti(vl)), "silentHours");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getIsAvailableDummySkill(), (et, vl) -> ((ReservedVillage)et).setIsAvailableDummySkill((Boolean)vl), "isAvailableDummySkill");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getIsForBeginner(), (et, vl) -> ((ReservedVillage)et).setIsForBeginner((Boolean)vl), "isForBeginner");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getRegisterDatetime(), (et, vl) -> ((ReservedVillage)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getRegisterTrace(), (et, vl) -> ((ReservedVillage)et).setRegisterTrace((String)vl), "registerTrace");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getUpdateDatetime(), (et, vl) -> ((ReservedVillage)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
-        setupEpg(_epgMap, et -> ((ReservedVillage)et).getUpdateTrace(), (et, vl) -> ((ReservedVillage)et).setUpdateTrace((String)vl), "updateTrace");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getVillageIdMod(), (et, vl) -> ((AutogenerateOrganize)et).setVillageIdMod(cti(vl)), "villageIdMod");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getOrganization(), (et, vl) -> ((AutogenerateOrganize)et).setOrganization((String)vl), "organization");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getIsAvailableDummySkill(), (et, vl) -> ((AutogenerateOrganize)et).setIsAvailableDummySkill((Boolean)vl), "isAvailableDummySkill");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getRegisterDatetime(), (et, vl) -> ((AutogenerateOrganize)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getRegisterTrace(), (et, vl) -> ((AutogenerateOrganize)et).setRegisterTrace((String)vl), "registerTrace");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getUpdateDatetime(), (et, vl) -> ((AutogenerateOrganize)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
+        setupEpg(_epgMap, et -> ((AutogenerateOrganize)et).getUpdateTrace(), (et, vl) -> ((AutogenerateOrganize)et).setUpdateTrace((String)vl), "updateTrace");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -60,10 +56,10 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "reserved_village";
-    protected final String _tableDispName = "RESERVED_VILLAGE";
-    protected final String _tablePropertyName = "reservedVillage";
-    protected final TableSqlName _tableSqlName = new TableSqlName("RESERVED_VILLAGE", _tableDbName);
+    protected final String _tableDbName = "AUTOGENERATE_ORGANIZE";
+    protected final String _tableDispName = "AUTOGENERATE_ORGANIZE";
+    protected final String _tablePropertyName = "autogenerateOrganize";
+    protected final TableSqlName _tableSqlName = new TableSqlName("AUTOGENERATE_ORGANIZE", _tableDbName);
     { _tableSqlName.xacceptFilter(DBFluteConfig.getInstance().getTableSqlNameFilter()); }
     public String getTableDbName() { return _tableDbName; }
     public String getTableDispName() { return _tableDispName; }
@@ -73,53 +69,29 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnReservedVillageId = cci("RESERVED_VILLAGE_ID", "RESERVED_VILLAGE_ID", null, null, Integer.class, "reservedVillageId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnCreateDatetime = cci("CREATE_DATETIME", "CREATE_DATETIME", null, null, java.time.LocalDateTime.class, "createDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnStartDatetime = cci("START_DATETIME", "START_DATETIME", null, null, java.time.LocalDateTime.class, "startDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnVillageIdMod = cci("VILLAGE_ID_MOD", "VILLAGE_ID_MOD", null, null, Integer.class, "villageIdMod", null, true, false, true, "INT", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnOrganization = cci("ORGANIZATION", "ORGANIZATION", null, null, String.class, "organization", null, false, false, true, "VARCHAR", 255, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnSilentHours = cci("SILENT_HOURS", "SILENT_HOURS", null, null, Integer.class, "silentHours", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnIsAvailableDummySkill = cci("IS_AVAILABLE_DUMMY_SKILL", "IS_AVAILABLE_DUMMY_SKILL", null, null, Boolean.class, "isAvailableDummySkill", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnIsForBeginner = cci("IS_FOR_BEGINNER", "IS_FOR_BEGINNER", null, null, Boolean.class, "isForBeginner", null, false, false, true, "BIT", null, null, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnReservedVillageId() { return _columnReservedVillageId; }
-    /**
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnCreateDatetime() { return _columnCreateDatetime; }
-    /**
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnStartDatetime() { return _columnStartDatetime; }
+    public ColumnInfo columnVillageIdMod() { return _columnVillageIdMod; }
     /**
      * ORGANIZATION: {NotNull, VARCHAR(255)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnOrganization() { return _columnOrganization; }
     /**
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnSilentHours() { return _columnSilentHours; }
-    /**
      * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnIsAvailableDummySkill() { return _columnIsAvailableDummySkill; }
-    /**
-     * IS_FOR_BEGINNER: {NotNull, BIT}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnIsForBeginner() { return _columnIsForBeginner; }
     /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
@@ -143,13 +115,9 @@ public class ReservedVillageDbm extends AbstractDBMeta {
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
-        ls.add(columnReservedVillageId());
-        ls.add(columnCreateDatetime());
-        ls.add(columnStartDatetime());
+        ls.add(columnVillageIdMod());
         ls.add(columnOrganization());
-        ls.add(columnSilentHours());
         ls.add(columnIsAvailableDummySkill());
-        ls.add(columnIsForBeginner());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());
@@ -165,7 +133,7 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                       Primary Element
     //                                       ---------------
-    protected UniqueInfo cpui() { return hpcpui(columnReservedVillageId()); }
+    protected UniqueInfo cpui() { return hpcpui(columnVillageIdMod()); }
     public boolean hasPrimaryKey() { return true; }
     public boolean hasCompoundPrimaryKey() { return false; }
 
@@ -185,7 +153,6 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                        Various Info
     //                                                                        ============
-    public boolean hasIdentity() { return true; }
     public boolean hasCommonColumn() { return true; }
     public List<ColumnInfo> getCommonColumnInfoList()
     { return newArrayList(columnRegisterDatetime(), columnRegisterTrace(), columnUpdateDatetime(), columnUpdateTrace()); }
@@ -197,27 +164,27 @@ public class ReservedVillageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                           Type Name
     //                                                                           =========
-    public String getEntityTypeName() { return "com.ort.dbflute.exentity.ReservedVillage"; }
-    public String getConditionBeanTypeName() { return "com.ort.dbflute.cbean.ReservedVillageCB"; }
-    public String getBehaviorTypeName() { return "com.ort.dbflute.exbhv.ReservedVillageBhv"; }
+    public String getEntityTypeName() { return "com.ort.dbflute.exentity.AutogenerateOrganize"; }
+    public String getConditionBeanTypeName() { return "com.ort.dbflute.cbean.AutogenerateOrganizeCB"; }
+    public String getBehaviorTypeName() { return "com.ort.dbflute.exbhv.AutogenerateOrganizeBhv"; }
 
     // ===================================================================================
     //                                                                         Object Type
     //                                                                         ===========
-    public Class<ReservedVillage> getEntityType() { return ReservedVillage.class; }
+    public Class<AutogenerateOrganize> getEntityType() { return AutogenerateOrganize.class; }
 
     // ===================================================================================
     //                                                                     Object Instance
     //                                                                     ===============
-    public ReservedVillage newEntity() { return new ReservedVillage(); }
+    public AutogenerateOrganize newEntity() { return new AutogenerateOrganize(); }
 
     // ===================================================================================
     //                                                                   Map Communication
     //                                                                   =================
     public void acceptPrimaryKeyMap(Entity et, Map<String, ? extends Object> mp)
-    { doAcceptPrimaryKeyMap((ReservedVillage)et, mp); }
+    { doAcceptPrimaryKeyMap((AutogenerateOrganize)et, mp); }
     public void acceptAllColumnMap(Entity et, Map<String, ? extends Object> mp)
-    { doAcceptAllColumnMap((ReservedVillage)et, mp); }
+    { doAcceptAllColumnMap((AutogenerateOrganize)et, mp); }
     public Map<String, Object> extractPrimaryKeyMap(Entity et) { return doExtractPrimaryKeyMap(et); }
     public Map<String, Object> extractAllColumnMap(Entity et) { return doExtractAllColumnMap(et); }
 }

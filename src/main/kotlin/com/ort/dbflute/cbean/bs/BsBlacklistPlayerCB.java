@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of blacklist_player.
+ * The base condition-bean of BLACKLIST_PLAYER.
  * @author DBFlute(AutoGenerator)
  */
 public class BsBlacklistPlayerCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsBlacklistPlayerCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "blacklist_player";
+        return "BLACKLIST_PLAYER";
     }
 
     // ===================================================================================
@@ -97,8 +97,8 @@ public class BsBlacklistPlayerCB extends AbstractConditionBean {
 
     /**
      * Accept the query condition of unique key as equal.
-     * @param fromPlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
-     * @param toPlayerId : +UQ, IX, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
+     * @param fromPlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
+     * @param toPlayerId : +UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
      * @return this. (NotNull)
      */
     public BlacklistPlayerCB acceptUniqueOf(Integer fromPlayerId, Integer toPlayerId) {
@@ -366,12 +366,12 @@ public class BsBlacklistPlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnBlacklistPlayerId() { return doColumn("BLACKLIST_PLAYER_ID"); }
         /**
-         * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
+         * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnFromPlayerId() { return doColumn("FROM_PLAYER_ID"); }
         /**
-         * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
+         * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnToPlayerId() { return doColumn("TO_PLAYER_ID"); }
@@ -410,7 +410,7 @@ public class BsBlacklistPlayerCB extends AbstractConditionBean {
             }
         }
         @Override
-        protected String getTableDbName() { return "blacklist_player"; }
+        protected String getTableDbName() { return "BLACKLIST_PLAYER"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * PLAYER by my FROM_PLAYER_ID, named 'playerByFromPlayerId'.

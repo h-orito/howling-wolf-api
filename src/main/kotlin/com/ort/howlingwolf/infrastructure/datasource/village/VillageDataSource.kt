@@ -223,6 +223,12 @@ class VillageDataSource(
         return VillageDataConverter.convertVillageToVillage(village)
     }
 
+    fun findLatestVillageId(): Int {
+        return villageBhv.selectScalar(Int::class.java).max{
+            it.specify().columnVillageId()
+        }.orElse(0)
+    }
+
 
     /**
      * 差分更新

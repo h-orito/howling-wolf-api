@@ -7,7 +7,7 @@ import com.ort.howlingwolf.api.view.external.RecruitingVillagesView
 import com.ort.howlingwolf.api.view.external.VillageRecordsView
 import com.ort.howlingwolf.application.service.CharachipService
 import com.ort.howlingwolf.application.service.PlayerService
-import com.ort.howlingwolf.application.service.ReservedVillageService
+import com.ort.howlingwolf.application.service.AutogenerateVillageService
 import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ExternalController(
     val villageService: VillageService,
-    val reservedVillageService: ReservedVillageService,
+    val autogenerateVillageService: AutogenerateVillageService,
     val charachipService: CharachipService,
     val playerService: PlayerService
 ) {
@@ -31,7 +31,7 @@ class ExternalController(
                 VillageStatus(CDef.VillageStatus.エピローグ)
             )
         ).list.sortedBy { it.id }
-        val reservedVillageList = reservedVillageService.findReservedVillages(limit = 3).list
+        val reservedVillageList = autogenerateVillageService.findReservedVillages(limit = 3).list
 
         val charachips = charachipService.findCharaChips()
 

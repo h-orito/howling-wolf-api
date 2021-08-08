@@ -67,7 +67,7 @@ public abstract class BsPlayerDetailBhv extends AbstractBehaviorWritable<PlayerD
     /** {@inheritDoc} */
     public PlayerDetailDbm asDBMeta() { return PlayerDetailDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "player_detail"; }
+    public String asTableDbName() { return "PLAYER_DETAIL"; }
 
     // ===================================================================================
     //                                                                        New Instance
@@ -159,7 +159,7 @@ public abstract class BsPlayerDetailBhv extends AbstractBehaviorWritable<PlayerD
 
     /**
      * Select the entity by the primary-key value.
-     * @param playerId : PK, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
+     * @param playerId : PK, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.

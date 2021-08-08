@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of face_type.
+ * The base condition-query of FACE_TYPE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsFaceTypeCQ extends AbstractBsFaceTypeCQ {
@@ -35,7 +35,7 @@ public class BsFaceTypeCQ extends AbstractBsFaceTypeCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from face_type) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from FACE_TYPE) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsFaceTypeCQ extends AbstractBsFaceTypeCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join face_type on ... and FOO = [value] ...}
+     * {select ... from ... left outer join FACE_TYPE on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

@@ -22,7 +22,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of coming_out.
+ * The base condition-bean of COMING_OUT.
  * @author DBFlute(AutoGenerator)
  */
 public class BsComingOutCB extends AbstractConditionBean {
@@ -78,7 +78,7 @@ public class BsComingOutCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "coming_out";
+        return "COMING_OUT";
     }
 
     // ===================================================================================
@@ -86,8 +86,8 @@ public class BsComingOutCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param villagePlayerId : PK, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
-     * @param skillCode : PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill. (NotNull)
+     * @param villagePlayerId : PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER. (NotNull)
+     * @param skillCode : PK, IX, NotNull, VARCHAR(20), FK to SKILL, classification=Skill. (NotNull)
      * @return this. (NotNull)
      */
     public ComingOutCB acceptPK(Integer villagePlayerId, CDef.Skill skillCode) {
@@ -346,12 +346,12 @@ public class BsComingOutCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
+         * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
+         * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to SKILL, classification=Skill}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnSkillCode() { return doColumn("SKILL_CODE"); }
@@ -363,7 +363,7 @@ public class BsComingOutCB extends AbstractConditionBean {
             columnSkillCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "coming_out"; }
+        protected String getTableDbName() { return "COMING_OUT"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * SKILL by my SKILL_CODE, named 'skill'.

@@ -11,20 +11,20 @@ import com.ort.dbflute.allcommon.DBMetaInstanceHandler;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The entity of RESERVED_VILLAGE as TABLE. <br>
- * 予約村
+ * The entity of AUTOGENERATE_TIME as TABLE. <br>
+ * 自動生成編成
  * <pre>
  * [primary-key]
- *     RESERVED_VILLAGE_ID
+ *     VILLAGE_ID_MOD
  *
  * [column]
- *     RESERVED_VILLAGE_ID, CREATE_DATETIME, START_DATETIME, ORGANIZATION, SILENT_HOURS, IS_AVAILABLE_DUMMY_SKILL, IS_FOR_BEGINNER, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_ID_MOD, START_TIME, SILENT_HOURS, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
  *
  * [identity]
- *     RESERVED_VILLAGE_ID
+ *     
  *
  * [version-no]
  *     
@@ -43,24 +43,16 @@ import com.ort.dbflute.exentity.*;
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer reservedVillageId = entity.getReservedVillageId();
- * java.time.LocalDateTime createDatetime = entity.getCreateDatetime();
- * java.time.LocalDateTime startDatetime = entity.getStartDatetime();
- * String organization = entity.getOrganization();
+ * Integer villageIdMod = entity.getVillageIdMod();
+ * String startTime = entity.getStartTime();
  * Integer silentHours = entity.getSilentHours();
- * Boolean isAvailableDummySkill = entity.getIsAvailableDummySkill();
- * Boolean isForBeginner = entity.getIsForBeginner();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * String updateTrace = entity.getUpdateTrace();
- * entity.setReservedVillageId(reservedVillageId);
- * entity.setCreateDatetime(createDatetime);
- * entity.setStartDatetime(startDatetime);
- * entity.setOrganization(organization);
+ * entity.setVillageIdMod(villageIdMod);
+ * entity.setStartTime(startTime);
  * entity.setSilentHours(silentHours);
- * entity.setIsAvailableDummySkill(isAvailableDummySkill);
- * entity.setIsForBeginner(isForBeginner);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -69,7 +61,7 @@ import com.ort.dbflute.exentity.*;
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
-public abstract class BsReservedVillage extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
+public abstract class BsAutogenerateTime extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
 
     // ===================================================================================
     //                                                                          Definition
@@ -80,26 +72,14 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)} */
-    protected Integer _reservedVillageId;
+    /** VILLAGE_ID_MOD: {PK, NotNull, INT(10)} */
+    protected Integer _villageIdMod;
 
-    /** CREATE_DATETIME: {NotNull, DATETIME(19)} */
-    protected java.time.LocalDateTime _createDatetime;
-
-    /** START_DATETIME: {NotNull, DATETIME(19)} */
-    protected java.time.LocalDateTime _startDatetime;
-
-    /** ORGANIZATION: {NotNull, VARCHAR(255)} */
-    protected String _organization;
+    /** START_TIME: {NotNull, CHAR(4)} */
+    protected String _startTime;
 
     /** SILENT_HOURS: {NotNull, INT UNSIGNED(10)} */
     protected Integer _silentHours;
-
-    /** IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} */
-    protected Boolean _isAvailableDummySkill;
-
-    /** IS_FOR_BEGINNER: {NotNull, BIT} */
-    protected Boolean _isForBeginner;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -123,7 +103,7 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "reserved_village";
+        return "AUTOGENERATE_TIME";
     }
 
     // ===================================================================================
@@ -131,7 +111,7 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     //                                                                        ============
     /** {@inheritDoc} */
     public boolean hasPrimaryKeyValue() {
-        if (_reservedVillageId == null) { return false; }
+        if (_villageIdMod == null) { return false; }
         return true;
     }
 
@@ -150,9 +130,9 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     //                                                                      ==============
     @Override
     protected boolean doEquals(Object obj) {
-        if (obj instanceof BsReservedVillage) {
-            BsReservedVillage other = (BsReservedVillage)obj;
-            if (!xSV(_reservedVillageId, other._reservedVillageId)) { return false; }
+        if (obj instanceof BsAutogenerateTime) {
+            BsAutogenerateTime other = (BsAutogenerateTime)obj;
+            if (!xSV(_villageIdMod, other._villageIdMod)) { return false; }
             return true;
         } else {
             return false;
@@ -163,7 +143,7 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     protected int doHashCode(int initial) {
         int hs = initial;
         hs = xCH(hs, asTableDbName());
-        hs = xCH(hs, _reservedVillageId);
+        hs = xCH(hs, _villageIdMod);
         return hs;
     }
 
@@ -175,13 +155,9 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     @Override
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
-        sb.append(dm).append(xfND(_reservedVillageId));
-        sb.append(dm).append(xfND(_createDatetime));
-        sb.append(dm).append(xfND(_startDatetime));
-        sb.append(dm).append(xfND(_organization));
+        sb.append(dm).append(xfND(_villageIdMod));
+        sb.append(dm).append(xfND(_startTime));
         sb.append(dm).append(xfND(_silentHours));
-        sb.append(dm).append(xfND(_isAvailableDummySkill));
-        sb.append(dm).append(xfND(_isForBeginner));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -199,91 +175,51 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     }
 
     @Override
-    public ReservedVillage clone() {
-        return (ReservedVillage)super.clone();
+    public AutogenerateTime clone() {
+        return (AutogenerateTime)super.clone();
     }
 
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)} <br>
-     * 予約村ID
-     * @return The value of the column 'RESERVED_VILLAGE_ID'. (basically NotNull if selected: for the constraint)
+     * [get] VILLAGE_ID_MOD: {PK, NotNull, INT(10)} <br>
+     * 余り
+     * @return The value of the column 'VILLAGE_ID_MOD'. (basically NotNull if selected: for the constraint)
      */
-    public Integer getReservedVillageId() {
-        checkSpecifiedProperty("reservedVillageId");
-        return _reservedVillageId;
+    public Integer getVillageIdMod() {
+        checkSpecifiedProperty("villageIdMod");
+        return _villageIdMod;
     }
 
     /**
-     * [set] RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)} <br>
-     * 予約村ID
-     * @param reservedVillageId The value of the column 'RESERVED_VILLAGE_ID'. (basically NotNull if update: for the constraint)
+     * [set] VILLAGE_ID_MOD: {PK, NotNull, INT(10)} <br>
+     * 余り
+     * @param villageIdMod The value of the column 'VILLAGE_ID_MOD'. (basically NotNull if update: for the constraint)
      */
-    public void setReservedVillageId(Integer reservedVillageId) {
-        registerModifiedProperty("reservedVillageId");
-        _reservedVillageId = reservedVillageId;
+    public void setVillageIdMod(Integer villageIdMod) {
+        registerModifiedProperty("villageIdMod");
+        _villageIdMod = villageIdMod;
     }
 
     /**
-     * [get] CREATE_DATETIME: {NotNull, DATETIME(19)} <br>
-     * 村作成日時
-     * @return The value of the column 'CREATE_DATETIME'. (basically NotNull if selected: for the constraint)
+     * [get] START_TIME: {NotNull, CHAR(4)} <br>
+     * 開始時間
+     * @return The value of the column 'START_TIME'. (basically NotNull if selected: for the constraint)
      */
-    public java.time.LocalDateTime getCreateDatetime() {
-        checkSpecifiedProperty("createDatetime");
-        return _createDatetime;
+    public String getStartTime() {
+        checkSpecifiedProperty("startTime");
+        return convertEmptyToNull(_startTime);
     }
 
     /**
-     * [set] CREATE_DATETIME: {NotNull, DATETIME(19)} <br>
-     * 村作成日時
-     * @param createDatetime The value of the column 'CREATE_DATETIME'. (basically NotNull if update: for the constraint)
+     * [set] START_TIME: {NotNull, CHAR(4)} <br>
+     * 開始時間
+     * @param startTime The value of the column 'START_TIME'. (basically NotNull if update: for the constraint)
      */
-    public void setCreateDatetime(java.time.LocalDateTime createDatetime) {
-        registerModifiedProperty("createDatetime");
-        _createDatetime = createDatetime;
-    }
-
-    /**
-     * [get] START_DATETIME: {NotNull, DATETIME(19)} <br>
-     * 村開始日時
-     * @return The value of the column 'START_DATETIME'. (basically NotNull if selected: for the constraint)
-     */
-    public java.time.LocalDateTime getStartDatetime() {
-        checkSpecifiedProperty("startDatetime");
-        return _startDatetime;
-    }
-
-    /**
-     * [set] START_DATETIME: {NotNull, DATETIME(19)} <br>
-     * 村開始日時
-     * @param startDatetime The value of the column 'START_DATETIME'. (basically NotNull if update: for the constraint)
-     */
-    public void setStartDatetime(java.time.LocalDateTime startDatetime) {
-        registerModifiedProperty("startDatetime");
-        _startDatetime = startDatetime;
-    }
-
-    /**
-     * [get] ORGANIZATION: {NotNull, VARCHAR(255)} <br>
-     * 編成
-     * @return The value of the column 'ORGANIZATION'. (basically NotNull if selected: for the constraint)
-     */
-    public String getOrganization() {
-        checkSpecifiedProperty("organization");
-        return convertEmptyToNull(_organization);
-    }
-
-    /**
-     * [set] ORGANIZATION: {NotNull, VARCHAR(255)} <br>
-     * 編成
-     * @param organization The value of the column 'ORGANIZATION'. (basically NotNull if update: for the constraint)
-     */
-    public void setOrganization(String organization) {
-        registerModifiedProperty("organization");
-        _organization = organization;
+    public void setStartTime(String startTime) {
+        registerModifiedProperty("startTime");
+        _startTime = startTime;
     }
 
     /**
@@ -304,46 +240,6 @@ public abstract class BsReservedVillage extends AbstractEntity implements Domain
     public void setSilentHours(Integer silentHours) {
         registerModifiedProperty("silentHours");
         _silentHours = silentHours;
-    }
-
-    /**
-     * [get] IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} <br>
-     * 役欠けありか
-     * @return The value of the column 'IS_AVAILABLE_DUMMY_SKILL'. (basically NotNull if selected: for the constraint)
-     */
-    public Boolean getIsAvailableDummySkill() {
-        checkSpecifiedProperty("isAvailableDummySkill");
-        return _isAvailableDummySkill;
-    }
-
-    /**
-     * [set] IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT} <br>
-     * 役欠けありか
-     * @param isAvailableDummySkill The value of the column 'IS_AVAILABLE_DUMMY_SKILL'. (basically NotNull if update: for the constraint)
-     */
-    public void setIsAvailableDummySkill(Boolean isAvailableDummySkill) {
-        registerModifiedProperty("isAvailableDummySkill");
-        _isAvailableDummySkill = isAvailableDummySkill;
-    }
-
-    /**
-     * [get] IS_FOR_BEGINNER: {NotNull, BIT} <br>
-     * 初心者村か
-     * @return The value of the column 'IS_FOR_BEGINNER'. (basically NotNull if selected: for the constraint)
-     */
-    public Boolean getIsForBeginner() {
-        checkSpecifiedProperty("isForBeginner");
-        return _isForBeginner;
-    }
-
-    /**
-     * [set] IS_FOR_BEGINNER: {NotNull, BIT} <br>
-     * 初心者村か
-     * @param isForBeginner The value of the column 'IS_FOR_BEGINNER'. (basically NotNull if update: for the constraint)
-     */
-    public void setIsForBeginner(Boolean isForBeginner) {
-        registerModifiedProperty("isForBeginner");
-        _isForBeginner = isForBeginner;
     }
 
     /**

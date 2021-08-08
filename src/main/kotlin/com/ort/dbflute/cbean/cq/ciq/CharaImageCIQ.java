@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of chara_image.
+ * The condition-query for in-line of CHARA_IMAGE.
  * @author DBFlute(AutoGenerator)
  */
 public class CharaImageCIQ extends AbstractBsCharaImageCQ {

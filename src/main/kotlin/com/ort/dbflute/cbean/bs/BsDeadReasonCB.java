@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of dead_reason.
+ * The base condition-bean of DEAD_REASON.
  * @author DBFlute(AutoGenerator)
  */
 public class BsDeadReasonCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsDeadReasonCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "dead_reason";
+        return "DEAD_REASON";
     }
 
     // ===================================================================================
@@ -304,10 +304,10 @@ public class BsDeadReasonCB extends AbstractConditionBean {
             columnDeadReasonCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "dead_reason"; }
+        protected String getTableDbName() { return "DEAD_REASON"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from village_player where ...) as FOO_MAX} <br>
+         * {select max(FOO) from VILLAGE_PLAYER where ...) as FOO_MAX} <br>
          * VILLAGE_PLAYER by DEAD_REASON_CODE, named 'villagePlayerList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(playerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

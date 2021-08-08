@@ -1,13 +1,10 @@
 package com.ort.howlingwolf.api.view.reserved
 
 import com.ort.howlingwolf.domain.model.reserved.ReservedVillage
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class ReservedVillageView(
-    val id: Int,
-    val villageCreateDatetime: LocalDateTime,
-    val villageStartDatetime: LocalDateTime,
+    val startTime: LocalTime,
     val organization: String,
     val silentHours: Int,
     val sayableStart: LocalTime,
@@ -18,13 +15,11 @@ data class ReservedVillageView(
     constructor(
         reservedVillage: ReservedVillage
     ) : this(
-        id = reservedVillage.id,
-        villageCreateDatetime = reservedVillage.villageCreateDatetime,
-        villageStartDatetime = reservedVillage.villageStartDatetime,
+        startTime = reservedVillage.startTime,
         organization = reservedVillage.organization,
         silentHours = reservedVillage.silentHours,
-        sayableStart = reservedVillage.villageStartDatetime.plusHours(reservedVillage.silentHours.toLong()).toLocalTime(),
-        sayableEnd = reservedVillage.villageStartDatetime.toLocalTime(),
+        sayableStart = reservedVillage.startTime.plusHours(reservedVillage.silentHours.toLong()),
+        sayableEnd = reservedVillage.startTime,
         availableDummySkill = reservedVillage.availableDummySkill,
         forBeginner = reservedVillage.forBeginner
     )

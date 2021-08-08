@@ -3,7 +3,7 @@ package com.ort.dbflute.cbean.nss;
 import com.ort.dbflute.cbean.cq.BlacklistPlayerCQ;
 
 /**
- * The nest select set-upper of blacklist_player.
+ * The nest select set-upper of BLACKLIST_PLAYER.
  * @author DBFlute(AutoGenerator)
  */
 public class BlacklistPlayerNss {

@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of camp.
+ * The condition-query for in-line of CAMP.
  * @author DBFlute(AutoGenerator)
  */
 public class CampCIQ extends AbstractBsCampCQ {

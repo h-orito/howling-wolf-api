@@ -21,3 +21,5 @@ data-directory: playsql/data/common/tsv/UTF-8
 13-CHARA_IMAGE.tsv (194)
 14-NOONNIGHT.tsv (2)
 15-APP_VERSION.tsv (1)
+16-AUTOGENERATE_ORGANIZE.tsv (10)
+17-AUTOGENERATE_TIME.tsv (8)

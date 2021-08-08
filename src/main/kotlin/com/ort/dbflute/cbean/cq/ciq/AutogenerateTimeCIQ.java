@@ -12,21 +12,21 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of reserved_village.
+ * The condition-query for in-line of AUTOGENERATE_TIME.
  * @author DBFlute(AutoGenerator)
  */
-public class ReservedVillageCIQ extends AbstractBsReservedVillageCQ {
+public class AutogenerateTimeCIQ extends AbstractBsAutogenerateTimeCQ {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected BsReservedVillageCQ _myCQ;
+    protected BsAutogenerateTimeCQ _myCQ;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public ReservedVillageCIQ(ConditionQuery referrerQuery, SqlClause sqlClause
-                        , String aliasName, int nestLevel, BsReservedVillageCQ myCQ) {
+    public AutogenerateTimeCIQ(ConditionQuery referrerQuery, SqlClause sqlClause
+                        , String aliasName, int nestLevel, BsAutogenerateTimeCQ myCQ) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
         _myCQ = myCQ;
         _foreignPropertyName = _myCQ.xgetForeignPropertyName(); // accept foreign property name
@@ -61,27 +61,23 @@ public class ReservedVillageCIQ extends AbstractBsReservedVillageCQ {
     // ===================================================================================
     //                                                                Override about Query
     //                                                                ====================
-    protected ConditionValue xgetCValueReservedVillageId() { return _myCQ.xdfgetReservedVillageId(); }
-    protected ConditionValue xgetCValueCreateDatetime() { return _myCQ.xdfgetCreateDatetime(); }
-    protected ConditionValue xgetCValueStartDatetime() { return _myCQ.xdfgetStartDatetime(); }
-    protected ConditionValue xgetCValueOrganization() { return _myCQ.xdfgetOrganization(); }
+    protected ConditionValue xgetCValueVillageIdMod() { return _myCQ.xdfgetVillageIdMod(); }
+    protected ConditionValue xgetCValueStartTime() { return _myCQ.xdfgetStartTime(); }
     protected ConditionValue xgetCValueSilentHours() { return _myCQ.xdfgetSilentHours(); }
-    protected ConditionValue xgetCValueIsAvailableDummySkill() { return _myCQ.xdfgetIsAvailableDummySkill(); }
-    protected ConditionValue xgetCValueIsForBeginner() { return _myCQ.xdfgetIsForBeginner(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }
     protected ConditionValue xgetCValueUpdateTrace() { return _myCQ.xdfgetUpdateTrace(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
-    public String keepScalarCondition(ReservedVillageCQ sq)
+    public String keepScalarCondition(AutogenerateTimeCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }
-    public String keepSpecifyMyselfDerived(ReservedVillageCQ sq)
+    public String keepSpecifyMyselfDerived(AutogenerateTimeCQ sq)
     { throwIICBOE("(Specify)MyselfDerived"); return null;}
-    public String keepQueryMyselfDerived(ReservedVillageCQ sq)
+    public String keepQueryMyselfDerived(AutogenerateTimeCQ sq)
     { throwIICBOE("(Query)MyselfDerived"); return null;}
     public String keepQueryMyselfDerivedParameter(Object vl)
     { throwIICBOE("(Query)MyselfDerived"); return null;}
-    public String keepMyselfExists(ReservedVillageCQ sq)
+    public String keepMyselfExists(AutogenerateTimeCQ sq)
     { throwIICBOE("MyselfExists"); return null;}
 
     protected void throwIICBOE(String name)
@@ -91,6 +87,6 @@ public class ReservedVillageCIQ extends AbstractBsReservedVillageCQ {
     //                                                                       Very Internal
     //                                                                       =============
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xinCB() { return ReservedVillageCB.class.getName(); }
-    protected String xinCQ() { return ReservedVillageCQ.class.getName(); }
+    protected String xinCB() { return AutogenerateTimeCB.class.getName(); }
+    protected String xinCQ() { return AutogenerateTimeCQ.class.getName(); }
 }

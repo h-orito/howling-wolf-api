@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of coming_out.
+ * The base condition-query of COMING_OUT.
  * @author DBFlute(AutoGenerator)
  */
 public class BsComingOutCQ extends AbstractBsComingOutCQ {
@@ -35,7 +35,7 @@ public class BsComingOutCQ extends AbstractBsComingOutCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from coming_out) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from COMING_OUT) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsComingOutCQ extends AbstractBsComingOutCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join coming_out on ... and FOO = [value] ...}
+     * {select ... from ... left outer join COMING_OUT on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -81,14 +81,14 @@ public class BsComingOutCQ extends AbstractBsComingOutCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsComingOutCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
      * @return this. (NotNull)
      */
     public BsComingOutCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
@@ -101,14 +101,14 @@ public class BsComingOutCQ extends AbstractBsComingOutCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
+     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to SKILL, classification=Skill}
      * @return this. (NotNull)
      */
     public BsComingOutCQ addOrderBy_SkillCode_Asc() { regOBA("SKILL_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to skill, classification=Skill}
+     * SKILL_CODE: {PK, IX, NotNull, VARCHAR(20), FK to SKILL, classification=Skill}
      * @return this. (NotNull)
      */
     public BsComingOutCQ addOrderBy_SkillCode_Desc() { regOBD("SKILL_CODE"); return this; }
@@ -179,7 +179,7 @@ public class BsComingOutCQ extends AbstractBsComingOutCQ {
         return xgetQueRlMap(prop);
     }
     protected SkillCQ xcreateQuerySkill() {
-        String nrp = xresolveNRP("coming_out", "skill"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("COMING_OUT", "skill"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new SkillCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "skill", nrp);
     }
     protected void xsetupOuterJoinSkill() { xregOutJo("skill"); }
@@ -199,7 +199,7 @@ public class BsComingOutCQ extends AbstractBsComingOutCQ {
         return xgetQueRlMap(prop);
     }
     protected VillagePlayerCQ xcreateQueryVillagePlayer() {
-        String nrp = xresolveNRP("coming_out", "villagePlayer"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("COMING_OUT", "villagePlayer"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillagePlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villagePlayer", nrp);
     }
     protected void xsetupOuterJoinVillagePlayer() { xregOutJo("villagePlayer"); }

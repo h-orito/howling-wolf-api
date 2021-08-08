@@ -13,20 +13,20 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of reserved_village.
+ * The base condition-query of AUTOGENERATE_ORGANIZE.
  * @author DBFlute(AutoGenerator)
  */
-public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
+public class BsAutogenerateOrganizeCQ extends AbstractBsAutogenerateOrganizeCQ {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected ReservedVillageCIQ _inlineQuery;
+    protected AutogenerateOrganizeCIQ _inlineQuery;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public BsReservedVillageCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+    public BsAutogenerateOrganizeCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
     }
 
@@ -35,103 +35,63 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from reserved_village) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from AUTOGENERATE_ORGANIZE) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
      * @return The condition-query for InlineView query. (NotNull)
      */
-    public ReservedVillageCIQ inline() {
+    public AutogenerateOrganizeCIQ inline() {
         if (_inlineQuery == null) { _inlineQuery = xcreateCIQ(); }
         _inlineQuery.xsetOnClause(false); return _inlineQuery;
     }
 
-    protected ReservedVillageCIQ xcreateCIQ() {
-        ReservedVillageCIQ ciq = xnewCIQ();
+    protected AutogenerateOrganizeCIQ xcreateCIQ() {
+        AutogenerateOrganizeCIQ ciq = xnewCIQ();
         ciq.xsetBaseCB(_baseCB);
         return ciq;
     }
 
-    protected ReservedVillageCIQ xnewCIQ() {
-        return new ReservedVillageCIQ(xgetReferrerQuery(), xgetSqlClause(), xgetAliasName(), xgetNestLevel(), this);
+    protected AutogenerateOrganizeCIQ xnewCIQ() {
+        return new AutogenerateOrganizeCIQ(xgetReferrerQuery(), xgetSqlClause(), xgetAliasName(), xgetNestLevel(), this);
     }
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join reserved_village on ... and FOO = [value] ...}
+     * {select ... from ... left outer join AUTOGENERATE_ORGANIZE on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
      * @return The condition-query for OnClause query. (NotNull)
      * @throws IllegalConditionBeanOperationException When this condition-query is base query.
      */
-    public ReservedVillageCIQ on() {
+    public AutogenerateOrganizeCIQ on() {
         if (isBaseQuery()) { throw new IllegalConditionBeanOperationException("OnClause for local table is unavailable!"); }
-        ReservedVillageCIQ inlineQuery = inline(); inlineQuery.xsetOnClause(true); return inlineQuery;
+        AutogenerateOrganizeCIQ inlineQuery = inline(); inlineQuery.xsetOnClause(true); return inlineQuery;
     }
 
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
-    protected ConditionValue _reservedVillageId;
-    public ConditionValue xdfgetReservedVillageId()
-    { if (_reservedVillageId == null) { _reservedVillageId = nCV(); }
-      return _reservedVillageId; }
-    protected ConditionValue xgetCValueReservedVillageId() { return xdfgetReservedVillageId(); }
+    protected ConditionValue _villageIdMod;
+    public ConditionValue xdfgetVillageIdMod()
+    { if (_villageIdMod == null) { _villageIdMod = nCV(); }
+      return _villageIdMod; }
+    protected ConditionValue xgetCValueVillageIdMod() { return xdfgetVillageIdMod(); }
 
     /**
      * Add order-by as ascend. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_ReservedVillageId_Asc() { regOBA("RESERVED_VILLAGE_ID"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_VillageIdMod_Asc() { regOBA("VILLAGE_ID_MOD"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * RESERVED_VILLAGE_ID: {PK, ID, NotNull, INT UNSIGNED(10)}
+     * VILLAGE_ID_MOD: {PK, NotNull, INT(10)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_ReservedVillageId_Desc() { regOBD("RESERVED_VILLAGE_ID"); return this; }
-
-    protected ConditionValue _createDatetime;
-    public ConditionValue xdfgetCreateDatetime()
-    { if (_createDatetime == null) { _createDatetime = nCV(); }
-      return _createDatetime; }
-    protected ConditionValue xgetCValueCreateDatetime() { return xdfgetCreateDatetime(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_CreateDatetime_Asc() { regOBA("CREATE_DATETIME"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * CREATE_DATETIME: {NotNull, DATETIME(19)}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_CreateDatetime_Desc() { regOBD("CREATE_DATETIME"); return this; }
-
-    protected ConditionValue _startDatetime;
-    public ConditionValue xdfgetStartDatetime()
-    { if (_startDatetime == null) { _startDatetime = nCV(); }
-      return _startDatetime; }
-    protected ConditionValue xgetCValueStartDatetime() { return xdfgetStartDatetime(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_StartDatetime_Asc() { regOBA("START_DATETIME"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * START_DATETIME: {NotNull, DATETIME(19)}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_StartDatetime_Desc() { regOBD("START_DATETIME"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_VillageIdMod_Desc() { regOBD("VILLAGE_ID_MOD"); return this; }
 
     protected ConditionValue _organization;
     public ConditionValue xdfgetOrganization()
@@ -144,34 +104,14 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * ORGANIZATION: {NotNull, VARCHAR(255)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_Organization_Asc() { regOBA("ORGANIZATION"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_Organization_Asc() { regOBA("ORGANIZATION"); return this; }
 
     /**
      * Add order-by as descend. <br>
      * ORGANIZATION: {NotNull, VARCHAR(255)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_Organization_Desc() { regOBD("ORGANIZATION"); return this; }
-
-    protected ConditionValue _silentHours;
-    public ConditionValue xdfgetSilentHours()
-    { if (_silentHours == null) { _silentHours = nCV(); }
-      return _silentHours; }
-    protected ConditionValue xgetCValueSilentHours() { return xdfgetSilentHours(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_SilentHours_Asc() { regOBA("SILENT_HOURS"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * SILENT_HOURS: {NotNull, INT UNSIGNED(10)}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_SilentHours_Desc() { regOBD("SILENT_HOURS"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_Organization_Desc() { regOBD("ORGANIZATION"); return this; }
 
     protected ConditionValue _isAvailableDummySkill;
     public ConditionValue xdfgetIsAvailableDummySkill()
@@ -184,34 +124,14 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_IsAvailableDummySkill_Asc() { regOBA("IS_AVAILABLE_DUMMY_SKILL"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_IsAvailableDummySkill_Asc() { regOBA("IS_AVAILABLE_DUMMY_SKILL"); return this; }
 
     /**
      * Add order-by as descend. <br>
      * IS_AVAILABLE_DUMMY_SKILL: {NotNull, BIT}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_IsAvailableDummySkill_Desc() { regOBD("IS_AVAILABLE_DUMMY_SKILL"); return this; }
-
-    protected ConditionValue _isForBeginner;
-    public ConditionValue xdfgetIsForBeginner()
-    { if (_isForBeginner == null) { _isForBeginner = nCV(); }
-      return _isForBeginner; }
-    protected ConditionValue xgetCValueIsForBeginner() { return xdfgetIsForBeginner(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * IS_FOR_BEGINNER: {NotNull, BIT}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_IsForBeginner_Asc() { regOBA("IS_FOR_BEGINNER"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * IS_FOR_BEGINNER: {NotNull, BIT}
-     * @return this. (NotNull)
-     */
-    public BsReservedVillageCQ addOrderBy_IsForBeginner_Desc() { regOBD("IS_FOR_BEGINNER"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_IsAvailableDummySkill_Desc() { regOBD("IS_AVAILABLE_DUMMY_SKILL"); return this; }
 
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()
@@ -224,14 +144,14 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_RegisterDatetime_Asc() { regOBA("REGISTER_DATETIME"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_RegisterDatetime_Asc() { regOBA("REGISTER_DATETIME"); return this; }
 
     /**
      * Add order-by as descend. <br>
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_RegisterDatetime_Desc() { regOBD("REGISTER_DATETIME"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_RegisterDatetime_Desc() { regOBD("REGISTER_DATETIME"); return this; }
 
     protected ConditionValue _registerTrace;
     public ConditionValue xdfgetRegisterTrace()
@@ -244,14 +164,14 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_RegisterTrace_Asc() { regOBA("REGISTER_TRACE"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_RegisterTrace_Asc() { regOBA("REGISTER_TRACE"); return this; }
 
     /**
      * Add order-by as descend. <br>
      * REGISTER_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_RegisterTrace_Desc() { regOBD("REGISTER_TRACE"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_RegisterTrace_Desc() { regOBD("REGISTER_TRACE"); return this; }
 
     protected ConditionValue _updateDatetime;
     public ConditionValue xdfgetUpdateDatetime()
@@ -264,14 +184,14 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_UpdateDatetime_Asc() { regOBA("UPDATE_DATETIME"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_UpdateDatetime_Asc() { regOBA("UPDATE_DATETIME"); return this; }
 
     /**
      * Add order-by as descend. <br>
      * UPDATE_DATETIME: {NotNull, DATETIME(19)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_UpdateDatetime_Desc() { regOBD("UPDATE_DATETIME"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_UpdateDatetime_Desc() { regOBD("UPDATE_DATETIME"); return this; }
 
     protected ConditionValue _updateTrace;
     public ConditionValue xdfgetUpdateTrace()
@@ -284,14 +204,14 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_UpdateTrace_Asc() { regOBA("UPDATE_TRACE"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_UpdateTrace_Asc() { regOBA("UPDATE_TRACE"); return this; }
 
     /**
      * Add order-by as descend. <br>
      * UPDATE_TRACE: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addOrderBy_UpdateTrace_Desc() { regOBD("UPDATE_TRACE"); return this; }
+    public BsAutogenerateOrganizeCQ addOrderBy_UpdateTrace_Desc() { regOBD("UPDATE_TRACE"); return this; }
 
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
@@ -310,7 +230,7 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * @param aliasName The alias name specified at (Specify)DerivedReferrer. (NotNull)
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addSpecifiedDerivedOrderBy_Asc(String aliasName) { registerSpecifiedDerivedOrderBy_Asc(aliasName); return this; }
+    public BsAutogenerateOrganizeCQ addSpecifiedDerivedOrderBy_Asc(String aliasName) { registerSpecifiedDerivedOrderBy_Asc(aliasName); return this; }
 
     /**
      * Add order-by for specified derived column as descend.
@@ -326,7 +246,7 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
      * @param aliasName The alias name specified at (Specify)DerivedReferrer. (NotNull)
      * @return this. (NotNull)
      */
-    public BsReservedVillageCQ addSpecifiedDerivedOrderBy_Desc(String aliasName) { registerSpecifiedDerivedOrderBy_Desc(aliasName); return this; }
+    public BsAutogenerateOrganizeCQ addSpecifiedDerivedOrderBy_Desc(String aliasName) { registerSpecifiedDerivedOrderBy_Desc(aliasName); return this; }
 
     // ===================================================================================
     //                                                                         Union Query
@@ -344,39 +264,39 @@ public class BsReservedVillageCQ extends AbstractBsReservedVillageCQ {
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============
-    public Map<String, ReservedVillageCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
-    public String keepScalarCondition(ReservedVillageCQ sq) { return xkeepSQue("scalarCondition", sq); }
+    public Map<String, AutogenerateOrganizeCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
+    public String keepScalarCondition(AutogenerateOrganizeCQ sq) { return xkeepSQue("scalarCondition", sq); }
 
     // ===================================================================================
     //                                                                       MyselfDerived
     //                                                                       =============
-    public Map<String, ReservedVillageCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
-    public String keepSpecifyMyselfDerived(ReservedVillageCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
+    public Map<String, AutogenerateOrganizeCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
+    public String keepSpecifyMyselfDerived(AutogenerateOrganizeCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
 
-    public Map<String, ReservedVillageCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
-    public String keepQueryMyselfDerived(ReservedVillageCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
+    public Map<String, AutogenerateOrganizeCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
+    public String keepQueryMyselfDerived(AutogenerateOrganizeCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
     public Map<String, Object> xdfgetQueryMyselfDerivedParameter() { return xgetSQuePmMap("queryMyselfDerived"); }
     public String keepQueryMyselfDerivedParameter(Object pm) { return xkeepSQuePm("queryMyselfDerived", pm); }
 
     // ===================================================================================
     //                                                                        MyselfExists
     //                                                                        ============
-    protected Map<String, ReservedVillageCQ> _myselfExistsMap;
-    public Map<String, ReservedVillageCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
-    public String keepMyselfExists(ReservedVillageCQ sq) { return xkeepSQue("myselfExists", sq); }
+    protected Map<String, AutogenerateOrganizeCQ> _myselfExistsMap;
+    public Map<String, AutogenerateOrganizeCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
+    public String keepMyselfExists(AutogenerateOrganizeCQ sq) { return xkeepSQue("myselfExists", sq); }
 
     // ===================================================================================
     //                                                                       MyselfInScope
     //                                                                       =============
-    public Map<String, ReservedVillageCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
-    public String keepMyselfInScope(ReservedVillageCQ sq) { return xkeepSQue("myselfInScope", sq); }
+    public Map<String, AutogenerateOrganizeCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
+    public String keepMyselfInScope(AutogenerateOrganizeCQ sq) { return xkeepSQue("myselfInScope", sq); }
 
     // ===================================================================================
     //                                                                       Very Internal
     //                                                                       =============
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xCB() { return ReservedVillageCB.class.getName(); }
-    protected String xCQ() { return ReservedVillageCQ.class.getName(); }
+    protected String xCB() { return AutogenerateOrganizeCB.class.getName(); }
+    protected String xCQ() { return AutogenerateOrganizeCQ.class.getName(); }
     protected String xCHp() { return HpQDRFunction.class.getName(); }
     protected String xCOp() { return ConditionOption.class.getName(); }
     protected String xMap() { return Map.class.getName(); }

@@ -67,7 +67,7 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     /** {@inheritDoc} */
     public PlayerDbm asDBMeta() { return PlayerDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "player"; }
+    public String asTableDbName() { return "PLAYER"; }
 
     // ===================================================================================
     //                                                                        New Instance

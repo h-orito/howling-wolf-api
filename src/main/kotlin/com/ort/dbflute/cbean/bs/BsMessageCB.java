@@ -20,7 +20,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of message.
+ * The base condition-bean of MESSAGE.
  * @author DBFlute(AutoGenerator)
  */
 public class BsMessageCB extends AbstractConditionBean {
@@ -76,7 +76,7 @@ public class BsMessageCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "message";
+        return "MESSAGE";
     }
 
     // ===================================================================================
@@ -386,7 +386,7 @@ public class BsMessageCB extends AbstractConditionBean {
             columnMessageTypeCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "message"; }
+        protected String getTableDbName() { return "MESSAGE"; }
     }
 
     // ===================================================================================

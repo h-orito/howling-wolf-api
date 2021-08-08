@@ -68,7 +68,7 @@ public abstract class BsVillageDayBhv extends AbstractBehaviorWritable<VillageDa
     /** {@inheritDoc} */
     public VillageDayDbm asDBMeta() { return VillageDayDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "village_day"; }
+    public String asTableDbName() { return "VILLAGE_DAY"; }
 
     // ===================================================================================
     //                                                                        New Instance
@@ -189,9 +189,9 @@ public abstract class BsVillageDayBhv extends AbstractBehaviorWritable<VillageDa
 
     /**
      * Select the entity by the unique-key value.
-     * @param villageId : UQ+, NotNull, INT UNSIGNED(10), FK to village. (NotNull)
+     * @param villageId : UQ+, NotNull, INT UNSIGNED(10), FK to VILLAGE. (NotNull)
      * @param day : +UQ, NotNull, INT UNSIGNED(10). (NotNull)
-     * @param noonnightCode : +UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight. (NotNull)
+     * @param noonnightCode : +UQ, IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight. (NotNull)
      * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
