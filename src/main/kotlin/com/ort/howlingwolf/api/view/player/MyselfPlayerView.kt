@@ -10,7 +10,7 @@ data class MyselfPlayerView(
     val id: Int,
     val nickname: String,
     val twitterUserName: String,
-    val isAvailableCreateVillage: Boolean,
+    val availableCreateVillage: Boolean,
     val participateProgressVillages: VillagesView,
     val participateFinishedVillages: VillagesView,
     val createProgressVillages: VillagesView,
@@ -27,7 +27,7 @@ data class MyselfPlayerView(
         id = player.id,
         nickname = player.nickname,
         twitterUserName = player.twitterUserName,
-        isAvailableCreateVillage = player.isAvailableCreateVillage(user),
+        availableCreateVillage = player.isAvailableCreateVillage(user),
         participateProgressVillages = VillagesView(Villages(participantVillages.list.filter {
             !it.status.isSolved()
         })),

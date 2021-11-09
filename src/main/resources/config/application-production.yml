@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${HOWLING_WOLF_DB_NAME}?character_set_server=utf8mb4
+    username: ${HOWLING_WOLF_DB_USERNAME}
+    password: ${HOWLING_WOLF_DB_PASSWORD}
+    driverClassName: com.mysql.jdbc.Driver
+    type: org.apache.tomcat.jdbc.pool.DataSource
+  messages:
+    basename: messages
+    cache-duration: -1
+    encoding: UTF-8
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+security:
+  corsClientUrls:
+    - https://howling-wolf.com
+server:
+  port: 8086
+  servlet:
+    context-path: /howling-wolf
+    session:
+      timeout: 86400
+  compression:
+    enabled: true
+  tomcat:
+    basedir: /app/logs
+    accesslog:
+      enabled: true
+      suffix: .log
+      prefix: howling-wolf-access_log
+      file-date-format: .yyyy-MM-dd
+      max-days: 30
+      pattern: '%t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %{X-Forwarded-For}i %D %S %I'
+    remoteip.remote-ip-header: true
+    use-forward-headers: true
+logging:
+  level:
+    org.springframework: INFO
+    root: INFO
+    org.seasar.dbflute: ERROR
+  file.name: /app/logs/howling-wolf.log
+slack.token: ${SLACK_TOKEN}
+twitter:
+  oauth:
+    consumer-key: ${TWITTER_CONSUMER_KEY}
+    consumer-secret: ${TWITTER_CONSUMER_SECRET}
+    access-token: ${TWITTER_ACCESS_TOKEN}
+    access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET}
+
+firebase:
+  adminsdk:
+    secretkey:
+      path: ${HOWLING_WOLF_FIREBASE_ADMINSDK_PATH}
+  database:
+    url: ${HOWLING_WOLF_FIREBASE_DATABASE_URL}

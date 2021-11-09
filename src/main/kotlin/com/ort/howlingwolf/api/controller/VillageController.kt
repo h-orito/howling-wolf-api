@@ -270,10 +270,10 @@ class VillageController(
                 chara = CharaView(chara),
                 player = null,
                 dead = null,
-                isSpectator = body.spectator ?: false,
+                spectator = body.spectator ?: false,
                 skill = null,
                 skillRequest = null,
-                isWin = null,
+                win = null,
                 comingOuts = ComingOuts()
             ),
             to = null,

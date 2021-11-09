@@ -50,7 +50,7 @@ data class VillageSettings(
                     openSkillInGrave = false,
                     visibleGraveMessage = false,
                     availableSuddenlyDeath = true,
-                    availableCommit = false,
+                    availableCommit = true,
                     availableDummySkill = availableDummySkill,
                     forBeginner = forBeginner,
                     messageRestrict = VillageMessageRestricts(
@@ -89,10 +89,10 @@ data class VillageSettings(
 
     fun existsDifference(setting: VillageSettings): Boolean {
         return capacity.existsDifference(setting.capacity)
-            || time.existsDifference(setting.time)
-            || organizations.existsDifference(setting.organizations)
-            || rules.existsDifference(setting.rules)
-            || password.existsDifference(setting.password)
+                || time.existsDifference(setting.time)
+                || organizations.existsDifference(setting.organizations)
+                || rules.existsDifference(setting.rules)
+                || password.existsDifference(setting.password)
     }
 
     fun extendPrologue(): VillageSettings {

@@ -19,7 +19,7 @@ data class VillageView(
     val participant: VillageParticipantsView,
     val spectator: VillageParticipantsView,
     val day: VillageDays,
-    val isSilentTime: Boolean
+    val silentTime: Boolean
 ) {
 
     constructor(
@@ -47,6 +47,6 @@ data class VillageView(
             shouldHidePlayer = !village.status.isSolved()
         ),
         day = village.day,
-        isSilentTime = village.isSilentTime()
+        silentTime = village.isSilentTime()
     )
 }

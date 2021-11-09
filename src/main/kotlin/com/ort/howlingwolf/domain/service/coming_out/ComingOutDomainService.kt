@@ -17,7 +17,7 @@ class ComingOutDomainService {
 
     fun convertToSituation(village: Village, participant: VillageParticipant?): VillageComingOutSituation {
         return VillageComingOutSituation(
-            isAvailableComingOut = isAvailableComingOut(village, participant),
+            availableComingOut = isAvailableComingOut(village, participant),
             currentComingOuts = participant?.comingOuts ?: ComingOuts(),
             selectableSkillList = selectableSkillList(village, participant)
         )

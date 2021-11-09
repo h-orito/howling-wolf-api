@@ -8,7 +8,7 @@ import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 
 data class VillageSaySituationView(
-    val isAvailableSay: Boolean,
+    val availableSay: Boolean,
     val selectableMessageTypeList: List<VillageSayMessageTypeSituationView>,
     val selectableFaceTypeList: List<CharaFace>,
     val defaultMessageType: MessageType?
@@ -21,7 +21,7 @@ data class VillageSaySituationView(
         charas: Charas,
         shouldHidePlayer: Boolean
     ) : this(
-        isAvailableSay = situation.isAvailableSay,
+        availableSay = situation.isAvailableSay,
         selectableMessageTypeList = situation.selectableMessageTypeList.map {
             VillageSayMessageTypeSituationView(
                 situation = it,

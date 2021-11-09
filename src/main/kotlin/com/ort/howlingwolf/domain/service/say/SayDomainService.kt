@@ -170,7 +170,7 @@ class SayDomainService(
     ): VillageSayRestrictSituation {
         val restrict = village.setting.rules.messageRestrict.restrict(messageType)
         return VillageSayRestrictSituation(
-            isRestricted = restrict != null,
+            restricted = restrict != null,
             maxCount = restrict?.count,
             remainingCount = restrict?.remainingCount(
                 village.status.toCdef(),
