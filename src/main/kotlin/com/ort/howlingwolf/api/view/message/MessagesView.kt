@@ -9,8 +9,8 @@ data class MessagesView(
     val list: List<MessageView>,
     val allRecordCount: Int?,
     val allPageCount: Int?,
-    val isExistPrePage: Boolean?,
-    val isExistNextPage: Boolean?,
+    val existPrePage: Boolean?,
+    val existNextPage: Boolean?,
     val currentPageNum: Int?,
     val todayMessageCountMap: Map<Int, Int>
 ) {
@@ -32,8 +32,8 @@ data class MessagesView(
         },
         allRecordCount = messages.allRecordCount,
         allPageCount = messages.allPageCount,
-        isExistPrePage = messages.isExistPrePage,
-        isExistNextPage = messages.isExistNextPage,
+        existPrePage = messages.isExistPrePage,
+        existNextPage = messages.isExistNextPage,
         currentPageNum = messages.currentPageNum,
         todayMessageCountMap = convertToMessageCountMap(village, todayMessages)
     )

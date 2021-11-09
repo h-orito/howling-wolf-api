@@ -18,8 +18,8 @@ class CommitDomainService {
         commit: Commit?
     ): VillageCommitSituation {
         return VillageCommitSituation(
-            isAvailableCommit = isAvailableCommit(village, participant),
-            isCommitting = commit != null
+            availableCommit = isAvailableCommit(village, participant),
+            committing = commit != null
         )
     }
 

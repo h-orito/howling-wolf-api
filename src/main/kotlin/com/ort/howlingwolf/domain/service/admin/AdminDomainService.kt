@@ -14,7 +14,7 @@ class AdminDomainService {
     fun convertToSituation(village: Village, myself: VillageParticipant?, players: Players, charas: Charas): VillageAdminSituation {
         if (myself?.playerId != 1) return VillageAdminSituation(false, listOf())
         return VillageAdminSituation(
-            isAdmin = true,
+            admin = true,
             participantList = village.participant.memberList.map { participant ->
                 VillageParticipantSituation(
                     name = charas.chara(participant.charaId).charaName.fullName(),

@@ -12,7 +12,7 @@ data class VillageAbilitySituationView(
     val targetList: List<VillageParticipantView>,
     val target: VillageParticipantView?,
     val usable: Boolean,
-    val isAvailableNoTarget: Boolean
+    val availableNoTarget: Boolean
 ) {
     constructor(
         situation: VillageAbilitySituation,
@@ -41,6 +41,6 @@ data class VillageAbilitySituationView(
             )
         },
         usable = situation.usable,
-        isAvailableNoTarget = situation.isAvailableNoTarget
+        availableNoTarget = situation.isAvailableNoTarget
     )
 }

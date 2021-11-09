@@ -8,11 +8,11 @@ import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 
 data class VillageParticipateSituationView(
-    val isParticipating: Boolean,
-    val isAvailableParticipate: Boolean,
-    val isAvailableSpectate: Boolean,
+    val participating: Boolean,
+    val availableParticipate: Boolean,
+    val availableSpectate: Boolean,
     val selectableCharaList: List<Chara>,
-    val isAvailableLeave: Boolean,
+    val availableLeave: Boolean,
     val myself: VillageParticipantView?
 ) {
     constructor(
@@ -21,11 +21,11 @@ data class VillageParticipateSituationView(
         players: Players,
         charas: Charas
     ) : this(
-        isParticipating = situation.isParticipating,
-        isAvailableParticipate = situation.isAvailableParticipate,
-        isAvailableSpectate = situation.isAvailableSpectate,
+        participating = situation.isParticipating,
+        availableParticipate = situation.isAvailableParticipate,
+        availableSpectate = situation.isAvailableSpectate,
         selectableCharaList = situation.selectableCharaList,
-        isAvailableLeave = situation.isAvailableLeave,
+        availableLeave = situation.isAvailableLeave,
         myself = situation.myself?.let {
             VillageParticipantView(
                 village = village,

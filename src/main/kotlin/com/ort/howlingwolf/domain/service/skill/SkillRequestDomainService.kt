@@ -18,7 +18,7 @@ class SkillRequestDomainService {
         skillRequest: SkillRequest?
     ): VillageSkillRequestSituation {
         return VillageSkillRequestSituation(
-            isAvailableSkillRequest = isAvailableSkillRequest(village, participant),
+            availableSkillRequest = isAvailableSkillRequest(village, participant),
             selectableSkillList = village.setting.organizations.allRequestableSkillList(),
             skillRequest = skillRequest
         )
