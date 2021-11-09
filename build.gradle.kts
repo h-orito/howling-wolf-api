@@ -4,8 +4,8 @@ plugins {
     java
     id("org.springframework.boot") version "2.3.0.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
+    kotlin("jvm") version "1.4.20"
+    kotlin("plugin.spring") version "1.4.20"
     id("com.google.cloud.tools.jib") version "2.6.0"
 }
 
@@ -40,7 +40,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     // mysql
-    implementation("mysql:mysql-connector-java:8.0.25")
+    val mysqlConnectorVersion = if (System.getenv("MYSQL_CONNECTOR_VERSION") != null) {
+        System.getenv("MYSQL_CONNECTOR_VERSION")
+    } else "8.0.25"
+    implementation("mysql:mysql-connector-java:$mysqlConnectorVersion")
     // jwt
     implementation("io.jsonwebtoken:jjwt-api:0.10.7")
     implementation("io.jsonwebtoken:jjwt-impl:0.10.7")

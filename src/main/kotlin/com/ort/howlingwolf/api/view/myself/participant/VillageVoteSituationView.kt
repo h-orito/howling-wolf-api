@@ -7,7 +7,7 @@ import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
 
 data class VillageVoteSituationView(
-    val isAvailableVote: Boolean,
+    val availableVote: Boolean,
     val targetList: List<VillageParticipantView>,
     val target: VillageParticipantView?
 ) {
@@ -18,7 +18,7 @@ data class VillageVoteSituationView(
         charas: Charas,
         shouldHidePlayer: Boolean
     ) : this(
-        isAvailableVote = situation.isAvailableVote,
+        availableVote = situation.isAvailableVote,
         targetList = situation.targetList.map {
             VillageParticipantView(
                 village = village,
