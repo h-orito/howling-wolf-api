@@ -24,6 +24,7 @@ class ProgressDomainService(
     private val attackDomainService: AttackDomainService,
     private val miserableDeathDomainService: MiserableDeathDomainService,
     private val suddenlyDeathDomainService: SuddenlyDeathDomainService,
+    private val suicideDomainService: SuicideDomainService,
     private val epilogueDomainService: EpilogueDomainService,
     private val abilityDomainService: AbilityDomainService,
     private val voteDomainService: VoteDomainService
@@ -61,6 +62,9 @@ class ProgressDomainService(
 
         // 無惨メッセージ
         dayChange = miserableDeathDomainService.processDayChangeAction(dayChange, charas)
+
+        // 後追い
+        dayChange = suicideDomainService.suicide(dayChange, charas)
 
         // 2日目限定メッセージ
         dayChange = addDay2MessageIfNeeded(dayChange)

@@ -80,7 +80,7 @@ class PsychicMessageDomainServiceTest : HowlingWolfTest() {
         val isViewable = psychicMessageDomainService.isViewable(village, participant)
 
         // ## Assert ##
-        assertThat(isViewable).isFalse()
+        assertThat(isViewable).isTrue()
     }
 
     @Test

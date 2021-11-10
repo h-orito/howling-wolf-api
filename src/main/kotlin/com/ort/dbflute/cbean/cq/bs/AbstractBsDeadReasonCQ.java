@@ -94,6 +94,14 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
         setDeadReasonCode_Equal_AsDeadReason(CDef.DeadReason.突然);
     }
 
+    /**
+     * Equal(=). As 後追 (SUICIDE). And OnlyOnceRegistered. <br>
+     * 後追
+     */
+    public void setDeadReasonCode_Equal_後追() {
+        setDeadReasonCode_Equal_AsDeadReason(CDef.DeadReason.後追);
+    }
+
     protected void doSetDeadReasonCode_Equal(String deadReasonCode) {
         regDeadReasonCode(CK_EQ, deadReasonCode);
     }
@@ -147,6 +155,14 @@ public abstract class AbstractBsDeadReasonCQ extends AbstractConditionQuery {
      */
     public void setDeadReasonCode_NotEqual_突然() {
         setDeadReasonCode_NotEqual_AsDeadReason(CDef.DeadReason.突然);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 後追 (SUICIDE). And OnlyOnceRegistered. <br>
+     * 後追
+     */
+    public void setDeadReasonCode_NotEqual_後追() {
+        setDeadReasonCode_NotEqual_AsDeadReason(CDef.DeadReason.後追);
     }
 
     protected void doSetDeadReasonCode_NotEqual(String deadReasonCode) {

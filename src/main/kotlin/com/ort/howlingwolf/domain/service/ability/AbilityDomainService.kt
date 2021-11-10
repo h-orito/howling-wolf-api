@@ -4,6 +4,7 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.domain.model.ability.AbilityType
 import com.ort.howlingwolf.domain.model.ability.AbilityTypes
 import com.ort.howlingwolf.domain.model.charachip.Chara
+import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.daychange.DayChange
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.myself.participant.VillageAbilitySituation
@@ -58,6 +59,7 @@ class AbilityDomainService(
     fun assertAbility(
         village: Village,
         participant: VillageParticipant?,
+        myselfId: Int?,
         targetId: Int?,
         abilityType: AbilityType
     ) {
@@ -67,8 +69,11 @@ class AbilityDomainService(
             throw HowlingWolfBadRequestException("${abilityType.name}の能力を持っていません")
         }
         // 使えない状況
-        if (!isUsable(village, participant, abilityType)) throw HowlingWolfBusinessException("${abilityType.name}能力を使えない状態です")
+        if (!isUsable(village, participant, abilityType)) {
+            throw HowlingWolfBusinessException("${abilityType.name}能力を使えない状態です")
+        }
         // 対象指定がおかしい
+        if (abilityType.toCdef() == CDef.AbilityType.襲撃 && myselfId == null) throw HowlingWolfBusinessException("襲撃者指定が必要です")
         if (targetId == null && !canNoTarget(village, abilityType)) throw HowlingWolfBusinessException("対象指定が必要です")
         if (targetId != null && getSelectableTargetList(village, participant, abilityType).none { it.id == targetId }) {
             throw HowlingWolfBusinessException("指定できない対象を指定しています")
@@ -116,6 +121,19 @@ class AbilityDomainService(
         return dayChange.copy(abilities = abilities).setIsChange(dayChange)
     }
 
+    fun addRecongnizeMessages(orgDayChange: DayChange, charas: Charas): DayChange {
+        // 人狼系役職メッセージ追加
+        var dayChange = addWolfsConfirmMessage(orgDayChange, charas)
+        // 狂信者がいれば狂信者向けメッセージ追加
+        dayChange = addFanaticMessageIfNeeded(dayChange, charas)
+        // 共有がいれば役職メッセージ追加
+        dayChange = addMasonsConfirmMessageIfNeeded(dayChange, charas)
+        // 妖狐系がいれば役職メッセージ追加
+        dayChange = addFoxsConfirmMessageIfNeeded(dayChange, charas)
+
+        return dayChange
+    }
+
     // ===================================================================================
     //                                                                        Assist Logic
     //                                                                        ============
@@ -144,10 +162,57 @@ class AbilityDomainService(
     ): VillageAbilitySituation {
         return VillageAbilitySituation(
             type = abilityType,
+            attacker = getSelectingAttacker(village, participant, villageAbilities, abilityType),
+            attackerList = getSelectableAttacker(village, participant, abilityType),
             targetList = this.getSelectableTargetList(village, participant, abilityType),
             target = this.getSelectingTarget(village, participant, villageAbilities, abilityType),
             usable = this.isUsable(village, participant, abilityType),
             isAvailableNoTarget = this.canNoTarget(village, abilityType)
         )
+    }
+
+    private fun addWolfsConfirmMessage(dayChange: DayChange, charas: Charas): DayChange {
+        return dayChange.copy(
+            messages = dayChange.messages.add(dayChange.village.createWolfsConfirmMessage(charas))
+        )
+    }
+
+    private fun addFanaticMessageIfNeeded(dayChange: DayChange, charas: Charas): DayChange {
+        return dayChange.village.createFanaticConfirmMessage(charas)?.let {
+            dayChange.copy(messages = dayChange.messages.add(it))
+        } ?: dayChange
+    }
+
+    private fun addMasonsConfirmMessageIfNeeded(dayChange: DayChange, charas: Charas): DayChange {
+        return dayChange.village.createMasonsConfirmMessage(charas)?.let {
+            dayChange.copy(messages = dayChange.messages.add(it))
+        } ?: dayChange
+    }
+
+    private fun addFoxsConfirmMessageIfNeeded(dayChange: DayChange, charas: Charas): DayChange {
+        return dayChange.village.createFoxsConfirmMessage(charas)?.let {
+            dayChange.copy(messages = dayChange.messages.add(it))
+        } ?: dayChange
+    }
+
+    private fun getSelectingAttacker(
+        village: Village,
+        participant: VillageParticipant?,
+        villageAbilities: VillageAbilities,
+        abilityType: AbilityType
+    ): VillageParticipant? {
+        return if (!canUseAbility(village, participant)) null
+        else if (abilityType.toCdef() != CDef.AbilityType.襲撃) null
+        else attackDomainService.getSelectingAttacker(village, villageAbilities)
+    }
+
+    private fun getSelectableAttacker(
+        village: Village,
+        participant: VillageParticipant?,
+        abilityType: AbilityType
+    ): List<VillageParticipant> {
+        return if (!canUseAbility(village, participant)) emptyList()
+        else if (abilityType.toCdef() != CDef.AbilityType.襲撃) emptyList()
+        else attackDomainService.getSelectableAttacker(village)
     }
 }

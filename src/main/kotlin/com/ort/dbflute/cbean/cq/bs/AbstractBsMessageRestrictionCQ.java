@@ -240,6 +240,22 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
     }
 
     /**
+     * Equal(=). As 狂信者人狼確認メッセージ (PRIVATE_FANATIC). And OnlyOnceRegistered. <br>
+     * 狂信者人狼確認メッセージ
+     */
+    public void setMessageTypeCode_Equal_狂信者人狼確認メッセージ() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.狂信者人狼確認メッセージ);
+    }
+
+    /**
+     * Equal(=). As 妖狐メッセージ (PRIVATE_FOX). And OnlyOnceRegistered. <br>
+     * 妖狐メッセージ
+     */
+    public void setMessageTypeCode_Equal_妖狐メッセージ() {
+        setMessageTypeCode_Equal_AsMessageType(CDef.MessageType.妖狐メッセージ);
+    }
+
+    /**
      * Equal(=). As 共有相互確認メッセージ (PRIVATE_MASON). And OnlyOnceRegistered. <br>
      * 共有相互確認メッセージ
      */
@@ -380,6 +396,22 @@ public abstract class AbstractBsMessageRestrictionCQ extends AbstractConditionQu
      */
     public void setMessageTypeCode_NotEqual_参加者一覧() {
         setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.参加者一覧);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 狂信者人狼確認メッセージ (PRIVATE_FANATIC). And OnlyOnceRegistered. <br>
+     * 狂信者人狼確認メッセージ
+     */
+    public void setMessageTypeCode_NotEqual_狂信者人狼確認メッセージ() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.狂信者人狼確認メッセージ);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 妖狐メッセージ (PRIVATE_FOX). And OnlyOnceRegistered. <br>
+     * 妖狐メッセージ
+     */
+    public void setMessageTypeCode_NotEqual_妖狐メッセージ() {
+        setMessageTypeCode_NotEqual_AsMessageType(CDef.MessageType.妖狐メッセージ);
     }
 
     /**

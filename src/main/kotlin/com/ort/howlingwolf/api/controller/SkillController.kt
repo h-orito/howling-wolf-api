@@ -14,7 +14,7 @@ class SkillController(
     //                                                                             Execute
     //                                                                           =========
     @GetMapping("/skill/list")
-    fun charachipList(): SkillsView {
+    fun skills(): SkillsView {
         return SkillsView(
             list = skillService.findSkills().list
         )

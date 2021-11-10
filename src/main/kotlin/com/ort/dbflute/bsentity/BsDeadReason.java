@@ -149,6 +149,14 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
         setDeadReasonCodeAsDeadReason(CDef.DeadReason.突然);
     }
 
+    /**
+     * Set the value of deadReasonCode as 後追 (SUICIDE). <br>
+     * 後追
+     */
+    public void setDeadReasonCode_後追() {
+        setDeadReasonCodeAsDeadReason(CDef.DeadReason.後追);
+    }
+
     // ===================================================================================
     //                                                        Classification Determination
     //                                                        ============================
@@ -194,6 +202,17 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
     public boolean isDeadReasonCode突然() {
         CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
         return cdef != null ? cdef.equals(CDef.DeadReason.突然) : false;
+    }
+
+    /**
+     * Is the value of deadReasonCode 後追? <br>
+     * 後追
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode後追() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null ? cdef.equals(CDef.DeadReason.後追) : false;
     }
 
     /**

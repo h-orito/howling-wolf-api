@@ -15,4 +15,8 @@ data class Camp(
     )
 
     fun toCdef(): CDef.Camp = CDef.Camp.codeOf(code)
+
+    fun isFoxs(): Boolean = toCdef() == CDef.Camp.狐陣営
 }
+
+fun CDef.Camp.toModel(): Camp = Camp(this)

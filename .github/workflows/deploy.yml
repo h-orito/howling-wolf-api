@@ -3,7 +3,7 @@ name: delivery_oracle
 on:
   push:
     branches:
-      - feature/oci
+      - master
 
 jobs:
   delivery:
@@ -12,7 +12,7 @@ jobs:
       - name: clone repository
         uses: actions/checkout@v2
         with:
-          ref: feature/oci
+          ref: master
 
       - name: download arm64 JDK 8
         run: |

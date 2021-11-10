@@ -105,7 +105,7 @@ class VillageDataSourceTest : HowlingWolfTest() {
         val settingList = villageSettingBhv.selectList { it.query().setVillageId_Equal(villageId) }
         assertThat(settingList).isNotEmpty
         assertThat(settingList.first { it.isVillageSettingItemCodeキャラクターグループid }.villageSettingText).isEqualTo("1")
-        assertThat(settingList.first { it.isVillageSettingItemCodeコミット可能か }.villageSettingText).isEqualTo("0")
+        assertThat(settingList.first { it.isVillageSettingItemCodeコミット可能か }.villageSettingText).isEqualTo("1")
         assertThat(settingList.first { it.isVillageSettingItemCodeダミーキャラid }.villageSettingText).isEqualTo("1")
         assertThat(settingList.first { it.isVillageSettingItemCode役職希望可能か }.villageSettingText).isEqualTo("1")
         assertThat(settingList.first { it.isVillageSettingItemCode更新間隔秒 }.villageSettingText).isEqualTo(interval.toString())

@@ -7,6 +7,7 @@ import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
+import com.ort.howlingwolf.domain.model.skill.Skills
 import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
@@ -37,9 +38,9 @@ data class Village(
 
     private val beginnerMessage: String =
         "この村は初心者村です。\n\n・村建てから24時間経過するまでは1戦以上参加したことがある方の参加が制限されます\n" +
-            "・初心者の方は初心者COしてもOKです\n・初心者でない方は初心者に優しく教えながら参加してください\n" +
-            "・他のサイトや対面などで何戦かやったことがあるけど自信がない、という方も大歓迎です\n" +
-            "　（どの程度経験があるか記載しておくとサポートを受けやすくなると思います。）"
+                "・初心者の方は初心者COしてもOKです\n・初心者でない方は初心者に優しく教えながら参加してください\n" +
+                "・他のサイトや対面などで何戦かやったことがあるけど自信がない、という方も大歓迎です\n" +
+                "　（どの程度経験があるか記載しておくとサポートを受けやすくなると思います。）"
 
     private val day1Message: String =
         "さあ、自らの姿を鏡に映してみよう。\nそこに映るのはただの村人か、それとも血に飢えた人狼か。\n\nたとえ人狼でも、多人数で立ち向かえば怖くはない。\n問題は、だれが人狼なのかという事だ。\n占い師の能力を持つ人間ならば、それを見破れるだろう。"
@@ -94,37 +95,55 @@ data class Village(
 
     /** 人狼系の役職相互確認メッセージ */
     fun createWolfsConfirmMessage(charas: Charas): Message {
-        val text = CDef.Skill.listOfAvailableWerewolfSay().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
-            val memberList = participant.memberList.filter { it.skill!!.toCdef() == cdefSkill }
-            if (memberList.isEmpty()) null
-            else "${Skill(cdefSkill).name}は${memberList.joinToString(separator = "、") {
-                charas.chara(it.charaId).charaName.fullName()
-            }}"
-        }.joinToString(
-            separator = "、\n",
-            prefix = "この村の",
-            postfix = "のようだ。"
-        )
+        val text = createRecognizeSkillMessageText(Skills.wolfs.list, charas)
         return Message.createAttackPrivateMessage(text, day.latestDay().id)
+    }
+
+    /** 狂信者の役職確認メッセージ */
+    fun createFanaticConfirmMessage(charas: Charas): Message? {
+        // 狂信者がいなければなし
+        if (participant.memberList.none { it.skill!!.canRecognizeWolf() }) return null
+        // 襲撃役職を一括りにして人狼とする
+        val text = participant.memberList.filter { it.skill!!.hasAttackAbility() }.joinToString(
+            separator = "、",
+            prefix = "この村の人狼は",
+            postfix = "のようだ。"
+        ) {
+            charas.chara(it.charaId).charaName.fullName()
+        }
+        return Message.createFanaticPrivateMessage(text, day.latestDay().id)
     }
 
     /** 共有系の役職相互確認メッセージ */
     fun createMasonsConfirmMessage(charas: Charas): Message? {
         // 共有がいなければなし
-        if (participant.memberList.none { it.skill!!.toCdef().isRecognizableEachMason }) return null
-        // 共有が存在する
-        val text = CDef.Skill.listOfRecognizableEachMason().sortedBy { Integer.parseInt(it.order()) }.mapNotNull { cdefSkill ->
-            val memberList = participant.memberList.filter { it.skill!!.toCdef() == cdefSkill }
-            if (memberList.isEmpty()) null
-            else "${Skill(cdefSkill).name}は${memberList.joinToString(separator = "、") {
-                charas.chara(it.charaId).charaName.fullName()
-            }}"
+        if (participant.memberList.none { it.skill!!.canRecognizeEachMason() }) return null
+        val text = createRecognizeSkillMessageText(Skills.masons.list, charas)
+        return Message.createMasonPrivateMessage(text, day.latestDay().id)
+    }
+
+    /** 妖狐系の役職相互確認メッセージ */
+    fun createFoxsConfirmMessage(charas: Charas): Message? {
+        // 妖狐がいなければなし
+        if (participant.memberList.none { it.skill!!.canRecognizeFoxs() }) return null
+        val text = createRecognizeSkillMessageText(Skills.foxs.list, charas)
+        return Message.createFoxPrivateMessage(text, day.latestDay().id)
+    }
+
+    private fun createRecognizeSkillMessageText(skills: List<Skill>, charas: Charas): String {
+        return skills.mapNotNull { skill ->
+            val list = participant.filterBySkill(skill).memberList
+            if (list.isEmpty()) null
+            else "${skill.name}は${
+                list.joinToString(separator = "、") {
+                    charas.chara(it.charaId).charaName.fullName()
+                }
+            }"
         }.joinToString(
             separator = "、\n",
             prefix = "この村の",
             postfix = "のようだ。"
         )
-        return Message.createMasonPrivateMessage(text, day.latestDay().id)
     }
 
     /**
@@ -154,11 +173,11 @@ data class Village(
         val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
 
         return "新しい村が作成されました。\r\n" +
-            "村名：$name$forBeginner\r\n" +
-            "編成：$organization\r\n" +
-            "開始予定：$startDatetime\r\n" +
-            silentHoursStr +
-            "https://howling-wolf.com/village?id=$id"
+                "村名：$name$forBeginner\r\n" +
+                "編成：$organization\r\n" +
+                "開始予定：$startDatetime\r\n" +
+                silentHoursStr +
+                "https://howling-wolf.com/village?id=$id"
     }
 
     fun createStartVillageMessage(): String {
@@ -170,11 +189,11 @@ data class Village(
         val forBeginner = if (setting.rules.forBeginner) "（初心者村）" else ""
 
         return "村が開始されました。\r\n" +
-            "村名：$name$forBeginner\r\n" +
-            "編成：$organization\r\n" +
-            "開始予定：$startDatetime\r\n" +
-            silentHoursStr +
-            "https://howling-wolf.com/village?id=$id"
+                "村名：$name$forBeginner\r\n" +
+                "編成：$organization\r\n" +
+                "開始予定：$startDatetime\r\n" +
+                silentHoursStr +
+                "https://howling-wolf.com/village?id=$id"
     }
 
     // ===================================================================================
@@ -203,10 +222,10 @@ data class Village(
     // 差分があるか
     fun existsDifference(village: Village): Boolean {
         return status.code != village.status.code
-            || winCamp?.code != village.winCamp?.code
-            || participant.existsDifference(village.participant)
-            || day.existsDifference(village.day)
-            || setting.existsDifference(village.setting)
+                || winCamp?.code != village.winCamp?.code
+                || participant.existsDifference(village.participant)
+                || day.existsDifference(village.day)
+                || setting.existsDifference(village.setting)
     }
 
     // 決着がついたか
@@ -282,79 +301,34 @@ data class Village(
      * @param second 第2役職希望
      */
     fun assertSkillRequest(first: CDef.Skill, second: CDef.Skill) {
-        if (setting.organizations.allRequestableSkillList().none { it.code == first.code() }) throw HowlingWolfBusinessException("役職希望変更できません")
-        if (setting.organizations.allRequestableSkillList().none { it.code == second.code() }) throw HowlingWolfBusinessException("役職希望変更できません")
+        if (setting.organizations.allRequestableSkillList()
+                .none { it.code == first.code() }
+        ) throw HowlingWolfBusinessException("役職希望変更できません")
+        if (setting.organizations.allRequestableSkillList()
+                .none { it.code == second.code() }
+        ) throw HowlingWolfBusinessException("役職希望変更できません")
     }
 
-    /** 村としてコミットできるか */
-    fun isAvailableCommit(): Boolean {
-        // コミットできない設定ならNG
-        if (!setting.rules.availableCommit) return false
-        // 進行中以外はNG
-        if (!status.isProgress()) return false
+    fun isSilentTime(): Boolean =
+        status.isProgress() && setting.time.isSilentTime(day.yesterday().dayChangeDatetime)
 
-        return true
-    }
-
+    fun isAvailableCommit(): Boolean = setting.rules.availableCommit && status.isProgress()
     fun isAvailableComingOut(): Boolean = !isSilentTime() && status.isProgress()
-
-    /** 村の状況として発言できるか */
-    fun isAvailableSay(): Boolean = !status.toCdef().isFinishedVillage // 終了していたら不可
-
-    /** 村として通常発言できるか */
-    fun isSayableNormalSay(): Boolean {
-        // 終了していたら不可
-        if (status.toCdef().isFinishedVillage) return false
-        // 進行中で沈黙時間だったら不可
-        return !isSilentTime()
-    }
-
-    fun isSilentTime(): Boolean {
-        return status.isProgress() && setting.time.isSilentTime(day.yesterday().dayChangeDatetime)
-    }
-
-    /** 村として囁き発言を見られるか */
+    fun isAvailableSay(): Boolean = !status.toCdef().isFinishedVillage
+    fun isSayableNormalSay(): Boolean = !status.isFinished() && !isSilentTime()
     fun isViewableWerewolfSay(): Boolean = status.isSolved()
-
-    /** 村として囁き発言できるか */
-    fun isSayableWerewolfSay(): Boolean = status.isProgress() // 進行中以外は不可
-
-    /** 村として墓下発言を見られるか */
-    fun isViewableGraveSay(): Boolean {
-        if (status.isSolved()) return true
-        return setting.rules.visibleGraveMessage
-    }
-
-    /** 村として墓下発言できるか */
-    fun isSayableGraveSay(): Boolean = status.isProgress() // 進行中以外は不可
-
-    /** 村として独り言を見られるか */
-    fun isViewableMonologueSay(): Boolean = status.isSolved() // 終了していたら全て見られる
-
-    /** 村として独り言発言できるか */
-    fun isSayableMonologueSay(): Boolean = true // 制約なし
-
-    /** 村として見学発言を見られるか */
-    fun isViewableSpectateSay(): Boolean {
-        // 進行中以外は開放
-        if (!status.isProgress()) return true
-        // 見られる設定なら開放
-        return setting.rules.visibleGraveMessage
-    }
-
-    /** 村として見学発言できるか */
-    fun isSayableSpectateSay(): Boolean = true // 制約なし
-
-    /** 村として襲撃メッセージを見られるか */
-    fun isViewableAttackMessage(): Boolean = status.isSolved() // 終了していたら全て見られる
-
-    /** 村として共有メッセージを見られるか */
-    fun isViewableMasonMessage(): Boolean = status.isSolved() // 終了していたら全て見られる
-
-    /** 村として白黒霊能結果を見られるか */
-    fun isViewablePsychicMessage(): Boolean = status.isSolved()// 終了していたら全て見られる
-
-    /** 村として秘話を見られるか */
+    fun isSayableWerewolfSay(): Boolean = status.isProgress()
+    fun isViewableGraveSay(): Boolean = status.isSolved() || setting.rules.visibleGraveMessage
+    fun isSayableGraveSay(): Boolean = status.isProgress()
+    fun isViewableMonologueSay(): Boolean = status.isSolved()
+    fun isSayableMonologueSay(): Boolean = true
+    fun isViewableSpectateSay(): Boolean = !status.isProgress() || setting.rules.visibleGraveMessage
+    fun isSayableSpectateSay(): Boolean = true
+    fun isViewableAttackMessage(): Boolean = status.isSolved()
+    fun isViewableMasonMessage(): Boolean = status.isSolved()
+    fun isViewableFanaticMessage(): Boolean = status.isSolved()
+    fun isViewableFoxMessage(): Boolean = status.isSolved()
+    fun isViewablePsychicMessage(): Boolean = status.isSolved()
     fun isViewableSecretSay(): Boolean = status.isSolved()
 
     /**
@@ -445,6 +419,9 @@ data class Village(
     fun divineKillParticipant(participantId: Int, latestDay: VillageDay): Village =
         this.copy(participant = this.participant.divineKill(participantId, latestDay))
 
+    // 後追い
+    fun suicideParticipant(participantId: Int): Village =
+        this.copy(participant = this.participant.suicide(participantId, day.latestDay()))
 
     // 役職割り当て
     fun assignSkill(participants: VillageParticipants): Village {
@@ -452,7 +429,8 @@ data class Village(
     }
 
     // ステータス変更
-    fun changeStatus(cdefVillageStatus: CDef.VillageStatus): Village = this.copy(status = VillageStatus(cdefVillageStatus))
+    fun changeStatus(cdefVillageStatus: CDef.VillageStatus): Village =
+        this.copy(status = VillageStatus(cdefVillageStatus))
 
     // エピローグ遷移
     fun toEpilogue(): Village {
@@ -476,7 +454,7 @@ data class Village(
     //                                                                        ============
     private fun isAlreadyParticipateCharacter(charaId: Int): Boolean {
         return participant.memberList.any { it.charaId == charaId }
-            || spectator.memberList.any { it.charaId == charaId }
+                || spectator.memberList.any { it.charaId == charaId }
     }
 
     private fun assertPassword(password: String?) {
