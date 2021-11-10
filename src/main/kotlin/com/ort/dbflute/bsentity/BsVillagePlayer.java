@@ -262,6 +262,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of skillCode as 狂信者 (FANATIC). <br>
+     * 狂信者
+     */
+    public void setSkillCode_狂信者() {
+        setSkillCodeAsSkill(CDef.Skill.狂信者);
+    }
+
+    /**
      * Set the value of skillCode as 妖狐 (FOX). <br>
      * 妖狐
      */
@@ -275,6 +283,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
      */
     public void setSkillCode_狩人() {
         setSkillCodeAsSkill(CDef.Skill.狩人);
+    }
+
+    /**
+     * Set the value of skillCode as 背徳者 (IMMORAL). <br>
+     * 背徳者
+     */
+    public void setSkillCode_背徳者() {
+        setSkillCodeAsSkill(CDef.Skill.背徳者);
     }
 
     /**
@@ -310,11 +326,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of skillCode as 猫又 (MONSTERCAT). <br>
+     * 猫又
+     */
+    public void setSkillCode_猫又() {
+        setSkillCodeAsSkill(CDef.Skill.猫又);
+    }
+
+    /**
      * Set the value of skillCode as 占い師 (SEER). <br>
      * 占い師
      */
     public void setSkillCode_占い師() {
         setSkillCodeAsSkill(CDef.Skill.占い師);
+    }
+
+    /**
+     * Set the value of skillCode as 聖痕者 (STIGMATA). <br>
+     * 聖痕者
+     */
+    public void setSkillCode_聖痕者() {
+        setSkillCodeAsSkill(CDef.Skill.聖痕者);
     }
 
     /**
@@ -358,6 +390,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of requestSkillCode as 狂信者 (FANATIC). <br>
+     * 狂信者
+     */
+    public void setRequestSkillCode_狂信者() {
+        setRequestSkillCodeAsSkill(CDef.Skill.狂信者);
+    }
+
+    /**
      * Set the value of requestSkillCode as 妖狐 (FOX). <br>
      * 妖狐
      */
@@ -371,6 +411,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
      */
     public void setRequestSkillCode_狩人() {
         setRequestSkillCodeAsSkill(CDef.Skill.狩人);
+    }
+
+    /**
+     * Set the value of requestSkillCode as 背徳者 (IMMORAL). <br>
+     * 背徳者
+     */
+    public void setRequestSkillCode_背徳者() {
+        setRequestSkillCodeAsSkill(CDef.Skill.背徳者);
     }
 
     /**
@@ -406,11 +454,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of requestSkillCode as 猫又 (MONSTERCAT). <br>
+     * 猫又
+     */
+    public void setRequestSkillCode_猫又() {
+        setRequestSkillCodeAsSkill(CDef.Skill.猫又);
+    }
+
+    /**
      * Set the value of requestSkillCode as 占い師 (SEER). <br>
      * 占い師
      */
     public void setRequestSkillCode_占い師() {
         setRequestSkillCodeAsSkill(CDef.Skill.占い師);
+    }
+
+    /**
+     * Set the value of requestSkillCode as 聖痕者 (STIGMATA). <br>
+     * 聖痕者
+     */
+    public void setRequestSkillCode_聖痕者() {
+        setRequestSkillCodeAsSkill(CDef.Skill.聖痕者);
     }
 
     /**
@@ -454,6 +518,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of secondRequestSkillCode as 狂信者 (FANATIC). <br>
+     * 狂信者
+     */
+    public void setSecondRequestSkillCode_狂信者() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.狂信者);
+    }
+
+    /**
      * Set the value of secondRequestSkillCode as 妖狐 (FOX). <br>
      * 妖狐
      */
@@ -467,6 +539,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
      */
     public void setSecondRequestSkillCode_狩人() {
         setSecondRequestSkillCodeAsSkill(CDef.Skill.狩人);
+    }
+
+    /**
+     * Set the value of secondRequestSkillCode as 背徳者 (IMMORAL). <br>
+     * 背徳者
+     */
+    public void setSecondRequestSkillCode_背徳者() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.背徳者);
     }
 
     /**
@@ -502,11 +582,27 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Set the value of secondRequestSkillCode as 猫又 (MONSTERCAT). <br>
+     * 猫又
+     */
+    public void setSecondRequestSkillCode_猫又() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.猫又);
+    }
+
+    /**
      * Set the value of secondRequestSkillCode as 占い師 (SEER). <br>
      * 占い師
      */
     public void setSecondRequestSkillCode_占い師() {
         setSecondRequestSkillCodeAsSkill(CDef.Skill.占い師);
+    }
+
+    /**
+     * Set the value of secondRequestSkillCode as 聖痕者 (STIGMATA). <br>
+     * 聖痕者
+     */
+    public void setSecondRequestSkillCode_聖痕者() {
+        setSecondRequestSkillCodeAsSkill(CDef.Skill.聖痕者);
     }
 
     /**
@@ -573,6 +669,14 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         setDeadReasonCodeAsDeadReason(CDef.DeadReason.突然);
     }
 
+    /**
+     * Set the value of deadReasonCode as 後追 (SUICIDE). <br>
+     * 後追
+     */
+    public void setDeadReasonCode_後追() {
+        setDeadReasonCodeAsDeadReason(CDef.DeadReason.後追);
+    }
+
     // ===================================================================================
     //                                                        Classification Determination
     //                                                        ============================
@@ -585,6 +689,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSkillCodeC国狂人() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.C国狂人) : false;
+    }
+
+    /**
+     * Is the value of skillCode 狂信者? <br>
+     * 狂信者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode狂信者() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.狂信者) : false;
     }
 
     /**
@@ -607,6 +722,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSkillCode狩人() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狩人) : false;
+    }
+
+    /**
+     * Is the value of skillCode 背徳者? <br>
+     * 背徳者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode背徳者() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.背徳者) : false;
     }
 
     /**
@@ -654,6 +780,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Is the value of skillCode 猫又? <br>
+     * 猫又
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode猫又() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.猫又) : false;
+    }
+
+    /**
      * Is the value of skillCode 占い師? <br>
      * 占い師
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -662,6 +799,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSkillCode占い師() {
         CDef.Skill cdef = getSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.占い師) : false;
+    }
+
+    /**
+     * Is the value of skillCode 聖痕者? <br>
+     * 聖痕者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode聖痕者() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.聖痕者) : false;
     }
 
     /**
@@ -839,6 +987,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 人狼を認知できる <br>
+     * The group elements:[狂信者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_RecognizableWolf() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableWolf();
+    }
+
+    /**
+     * 妖狐を認知できる <br>
+     * The group elements:[妖狐, 背徳者]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_RecognizableFox() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableFox();
+    }
+
+    /**
      * 襲撃耐性を持つ <br>
      * The group elements:[妖狐]
      * @return The determination, true or false.
@@ -859,6 +1027,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 死亡時道連れにする <br>
+     * The group elements:[猫又]
+     * @return The determination, true or false.
+     */
+    public boolean isSkillCode_ForceDoubleSuicide() {
+        CDef.Skill cdef = getSkillCodeAsSkill();
+        return cdef != null && cdef.isForceDoubleSuicide();
+    }
+
+    /**
      * Is the value of requestSkillCode C国狂人? <br>
      * C国狂人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -867,6 +1045,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCodeC国狂人() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.C国狂人) : false;
+    }
+
+    /**
+     * Is the value of requestSkillCode 狂信者? <br>
+     * 狂信者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode狂信者() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.狂信者) : false;
     }
 
     /**
@@ -889,6 +1078,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCode狩人() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狩人) : false;
+    }
+
+    /**
+     * Is the value of requestSkillCode 背徳者? <br>
+     * 背徳者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode背徳者() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.背徳者) : false;
     }
 
     /**
@@ -936,6 +1136,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Is the value of requestSkillCode 猫又? <br>
+     * 猫又
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode猫又() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.猫又) : false;
+    }
+
+    /**
      * Is the value of requestSkillCode 占い師? <br>
      * 占い師
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -944,6 +1155,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isRequestSkillCode占い師() {
         CDef.Skill cdef = getRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.占い師) : false;
+    }
+
+    /**
+     * Is the value of requestSkillCode 聖痕者? <br>
+     * 聖痕者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode聖痕者() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.聖痕者) : false;
     }
 
     /**
@@ -1121,6 +1343,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 人狼を認知できる <br>
+     * The group elements:[狂信者]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_RecognizableWolf() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableWolf();
+    }
+
+    /**
+     * 妖狐を認知できる <br>
+     * The group elements:[妖狐, 背徳者]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_RecognizableFox() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableFox();
+    }
+
+    /**
      * 襲撃耐性を持つ <br>
      * The group elements:[妖狐]
      * @return The determination, true or false.
@@ -1141,6 +1383,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 死亡時道連れにする <br>
+     * The group elements:[猫又]
+     * @return The determination, true or false.
+     */
+    public boolean isRequestSkillCode_ForceDoubleSuicide() {
+        CDef.Skill cdef = getRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isForceDoubleSuicide();
+    }
+
+    /**
      * Is the value of secondRequestSkillCode C国狂人? <br>
      * C国狂人
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -1149,6 +1401,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCodeC国狂人() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.C国狂人) : false;
+    }
+
+    /**
+     * Is the value of secondRequestSkillCode 狂信者? <br>
+     * 狂信者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode狂信者() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.狂信者) : false;
     }
 
     /**
@@ -1171,6 +1434,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode狩人() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.狩人) : false;
+    }
+
+    /**
+     * Is the value of secondRequestSkillCode 背徳者? <br>
+     * 背徳者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode背徳者() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.背徳者) : false;
     }
 
     /**
@@ -1218,6 +1492,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * Is the value of secondRequestSkillCode 猫又? <br>
+     * 猫又
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode猫又() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.猫又) : false;
+    }
+
+    /**
      * Is the value of secondRequestSkillCode 占い師? <br>
      * 占い師
      * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
@@ -1226,6 +1511,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode占い師() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null ? cdef.equals(CDef.Skill.占い師) : false;
+    }
+
+    /**
+     * Is the value of secondRequestSkillCode 聖痕者? <br>
+     * 聖痕者
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode聖痕者() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null ? cdef.equals(CDef.Skill.聖痕者) : false;
     }
 
     /**
@@ -1403,6 +1699,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     }
 
     /**
+     * 人狼を認知できる <br>
+     * The group elements:[狂信者]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_RecognizableWolf() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableWolf();
+    }
+
+    /**
+     * 妖狐を認知できる <br>
+     * The group elements:[妖狐, 背徳者]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_RecognizableFox() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isRecognizableFox();
+    }
+
+    /**
      * 襲撃耐性を持つ <br>
      * The group elements:[妖狐]
      * @return The determination, true or false.
@@ -1420,6 +1736,16 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isSecondRequestSkillCode_DeadByDivine() {
         CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
         return cdef != null && cdef.isDeadByDivine();
+    }
+
+    /**
+     * 死亡時道連れにする <br>
+     * The group elements:[猫又]
+     * @return The determination, true or false.
+     */
+    public boolean isSecondRequestSkillCode_ForceDoubleSuicide() {
+        CDef.Skill cdef = getSecondRequestSkillCodeAsSkill();
+        return cdef != null && cdef.isForceDoubleSuicide();
     }
 
     /**
@@ -1464,6 +1790,17 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
     public boolean isDeadReasonCode突然() {
         CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
         return cdef != null ? cdef.equals(CDef.DeadReason.突然) : false;
+    }
+
+    /**
+     * Is the value of deadReasonCode 後追? <br>
+     * 後追
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isDeadReasonCode後追() {
+        CDef.DeadReason cdef = getDeadReasonCodeAsDeadReason();
+        return cdef != null ? cdef.equals(CDef.DeadReason.後追) : false;
     }
 
     /**

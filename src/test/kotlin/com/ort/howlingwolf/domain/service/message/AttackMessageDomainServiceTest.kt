@@ -93,7 +93,7 @@ class AttackMessageDomainServiceTest : HowlingWolfTest() {
         val isViewable = attackMessageDomainService.isViewable(village, participant)
 
         // ## Assert ##
-        assertThat(isViewable).isFalse()
+        assertThat(isViewable).isTrue()
     }
 
     @Test

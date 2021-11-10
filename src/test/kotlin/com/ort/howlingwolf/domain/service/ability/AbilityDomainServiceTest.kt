@@ -190,7 +190,7 @@ class AbilityDomainServiceTest : HowlingWolfTest() {
 
         // ## Act ##
         // ## Assert ##
-        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
+        abilityDomainService.assertAbility(village, participant, participant.id, targetId, abilityType)
     }
 
     @Test(expected = HowlingWolfBusinessException::class)
@@ -203,7 +203,7 @@ class AbilityDomainServiceTest : HowlingWolfTest() {
 
         // ## Act ##
         // ## Assert ##
-        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
+        abilityDomainService.assertAbility(village, participant, null, targetId, abilityType)
     }
 
     fun test_assertAbility_対象なしにできる能力で対象なし() {
@@ -215,7 +215,7 @@ class AbilityDomainServiceTest : HowlingWolfTest() {
 
         // ## Act ##
         // ## Assert ##
-        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
+        abilityDomainService.assertAbility(village, participant, participant.id, targetId, abilityType)
     }
 
     @Test(expected = HowlingWolfBusinessException::class)
@@ -236,7 +236,7 @@ class AbilityDomainServiceTest : HowlingWolfTest() {
 
         // ## Act ##
         // ## Assert ##
-        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
+        abilityDomainService.assertAbility(village, participant, participant.id, targetId, abilityType)
     }
 
     @Test
@@ -257,7 +257,7 @@ class AbilityDomainServiceTest : HowlingWolfTest() {
 
         // ## Act ##
         // ## Assert ##
-        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
+        abilityDomainService.assertAbility(village, participant, participant.id, targetId, abilityType)
     }
 
     @Test

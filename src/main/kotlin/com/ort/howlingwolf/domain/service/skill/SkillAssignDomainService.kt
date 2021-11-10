@@ -58,7 +58,10 @@ class SkillAssignDomainService {
         // ありの場合は2日目に襲撃死できる役職を割り当て
         val availableSkillList = mutableListOf<CDef.Skill>()
         for ((cdefSkill, capacity) in skillPersonCountMap.entries) {
-            if (cdefSkill.isNoDeadByAttack || cdefSkill.isNotSelectableAttack) continue
+            if (cdefSkill.isNoDeadByAttack ||
+                cdefSkill.isNotSelectableAttack ||
+                cdefSkill.isForceDoubleSuicide
+            ) continue
             repeat(capacity) {
                 availableSkillList.add(cdefSkill)
             }
@@ -125,18 +128,25 @@ class SkillAssignDomainService {
         return changedParticipants
     }
 
-    private fun assignFirstRangeRequest(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
+    private fun assignFirstRangeRequest(
+        participants: VillageParticipants,
+        skillPersonCountMap: Map<CDef.Skill, Int>
+    ): VillageParticipants {
         var changedParticipants = participants.copy()
         // 範囲指定している人
         changedParticipants.memberList
-            .filter { it.skill == null && CDef.Skill.listOfSomeoneSkill().contains(it.skillRequest.first.toCdef()) && it.skillRequest.first.toCdef() != CDef.Skill.おまかせ }
+            .filter {
+                it.skill == null && CDef.Skill.listOfSomeoneSkill()
+                    .contains(it.skillRequest.first.toCdef()) && it.skillRequest.first.toCdef() != CDef.Skill.おまかせ
+            }
             .shuffled()
             .forEach {
                 // 役職候補
                 val candidateSkillList = getCandidateSkillList(it.skillRequest.first.toCdef()).sorted()
                 for (skill in candidateSkillList) {
                     val capacity = skillPersonCountMap[skill] ?: 0
-                    val left = capacity - changedParticipants.memberList.count { member -> member.skill?.toCdef() == skill }
+                    val left =
+                        capacity - changedParticipants.memberList.count { member -> member.skill?.toCdef() == skill }
                     if (left <= 0) continue
                     changedParticipants = changedParticipants.assignSkill(it.id, Skill(skill))
                     break
@@ -164,14 +174,18 @@ class SkillAssignDomainService {
         var changedParticipants = participants.copy()
         // 範囲指定している人
         changedParticipants.memberList
-            .filter { it.skill == null && CDef.Skill.listOfSomeoneSkill().contains(it.skillRequest.second.toCdef()) && it.skillRequest.second.toCdef() != CDef.Skill.おまかせ }
+            .filter {
+                it.skill == null && CDef.Skill.listOfSomeoneSkill()
+                    .contains(it.skillRequest.second.toCdef()) && it.skillRequest.second.toCdef() != CDef.Skill.おまかせ
+            }
             .shuffled()
             .forEach {
                 // 役職候補
                 val candidateSkillList = getCandidateSkillList(it.skillRequest.second.toCdef()).sorted()
                 for (skill in candidateSkillList) {
                     val capacity = skillPersonCountMap[skill] ?: 0
-                    val left = capacity - changedParticipants.memberList.count { member -> member.skill?.toCdef() == skill }
+                    val left =
+                        capacity - changedParticipants.memberList.count { member -> member.skill?.toCdef() == skill }
                     if (left <= 0) continue
                     changedParticipants = changedParticipants.assignSkill(it.id, Skill(skill))
                     break
@@ -180,7 +194,10 @@ class SkillAssignDomainService {
         return changedParticipants
     }
 
-    private fun assignOther(participants: VillageParticipants, skillPersonCountMap: Map<CDef.Skill, Int>): VillageParticipants {
+    private fun assignOther(
+        participants: VillageParticipants,
+        skillPersonCountMap: Map<CDef.Skill, Int>
+    ): VillageParticipants {
         var changedParticipants = participants.copy()
 
         // 役職が決まっていない参加者に

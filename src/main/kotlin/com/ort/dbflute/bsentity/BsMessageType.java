@@ -166,6 +166,22 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     }
 
     /**
+     * Set the value of messageTypeCode as 狂信者人狼確認メッセージ (PRIVATE_FANATIC). <br>
+     * 狂信者人狼確認メッセージ
+     */
+    public void setMessageTypeCode_狂信者人狼確認メッセージ() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.狂信者人狼確認メッセージ);
+    }
+
+    /**
+     * Set the value of messageTypeCode as 妖狐メッセージ (PRIVATE_FOX). <br>
+     * 妖狐メッセージ
+     */
+    public void setMessageTypeCode_妖狐メッセージ() {
+        setMessageTypeCodeAsMessageType(CDef.MessageType.妖狐メッセージ);
+    }
+
+    /**
      * Set the value of messageTypeCode as 共有相互確認メッセージ (PRIVATE_MASON). <br>
      * 共有相互確認メッセージ
      */
@@ -304,6 +320,28 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
     public boolean isMessageTypeCode参加者一覧() {
         CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
         return cdef != null ? cdef.equals(CDef.MessageType.参加者一覧) : false;
+    }
+
+    /**
+     * Is the value of messageTypeCode 狂信者人狼確認メッセージ? <br>
+     * 狂信者人狼確認メッセージ
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isMessageTypeCode狂信者人狼確認メッセージ() {
+        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
+        return cdef != null ? cdef.equals(CDef.MessageType.狂信者人狼確認メッセージ) : false;
+    }
+
+    /**
+     * Is the value of messageTypeCode 妖狐メッセージ? <br>
+     * 妖狐メッセージ
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isMessageTypeCode妖狐メッセージ() {
+        CDef.MessageType cdef = getMessageTypeCodeAsMessageType();
+        return cdef != null ? cdef.equals(CDef.MessageType.妖狐メッセージ) : false;
     }
 
     /**

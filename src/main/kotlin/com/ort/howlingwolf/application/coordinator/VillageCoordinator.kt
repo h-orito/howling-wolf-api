@@ -347,20 +347,22 @@ class VillageCoordinator(
      *
      * @param villageId villageId
      * @param user user
+     * @param myselfId 行使村参加者ID (襲撃の場合のみ)
      * @param targetId 対象村参加者ID
      * @param abilityTypeCode 能力種別
      */
     @Transactional(rollbackFor = [Exception::class, HowlingWolfBusinessException::class])
-    fun setAbility(villageId: Int, user: HowlingWolfUser, targetId: Int?, abilityTypeCode: String) {
+    fun setAbility(villageId: Int, user: HowlingWolfUser, myselfId: Int?, targetId: Int?, abilityTypeCode: String) {
         // 能力セットできない状況ならエラー
         val village: Village = villageService.findVillage(villageId)
-        val participant: VillageParticipant? = findParticipant(village, user)
+        val myself: VillageParticipant? = findParticipant(village, user)
         val abilityType = AbilityType(abilityTypeCode)
-        abilityDomainService.assertAbility(village, participant, targetId, abilityType)
+        abilityDomainService.assertAbility(village, myself, myselfId, targetId, abilityType)
         // 能力セット
-        val villageAbility = VillageAbility(village.day.latestDay().id, participant!!.id, targetId, abilityType)
+        val villageAbility = VillageAbility(village.day.latestDay().id, myselfId ?: myself!!.id, targetId, abilityType)
         abilityService.updateAbility(villageAbility)
         val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
+        val participant = myselfId?.let { village.participant.member(it) } ?: myself!!
         messageService.registerAbilitySetMessage(village, participant, targetId, abilityType, charas)
     }
 

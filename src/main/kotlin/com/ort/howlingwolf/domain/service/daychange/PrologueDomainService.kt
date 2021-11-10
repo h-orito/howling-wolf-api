@@ -26,19 +26,26 @@ class PrologueDomainService(
         charas: Charas
     ): DayChange {
         // 開始2時間を切っていたら退村させない
-        if (HowlingWolfDateUtil.currentLocalDateTime().isAfter(dayChange.village.setting.time.startDatetime.minusHours(2L))) {
+        if (HowlingWolfDateUtil.currentLocalDateTime()
+                .isAfter(dayChange.village.setting.time.startDatetime.minusHours(2L))
+        ) {
             return dayChange
         }
         // 24時間以内の発言
         val recentMessageList =
-            todayMessages.list.filter { it.time.datetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime().minusDays(1L)) }
+            todayMessages.list.filter {
+                it.time.datetime.isAfter(
+                    HowlingWolfDateUtil.currentLocalDateTime().minusDays(1L)
+                )
+            }
         // 24時間以内に発言していなかったら退村
         var village = dayChange.village.copy()
         var messages = dayChange.messages.copy()
         dayChange.village.notDummyParticipant().memberList.forEach { member ->
             if (recentMessageList.none { message -> message.fromVillageParticipantId!! == member.id }) {
                 village = village.leaveParticipant(member.id)
-                messages = messages.add(participateDomainService.createLeaveMessage(village, charas.chara(member.charaId)))
+                messages =
+                    messages.add(participateDomainService.createLeaveMessage(village, charas.chara(member.charaId)))
             }
         }
         return dayChange.copy(
@@ -77,10 +84,8 @@ class PrologueDomainService(
         dayChange = skillAssignDomainService.assign(dayChange)
         // 役職構成メッセージ追加
         dayChange = addOrganizationMessage(dayChange)
-        // 人狼系役職メッセージ追加
-        dayChange = addWolfsConfirmMessage(dayChange, charas)
-        // 共有がいれば役職メッセージ追加
-        dayChange = addMasonsConfirmMessageIfNeeded(dayChange, charas)
+        // 仲間把握メッセージ追加
+        dayChange = abilityDomainService.addRecongnizeMessages(dayChange, charas)
         // ステータス変更
         dayChange = dayChange.copy(village = dayChange.village.changeStatus(CDef.VillageStatus.進行中))
         // デフォルト能力行使指定
@@ -128,20 +133,6 @@ class PrologueDomainService(
         return dayChange.copy(
             messages = dayChange.messages.add(dayChange.village.createOrganizationMessage())
         )
-    }
-
-    private fun addWolfsConfirmMessage(dayChange: DayChange, charas: Charas): DayChange {
-        return dayChange.copy(
-            messages = dayChange.messages.add(dayChange.village.createWolfsConfirmMessage(charas))
-        )
-    }
-
-    private fun addMasonsConfirmMessageIfNeeded(dayChange: DayChange, charas: Charas): DayChange {
-        return dayChange.village.createMasonsConfirmMessage(charas)?.let {
-            dayChange.copy(
-                messages = dayChange.messages.add(it)
-            )
-        } ?: dayChange
     }
 
     private fun addDummyCharaFirstDayMessageIfNeeded(dayChange: DayChange, charas: Charas): DayChange {

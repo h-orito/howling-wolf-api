@@ -417,7 +417,7 @@ class VillageController(
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: VillageAbilityBody
     ) {
-        villageCoordinator.setAbility(villageId, user, body.targetId, body.abilityType!!)
+        villageCoordinator.setAbility(villageId, user, body.myselfId, body.targetId, body.abilityType!!)
     }
 
     /**

@@ -1,9 +1,10 @@
 package com.ort.howlingwolf.domain.model.skill
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.domain.model.ability.AbilityTypes
 import com.ort.howlingwolf.domain.model.ability.AbilityType
+import com.ort.howlingwolf.domain.model.ability.AbilityTypes
 import com.ort.howlingwolf.domain.model.camp.Camp
+import com.ort.howlingwolf.domain.model.camp.toModel
 import com.ort.howlingwolf.domain.model.message.MessageType
 
 data class Skill(
@@ -38,6 +39,20 @@ data class Skill(
         description = cdefSkill.description()
     )
 
+    fun camp(): Camp = CDef.Camp.codeOf(toCdef().campCode()).toModel()
+
+    fun isViewableWerewolfSay(): Boolean = toCdef().isViewableWerewolfSay
+    fun isAvailableWerewolfSay(): Boolean = toCdef().isAvailableWerewolfSay
+
+    fun canRecognizeWolf(): Boolean = toCdef().isRecognizableWolf
+    fun canRecognizeEachMason(): Boolean = toCdef().isRecognizableEachMason
+    fun canRecognizeFoxs(): Boolean = toCdef().isRecognizableFox
+    fun hasPsychicAbility(): Boolean = toCdef().isHasPsychicAbility
+    fun hasAttackAbility(): Boolean = toCdef().isHasAttackAbility
+
+    fun isFoxCount(): Boolean = Skills.foxs.list.any { it.code == code }
+
+
     companion object {
 
         private val skillAbilityTypeListMap = mapOf(
@@ -51,7 +66,8 @@ data class Skill(
             CDef.Skill.人狼 to listOf(AbilityType(CDef.AbilityType.襲撃)),
             CDef.Skill.占い師 to listOf(AbilityType(CDef.AbilityType.占い)),
             CDef.Skill.狩人 to listOf(AbilityType(CDef.AbilityType.護衛)),
-            CDef.Skill.霊能者 to listOf(AbilityType("PSYCHIC", "霊視"))
+            CDef.Skill.霊能者 to listOf(AbilityType("PSYCHIC", "霊視")),
+            CDef.Skill.猫又 to listOf(AbilityType("FORCESUICIDE", "道連れ"))
         )
 
         fun skillByShortName(shortName: String): Skill? {
@@ -102,3 +118,5 @@ data class Skill(
 
     fun toCdef(): CDef.Skill = CDef.Skill.codeOf(code)
 }
+
+fun CDef.Skill.toModel(): Skill = Skill(this)

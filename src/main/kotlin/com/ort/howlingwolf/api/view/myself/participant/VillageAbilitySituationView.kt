@@ -9,6 +9,8 @@ import com.ort.howlingwolf.domain.model.village.Village
 
 data class VillageAbilitySituationView(
     val type: AbilityType,
+    val attackerList: List<VillageParticipantView>,
+    val attacker: VillageParticipantView?,
     val targetList: List<VillageParticipantView>,
     val target: VillageParticipantView?,
     val usable: Boolean,
@@ -22,6 +24,24 @@ data class VillageAbilitySituationView(
         shouldHidePlayer: Boolean
     ) : this(
         type = situation.type,
+        attackerList = situation.attackerList.map {
+            VillageParticipantView(
+                village = village,
+                villageParticipantId = it.id,
+                players = players,
+                charas = charas,
+                shouldHidePlayer = shouldHidePlayer
+            )
+        },
+        attacker = situation.attacker?.let {
+            VillageParticipantView(
+                village = village,
+                villageParticipantId = it.id,
+                players = players,
+                charas = charas,
+                shouldHidePlayer = shouldHidePlayer
+            )
+        },
         targetList = situation.targetList.map {
             VillageParticipantView(
                 village = village,

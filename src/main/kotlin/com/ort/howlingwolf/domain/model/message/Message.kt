@@ -48,8 +48,14 @@ data class Message(
         fun createAttackPrivateMessage(text: String, villageDayId: Int): Message =
             createSystemMessage(MessageType(CDef.MessageType.襲撃結果), text, villageDayId)
 
+        fun createFanaticPrivateMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.狂信者人狼確認メッセージ), text, villageDayId)
+
         fun createMasonPrivateMessage(text: String, villageDayId: Int): Message =
             createSystemMessage(MessageType(CDef.MessageType.共有相互確認メッセージ), text, villageDayId)
+
+        fun createFoxPrivateMessage(text: String, villageDayId: Int): Message =
+            createSystemMessage(MessageType(CDef.MessageType.妖狐メッセージ), text, villageDayId)
 
         // ===================================================================================
         //                                                                        Assist Logic

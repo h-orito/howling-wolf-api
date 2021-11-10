@@ -20,7 +20,12 @@ data class VillageParticipants(
         )
     }
 
-    fun addParticipant(charaId: Int, playerId: Int, skillRequest: SkillRequest, isSpectator: Boolean): VillageParticipants {
+    fun addParticipant(
+        charaId: Int,
+        playerId: Int,
+        skillRequest: SkillRequest,
+        isSpectator: Boolean
+    ): VillageParticipants {
         return this.copy(
             count = count + 1,
             memberList = memberList + VillageParticipant(
@@ -93,8 +98,18 @@ data class VillageParticipants(
         )
     }
 
+    // 後追い
+    fun suicide(participantId: Int, villageDay: VillageDay): VillageParticipants {
+        return this.copy(
+            memberList = this.memberList.map {
+                if (it.id == participantId) it.suicide(villageDay) else it.copy()
+            }
+        )
+    }
+
     // 勝敗設定
-    fun winLose(winCamo: Camp): VillageParticipants = this.copy(memberList = this.memberList.map { it.winLose(winCamo) })
+    fun winLose(winCamo: Camp): VillageParticipants =
+        this.copy(memberList = this.memberList.map { it.winLose(winCamo) })
 
     fun member(id: Int): VillageParticipant = memberList.first { it.id == id }
 
@@ -103,6 +118,14 @@ data class VillageParticipants(
         return VillageParticipants(
             count = aliveMembers.size,
             memberList = aliveMembers
+        )
+    }
+
+    fun filterBySkill(skill: Skill): VillageParticipants {
+        val list = memberList.filter { it.skill?.code == skill.code }
+        return copy(
+            count = list.size,
+            memberList = list
         )
     }
 

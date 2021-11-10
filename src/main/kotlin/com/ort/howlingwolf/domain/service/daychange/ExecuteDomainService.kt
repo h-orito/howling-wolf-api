@@ -4,7 +4,10 @@ import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.daychange.DayChange
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.village.Village
+import com.ort.howlingwolf.domain.model.village.VillageDay
+import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.vote.VillageVote
+import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
 import com.ort.howlingwolf.domain.service.vote.VoteDomainService
 import org.springframework.stereotype.Service
 
@@ -38,13 +41,21 @@ class ExecuteDomainService(
         // 得票数トップの参加者リスト
         val maxVotedParticipantIdList = filterMaxVotedParticipantList(votedMap)
         // うち一人を処刑する
-        maxVotedParticipantIdList.shuffled().first().let { executedParticipantId ->
-            // 処刑（突然死していた場合は死因を上書きしない）
-            if (village.participant.member(executedParticipantId).isAlive()) {
-                village = village.executeParticipant(executedParticipantId, village.day.latestDay())
+        val executedParticipantId = getExecutedParticipantId(maxVotedParticipantIdList)
+        // 処刑（突然死していた場合は死因を上書きしない）
+        val executedParticipant = village.participant.member(executedParticipantId)
+        if (executedParticipant.isAlive()) {
+            village = village.executeParticipant(executedParticipantId, village.day.latestDay())
+        }
+        // 処刑メッセージ
+        messages = messages.add(createExecuteMessage(village, executedParticipantId, votedMap, charas))
+
+        // 猫又による道連れ
+        if (executedParticipant.isAlive()) {
+            forceSuicidedParticipant(village, dayChange.votes, executedParticipant)?.let {
+                village = village.divineKillParticipant(it.id, village.day.latestDay())
+                messages = messages.add(createForceSuicideMessage(executedParticipant, it, village.day.latestDay(), charas))
             }
-            // 処刑メッセージ
-            messages = messages.add(createExecuteMessage(village, executedParticipantId, votedMap, charas))
         }
         return dayChange.copy(
             village = village,
@@ -89,5 +100,37 @@ class ExecuteDomainService(
             message,
             village.day.latestDay().id
         )
+    }
+
+    private fun forceSuicidedParticipant(
+        village: Village,
+        votes: VillageVotes,
+        executedParticipant: VillageParticipant
+    ): VillageParticipant? {
+        // 処刑されたのが道連れ役職でなければ何もしない
+        if (!executedParticipant.skill!!.toCdef().isForceDoubleSuicide) return null
+        // 生存している投票者からランダムで1名を道連れにする
+        return votes.filterYesterday(village).list.shuffled().firstOrNull {
+            it.targetId == executedParticipant.id && village.participant.member(it.myselfId).isAlive()
+        }?.let { village.participant.member(it.myselfId) }
+    }
+
+    private fun createForceSuicideMessage(
+        executedParticipant: VillageParticipant,
+        forceSuicidedParticipant: VillageParticipant,
+        latestDay: VillageDay,
+        charas: Charas
+    ): Message {
+        val executedCharaName = charas.chara(executedParticipant.charaId).charaName.fullName()
+        val forceSuicidedCharaName = charas.chara(forceSuicidedParticipant.charaId).charaName.fullName()
+        val message = "${executedCharaName}は、${forceSuicidedCharaName}を道連れにした。"
+        return Message.createPrivateSystemMessage(
+            message,
+            latestDay.id
+        )
+    }
+
+    private fun getExecutedParticipantId(maxVotedParticipantIdList: List<Int>): Int {
+        return maxVotedParticipantIdList.shuffled().first()
     }
 }
