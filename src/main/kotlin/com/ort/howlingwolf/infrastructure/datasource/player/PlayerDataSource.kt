@@ -71,11 +71,12 @@ class PlayerDataSource(
         return Players(list = playerList.map { convertPlayerToSimplePlayer(it) })
     }
 
-    fun update(uid: String, nickname: String, twitterUserName: String) {
+    fun update(uid: String, nickname: String, twitterUserName: String, twitterUserId: String?) {
         val player = Player()
         player.uniqueBy(uid)
         player.nickname = removeSurrogate(nickname)
         player.twitterUserName = twitterUserName
+        twitterUserId?.let { player.registerTrace = "twitterId: $it" }
         playerBhv.update(player)
     }
 

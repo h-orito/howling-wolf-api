@@ -50,7 +50,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.10.7")
     implementation("com.google.firebase:firebase-admin:6.8.1")
     // twitter
-    implementation("org.twitter4j:twitter4j-core:4.0.7")
+    implementation("io.github.redouane59.twitter:twittered:2.13")
     // slack
     implementation("com.slack.api:slack-api-client:1.4.0")
 
