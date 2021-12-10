@@ -4,11 +4,13 @@ import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import com.ort.howlingwolf.infrastructure.datasource.player.PlayerDataSource
+import com.ort.howlingwolf.infrastructure.repository.TweetRepository
 import org.springframework.stereotype.Service
 
 @Service
 class PlayerService(
-    private val playerDataSource: PlayerDataSource
+    private val playerDataSource: PlayerDataSource,
+    private val tweetRepository: TweetRepository
 ) {
 
     fun findPlayer(id: Int): Player = playerDataSource.findPlayer(id)
@@ -20,7 +22,8 @@ class PlayerService(
     fun findPlayers(playerIdList: List<Int>): Players = playerDataSource.findPlayers(playerIdList)
 
     fun updateNickname(user: HowlingWolfUser, nickname: String, twitterUserName: String) {
-        playerDataSource.update(user.uid, nickname, twitterUserName)
+        val twitterUserId = tweetRepository.getUserIdByUsername(twitterUserName)
+        playerDataSource.update(user.uid, nickname, twitterUserName, twitterUserId)
     }
 
     fun updateDetail(uid: String, otherSiteName: String?, introduction: String?) {

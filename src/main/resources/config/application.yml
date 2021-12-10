@@ -26,8 +26,9 @@ server:
     basedir: /var/log/
     accesslog:
       enabled: true
+      directory: access
       suffix: .log
-      prefix: howling-wolf-access_log
+      prefix: access_log
       file-date-format: .yyyy-MM-dd
       max-days: 30
       pattern: '%t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %{X-Forwarded-For}i %D %S %I'
@@ -41,10 +42,10 @@ logging:
   file.name: /var/log/howling-wolf.log
 twitter:
   oauth:
-    consumer-key: ""
-    consumer-secret: ""
-    access-token: ""
-    access-token-secret: ""
+    consumer-key:
+    consumer-secret:
+    access-token:
+    access-token-secret:
 
 firebase:
   adminsdk:
