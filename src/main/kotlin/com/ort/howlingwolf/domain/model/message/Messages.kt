@@ -7,7 +7,8 @@ data class Messages(
     val allPageCount: Int? = null,
     val isExistPrePage: Boolean? = null,
     val isExistNextPage: Boolean? = null,
-    val currentPageNum: Int? = null
+    val currentPageNum: Int? = null,
+    val isLatest: Boolean = false
 ) {
 
     fun add(message: Message): Messages {

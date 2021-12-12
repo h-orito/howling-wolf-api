@@ -31,6 +31,7 @@ class MessageCoordinator(
         pageNum: Int?,
         keyword: String?,
         messageTypeList: List<CDef.MessageType>?,
+        isLatest: Boolean,
         participantIdList: List<Int>?
     ): Messages {
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
@@ -44,6 +45,7 @@ class MessageCoordinator(
             pageSize = pageSize,
             pageNum = pageNum,
             keyword = keyword,
+            isLatest = isLatest,
             participantIdList = participantIdList
         )
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id

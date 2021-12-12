@@ -13,6 +13,7 @@ import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
+import org.dbflute.cbean.result.PagingResultBean
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import java.time.ZoneOffset
@@ -47,41 +48,45 @@ class MessageDataSource(
             return Messages(listOf())
         }
 
-        return if (query.isPaging()) {
-            val messageList = messageBhv.selectPage {
-                queryMessage(
-                    cb = it,
-                    villageId = villageId,
-                    villageDayId = villageDayId,
-                    query = query
-                )
-                it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
-                it.paging(query.pageSize!!, query.pageNum!!)
-            }
-            Messages(
-                list = messageList.map { convertMessageToMessage(it) },
-                allRecordCount = messageList.allRecordCount,
-                allPageCount = messageList.allPageCount,
-                isExistPrePage = messageList.existsPreviousPage(),
-                isExistNextPage = messageList.existsNextPage(),
-                currentPageNum = messageList.currentPageNumber
+        val messagePage = messageBhv.selectPage {
+            queryPaging(it, query)
+            queryMessage(
+                cb = it,
+                villageId = villageId,
+                villageDayId = villageDayId,
+                query = query
             )
-
-        } else {
-            val messageList = messageBhv.selectList {
-                queryMessage(
-                    cb = it,
-                    villageId = villageId,
-                    villageDayId = villageDayId,
-                    query = query
-                )
+            if (query.isLatest) {
+                it.query().addOrderBy_MessageUnixtimestampMilli_Desc()
+            } else {
                 it.query().addOrderBy_MessageUnixtimestampMilli_Asc()
             }
-            Messages(
-                list = messageList.map { convertMessageToMessage(it) }
-            )
         }
+        return if (query.isLatest) mapMessagesWithLatest(messagePage)
+        else mapMessagesWithPaging(messagePage)
     }
+
+    private fun mapMessagesWithPaging(messagePage: PagingResultBean<Message>): Messages =
+        Messages(
+            list = messagePage.map { convertMessageToMessage(it) },
+            allPageCount = messagePage.allPageCount,
+            allRecordCount = messagePage.allRecordCount,
+            isExistPrePage = messagePage.existsPreviousPage(),
+            isExistNextPage = messagePage.existsNextPage(),
+            currentPageNum = messagePage.currentPageNumber,
+            isLatest = false
+        )
+
+    private fun mapMessagesWithLatest(messagePage: PagingResultBean<Message>): Messages =
+        Messages(
+            list = messagePage.reversed().map { convertMessageToMessage(it) },
+            allPageCount = messagePage.allPageCount,
+            allRecordCount = messagePage.allRecordCount,
+            isExistPrePage = messagePage.existsNextPage(), // 逆順にしているので
+            isExistNextPage = false, // 最新なので次はなし
+            currentPageNum = null,
+            isLatest = true
+        )
 
     /**
      * 最新発言日時取得
@@ -106,7 +111,8 @@ class MessageDataSource(
             participantIdList = null,
             includeMonologue = false,
             includeSecret = false,
-            includePrivateAbility = false
+            includePrivateAbility = false,
+            isLatest = false
         )
         return messageBhv.selectEntityWithDeletedCheck() {
             queryMessage(it, villageId, null, query)
@@ -175,7 +181,12 @@ class MessageDataSource(
 
         // 何回目の発言か
         if (message.content.type.shouldSetCount()) {
-            val count: Int = selectMessageTypeCount(villageId, message.time.villageDayId, messageTypeCode, message.fromVillageParticipantId)
+            val count: Int = selectMessageTypeCount(
+                villageId,
+                message.time.villageDayId,
+                messageTypeCode,
+                message.fromVillageParticipantId
+            )
             mes.messageCount = count + 1
         }
 
@@ -273,9 +284,24 @@ class MessageDataSource(
                     // 何もしない
                 } else {
                     cb.orScopeQuery { orCB ->
-                        if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
-                        if (query.includeSecret) orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
-                        if (query.includePrivateAbility) orCB.orScopeQueryAndPart { andCB -> queryMyPrivateAbility(andCB, participantId) }
+                        if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB ->
+                            queryMyMonologue(
+                                andCB,
+                                participantId
+                            )
+                        }
+                        if (query.includeSecret) orCB.orScopeQueryAndPart { andCB ->
+                            querySecretSayToMe(
+                                andCB,
+                                participantId
+                            )
+                        }
+                        if (query.includePrivateAbility) orCB.orScopeQueryAndPart { andCB ->
+                            queryMyPrivateAbility(
+                                andCB,
+                                participantId
+                            )
+                        }
                     }
                 }
             }
@@ -287,14 +313,31 @@ class MessageDataSource(
             else {
                 cb.orScopeQuery { orCB ->
                     orCB.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
-                    if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, participantId) }
-                    if (query.includeSecret) orCB.orScopeQueryAndPart { andCB -> querySecretSayToMe(andCB, participantId) }
-                    if (query.includePrivateAbility) orCB.orScopeQueryAndPart { andCB -> queryMyPrivateAbility(andCB, participantId) }
+                    if (query.includeMonologue) orCB.orScopeQueryAndPart { andCB ->
+                        queryMyMonologue(
+                            andCB,
+                            participantId
+                        )
+                    }
+                    if (query.includeSecret) orCB.orScopeQueryAndPart { andCB ->
+                        querySecretSayToMe(
+                            andCB,
+                            participantId
+                        )
+                    }
+                    if (query.includePrivateAbility) orCB.orScopeQueryAndPart { andCB ->
+                        queryMyPrivateAbility(
+                            andCB,
+                            participantId
+                        )
+                    }
                 }
             }
         }
         query.from?.let { cb.query().setMessageUnixtimestampMilli_GreaterThan(it) }
-        query.keyword?.let { cb.query().setMessageContent_LikeSearch(it) { op -> op.splitByBlank().likeContain().asOrSplit() } }
+        query.keyword?.let {
+            cb.query().setMessageContent_LikeSearch(it) { op -> op.splitByBlank().likeContain().asOrSplit() }
+        }
         if (!query.participantIdList.isNullOrEmpty()) cb.query().setVillagePlayerId_InScope(query.participantIdList)
     }
 
@@ -311,5 +354,15 @@ class MessageDataSource(
     private fun querySecretSayToMe(cb: MessageCB, id: Int) {
         cb.query().setToVillagePlayerId_Equal(id)
         cb.query().setMessageTypeCode_Equal(CDef.MessageType.秘話.code())
+    }
+
+    private fun queryPaging(cb: MessageCB, query: MessageQuery) {
+        when {
+            !query.isPaging() -> cb.paging(100000, 1)
+            query.isLatest -> cb.paging(query.pageSize!!, 1)
+            query.pageNum != null && query.pageSize != null -> cb.paging(query.pageSize, query.pageNum)
+            query.pageSize != null -> cb.paging(query.pageSize, 100000)
+            else -> cb.paging(100000, 1)
+        }
     }
 }

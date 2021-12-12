@@ -12,6 +12,7 @@ data class MessagesView(
     val existPrePage: Boolean?,
     val existNextPage: Boolean?,
     val currentPageNum: Int?,
+    val isLatest: Boolean?,
     val todayMessageCountMap: Map<Int, Int>
 ) {
     constructor(
@@ -35,6 +36,7 @@ data class MessagesView(
         existPrePage = messages.isExistPrePage,
         existNextPage = messages.isExistNextPage,
         currentPageNum = messages.currentPageNum,
+        isLatest = messages.isLatest,
         todayMessageCountMap = convertToMessageCountMap(village, todayMessages)
     )
 
