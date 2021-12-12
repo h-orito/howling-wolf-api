@@ -502,7 +502,8 @@ data class Village(
             startDatetime: LocalDateTime,
             silentHours: Int?,
             availableDummySkill: Boolean,
-            forBeginner: Boolean
+            forBeginner: Boolean,
+            canSkillRequest: Boolean
         ): Village {
             return Village(
                 id = 1, // dummy
@@ -514,7 +515,8 @@ data class Village(
                     startDatetime,
                     silentHours,
                     availableDummySkill,
-                    forBeginner
+                    forBeginner,
+                    canSkillRequest
                 ),
                 participant = VillageParticipants(
                     count = 0,

@@ -26,7 +26,8 @@ class AutogenerateVillageDataSource(
                 val organize =
                     autogenerateOrganizeMap[currentVillageId % autogenerateOrganizeMap.size]!!.first()
                 val time = autogenerateTimeMap[currentVillageId % autogenerateTimeMap.size]!!.first()
-                convertToReservedVillage(organize, time, currentVillageId)
+                val canSkillRequest = currentVillageId % 3 != 0
+                convertToReservedVillage(organize, time, currentVillageId, canSkillRequest)
             }
         )
     }
@@ -37,14 +38,16 @@ class AutogenerateVillageDataSource(
     private fun convertToReservedVillage(
         organize: AutogenerateOrganize,
         time: AutogenerateTime,
-        currentVillageId: Int
+        currentVillageId: Int,
+        canSkillRequest: Boolean
     ): ReservedVillage {
         return ReservedVillage(
             startTime = LocalTime.parse(time.startTime, DateTimeFormatter.ofPattern("HHmm")),
             organization = organize.organization,
             silentHours = time.silentHours,
             availableDummySkill = organize.isAvailableDummySkill,
-            forBeginner = currentVillageId % 3 == 0
+            forBeginner = currentVillageId % 3 == 0,
+            canSkillRequest = canSkillRequest
         )
     }
 }

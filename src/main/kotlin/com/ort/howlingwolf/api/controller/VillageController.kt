@@ -163,7 +163,8 @@ class VillageController(
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
-        val todayMessages = messageService.findMessages(village.id, villageDayId, MessageQuery(listOf(CDef.MessageType.通常発言)))
+        val todayMessages =
+            messageService.findMessages(village.id, villageDayId, MessageQuery(listOf(CDef.MessageType.通常発言)))
         return MessagesView(
             messages = messages,
             village = village,
@@ -208,7 +209,8 @@ class VillageController(
             body.startDatetime!!,
             body.silentHours,
             body.availableDummySkill!!,
-            body.forBeginner!!
+            body.forBeginner!!,
+            true
         )
         val villageId: Int = villageCoordinator.registerVillage(village, user)
         return VillageRegisterView(villageId = villageId)

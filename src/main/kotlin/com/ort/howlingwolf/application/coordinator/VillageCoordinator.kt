@@ -146,7 +146,8 @@ class VillageCoordinator(
                 startDatetime = startDatetime,
                 silentHours = nextVillage.silentHours,
                 availableDummySkill = nextVillage.availableDummySkill,
-                forBeginner = nextVillage.forBeginner
+                forBeginner = nextVillage.forBeginner,
+                canSkillRequest = nextVillage.canSkillRequest
             )
         )
         // ツイート

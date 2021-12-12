@@ -25,10 +25,13 @@ class PlayerDataSourceTest : HowlingWolfTest() {
     //                                                                           =========
     @Autowired
     lateinit var playerBhv: PlayerBhv
+
     @Autowired
     lateinit var villageBhv: VillageBhv
+
     @Autowired
     lateinit var villagePlayerBhv: VillagePlayerBhv
+
     @Autowired
     lateinit var playerDataSource: PlayerDataSource
 
@@ -98,7 +101,7 @@ class PlayerDataSourceTest : HowlingWolfTest() {
         val twitterUserName = "after_u_n"
 
         // ## Act ##
-        playerDataSource.update(player.uid, nickname, twitterUserName)
+        playerDataSource.update(player.uid, nickname, twitterUserName, "1")
 
         // ## Assert ##
         val playerByUid = playerDataSource.findPlayer(player.uid)

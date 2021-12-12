@@ -21,7 +21,8 @@ data class VillageSettings(
             startDatetime: LocalDateTime,
             silentHours: Int?,
             availableDummySkill: Boolean,
-            forBeginner: Boolean
+            forBeginner: Boolean,
+            canSkillRequest: Boolean
         ): VillageSettings {
             val personNum = organization.length
             return VillageSettings(
@@ -45,7 +46,7 @@ data class VillageSettings(
                 organizations = VillageOrganizations(mapOf(personNum to organization)),
                 rules = VillageRules(
                     openVote = false,
-                    availableSkillRequest = true,
+                    availableSkillRequest = canSkillRequest,
                     availableSpectate = false,
                     openSkillInGrave = false,
                     visibleGraveMessage = false,

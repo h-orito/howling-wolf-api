@@ -7,5 +7,6 @@ data class ReservedVillage(
     val organization: String,
     val silentHours: Int,
     val availableDummySkill: Boolean,
-    val forBeginner: Boolean
+    val forBeginner: Boolean,
+    val canSkillRequest: Boolean
 )

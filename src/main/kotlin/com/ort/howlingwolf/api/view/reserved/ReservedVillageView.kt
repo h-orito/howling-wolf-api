@@ -10,7 +10,8 @@ data class ReservedVillageView(
     val sayableStart: LocalTime,
     val sayableEnd: LocalTime,
     val availableDummySkill: Boolean,
-    val forBeginner: Boolean
+    val forBeginner: Boolean,
+    val canSkillRequest: Boolean
 ) {
     constructor(
         reservedVillage: ReservedVillage
@@ -21,6 +22,7 @@ data class ReservedVillageView(
         sayableStart = reservedVillage.startTime.plusHours(reservedVillage.silentHours.toLong()),
         sayableEnd = reservedVillage.startTime,
         availableDummySkill = reservedVillage.availableDummySkill,
-        forBeginner = reservedVillage.forBeginner
+        forBeginner = reservedVillage.forBeginner,
+        canSkillRequest = reservedVillage.canSkillRequest
     )
 }
