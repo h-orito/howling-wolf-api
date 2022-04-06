@@ -248,6 +248,11 @@ class VillageCoordinator(
             message = message,
             isSpectate = isSpectate
         )
+        // IPアドレスが重複している人がいたら通知
+        val ipAddresses = village.notDummyParticipant().memberList.mapNotNull { it.ipAddress }
+        if (ipAddresses.size != ipAddresses.toSet().size) {
+            slackRepository.postToSlack(villageId, "IPアドレス重複検出")
+        }
     }
 
     /**

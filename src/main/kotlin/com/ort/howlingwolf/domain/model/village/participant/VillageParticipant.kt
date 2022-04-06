@@ -18,7 +18,8 @@ data class VillageParticipant(
     val skill: Skill?,
     val skillRequest: SkillRequest,
     val isWin: Boolean?,
-    val comingOuts: ComingOuts
+    val comingOuts: ComingOuts,
+    val ipAddress: String? = null
 ) {
     // ===================================================================================
     //                                                                                read
