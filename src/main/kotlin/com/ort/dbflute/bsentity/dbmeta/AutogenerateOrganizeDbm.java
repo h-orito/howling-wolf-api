@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of AUTOGENERATE_ORGANIZE. (Singleton)
+ * The DB meta of autogenerate_organize. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class AutogenerateOrganizeDbm extends AbstractDBMeta {
@@ -56,7 +56,7 @@ public class AutogenerateOrganizeDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "AUTOGENERATE_ORGANIZE";
+    protected final String _tableDbName = "autogenerate_organize";
     protected final String _tableDispName = "AUTOGENERATE_ORGANIZE";
     protected final String _tablePropertyName = "autogenerateOrganize";
     protected final TableSqlName _tableSqlName = new TableSqlName("AUTOGENERATE_ORGANIZE", _tableDbName);

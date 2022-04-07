@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of VILLAGE_SETTING_ITEM.
+ * The abstract condition-query of village_setting_item.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQu
     }
 
     public String asTableDbName() {
-        return "VILLAGE_SETTING_ITEM";
+        return "village_setting_item";
     }
 
     // ===================================================================================
@@ -457,8 +457,8 @@ public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQu
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select VILLAGE_SETTING_ITEM_CODE from VILLAGE_SETTING where ...)} <br>
-     * VILLAGE_SETTING by VILLAGE_SETTING_ITEM_CODE, named 'villageSettingAsOne'.
+     * {exists (select VILLAGE_SETTING_ITEM_CODE from village_setting where ...)} <br>
+     * village_setting by VILLAGE_SETTING_ITEM_CODE, named 'villageSettingAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsVillageSetting</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     settingCB.query().set...
@@ -476,8 +476,8 @@ public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQu
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select VILLAGE_SETTING_ITEM_CODE from VILLAGE_SETTING where ...)} <br>
-     * VILLAGE_SETTING by VILLAGE_SETTING_ITEM_CODE, named 'villageSettingAsOne'.
+     * {not exists (select VILLAGE_SETTING_ITEM_CODE from village_setting where ...)} <br>
+     * village_setting by VILLAGE_SETTING_ITEM_CODE, named 'villageSettingAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsVillageSetting</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     settingCB.query().set...
@@ -503,8 +503,8 @@ public abstract class AbstractBsVillageSettingItemCQ extends AbstractConditionQu
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from VILLAGE_SETTING where ...)} <br>
-     * VILLAGE_SETTING by VILLAGE_SETTING_ITEM_CODE, named 'villageSettingAsOne'.
+     * {FOO &lt;= (select max(BAR) from village_setting where ...)} <br>
+     * village_setting by VILLAGE_SETTING_ITEM_CODE, named 'villageSettingAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedVillageSetting()</span>.<span style="color: #CC4747">max</span>(settingCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     settingCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

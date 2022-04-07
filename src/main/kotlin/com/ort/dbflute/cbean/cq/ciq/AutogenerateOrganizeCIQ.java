@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of AUTOGENERATE_ORGANIZE.
+ * The condition-query for in-line of autogenerate_organize.
  * @author DBFlute(AutoGenerator)
  */
 public class AutogenerateOrganizeCIQ extends AbstractBsAutogenerateOrganizeCQ {

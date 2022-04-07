@@ -93,7 +93,8 @@ class DebugController(
                 message = "テストアカウント入村 playerId: ${playerId}",
                 isSpectate = false,
                 firstRequestSkill = randomSkill.toCdef(),
-                secondRequestSkill = randomSkill2.toCdef()
+                secondRequestSkill = randomSkill2.toCdef(),
+                ipAddress = "test account $playerId"
             )
             playerId++
         }

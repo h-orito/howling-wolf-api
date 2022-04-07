@@ -320,7 +320,8 @@ class VillageController(
             message = body.joinMessage!!,
             isSpectate = body.spectator ?: false,
             firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
-            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill)
+            secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
+            ipAddress = user.ipAddress!!
         )
     }
 

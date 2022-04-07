@@ -103,7 +103,7 @@ public abstract class BsAutogenerateOrganize extends AbstractEntity implements D
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "AUTOGENERATE_ORGANIZE";
+        return "autogenerate_organize";
     }
 
     // ===================================================================================

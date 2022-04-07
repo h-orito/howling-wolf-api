@@ -199,7 +199,7 @@ object VillageDataConverter {
                     ComingOut(Skill(it.skillCodeAsSkill))
                 }
             ),
-            ipAddress = vp.registerTrace.split(": ").let { if (it.size > 1) it[1] else null }
+            ipAddresses = vp.villagePlayerAccessInfoList.map { it.ipAddress }
         )
     }
 

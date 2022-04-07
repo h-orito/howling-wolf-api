@@ -20,7 +20,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of AUTOGENERATE_ORGANIZE.
+ * The base condition-bean of autogenerate_organize.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAutogenerateOrganizeCB extends AbstractConditionBean {
@@ -76,7 +76,7 @@ public class BsAutogenerateOrganizeCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "AUTOGENERATE_ORGANIZE";
+        return "autogenerate_organize";
     }
 
     // ===================================================================================
@@ -328,7 +328,7 @@ public class BsAutogenerateOrganizeCB extends AbstractConditionBean {
             columnVillageIdMod(); // PK
         }
         @Override
-        protected String getTableDbName() { return "AUTOGENERATE_ORGANIZE"; }
+        protected String getTableDbName() { return "autogenerate_organize"; }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)

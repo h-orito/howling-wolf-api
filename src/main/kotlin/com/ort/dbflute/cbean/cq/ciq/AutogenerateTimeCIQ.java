@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of AUTOGENERATE_TIME.
+ * The condition-query for in-line of autogenerate_time.
  * @author DBFlute(AutoGenerator)
  */
 public class AutogenerateTimeCIQ extends AbstractBsAutogenerateTimeCQ {

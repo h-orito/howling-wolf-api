@@ -22,7 +22,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of ABILITY.
+ * The base condition-bean of ability.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAbilityCB extends AbstractConditionBean {
@@ -78,7 +78,7 @@ public class BsAbilityCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "ABILITY";
+        return "ability";
     }
 
     // ===================================================================================
@@ -86,9 +86,9 @@ public class BsAbilityCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param abilityTypeCode : PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType. (NotNull)
-     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY. (NotNull)
-     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER. (NotNull)
+     * @param abilityTypeCode : PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
+     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
      * @return this. (NotNull)
      */
     public AbilityCB acceptPK(CDef.AbilityType abilityTypeCode, Integer villageDayId, Integer villagePlayerId) {
@@ -397,22 +397,22 @@ public class BsAbilityCB extends AbstractConditionBean {
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+         * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnAbilityTypeCode() { return doColumn("ABILITY_TYPE_CODE"); }
         /**
-         * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+         * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageDayId() { return doColumn("VILLAGE_DAY_ID"); }
         /**
-         * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+         * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+         * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnTargetVillagePlayerId() { return doColumn("TARGET_VILLAGE_PLAYER_ID"); }
@@ -449,7 +449,7 @@ public class BsAbilityCB extends AbstractConditionBean {
             }
         }
         @Override
-        protected String getTableDbName() { return "ABILITY"; }
+        protected String getTableDbName() { return "ability"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * ABILITY_TYPE by my ABILITY_TYPE_CODE, named 'abilityType'.

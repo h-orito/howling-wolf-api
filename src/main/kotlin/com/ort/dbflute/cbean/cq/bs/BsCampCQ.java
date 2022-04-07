@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of CAMP.
+ * The base condition-query of camp.
  * @author DBFlute(AutoGenerator)
  */
 public class BsCampCQ extends AbstractBsCampCQ {
@@ -35,7 +35,7 @@ public class BsCampCQ extends AbstractBsCampCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from CAMP) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from camp) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsCampCQ extends AbstractBsCampCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join CAMP on ... and FOO = [value] ...}
+     * {select ... from ... left outer join camp on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

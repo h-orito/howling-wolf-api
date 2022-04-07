@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of AUTOGENERATE_TIME.
+ * The abstract condition-query of autogenerate_time.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsAutogenerateTimeCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsAutogenerateTimeCQ extends AbstractConditionQuer
     }
 
     public String asTableDbName() {
-        return "AUTOGENERATE_TIME";
+        return "autogenerate_time";
     }
 
     // ===================================================================================

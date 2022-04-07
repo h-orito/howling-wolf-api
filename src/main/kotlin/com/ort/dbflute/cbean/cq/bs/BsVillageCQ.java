@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of VILLAGE.
+ * The base condition-query of village.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVillageCQ extends AbstractBsVillageCQ {
@@ -35,7 +35,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from VILLAGE) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from village) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join VILLAGE on ... and FOO = [value] ...}
+     * {select ... from ... left outer join village on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -177,14 +177,14 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
     public BsVillageCQ addOrderBy_CreatePlayerId_Asc() { regOBA("CREATE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * CREATE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
     public BsVillageCQ addOrderBy_CreatePlayerId_Desc() { regOBD("CREATE_PLAYER_ID"); return this; }
@@ -197,14 +197,14 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to VILLAGE_STATUS, classification=VillageStatus}
+     * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
      * @return this. (NotNull)
      */
     public BsVillageCQ addOrderBy_VillageStatusCode_Asc() { regOBA("VILLAGE_STATUS_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to VILLAGE_STATUS, classification=VillageStatus}
+     * VILLAGE_STATUS_CODE: {IX, NotNull, VARCHAR(20), FK to village_status, classification=VillageStatus}
      * @return this. (NotNull)
      */
     public BsVillageCQ addOrderBy_VillageStatusCode_Desc() { regOBD("VILLAGE_STATUS_CODE"); return this; }
@@ -237,14 +237,14 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to CAMP, classification=Camp}
+     * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to camp, classification=Camp}
      * @return this. (NotNull)
      */
     public BsVillageCQ addOrderBy_WinCampCode_Asc() { regOBA("WIN_CAMP_CODE"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to CAMP, classification=Camp}
+     * WIN_CAMP_CODE: {IX, VARCHAR(20), FK to camp, classification=Camp}
      * @return this. (NotNull)
      */
     public BsVillageCQ addOrderBy_WinCampCode_Desc() { regOBD("WIN_CAMP_CODE"); return this; }
@@ -398,7 +398,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
         return xgetQueRlMap(prop);
     }
     protected PlayerCQ xcreateQueryPlayer() {
-        String nrp = xresolveNRP("VILLAGE", "player"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("village", "player"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new PlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "player", nrp);
     }
     protected void xsetupOuterJoinPlayer() { xregOutJo("player"); }
@@ -418,7 +418,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
         return xgetQueRlMap(prop);
     }
     protected VillageStatusCQ xcreateQueryVillageStatus() {
-        String nrp = xresolveNRP("VILLAGE", "villageStatus"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("village", "villageStatus"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new VillageStatusCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "villageStatus", nrp);
     }
     protected void xsetupOuterJoinVillageStatus() { xregOutJo("villageStatus"); }
@@ -438,7 +438,7 @@ public class BsVillageCQ extends AbstractBsVillageCQ {
         return xgetQueRlMap(prop);
     }
     protected CampCQ xcreateQueryCamp() {
-        String nrp = xresolveNRP("VILLAGE", "camp"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("village", "camp"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new CampCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "camp", nrp);
     }
     protected void xsetupOuterJoinCamp() { xregOutJo("camp"); }

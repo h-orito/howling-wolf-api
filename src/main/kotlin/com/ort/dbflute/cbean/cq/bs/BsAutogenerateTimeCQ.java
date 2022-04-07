@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of AUTOGENERATE_TIME.
+ * The base condition-query of autogenerate_time.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAutogenerateTimeCQ extends AbstractBsAutogenerateTimeCQ {
@@ -35,7 +35,7 @@ public class BsAutogenerateTimeCQ extends AbstractBsAutogenerateTimeCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from AUTOGENERATE_TIME) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from autogenerate_time) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsAutogenerateTimeCQ extends AbstractBsAutogenerateTimeCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join AUTOGENERATE_TIME on ... and FOO = [value] ...}
+     * {select ... from ... left outer join autogenerate_time on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

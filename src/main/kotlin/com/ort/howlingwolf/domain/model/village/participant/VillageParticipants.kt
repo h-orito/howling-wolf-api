@@ -24,7 +24,8 @@ data class VillageParticipants(
         charaId: Int,
         playerId: Int,
         skillRequest: SkillRequest,
-        isSpectator: Boolean
+        isSpectator: Boolean,
+        ipAddress: String
     ): VillageParticipants {
         return this.copy(
             count = count + 1,
@@ -38,7 +39,8 @@ data class VillageParticipants(
                 skill = null,
                 skillRequest = skillRequest,
                 isWin = null,
-                comingOuts = ComingOuts()
+                comingOuts = ComingOuts(),
+                ipAddresses = listOf(ipAddress)
             )
         )
     }
@@ -103,6 +105,15 @@ data class VillageParticipants(
         return this.copy(
             memberList = this.memberList.map {
                 if (it.id == participantId) it.suicide(villageDay) else it.copy()
+            }
+        )
+    }
+
+    // IPアドレス追加
+    fun addIpAddress(id: Int, ipAddress: String): VillageParticipants {
+        return this.copy(
+            memberList = this.memberList.map {
+                if (it.id == id) it.addIpAddress(ipAddress) else it.copy()
             }
         )
     }

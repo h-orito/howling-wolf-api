@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of BLACKLIST_PLAYER.
+ * The abstract condition-query of blacklist_player.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
     }
 
     public String asTableDbName() {
-        return "BLACKLIST_PLAYER";
+        return "blacklist_player";
     }
 
     // ===================================================================================
@@ -174,7 +174,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerId The value of fromPlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setFromPlayerId_Equal(Integer fromPlayerId) {
@@ -187,7 +187,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerId The value of fromPlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setFromPlayerId_NotEqual(Integer fromPlayerId) {
@@ -200,7 +200,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerId The value of fromPlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setFromPlayerId_GreaterThan(Integer fromPlayerId) {
@@ -209,7 +209,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerId The value of fromPlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setFromPlayerId_LessThan(Integer fromPlayerId) {
@@ -218,7 +218,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerId The value of fromPlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setFromPlayerId_GreaterEqual(Integer fromPlayerId) {
@@ -227,7 +227,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerId The value of fromPlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setFromPlayerId_LessEqual(Integer fromPlayerId) {
@@ -238,7 +238,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param minNumber The min number of fromPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of fromPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -251,7 +251,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param minNumber The min number of fromPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of fromPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -262,7 +262,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerIdList The collection of fromPlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setFromPlayerId_InScope(Collection<Integer> fromPlayerIdList) {
@@ -275,7 +275,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @param fromPlayerIdList The collection of fromPlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setFromPlayerId_NotInScope(Collection<Integer> fromPlayerIdList) {
@@ -291,7 +291,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerId The value of toPlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setToPlayerId_Equal(Integer toPlayerId) {
@@ -304,7 +304,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerId The value of toPlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setToPlayerId_NotEqual(Integer toPlayerId) {
@@ -317,7 +317,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerId The value of toPlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setToPlayerId_GreaterThan(Integer toPlayerId) {
@@ -326,7 +326,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerId The value of toPlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setToPlayerId_LessThan(Integer toPlayerId) {
@@ -335,7 +335,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerId The value of toPlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setToPlayerId_GreaterEqual(Integer toPlayerId) {
@@ -344,7 +344,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerId The value of toPlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setToPlayerId_LessEqual(Integer toPlayerId) {
@@ -355,7 +355,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param minNumber The min number of toPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of toPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -368,7 +368,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param minNumber The min number of toPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of toPlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -379,7 +379,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerIdList The collection of toPlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setToPlayerId_InScope(Collection<Integer> toPlayerIdList) {
@@ -392,7 +392,7 @@ public abstract class AbstractBsBlacklistPlayerCQ extends AbstractConditionQuery
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @param toPlayerIdList The collection of toPlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setToPlayerId_NotInScope(Collection<Integer> toPlayerIdList) {

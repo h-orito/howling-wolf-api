@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of AUTOGENERATE_ORGANIZE.
+ * The abstract condition-query of autogenerate_organize.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsAutogenerateOrganizeCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsAutogenerateOrganizeCQ extends AbstractCondition
     }
 
     public String asTableDbName() {
-        return "AUTOGENERATE_ORGANIZE";
+        return "autogenerate_organize";
     }
 
     // ===================================================================================

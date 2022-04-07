@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of NOONNIGHT. (Singleton)
+ * The DB meta of noonnight. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class NoonnightDbm extends AbstractDBMeta {
@@ -59,7 +59,7 @@ public class NoonnightDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "NOONNIGHT";
+    protected final String _tableDbName = "noonnight";
     protected final String _tableDispName = "NOONNIGHT";
     protected final String _tablePropertyName = "noonnight";
     protected final TableSqlName _tableSqlName = new TableSqlName("NOONNIGHT", _tableDbName);

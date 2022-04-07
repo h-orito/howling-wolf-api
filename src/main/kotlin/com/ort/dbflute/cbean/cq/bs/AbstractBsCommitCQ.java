@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of COMMIT.
+ * The abstract condition-query of commit.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "COMMIT";
+        return "commit";
     }
 
     // ===================================================================================
@@ -45,7 +45,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
     //                                                                               =====
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_Equal(Integer villagePlayerId) {
@@ -58,7 +58,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
@@ -71,7 +71,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
@@ -80,7 +80,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
@@ -89,7 +89,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
@@ -98,7 +98,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
@@ -109,7 +109,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -122,7 +122,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -133,7 +133,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
@@ -146,7 +146,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
@@ -159,13 +159,13 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      */
     public void setVillagePlayerId_IsNull() { regVillagePlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, NotNull, INT UNSIGNED(10), FK to village_player}
      */
     public void setVillagePlayerId_IsNotNull() { regVillagePlayerId(CK_ISNN, DOBJ); }
 
@@ -174,7 +174,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_Equal(Integer villageDayId) {
@@ -187,7 +187,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_NotEqual(Integer villageDayId) {
@@ -200,7 +200,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_GreaterThan(Integer villageDayId) {
@@ -209,7 +209,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_LessThan(Integer villageDayId) {
@@ -218,7 +218,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_GreaterEqual(Integer villageDayId) {
@@ -227,7 +227,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_LessEqual(Integer villageDayId) {
@@ -238,7 +238,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -251,7 +251,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -262,7 +262,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayIdList The collection of villageDayId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageDayId_InScope(Collection<Integer> villageDayIdList) {
@@ -275,7 +275,7 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayIdList The collection of villageDayId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageDayId_NotInScope(Collection<Integer> villageDayIdList) {
@@ -288,13 +288,13 @@ public abstract class AbstractBsCommitCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      */
     public void setVillageDayId_IsNull() { regVillageDayId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      */
     public void setVillageDayId_IsNotNull() { regVillageDayId(CK_ISNN, DOBJ); }
 

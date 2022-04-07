@@ -20,7 +20,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of AUTOGENERATE_TIME.
+ * The base condition-bean of autogenerate_time.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAutogenerateTimeCB extends AbstractConditionBean {
@@ -76,7 +76,7 @@ public class BsAutogenerateTimeCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "AUTOGENERATE_TIME";
+        return "autogenerate_time";
     }
 
     // ===================================================================================
@@ -328,7 +328,7 @@ public class BsAutogenerateTimeCB extends AbstractConditionBean {
             columnVillageIdMod(); // PK
         }
         @Override
-        protected String getTableDbName() { return "AUTOGENERATE_TIME"; }
+        protected String getTableDbName() { return "autogenerate_time"; }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)

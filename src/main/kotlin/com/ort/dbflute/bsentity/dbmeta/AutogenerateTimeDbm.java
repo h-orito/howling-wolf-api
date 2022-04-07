@@ -13,7 +13,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of AUTOGENERATE_TIME. (Singleton)
+ * The DB meta of autogenerate_time. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class AutogenerateTimeDbm extends AbstractDBMeta {
@@ -56,7 +56,7 @@ public class AutogenerateTimeDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "AUTOGENERATE_TIME";
+    protected final String _tableDbName = "autogenerate_time";
     protected final String _tableDispName = "AUTOGENERATE_TIME";
     protected final String _tablePropertyName = "autogenerateTime";
     protected final TableSqlName _tableSqlName = new TableSqlName("AUTOGENERATE_TIME", _tableDbName);

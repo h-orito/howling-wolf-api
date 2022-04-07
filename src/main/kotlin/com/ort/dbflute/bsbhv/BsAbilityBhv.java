@@ -68,7 +68,7 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
     /** {@inheritDoc} */
     public AbilityDbm asDBMeta() { return AbilityDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "ABILITY"; }
+    public String asTableDbName() { return "ability"; }
 
     // ===================================================================================
     //                                                                        New Instance
@@ -160,9 +160,9 @@ public abstract class BsAbilityBhv extends AbstractBehaviorWritable<Ability, Abi
 
     /**
      * Select the entity by the primary-key value.
-     * @param abilityTypeCode : PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType. (NotNull)
-     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY. (NotNull)
-     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER. (NotNull)
+     * @param abilityTypeCode : PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType. (NotNull)
+     * @param villageDayId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_day. (NotNull)
+     * @param villagePlayerId : PK, IX, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.

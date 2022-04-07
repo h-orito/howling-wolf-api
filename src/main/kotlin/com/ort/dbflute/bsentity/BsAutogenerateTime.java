@@ -103,7 +103,7 @@ public abstract class BsAutogenerateTime extends AbstractEntity implements Domai
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "AUTOGENERATE_TIME";
+        return "autogenerate_time";
     }
 
     // ===================================================================================

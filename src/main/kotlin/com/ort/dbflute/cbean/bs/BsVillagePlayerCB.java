@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.cq.*;
 import com.ort.dbflute.cbean.nss.*;
 
 /**
- * The base condition-bean of VILLAGE_PLAYER.
+ * The base condition-bean of village_player.
  * @author DBFlute(AutoGenerator)
  */
 public class BsVillagePlayerCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "VILLAGE_PLAYER";
+        return "village_player";
     }
 
     // ===================================================================================
@@ -524,32 +524,32 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to VILLAGE}
+         * VILLAGE_ID: {IX, NotNull, INT UNSIGNED(10), FK to village}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillageId() { return doColumn("VILLAGE_ID"); }
         /**
-         * PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+         * PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to player}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnPlayerId() { return doColumn("PLAYER_ID"); }
         /**
-         * CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA}
+         * CHARA_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCharaId() { return doColumn("CHARA_ID"); }
         /**
-         * SKILL_CODE: {IX, VARCHAR(20), FK to SKILL, classification=Skill}
+         * SKILL_CODE: {IX, VARCHAR(20), FK to skill, classification=Skill}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnSkillCode() { return doColumn("SKILL_CODE"); }
         /**
-         * REQUEST_SKILL_CODE: {IX, VARCHAR(20), FK to SKILL, classification=Skill}
+         * REQUEST_SKILL_CODE: {IX, VARCHAR(20), FK to skill, classification=Skill}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnRequestSkillCode() { return doColumn("REQUEST_SKILL_CODE"); }
         /**
-         * SECOND_REQUEST_SKILL_CODE: {IX, VARCHAR(20), FK to SKILL, classification=Skill}
+         * SECOND_REQUEST_SKILL_CODE: {IX, VARCHAR(20), FK to skill, classification=Skill}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnSecondRequestSkillCode() { return doColumn("SECOND_REQUEST_SKILL_CODE"); }
@@ -564,12 +564,12 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnIsSpectator() { return doColumn("IS_SPECTATOR"); }
         /**
-         * DEAD_REASON_CODE: {IX, VARCHAR(20), FK to DEAD_REASON, classification=DeadReason}
+         * DEAD_REASON_CODE: {IX, VARCHAR(20), FK to dead_reason, classification=DeadReason}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnDeadReasonCode() { return doColumn("DEAD_REASON_CODE"); }
         /**
-         * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_DAY}
+         * DEAD_VILLAGE_DAY_ID: {IX, INT UNSIGNED(10), FK to village_day}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnDeadVillageDayId() { return doColumn("DEAD_VILLAGE_DAY_ID"); }
@@ -637,7 +637,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
             }
         }
         @Override
-        protected String getTableDbName() { return "VILLAGE_PLAYER"; }
+        protected String getTableDbName() { return "village_player"; }
         /**
          * Prepare to specify functions about relation table. <br>
          * CHARA by my CHARA_ID, named 'chara'.
@@ -800,7 +800,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from ABILITY where ...) as FOO_MAX} <br>
+         * {select max(FOO) from ability where ...) as FOO_MAX} <br>
          * ABILITY by TARGET_VILLAGE_PLAYER_ID, named 'abilityByTargetVillagePlayerIdList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -817,7 +817,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from ABILITY where ...) as FOO_MAX} <br>
+         * {select max(FOO) from ability where ...) as FOO_MAX} <br>
          * ABILITY by VILLAGE_PLAYER_ID, named 'abilityByVillagePlayerIdList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(abilityCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -834,7 +834,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from COMING_OUT where ...) as FOO_MAX} <br>
+         * {select max(FOO) from coming_out where ...) as FOO_MAX} <br>
          * COMING_OUT by VILLAGE_PLAYER_ID, named 'comingOutList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(outCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -851,7 +851,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from COMMIT where ...) as FOO_MAX} <br>
+         * {select max(FOO) from commit where ...) as FOO_MAX} <br>
          * COMMIT by VILLAGE_PLAYER_ID, named 'commitList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(commitCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -868,7 +868,24 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from VOTE where ...) as FOO_MAX} <br>
+         * {select max(FOO) from village_player_access_info where ...) as FOO_MAX} <br>
+         * VILLAGE_PLAYER_ACCESS_INFO by VILLAGE_PLAYER_ID, named 'villagePlayerAccessInfoList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(infoCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     infoCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     infoCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, VillagePlayerAccessInfo.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<VillagePlayerAccessInfoCB, VillagePlayerCQ> derivedVillagePlayerAccessInfo() {
+            assertDerived("villagePlayerAccessInfoList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<VillagePlayerAccessInfoCB> sq, VillagePlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveVillagePlayerAccessInfoList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from vote where ...) as FOO_MAX} <br>
          * VOTE by TARGET_VILLAGE_PLAYER_ID, named 'voteByTargetVillagePlayerIdList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -885,7 +902,7 @@ public class BsVillagePlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from VOTE where ...) as FOO_MAX} <br>
+         * {select max(FOO) from vote where ...) as FOO_MAX} <br>
          * VOTE by VILLAGE_PLAYER_ID, named 'voteByVillagePlayerIdList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(voteCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of VILLAGE_SETTING. (Singleton)
+ * The DB meta of village_setting. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class VillageSettingDbm extends AbstractDBMeta {
@@ -77,7 +77,7 @@ public class VillageSettingDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "VILLAGE_SETTING";
+    protected final String _tableDbName = "village_setting";
     protected final String _tableDispName = "VILLAGE_SETTING";
     protected final String _tablePropertyName = "villageSetting";
     protected final TableSqlName _tableSqlName = new TableSqlName("VILLAGE_SETTING", _tableDbName);
@@ -99,12 +99,12 @@ public class VillageSettingDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnUpdateTrace = cci("UPDATE_TRACE", "UPDATE_TRACE", null, null, String.class, "updateTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
 
     /**
-     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE}
+     * VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageId() { return _columnVillageId; }
     /**
-     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to VILLAGE_SETTING_ITEM, classification=VillageSettingItem}
+     * VILLAGE_SETTING_ITEM_CODE: {PK, IX, NotNull, VARCHAR(100), FK to village_setting_item, classification=VillageSettingItem}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageSettingItemCode() { return _columnVillageSettingItemCode; }

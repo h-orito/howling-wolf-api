@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of FACE_TYPE.
+ * The abstract condition-query of face_type.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "FACE_TYPE";
+        return "face_type";
     }
 
     // ===================================================================================
@@ -233,8 +233,8 @@ public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select FACE_TYPE_CODE from CHARA_IMAGE where ...)} <br>
-     * CHARA_IMAGE by FACE_TYPE_CODE, named 'charaImageAsOne'.
+     * {exists (select FACE_TYPE_CODE from chara_image where ...)} <br>
+     * chara_image by FACE_TYPE_CODE, named 'charaImageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsCharaImage</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     imageCB.query().set...
@@ -252,8 +252,8 @@ public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select FACE_TYPE_CODE from CHARA_IMAGE where ...)} <br>
-     * CHARA_IMAGE by FACE_TYPE_CODE, named 'charaImageAsOne'.
+     * {not exists (select FACE_TYPE_CODE from chara_image where ...)} <br>
+     * chara_image by FACE_TYPE_CODE, named 'charaImageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsCharaImage</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     imageCB.query().set...
@@ -279,8 +279,8 @@ public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from CHARA_IMAGE where ...)} <br>
-     * CHARA_IMAGE by FACE_TYPE_CODE, named 'charaImageAsOne'.
+     * {FOO &lt;= (select max(BAR) from chara_image where ...)} <br>
+     * chara_image by FACE_TYPE_CODE, named 'charaImageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedCharaImage()</span>.<span style="color: #CC4747">max</span>(imageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     imageCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>

@@ -43,13 +43,13 @@ import com.ort.dbflute.cbean.*;
  *     CHARA, DEAD_REASON, VILLAGE_DAY, PLAYER, SKILL, VILLAGE
  *
  * [referrer table]
- *     ABILITY, COMING_OUT, COMMIT, VOTE
+ *     ABILITY, COMING_OUT, COMMIT, VILLAGE_PLAYER_ACCESS_INFO, VOTE
  *
  * [foreign property]
  *     chara, deadReason, villageDay, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
  *
  * [referrer property]
- *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, comingOutList, commitList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
+ *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, comingOutList, commitList, villagePlayerAccessInfoList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -67,7 +67,7 @@ public abstract class BsVillagePlayerBhv extends AbstractBehaviorWritable<Villag
     /** {@inheritDoc} */
     public VillagePlayerDbm asDBMeta() { return VillagePlayerDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "VILLAGE_PLAYER"; }
+    public String asTableDbName() { return "village_player"; }
 
     // ===================================================================================
     //                                                                        New Instance
@@ -615,6 +615,70 @@ public abstract class BsVillagePlayerBhv extends AbstractBehaviorWritable<Villag
 
     protected NestedReferrerListGateway<Commit> doLoadCommit(List<VillagePlayer> villagePlayerList, LoadReferrerOption<CommitCB, Commit> option) {
         return helpLoadReferrerInternally(villagePlayerList, option, "commitList");
+    }
+
+    /**
+     * Load referrer of villagePlayerAccessInfoList by the set-upper of referrer. <br>
+     * VILLAGE_PLAYER_ACCESS_INFO by VILLAGE_PLAYER_ID, named 'villagePlayerAccessInfoList'.
+     * <pre>
+     * <span style="color: #0000C0">villagePlayerBhv</span>.<span style="color: #CC4747">loadVillagePlayerAccessInfo</span>(<span style="color: #553000">villagePlayerList</span>, <span style="color: #553000">infoCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">infoCB</span>.setupSelect...
+     *     <span style="color: #553000">infoCB</span>.query().set...
+     *     <span style="color: #553000">infoCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (VillagePlayer villagePlayer : <span style="color: #553000">villagePlayerList</span>) {
+     *     ... = villagePlayer.<span style="color: #CC4747">getVillagePlayerAccessInfoList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillagePlayerId_InScope(pkList);
+     * cb.query().addOrderBy_VillagePlayerId_Asc();
+     * </pre>
+     * @param villagePlayerList The entity list of villagePlayer. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<VillagePlayerAccessInfo> loadVillagePlayerAccessInfo(List<VillagePlayer> villagePlayerList, ReferrerConditionSetupper<VillagePlayerAccessInfoCB> refCBLambda) {
+        xassLRArg(villagePlayerList, refCBLambda);
+        return doLoadVillagePlayerAccessInfo(villagePlayerList, new LoadReferrerOption<VillagePlayerAccessInfoCB, VillagePlayerAccessInfo>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of villagePlayerAccessInfoList by the set-upper of referrer. <br>
+     * VILLAGE_PLAYER_ACCESS_INFO by VILLAGE_PLAYER_ID, named 'villagePlayerAccessInfoList'.
+     * <pre>
+     * <span style="color: #0000C0">villagePlayerBhv</span>.<span style="color: #CC4747">loadVillagePlayerAccessInfo</span>(<span style="color: #553000">villagePlayer</span>, <span style="color: #553000">infoCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">infoCB</span>.setupSelect...
+     *     <span style="color: #553000">infoCB</span>.query().set...
+     *     <span style="color: #553000">infoCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">villagePlayer</span>.<span style="color: #CC4747">getVillagePlayerAccessInfoList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillagePlayerId_InScope(pkList);
+     * cb.query().addOrderBy_VillagePlayerId_Asc();
+     * </pre>
+     * @param villagePlayer The entity of villagePlayer. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<VillagePlayerAccessInfo> loadVillagePlayerAccessInfo(VillagePlayer villagePlayer, ReferrerConditionSetupper<VillagePlayerAccessInfoCB> refCBLambda) {
+        xassLRArg(villagePlayer, refCBLambda);
+        return doLoadVillagePlayerAccessInfo(xnewLRLs(villagePlayer), new LoadReferrerOption<VillagePlayerAccessInfoCB, VillagePlayerAccessInfo>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<VillagePlayerAccessInfo> doLoadVillagePlayerAccessInfo(List<VillagePlayer> villagePlayerList, LoadReferrerOption<VillagePlayerAccessInfoCB, VillagePlayerAccessInfo> option) {
+        return helpLoadReferrerInternally(villagePlayerList, option, "villagePlayerAccessInfoList");
     }
 
     /**

@@ -67,7 +67,7 @@ public abstract class BsAutogenerateTimeBhv extends AbstractBehaviorWritable<Aut
     /** {@inheritDoc} */
     public AutogenerateTimeDbm asDBMeta() { return AutogenerateTimeDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "AUTOGENERATE_TIME"; }
+    public String asTableDbName() { return "autogenerate_time"; }
 
     // ===================================================================================
     //                                                                        New Instance

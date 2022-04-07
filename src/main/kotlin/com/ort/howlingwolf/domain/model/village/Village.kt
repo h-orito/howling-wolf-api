@@ -373,7 +373,8 @@ data class Village(
         charaId: Int,
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
-        isSpectate: Boolean
+        isSpectate: Boolean,
+        ipAddress: String
     ): Village {
         return if (isSpectate) {
             this.copy(
@@ -381,7 +382,8 @@ data class Village(
                     charaId = charaId,
                     playerId = playerId,
                     skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
-                    isSpectator = true
+                    isSpectator = true,
+                    ipAddress = ipAddress
                 )
             )
         } else {
@@ -390,7 +392,8 @@ data class Village(
                     charaId = charaId,
                     playerId = playerId,
                     skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
-                    isSpectator = false
+                    isSpectator = false,
+                    ipAddress = ipAddress
                 )
             )
         }
@@ -422,6 +425,10 @@ data class Village(
     // 後追い
     fun suicideParticipant(participantId: Int): Village =
         this.copy(participant = this.participant.suicide(participantId, day.latestDay()))
+
+    // IPアドレス追加
+    fun addParticipantIpAddress(id: Int, ipAddress: String): Village =
+        this.copy(participant = this.participant.addIpAddress(id, ipAddress))
 
     // 役職割り当て
     fun assignSkill(participants: VillageParticipants): Village {

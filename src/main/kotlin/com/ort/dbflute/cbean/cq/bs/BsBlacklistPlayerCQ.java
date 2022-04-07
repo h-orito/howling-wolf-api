@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of BLACKLIST_PLAYER.
+ * The base condition-query of blacklist_player.
  * @author DBFlute(AutoGenerator)
  */
 public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
@@ -35,7 +35,7 @@ public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from BLACKLIST_PLAYER) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from blacklist_player) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join BLACKLIST_PLAYER on ... and FOO = [value] ...}
+     * {select ... from ... left outer join blacklist_player on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
@@ -101,14 +101,14 @@ public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
     public BsBlacklistPlayerCQ addOrderBy_FromPlayerId_Asc() { regOBA("FROM_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
     public BsBlacklistPlayerCQ addOrderBy_FromPlayerId_Desc() { regOBD("FROM_PLAYER_ID"); return this; }
@@ -121,14 +121,14 @@ public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
     public BsBlacklistPlayerCQ addOrderBy_ToPlayerId_Asc() { regOBA("TO_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return this. (NotNull)
      */
     public BsBlacklistPlayerCQ addOrderBy_ToPlayerId_Desc() { regOBD("TO_PLAYER_ID"); return this; }
@@ -279,7 +279,7 @@ public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
         return xgetQueRlMap(prop);
     }
     protected PlayerCQ xcreateQueryPlayerByFromPlayerId() {
-        String nrp = xresolveNRP("BLACKLIST_PLAYER", "playerByFromPlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("blacklist_player", "playerByFromPlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new PlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "playerByFromPlayerId", nrp);
     }
     protected void xsetupOuterJoinPlayerByFromPlayerId() { xregOutJo("playerByFromPlayerId"); }
@@ -299,7 +299,7 @@ public class BsBlacklistPlayerCQ extends AbstractBsBlacklistPlayerCQ {
         return xgetQueRlMap(prop);
     }
     protected PlayerCQ xcreateQueryPlayerByToPlayerId() {
-        String nrp = xresolveNRP("BLACKLIST_PLAYER", "playerByToPlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        String nrp = xresolveNRP("blacklist_player", "playerByToPlayerId"); String jan = xresolveJAN(nrp, xgetNNLvl());
         return xinitRelCQ(new PlayerCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "playerByToPlayerId", nrp);
     }
     protected void xsetupOuterJoinPlayerByToPlayerId() { xregOutJo("playerByToPlayerId"); }

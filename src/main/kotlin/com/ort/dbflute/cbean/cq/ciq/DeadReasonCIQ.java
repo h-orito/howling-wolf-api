@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of DEAD_REASON.
+ * The condition-query for in-line of dead_reason.
  * @author DBFlute(AutoGenerator)
  */
 public class DeadReasonCIQ extends AbstractBsDeadReasonCQ {

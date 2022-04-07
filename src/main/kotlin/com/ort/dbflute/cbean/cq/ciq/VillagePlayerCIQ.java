@@ -12,7 +12,7 @@ import com.ort.dbflute.cbean.cq.bs.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of VILLAGE_PLAYER.
+ * The condition-query for in-line of village_player.
  * @author DBFlute(AutoGenerator)
  */
 public class VillagePlayerCIQ extends AbstractBsVillagePlayerCQ {
@@ -70,6 +70,8 @@ public class VillagePlayerCIQ extends AbstractBsVillagePlayerCQ {
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillagePlayerId_ExistsReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepVillagePlayerId_ExistsReferrer_VillagePlayerAccessInfoList(VillagePlayerAccessInfoCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillagePlayerId_ExistsReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepVillagePlayerId_ExistsReferrer_VoteByVillagePlayerIdList(VoteCQ sq)
@@ -82,6 +84,8 @@ public class VillagePlayerCIQ extends AbstractBsVillagePlayerCQ {
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillagePlayerId_NotExistsReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepVillagePlayerId_NotExistsReferrer_VillagePlayerAccessInfoList(VillagePlayerAccessInfoCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillagePlayerId_NotExistsReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepVillagePlayerId_NotExistsReferrer_VoteByVillagePlayerIdList(VoteCQ sq)
@@ -93,6 +97,8 @@ public class VillagePlayerCIQ extends AbstractBsVillagePlayerCQ {
     public String keepVillagePlayerId_SpecifyDerivedReferrer_ComingOutList(ComingOutCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillagePlayerId_SpecifyDerivedReferrer_CommitList(CommitCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepVillagePlayerId_SpecifyDerivedReferrer_VillagePlayerAccessInfoList(VillagePlayerAccessInfoCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepVillagePlayerId_SpecifyDerivedReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
@@ -113,6 +119,10 @@ public class VillagePlayerCIQ extends AbstractBsVillagePlayerCQ {
     public String keepVillagePlayerId_QueryDerivedReferrer_CommitList(CommitCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepVillagePlayerId_QueryDerivedReferrer_CommitListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillagePlayerId_QueryDerivedReferrer_VillagePlayerAccessInfoList(VillagePlayerAccessInfoCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepVillagePlayerId_QueryDerivedReferrer_VillagePlayerAccessInfoListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepVillagePlayerId_QueryDerivedReferrer_VoteByTargetVillagePlayerIdList(VoteCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }

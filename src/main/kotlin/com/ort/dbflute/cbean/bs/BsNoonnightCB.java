@@ -21,7 +21,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of NOONNIGHT.
+ * The base condition-bean of noonnight.
  * @author DBFlute(AutoGenerator)
  */
 public class BsNoonnightCB extends AbstractConditionBean {
@@ -77,7 +77,7 @@ public class BsNoonnightCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "NOONNIGHT";
+        return "noonnight";
     }
 
     // ===================================================================================
@@ -309,10 +309,10 @@ public class BsNoonnightCB extends AbstractConditionBean {
             columnNoonnightCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "NOONNIGHT"; }
+        protected String getTableDbName() { return "noonnight"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from VILLAGE_DAY where ...) as FOO_MAX} <br>
+         * {select max(FOO) from village_day where ...) as FOO_MAX} <br>
          * VILLAGE_DAY by NOONNIGHT_CODE, named 'villageDayList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(dayCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

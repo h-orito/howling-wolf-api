@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of ABILITY.
+ * The abstract condition-query of ability.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "ABILITY";
+        return "ability";
     }
 
     // ===================================================================================
@@ -45,7 +45,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
     //                                                                               =====
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      * @param abilityTypeCode The value of abilityTypeCode as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setAbilityTypeCode_Equal(String abilityTypeCode) {
@@ -54,7 +54,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). As AbilityType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType} <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
      * 能力種別
      * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
@@ -92,7 +92,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      * @param abilityTypeCode The value of abilityTypeCode as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setAbilityTypeCode_NotEqual(String abilityTypeCode) {
@@ -101,7 +101,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). As AbilityType. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType} <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
      * 能力種別
      * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
      */
@@ -139,7 +139,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      * @param abilityTypeCodeList The collection of abilityTypeCode as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setAbilityTypeCode_InScope(Collection<String> abilityTypeCodeList) {
@@ -148,7 +148,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in ('a', 'b')}. As AbilityType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType} <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
      * 能力種別
      * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
@@ -162,7 +162,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      * @param abilityTypeCodeList The collection of abilityTypeCode as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     protected void setAbilityTypeCode_NotInScope(Collection<String> abilityTypeCodeList) {
@@ -171,7 +171,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in ('a', 'b')}. As AbilityType. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType} <br>
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType} <br>
      * 能力種別
      * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
@@ -185,13 +185,13 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      */
     public void setAbilityTypeCode_IsNull() { regAbilityTypeCode(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ABILITY_TYPE, classification=AbilityType}
+     * ABILITY_TYPE_CODE: {PK, NotNull, VARCHAR(20), FK to ability_type, classification=AbilityType}
      */
     public void setAbilityTypeCode_IsNotNull() { regAbilityTypeCode(CK_ISNN, DOBJ); }
 
@@ -200,7 +200,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_Equal(Integer villageDayId) {
@@ -213,7 +213,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_NotEqual(Integer villageDayId) {
@@ -226,7 +226,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_GreaterThan(Integer villageDayId) {
@@ -235,7 +235,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_LessThan(Integer villageDayId) {
@@ -244,7 +244,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_GreaterEqual(Integer villageDayId) {
@@ -253,7 +253,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayId The value of villageDayId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillageDayId_LessEqual(Integer villageDayId) {
@@ -264,7 +264,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -277,7 +277,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param minNumber The min number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villageDayId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -288,7 +288,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayIdList The collection of villageDayId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageDayId_InScope(Collection<Integer> villageDayIdList) {
@@ -301,7 +301,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      * @param villageDayIdList The collection of villageDayId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillageDayId_NotInScope(Collection<Integer> villageDayIdList) {
@@ -314,13 +314,13 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      */
     public void setVillageDayId_IsNull() { regVillageDayId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_DAY}
+     * VILLAGE_DAY_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_day}
      */
     public void setVillageDayId_IsNotNull() { regVillageDayId(CK_ISNN, DOBJ); }
 
@@ -329,7 +329,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_Equal(Integer villagePlayerId) {
@@ -342,7 +342,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
@@ -355,7 +355,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
@@ -364,7 +364,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
@@ -373,7 +373,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
@@ -382,7 +382,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
@@ -393,7 +393,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -406,7 +406,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -417,7 +417,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
@@ -430,7 +430,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
@@ -443,13 +443,13 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      */
     public void setVillagePlayerId_IsNull() { regVillagePlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * VILLAGE_PLAYER_ID: {PK, IX, NotNull, INT UNSIGNED(10), FK to village_player}
      */
     public void setVillagePlayerId_IsNotNull() { regVillagePlayerId(CK_ISNN, DOBJ); }
 
@@ -458,7 +458,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerId The value of targetVillagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_Equal(Integer targetVillagePlayerId) {
@@ -471,7 +471,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerId The value of targetVillagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_NotEqual(Integer targetVillagePlayerId) {
@@ -484,7 +484,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_GreaterThan(Integer targetVillagePlayerId) {
@@ -493,7 +493,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerId The value of targetVillagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_LessThan(Integer targetVillagePlayerId) {
@@ -502,7 +502,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerId The value of targetVillagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_GreaterEqual(Integer targetVillagePlayerId) {
@@ -511,7 +511,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerId The value of targetVillagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_LessEqual(Integer targetVillagePlayerId) {
@@ -522,7 +522,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -535,7 +535,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of targetVillagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -546,7 +546,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_InScope(Collection<Integer> targetVillagePlayerIdList) {
@@ -559,7 +559,7 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      * @param targetVillagePlayerIdList The collection of targetVillagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setTargetVillagePlayerId_NotInScope(Collection<Integer> targetVillagePlayerIdList) {
@@ -572,13 +572,13 @@ public abstract class AbstractBsAbilityCQ extends AbstractConditionQuery {
 
     /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      */
     public void setTargetVillagePlayerId_IsNull() { regTargetVillagePlayerId(CK_ISN, DOBJ); }
 
     /**
      * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to VILLAGE_PLAYER}
+     * TARGET_VILLAGE_PLAYER_ID: {IX, INT UNSIGNED(10), FK to village_player}
      */
     public void setTargetVillagePlayerId_IsNotNull() { regTargetVillagePlayerId(CK_ISNN, DOBJ); }
 

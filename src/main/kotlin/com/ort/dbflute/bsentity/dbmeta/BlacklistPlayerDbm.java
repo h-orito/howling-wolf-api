@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of BLACKLIST_PLAYER. (Singleton)
+ * The DB meta of blacklist_player. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class BlacklistPlayerDbm extends AbstractDBMeta {
@@ -70,7 +70,7 @@ public class BlacklistPlayerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "BLACKLIST_PLAYER";
+    protected final String _tableDbName = "blacklist_player";
     protected final String _tableDispName = "BLACKLIST_PLAYER";
     protected final String _tablePropertyName = "blacklistPlayer";
     protected final TableSqlName _tableSqlName = new TableSqlName("BLACKLIST_PLAYER", _tableDbName);
@@ -97,12 +97,12 @@ public class BlacklistPlayerDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnBlacklistPlayerId() { return _columnBlacklistPlayerId; }
     /**
-     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * FROM_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to player}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnFromPlayerId() { return _columnFromPlayerId; }
     /**
-     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER}
+     * TO_PLAYER_ID: {+UQ, IX, NotNull, INT UNSIGNED(10), FK to player}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnToPlayerId() { return _columnToPlayerId; }

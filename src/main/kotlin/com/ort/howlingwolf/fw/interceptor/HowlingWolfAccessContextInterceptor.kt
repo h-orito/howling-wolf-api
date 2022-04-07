@@ -3,6 +3,7 @@ package com.ort.howlingwolf.fw.interceptor
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.HowlingWolfUserInfoUtil
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
+import com.ort.howlingwolf.fw.security.getIpAddress
 import org.dbflute.hook.AccessContext
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.HttpServletRequest
@@ -19,14 +20,10 @@ class HowlingWolfAccessContextInterceptor : HandlerInterceptorAdapter() {
         // [アクセスユーザ]
         val userInfo: HowlingWolfUser? = HowlingWolfUserInfoUtil.getUserInfo()
         val accessUser = userInfo?.username ?: "not_login_user"
-        val xForwardedFor = request.getHeader("X-Forwarded-For")
-        val ipAddress =
-            if (xForwardedFor.isNullOrEmpty()) request.remoteAddr
-            else xForwardedFor
 
         val context = AccessContext()
         context.accessLocalDateTime = accessLocalDateTime
-        context.accessUser = "$accessUser: $ipAddress"
+        context.accessUser = "$accessUser: ${request.getIpAddress()}"
         AccessContext.setAccessContextOnThread(context)
 
         // Handlerメソッドを呼び出す場合はtrueを返却する

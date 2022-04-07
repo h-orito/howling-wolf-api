@@ -93,7 +93,7 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
     /** CHARA_SHORT_NAME: {NotNull, CHAR(1)} */
     protected String _charaShortName;
 
-    /** CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP} */
+    /** CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group} */
     protected Integer _charaGroupId;
 
     /** DEFAULT_JOIN_MESSAGE: {VARCHAR(200)} */
@@ -130,7 +130,7 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "CHARA";
+        return "chara";
     }
 
     // ===================================================================================
@@ -356,7 +356,7 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
     }
 
     /**
-     * [get] CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP} <br>
+     * [get] CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group} <br>
      * キャラクターグループID
      * @return The value of the column 'CHARA_GROUP_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -366,7 +366,7 @@ public abstract class BsChara extends AbstractEntity implements DomainEntity, En
     }
 
     /**
-     * [set] CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to CHARA_GROUP} <br>
+     * [set] CHARA_GROUP_ID: {IX, NotNull, INT UNSIGNED(10), FK to chara_group} <br>
      * キャラクターグループID
      * @param charaGroupId The value of the column 'CHARA_GROUP_ID'. (basically NotNull if update: for the constraint)
      */

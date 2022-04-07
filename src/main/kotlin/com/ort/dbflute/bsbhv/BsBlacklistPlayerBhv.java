@@ -67,7 +67,7 @@ public abstract class BsBlacklistPlayerBhv extends AbstractBehaviorWritable<Blac
     /** {@inheritDoc} */
     public BlacklistPlayerDbm asDBMeta() { return BlacklistPlayerDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "BLACKLIST_PLAYER"; }
+    public String asTableDbName() { return "blacklist_player"; }
 
     // ===================================================================================
     //                                                                        New Instance
@@ -188,8 +188,8 @@ public abstract class BsBlacklistPlayerBhv extends AbstractBehaviorWritable<Blac
 
     /**
      * Select the entity by the unique-key value.
-     * @param fromPlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
-     * @param toPlayerId : +UQ, IX, NotNull, INT UNSIGNED(10), FK to PLAYER. (NotNull)
+     * @param fromPlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
+     * @param toPlayerId : +UQ, IX, NotNull, INT UNSIGNED(10), FK to player. (NotNull)
      * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.

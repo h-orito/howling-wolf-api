@@ -67,7 +67,7 @@ public abstract class BsAutogenerateOrganizeBhv extends AbstractBehaviorWritable
     /** {@inheritDoc} */
     public AutogenerateOrganizeDbm asDBMeta() { return AutogenerateOrganizeDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "AUTOGENERATE_ORGANIZE"; }
+    public String asTableDbName() { return "autogenerate_organize"; }
 
     // ===================================================================================
     //                                                                        New Instance

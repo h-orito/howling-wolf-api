@@ -74,7 +74,7 @@ class PlayerDataSource(
     fun update(uid: String, nickname: String, twitterUserName: String, twitterUserId: String?) {
         val player = Player()
         player.uniqueBy(uid)
-        player.nickname = removeSurrogate(nickname)
+        player.nickname = removeSurrogate(nickname).ifEmpty { "名無し" }
         player.twitterUserName = twitterUserName
         twitterUserId?.let { player.registerTrace = "twitterId: $it" }
         playerBhv.update(player)

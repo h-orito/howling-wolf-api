@@ -13,7 +13,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of AUTOGENERATE_ORGANIZE.
+ * The base condition-query of autogenerate_organize.
  * @author DBFlute(AutoGenerator)
  */
 public class BsAutogenerateOrganizeCQ extends AbstractBsAutogenerateOrganizeCQ {
@@ -35,7 +35,7 @@ public class BsAutogenerateOrganizeCQ extends AbstractBsAutogenerateOrganizeCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from AUTOGENERATE_ORGANIZE) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from autogenerate_organize) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
@@ -58,7 +58,7 @@ public class BsAutogenerateOrganizeCQ extends AbstractBsAutogenerateOrganizeCQ {
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join AUTOGENERATE_ORGANIZE on ... and FOO = [value] ...}
+     * {select ... from ... left outer join autogenerate_organize on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>

@@ -14,7 +14,7 @@ import com.ort.dbflute.allcommon.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The DB meta of VILLAGE_DAY. (Singleton)
+ * The DB meta of village_day. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
 public class VillageDayDbm extends AbstractDBMeta {
@@ -79,7 +79,7 @@ public class VillageDayDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "VILLAGE_DAY";
+    protected final String _tableDbName = "village_day";
     protected final String _tableDispName = "VILLAGE_DAY";
     protected final String _tablePropertyName = "villageDay";
     protected final TableSqlName _tableSqlName = new TableSqlName("VILLAGE_DAY", _tableDbName);
@@ -108,7 +108,7 @@ public class VillageDayDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnVillageDayId() { return _columnVillageDayId; }
     /**
-     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to VILLAGE}
+     * VILLAGE_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillageId() { return _columnVillageId; }
@@ -118,7 +118,7 @@ public class VillageDayDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnDay() { return _columnDay; }
     /**
-     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to NOONNIGHT, classification=Noonnight}
+     * NOONNIGHT_CODE: {+UQ, IX, NotNull, VARCHAR(20), FK to noonnight, classification=Noonnight}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnNoonnightCode() { return _columnNoonnightCode; }

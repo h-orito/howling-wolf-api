@@ -2,7 +2,9 @@ package com.ort.howlingwolf.fw.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
+import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import com.ort.howlingwolf.fw.security.HowlingWolfUserDetailService
+import com.ort.howlingwolf.fw.security.getIpAddress
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwsHeader
 import io.jsonwebtoken.SigningKeyResolverAdapter
@@ -58,7 +60,8 @@ class LoginFilter(
 
             // ユーザ情報を検索
             return try {
-                userService.loadUserByUsername(uid)
+                val user: HowlingWolfUser = userService.loadUserByUsername(uid) as HowlingWolfUser
+                user.copy(ipAddress = request.getIpAddress())
             } catch (e: UsernameNotFoundException) {
                 // uidまで取得できているのでユーザを新規作成
                 userService.insertUser(uid)

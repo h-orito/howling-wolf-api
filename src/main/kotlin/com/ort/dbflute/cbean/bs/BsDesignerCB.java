@@ -20,7 +20,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of DESIGNER.
+ * The base condition-bean of designer.
  * @author DBFlute(AutoGenerator)
  */
 public class BsDesignerCB extends AbstractConditionBean {
@@ -76,7 +76,7 @@ public class BsDesignerCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "DESIGNER";
+        return "designer";
     }
 
     // ===================================================================================
@@ -323,10 +323,10 @@ public class BsDesignerCB extends AbstractConditionBean {
             columnDesignerId(); // PK
         }
         @Override
-        protected String getTableDbName() { return "DESIGNER"; }
+        protected String getTableDbName() { return "designer"; }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
-         * {select max(FOO) from CHARA_GROUP where ...) as FOO_MAX} <br>
+         * {select max(FOO) from chara_group where ...) as FOO_MAX} <br>
          * CHARA_GROUP by DESIGNER_ID, named 'charaGroupList'.
          * <pre>
          * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(groupCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {

@@ -77,10 +77,10 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    /** VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE} */
+    /** VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village} */
     protected Integer _villageId;
 
-    /** MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to MESSAGE_TYPE, classification=MessageType} */
+    /** MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType} */
     protected String _messageTypeCode;
 
     /** MESSAGE_MAX_NUM: {NotNull, INT UNSIGNED(10)} */
@@ -111,7 +111,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
 
     /** {@inheritDoc} */
     public String asTableDbName() {
-        return "MESSAGE_RESTRICTION";
+        return "message_restriction";
     }
 
     // ===================================================================================
@@ -129,7 +129,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     //                                                             =======================
     /**
      * Get the value of messageTypeCode as the classification of MessageType. <br>
-     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to MESSAGE_TYPE, classification=MessageType} <br>
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType} <br>
      * メッセージ種別
      * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
@@ -140,7 +140,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
 
     /**
      * Set the value of messageTypeCode as the classification of MessageType. <br>
-     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to MESSAGE_TYPE, classification=MessageType} <br>
+     * MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType} <br>
      * メッセージ種別
      * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
      */
@@ -606,7 +606,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     //                                                                            Accessor
     //                                                                            ========
     /**
-     * [get] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE} <br>
+     * [get] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village} <br>
      * 村ID
      * @return The value of the column 'VILLAGE_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -616,7 +616,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     }
 
     /**
-     * [set] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to VILLAGE} <br>
+     * [set] VILLAGE_ID: {PK, NotNull, INT UNSIGNED(10), FK to village} <br>
      * 村ID
      * @param villageId The value of the column 'VILLAGE_ID'. (basically NotNull if update: for the constraint)
      */
@@ -626,7 +626,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     }
 
     /**
-     * [get] MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to MESSAGE_TYPE, classification=MessageType} <br>
+     * [get] MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType} <br>
      * メッセージ種別コード
      * @return The value of the column 'MESSAGE_TYPE_CODE'. (basically NotNull if selected: for the constraint)
      */
@@ -636,7 +636,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
     }
 
     /**
-     * [set] MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to MESSAGE_TYPE, classification=MessageType} <br>
+     * [set] MESSAGE_TYPE_CODE: {PK, IX, NotNull, VARCHAR(20), FK to message_type, classification=MessageType} <br>
      * メッセージ種別コード
      * @param messageTypeCode The value of the column 'MESSAGE_TYPE_CODE'. (basically NotNull if update: for the constraint)
      */

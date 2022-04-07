@@ -16,7 +16,7 @@ import com.ort.dbflute.cbean.*;
 import com.ort.dbflute.cbean.cq.*;
 
 /**
- * The abstract condition-query of CAMP.
+ * The abstract condition-query of camp.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
@@ -37,7 +37,7 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
     }
 
     public String asTableDbName() {
-        return "CAMP";
+        return "camp";
     }
 
     // ===================================================================================
@@ -185,8 +185,8 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select CAMP_CODE from SKILL where ...)} <br>
-     * SKILL by CAMP_CODE, named 'skillAsOne'.
+     * {exists (select CAMP_CODE from skill where ...)} <br>
+     * skill by CAMP_CODE, named 'skillAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsSkill</span>(skillCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     skillCB.query().set...
@@ -204,8 +204,8 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
-     * {exists (select WIN_CAMP_CODE from VILLAGE where ...)} <br>
-     * VILLAGE by WIN_CAMP_CODE, named 'villageAsOne'.
+     * {exists (select WIN_CAMP_CODE from village where ...)} <br>
+     * village by WIN_CAMP_CODE, named 'villageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">existsVillage</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     villageCB.query().set...
@@ -223,8 +223,8 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select CAMP_CODE from SKILL where ...)} <br>
-     * SKILL by CAMP_CODE, named 'skillAsOne'.
+     * {not exists (select CAMP_CODE from skill where ...)} <br>
+     * skill by CAMP_CODE, named 'skillAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsSkill</span>(skillCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     skillCB.query().set...
@@ -242,8 +242,8 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
-     * {not exists (select WIN_CAMP_CODE from VILLAGE where ...)} <br>
-     * VILLAGE by WIN_CAMP_CODE, named 'villageAsOne'.
+     * {not exists (select WIN_CAMP_CODE from village where ...)} <br>
+     * village by WIN_CAMP_CODE, named 'villageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">notExistsVillage</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     villageCB.query().set...
@@ -277,8 +277,8 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from SKILL where ...)} <br>
-     * SKILL by CAMP_CODE, named 'skillAsOne'.
+     * {FOO &lt;= (select max(BAR) from skill where ...)} <br>
+     * skill by CAMP_CODE, named 'skillAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedSkill()</span>.<span style="color: #CC4747">max</span>(skillCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     skillCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
@@ -304,8 +304,8 @@ public abstract class AbstractBsCampCQ extends AbstractConditionQuery {
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
-     * {FOO &lt;= (select max(BAR) from VILLAGE where ...)} <br>
-     * VILLAGE by WIN_CAMP_CODE, named 'villageAsOne'.
+     * {FOO &lt;= (select max(BAR) from village where ...)} <br>
+     * village by WIN_CAMP_CODE, named 'villageAsOne'.
      * <pre>
      * cb.query().<span style="color: #CC4747">derivedVillage()</span>.<span style="color: #CC4747">max</span>(villageCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     villageCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
