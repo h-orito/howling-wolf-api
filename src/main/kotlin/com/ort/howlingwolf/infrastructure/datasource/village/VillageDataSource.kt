@@ -9,6 +9,7 @@ import com.ort.dbflute.exbhv.VillagePlayerBhv
 import com.ort.dbflute.exbhv.VillageSettingBhv
 import com.ort.dbflute.exentity.*
 import com.ort.howlingwolf.domain.model.village.Villages
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
 import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
@@ -303,13 +304,13 @@ class VillageDataSource(
             before.participant.memberList.any { it.id == member.id }
         }.forEach {
             val participantId = insertVillagePlayer(villageId, it)
-            insertVillagePlayerAccessInfos(participantId, it.ipAddresses)
+            insertVillagePlayerAccessInfos(participantId, it.accessInfos)
         }
         after.spectator.memberList.filterNot { member ->
             before.spectator.memberList.any { it.id == member.id }
         }.forEach {
             val participantId = insertVillagePlayer(villageId, it)
-            insertVillagePlayerAccessInfos(participantId, it.ipAddresses)
+            insertVillagePlayerAccessInfos(participantId, it.accessInfos)
         }
 
         // 更新
@@ -318,14 +319,14 @@ class VillageDataSource(
         }.forEach {
             val beforeMember = before.participant.member(it.id)
             if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
-            insertVillagePlayerAccessInfos(it.id, it.ipAddresses)
+            insertVillagePlayerAccessInfos(it.id, it.accessInfos)
         }
         after.spectator.memberList.filter { member ->
             before.spectator.memberList.any { it.id == member.id }
         }.forEach {
             val beforeMember = before.spectator.member(it.id)
             if (it.existsDifference(beforeMember)) updateVillagePlayer(villageId, it)
-            insertVillagePlayerAccessInfos(it.id, it.ipAddresses)
+            insertVillagePlayerAccessInfos(it.id, it.accessInfos)
         }
     }
 
@@ -477,21 +478,36 @@ class VillageDataSource(
         villagePlayerBhv.update(villagePlayer)
     }
 
-    private fun insertVillagePlayerAccessInfos(participantId: Int, ipAddresses: List<String>) {
+    private fun insertVillagePlayerAccessInfos(
+        participantId: Int,
+        accessInfos: List<AccessInfo>,
+
+        ) {
         val exists = villagePlayerAccessInfoBhv.selectList {
             it.query().setVillagePlayerId_Equal(participantId)
-        }.map { it.ipAddress }
-        ipAddresses.filterNot { exists.contains(it) }.forEach {
-            insertVillagePlayerAccessInfo(participantId, it)
+        }
+        accessInfos
+            .filterNot { a -> exists.any { it.ipAddress == a.ipAddress && it.clientToken == a.clientToken } }
+            .forEach {
+                insertVillagePlayerAccessInfo(participantId, it)
         }
     }
 
-    private fun insertVillagePlayerAccessInfo(participantId: Int, ipAddress: String) {
-        val optAccessInfo = villagePlayerAccessInfoBhv.selectByUniqueOf(participantId, ipAddress)
+    private fun insertVillagePlayerAccessInfo(participantId: Int, accessInfo: AccessInfo) {
+        val optAccessInfo = villagePlayerAccessInfoBhv.selectEntity {
+            it.query().setVillagePlayerId_Equal(participantId)
+            it.query().setIpAddress_Equal(accessInfo.ipAddress)
+            if (accessInfo.clientToken == null) {
+                it.query().setClientToken_IsNull()
+            } else {
+                it.query().setClientToken_Equal(accessInfo.clientToken)
+            }
+        }
         if (optAccessInfo.isPresent) return
         val info = VillagePlayerAccessInfo()
         info.villagePlayerId = participantId
-        info.ipAddress = ipAddress
+        info.ipAddress = accessInfo.ipAddress
+        info.clientToken = accessInfo.clientToken
         villagePlayerAccessInfoBhv.insert(info)
     }
 

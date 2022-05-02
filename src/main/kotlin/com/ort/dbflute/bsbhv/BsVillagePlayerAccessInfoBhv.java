@@ -28,7 +28,7 @@ import com.ort.dbflute.cbean.*;
  *     VILLAGE_PLAYER_ACCESS_INFO_ID
  *
  * [column]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID, VILLAGE_PLAYER_ID, IP_ADDRESS, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_PLAYER_ACCESS_INFO_ID, VILLAGE_PLAYER_ID, IP_ADDRESS, CLIENT_TOKEN, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -184,32 +184,6 @@ public abstract class BsVillagePlayerAccessInfoBhv extends AbstractBehaviorWrita
     protected VillagePlayerAccessInfoCB xprepareCBAsPK(Integer villagePlayerAccessInfoId) {
         assertObjectNotNull("villagePlayerAccessInfoId", villagePlayerAccessInfoId);
         return newConditionBean().acceptPK(villagePlayerAccessInfoId);
-    }
-
-    /**
-     * Select the entity by the unique-key value.
-     * @param villagePlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
-     * @param ipAddress : +UQ, NotNull, VARCHAR(64). (NotNull)
-     * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
-     * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
-     * @throws EntityDuplicatedException When the entity has been duplicated.
-     * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
-     */
-    public OptionalEntity<VillagePlayerAccessInfo> selectByUniqueOf(Integer villagePlayerId, String ipAddress) {
-        return facadeSelectByUniqueOf(villagePlayerId, ipAddress);
-    }
-
-    protected OptionalEntity<VillagePlayerAccessInfo> facadeSelectByUniqueOf(Integer villagePlayerId, String ipAddress) {
-        return doSelectByUniqueOf(villagePlayerId, ipAddress, typeOfSelectedEntity());
-    }
-
-    protected <ENTITY extends VillagePlayerAccessInfo> OptionalEntity<ENTITY> doSelectByUniqueOf(Integer villagePlayerId, String ipAddress, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(villagePlayerId, ipAddress), tp), villagePlayerId, ipAddress);
-    }
-
-    protected VillagePlayerAccessInfoCB xprepareCBAsUniqueOf(Integer villagePlayerId, String ipAddress) {
-        assertObjectNotNull("villagePlayerId", villagePlayerId);assertObjectNotNull("ipAddress", ipAddress);
-        return newConditionBean().acceptUniqueOf(villagePlayerId, ipAddress);
     }
 
     // ===================================================================================

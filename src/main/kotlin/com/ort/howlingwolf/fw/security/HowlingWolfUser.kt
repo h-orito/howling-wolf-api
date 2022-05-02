@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest
 data class HowlingWolfUser(
         val uid: String,
         val authority: CDef.Authority,
-        var ipAddress: String? = null
+        var ipAddress: String? = null,
+        var clientToken: String? = null
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {

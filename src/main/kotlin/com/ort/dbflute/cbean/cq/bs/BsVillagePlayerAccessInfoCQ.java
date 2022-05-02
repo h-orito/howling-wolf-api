@@ -101,14 +101,14 @@ public class BsVillagePlayerAccessInfoCQ extends AbstractBsVillagePlayerAccessIn
 
     /**
      * Add order-by as ascend. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
      */
     public BsVillagePlayerAccessInfoCQ addOrderBy_VillagePlayerId_Asc() { regOBA("VILLAGE_PLAYER_ID"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return this. (NotNull)
      */
     public BsVillagePlayerAccessInfoCQ addOrderBy_VillagePlayerId_Desc() { regOBD("VILLAGE_PLAYER_ID"); return this; }
@@ -121,17 +121,37 @@ public class BsVillagePlayerAccessInfoCQ extends AbstractBsVillagePlayerAccessIn
 
     /**
      * Add order-by as ascend. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
      */
     public BsVillagePlayerAccessInfoCQ addOrderBy_IpAddress_Asc() { regOBA("IP_ADDRESS"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @return this. (NotNull)
      */
     public BsVillagePlayerAccessInfoCQ addOrderBy_IpAddress_Desc() { regOBD("IP_ADDRESS"); return this; }
+
+    protected ConditionValue _clientToken;
+    public ConditionValue xdfgetClientToken()
+    { if (_clientToken == null) { _clientToken = nCV(); }
+      return _clientToken; }
+    protected ConditionValue xgetCValueClientToken() { return xdfgetClientToken(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @return this. (NotNull)
+     */
+    public BsVillagePlayerAccessInfoCQ addOrderBy_ClientToken_Asc() { regOBA("CLIENT_TOKEN"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @return this. (NotNull)
+     */
+    public BsVillagePlayerAccessInfoCQ addOrderBy_ClientToken_Desc() { regOBD("CLIENT_TOKEN"); return this; }
 
     protected ConditionValue _registerDatetime;
     public ConditionValue xdfgetRegisterDatetime()

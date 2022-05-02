@@ -20,7 +20,7 @@ import com.ort.dbflute.exentity.*;
  *     VILLAGE_PLAYER_ACCESS_INFO_ID
  *
  * [column]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID, VILLAGE_PLAYER_ID, IP_ADDRESS, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     VILLAGE_PLAYER_ACCESS_INFO_ID, VILLAGE_PLAYER_ID, IP_ADDRESS, CLIENT_TOKEN, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -48,6 +48,7 @@ import com.ort.dbflute.exentity.*;
  * Integer villagePlayerAccessInfoId = entity.getVillagePlayerAccessInfoId();
  * Integer villagePlayerId = entity.getVillagePlayerId();
  * String ipAddress = entity.getIpAddress();
+ * String clientToken = entity.getClientToken();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * String registerTrace = entity.getRegisterTrace();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
@@ -55,6 +56,7 @@ import com.ort.dbflute.exentity.*;
  * entity.setVillagePlayerAccessInfoId(villagePlayerAccessInfoId);
  * entity.setVillagePlayerId(villagePlayerId);
  * entity.setIpAddress(ipAddress);
+ * entity.setClientToken(clientToken);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setRegisterTrace(registerTrace);
  * entity.setUpdateDatetime(updateDatetime);
@@ -77,11 +79,14 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
     /** VILLAGE_PLAYER_ACCESS_INFO_ID: {PK, ID, NotNull, INT UNSIGNED(10)} */
     protected Integer _villagePlayerAccessInfoId;
 
-    /** VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player} */
+    /** VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} */
     protected Integer _villagePlayerId;
 
-    /** IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)} */
+    /** IP_ADDRESS: {NotNull, VARCHAR(64)} */
     protected String _ipAddress;
+
+    /** CLIENT_TOKEN: {VARCHAR(64)} */
+    protected String _clientToken;
 
     /** REGISTER_DATETIME: {NotNull, DATETIME(19)} */
     protected java.time.LocalDateTime _registerDatetime;
@@ -115,19 +120,6 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
     public boolean hasPrimaryKeyValue() {
         if (_villagePlayerAccessInfoId == null) { return false; }
         return true;
-    }
-
-    /**
-     * To be unique by the unique column. <br>
-     * You can update the entity by the key when entity update (NOT batch update).
-     * @param villagePlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
-     * @param ipAddress : +UQ, NotNull, VARCHAR(64). (NotNull)
-     */
-    public void uniqueBy(Integer villagePlayerId, String ipAddress) {
-        __uniqueDrivenProperties.clear();
-        __uniqueDrivenProperties.addPropertyName("villagePlayerId");
-        __uniqueDrivenProperties.addPropertyName("ipAddress");
-        setVillagePlayerId(villagePlayerId);setIpAddress(ipAddress);
     }
 
     // ===================================================================================
@@ -200,6 +192,7 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
         sb.append(dm).append(xfND(_villagePlayerAccessInfoId));
         sb.append(dm).append(xfND(_villagePlayerId));
         sb.append(dm).append(xfND(_ipAddress));
+        sb.append(dm).append(xfND(_clientToken));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_registerTrace));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -251,7 +244,7 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
     }
 
     /**
-     * [get] VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * [get] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
      * 村参加者ID
      * @return The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if selected: for the constraint)
      */
@@ -261,7 +254,7 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
     }
 
     /**
-     * [set] VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player} <br>
+     * [set] VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player} <br>
      * 村参加者ID
      * @param villagePlayerId The value of the column 'VILLAGE_PLAYER_ID'. (basically NotNull if update: for the constraint)
      */
@@ -271,7 +264,7 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
     }
 
     /**
-     * [get] IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)} <br>
+     * [get] IP_ADDRESS: {NotNull, VARCHAR(64)} <br>
      * IPアドレス
      * @return The value of the column 'IP_ADDRESS'. (basically NotNull if selected: for the constraint)
      */
@@ -281,13 +274,33 @@ public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implement
     }
 
     /**
-     * [set] IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)} <br>
+     * [set] IP_ADDRESS: {NotNull, VARCHAR(64)} <br>
      * IPアドレス
      * @param ipAddress The value of the column 'IP_ADDRESS'. (basically NotNull if update: for the constraint)
      */
     public void setIpAddress(String ipAddress) {
         registerModifiedProperty("ipAddress");
         _ipAddress = ipAddress;
+    }
+
+    /**
+     * [get] CLIENT_TOKEN: {VARCHAR(64)} <br>
+     * クライアントトークン
+     * @return The value of the column 'CLIENT_TOKEN'. (NullAllowed even if selected: for no constraint)
+     */
+    public String getClientToken() {
+        checkSpecifiedProperty("clientToken");
+        return convertEmptyToNull(_clientToken);
+    }
+
+    /**
+     * [set] CLIENT_TOKEN: {VARCHAR(64)} <br>
+     * クライアントトークン
+     * @param clientToken The value of the column 'CLIENT_TOKEN'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setClientToken(String clientToken) {
+        registerModifiedProperty("clientToken");
+        _clientToken = clientToken;
     }
 
     /**

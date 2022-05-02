@@ -174,7 +174,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as equal. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_Equal(Integer villagePlayerId) {
@@ -187,7 +187,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_NotEqual(Integer villagePlayerId) {
@@ -200,7 +200,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_GreaterThan(Integer villagePlayerId) {
@@ -209,7 +209,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_LessThan(Integer villagePlayerId) {
@@ -218,7 +218,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_GreaterEqual(Integer villagePlayerId) {
@@ -227,7 +227,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerId The value of villagePlayerId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
     public void setVillagePlayerId_LessEqual(Integer villagePlayerId) {
@@ -238,7 +238,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
@@ -251,7 +251,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param minNumber The min number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param maxNumber The max number of villagePlayerId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
@@ -262,7 +262,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerIdList The collection of villagePlayerId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillagePlayerId_InScope(Collection<Integer> villagePlayerIdList) {
@@ -275,7 +275,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @param villagePlayerIdList The collection of villagePlayerId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setVillagePlayerId_NotInScope(Collection<Integer> villagePlayerIdList) {
@@ -291,7 +291,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_Equal(String ipAddress) {
@@ -304,7 +304,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_NotEqual(String ipAddress) {
@@ -317,7 +317,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_GreaterThan(String ipAddress) {
@@ -326,7 +326,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_LessThan(String ipAddress) {
@@ -335,7 +335,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_GreaterEqual(String ipAddress) {
@@ -344,7 +344,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_LessEqual(String ipAddress) {
@@ -353,7 +353,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddressList The collection of ipAddress as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_InScope(Collection<String> ipAddressList) {
@@ -366,7 +366,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddressList The collection of ipAddress as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
     public void setIpAddress_NotInScope(Collection<String> ipAddressList) {
@@ -379,7 +379,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)} <br>
+     * IP_ADDRESS: {NotNull, VARCHAR(64)} <br>
      * <pre>e.g. setIpAddress_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
      * @param ipAddress The value of ipAddress as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
@@ -390,7 +390,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)} <br>
+     * IP_ADDRESS: {NotNull, VARCHAR(64)} <br>
      * <pre>e.g. setIpAddress_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
      * @param ipAddress The value of ipAddress as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of like-search. (NotNull)
@@ -402,7 +402,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
@@ -413,7 +413,7 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @param ipAddress The value of ipAddress as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of not-like-search. (NotNull)
      */
@@ -423,6 +423,159 @@ public abstract class AbstractBsVillagePlayerAccessInfoCQ extends AbstractCondit
 
     protected void regIpAddress(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIpAddress(), "IP_ADDRESS"); }
     protected abstract ConditionValue xgetCValueIpAddress();
+
+    /**
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_Equal(String clientToken) {
+        doSetClientToken_Equal(fRES(clientToken));
+    }
+
+    protected void doSetClientToken_Equal(String clientToken) {
+        regClientToken(CK_EQ, clientToken);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_NotEqual(String clientToken) {
+        doSetClientToken_NotEqual(fRES(clientToken));
+    }
+
+    protected void doSetClientToken_NotEqual(String clientToken) {
+        regClientToken(CK_NES, clientToken);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_GreaterThan(String clientToken) {
+        regClientToken(CK_GT, fRES(clientToken));
+    }
+
+    /**
+     * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_LessThan(String clientToken) {
+        regClientToken(CK_LT, fRES(clientToken));
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_GreaterEqual(String clientToken) {
+        regClientToken(CK_GE, fRES(clientToken));
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_LessEqual(String clientToken) {
+        regClientToken(CK_LE, fRES(clientToken));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientTokenList The collection of clientToken as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_InScope(Collection<String> clientTokenList) {
+        doSetClientToken_InScope(clientTokenList);
+    }
+
+    protected void doSetClientToken_InScope(Collection<String> clientTokenList) {
+        regINS(CK_INS, cTL(clientTokenList), xgetCValueClientToken(), "CLIENT_TOKEN");
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientTokenList The collection of clientToken as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setClientToken_NotInScope(Collection<String> clientTokenList) {
+        doSetClientToken_NotInScope(clientTokenList);
+    }
+
+    protected void doSetClientToken_NotInScope(Collection<String> clientTokenList) {
+        regINS(CK_NINS, cTL(clientTokenList), xgetCValueClientToken(), "CLIENT_TOKEN");
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)} <br>
+     * <pre>e.g. setClientToken_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param clientToken The value of clientToken as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setClientToken_LikeSearch(String clientToken, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setClientToken_LikeSearch(clientToken, xcLSOP(opLambda));
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)} <br>
+     * <pre>e.g. setClientToken_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param clientToken The value of clientToken as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of like-search. (NotNull)
+     */
+    protected void setClientToken_LikeSearch(String clientToken, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(clientToken), xgetCValueClientToken(), "CLIENT_TOKEN", likeSearchOption);
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setClientToken_NotLikeSearch(String clientToken, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setClientToken_NotLikeSearch(clientToken, xcLSOP(opLambda));
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @param clientToken The value of clientToken as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of not-like-search. (NotNull)
+     */
+    protected void setClientToken_NotLikeSearch(String clientToken, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(clientToken), xgetCValueClientToken(), "CLIENT_TOKEN", likeSearchOption);
+    }
+
+    /**
+     * IsNull {is null}. And OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     */
+    public void setClientToken_IsNull() { regClientToken(CK_ISN, DOBJ); }
+
+    /**
+     * IsNullOrEmpty {is null or empty}. And OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     */
+    public void setClientToken_IsNullOrEmpty() { regClientToken(CK_ISNOE, DOBJ); }
+
+    /**
+     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     */
+    public void setClientToken_IsNotNull() { regClientToken(CK_ISNN, DOBJ); }
+
+    protected void regClientToken(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueClientToken(), "CLIENT_TOKEN"); }
+    protected abstract ConditionValue xgetCValueClientToken();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>

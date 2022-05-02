@@ -61,7 +61,11 @@ class LoginFilter(
             // ユーザ情報を検索
             return try {
                 val user: HowlingWolfUser = userService.loadUserByUsername(uid) as HowlingWolfUser
-                user.copy(ipAddress = request.getIpAddress())
+                val clientToken = getClientToken(request)
+                user.copy(
+                    ipAddress = request.getIpAddress(),
+                    clientToken = clientToken
+                )
             } catch (e: UsernameNotFoundException) {
                 // uidまで取得できているのでユーザを新規作成
                 userService.insertUser(uid)
@@ -69,6 +73,14 @@ class LoginFilter(
         } catch (e: Exception) {
             throw BadCredentialsException(e.message, e)
         }
+    }
+
+    private fun getClientToken(request: HttpServletRequest): String? {
+        val clientToken = request.getHeader("Client")
+        if (clientToken == null || !clientToken.startsWith("Client ")) {
+            return null
+        }
+        return clientToken.substring("Client ".length)
     }
 
     // リクエストヘッダからトークンを取得

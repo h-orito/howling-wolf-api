@@ -95,19 +95,6 @@ public class BsVillagePlayerAccessInfoCB extends AbstractConditionBean {
         return (VillagePlayerAccessInfoCB)this;
     }
 
-    /**
-     * Accept the query condition of unique key as equal.
-     * @param villagePlayerId : UQ+, NotNull, INT UNSIGNED(10), FK to village_player. (NotNull)
-     * @param ipAddress : +UQ, NotNull, VARCHAR(64). (NotNull)
-     * @return this. (NotNull)
-     */
-    public VillagePlayerAccessInfoCB acceptUniqueOf(Integer villagePlayerId, String ipAddress) {
-        assertObjectNotNull("villagePlayerId", villagePlayerId);assertObjectNotNull("ipAddress", ipAddress);
-        BsVillagePlayerAccessInfoCB cb = this;
-        cb.query().setVillagePlayerId_Equal(villagePlayerId);cb.query().setIpAddress_Equal(ipAddress);
-        return (VillagePlayerAccessInfoCB)this;
-    }
-
     public ConditionBean addOrderBy_PK_Asc() {
         query().addOrderBy_VillagePlayerAccessInfoId_Asc();
         return this;
@@ -336,15 +323,20 @@ public class BsVillagePlayerAccessInfoCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnVillagePlayerAccessInfoId() { return doColumn("VILLAGE_PLAYER_ACCESS_INFO_ID"); }
         /**
-         * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+         * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnVillagePlayerId() { return doColumn("VILLAGE_PLAYER_ID"); }
         /**
-         * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+         * IP_ADDRESS: {NotNull, VARCHAR(64)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnIpAddress() { return doColumn("IP_ADDRESS"); }
+        /**
+         * CLIENT_TOKEN: {VARCHAR(64)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnClientToken() { return doColumn("CLIENT_TOKEN"); }
         /**
          * REGISTER_DATETIME: {NotNull, DATETIME(19)}
          * @return The information object of specified column. (NotNull)

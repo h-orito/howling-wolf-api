@@ -732,6 +732,8 @@
             size="10" type="INTEGER"/>
         <column comment="IPアドレス" dbType="VARCHAR" javaType="String"
             name="IP_ADDRESS" required="true" size="64" type="VARCHAR"/>
+        <column comment="クライアントトークン" dbType="VARCHAR" javaType="String"
+            name="CLIENT_TOKEN" size="64" type="VARCHAR"/>
         <column comment="登録日時" dbType="DATETIME"
             javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
             required="true" size="19" type="TIMESTAMP"/>
@@ -746,10 +748,9 @@
             foreignTable="village_player" name="FK_VILLAGE_PLAYER_ACCESS_INFO_VILLAGE_PLAYER">
             <reference foreign="VILLAGE_PLAYER_ID" local="VILLAGE_PLAYER_ID"/>
         </foreign-key>
-        <unique name="UQ_village_player_access_info">
-            <unique-column name="VILLAGE_PLAYER_ID" position="1"/>
-            <unique-column name="IP_ADDRESS" position="2"/>
-        </unique>
+        <index name="FK_VILLAGE_PLAYER_ACCESS_INFO_VILLAGE_PLAYER">
+            <index-column name="VILLAGE_PLAYER_ID" position="1"/>
+        </index>
     </table>
     <table comment="村設定" name="village_setting"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">

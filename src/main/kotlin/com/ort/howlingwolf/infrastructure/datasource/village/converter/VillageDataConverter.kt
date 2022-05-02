@@ -12,6 +12,7 @@ import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOut
@@ -199,7 +200,7 @@ object VillageDataConverter {
                     ComingOut(Skill(it.skillCodeAsSkill))
                 }
             ),
-            ipAddresses = vp.villagePlayerAccessInfoList.map { it.ipAddress }
+            accessInfos = vp.villagePlayerAccessInfoList.map { AccessInfo(it.ipAddress, it.clientToken) }
         )
     }
 

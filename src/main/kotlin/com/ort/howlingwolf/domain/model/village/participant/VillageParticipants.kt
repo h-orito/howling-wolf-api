@@ -25,7 +25,7 @@ data class VillageParticipants(
         playerId: Int,
         skillRequest: SkillRequest,
         isSpectator: Boolean,
-        ipAddress: String
+        accessInfo: AccessInfo
     ): VillageParticipants {
         return this.copy(
             count = count + 1,
@@ -40,7 +40,7 @@ data class VillageParticipants(
                 skillRequest = skillRequest,
                 isWin = null,
                 comingOuts = ComingOuts(),
-                ipAddresses = listOf(ipAddress)
+                accessInfos = listOf(accessInfo)
             )
         )
     }
@@ -110,10 +110,10 @@ data class VillageParticipants(
     }
 
     // IPアドレス追加
-    fun addIpAddress(id: Int, ipAddress: String): VillageParticipants {
+    fun addAccessInfo(id: Int, accessInfo: AccessInfo): VillageParticipants {
         return this.copy(
             memberList = this.memberList.map {
-                if (it.id == id) it.addIpAddress(ipAddress) else it.copy()
+                if (it.id == id) it.addAccessInfo(accessInfo) else it.copy()
             }
         )
     }

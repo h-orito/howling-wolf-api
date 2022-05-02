@@ -9,6 +9,7 @@ import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.skill.Skills
 import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
@@ -374,7 +375,7 @@ data class Village(
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         isSpectate: Boolean,
-        ipAddress: String
+        accessInfo: AccessInfo
     ): Village {
         return if (isSpectate) {
             this.copy(
@@ -383,7 +384,7 @@ data class Village(
                     playerId = playerId,
                     skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
                     isSpectator = true,
-                    ipAddress = ipAddress
+                    accessInfo = accessInfo
                 )
             )
         } else {
@@ -393,7 +394,7 @@ data class Village(
                     playerId = playerId,
                     skillRequest = SkillRequest(Skill(firstRequestSkill), Skill(secondRequestSkill)),
                     isSpectator = false,
-                    ipAddress = ipAddress
+                    accessInfo = accessInfo
                 )
             )
         }
@@ -427,8 +428,8 @@ data class Village(
         this.copy(participant = this.participant.suicide(participantId, day.latestDay()))
 
     // IPアドレス追加
-    fun addParticipantIpAddress(id: Int, ipAddress: String): Village =
-        this.copy(participant = this.participant.addIpAddress(id, ipAddress))
+    fun addParticipantIpAddress(id: Int, accessInfo: AccessInfo): Village =
+        this.copy(participant = this.participant.addAccessInfo(id, accessInfo))
 
     // 役職割り当て
     fun assignSkill(participants: VillageParticipants): Village {

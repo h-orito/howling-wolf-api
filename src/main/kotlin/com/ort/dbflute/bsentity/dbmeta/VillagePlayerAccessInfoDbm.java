@@ -46,6 +46,7 @@ public class VillagePlayerAccessInfoDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getVillagePlayerAccessInfoId(), (et, vl) -> ((VillagePlayerAccessInfo)et).setVillagePlayerAccessInfoId(cti(vl)), "villagePlayerAccessInfoId");
         setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getVillagePlayerId(), (et, vl) -> ((VillagePlayerAccessInfo)et).setVillagePlayerId(cti(vl)), "villagePlayerId");
         setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getIpAddress(), (et, vl) -> ((VillagePlayerAccessInfo)et).setIpAddress((String)vl), "ipAddress");
+        setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getClientToken(), (et, vl) -> ((VillagePlayerAccessInfo)et).setClientToken((String)vl), "clientToken");
         setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getRegisterDatetime(), (et, vl) -> ((VillagePlayerAccessInfo)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getRegisterTrace(), (et, vl) -> ((VillagePlayerAccessInfo)et).setRegisterTrace((String)vl), "registerTrace");
         setupEpg(_epgMap, et -> ((VillagePlayerAccessInfo)et).getUpdateDatetime(), (et, vl) -> ((VillagePlayerAccessInfo)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -85,6 +86,7 @@ public class VillagePlayerAccessInfoDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnVillagePlayerAccessInfoId = cci("VILLAGE_PLAYER_ACCESS_INFO_ID", "VILLAGE_PLAYER_ACCESS_INFO_ID", null, null, Integer.class, "villagePlayerAccessInfoId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnVillagePlayerId = cci("VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", null, null, Integer.class, "villagePlayerId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, "villagePlayer", null, null, false);
     protected final ColumnInfo _columnIpAddress = cci("IP_ADDRESS", "IP_ADDRESS", null, null, String.class, "ipAddress", null, false, false, true, "VARCHAR", 64, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnClientToken = cci("CLIENT_TOKEN", "CLIENT_TOKEN", null, null, String.class, "clientToken", null, false, false, false, "VARCHAR", 64, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("REGISTER_DATETIME", "REGISTER_DATETIME", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterTrace = cci("REGISTER_TRACE", "REGISTER_TRACE", null, null, String.class, "registerTrace", null, false, false, true, "VARCHAR", 64, 0, null, null, true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("UPDATE_DATETIME", "UPDATE_DATETIME", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, true, "DATETIME", 19, 0, null, null, true, null, null, null, null, null, false);
@@ -96,15 +98,20 @@ public class VillagePlayerAccessInfoDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnVillagePlayerAccessInfoId() { return _columnVillagePlayerAccessInfoId; }
     /**
-     * VILLAGE_PLAYER_ID: {UQ+, NotNull, INT UNSIGNED(10), FK to village_player}
+     * VILLAGE_PLAYER_ID: {IX, NotNull, INT UNSIGNED(10), FK to village_player}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnVillagePlayerId() { return _columnVillagePlayerId; }
     /**
-     * IP_ADDRESS: {+UQ, NotNull, VARCHAR(64)}
+     * IP_ADDRESS: {NotNull, VARCHAR(64)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnIpAddress() { return _columnIpAddress; }
+    /**
+     * CLIENT_TOKEN: {VARCHAR(64)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnClientToken() { return _columnClientToken; }
     /**
      * REGISTER_DATETIME: {NotNull, DATETIME(19)}
      * @return The information object of specified column. (NotNull)
@@ -131,6 +138,7 @@ public class VillagePlayerAccessInfoDbm extends AbstractDBMeta {
         ls.add(columnVillagePlayerAccessInfoId());
         ls.add(columnVillagePlayerId());
         ls.add(columnIpAddress());
+        ls.add(columnClientToken());
         ls.add(columnRegisterDatetime());
         ls.add(columnRegisterTrace());
         ls.add(columnUpdateDatetime());
@@ -149,16 +157,6 @@ public class VillagePlayerAccessInfoDbm extends AbstractDBMeta {
     protected UniqueInfo cpui() { return hpcpui(columnVillagePlayerAccessInfoId()); }
     public boolean hasPrimaryKey() { return true; }
     public boolean hasCompoundPrimaryKey() { return false; }
-
-    // -----------------------------------------------------
-    //                                        Unique Element
-    //                                        --------------
-    public UniqueInfo uniqueOf() {
-        List<ColumnInfo> ls = newArrayListSized(4);
-        ls.add(columnVillagePlayerId());
-        ls.add(columnIpAddress());
-        return hpcui(ls);
-    }
 
     // ===================================================================================
     //                                                                       Relation Info

@@ -43,6 +43,7 @@ import com.ort.howlingwolf.domain.model.skill.Skills
 import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.Villages
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -321,7 +322,7 @@ class VillageController(
             isSpectate = body.spectator ?: false,
             firstRequestSkill = CDef.Skill.codeOf(body.firstRequestSkill),
             secondRequestSkill = CDef.Skill.codeOf(body.secondRequestSkill),
-            ipAddress = user.ipAddress!!
+            accessInfo = AccessInfo(user.ipAddress!!, user.clientToken)
         )
     }
 

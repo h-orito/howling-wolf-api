@@ -25,6 +25,7 @@ import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbility
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.vote.VillageVote
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
@@ -228,7 +229,7 @@ class VillageCoordinator(
         isSpectate: Boolean,
         firstRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
         secondRequestSkill: CDef.Skill = CDef.Skill.おまかせ,
-        ipAddress: String
+        accessInfo: AccessInfo
     ) {
         // 村参加者登録
         var village: Village = villageService.findVillage(villageId)
@@ -238,7 +239,7 @@ class VillageCoordinator(
             firstRequestSkill = firstRequestSkill,
             secondRequestSkill = secondRequestSkill,
             isSpectate = isSpectate,
-            ipAddress = ipAddress
+            accessInfo = accessInfo
         )
         village = villageService.updateVillageDifference(village, changedVillage)
         val participant: VillageParticipant = findParticipant(village, playerId)!!
@@ -252,12 +253,14 @@ class VillageCoordinator(
             isSpectate = isSpectate
         )
         // IPアドレスが重複している人がいたら通知
+        val ipAddress = accessInfo.ipAddress
+        val clientToken = accessInfo.clientToken
         val isContain = village.notDummyParticipant().memberList
             .filterNot { it.id == participant.id }
-            .flatMap { it.ipAddresses }.distinct()
-            .contains(ipAddress)
+            .flatMap { it.accessInfos }
+            .any { a -> a.ipAddress == ipAddress || a.clientToken == clientToken }
         if (isContain) {
-            slackRepository.postToSlack(villageId, "IPアドレス重複検出: $ipAddress")
+            slackRepository.postToSlack(villageId, "IPアドレス/クライアントトークン重複検出: IP: $ipAddress, Token: $clientToken")
         }
     }
 
@@ -354,15 +357,16 @@ class VillageCoordinator(
         }
         // IPアドレス更新
         val ipAddress = user.ipAddress!!
-        val changedVillage: Village = village.addParticipantIpAddress(participant.id, ipAddress)
+        val clientToken = user.clientToken!!
+        val changedVillage: Village = village.addParticipantIpAddress(participant.id, AccessInfo(ipAddress, clientToken))
         village = villageService.updateVillageDifference(village, changedVillage)
-        // IPアドレスが重複している人がいたら通知
+        // IPアドレスかクライアントトークンが重複している人がいたら通知
         val isContain = village.notDummyParticipant().memberList
             .filterNot { it.id == participant.id }
-            .flatMap { it.ipAddresses }.distinct()
-            .contains(ipAddress)
+            .flatMap { it.accessInfos }
+            .any { a -> a.ipAddress == ipAddress || a.clientToken == clientToken }
         if (isContain) {
-            slackRepository.postToSlack(villageId, "IPアドレス重複検出: $ipAddress")
+            slackRepository.postToSlack(villageId, "IPアドレス/クライアントトークン重複検出: IP: $ipAddress, Token: $clientToken")
         }
     }
 
@@ -507,7 +511,7 @@ class VillageCoordinator(
             charaId = village.setting.charachip.dummyCharaId,
             message = message,
             isSpectate = false,
-            ipAddress = "dummy"
+            accessInfo = AccessInfo("dummy", "dummy")
         )
     }
 

@@ -19,7 +19,7 @@ data class VillageParticipant(
     val skillRequest: SkillRequest,
     val isWin: Boolean?,
     val comingOuts: ComingOuts,
-    val ipAddresses: List<String>
+    val accessInfos: List<AccessInfo>
 ) {
     // ===================================================================================
     //                                                                                read
@@ -63,7 +63,7 @@ data class VillageParticipant(
         if (skill?.code != participant.skill?.code) return true
         if (skillRequest.first.code != participant.skillRequest.first.code) return true
         if (skillRequest.second.code != participant.skillRequest.second.code) return true
-        if (ipAddresses.size != participant.ipAddresses.size) return true
+        if (accessInfos.size != participant.accessInfos.size) return true
         return false
     }
 
@@ -105,5 +105,8 @@ data class VillageParticipant(
     }
 
     // IPアドレス追加
-    fun addIpAddress(ipAddress: String): VillageParticipant  = this.copy(ipAddresses = (ipAddresses + ipAddress).distinct())
+    fun addAccessInfo(accessInfo: AccessInfo): VillageParticipant {
+        return if (accessInfos.any { a -> a.ipAddress == accessInfo.ipAddress && a.clientToken == accessInfo.clientToken }) this
+        else this.copy(accessInfos = accessInfos + accessInfo)
+    }
 }

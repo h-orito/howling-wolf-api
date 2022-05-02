@@ -64,6 +64,7 @@ public class VillagePlayerAccessInfoCIQ extends AbstractBsVillagePlayerAccessInf
     protected ConditionValue xgetCValueVillagePlayerAccessInfoId() { return _myCQ.xdfgetVillagePlayerAccessInfoId(); }
     protected ConditionValue xgetCValueVillagePlayerId() { return _myCQ.xdfgetVillagePlayerId(); }
     protected ConditionValue xgetCValueIpAddress() { return _myCQ.xdfgetIpAddress(); }
+    protected ConditionValue xgetCValueClientToken() { return _myCQ.xdfgetClientToken(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueRegisterTrace() { return _myCQ.xdfgetRegisterTrace(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }

@@ -16,6 +16,7 @@ import com.ort.howlingwolf.application.service.VillageService
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
@@ -94,7 +95,7 @@ class DebugController(
                 isSpectate = false,
                 firstRequestSkill = randomSkill.toCdef(),
                 secondRequestSkill = randomSkill2.toCdef(),
-                ipAddress = "test account $playerId"
+                accessInfo = AccessInfo("test account $playerId", "test account $playerId")
             )
             playerId++
         }
