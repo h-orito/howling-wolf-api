@@ -86,7 +86,7 @@ class DayChangeCoordinator(
         dayChange = dayChange.copy(village = villageService.findVillage(village.id))
 
         // 日付更新
-        dayChangeDomainService.process(dayChange, todayMessages, charas).also {
+        dayChangeDomainService.process(dayChange, todayMessages, charas, commits).also {
             updateIfNeeded(dayChange, it)
         }
     }

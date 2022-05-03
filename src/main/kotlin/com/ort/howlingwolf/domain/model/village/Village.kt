@@ -311,7 +311,7 @@ data class Village(
     }
 
     fun isSilentTime(): Boolean =
-        status.isProgress() && setting.time.isSilentTime(day.yesterday().dayChangeDatetime)
+        status.isProgress() && setting.time.isSilentTime(day.latestDay().startDatetime)
 
     fun isAvailableCommit(): Boolean = setting.rules.availableCommit && status.isProgress()
     fun isAvailableComingOut(): Boolean = !isSilentTime() && status.isProgress()
@@ -362,6 +362,7 @@ data class Village(
             id = 0, // dummy
             day = day.latestDay().day + 1, // 一旦長期だけを考えるので常に昼
             noonnight = CDef.Noonnight.昼.code(),
+            startDatetime = LocalDateTime.now(),
             dayChangeDatetime = day.latestDay().dayChangeDatetime.plusSeconds(setting.time.dayChangeIntervalSeconds.toLong())
         )
         dayList.add(newDay)
@@ -495,7 +496,7 @@ data class Village(
     private fun judgeWinCamp(): Camp? {
         if (!this.isSettled()) return null
         if (isFoxAlive()) return Camp(CDef.Camp.狐陣営)
-        if (wolfCount() > 0) return Camp(CDef.Camp.人狼陣営)
+        if (villagerCount() <= wolfCount()) return Camp(CDef.Camp.人狼陣営)
         return Camp(CDef.Camp.村人陣営)
     }
 

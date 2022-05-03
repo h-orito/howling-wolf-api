@@ -39,13 +39,13 @@ class DayChangeDomainService(
     }
 
     // 日付変更処理
-    fun process(dayChange: DayChange, todayMessages: Messages, charas: Charas): DayChange {
+    fun process(dayChange: DayChange, todayMessages: Messages, charas: Charas, commits: Commits): DayChange {
         val status = dayChange.village.status
         return when {
             // プロローグ
             status.isPrologue() -> prologueDomainService.dayChange(dayChange, charas)
             // 進行中
-            status.isProgress() -> progressDomainService.dayChange(dayChange, todayMessages, charas)
+            status.isProgress() -> progressDomainService.dayChange(dayChange, todayMessages, charas, commits)
             // エピローグ
             status.isEpilogue() -> epilogueDomainService.dayChange(dayChange)
             // 終了後

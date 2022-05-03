@@ -40,10 +40,11 @@ class ProgressDomainService(
     fun dayChange(
         beforeDayChange: DayChange,
         todayMessages: Messages,
-        charas: Charas
+        charas: Charas,
+        commits: Commits
     ): DayChange {
         // 突然死
-        var dayChange = suddenlyDeathDomainService.processDayChangeAction(beforeDayChange, todayMessages, charas)
+        var dayChange = suddenlyDeathDomainService.processDayChangeAction(beforeDayChange, todayMessages, charas, commits)
 
         // 処刑
         dayChange = executeDomainService.processDayChangeAction(dayChange, charas)
