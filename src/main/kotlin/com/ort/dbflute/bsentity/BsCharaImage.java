@@ -134,6 +134,14 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     }
 
     /**
+     * Set the value of faceTypeCode as 恋人 (LOVER). <br>
+     * 恋人
+     */
+    public void setFaceTypeCode_恋人() {
+        setFaceTypeCodeAsFaceType(CDef.FaceType.恋人);
+    }
+
+    /**
      * Set the value of faceTypeCode as 共鳴 (MASON). <br>
      * 共鳴
      */
@@ -185,6 +193,17 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
     public boolean isFaceTypeCode墓下() {
         CDef.FaceType cdef = getFaceTypeCodeAsFaceType();
         return cdef != null ? cdef.equals(CDef.FaceType.墓下) : false;
+    }
+
+    /**
+     * Is the value of faceTypeCode 恋人? <br>
+     * 恋人
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isFaceTypeCode恋人() {
+        CDef.FaceType cdef = getFaceTypeCodeAsFaceType();
+        return cdef != null ? cdef.equals(CDef.FaceType.恋人) : false;
     }
 
     /**

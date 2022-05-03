@@ -1663,6 +1663,9 @@ public interface CDef extends Classification {
         /** 墓下 */
         墓下("GRAVE", "墓下", emptyStrings())
         ,
+        /** 恋人 */
+        恋人("LOVER", "恋人", emptyStrings())
+        ,
         /** 共鳴 */
         共鳴("MASON", "共鳴", emptyStrings())
         ,

@@ -71,6 +71,14 @@ public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
     }
 
     /**
+     * Equal(=). As 恋人 (LOVER). And OnlyOnceRegistered. <br>
+     * 恋人
+     */
+    public void setFaceTypeCode_Equal_恋人() {
+        setFaceTypeCode_Equal_AsFaceType(CDef.FaceType.恋人);
+    }
+
+    /**
      * Equal(=). As 共鳴 (MASON). And OnlyOnceRegistered. <br>
      * 共鳴
      */
@@ -139,6 +147,14 @@ public abstract class AbstractBsFaceTypeCQ extends AbstractConditionQuery {
      */
     public void setFaceTypeCode_NotEqual_墓下() {
         setFaceTypeCode_NotEqual_AsFaceType(CDef.FaceType.墓下);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As 恋人 (LOVER). And OnlyOnceRegistered. <br>
+     * 恋人
+     */
+    public void setFaceTypeCode_NotEqual_恋人() {
+        setFaceTypeCode_NotEqual_AsFaceType(CDef.FaceType.恋人);
     }
 
     /**
