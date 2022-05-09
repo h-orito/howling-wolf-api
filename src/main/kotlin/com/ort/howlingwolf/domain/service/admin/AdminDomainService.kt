@@ -11,10 +11,20 @@ import org.springframework.stereotype.Service
 @Service
 class AdminDomainService {
 
-    fun convertToSituation(village: Village, myself: VillageParticipant?, players: Players, charas: Charas): VillageAdminSituation {
-        if (myself?.playerId != 1) return VillageAdminSituation(false, listOf())
+    fun convertToSituation(
+        village: Village,
+        myself: VillageParticipant?,
+        players: Players,
+        charas: Charas
+    ): VillageAdminSituation {
+        if (myself?.playerId != 1) return VillageAdminSituation(
+            admin = false,
+            availableKick = false,
+            participantList = listOf()
+        )
         return VillageAdminSituation(
             admin = true,
+            availableKick = isAvailableKick(village, myself),
             participantList = village.participant.memberList.map { participant ->
                 VillageParticipantSituation(
                     name = charas.chara(participant.charaId).charaName.fullName(),
@@ -24,5 +34,9 @@ class AdminDomainService {
                 )
             }
         )
+    }
+
+    private fun isAvailableKick(village: Village, myself: VillageParticipant): Boolean {
+        return village.status.isPrologue() && myself.isAdmin()
     }
 }
