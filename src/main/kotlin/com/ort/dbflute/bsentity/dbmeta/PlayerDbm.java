@@ -93,7 +93,7 @@ public class PlayerDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "blacklistPlayerByFromPlayerIdList,blacklistPlayerByToPlayerIdList,villageList,villagePlayerList", null, false);
+    protected final ColumnInfo _columnPlayerId = cci("PLAYER_ID", "PLAYER_ID", null, null, Integer.class, "playerId", null, true, true, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "blacklistPlayerByFromPlayerIdList,blacklistPlayerByToPlayerIdList,playerIntroduceByFromPlayerIdList,playerIntroduceByToPlayerIdList,villageList,villagePlayerList", null, false);
     protected final ColumnInfo _columnUid = cci("UID", "UID", null, null, String.class, "uid", null, false, false, true, "VARCHAR", 100, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnNickname = cci("NICKNAME", "NICKNAME", null, null, String.class, "nickname", null, false, false, true, "VARCHAR", 50, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnTwitterUserName = cci("TWITTER_USER_NAME", "TWITTER_USER_NAME", null, null, String.class, "twitterUserName", null, false, false, true, "VARCHAR", 15, 0, null, null, false, null, null, null, null, null, false);
@@ -230,6 +230,22 @@ public class PlayerDbm extends AbstractDBMeta {
     public ReferrerInfo referrerBlacklistPlayerByToPlayerIdList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnPlayerId(), BlacklistPlayerDbm.getInstance().columnToPlayerId());
         return cri("FK_BLACKLIST_TO_PLAYER_PLAYER", "blacklistPlayerByToPlayerIdList", this, BlacklistPlayerDbm.getInstance(), mp, false, "playerByToPlayerId");
+    }
+    /**
+     * PLAYER_INTRODUCE by FROM_PLAYER_ID, named 'playerIntroduceByFromPlayerIdList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerPlayerIntroduceByFromPlayerIdList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnPlayerId(), PlayerIntroduceDbm.getInstance().columnFromPlayerId());
+        return cri("FK_PLAYER_INTRODUCE_PLAYER", "playerIntroduceByFromPlayerIdList", this, PlayerIntroduceDbm.getInstance(), mp, false, "playerByFromPlayerId");
+    }
+    /**
+     * PLAYER_INTRODUCE by TO_PLAYER_ID, named 'playerIntroduceByToPlayerIdList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerPlayerIntroduceByToPlayerIdList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnPlayerId(), PlayerIntroduceDbm.getInstance().columnToPlayerId());
+        return cri("FK_PLAYER_INTRODUCE_TO_PLAYER", "playerIntroduceByToPlayerIdList", this, PlayerIntroduceDbm.getInstance(), mp, false, "playerByToPlayerId");
     }
     /**
      * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.

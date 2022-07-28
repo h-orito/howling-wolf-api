@@ -485,6 +485,40 @@ public class BsPlayerCB extends AbstractConditionBean {
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from player_introduce where ...) as FOO_MAX} <br>
+         * PLAYER_INTRODUCE by FROM_PLAYER_ID, named 'playerIntroduceByFromPlayerIdList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     introduceCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     introduceCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, PlayerIntroduce.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<PlayerIntroduceCB, PlayerCQ> derivedPlayerIntroduceByFromPlayerId() {
+            assertDerived("playerIntroduceByFromPlayerIdList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<PlayerIntroduceCB> sq, PlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderivePlayerIntroduceByFromPlayerIdList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from player_introduce where ...) as FOO_MAX} <br>
+         * PLAYER_INTRODUCE by TO_PLAYER_ID, named 'playerIntroduceByToPlayerIdList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     introduceCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     introduceCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, PlayerIntroduce.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<PlayerIntroduceCB, PlayerCQ> derivedPlayerIntroduceByToPlayerId() {
+            assertDerived("playerIntroduceByToPlayerIdList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<PlayerIntroduceCB> sq, PlayerCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderivePlayerIntroduceByToPlayerIdList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
          * {select max(FOO) from village where ...) as FOO_MAX} <br>
          * VILLAGE by CREATE_PLAYER_ID, named 'villageList'.
          * <pre>

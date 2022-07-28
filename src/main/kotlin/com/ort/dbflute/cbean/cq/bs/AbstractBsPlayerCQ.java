@@ -197,6 +197,44 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
 
     /**
      * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select FROM_PLAYER_ID from player_introduce where ...)} <br>
+     * player_introduce by FROM_PLAYER_ID, named 'playerIntroduceByFromPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsPlayerIntroduceByFromPlayerId</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     introduceCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of PlayerIntroduceByFromPlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsPlayerIntroduceByFromPlayerId(SubQuery<PlayerIntroduceCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_ExistsReferrer_PlayerIntroduceByFromPlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", pp, "playerIntroduceByFromPlayerIdList");
+    }
+    public abstract String keepPlayerId_ExistsReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select TO_PLAYER_ID from player_introduce where ...)} <br>
+     * player_introduce by TO_PLAYER_ID, named 'playerIntroduceByToPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsPlayerIntroduceByToPlayerId</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     introduceCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of PlayerIntroduceByToPlayerIdList for 'exists'. (NotNull)
+     */
+    public void existsPlayerIntroduceByToPlayerId(SubQuery<PlayerIntroduceCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_ExistsReferrer_PlayerIntroduceByToPlayerIdList(cb.query());
+        registerExistsReferrer(cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "playerIntroduceByToPlayerIdList");
+    }
+    public abstract String keepPlayerId_ExistsReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq);
+
+    /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
      * {exists (select CREATE_PLAYER_ID from village where ...)} <br>
      * village by CREATE_PLAYER_ID, named 'villageAsOne'.
      * <pre>
@@ -273,6 +311,44 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
 
     /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select FROM_PLAYER_ID from player_introduce where ...)} <br>
+     * player_introduce by FROM_PLAYER_ID, named 'playerIntroduceByFromPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsPlayerIntroduceByFromPlayerId</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     introduceCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of PlayerId_NotExistsReferrer_PlayerIntroduceByFromPlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsPlayerIntroduceByFromPlayerId(SubQuery<PlayerIntroduceCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_NotExistsReferrer_PlayerIntroduceByFromPlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", pp, "playerIntroduceByFromPlayerIdList");
+    }
+    public abstract String keepPlayerId_NotExistsReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select TO_PLAYER_ID from player_introduce where ...)} <br>
+     * player_introduce by TO_PLAYER_ID, named 'playerIntroduceByToPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsPlayerIntroduceByToPlayerId</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     introduceCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of PlayerId_NotExistsReferrer_PlayerIntroduceByToPlayerIdList for 'not exists'. (NotNull)
+     */
+    public void notExistsPlayerIntroduceByToPlayerId(SubQuery<PlayerIntroduceCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepPlayerId_NotExistsReferrer_PlayerIntroduceByToPlayerIdList(cb.query());
+        registerNotExistsReferrer(cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "playerIntroduceByToPlayerIdList");
+    }
+    public abstract String keepPlayerId_NotExistsReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq);
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
      * {not exists (select CREATE_PLAYER_ID from village where ...)} <br>
      * village by CREATE_PLAYER_ID, named 'villageAsOne'.
      * <pre>
@@ -324,6 +400,22 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "blacklistPlayerByToPlayerIdList", al, op);
     }
     public abstract String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq);
+
+    public void xsderivePlayerIntroduceByFromPlayerIdList(String fn, SubQuery<PlayerIntroduceCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepPlayerId_SpecifyDerivedReferrer_PlayerIntroduceByFromPlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", pp, "playerIntroduceByFromPlayerIdList", al, op);
+    }
+    public abstract String keepPlayerId_SpecifyDerivedReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq);
+
+    public void xsderivePlayerIntroduceByToPlayerIdList(String fn, SubQuery<PlayerIntroduceCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepPlayerId_SpecifyDerivedReferrer_PlayerIntroduceByToPlayerIdList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "PLAYER_ID", "TO_PLAYER_ID", pp, "playerIntroduceByToPlayerIdList", al, op);
+    }
+    public abstract String keepPlayerId_SpecifyDerivedReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq);
 
     public void xsderiveVillageList(String fn, SubQuery<VillageCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
@@ -394,6 +486,60 @@ public abstract class AbstractBsPlayerCQ extends AbstractConditionQuery {
     }
     public abstract String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq);
     public abstract String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from player_introduce where ...)} <br>
+     * player_introduce by FROM_PLAYER_ID, named 'playerIntroduceByFromPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedPlayerIntroduceByFromPlayerId()</span>.<span style="color: #CC4747">max</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     introduceCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     introduceCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<PlayerIntroduceCB> derivedPlayerIntroduceByFromPlayerId() {
+        return xcreateQDRFunctionPlayerIntroduceByFromPlayerIdList();
+    }
+    protected HpQDRFunction<PlayerIntroduceCB> xcreateQDRFunctionPlayerIntroduceByFromPlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderivePlayerIntroduceByFromPlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderivePlayerIntroduceByFromPlayerIdList(String fn, SubQuery<PlayerIntroduceCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByFromPlayerIdList(cb.query()); String prpp = keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByFromPlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "PLAYER_ID", "FROM_PLAYER_ID", sqpp, "playerIntroduceByFromPlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq);
+    public abstract String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByFromPlayerIdListParameter(Object vl);
+
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from player_introduce where ...)} <br>
+     * player_introduce by TO_PLAYER_ID, named 'playerIntroduceByToPlayerIdAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedPlayerIntroduceByToPlayerId()</span>.<span style="color: #CC4747">max</span>(introduceCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     introduceCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     introduceCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<PlayerIntroduceCB> derivedPlayerIntroduceByToPlayerId() {
+        return xcreateQDRFunctionPlayerIntroduceByToPlayerIdList();
+    }
+    protected HpQDRFunction<PlayerIntroduceCB> xcreateQDRFunctionPlayerIntroduceByToPlayerIdList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderivePlayerIntroduceByToPlayerIdList(fn, sq, rd, vl, op));
+    }
+    public void xqderivePlayerIntroduceByToPlayerIdList(String fn, SubQuery<PlayerIntroduceCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        PlayerIntroduceCB cb = new PlayerIntroduceCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByToPlayerIdList(cb.query()); String prpp = keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByToPlayerIdListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "PLAYER_ID", "TO_PLAYER_ID", sqpp, "playerIntroduceByToPlayerIdList", rd, vl, prpp, op);
+    }
+    public abstract String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq);
+    public abstract String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByToPlayerIdListParameter(Object vl);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>

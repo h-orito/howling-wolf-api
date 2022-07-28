@@ -66,6 +66,10 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepPlayerId_ExistsReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepPlayerId_ExistsReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepPlayerId_ExistsReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepPlayerId_ExistsReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
     public String keepPlayerId_ExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
@@ -74,6 +78,10 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepPlayerId_NotExistsReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepPlayerId_NotExistsReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepPlayerId_NotExistsReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepPlayerId_NotExistsReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepPlayerId_NotExistsReferrer_VillagePlayerList(VillagePlayerCQ sq)
@@ -81,6 +89,10 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     public String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByFromPlayerIdList(BlacklistPlayerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepPlayerId_SpecifyDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepPlayerId_SpecifyDerivedReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepPlayerId_SpecifyDerivedReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepPlayerId_SpecifyDerivedReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
@@ -93,6 +105,14 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     public String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdList(BlacklistPlayerCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepPlayerId_QueryDerivedReferrer_BlacklistPlayerByToPlayerIdListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByFromPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByFromPlayerIdListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByToPlayerIdList(PlayerIntroduceCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepPlayerId_QueryDerivedReferrer_PlayerIntroduceByToPlayerIdListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepPlayerId_QueryDerivedReferrer_VillageList(VillageCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }

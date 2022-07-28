@@ -16,11 +16,7 @@ import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
@@ -45,13 +41,18 @@ class PlayerController(
         val createVillages: Villages = villageService.findVillages(
             player.createProgressVillageIdList + player.createFinishedVillageIdList
         )
+
         val blacklistPlayers: Players = playerService.findPlayers(player.blacklistPlayers.list)
+        val introducePlayers: Players = playerService.findPlayers(player.introducePlayerIds)
+        val introducedPlayers: Players = playerService.findPlayers(player.introducedPlayerIds)
         return MyselfPlayerView(
             player,
             participantVillages,
             createVillages,
             blacklistPlayers,
-            user
+            user,
+            introducePlayers,
+            introducedPlayers
         )
     }
 
@@ -89,17 +90,36 @@ class PlayerController(
         playerService.deleteBlacklist(user.uid, target.id)
     }
 
-    private val logger = LoggerFactory.getLogger(PlayerController::class.java)
+    @PostMapping("/player/introduce/{playerId}")
+    fun registerIntroduce(
+        @AuthenticationPrincipal user: HowlingWolfUser,
+        @PathVariable("playerId") targetPlayerId: Int
+    ) {
+        val target: Player = playerService.findPlayer(targetPlayerId)
+        playerService.registerIntroduce(user.uid, target.id)
+    }
+
+    @PostMapping("/player/remove-introduce/{playerId}")
+    fun removeIntroduce(
+        @AuthenticationPrincipal user: HowlingWolfUser,
+        @PathVariable("playerId") targetPlayerId: Int
+    ) {
+        val target: Player = playerService.findPlayer(targetPlayerId)
+        playerService.deleteIntroduce(user.uid, target.id)
+    }
+
     @GetMapping("/player/{playerId}/record")
     fun stats(
         @PathVariable("playerId") playerId: Int
     ): PlayerRecordsView {
         val player: Player = playerService.findPlayer(playerId)
         val playerRecords = playerCoordinator.findPlayerRecords(player)
-        val charachipIdList = playerRecords.participateVillageList.map { it.village.setting.charachip.charachipId }.distinct()
+        val charachipIdList =
+            playerRecords.participateVillageList.map { it.village.setting.charachip.charachipId }.distinct()
         val charas: Charas = charachipService.findCharas(charachipIdList)
         val playerIdList =
-            playerRecords.participateVillageList.flatMap { it.village.participant.memberList.map { it.playerId!! } }.distinct()
+            playerRecords.participateVillageList.flatMap { it.village.participant.memberList.map { it.playerId!! } }
+                .distinct()
         val players: Players = playerService.findPlayers(playerIdList)
         val createPlayerIdList = playerRecords.participateVillageList.map { it.village.creatorPlayerId }
         val createPlayers: Players = playerService.findPlayers(createPlayerIdList)

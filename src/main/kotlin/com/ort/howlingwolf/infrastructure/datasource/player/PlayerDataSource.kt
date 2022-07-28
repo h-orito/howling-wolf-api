@@ -4,21 +4,25 @@ import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.BlacklistPlayerBhv
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.dbflute.exbhv.PlayerDetailBhv
+import com.ort.dbflute.exbhv.PlayerIntroduceBhv
 import com.ort.dbflute.exentity.BlacklistPlayer
-import com.ort.dbflute.exentity.Player
 import com.ort.dbflute.exentity.PlayerDetail
+import com.ort.dbflute.exentity.PlayerIntroduce
+import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import org.springframework.stereotype.Repository
+import com.ort.dbflute.exentity.Player as DbPlayer
 
 @Repository
 class PlayerDataSource(
     private val playerBhv: PlayerBhv,
     private val playerDetailBhv: PlayerDetailBhv,
-    private val blacklistPlayerBhv: BlacklistPlayerBhv
+    private val blacklistPlayerBhv: BlacklistPlayerBhv,
+    private val playerIntroduceBhv: PlayerIntroduceBhv
 ) {
 
-    fun findPlayer(id: Int): com.ort.howlingwolf.domain.model.player.Player {
+    fun findPlayer(id: Int): Player {
         val player = playerBhv.selectEntityWithDeletedCheck {
             it.setupSelect_PlayerDetailAsOne()
             it.query().setPlayerId_Equal(id)
@@ -30,11 +34,13 @@ class PlayerDataSource(
                 vpCB.query().setIsGone_Equal(false) // participant village
             }
             it.loadBlacklistPlayerByFromPlayerId { }
+            it.loadPlayerIntroduceByFromPlayerId { }
+            it.loadPlayerIntroduceByToPlayerId { }
         }
         return convertPlayerToPlayer(player)
     }
 
-    fun findPlayer(uid: String): com.ort.howlingwolf.domain.model.player.Player {
+    fun findPlayer(uid: String): Player {
         val player = playerBhv.selectEntityWithDeletedCheck {
             it.setupSelect_PlayerDetailAsOne()
             it.query().setUid_Equal(uid)
@@ -46,6 +52,8 @@ class PlayerDataSource(
                 vpCB.query().setIsGone_Equal(false) // participant village
             }
             it.loadBlacklistPlayerByFromPlayerId { }
+            it.loadPlayerIntroduceByFromPlayerId { }
+            it.loadPlayerIntroduceByToPlayerId { }
         }
         return convertPlayerToPlayer(player)
     }
@@ -64,17 +72,15 @@ class PlayerDataSource(
         if (playerIdList.isEmpty()) return Players(listOf())
         val playerList = playerBhv.selectList {
             it.setupSelect_PlayerDetailAsOne()
-            it.query().existsVillagePlayer {
-                it.query().setPlayerId_InScope(playerIdList)
-            }
+            it.query().setPlayerId_InScope(playerIdList)
         }
         return Players(list = playerList.map { convertPlayerToSimplePlayer(it) })
     }
 
     fun update(uid: String, nickname: String, twitterUserName: String, twitterUserId: String?) {
-        val player = Player()
+        val player = DbPlayer()
         player.uniqueBy(uid)
-        player.nickname = removeSurrogate(nickname).ifEmpty { "名無し" }
+        player.nickname = nickname
         player.twitterUserName = twitterUserName
         twitterUserId?.let { player.registerTrace = "twitterId: $it" }
         playerBhv.update(player)
@@ -121,12 +127,35 @@ class PlayerDataSource(
         }
     }
 
+    fun registerIntroduce(uid: String, targetPlayerId: Int) {
+        val entity = playerIntroduceBhv.selectEntity {
+            it.query().queryPlayerByFromPlayerId().setUid_Equal(uid)
+            it.query().setToPlayerId_Equal(targetPlayerId)
+        }
+        if (entity.isPresent) return
+        val player = playerBhv.selectEntity {
+            it.query().setUid_Equal(uid)
+        }
+        if (!player.isPresent) return
+        val introduce = PlayerIntroduce()
+        introduce.fromPlayerId = player.get().playerId
+        introduce.toPlayerId = targetPlayerId
+        playerIntroduceBhv.insert(introduce)
+    }
+
+    fun deleteIntroduce(uid: String, targetPlayerId: Int) {
+        playerIntroduceBhv.queryDelete {
+            it.query().queryPlayerByFromPlayerId().setUid_Equal(uid)
+            it.query().setToPlayerId_Equal(targetPlayerId)
+        }
+    }
+
     fun updateDifference(before: Players, after: Players) {
         // player
         after.list.forEach {
             val beforePlayer = before.list.first { bP -> bP.id == it.id }
             if (it.existsDifference(beforePlayer)) {
-                val player = Player()
+                val player = DbPlayer()
                 player.playerId = it.id
                 player.isRestrictedParticipation = it.isRestrictedParticipation
                 playerBhv.update(player)
@@ -137,8 +166,8 @@ class PlayerDataSource(
     // ===================================================================================
     //                                                                             Mapping
     //                                                                             =======
-    private fun convertPlayerToPlayer(player: Player): com.ort.howlingwolf.domain.model.player.Player {
-        return com.ort.howlingwolf.domain.model.player.Player(
+    private fun convertPlayerToPlayer(player: DbPlayer): Player {
+        return Player(
             id = player.playerId,
             nickname = player.nickname,
             twitterUserName = player.twitterUserName,
@@ -158,12 +187,14 @@ class PlayerDataSource(
             createFinishedVillageIdList = player.villageList.filter {
                 it.villageStatusCodeAsVillageStatus.isSolvedVillage
             }.map { it.villageId },
-            blacklistPlayers = BlacklistPlayers(player.blacklistPlayerByFromPlayerIdList.map { it.toPlayerId })
+            blacklistPlayers = BlacklistPlayers(player.blacklistPlayerByFromPlayerIdList.map { it.toPlayerId }),
+            introducePlayerIds = player.playerIntroduceByFromPlayerIdList.map { it.toPlayerId },
+            introducedPlayerIds = player.playerIntroduceByToPlayerIdList.map { it.fromPlayerId }
         )
     }
 
-    private fun convertPlayerToSimplePlayer(player: Player): com.ort.howlingwolf.domain.model.player.Player {
-        return com.ort.howlingwolf.domain.model.player.Player(
+    private fun convertPlayerToSimplePlayer(player: DbPlayer): Player {
+        return Player(
             id = player.playerId,
             nickname = player.nickname,
             twitterUserName = player.twitterUserName,
@@ -171,19 +202,5 @@ class PlayerDataSource(
             introduction = player.playerDetailAsOne.map { it.introduction }.orElse(null),
             isRestrictedParticipation = player.isRestrictedParticipation
         )
-    }
-
-    // ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-    /**
-     * 絵文字を除く文字列を返す
-     * @param text
-     * @return 4byte文字を除いた文字列
-     */
-    private fun removeSurrogate(text: String): String {
-        return text.chunked(1).filter { c ->
-            !c.matches("[\\uD800-\\uDFFF]".toRegex())
-        }.joinToString(separator = "")
     }
 }

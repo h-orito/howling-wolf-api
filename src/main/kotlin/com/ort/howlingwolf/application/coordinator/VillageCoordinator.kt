@@ -1,15 +1,7 @@
 package com.ort.howlingwolf.application.coordinator
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.application.service.AbilityService
-import com.ort.howlingwolf.application.service.AutogenerateVillageService
-import com.ort.howlingwolf.application.service.CharachipService
-import com.ort.howlingwolf.application.service.ComingOutService
-import com.ort.howlingwolf.application.service.CommitService
-import com.ort.howlingwolf.application.service.MessageService
-import com.ort.howlingwolf.application.service.PlayerService
-import com.ort.howlingwolf.application.service.VillageService
-import com.ort.howlingwolf.application.service.VoteService
+import com.ort.howlingwolf.application.service.*
 import com.ort.howlingwolf.domain.model.ability.AbilityType
 import com.ort.howlingwolf.domain.model.charachip.Chara
 import com.ort.howlingwolf.domain.model.charachip.Charas
@@ -358,7 +350,8 @@ class VillageCoordinator(
         // IPアドレス更新
         val ipAddress = user.ipAddress!!
         val clientToken = user.clientToken!!
-        val changedVillage: Village = village.addParticipantIpAddress(participant.id, AccessInfo(ipAddress, clientToken))
+        val changedVillage: Village =
+            village.addParticipantIpAddress(participant.id, AccessInfo(ipAddress, clientToken))
         village = villageService.updateVillageDifference(village, changedVillage)
         // IPアドレスかクライアントトークンが重複している人がいたら通知
         val isContain = village.notDummyParticipant().memberList

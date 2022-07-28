@@ -30,13 +30,13 @@ import com.ort.dbflute.cbean.*;
  *     AUTHORITY, PLAYER_DETAIL(AsOne)
  *
  * [referrer table]
- *     BLACKLIST_PLAYER, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
+ *     BLACKLIST_PLAYER, PLAYER_INTRODUCE, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
  *
  * [foreign property]
  *     authority, playerDetailAsOne
  *
  * [referrer property]
- *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, villageList, villagePlayerList
+ *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, playerIntroduceByFromPlayerIdList, playerIntroduceByToPlayerIdList, villageList, villagePlayerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -127,6 +127,74 @@ public class LoaderOfPlayer {
     public NestedReferrerLoaderGateway<LoaderOfBlacklistPlayer> loadBlacklistPlayerByToPlayerId(ReferrerConditionSetupper<BlacklistPlayerCB> refCBLambda) {
         myBhv().loadBlacklistPlayerByToPlayerId(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerBlacklistPlayerByToPlayerId = refLs);
         return hd -> hd.handle(new LoaderOfBlacklistPlayer().ready(_referrerBlacklistPlayerByToPlayerId, _selector));
+    }
+
+    protected List<PlayerIntroduce> _referrerPlayerIntroduceByFromPlayerId;
+
+    /**
+     * Load referrer of playerIntroduceByFromPlayerIdList by the set-upper of referrer. <br>
+     * PLAYER_INTRODUCE by FROM_PLAYER_ID, named 'playerIntroduceByFromPlayerIdList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">playerList</span>, <span style="color: #553000">playerLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">playerLoader</span>.<span style="color: #CC4747">loadPlayerIntroduceByFromPlayerId</span>(<span style="color: #553000">introduceCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *         <span style="color: #553000">introduceCB</span>.setupSelect...
+     *         <span style="color: #553000">introduceCB</span>.query().set...
+     *         <span style="color: #553000">introduceCB</span>.query().addOrderBy...
+     *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">introduceLoader</span> -&gt; {</span>
+     *     <span style="color: #3F7E5E">//    introduceLoader.load...</span>
+     *     <span style="color: #3F7E5E">//});</span>
+     * });
+     * for (Player player : <span style="color: #553000">playerList</span>) {
+     *     ... = player.<span style="color: #CC4747">getPlayerIntroduceByFromPlayerIdList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setFromPlayerId_InScope(pkList);
+     * cb.query().addOrderBy_FromPlayerId_Asc();
+     * </pre>
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerLoaderGateway<LoaderOfPlayerIntroduce> loadPlayerIntroduceByFromPlayerId(ReferrerConditionSetupper<PlayerIntroduceCB> refCBLambda) {
+        myBhv().loadPlayerIntroduceByFromPlayerId(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerPlayerIntroduceByFromPlayerId = refLs);
+        return hd -> hd.handle(new LoaderOfPlayerIntroduce().ready(_referrerPlayerIntroduceByFromPlayerId, _selector));
+    }
+
+    protected List<PlayerIntroduce> _referrerPlayerIntroduceByToPlayerId;
+
+    /**
+     * Load referrer of playerIntroduceByToPlayerIdList by the set-upper of referrer. <br>
+     * PLAYER_INTRODUCE by TO_PLAYER_ID, named 'playerIntroduceByToPlayerIdList'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">playerList</span>, <span style="color: #553000">playerLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">playerLoader</span>.<span style="color: #CC4747">loadPlayerIntroduceByToPlayerId</span>(<span style="color: #553000">introduceCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *         <span style="color: #553000">introduceCB</span>.setupSelect...
+     *         <span style="color: #553000">introduceCB</span>.query().set...
+     *         <span style="color: #553000">introduceCB</span>.query().addOrderBy...
+     *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">introduceLoader</span> -&gt; {</span>
+     *     <span style="color: #3F7E5E">//    introduceLoader.load...</span>
+     *     <span style="color: #3F7E5E">//});</span>
+     * });
+     * for (Player player : <span style="color: #553000">playerList</span>) {
+     *     ... = player.<span style="color: #CC4747">getPlayerIntroduceByToPlayerIdList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setToPlayerId_InScope(pkList);
+     * cb.query().addOrderBy_ToPlayerId_Asc();
+     * </pre>
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerLoaderGateway<LoaderOfPlayerIntroduce> loadPlayerIntroduceByToPlayerId(ReferrerConditionSetupper<PlayerIntroduceCB> refCBLambda) {
+        myBhv().loadPlayerIntroduceByToPlayerId(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerPlayerIntroduceByToPlayerId = refLs);
+        return hd -> hd.handle(new LoaderOfPlayerIntroduce().ready(_referrerPlayerIntroduceByToPlayerId, _selector));
     }
 
     protected List<Village> _referrerVillage;

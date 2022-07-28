@@ -38,5 +38,16 @@ class PlayerService(
         playerDataSource.deleteBlacklist(uid, targetPlayerId)
     }
 
+    fun registerIntroduce(uid: String, targetPlayerId: Int) {
+        val player = playerDataSource.findPlayer(uid)
+        if (!player.canIntroduce()) return
+        if (player.id == targetPlayerId) return
+        playerDataSource.registerIntroduce(uid, targetPlayerId)
+    }
+
+    fun deleteIntroduce(uid: String, targetPlayerId: Int) {
+        playerDataSource.deleteIntroduce(uid, targetPlayerId)
+    }
+
     fun updateDifference(before: Players, after: Players) = playerDataSource.updateDifference(before, after)
 }

@@ -16,7 +16,9 @@ data class Player(
     val participateFinishedVillageIdList: List<Int> = listOf(),
     val createProgressVillageIdList: List<Int> = listOf(),
     val createFinishedVillageIdList: List<Int> = listOf(),
-    val blacklistPlayers: BlacklistPlayers = BlacklistPlayers(listOf())
+    val blacklistPlayers: BlacklistPlayers = BlacklistPlayers(listOf()),
+    val introducePlayerIds: List<Int> = emptyList(),
+    val introducedPlayerIds: List<Int> = emptyList()
 ) {
     fun restrictParticipation(): Player {
         return this.copy(isRestrictedParticipation = true)
@@ -63,5 +65,9 @@ data class Player(
 
     fun existsDifference(player: Player): Boolean {
         return id != player.id || isRestrictedParticipation != player.isRestrictedParticipation
+    }
+
+    fun canIntroduce(): Boolean {
+        return !isRestrictedParticipation && participateFinishedVillageIdList.isNotEmpty()
     }
 }

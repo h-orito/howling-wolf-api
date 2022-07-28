@@ -512,6 +512,44 @@
             <reference foreign="PLAYER_ID" local="PLAYER_ID"/>
         </foreign-key>
     </table>
+    <table comment="プレイヤー紹介" name="player_introduce"
+        schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
+        <column autoIncrement="true" comment="プレイヤー紹介ID"
+            dbType="INT UNSIGNED" javaType="Integer"
+            name="PLAYER_INTRODUCE_ID" pkName="PRIMARY" pkPosition="1"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="プレイヤーID" dbType="INT UNSIGNED"
+            javaType="Integer" name="FROM_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="紹介対象プレイヤーID" dbType="INT UNSIGNED"
+            javaType="Integer" name="TO_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="登録日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="登録トレース" dbType="VARCHAR" javaType="String"
+            name="REGISTER_TRACE" required="true" size="64" type="VARCHAR"/>
+        <column comment="更新日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="UPDATE_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="更新トレース" dbType="VARCHAR" javaType="String"
+            name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="player" name="FK_PLAYER_INTRODUCE_PLAYER">
+            <reference foreign="PLAYER_ID" local="FROM_PLAYER_ID"/>
+        </foreign-key>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="player" name="FK_PLAYER_INTRODUCE_TO_PLAYER">
+            <reference foreign="PLAYER_ID" local="TO_PLAYER_ID"/>
+        </foreign-key>
+        <unique name="UQ_player_introduce">
+            <unique-column name="FROM_PLAYER_ID" position="1"/>
+            <unique-column name="TO_PLAYER_ID" position="2"/>
+        </unique>
+        <index name="FK_PLAYER_INTRODUCE_TO_PLAYER">
+            <index-column name="TO_PLAYER_ID" position="1"/>
+        </index>
+    </table>
     <table comment="役職" name="skill"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
         <column comment="役職コード" dbType="VARCHAR" javaType="String"

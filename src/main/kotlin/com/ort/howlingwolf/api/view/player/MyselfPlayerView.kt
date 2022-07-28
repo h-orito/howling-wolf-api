@@ -15,14 +15,18 @@ data class MyselfPlayerView(
     val participateFinishedVillages: VillagesView,
     val createProgressVillages: VillagesView,
     val createFinishedVillages: VillagesView,
-    val blacklistPlayers: List<PlayerView>
+    val blacklistPlayers: List<PlayerView>,
+    val introducePlayers: List<PlayerView>,
+    val introducedPlayers: List<PlayerView>
 ) {
     constructor(
         player: Player,
         participantVillages: Villages,
         createVillages: Villages,
         blacklistPlayers: Players,
-        user: HowlingWolfUser
+        user: HowlingWolfUser,
+        introducePlayers: Players,
+        introducedPlayers: Players
     ) : this(
         id = player.id,
         nickname = player.nickname,
@@ -40,6 +44,8 @@ data class MyselfPlayerView(
         createFinishedVillages = VillagesView(Villages(createVillages.list.filter {
             it.status.isSolved()
         })),
-        blacklistPlayers = blacklistPlayers.list.map { PlayerView(it) }
+        blacklistPlayers = blacklistPlayers.list.map { PlayerView(it) },
+        introducePlayers = introducePlayers.list.map { PlayerView(it) },
+        introducedPlayers = introducedPlayers.list.map { PlayerView(it) }
     )
 }

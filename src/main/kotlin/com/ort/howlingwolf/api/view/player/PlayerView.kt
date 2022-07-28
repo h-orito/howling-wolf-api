@@ -7,7 +7,8 @@ data class PlayerView(
     val nickname: String,
     val twitterUserName: String,
     val otherSiteName: String?,
-    val introduction: String?
+    val introduction: String?,
+    val introduced: Boolean
 ) {
     constructor(
         player: Player
@@ -16,6 +17,7 @@ data class PlayerView(
         nickname = player.nickname,
         twitterUserName = player.twitterUserName,
         otherSiteName = player.otherSiteName,
-        introduction = player.introduction
+        introduction = player.introduction,
+        introduced = player.introducedPlayerIds.isNotEmpty()
     )
 }

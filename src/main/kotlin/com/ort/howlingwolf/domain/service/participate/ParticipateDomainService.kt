@@ -108,7 +108,7 @@ class ParticipateDomainService {
     fun getSelectableCharaList(village: Village, charas: Charas): List<Chara> {
         return charas.list.filterNot { chara ->
             village.participant.memberList.any { it.charaId == chara.id }
-                || village.spectator.memberList.any { it.charaId == chara.id }
+                    || village.spectator.memberList.any { it.charaId == chara.id }
         }
     }
 
@@ -166,12 +166,15 @@ class ParticipateDomainService {
         // プレイヤーとして参加可能か
         player ?: return false
         if (!player.isAvailableParticipate()) return false
+        // 誰かに招待されていないとNG
+        if (player.introducedPlayerIds.isEmpty()) return false
         // 村として参加可能か
         if (!village.isAvailableParticipate()) return false
         // 複合条件：初心者村かつ1戦以上経験ありかつ1回目の更新時間を迎えていない場合NG
         if (village.setting.rules.forBeginner
             && player.participateFinishedVillageIdList.isNotEmpty()
-            && village.setting.time.prologueStartDatetime.plusDays(1L).isAfter(HowlingWolfDateUtil.currentLocalDateTime())
+            && village.setting.time.prologueStartDatetime.plusDays(1L)
+                .isAfter(HowlingWolfDateUtil.currentLocalDateTime())
         ) {
             return false
         }
@@ -194,6 +197,7 @@ class ParticipateDomainService {
         // プレイヤーとして参加可能か
         player ?: return false
         if (!player.isAvailableParticipate()) return false
+        if (player.introducedPlayerIds.isEmpty()) return false
         // 村として見学可能か
         return village.isAvailableSpectate(charachipCharaNum)
     }
