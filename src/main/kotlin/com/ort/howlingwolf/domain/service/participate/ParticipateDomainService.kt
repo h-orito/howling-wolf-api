@@ -50,6 +50,8 @@ class ParticipateDomainService {
     ) {
         // 参加できない状況ならNG
         if (!isAvailableParticipate(player, village)) throw HowlingWolfBusinessException("参加できません")
+        // 誰かに招待されていないとNG
+        if (player!!.introducedPlayerIds.isEmpty()) throw HowlingWolfBusinessException("参加できません")
         // 既にそのキャラが参加していたりパスワードを間違えていたらNG
         village.assertParticipate(charaId, password)
         // 役職希望無効の場合はおまかせのみ
@@ -74,6 +76,8 @@ class ParticipateDomainService {
         password: String?
     ) {
         if (!isAvailableSpectate(player, village, charachipCharaNum)) throw HowlingWolfBusinessException("見学できません")
+        // 誰かに招待されていないとNG
+        if (player!!.introducedPlayerIds.isEmpty()) throw HowlingWolfBusinessException("見学できません")
         // 既にそのキャラが参加していたりパスワードを間違えていたらNG
         village.assertParticipate(charaId, password)
     }
@@ -166,8 +170,6 @@ class ParticipateDomainService {
         // プレイヤーとして参加可能か
         player ?: return false
         if (!player.isAvailableParticipate()) return false
-        // 誰かに招待されていないとNG
-        if (player.introducedPlayerIds.isEmpty()) return false
         // 村として参加可能か
         if (!village.isAvailableParticipate()) return false
         // 複合条件：初心者村かつ1戦以上経験ありかつ1回目の更新時間を迎えていない場合NG
@@ -197,7 +199,6 @@ class ParticipateDomainService {
         // プレイヤーとして参加可能か
         player ?: return false
         if (!player.isAvailableParticipate()) return false
-        if (player.introducedPlayerIds.isEmpty()) return false
         // 村として見学可能か
         return village.isAvailableSpectate(charachipCharaNum)
     }
