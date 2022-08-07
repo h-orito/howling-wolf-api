@@ -56,5 +56,5 @@ firebase:
     url: ${HOWLING_WOLF_FIREBASE_DATABASE_URL}
 
 discord:
-  webhook-url: ${DISCORD_WEBHOOK_URL}
-  master-userid: ${DISCORD_MASTER_USERID}
+  webhook-url: ${HOWLING_WOLF_DISCORD_WEBHOOK_URL}
+  master-userid: ${HOWLING_WOLF_DISCORD_MASTER_USERID}
