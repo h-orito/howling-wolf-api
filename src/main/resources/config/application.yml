@@ -53,3 +53,7 @@ firebase:
       path: ""
   database:
     url: ""
+
+discord:
+  webhook-url:
+  master-userid:

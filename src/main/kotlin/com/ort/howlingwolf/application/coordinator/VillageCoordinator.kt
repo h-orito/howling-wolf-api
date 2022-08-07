@@ -32,6 +32,7 @@ import com.ort.howlingwolf.domain.service.vote.VoteDomainService
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.exception.HowlingWolfBusinessException
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
+import com.ort.howlingwolf.infrastructure.repository.DiscordRepository
 import com.ort.howlingwolf.infrastructure.repository.SlackRepository
 import com.ort.howlingwolf.infrastructure.repository.TweetRepository
 import org.springframework.stereotype.Service
@@ -55,6 +56,7 @@ class VillageCoordinator(
     private val autogenerateVillageService: AutogenerateVillageService,
     private val tweetRepository: TweetRepository,
     private val slackRepository: SlackRepository,
+    private val discordRepository: DiscordRepository,
     // domain service
     private val participateDomainService: ParticipateDomainService,
     private val skillRequestDomainService: SkillRequestDomainService,
@@ -253,6 +255,7 @@ class VillageCoordinator(
             .any { a -> a.ipAddress == ipAddress || a.clientToken == clientToken }
         if (isContain) {
             slackRepository.postToSlack(villageId, "IPアドレス/クライアントトークン重複検出: IP: $ipAddress, Token: $clientToken")
+            discordRepository.post(villageId, "IPアドレス/クライアントトークン重複検出: IP: $ipAddress, Token: $clientToken")
         }
     }
 
@@ -346,6 +349,7 @@ class VillageCoordinator(
         // 特定の文字列が含まれていたら通知
         if (messageText.contains("@国主") || messageText.contains("＠国主")) {
             slackRepository.postToSlack(villageId, messageText)
+            discordRepository.post(villageId, messageText)
         }
         // IPアドレス更新
         val ipAddress = user.ipAddress!!
@@ -360,6 +364,7 @@ class VillageCoordinator(
             .any { a -> a.ipAddress == ipAddress || a.clientToken == clientToken }
         if (isContain) {
             slackRepository.postToSlack(villageId, "IPアドレス/クライアントトークン重複検出: IP: $ipAddress, Token: $clientToken")
+            discordRepository.post(villageId, "IPアドレス/クライアントトークン重複検出: IP: $ipAddress, Token: $clientToken")
         }
     }
 
