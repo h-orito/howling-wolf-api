@@ -214,7 +214,7 @@ class ProgressDomainServiceTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val afterDayChange = progressDomainService.dayChange(dayChange, messages, charas)
+        val afterDayChange = progressDomainService.dayChange(dayChange, messages, charas, Commits(listOf()))
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
@@ -222,12 +222,12 @@ class ProgressDomainServiceTest : HowlingWolfTest() {
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.進行中)
         assertThat(afterDayChange.messages.list.any { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
-                && message.content.text.contains("ついに犠牲者が")
+                    && message.content.text.contains("ついに犠牲者が")
         }).isTrue()
         assertThat(afterDayChange.messages.list.any { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
-                && message.content.text.contains("現在の生存者は")
-                && message.content.text.contains(charas.list.last().charaName.name)
+                    && message.content.text.contains("現在の生存者は")
+                    && message.content.text.contains(charas.list.last().charaName.name)
         }).isTrue()
         assertThat(afterDayChange.abilities.list.filter { it.villageDayId == latestDay.id }).isNotEmpty
         assertThat(afterDayChange.votes.list.filter { it.villageDayId == latestDay.id }).isNotEmpty
@@ -303,7 +303,7 @@ class ProgressDomainServiceTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val afterDayChange = progressDomainService.dayChange(dayChange, messages, charas)
+        val afterDayChange = progressDomainService.dayChange(dayChange, messages, charas, Commits(listOf()))
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
@@ -312,8 +312,8 @@ class ProgressDomainServiceTest : HowlingWolfTest() {
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.進行中)
         assertThat(afterDayChange.messages.list.any { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
-                && message.content.text.contains("現在の生存者は")
-                && message.content.text.contains(charas.list.last().charaName.name)
+                    && message.content.text.contains("現在の生存者は")
+                    && message.content.text.contains(charas.list.last().charaName.name)
         }).isTrue()
         assertThat(afterDayChange.abilities.list.filter { it.villageDayId == latestDay.id }).satisfies { latestDayAbilityList ->
             assertThat(latestDayAbilityList.any { it.abilityType.code == CDef.AbilityType.襲撃.code() }).isTrue()
@@ -391,7 +391,7 @@ class ProgressDomainServiceTest : HowlingWolfTest() {
         )
 
         // ## Act ##
-        val afterDayChange = progressDomainService.dayChange(dayChange, messages, charas)
+        val afterDayChange = progressDomainService.dayChange(dayChange, messages, charas, Commits(listOf()))
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).isTrue()
@@ -400,7 +400,7 @@ class ProgressDomainServiceTest : HowlingWolfTest() {
         assertThat(afterDayChange.village.status.toCdef()).isEqualTo(CDef.VillageStatus.エピローグ)
         assertThat(afterDayChange.messages.list.none { message ->
             message.content.type.toCdef() == CDef.MessageType.公開システムメッセージ
-                && message.content.text.contains("現在の生存者は")
+                    && message.content.text.contains("現在の生存者は")
         }).isTrue()
         assertThat(afterDayChange.abilities.list.filter { it.villageDayId == latestDay.id }).satisfies { latestDayAbilityList ->
             assertThat(latestDayAbilityList.none { it.abilityType.code == CDef.AbilityType.襲撃.code() }).isTrue()

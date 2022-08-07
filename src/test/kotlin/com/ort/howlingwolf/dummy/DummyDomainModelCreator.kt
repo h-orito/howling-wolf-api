@@ -1,11 +1,7 @@
 package com.ort.howlingwolf.dummy
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.howlingwolf.domain.model.charachip.Chara
-import com.ort.howlingwolf.domain.model.charachip.CharaDefaultMessage
-import com.ort.howlingwolf.domain.model.charachip.CharaName
-import com.ort.howlingwolf.domain.model.charachip.CharaSize
-import com.ort.howlingwolf.domain.model.charachip.Charas
+import com.ort.howlingwolf.domain.model.charachip.*
 import com.ort.howlingwolf.domain.model.commit.Commits
 import com.ort.howlingwolf.domain.model.daychange.DayChange
 import com.ort.howlingwolf.domain.model.dead.Dead
@@ -26,13 +22,7 @@ import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
-import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
-import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
-import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
-import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
-import com.ort.howlingwolf.domain.model.village.setting.VillageRules
-import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
-import com.ort.howlingwolf.domain.model.village.setting.VillageTime
+import com.ort.howlingwolf.domain.model.village.setting.*
 import com.ort.howlingwolf.domain.model.village.vote.VillageVotes
 import java.time.LocalDateTime
 
@@ -59,7 +49,8 @@ object DummyDomainModelCreator {
         startDatetime = LocalDateTime.now().plusDays(1L),
         silentHours = null,
         availableDummySkill = false,
-        forBeginner = false
+        forBeginner = false,
+        canSkillRequest = false
     )
 
     fun createDummyVillageDays(): VillageDays = VillageDays(listOf())
@@ -68,6 +59,7 @@ object DummyDomainModelCreator {
         id = randomNumber(),
         day = randomNumber(),
         noonnight = CDef.Noonnight.昼.code(),
+        startDatetime = LocalDateTime.now(),
         dayChangeDatetime = LocalDateTime.now()
     )
 
@@ -92,7 +84,8 @@ object DummyDomainModelCreator {
 
     fun createDummyVillageCharachip(): VillageCharachip = VillageCharachip(1, 1)
 
-    fun createDummyVillageTime(): VillageTime = VillageTime("dummy", LocalDateTime.now(), null, null, LocalDateTime.now(), 0, null)
+    fun createDummyVillageTime(): VillageTime =
+        VillageTime("dummy", LocalDateTime.now(), null, null, LocalDateTime.now(), 0, null)
 
     fun createDummyPersonCapacity(): PersonCapacity = PersonCapacity(1, 1)
 
@@ -108,7 +101,8 @@ object DummyDomainModelCreator {
         skill = null,
         skillRequest = createDummySkillRequest(),
         isWin = null,
-        comingOuts = ComingOuts()
+        comingOuts = ComingOuts(),
+        accessInfos = listOf()
     )
 
     fun createDummySkillRequest(): SkillRequest = SkillRequest(
@@ -187,15 +181,19 @@ object DummyDomainModelCreator {
 
     fun createDummyAliveWolf(): VillageParticipant = createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.人狼))
 
-    fun createDummyAliveVillager(): VillageParticipant = createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.村人))
+    fun createDummyAliveVillager(): VillageParticipant =
+        createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.村人))
 
     fun createDummyAliveSeer(): VillageParticipant = createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.占い師))
 
-    fun createDummyAlivePsychic(): VillageParticipant = createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.霊能者))
+    fun createDummyAlivePsychic(): VillageParticipant =
+        createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.霊能者))
 
-    fun createDummyAliveHunter(): VillageParticipant = createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.狩人))
+    fun createDummyAliveHunter(): VillageParticipant =
+        createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.狩人))
 
-    fun createDummyAliveMadman(): VillageParticipant = createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.狂人))
+    fun createDummyAliveMadman(): VillageParticipant =
+        createDummyVillageParticipant().copy(skill = Skill(CDef.Skill.狂人))
 
     fun createDummyDeadWolf(): VillageParticipant = createDummyAliveWolf().copy(dead = createDummyDead())
 

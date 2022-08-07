@@ -1,11 +1,7 @@
 package com.ort.howlingwolf.infrastructure.datasource.village
 
 import com.ort.dbflute.allcommon.CDef
-import com.ort.dbflute.exbhv.MessageRestrictionBhv
-import com.ort.dbflute.exbhv.VillageBhv
-import com.ort.dbflute.exbhv.VillageDayBhv
-import com.ort.dbflute.exbhv.VillagePlayerBhv
-import com.ort.dbflute.exbhv.VillageSettingBhv
+import com.ort.dbflute.exbhv.*
 import com.ort.dbflute.exentity.VillagePlayer
 import com.ort.howlingwolf.HowlingWolfTest
 import com.ort.howlingwolf.domain.model.camp.Camp
@@ -20,15 +16,7 @@ import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.domain.model.village.participant.coming_out.ComingOuts
-import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
-import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
-import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestrict
-import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
-import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
-import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
-import com.ort.howlingwolf.domain.model.village.setting.VillageRules
-import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
-import com.ort.howlingwolf.domain.model.village.setting.VillageTime
+import com.ort.howlingwolf.domain.model.village.setting.*
 import com.ort.howlingwolf.dummy.DummyDomainModelCreator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -50,14 +38,19 @@ class VillageDataSourceTest : HowlingWolfTest() {
     //                                                                           =========
     @Autowired
     lateinit var villageDataSource: VillageDataSource
+
     @Autowired
     lateinit var villageBhv: VillageBhv
+
     @Autowired
     lateinit var villagePlayerBhv: VillagePlayerBhv
+
     @Autowired
     lateinit var villageSettingBhv: VillageSettingBhv
+
     @Autowired
     lateinit var messageRestrictionBhv: MessageRestrictionBhv
+
     @Autowired
     lateinit var villageDayBhv: VillageDayBhv
 
@@ -78,7 +71,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
             startDatetime = startDatetime,
             silentHours = null,
             availableDummySkill = false,
-            forBeginner = false
+            forBeginner = false,
+            canSkillRequest = false
         )
 
         // ## Act ##
@@ -343,12 +337,14 @@ class VillageDataSourceTest : HowlingWolfTest() {
                         id = 1,
                         day = 0,
                         noonnight = CDef.Noonnight.昼.code(),
+                        startDatetime = LocalDateTime.now(),
                         dayChangeDatetime = LocalDateTime.now()
                     ),
                     VillageDay(
                         id = 1,
                         day = 1,
                         noonnight = CDef.Noonnight.昼.code(),
+                        startDatetime = LocalDateTime.now(),
                         dayChangeDatetime = LocalDateTime.now().plusDays(2L)
                     )
                 )
@@ -369,7 +365,8 @@ class VillageDataSourceTest : HowlingWolfTest() {
             skill = null,
             skillRequest = SkillRequest(Skill(CDef.Skill.おまかせ), Skill(CDef.Skill.おまかせ)),
             isWin = null,
-            comingOuts = ComingOuts()
+            comingOuts = ComingOuts(),
+            accessInfos = listOf()
         )
     }
 

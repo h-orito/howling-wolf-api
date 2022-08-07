@@ -3,15 +3,10 @@ package com.ort.howlingwolf.application.coordinator
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.exbhv.PlayerBhv
 import com.ort.howlingwolf.HowlingWolfTest
-import com.ort.howlingwolf.application.service.AbilityService
-import com.ort.howlingwolf.application.service.CharachipService
-import com.ort.howlingwolf.application.service.CommitService
-import com.ort.howlingwolf.application.service.MessageService
-import com.ort.howlingwolf.application.service.PlayerService
-import com.ort.howlingwolf.application.service.VillageService
-import com.ort.howlingwolf.application.service.VoteService
+import com.ort.howlingwolf.application.service.*
 import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.player.Players
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import com.ort.howlingwolf.dummy.DummyDomainModelCreator
 import com.ort.howlingwolf.dummy.DummyVillageService
@@ -35,20 +30,28 @@ class VillageCoordinatorTest : HowlingWolfTest() {
     //                                                                           =========
     @Autowired
     lateinit var playerBhv: PlayerBhv
+
     @Autowired
     lateinit var villageCoordinator: VillageCoordinator
+
     @Autowired
     lateinit var villageService: VillageService
+
     @Autowired
     lateinit var messageService: MessageService
+
     @Autowired
     lateinit var charachipService: CharachipService
+
     @Autowired
     lateinit var playerService: PlayerService
+
     @Autowired
     lateinit var abilityService: AbilityService
+
     @Autowired
     lateinit var voteService: VoteService
+
     @Autowired
     lateinit var commitService: CommitService
 
@@ -121,7 +124,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
-            isSpectate = false
+            isSpectate = false,
+            accessInfo = AccessInfo("dummy", "dummy")
         )
 
         // ## Assert ##
@@ -141,7 +145,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
-            isSpectate = false
+            isSpectate = false,
+            accessInfo = AccessInfo("dummy", "dummy")
         )
         val first = CDef.Skill.人狼
         val second = CDef.Skill.村人
@@ -173,7 +178,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
-            isSpectate = false
+            isSpectate = false,
+            accessInfo = AccessInfo("dummy", "dummy")
         )
 
         // ## Act ##
@@ -197,7 +203,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
-            isSpectate = false
+            isSpectate = false,
+            accessInfo = AccessInfo("dummy", "dummy")
         )
         val messageText = "message text"
 
@@ -224,7 +231,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
             playerId = 2,
             charaId = charas.list[1].id,
             message = "入村しましたよ",
-            isSpectate = false
+            isSpectate = false,
+            accessInfo = AccessInfo("dummy", "dummy")
         )
         val messageText = "message text"
 
@@ -247,7 +255,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         )
         assertThat(messages.list.any {
             it.fromVillageParticipantId == participant?.id
-                && it.content.text == messageText
+                    && it.content.text == messageText
         }).isTrue()
     }
 
@@ -265,7 +273,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
                 firstRequestSkill = if (it == 2) CDef.Skill.占い師 else CDef.Skill.おまかせ,
-                isSpectate = false
+                isSpectate = false,
+                accessInfo = AccessInfo("dummy", "dummy")
             )
         }
         village = villageService.findVillage(village.id)
@@ -294,8 +303,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val abilities = abilityService.findVillageAbilities(village.id)
         assertThat(abilities.list.any {
             it.abilityType.toCdef() == CDef.AbilityType.占い
-                && it.myselfId == participant?.id
-                && it.targetId == village.dummyChara().id
+                    && it.myselfId == participant?.id
+                    && it.targetId == village.dummyChara().id
         }).isTrue()
     }
 
@@ -313,7 +322,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
                 firstRequestSkill = if (it == 2) CDef.Skill.占い師 else CDef.Skill.おまかせ,
-                isSpectate = false
+                isSpectate = false,
+                accessInfo = AccessInfo("dummy", "dummy")
             )
         }
         village = villageService.findVillage(village.id)
@@ -338,7 +348,7 @@ class VillageCoordinatorTest : HowlingWolfTest() {
         val votes = voteService.findVillageVotes(village.id)
         assertThat(votes.list.any {
             it.myselfId == participant?.id
-                && it.targetId == village.dummyChara().id
+                    && it.targetId == village.dummyChara().id
         }).isTrue()
     }
 
@@ -356,7 +366,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
                 firstRequestSkill = if (it == 2) CDef.Skill.占い師 else CDef.Skill.おまかせ,
-                isSpectate = false
+                isSpectate = false,
+                accessInfo = AccessInfo("dummy", "dummy")
             )
         }
         village = villageService.findVillage(village.id)
@@ -403,7 +414,8 @@ class VillageCoordinatorTest : HowlingWolfTest() {
                 charaId = charas.list[it].id,
                 message = "入村しましたよ",
                 firstRequestSkill = if (it == 2) CDef.Skill.占い師 else CDef.Skill.おまかせ,
-                isSpectate = false
+                isSpectate = false,
+                accessInfo = AccessInfo("dummy", "dummy")
             )
         }
 

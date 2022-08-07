@@ -10,15 +10,9 @@ import com.ort.howlingwolf.domain.model.village.Village
 import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
+import com.ort.howlingwolf.domain.model.village.participant.AccessInfo
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
-import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
-import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
-import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
-import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
-import com.ort.howlingwolf.domain.model.village.setting.VillageRules
-import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
-import com.ort.howlingwolf.domain.model.village.setting.VillageTime
+import com.ort.howlingwolf.domain.model.village.setting.*
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -39,14 +33,19 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
     //                                                                           =========
     @Autowired
     lateinit var villageCoordinator: VillageCoordinator
+
     @Autowired
     lateinit var dayChangeCoordinator: DayChangeCoordinator
+
     @Autowired
     lateinit var playerBhv: PlayerBhv
+
     @Autowired
     lateinit var messageBhv: MessageBhv
+
     @Autowired
     lateinit var villageService: VillageService
+
     @Autowired
     lateinit var charachipService: CharachipService
 
@@ -73,7 +72,14 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
         var village = registerVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..4).forEach {
-            villageCoordinator.participate(village.id, it, charas.list[it].id, message = "hoge", isSpectate = false)
+            villageCoordinator.participate(
+                village.id,
+                it,
+                charas.list[it].id,
+                message = "hoge",
+                isSpectate = false,
+                accessInfo = AccessInfo("dummy", "dummy")
+            )
         }
         village = villageService.findVillage(village.id)
         messageBhv.selectList {
@@ -101,7 +107,14 @@ class DayChangeCoordinatorTest : HowlingWolfTest() {
         var village = registerVillage()
         val charas = charachipService.findCharas(village.setting.charachip.charachipId)
         (2..11).forEach {
-            villageCoordinator.participate(village.id, it, charas.list[it].id, message = "hoge", isSpectate = false)
+            villageCoordinator.participate(
+                village.id,
+                it,
+                charas.list[it].id,
+                message = "hoge",
+                isSpectate = false,
+                accessInfo = AccessInfo("dummy", "dummy")
+            )
         }
         village = villageService.updateVillageDifference(
             village, village.copy(

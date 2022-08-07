@@ -157,6 +157,7 @@ class AttackDomainServiceTest : HowlingWolfTest() {
                         id = 1,
                         day = 2,
                         noonnight = CDef.Noonnight.昼.code(),
+                        startDatetime = LocalDateTime.now(),
                         dayChangeDatetime = LocalDateTime.now()
                     )
                 )

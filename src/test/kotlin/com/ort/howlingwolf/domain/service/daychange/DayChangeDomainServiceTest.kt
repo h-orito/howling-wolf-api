@@ -2,6 +2,7 @@ package com.ort.howlingwolf.domain.service.daychange
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.HowlingWolfTest
+import com.ort.howlingwolf.domain.model.commit.Commits
 import com.ort.howlingwolf.domain.model.daychange.DayChange
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.VillageStatus
@@ -58,7 +59,7 @@ class DayChangeDomainServiceTest : HowlingWolfTest() {
         val charas = DummyDomainModelCreator.createDummyCharas()
 
         // ## Act ##
-        val afterDayChange = dayChangeDomainService.process(dayChange, todayMessages, charas)
+        val afterDayChange = dayChangeDomainService.process(dayChange, todayMessages, charas, Commits(listOf()))
 
         // ## Assert ##
         assertThat(afterDayChange.isChange).`as`("終了後は何もしない").isFalse()

@@ -15,14 +15,7 @@ import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 import com.ort.howlingwolf.domain.model.village.blacklist.BlacklistPlayers
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
-import com.ort.howlingwolf.domain.model.village.setting.PersonCapacity
-import com.ort.howlingwolf.domain.model.village.setting.VillageCharachip
-import com.ort.howlingwolf.domain.model.village.setting.VillageMessageRestricts
-import com.ort.howlingwolf.domain.model.village.setting.VillageOrganizations
-import com.ort.howlingwolf.domain.model.village.setting.VillagePassword
-import com.ort.howlingwolf.domain.model.village.setting.VillageRules
-import com.ort.howlingwolf.domain.model.village.setting.VillageSettings
-import com.ort.howlingwolf.domain.model.village.setting.VillageTime
+import com.ort.howlingwolf.domain.model.village.setting.*
 import com.ort.howlingwolf.domain.service.message.MessageDomainService
 import com.ort.howlingwolf.infrastructure.datasource.village.VillageDataSource
 import org.assertj.core.api.Assertions.assertThat
@@ -44,14 +37,19 @@ class MessageDataSourceTest : HowlingWolfTest() {
     //                                                                           =========
     @Autowired
     lateinit var villagePlayerBhv: VillagePlayerBhv
+
     @Autowired
     lateinit var villageDayBhv: VillageDayBhv
+
     @Autowired
     lateinit var messageBhv: MessageBhv
+
     @Autowired
     lateinit var messageDataSource: MessageDataSource
+
     @Autowired
     lateinit var villageDataSource: VillageDataSource
+
     @Autowired
     lateinit var messageDomainService: MessageDomainService
 
@@ -202,7 +200,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
             pageSize = null,
             pageNum = null,
             keyword = null,
-            participantIdList = null
+            participantIdList = null,
+            isLatest = false
         )
         var messages = messageDataSource.findMessages(
             villageId = village.id,
@@ -224,7 +223,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
             pageSize = null,
             pageNum = null,
             keyword = null,
-            participantIdList = null
+            participantIdList = null,
+            isLatest = false
         )
         messages = messageDataSource.findMessages(
             villageId = village.id,
@@ -247,7 +247,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
             pageSize = null,
             pageNum = null,
             keyword = null,
-            participantIdList = null
+            participantIdList = null,
+            isLatest = false
         )
         messages = messageDataSource.findMessages(
             villageId = village.id,
@@ -269,7 +270,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
             pageSize = null,
             pageNum = null,
             keyword = null,
-            participantIdList = null
+            participantIdList = null,
+            isLatest = false
         )
         messages = messageDataSource.findMessages(
             villageId = village.id,
@@ -291,7 +293,8 @@ class MessageDataSourceTest : HowlingWolfTest() {
             pageSize = null,
             pageNum = null,
             keyword = "message text aaaaa",
-            participantIdList = null
+            participantIdList = null,
+            isLatest = false
         )
         messages = messageDataSource.findMessages(
             villageId = village.id,
