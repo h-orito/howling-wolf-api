@@ -24,14 +24,13 @@ import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kotlin.collections.HashMap
 
 /**
  * see https://qiita.com/mr-hisa-child/items/5ed2ae2fe4c86d4bb5c7
  */
 @Component
 class LoginFilter(
-    val userService: HowlingWolfUserDetailService
+    private val userService: HowlingWolfUserDetailService
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -39,10 +38,8 @@ class LoginFilter(
         filterChain: FilterChain
     ) {
         // コンテキストにログインユーザ情報をセット
-        SecurityContextHolder.getContext().authentication = PreAuthenticatedAuthenticationToken(
-            auth(request), null
-        )
-
+        val token = PreAuthenticatedAuthenticationToken(auth(request), null)
+        SecurityContextHolder.getContext().authentication = token
         filterChain.doFilter(request, response)
     }
 
@@ -99,7 +96,8 @@ class LoginFilter(
         private val objectMapper: ObjectMapper
     ) : SigningKeyResolverAdapter() {
 
-        private val TOKEN_URL: String = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+        private val TOKEN_URL: String =
+            "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
 
         override fun resolveSigningKey(jwsHeader: JwsHeader<*>, claims: Claims): Key? {
 

@@ -15,9 +15,11 @@ class HowlingWolfAuthenticationEntryPoint : AuthenticationEntryPoint {
 
     // 401とデフォルトメッセージを返すだけにしておく
     @Throws(IOException::class, ServletException::class)
-    override fun commence(request: HttpServletRequest,
-                          response: HttpServletResponse,
-                          exception: AuthenticationException) {
+    override fun commence(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        exception: AuthenticationException
+    ) {
         if (response.isCommitted) {
             logger.info("Response has already been committed.")
             return
