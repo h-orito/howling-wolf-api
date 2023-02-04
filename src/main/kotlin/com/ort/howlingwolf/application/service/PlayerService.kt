@@ -22,7 +22,9 @@ class PlayerService(
     fun findPlayers(playerIdList: List<Int>): Players = playerDataSource.findPlayers(playerIdList)
 
     fun updateNickname(user: HowlingWolfUser, nickname: String, twitterUserName: String) {
-        val twitterUserId = tweetRepository.getUserIdByUsername(twitterUserName)
+        // API有料化に伴い機能停止
+//        val twitterUserId = tweetRepository.getUserIdByUsername(twitterUserName)
+        val twitterUserId = null
         playerDataSource.update(user.uid, nickname, twitterUserName, twitterUserId)
     }
 

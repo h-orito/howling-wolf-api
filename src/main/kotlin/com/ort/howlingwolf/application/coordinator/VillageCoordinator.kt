@@ -146,7 +146,8 @@ class VillageCoordinator(
             )
         )
         // ツイート
-        tweetRepository.tweet(village.createNewVillageMessage())
+        // API有料化に伴い機能停止
+//        tweetRepository.tweet(village.createNewVillageMessage())
     }
 
     /**

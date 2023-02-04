@@ -93,7 +93,8 @@ class PrologueDomainService(
         // ダミーキャラ発言
         dayChange = addDummyCharaFirstDayMessageIfNeeded(dayChange, charas)
         // 開始ツイート
-        tweetRepository.tweet(dayChange.village.createStartVillageMessage())
+        // API有料化に伴い機能停止
+//        tweetRepository.tweet(dayChange.village.createStartVillageMessage())
 
         return dayChange.setIsChange(beforeDayChange)
     }
