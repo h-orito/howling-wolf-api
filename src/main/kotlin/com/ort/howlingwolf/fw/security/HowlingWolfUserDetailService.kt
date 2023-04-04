@@ -43,7 +43,6 @@ class HowlingWolfUserDetailService(
         player.uid = uid
         player.authorityCodeAsAuthority = CDef.Authority.プレイヤー
         player.nickname = "名無し"
-        player.twitterUserName = "未設定"
         player.isRestrictedParticipation = false
         playerBhv.insert(player)
         return HowlingWolfUser(

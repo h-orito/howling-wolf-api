@@ -300,6 +300,32 @@ public class BsPlayerCB extends AbstractConditionBean {
         return _nssPlayerDetailAsOne;
     }
 
+    protected TwitterUserNss _nssTwitterUserAsOne;
+    public TwitterUserNss xdfgetNssTwitterUserAsOne() {
+        if (_nssTwitterUserAsOne == null) { _nssTwitterUserAsOne = new TwitterUserNss(null); }
+        return _nssTwitterUserAsOne;
+    }
+    /**
+     * Set up relation columns to select clause. <br>
+     * twitter_user by player_id, named 'twitterUserAsOne'.
+     * <pre>
+     * <span style="color: #0000C0">playerBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_TwitterUserAsOne()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">player</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">player</span>.<span style="color: #CC4747">getTwitterUserAsOne()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     * @return The set-upper of nested relation. {setupSelect...().with[nested-relation]} (NotNull)
+     */
+    public TwitterUserNss setupSelect_TwitterUserAsOne() {
+        assertSetupSelectPurpose("twitterUserAsOne");
+        doSetupSelect(() -> query().queryTwitterUserAsOne());
+        if (_nssTwitterUserAsOne == null || !_nssTwitterUserAsOne.hasConditionQuery())
+        { _nssTwitterUserAsOne = new TwitterUserNss(query().queryTwitterUserAsOne()); }
+        return _nssTwitterUserAsOne;
+    }
+
     // [DBFlute-0.7.4]
     // ===================================================================================
     //                                                                             Specify
@@ -343,6 +369,7 @@ public class BsPlayerCB extends AbstractConditionBean {
     public static class HpSpecification extends HpAbstractSpecification<PlayerCQ> {
         protected AuthorityCB.HpSpecification _authority;
         protected PlayerDetailCB.HpSpecification _playerDetailAsOne;
+        protected TwitterUserCB.HpSpecification _twitterUserAsOne;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<PlayerCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
@@ -362,11 +389,6 @@ public class BsPlayerCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnNickname() { return doColumn("NICKNAME"); }
-        /**
-         * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnTwitterUserName() { return doColumn("TWITTER_USER_NAME"); }
         /**
          * AUTHORITY_CODE: {IX, NotNull, VARCHAR(20), FK to authority, classification=Authority}
          * @return The information object of specified column. (NotNull)
@@ -448,6 +470,26 @@ public class BsPlayerCB extends AbstractConditionBean {
                 }
             }
             return _playerDetailAsOne;
+        }
+        /**
+         * Prepare to specify functions about relation table. <br>
+         * twitter_user by player_id, named 'twitterUserAsOne'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public TwitterUserCB.HpSpecification specifyTwitterUserAsOne() {
+            assertRelation("twitterUserAsOne");
+            if (_twitterUserAsOne == null) {
+                _twitterUserAsOne = new TwitterUserCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryTwitterUserAsOne()
+                                    , () -> _qyCall.qy().queryTwitterUserAsOne())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _twitterUserAsOne.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryTwitterUserAsOne()
+                      , () -> xsyncQyCall().qy().queryTwitterUserAsOne()));
+                }
+            }
+            return _twitterUserAsOne;
         }
         /**
          * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>

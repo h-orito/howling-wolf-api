@@ -78,7 +78,10 @@ data class VillageParticipantRecordView(
         charaList: List<Chara>,
         players: Players
     ) : this(
-        twitterUserId = players.list.first { it.id == participant.playerId }.twitterUserName,
+        twitterUserId =
+        players.list.first { it.id == participant.playerId }.let {
+            it.twitterUserName ?: it.nickname
+        },
         otherSiteUserId = players.list.first { it.id == participant.playerId }.otherSiteName,
         characterName = charaList.first { it.id == participant.charaId }.charaName.name,
         skillName = participant.skill?.name,

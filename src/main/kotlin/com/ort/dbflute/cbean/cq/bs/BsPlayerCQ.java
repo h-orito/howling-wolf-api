@@ -217,26 +217,6 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
      */
     public BsPlayerCQ addOrderBy_Nickname_Desc() { regOBD("NICKNAME"); return this; }
 
-    protected ConditionValue _twitterUserName;
-    public ConditionValue xdfgetTwitterUserName()
-    { if (_twitterUserName == null) { _twitterUserName = nCV(); }
-      return _twitterUserName; }
-    protected ConditionValue xgetCValueTwitterUserName() { return xdfgetTwitterUserName(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
-     * @return this. (NotNull)
-     */
-    public BsPlayerCQ addOrderBy_TwitterUserName_Asc() { regOBA("TWITTER_USER_NAME"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * TWITTER_USER_NAME: {NotNull, VARCHAR(15)}
-     * @return this. (NotNull)
-     */
-    public BsPlayerCQ addOrderBy_TwitterUserName_Desc() { regOBD("TWITTER_USER_NAME"); return this; }
-
     protected ConditionValue _authorityCode;
     public ConditionValue xdfgetAuthorityCode()
     { if (_authorityCode == null) { _authorityCode = nCV(); }
@@ -404,6 +384,9 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
         if (bq.hasConditionQueryPlayerDetailAsOne()) {
             uq.queryPlayerDetailAsOne().reflectRelationOnUnionQuery(bq.queryPlayerDetailAsOne(), uq.queryPlayerDetailAsOne());
         }
+        if (bq.hasConditionQueryTwitterUserAsOne()) {
+            uq.queryTwitterUserAsOne().reflectRelationOnUnionQuery(bq.queryTwitterUserAsOne(), uq.queryTwitterUserAsOne());
+        }
     }
 
     // ===================================================================================
@@ -446,6 +429,24 @@ public class BsPlayerCQ extends AbstractBsPlayerCQ {
     }
     protected void xsetupOuterJoinPlayerDetailAsOne() { xregOutJo("playerDetailAsOne"); }
     public boolean hasConditionQueryPlayerDetailAsOne() { return xhasQueRlMap("playerDetailAsOne"); }
+
+    /**
+     * Get the condition-query for relation table. <br>
+     * twitter_user by player_id, named 'twitterUserAsOne'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public TwitterUserCQ queryTwitterUserAsOne() { return xdfgetConditionQueryTwitterUserAsOne(); }
+    public TwitterUserCQ xdfgetConditionQueryTwitterUserAsOne() {
+        String prop = "twitterUserAsOne";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryTwitterUserAsOne()); xsetupOuterJoinTwitterUserAsOne(); }
+        return xgetQueRlMap(prop);
+    }
+    protected TwitterUserCQ xcreateQueryTwitterUserAsOne() {
+        String nrp = xresolveNRP("player", "twitterUserAsOne"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new TwitterUserCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "twitterUserAsOne", nrp);
+    }
+    protected void xsetupOuterJoinTwitterUserAsOne() { xregOutJo("twitterUserAsOne"); }
+    public boolean hasConditionQueryTwitterUserAsOne() { return xhasQueRlMap("twitterUserAsOne"); }
 
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;

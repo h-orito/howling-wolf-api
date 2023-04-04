@@ -21,15 +21,20 @@ class PlayerService(
 
     fun findPlayers(playerIdList: List<Int>): Players = playerDataSource.findPlayers(playerIdList)
 
-    fun updateNickname(user: HowlingWolfUser, nickname: String, twitterUserName: String) {
+    fun updateNickname(user: HowlingWolfUser, nickname: String, twitterUserName: String?) {
         // API有料化に伴い機能停止
 //        val twitterUserId = tweetRepository.getUserIdByUsername(twitterUserName)
         val twitterUserId = null
         playerDataSource.update(user.uid, nickname, twitterUserName, twitterUserId)
     }
 
-    fun updateDetail(uid: String, otherSiteName: String?, introduction: String?) {
-        playerDataSource.updateDetail(uid, otherSiteName, introduction)
+    fun updateDetail(
+        uid: String,
+        nickname: String,
+        otherSiteName: String?,
+        introduction: String?
+    ) {
+        playerDataSource.updateDetail(uid, nickname, otherSiteName, introduction)
     }
 
     fun registerBlacklist(uid: String, targetPlayerId: Int) {

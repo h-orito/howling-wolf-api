@@ -251,7 +251,6 @@ CREATE TABLE PLAYER
 	PLAYER_ID INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'プレイヤーID',
 	UID VARCHAR(100) NOT NULL UNIQUE COMMENT 'ユーザID',
 	NICKNAME VARCHAR(50) NOT NULL COMMENT 'ニックネーム',
-	TWITTER_USER_NAME VARCHAR(15) NOT NULL COMMENT 'twitterのusername',
 	AUTHORITY_CODE VARCHAR(20) NOT NULL COMMENT '権限コード',
 	IS_RESTRICTED_PARTICIPATION BOOLEAN NOT NULL COMMENT '入村制限されているか',
 	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
@@ -261,6 +260,23 @@ CREATE TABLE PLAYER
 	PRIMARY KEY (PLAYER_ID)
 ) COMMENT = 'プレイヤー';
 
+create table twitter_user (
+    player_id int unsigned not null,
+	TWITTER_USER_NAME VARCHAR(15) NOT NULL COMMENT 'twitterのusername',
+	REGISTER_DATETIME DATETIME NOT NULL COMMENT '登録日時',
+	REGISTER_TRACE VARCHAR(64) NOT NULL COMMENT '登録トレース',
+	UPDATE_DATETIME DATETIME NOT NULL COMMENT '更新日時',
+	UPDATE_TRACE VARCHAR(64) NOT NULL COMMENT '更新トレース',
+	PRIMARY KEY (player_id)
+);
+
+
+alter table twitter_user
+    add constraint fk_twitter_user_player foreign key (player_id)
+    references PLAYER (player_id)
+    on update restrict
+    on delete restrict
+;
 
 CREATE TABLE PLAYER_DETAIL
 (

@@ -34,4 +34,13 @@ public class PlayerNss {
         _query.xdoNss(() -> _query.queryPlayerDetailAsOne());
         return new PlayerDetailNss(_query.queryPlayerDetailAsOne());
     }
+    /**
+     * With nested relation columns to select clause. <br>
+     * twitter_user by player_id, named 'twitterUserAsOne'.
+     * @return The set-upper of more nested relation. {...with[nested-relation].with[more-nested-relation]} (NotNull)
+     */
+    public TwitterUserNss withTwitterUserAsOne() {
+        _query.xdoNss(() -> _query.queryTwitterUserAsOne());
+        return new TwitterUserNss(_query.queryTwitterUserAsOne());
+    }
 }

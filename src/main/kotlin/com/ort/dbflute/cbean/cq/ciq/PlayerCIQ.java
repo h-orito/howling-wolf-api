@@ -124,7 +124,6 @@ public class PlayerCIQ extends AbstractBsPlayerCQ {
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     protected ConditionValue xgetCValueUid() { return _myCQ.xdfgetUid(); }
     protected ConditionValue xgetCValueNickname() { return _myCQ.xdfgetNickname(); }
-    protected ConditionValue xgetCValueTwitterUserName() { return _myCQ.xdfgetTwitterUserName(); }
     protected ConditionValue xgetCValueAuthorityCode() { return _myCQ.xdfgetAuthorityCode(); }
     protected ConditionValue xgetCValueIsRestrictedParticipation() { return _myCQ.xdfgetIsRestrictedParticipation(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }

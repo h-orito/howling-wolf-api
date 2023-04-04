@@ -9,7 +9,7 @@ import com.ort.howlingwolf.fw.security.HowlingWolfUser
 data class MyselfPlayerView(
     val id: Int,
     val nickname: String,
-    val twitterUserName: String,
+    val twitterUserName: String?,
     val availableCreateVillage: Boolean,
     val participateProgressVillages: VillagesView,
     val participateFinishedVillages: VillagesView,

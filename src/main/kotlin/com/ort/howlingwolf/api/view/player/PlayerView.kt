@@ -5,7 +5,7 @@ import com.ort.howlingwolf.domain.model.player.Player
 data class PlayerView(
     val id: Int,
     val nickname: String,
-    val twitterUserName: String,
+    val twitterUserName: String?,
     val otherSiteName: String?,
     val introduction: String?,
     val introduced: Boolean

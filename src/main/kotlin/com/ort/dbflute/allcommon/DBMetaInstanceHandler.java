@@ -55,6 +55,7 @@ public class DBMetaInstanceHandler implements DBMetaProvider {
         tmpMap.put("player_detail", "com.ort.dbflute.bsentity.dbmeta.PlayerDetailDbm");
         tmpMap.put("player_introduce", "com.ort.dbflute.bsentity.dbmeta.PlayerIntroduceDbm");
         tmpMap.put("skill", "com.ort.dbflute.bsentity.dbmeta.SkillDbm");
+        tmpMap.put("twitter_user", "com.ort.dbflute.bsentity.dbmeta.TwitterUserDbm");
         tmpMap.put("village", "com.ort.dbflute.bsentity.dbmeta.VillageDbm");
         tmpMap.put("village_day", "com.ort.dbflute.bsentity.dbmeta.VillageDayDbm");
         tmpMap.put("village_player", "com.ort.dbflute.bsentity.dbmeta.VillagePlayerDbm");

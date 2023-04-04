@@ -13,7 +13,6 @@ import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Villages
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -61,7 +60,7 @@ class PlayerController(
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: PlayerUpdateNicknameBody
     ) {
-        playerService.updateNickname(user, body.nickname!!, body.twitterUserName!!)
+        playerService.updateNickname(user, body.nickname!!, body.twitterUserName)
     }
 
     @PostMapping("/player/detail")
@@ -69,7 +68,7 @@ class PlayerController(
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: PlayerUpdateDetailBody
     ) {
-        playerService.updateDetail(user.uid, body.otherSiteName, body.introduction)
+        playerService.updateDetail(user.uid, body.nickname, body.otherSiteName, body.introduction)
     }
 
     @PostMapping("/player/blacklist-player/register/{playerId}")

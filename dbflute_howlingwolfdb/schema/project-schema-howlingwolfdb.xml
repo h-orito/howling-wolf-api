@@ -470,9 +470,6 @@
             name="UID" required="true" size="100" type="VARCHAR"/>
         <column comment="ニックネーム" dbType="VARCHAR" javaType="String"
             name="NICKNAME" required="true" size="50" type="VARCHAR"/>
-        <column comment="twitterのusername" dbType="VARCHAR"
-            javaType="String" name="TWITTER_USER_NAME" required="true"
-            size="15" type="VARCHAR"/>
         <column comment="権限コード" dbType="VARCHAR" javaType="String"
             name="AUTHORITY_CODE" required="true" size="20" type="VARCHAR"/>
         <column comment="入村制限されているか" dbType="BIT" javaType="Boolean"
@@ -572,6 +569,28 @@
         <index name="FK_SKILL_CAMP">
             <index-column name="CAMP_CODE" position="1"/>
         </index>
+    </table>
+    <table name="twitter_user" schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
+        <column comment="" dbType="INT UNSIGNED" javaType="Integer"
+            name="player_id" pkName="PRIMARY" pkPosition="1"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="twitterのusername" dbType="VARCHAR"
+            javaType="String" name="TWITTER_USER_NAME" required="true"
+            size="15" type="VARCHAR"/>
+        <column comment="登録日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="登録トレース" dbType="VARCHAR" javaType="String"
+            name="REGISTER_TRACE" required="true" size="64" type="VARCHAR"/>
+        <column comment="更新日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="UPDATE_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="更新トレース" dbType="VARCHAR" javaType="String"
+            name="UPDATE_TRACE" required="true" size="64" type="VARCHAR"/>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="player" name="fk_twitter_user_player">
+            <reference foreign="PLAYER_ID" local="player_id"/>
+        </foreign-key>
     </table>
     <table comment="村" name="village"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">

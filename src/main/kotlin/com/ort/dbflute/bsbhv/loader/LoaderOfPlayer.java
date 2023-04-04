@@ -15,7 +15,7 @@ import com.ort.dbflute.cbean.*;
  *     PLAYER_ID
  *
  * [column]
- *     PLAYER_ID, UID, NICKNAME, TWITTER_USER_NAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
+ *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
  *
  * [sequence]
  *     
@@ -27,13 +27,13 @@ import com.ort.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     AUTHORITY, PLAYER_DETAIL(AsOne)
+ *     AUTHORITY, PLAYER_DETAIL(AsOne), TWITTER_USER(AsOne)
  *
  * [referrer table]
- *     BLACKLIST_PLAYER, PLAYER_INTRODUCE, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL
+ *     BLACKLIST_PLAYER, PLAYER_INTRODUCE, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL, TWITTER_USER
  *
  * [foreign property]
- *     authority, playerDetailAsOne
+ *     authority, playerDetailAsOne, twitterUserAsOne
  *
  * [referrer property]
  *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, playerIntroduceByFromPlayerIdList, playerIntroduceByToPlayerIdList, villageList, villagePlayerList
@@ -280,6 +280,13 @@ public class LoaderOfPlayer {
         if (_foreignPlayerDetailAsOneLoader == null)
         { _foreignPlayerDetailAsOneLoader = new LoaderOfPlayerDetail().ready(myBhv().pulloutPlayerDetailAsOne(_selectedList), _selector); }
         return _foreignPlayerDetailAsOneLoader;
+    }
+
+    protected LoaderOfTwitterUser _foreignTwitterUserAsOneLoader;
+    public LoaderOfTwitterUser pulloutTwitterUserAsOne() {
+        if (_foreignTwitterUserAsOneLoader == null)
+        { _foreignTwitterUserAsOneLoader = new LoaderOfTwitterUser().ready(myBhv().pulloutTwitterUserAsOne(_selectedList), _selector); }
+        return _foreignTwitterUserAsOneLoader;
     }
 
     // ===================================================================================

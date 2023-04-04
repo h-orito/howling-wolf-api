@@ -8,3 +8,4 @@ data-directory: playsql/data/ut/tsv/UTF-8
 
 00-PLAYER.tsv (16)
 01-PLAYER_DETAIL.tsv (2)
+02-TWITTER_USER.tsv (16)
