@@ -11,6 +11,7 @@ import com.ort.howlingwolf.domain.model.village.VillageDay
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbilities
 import com.ort.howlingwolf.domain.model.village.ability.VillageAbility
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
+import com.ort.howlingwolf.domain.model.village.participant.VillageParticipants
 import org.springframework.stereotype.Service
 
 @Service
@@ -126,13 +127,14 @@ class AttackDomainService : IAbilityDomainService {
                 // 襲撃成功したら死亡
                 if (isAttackSuccess(dayChange, ability.targetId!!)) {
                     village = village.attackParticipant(ability.targetId, latestDay)
+                    val target = village.participant.member(ability.targetId)
 
                     // 猫又による道連れ
-                    forceSuicidedParticipant(village.participant.member(ability.targetId), attacker)?.let {
+                    forceSuicidedParticipant(target, attacker, village.participant)?.let {
                         village = village.divineKillParticipant(it.id, village.day.latestDay())
                         messages = messages.add(
                             createForceSuicideMessage(
-                                village.participant.member(ability.targetId),
+                                target,
                                 it,
                                 village.day.latestDay(),
                                 charas
@@ -191,14 +193,19 @@ class AttackDomainService : IAbilityDomainService {
 
     private fun forceSuicidedParticipant(
         attackedParticipant: VillageParticipant,
-        attacker: VillageParticipant
+        attacker: VillageParticipant,
+        participants: VillageParticipants
     ): VillageParticipant? {
-        // 襲撃者が既に死亡していたら何もしない
-        if (attacker.isDead()) return null
         // 襲撃されたのが道連れ役職でなければ何もしない
         if (!attackedParticipant.skill!!.toCdef().isForceDoubleSuicide) return null
-        // 襲撃者を道連れにする
-        return attacker
+        // 襲撃者が既に死亡している場合は生存している人狼からランダムで1名を道連れにする
+        return if (attacker.isDead()) {
+            participants
+                .filterAlive().memberList
+                .filter { it.skill!!.toCdef().isHasAttackAbility }
+                .filterNot { it.id == attacker.id }
+                .randomOrNull()
+        } else attacker
     }
 
     private fun createForceSuicideMessage(

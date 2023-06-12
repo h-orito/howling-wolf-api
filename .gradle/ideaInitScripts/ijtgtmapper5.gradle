@@ -1,0 +1,13 @@
+ext.pathMapper = [:]
+ext.pathMapper.put('E:/idea/plugins/android/lib/android-gradle-tooling.jar', '/mnt/e/idea/plugins/android/lib/android-gradle-tooling.jar')
+ext.pathMapper.put('E:/idea/lib/3rd-party-rt.jar', '/mnt/e/idea/lib/3rd-party-rt.jar')
+ext.pathMapper.put('E:/idea/plugins/gradle/lib/gradle-tooling-extension-impl.jar', '/mnt/e/idea/plugins/gradle/lib/gradle-tooling-extension-impl.jar')
+ext.pathMapper.put('E:/idea/plugins/gradle/lib/gradle-api-impldep-8.0.jar', '/mnt/e/idea/plugins/gradle/lib/gradle-api-impldep-8.0.jar')
+ext.pathMapper.put('E:/idea/plugins/Kotlin/lib/kotlin-gradle-tooling.jar', '/mnt/e/idea/plugins/Kotlin/lib/kotlin-gradle-tooling.jar')
+ext.pathMapper.put('E:/idea/plugins/packageSearch/lib/pkgs-tooling-extension.jar', '/mnt/e/idea/plugins/packageSearch/lib/pkgs-tooling-extension.jar')
+ext.pathMapper.put('E:/idea/plugins/gradle/lib/gradle-tooling-extension-api.jar', '/mnt/e/idea/plugins/gradle/lib/gradle-tooling-extension-api.jar')
+ext.pathMapper.put('E:/idea/lib/external-system-rt.jar', '/mnt/e/idea/lib/external-system-rt.jar')
+ext.pathMapper.put('E:/idea/plugins/android/lib/android-kotlin-extensions-tooling.jar', '/mnt/e/idea/plugins/android/lib/android-kotlin-extensions-tooling.jar')
+ext.pathMapper.put('E:/idea/lib/util_rt.jar', '/mnt/e/idea/lib/util_rt.jar')
+ext.pathMapper.put("<<target java executable path>>", '/usr/lib/jvm/java-11-openjdk-amd64/bin/java')
+ext.mapPath = { path -> pathMapper.get(path) ?: path }
