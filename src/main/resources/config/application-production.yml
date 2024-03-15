@@ -30,7 +30,7 @@ server:
       suffix: .log
       prefix: howling-wolf-access_log
       file-date-format: .yyyy-MM-dd
-      max-days: 30
+      max-days: 14
       pattern: '%t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %{X-Forwarded-For}i %D %S %I'
     remoteip.remote-ip-header: true
     use-forward-headers: true
