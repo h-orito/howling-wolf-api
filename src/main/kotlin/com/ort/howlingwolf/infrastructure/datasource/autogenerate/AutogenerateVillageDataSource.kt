@@ -46,7 +46,7 @@ class AutogenerateVillageDataSource(
             organization = organize.organization,
             silentHours = time.silentHours,
             availableDummySkill = organize.isAvailableDummySkill,
-            forBeginner = currentVillageId % 3 == 0,
+            forBeginner = currentVillageId % 4 == 0,
             canSkillRequest = canSkillRequest
         )
     }
