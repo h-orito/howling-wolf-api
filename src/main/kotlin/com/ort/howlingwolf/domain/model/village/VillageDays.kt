@@ -1,6 +1,7 @@
 package com.ort.howlingwolf.domain.model.village
 
 import com.ort.dbflute.allcommon.CDef
+import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 
 data class VillageDays(
     val dayList: List<VillageDay>
@@ -35,15 +36,25 @@ data class VillageDays(
     }
 
     fun extendPrologue(): VillageDays {
-        return this.copy(dayList = dayList.map {
-            if (it.id == latestDay().id) latestDay().copy(dayChangeDatetime = latestDay().dayChangeDatetime.plusDays(1L))
-            else it
-        })
+        var startDatetime = latestDay().dayChangeDatetime
+        while (true) {
+            startDatetime = startDatetime.plusDays(1L)
+            if (startDatetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime())) {
+                return this.copy(dayList = dayList.map {
+                    if (it.id == latestDay().id) latestDay().copy(dayChangeDatetime = startDatetime)
+                    else it
+                })
+            }
+        }
     }
 
     fun extendLatestDay(): VillageDays {
         return this.copy(dayList = dayList.map {
-            if (it.id == latestDay().id) latestDay().copy(dayChangeDatetime = yesterday().dayChangeDatetime.plusHours(extendHours))
+            if (it.id == latestDay().id) latestDay().copy(
+                dayChangeDatetime = yesterday().dayChangeDatetime.plusHours(
+                    extendHours
+                )
+            )
             else it
         })
     }

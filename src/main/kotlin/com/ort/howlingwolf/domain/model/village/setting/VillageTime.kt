@@ -48,9 +48,9 @@ data class VillageTime(
 
     fun existsDifference(time: VillageTime): Boolean {
         return termType != time.termType
-            || startDatetime != time.startDatetime
-            || dayChangeIntervalSeconds != time.dayChangeIntervalSeconds
-            || silentHours != time.silentHours
+                || startDatetime != time.startDatetime
+                || dayChangeIntervalSeconds != time.dayChangeIntervalSeconds
+                || silentHours != time.silentHours
     }
 
     fun isSilentTime(dayStartDatetime: LocalDateTime): Boolean {
@@ -60,9 +60,15 @@ data class VillageTime(
     }
 
     fun extendPrologue(): VillageTime {
-        return this.copy(
+        var startDatetime = this.startDatetime
+        while (true) {
             startDatetime = startDatetime.plusDays(1L)
-        )
+            if (startDatetime.isAfter(HowlingWolfDateUtil.currentLocalDateTime())) {
+                return this.copy(
+                    startDatetime = startDatetime
+                )
+            }
+        }
     }
 
     fun toEpilogue(villageDays: VillageDays): VillageTime {
