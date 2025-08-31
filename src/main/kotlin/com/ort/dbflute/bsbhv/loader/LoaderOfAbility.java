@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of ABILITY as TABLE. <br>
- * <pre>
- * [primary key]
- *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID
- *
- * [column]
- *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     ABILITY_TYPE, VILLAGE_PLAYER, VILLAGE_DAY
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     abilityType, villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of ABILITY as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfAbility {

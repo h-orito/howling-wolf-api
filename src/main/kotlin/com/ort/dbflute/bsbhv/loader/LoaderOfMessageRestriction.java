@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of MESSAGE_RESTRICTION as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_ID, MESSAGE_TYPE_CODE
- *
- * [column]
- *     VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_MAX_NUM, MESSAGE_MAX_LENGTH, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     MESSAGE_TYPE, VILLAGE
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     messageType, village
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of MESSAGE_RESTRICTION as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfMessageRestriction {

@@ -16,56 +16,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of VILLAGE_DAY as TABLE. <br>
  * 村日付
- * <pre>
- * [primary-key]
- *     VILLAGE_DAY_ID
- *
- * [column]
- *     VILLAGE_DAY_ID, VILLAGE_ID, DAY, NOONNIGHT_CODE, DAYCHANGE_DATETIME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     VILLAGE_DAY_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     NOONNIGHT, VILLAGE
- *
- * [referrer table]
- *     ABILITY, COMMIT, VILLAGE_PLAYER, VOTE
- *
- * [foreign property]
- *     noonnight, village
- *
- * [referrer property]
- *     abilityList, commitList, villagePlayerList, voteList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villageDayId = entity.getVillageDayId();
- * Integer villageId = entity.getVillageId();
- * Integer day = entity.getDay();
- * String noonnightCode = entity.getNoonnightCode();
- * java.time.LocalDateTime daychangeDatetime = entity.getDaychangeDatetime();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setVillageDayId(villageDayId);
- * entity.setVillageId(villageId);
- * entity.setDay(day);
- * entity.setNoonnightCode(noonnightCode);
- * entity.setDaychangeDatetime(daychangeDatetime);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsVillageDay extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
@@ -154,7 +104,7 @@ public abstract class BsVillageDay extends AbstractEntity implements DomainEntit
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Noonnight getNoonnightCodeAsNoonnight() {
-        return CDef.Noonnight.codeOf(getNoonnightCode());
+        return CDef.Noonnight.of(getNoonnightCode()).orElse(null);
     }
 
     /**

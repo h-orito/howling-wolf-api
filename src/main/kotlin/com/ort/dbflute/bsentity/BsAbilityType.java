@@ -13,42 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of ABILITY_TYPE as TABLE. <br>
  * 能力種別
- * <pre>
- * [primary-key]
- *     ABILITY_TYPE_CODE
- *
- * [column]
- *     ABILITY_TYPE_CODE, ABILITY_TYPE_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     ABILITY
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     abilityList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String abilityTypeCode = entity.getAbilityTypeCode();
- * String abilityTypeName = entity.getAbilityTypeName();
- * entity.setAbilityTypeCode(abilityTypeCode);
- * entity.setAbilityTypeName(abilityTypeName);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsAbilityType extends AbstractEntity implements DomainEntity {
@@ -101,7 +65,7 @@ public abstract class BsAbilityType extends AbstractEntity implements DomainEnti
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.AbilityType getAbilityTypeCodeAsAbilityType() {
-        return CDef.AbilityType.codeOf(getAbilityTypeCode());
+        return CDef.AbilityType.of(getAbilityTypeCode()).orElse(null);
     }
 
     /**

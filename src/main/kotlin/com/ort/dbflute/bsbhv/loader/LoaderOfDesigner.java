@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of DESIGNER as TABLE. <br>
- * <pre>
- * [primary key]
- *     DESIGNER_ID
- *
- * [column]
- *     DESIGNER_ID, DESIGNER_NAME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     DESIGNER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     CHARA_GROUP
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     charaGroupList
- * </pre>
+ * The referrer loader of DESIGNER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfDesigner {

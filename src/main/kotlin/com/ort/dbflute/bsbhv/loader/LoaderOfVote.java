@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of VOTE as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_DAY_ID, VILLAGE_PLAYER_ID
- *
- * [column]
- *     VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     VILLAGE_PLAYER, VILLAGE_DAY
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of VOTE as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfVote {

@@ -13,51 +13,7 @@ import com.ort.dbflute.allcommon.DBMetaInstanceHandler;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The entity of TWITTER_USER as TABLE. <br>
- * <pre>
- * [primary-key]
- *     player_id
- *
- * [column]
- *     player_id, TWITTER_USER_NAME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     player
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer playerId = entity.getPlayerId();
- * String twitterUserName = entity.getTwitterUserName();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setPlayerId(playerId);
- * entity.setTwitterUserName(twitterUserName);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
+ * The entity of TWITTER_USER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsTwitterUser extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

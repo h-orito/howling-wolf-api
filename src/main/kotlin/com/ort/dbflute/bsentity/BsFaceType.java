@@ -13,44 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of FACE_TYPE as TABLE. <br>
  * 表情種別
- * <pre>
- * [primary-key]
- *     FACE_TYPE_CODE
- *
- * [column]
- *     FACE_TYPE_CODE, FACE_TYPE_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     CHARA_IMAGE
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     charaImageList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String faceTypeCode = entity.getFaceTypeCode();
- * String faceTypeName = entity.getFaceTypeName();
- * Integer dispOrder = entity.getDispOrder();
- * entity.setFaceTypeCode(faceTypeCode);
- * entity.setFaceTypeName(faceTypeName);
- * entity.setDispOrder(dispOrder);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsFaceType extends AbstractEntity implements DomainEntity {
@@ -106,7 +68,7 @@ public abstract class BsFaceType extends AbstractEntity implements DomainEntity 
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.FaceType getFaceTypeCodeAsFaceType() {
-        return CDef.FaceType.codeOf(getFaceTypeCode());
+        return CDef.FaceType.of(getFaceTypeCode()).orElse(null);
     }
 
     /**

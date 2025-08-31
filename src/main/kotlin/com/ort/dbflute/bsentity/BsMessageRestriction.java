@@ -16,54 +16,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of MESSAGE_RESTRICTION as TABLE. <br>
  * 発言制限 : レコードなしの場合は無制限
- * <pre>
- * [primary-key]
- *     VILLAGE_ID, MESSAGE_TYPE_CODE
- *
- * [column]
- *     VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_MAX_NUM, MESSAGE_MAX_LENGTH, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     MESSAGE_TYPE, VILLAGE
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     messageType, village
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villageId = entity.getVillageId();
- * String messageTypeCode = entity.getMessageTypeCode();
- * Integer messageMaxNum = entity.getMessageMaxNum();
- * Integer messageMaxLength = entity.getMessageMaxLength();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setVillageId(villageId);
- * entity.setMessageTypeCode(messageTypeCode);
- * entity.setMessageMaxNum(messageMaxNum);
- * entity.setMessageMaxLength(messageMaxLength);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsMessageRestriction extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
@@ -135,7 +87,7 @@ public abstract class BsMessageRestriction extends AbstractEntity implements Dom
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.MessageType getMessageTypeCodeAsMessageType() {
-        return CDef.MessageType.codeOf(getMessageTypeCode());
+        return CDef.MessageType.of(getMessageTypeCode()).orElse(null);
     }
 
     /**

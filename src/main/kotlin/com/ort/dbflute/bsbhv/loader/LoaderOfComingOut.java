@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of COMING_OUT as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_PLAYER_ID, SKILL_CODE
- *
- * [column]
- *     VILLAGE_PLAYER_ID, SKILL_CODE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     SKILL, VILLAGE_PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     skill, villagePlayer
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of COMING_OUT as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfComingOut {

@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of TWITTER_USER as TABLE. <br>
- * <pre>
- * [primary key]
- *     player_id
- *
- * [column]
- *     player_id, TWITTER_USER_NAME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     player
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of TWITTER_USER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfTwitterUser {

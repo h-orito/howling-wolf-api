@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of PLAYER_DETAIL as TABLE. <br>
- * <pre>
- * [primary key]
- *     PLAYER_ID
- *
- * [column]
- *     PLAYER_ID, OTHER_SITE_NAME, INTRODUCTION
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     player
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of PLAYER_DETAIL as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfPlayerDetail {

@@ -15,54 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of VILLAGE_PLAYER_ACCESS_INFO as TABLE. <br>
  * 村参加者アクセス情報
- * <pre>
- * [primary-key]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID
- *
- * [column]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID, VILLAGE_PLAYER_ID, IP_ADDRESS, CLIENT_TOKEN, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     VILLAGE_PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     villagePlayer
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villagePlayerAccessInfoId = entity.getVillagePlayerAccessInfoId();
- * Integer villagePlayerId = entity.getVillagePlayerId();
- * String ipAddress = entity.getIpAddress();
- * String clientToken = entity.getClientToken();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setVillagePlayerAccessInfoId(villagePlayerAccessInfoId);
- * entity.setVillagePlayerId(villagePlayerId);
- * entity.setIpAddress(ipAddress);
- * entity.setClientToken(clientToken);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsVillagePlayerAccessInfo extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

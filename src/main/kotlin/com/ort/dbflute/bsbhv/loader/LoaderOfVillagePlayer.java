@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of VILLAGE_PLAYER as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_PLAYER_ID
- *
- * [column]
- *     VILLAGE_PLAYER_ID, VILLAGE_ID, PLAYER_ID, CHARA_ID, SKILL_CODE, REQUEST_SKILL_CODE, SECOND_REQUEST_SKILL_CODE, IS_DEAD, IS_SPECTATOR, DEAD_REASON_CODE, DEAD_VILLAGE_DAY_ID, IS_GONE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     VILLAGE_PLAYER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     CHARA, DEAD_REASON, VILLAGE_DAY, PLAYER, SKILL, VILLAGE
- *
- * [referrer table]
- *     ABILITY, COMING_OUT, COMMIT, VILLAGE_PLAYER_ACCESS_INFO, VOTE
- *
- * [foreign property]
- *     chara, deadReason, villageDay, player, skillByRequestSkillCode, skillBySecondRequestSkillCode, skillBySkillCode, village
- *
- * [referrer property]
- *     abilityByTargetVillagePlayerIdList, abilityByVillagePlayerIdList, comingOutList, commitList, villagePlayerAccessInfoList, voteByTargetVillagePlayerIdList, voteByVillagePlayerIdList
- * </pre>
+ * The referrer loader of VILLAGE_PLAYER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfVillagePlayer {

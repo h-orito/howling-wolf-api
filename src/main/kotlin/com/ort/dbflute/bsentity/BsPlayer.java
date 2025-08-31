@@ -16,56 +16,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of PLAYER as TABLE. <br>
  * プレイヤー
- * <pre>
- * [primary-key]
- *     PLAYER_ID
- *
- * [column]
- *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     PLAYER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     AUTHORITY, PLAYER_DETAIL(AsOne), TWITTER_USER(AsOne)
- *
- * [referrer table]
- *     BLACKLIST_PLAYER, PLAYER_INTRODUCE, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL, TWITTER_USER
- *
- * [foreign property]
- *     authority, playerDetailAsOne, twitterUserAsOne
- *
- * [referrer property]
- *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, playerIntroduceByFromPlayerIdList, playerIntroduceByToPlayerIdList, villageList, villagePlayerList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer playerId = entity.getPlayerId();
- * String uid = entity.getUid();
- * String nickname = entity.getNickname();
- * String authorityCode = entity.getAuthorityCode();
- * Boolean isRestrictedParticipation = entity.getIsRestrictedParticipation();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setPlayerId(playerId);
- * entity.setUid(uid);
- * entity.setNickname(nickname);
- * entity.setAuthorityCode(authorityCode);
- * entity.setIsRestrictedParticipation(isRestrictedParticipation);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsPlayer extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
@@ -150,7 +100,7 @@ public abstract class BsPlayer extends AbstractEntity implements DomainEntity, E
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Authority getAuthorityCodeAsAuthority() {
-        return CDef.Authority.codeOf(getAuthorityCode());
+        return CDef.Authority.of(getAuthorityCode()).orElse(null);
     }
 
     /**

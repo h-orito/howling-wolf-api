@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of NOONNIGHT as TABLE. <br>
- * <pre>
- * [primary key]
- *     NOONNIGHT_CODE
- *
- * [column]
- *     NOONNIGHT_CODE, NOONNIGHT_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     VILLAGE_DAY
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     villageDayList
- * </pre>
+ * The referrer loader of NOONNIGHT as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfNoonnight {

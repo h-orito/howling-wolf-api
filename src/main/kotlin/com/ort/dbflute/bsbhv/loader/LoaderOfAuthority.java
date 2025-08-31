@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of AUTHORITY as TABLE. <br>
- * <pre>
- * [primary key]
- *     AUTHORITY_CODE
- *
- * [column]
- *     AUTHORITY_CODE, AUTHORITY_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     PLAYER
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     playerList
- * </pre>
+ * The referrer loader of AUTHORITY as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfAuthority {

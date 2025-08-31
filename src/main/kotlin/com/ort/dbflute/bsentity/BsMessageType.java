@@ -13,42 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of MESSAGE_TYPE as TABLE. <br>
  * メッセージ種別
- * <pre>
- * [primary-key]
- *     MESSAGE_TYPE_CODE
- *
- * [column]
- *     MESSAGE_TYPE_CODE, MESSAGE_TYPE_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     MESSAGE_RESTRICTION
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     messageRestrictionList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String messageTypeCode = entity.getMessageTypeCode();
- * String messageTypeName = entity.getMessageTypeName();
- * entity.setMessageTypeCode(messageTypeCode);
- * entity.setMessageTypeName(messageTypeName);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsMessageType extends AbstractEntity implements DomainEntity {
@@ -101,7 +65,7 @@ public abstract class BsMessageType extends AbstractEntity implements DomainEnti
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.MessageType getMessageTypeCodeAsMessageType() {
-        return CDef.MessageType.codeOf(getMessageTypeCode());
+        return CDef.MessageType.of(getMessageTypeCode()).orElse(null);
     }
 
     /**

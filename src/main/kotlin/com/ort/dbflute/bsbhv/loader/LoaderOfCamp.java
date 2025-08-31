@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of CAMP as TABLE. <br>
- * <pre>
- * [primary key]
- *     CAMP_CODE
- *
- * [column]
- *     CAMP_CODE, CAMP_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     SKILL, VILLAGE
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     skillList, villageList
- * </pre>
+ * The referrer loader of CAMP as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfCamp {

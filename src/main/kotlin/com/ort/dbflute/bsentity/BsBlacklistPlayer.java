@@ -15,52 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of BLACKLIST_PLAYER as TABLE. <br>
  * ブラックリストプレイヤー
- * <pre>
- * [primary-key]
- *     BLACKLIST_PLAYER_ID
- *
- * [column]
- *     BLACKLIST_PLAYER_ID, FROM_PLAYER_ID, TO_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     BLACKLIST_PLAYER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     playerByFromPlayerId, playerByToPlayerId
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer blacklistPlayerId = entity.getBlacklistPlayerId();
- * Integer fromPlayerId = entity.getFromPlayerId();
- * Integer toPlayerId = entity.getToPlayerId();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setBlacklistPlayerId(blacklistPlayerId);
- * entity.setFromPlayerId(fromPlayerId);
- * entity.setToPlayerId(toPlayerId);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsBlacklistPlayer extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

@@ -13,50 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of DESIGNER as TABLE. <br>
  * デザイナー
- * <pre>
- * [primary-key]
- *     DESIGNER_ID
- *
- * [column]
- *     DESIGNER_ID, DESIGNER_NAME, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     DESIGNER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     CHARA_GROUP
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     charaGroupList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer designerId = entity.getDesignerId();
- * String designerName = entity.getDesignerName();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setDesignerId(designerId);
- * entity.setDesignerName(designerName);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsDesigner extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

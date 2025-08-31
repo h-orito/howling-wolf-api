@@ -13,44 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of NOONNIGHT as TABLE. <br>
  * 昼夜
- * <pre>
- * [primary-key]
- *     NOONNIGHT_CODE
- *
- * [column]
- *     NOONNIGHT_CODE, NOONNIGHT_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     VILLAGE_DAY
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     villageDayList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String noonnightCode = entity.getNoonnightCode();
- * String noonnightName = entity.getNoonnightName();
- * Integer dispOrder = entity.getDispOrder();
- * entity.setNoonnightCode(noonnightCode);
- * entity.setNoonnightName(noonnightName);
- * entity.setDispOrder(dispOrder);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsNoonnight extends AbstractEntity implements DomainEntity {
@@ -106,7 +68,7 @@ public abstract class BsNoonnight extends AbstractEntity implements DomainEntity
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Noonnight getNoonnightCodeAsNoonnight() {
-        return CDef.Noonnight.codeOf(getNoonnightCode());
+        return CDef.Noonnight.of(getNoonnightCode()).orElse(null);
     }
 
     /**

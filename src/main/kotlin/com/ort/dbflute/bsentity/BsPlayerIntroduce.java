@@ -15,52 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of PLAYER_INTRODUCE as TABLE. <br>
  * プレイヤー紹介
- * <pre>
- * [primary-key]
- *     PLAYER_INTRODUCE_ID
- *
- * [column]
- *     PLAYER_INTRODUCE_ID, FROM_PLAYER_ID, TO_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     PLAYER_INTRODUCE_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     playerByFromPlayerId, playerByToPlayerId
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer playerIntroduceId = entity.getPlayerIntroduceId();
- * Integer fromPlayerId = entity.getFromPlayerId();
- * Integer toPlayerId = entity.getToPlayerId();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setPlayerIntroduceId(playerIntroduceId);
- * entity.setFromPlayerId(fromPlayerId);
- * entity.setToPlayerId(toPlayerId);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsPlayerIntroduce extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

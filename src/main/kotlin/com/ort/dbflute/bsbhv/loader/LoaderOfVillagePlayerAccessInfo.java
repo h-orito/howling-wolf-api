@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of VILLAGE_PLAYER_ACCESS_INFO as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID
- *
- * [column]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID, VILLAGE_PLAYER_ID, IP_ADDRESS, CLIENT_TOKEN, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     VILLAGE_PLAYER_ACCESS_INFO_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     VILLAGE_PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     villagePlayer
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of VILLAGE_PLAYER_ACCESS_INFO as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfVillagePlayerAccessInfo {

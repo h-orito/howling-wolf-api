@@ -13,44 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of VILLAGE_SETTING_ITEM as TABLE. <br>
  * 村設定項目
- * <pre>
- * [primary-key]
- *     VILLAGE_SETTING_ITEM_CODE
- *
- * [column]
- *     VILLAGE_SETTING_ITEM_CODE, VILLAGE_SETTING_ITEM_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     VILLAGE_SETTING
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     villageSettingList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String villageSettingItemCode = entity.getVillageSettingItemCode();
- * String villageSettingItemName = entity.getVillageSettingItemName();
- * Integer dispOrder = entity.getDispOrder();
- * entity.setVillageSettingItemCode(villageSettingItemCode);
- * entity.setVillageSettingItemName(villageSettingItemName);
- * entity.setDispOrder(dispOrder);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsVillageSettingItem extends AbstractEntity implements DomainEntity {
@@ -106,7 +68,7 @@ public abstract class BsVillageSettingItem extends AbstractEntity implements Dom
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.VillageSettingItem getVillageSettingItemCodeAsVillageSettingItem() {
-        return CDef.VillageSettingItem.codeOf(getVillageSettingItemCode());
+        return CDef.VillageSettingItem.of(getVillageSettingItemCode()).orElse(null);
     }
 
     /**

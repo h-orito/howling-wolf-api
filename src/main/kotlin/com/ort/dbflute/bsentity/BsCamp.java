@@ -13,44 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of CAMP as TABLE. <br>
  * 陣営
- * <pre>
- * [primary-key]
- *     CAMP_CODE
- *
- * [column]
- *     CAMP_CODE, CAMP_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     SKILL, VILLAGE
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     skillList, villageList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String campCode = entity.getCampCode();
- * String campName = entity.getCampName();
- * Integer dispOrder = entity.getDispOrder();
- * entity.setCampCode(campCode);
- * entity.setCampName(campName);
- * entity.setDispOrder(dispOrder);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsCamp extends AbstractEntity implements DomainEntity {
@@ -106,7 +68,7 @@ public abstract class BsCamp extends AbstractEntity implements DomainEntity {
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Camp getCampCodeAsCamp() {
-        return CDef.Camp.codeOf(getCampCode());
+        return CDef.Camp.of(getCampCode()).orElse(null);
     }
 
     /**

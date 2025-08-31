@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of SKILL as TABLE. <br>
- * <pre>
- * [primary key]
- *     SKILL_CODE
- *
- * [column]
- *     SKILL_CODE, SKILL_NAME, SKILL_SHORT_NAME, CAMP_CODE, DISP_ORDER, DESCRIPTION
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     CAMP
- *
- * [referrer table]
- *     COMING_OUT, VILLAGE_PLAYER
- *
- * [foreign property]
- *     camp
- *
- * [referrer property]
- *     comingOutList, villagePlayerByRequestSkillCodeList, villagePlayerBySecondRequestSkillCodeList, villagePlayerBySkillCodeList
- * </pre>
+ * The referrer loader of SKILL as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfSkill {

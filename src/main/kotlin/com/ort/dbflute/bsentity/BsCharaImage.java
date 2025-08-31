@@ -15,44 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of CHARA_IMAGE as TABLE. <br>
  * キャラクター画像
- * <pre>
- * [primary-key]
- *     CHARA_ID, FACE_TYPE_CODE
- *
- * [column]
- *     CHARA_ID, FACE_TYPE_CODE, CHARA_IMG_URL
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     CHARA, FACE_TYPE
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     chara, faceType
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer charaId = entity.getCharaId();
- * String faceTypeCode = entity.getFaceTypeCode();
- * String charaImgUrl = entity.getCharaImgUrl();
- * entity.setCharaId(charaId);
- * entity.setFaceTypeCode(faceTypeCode);
- * entity.setCharaImgUrl(charaImgUrl);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsCharaImage extends AbstractEntity implements DomainEntity {
@@ -109,7 +71,7 @@ public abstract class BsCharaImage extends AbstractEntity implements DomainEntit
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.FaceType getFaceTypeCodeAsFaceType() {
-        return CDef.FaceType.codeOf(getFaceTypeCode());
+        return CDef.FaceType.of(getFaceTypeCode()).orElse(null);
     }
 
     /**

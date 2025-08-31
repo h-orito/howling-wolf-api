@@ -13,42 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of AUTHORITY as TABLE. <br>
  * 権限
- * <pre>
- * [primary-key]
- *     AUTHORITY_CODE
- *
- * [column]
- *     AUTHORITY_CODE, AUTHORITY_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     PLAYER
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     playerList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String authorityCode = entity.getAuthorityCode();
- * String authorityName = entity.getAuthorityName();
- * entity.setAuthorityCode(authorityCode);
- * entity.setAuthorityName(authorityName);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsAuthority extends AbstractEntity implements DomainEntity {
@@ -101,7 +65,7 @@ public abstract class BsAuthority extends AbstractEntity implements DomainEntity
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Authority getAuthorityCodeAsAuthority() {
-        return CDef.Authority.codeOf(getAuthorityCode());
+        return CDef.Authority.of(getAuthorityCode()).orElse(null);
     }
 
     /**

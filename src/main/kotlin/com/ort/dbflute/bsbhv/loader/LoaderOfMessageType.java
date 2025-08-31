@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of MESSAGE_TYPE as TABLE. <br>
- * <pre>
- * [primary key]
- *     MESSAGE_TYPE_CODE
- *
- * [column]
- *     MESSAGE_TYPE_CODE, MESSAGE_TYPE_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     MESSAGE_RESTRICTION
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     messageRestrictionList
- * </pre>
+ * The referrer loader of MESSAGE_TYPE as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfMessageType {

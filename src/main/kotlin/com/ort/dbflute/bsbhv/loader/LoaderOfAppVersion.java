@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of APP_VERSION as TABLE. <br>
- * <pre>
- * [primary key]
- *     CLIENT_VERSION
- *
- * [column]
- *     CLIENT_VERSION
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of APP_VERSION as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfAppVersion {

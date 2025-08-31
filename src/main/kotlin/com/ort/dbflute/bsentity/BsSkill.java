@@ -15,50 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of SKILL as TABLE. <br>
  * 役職
- * <pre>
- * [primary-key]
- *     SKILL_CODE
- *
- * [column]
- *     SKILL_CODE, SKILL_NAME, SKILL_SHORT_NAME, CAMP_CODE, DISP_ORDER, DESCRIPTION
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     CAMP
- *
- * [referrer table]
- *     COMING_OUT, VILLAGE_PLAYER
- *
- * [foreign property]
- *     camp
- *
- * [referrer property]
- *     comingOutList, villagePlayerByRequestSkillCodeList, villagePlayerBySecondRequestSkillCodeList, villagePlayerBySkillCodeList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String skillCode = entity.getSkillCode();
- * String skillName = entity.getSkillName();
- * String skillShortName = entity.getSkillShortName();
- * String campCode = entity.getCampCode();
- * Integer dispOrder = entity.getDispOrder();
- * String description = entity.getDescription();
- * entity.setSkillCode(skillCode);
- * entity.setSkillName(skillName);
- * entity.setSkillShortName(skillShortName);
- * entity.setCampCode(campCode);
- * entity.setDispOrder(dispOrder);
- * entity.setDescription(description);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsSkill extends AbstractEntity implements DomainEntity {
@@ -123,7 +79,7 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Skill getSkillCodeAsSkill() {
-        return CDef.Skill.codeOf(getSkillCode());
+        return CDef.Skill.of(getSkillCode()).orElse(null);
     }
 
     /**
@@ -144,7 +100,7 @@ public abstract class BsSkill extends AbstractEntity implements DomainEntity {
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Camp getCampCodeAsCamp() {
-        return CDef.Camp.codeOf(getCampCode());
+        return CDef.Camp.of(getCampCode()).orElse(null);
     }
 
     /**

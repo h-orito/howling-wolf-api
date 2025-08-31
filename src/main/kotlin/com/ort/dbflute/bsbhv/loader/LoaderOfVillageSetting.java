@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of VILLAGE_SETTING as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_ID, VILLAGE_SETTING_ITEM_CODE
- *
- * [column]
- *     VILLAGE_ID, VILLAGE_SETTING_ITEM_CODE, VILLAGE_SETTING_TEXT, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     VILLAGE, VILLAGE_SETTING_ITEM
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     village, villageSettingItem
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of VILLAGE_SETTING as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfVillageSetting {

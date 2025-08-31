@@ -13,52 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of AUTOGENERATE_ORGANIZE as TABLE. <br>
  * 自動生成編成
- * <pre>
- * [primary-key]
- *     VILLAGE_ID_MOD
- *
- * [column]
- *     VILLAGE_ID_MOD, ORGANIZATION, IS_AVAILABLE_DUMMY_SKILL, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villageIdMod = entity.getVillageIdMod();
- * String organization = entity.getOrganization();
- * Boolean isAvailableDummySkill = entity.getIsAvailableDummySkill();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setVillageIdMod(villageIdMod);
- * entity.setOrganization(organization);
- * entity.setIsAvailableDummySkill(isAvailableDummySkill);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsAutogenerateOrganize extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of BLACKLIST_PLAYER as TABLE. <br>
- * <pre>
- * [primary key]
- *     BLACKLIST_PLAYER_ID
- *
- * [column]
- *     BLACKLIST_PLAYER_ID, FROM_PLAYER_ID, TO_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     BLACKLIST_PLAYER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     playerByFromPlayerId, playerByToPlayerId
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of BLACKLIST_PLAYER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfBlacklistPlayer {

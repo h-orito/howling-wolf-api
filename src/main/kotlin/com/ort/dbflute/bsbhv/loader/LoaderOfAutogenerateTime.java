@@ -7,35 +7,7 @@ import com.ort.dbflute.exbhv.*;
 import com.ort.dbflute.exentity.*;
 
 /**
- * The referrer loader of AUTOGENERATE_TIME as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_ID_MOD
- *
- * [column]
- *     VILLAGE_ID_MOD, START_TIME, SILENT_HOURS, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     
- * </pre>
+ * The referrer loader of AUTOGENERATE_TIME as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfAutogenerateTime {

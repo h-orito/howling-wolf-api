@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of PLAYER as TABLE. <br>
- * <pre>
- * [primary key]
- *     PLAYER_ID
- *
- * [column]
- *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     PLAYER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     AUTHORITY, PLAYER_DETAIL(AsOne), TWITTER_USER(AsOne)
- *
- * [referrer table]
- *     BLACKLIST_PLAYER, PLAYER_INTRODUCE, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL, TWITTER_USER
- *
- * [foreign property]
- *     authority, playerDetailAsOne, twitterUserAsOne
- *
- * [referrer property]
- *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, playerIntroduceByFromPlayerIdList, playerIntroduceByToPlayerIdList, villageList, villagePlayerList
- * </pre>
+ * The referrer loader of PLAYER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfPlayer {

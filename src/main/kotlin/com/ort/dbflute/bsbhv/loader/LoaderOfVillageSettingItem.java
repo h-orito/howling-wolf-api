@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of VILLAGE_SETTING_ITEM as TABLE. <br>
- * <pre>
- * [primary key]
- *     VILLAGE_SETTING_ITEM_CODE
- *
- * [column]
- *     VILLAGE_SETTING_ITEM_CODE, VILLAGE_SETTING_ITEM_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     VILLAGE_SETTING
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     villageSettingList
- * </pre>
+ * The referrer loader of VILLAGE_SETTING_ITEM as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfVillageSettingItem {

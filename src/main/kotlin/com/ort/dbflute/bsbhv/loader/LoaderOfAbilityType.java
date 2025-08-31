@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of ABILITY_TYPE as TABLE. <br>
- * <pre>
- * [primary key]
- *     ABILITY_TYPE_CODE
- *
- * [column]
- *     ABILITY_TYPE_CODE, ABILITY_TYPE_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     ABILITY
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     abilityList
- * </pre>
+ * The referrer loader of ABILITY_TYPE as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfAbilityType {

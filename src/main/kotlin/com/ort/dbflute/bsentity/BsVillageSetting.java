@@ -16,52 +16,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of VILLAGE_SETTING as TABLE. <br>
  * 村設定
- * <pre>
- * [primary-key]
- *     VILLAGE_ID, VILLAGE_SETTING_ITEM_CODE
- *
- * [column]
- *     VILLAGE_ID, VILLAGE_SETTING_ITEM_CODE, VILLAGE_SETTING_TEXT, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     VILLAGE, VILLAGE_SETTING_ITEM
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     village, villageSettingItem
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villageId = entity.getVillageId();
- * String villageSettingItemCode = entity.getVillageSettingItemCode();
- * String villageSettingText = entity.getVillageSettingText();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setVillageId(villageId);
- * entity.setVillageSettingItemCode(villageSettingItemCode);
- * entity.setVillageSettingText(villageSettingText);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsVillageSetting extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
@@ -130,7 +84,7 @@ public abstract class BsVillageSetting extends AbstractEntity implements DomainE
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.VillageSettingItem getVillageSettingItemCodeAsVillageSettingItem() {
-        return CDef.VillageSettingItem.codeOf(getVillageSettingItemCode());
+        return CDef.VillageSettingItem.of(getVillageSettingItemCode()).orElse(null);
     }
 
     /**

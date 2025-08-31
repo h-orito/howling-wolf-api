@@ -14,44 +14,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of PLAYER_DETAIL as TABLE. <br>
  * プレイヤー詳細
- * <pre>
- * [primary-key]
- *     PLAYER_ID
- *
- * [column]
- *     PLAYER_ID, OTHER_SITE_NAME, INTRODUCTION
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     player
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer playerId = entity.getPlayerId();
- * String otherSiteName = entity.getOtherSiteName();
- * String introduction = entity.getIntroduction();
- * entity.setPlayerId(playerId);
- * entity.setOtherSiteName(otherSiteName);
- * entity.setIntroduction(introduction);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsPlayerDetail extends AbstractEntity implements DomainEntity {

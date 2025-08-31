@@ -9,35 +9,7 @@ import com.ort.dbflute.exentity.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The referrer loader of FACE_TYPE as TABLE. <br>
- * <pre>
- * [primary key]
- *     FACE_TYPE_CODE
- *
- * [column]
- *     FACE_TYPE_CODE, FACE_TYPE_NAME, DISP_ORDER
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     CHARA_IMAGE
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     charaImageList
- * </pre>
+ * The referrer loader of FACE_TYPE as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public class LoaderOfFaceType {

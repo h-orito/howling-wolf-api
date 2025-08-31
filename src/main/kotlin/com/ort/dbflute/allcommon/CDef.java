@@ -1,6 +1,8 @@
 package com.ort.dbflute.allcommon;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.dbflute.exception.ClassificationNotFoundException;
 import org.dbflute.jdbc.Classification;
@@ -8,7 +10,6 @@ import org.dbflute.jdbc.ClassificationCodeType;
 import org.dbflute.jdbc.ClassificationMeta;
 import org.dbflute.jdbc.ClassificationUndefinedHandlingType;
 import org.dbflute.optional.OptionalThing;
-import static org.dbflute.util.DfTypeUtil.emptyStrings;
 
 /**
  * The definition of classification.
@@ -21,120 +22,74 @@ public interface CDef extends Classification {
      */
     public enum Authority implements CDef {
         /** 管理者 */
-        管理者("ROLE_ADMIN", "管理者", emptyStrings())
-        ,
+        管理者("ROLE_ADMIN", "管理者"),
         /** プレイヤー */
-        プレイヤー("ROLE_PLAYER", "プレイヤー", emptyStrings())
-        ;
-        private static final Map<String, Authority> _codeClsMap = new HashMap<String, Authority>();
-        private static final Map<String, Authority> _nameClsMap = new HashMap<String, Authority>();
-        static {
-            for (Authority value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private Authority(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        プレイヤー("ROLE_PLAYER", "プレイヤー");
+        private static ZzzoneSlimmer<Authority> _slimmer = new ZzzoneSlimmer<>(Authority.class, values());
+        private String _code; private String _alias;
+        private Authority(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.Authority; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Authority> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof Authority) { return OptionalThing.of((Authority)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<Authority> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Authority> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<Authority> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static Authority codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof Authority) { return (Authority)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static Authority codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static Authority nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static Authority nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<Authority> listAll() {
-            return new ArrayList<Authority>(Arrays.asList(values()));
-        }
-
+        public static List<Authority> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<Authority> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: Authority." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<Authority> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<Authority> clsList = new ArrayList<Authority>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<Authority> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<Authority> groupOf(String groupName) {
-            return new ArrayList<Authority>(4);
-        }
-
+        @Deprecated
+        public static List<Authority> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -143,23 +98,12 @@ public interface CDef extends Classification {
      */
     public enum Camp implements CDef {
         /** 狐陣営 */
-        狐陣営("FOX", "狐陣営", emptyStrings())
-        ,
+        狐陣営("FOX", "狐陣営"),
         /** 村人陣営 */
-        村人陣営("VILLAGER", "村人陣営", emptyStrings())
-        ,
+        村人陣営("VILLAGER", "村人陣営"),
         /** 人狼陣営 */
-        人狼陣営("WEREWOLF", "人狼陣営", emptyStrings())
-        ;
-        private static final Map<String, Camp> _codeClsMap = new HashMap<String, Camp>();
-        private static final Map<String, Camp> _nameClsMap = new HashMap<String, Camp>();
-        static {
-            for (Camp value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
+        人狼陣営("WEREWOLF", "人狼陣営");
+        private static ZzzoneSlimmer<Camp> _slimmer = new ZzzoneSlimmer<>(Camp.class, values());
         private static final Map<String, Map<String, Object>> _subItemMapMap = new HashMap<String, Map<String, Object>>();
         static {
             {
@@ -178,110 +122,73 @@ public interface CDef extends Classification {
                 _subItemMapMap.put(人狼陣営.code(), Collections.unmodifiableMap(subItemMap));
             }
         }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private Camp(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        private String _code; private String _alias;
+        private Camp(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return _subItemMapMap.get(code()); }
         public ClassificationMeta meta() { return CDef.DefMeta.Camp; }
-
         public String order() {
             return (String)subItemMap().get("order");
         }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Camp> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof Camp) { return OptionalThing.of((Camp)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<Camp> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Camp> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<Camp> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static Camp codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof Camp) { return (Camp)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static Camp codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static Camp nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static Camp nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<Camp> listAll() {
-            return new ArrayList<Camp>(Arrays.asList(values()));
-        }
-
+        public static List<Camp> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<Camp> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: Camp." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<Camp> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<Camp> clsList = new ArrayList<Camp>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<Camp> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<Camp> groupOf(String groupName) {
-            return new ArrayList<Camp>(4);
-        }
-
+        @Deprecated
+        public static List<Camp> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -290,124 +197,77 @@ public interface CDef extends Classification {
      */
     public enum VillageStatus implements CDef {
         /** 廃村 */
-        廃村("CANCEL", "廃村", emptyStrings())
-        ,
+        廃村("CANCEL", "廃村"),
         /** 終了 */
-        終了("COMPLETED", "終了", emptyStrings())
-        ,
+        終了("COMPLETED", "終了"),
         /** エピローグ */
-        エピローグ("EPILOGUE", "エピローグ", emptyStrings())
-        ,
+        エピローグ("EPILOGUE", "エピローグ"),
         /** 進行中 */
-        進行中("IN_PROGRESS", "進行中", emptyStrings())
-        ,
+        進行中("IN_PROGRESS", "進行中"),
         /** プロローグ */
-        プロローグ("PROLOGUE", "プロローグ", emptyStrings())
-        ;
-        private static final Map<String, VillageStatus> _codeClsMap = new HashMap<String, VillageStatus>();
-        private static final Map<String, VillageStatus> _nameClsMap = new HashMap<String, VillageStatus>();
-        static {
-            for (VillageStatus value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private VillageStatus(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        プロローグ("PROLOGUE", "プロローグ");
+        private static ZzzoneSlimmer<VillageStatus> _slimmer = new ZzzoneSlimmer<>(VillageStatus.class, values());
+        private String _code; private String _alias;
+        private VillageStatus(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.VillageStatus; }
-
         /**
          * Is the classification in the group? <br>
          * 決着がついた村 <br>
          * The group elements:[エピローグ, 廃村, 終了]
          * @return The determination, true or false.
          */
-        public boolean isSolvedVillage() {
-            return エピローグ.equals(this) || 廃村.equals(this) || 終了.equals(this);
-        }
-
+        public boolean isSolvedVillage() { return エピローグ.equals(this) || 廃村.equals(this) || 終了.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 終了した村 <br>
          * The group elements:[廃村, 終了]
          * @return The determination, true or false.
          */
-        public boolean isFinishedVillage() {
-            return 廃村.equals(this) || 終了.equals(this);
-        }
-
+        public boolean isFinishedVillage() { return 廃村.equals(this) || 終了.equals(this); }
         public boolean inGroup(String groupName) {
-            if ("solvedVillage".equals(groupName)) { return isSolvedVillage(); }
-            if ("finishedVillage".equals(groupName)) { return isFinishedVillage(); }
+            if ("solvedVillage".equalsIgnoreCase(groupName)) { return isSolvedVillage(); }
+            if ("finishedVillage".equalsIgnoreCase(groupName)) { return isFinishedVillage(); }
             return false;
         }
-
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<VillageStatus> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof VillageStatus) { return OptionalThing.of((VillageStatus)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<VillageStatus> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<VillageStatus> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<VillageStatus> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static VillageStatus codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof VillageStatus) { return (VillageStatus)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static VillageStatus codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static VillageStatus nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static VillageStatus nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<VillageStatus> listAll() {
-            return new ArrayList<VillageStatus>(Arrays.asList(values()));
-        }
-
+        public static List<VillageStatus> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<VillageStatus> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
@@ -415,19 +275,14 @@ public interface CDef extends Classification {
             if ("finishedVillage".equalsIgnoreCase(groupName)) { return listOfFinishedVillage(); }
             throw new ClassificationNotFoundException("Unknown classification group: VillageStatus." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<VillageStatus> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<VillageStatus> clsList = new ArrayList<VillageStatus>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<VillageStatus> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 決着がついた村 <br>
@@ -435,9 +290,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<VillageStatus> listOfSolvedVillage() {
-            return new ArrayList<VillageStatus>(Arrays.asList(エピローグ, 廃村, 終了));
+            return new ArrayList<>(Arrays.asList(エピローグ, 廃村, 終了));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 終了した村 <br>
@@ -445,20 +299,20 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<VillageStatus> listOfFinishedVillage() {
-            return new ArrayList<VillageStatus>(Arrays.asList(廃村, 終了));
+            return new ArrayList<>(Arrays.asList(廃村, 終了));
         }
-
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
+        @Deprecated
         public static List<VillageStatus> groupOf(String groupName) {
-            if ("solvedVillage".equals(groupName)) { return listOfSolvedVillage(); }
-            if ("finishedVillage".equals(groupName)) { return listOfFinishedVillage(); }
-            return new ArrayList<VillageStatus>(4);
+            if ("solvedVillage".equalsIgnoreCase(groupName)) { return listOfSolvedVillage(); }
+            if ("finishedVillage".equalsIgnoreCase(groupName)) { return listOfFinishedVillage(); }
+            return new ArrayList<>();
         }
-
         @Override public String toString() { return code(); }
     }
 
@@ -467,62 +321,38 @@ public interface CDef extends Classification {
      */
     public enum Skill implements CDef {
         /** C国狂人 */
-        C国狂人("CMADMAN", "C国狂人", emptyStrings())
-        ,
+        C国狂人("CMADMAN", "C国狂人"),
         /** 狂信者 */
-        狂信者("FANATIC", "狂信者", emptyStrings())
-        ,
+        狂信者("FANATIC", "狂信者"),
         /** 妖狐 */
-        妖狐("FOX", "妖狐", emptyStrings())
-        ,
+        妖狐("FOX", "妖狐"),
         /** 狩人 */
-        狩人("HUNTER", "狩人", emptyStrings())
-        ,
+        狩人("HUNTER", "狩人"),
         /** 背徳者 */
-        背徳者("IMMORAL", "背徳者", emptyStrings())
-        ,
+        背徳者("IMMORAL", "背徳者"),
         /** おまかせ */
-        おまかせ("LEFTOVER", "おまかせ", emptyStrings())
-        ,
+        おまかせ("LEFTOVER", "おまかせ"),
         /** 狂人 */
-        狂人("MADMAN", "狂人", emptyStrings())
-        ,
+        狂人("MADMAN", "狂人"),
         /** 共有者 */
-        共有者("MASON", "共有者", emptyStrings())
-        ,
+        共有者("MASON", "共有者"),
         /** 霊能者 */
-        霊能者("MEDIUM", "霊能者", emptyStrings())
-        ,
+        霊能者("MEDIUM", "霊能者"),
         /** 猫又 */
-        猫又("MONSTERCAT", "猫又", emptyStrings())
-        ,
+        猫又("MONSTERCAT", "猫又"),
         /** 占い師 */
-        占い師("SEER", "占い師", emptyStrings())
-        ,
+        占い師("SEER", "占い師"),
         /** 聖痕者 */
-        聖痕者("STIGMATA", "聖痕者", emptyStrings())
-        ,
+        聖痕者("STIGMATA", "聖痕者"),
         /** 村人 */
-        村人("VILLAGER", "村人", emptyStrings())
-        ,
+        村人("VILLAGER", "村人"),
         /** おまかせ（村人陣営） */
-        おまかせ村人陣営("VILLAGERS", "おまかせ（村人陣営）", emptyStrings())
-        ,
+        おまかせ村人陣営("VILLAGERS", "おまかせ（村人陣営）"),
         /** 人狼 */
-        人狼("WEREWOLF", "人狼", emptyStrings())
-        ,
+        人狼("WEREWOLF", "人狼"),
         /** おまかせ（人狼陣営） */
-        おまかせ人狼陣営("WEREWOLFS", "おまかせ（人狼陣営）", emptyStrings())
-        ;
-        private static final Map<String, Skill> _codeClsMap = new HashMap<String, Skill>();
-        private static final Map<String, Skill> _nameClsMap = new HashMap<String, Skill>();
-        static {
-            for (Skill value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
+        おまかせ人狼陣営("WEREWOLFS", "おまかせ（人狼陣営）");
+        private static ZzzoneSlimmer<Skill> _slimmer = new ZzzoneSlimmer<>(Skill.class, values());
         private static final Map<String, Map<String, Object>> _subItemMapMap = new HashMap<String, Map<String, Object>>();
         static {
             {
@@ -654,293 +484,207 @@ public interface CDef extends Classification {
                 _subItemMapMap.put(おまかせ人狼陣営.code(), Collections.unmodifiableMap(subItemMap));
             }
         }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private Skill(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        private String _code; private String _alias;
+        private Skill(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return _subItemMapMap.get(code()); }
         public ClassificationMeta meta() { return CDef.DefMeta.Skill; }
-
         public String shortName() {
             return (String)subItemMap().get("shortName");
         }
-
         public String order() {
             return (String)subItemMap().get("order");
         }
-
         public String campCode() {
             return (String)subItemMap().get("campCode");
         }
-
         public String description() {
             return (String)subItemMap().get("description");
         }
-
         /**
          * Is the classification in the group? <br>
          * 囁きを見られる <br>
          * The group elements:[人狼, C国狂人]
          * @return The determination, true or false.
          */
-        public boolean isViewableWerewolfSay() {
-            return 人狼.equals(this) || C国狂人.equals(this);
-        }
-
+        public boolean isViewableWerewolfSay() { return 人狼.equals(this) || C国狂人.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 囁き可能 <br>
          * The group elements:[人狼, C国狂人]
          * @return The determination, true or false.
          */
-        public boolean isAvailableWerewolfSay() {
-            return 人狼.equals(this) || C国狂人.equals(this);
-        }
-
+        public boolean isAvailableWerewolfSay() { return 人狼.equals(this) || C国狂人.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 襲撃対象に選べない <br>
          * The group elements:[人狼]
          * @return The determination, true or false.
          */
-        public boolean isNotSelectableAttack() {
-            return 人狼.equals(this);
-        }
-
+        public boolean isNotSelectableAttack() { return 人狼.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 占い結果が人狼になる <br>
          * The group elements:[人狼]
          * @return The determination, true or false.
          */
-        public boolean isDivineResultWolf() {
-            return 人狼.equals(this);
-        }
-
+        public boolean isDivineResultWolf() { return 人狼.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 霊能結果が人狼になる <br>
          * The group elements:[人狼]
          * @return The determination, true or false.
          */
-        public boolean isPsychicResultWolf() {
-            return 人狼.equals(this);
-        }
-
+        public boolean isPsychicResultWolf() { return 人狼.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 襲撃能力を持つ <br>
          * The group elements:[人狼]
          * @return The determination, true or false.
          */
-        public boolean isHasAttackAbility() {
-            return 人狼.equals(this);
-        }
-
+        public boolean isHasAttackAbility() { return 人狼.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 占い能力を持つ <br>
          * The group elements:[占い師]
          * @return The determination, true or false.
          */
-        public boolean isHasDivineAbility() {
-            return 占い師.equals(this);
-        }
-
+        public boolean isHasDivineAbility() { return 占い師.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 護衛能力を持つ <br>
          * The group elements:[狩人]
          * @return The determination, true or false.
          */
-        public boolean isHasGuardAbility() {
-            return 狩人.equals(this);
-        }
-
+        public boolean isHasGuardAbility() { return 狩人.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 霊能能力を持つ <br>
          * The group elements:[霊能者]
          * @return The determination, true or false.
          */
-        public boolean isHasPsychicAbility() {
-            return 霊能者.equals(this);
-        }
-
+        public boolean isHasPsychicAbility() { return 霊能者.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 勝敗判定時狼にカウントする <br>
          * The group elements:[人狼]
          * @return The determination, true or false.
          */
-        public boolean isCountWolf() {
-            return 人狼.equals(this);
-        }
-
+        public boolean isCountWolf() { return 人狼.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 勝敗判定時に人間としてカウントしない <br>
          * The group elements:[妖狐]
          * @return The determination, true or false.
          */
-        public boolean isNoCount() {
-            return 妖狐.equals(this);
-        }
-
+        public boolean isNoCount() { return 妖狐.equals(this); }
         /**
          * Is the classification in the group? <br>
          * おまかせ系 <br>
          * The group elements:[おまかせ, おまかせ村人陣営, おまかせ人狼陣営]
          * @return The determination, true or false.
          */
-        public boolean isSomeoneSkill() {
-            return おまかせ.equals(this) || おまかせ村人陣営.equals(this) || おまかせ人狼陣営.equals(this);
-        }
-
+        public boolean isSomeoneSkill() { return おまかせ.equals(this) || おまかせ村人陣営.equals(this) || おまかせ人狼陣営.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 共有系としてお互いに認知できる <br>
          * The group elements:[共有者]
          * @return The determination, true or false.
          */
-        public boolean isRecognizableEachMason() {
-            return 共有者.equals(this);
-        }
-
+        public boolean isRecognizableEachMason() { return 共有者.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 人狼を認知できる <br>
          * The group elements:[狂信者]
          * @return The determination, true or false.
          */
-        public boolean isRecognizableWolf() {
-            return 狂信者.equals(this);
-        }
-
+        public boolean isRecognizableWolf() { return 狂信者.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 妖狐を認知できる <br>
          * The group elements:[妖狐, 背徳者]
          * @return The determination, true or false.
          */
-        public boolean isRecognizableFox() {
-            return 妖狐.equals(this) || 背徳者.equals(this);
-        }
-
+        public boolean isRecognizableFox() { return 妖狐.equals(this) || 背徳者.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 襲撃耐性を持つ <br>
          * The group elements:[妖狐]
          * @return The determination, true or false.
          */
-        public boolean isNoDeadByAttack() {
-            return 妖狐.equals(this);
-        }
-
+        public boolean isNoDeadByAttack() { return 妖狐.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 占いにより死亡する <br>
          * The group elements:[妖狐]
          * @return The determination, true or false.
          */
-        public boolean isDeadByDivine() {
-            return 妖狐.equals(this);
-        }
-
+        public boolean isDeadByDivine() { return 妖狐.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 死亡時道連れにする <br>
          * The group elements:[猫又]
          * @return The determination, true or false.
          */
-        public boolean isForceDoubleSuicide() {
-            return 猫又.equals(this);
-        }
-
+        public boolean isForceDoubleSuicide() { return 猫又.equals(this); }
         public boolean inGroup(String groupName) {
-            if ("viewableWerewolfSay".equals(groupName)) { return isViewableWerewolfSay(); }
-            if ("availableWerewolfSay".equals(groupName)) { return isAvailableWerewolfSay(); }
-            if ("notSelectableAttack".equals(groupName)) { return isNotSelectableAttack(); }
-            if ("divineResultWolf".equals(groupName)) { return isDivineResultWolf(); }
-            if ("psychicResultWolf".equals(groupName)) { return isPsychicResultWolf(); }
-            if ("hasAttackAbility".equals(groupName)) { return isHasAttackAbility(); }
-            if ("hasDivineAbility".equals(groupName)) { return isHasDivineAbility(); }
-            if ("hasGuardAbility".equals(groupName)) { return isHasGuardAbility(); }
-            if ("hasPsychicAbility".equals(groupName)) { return isHasPsychicAbility(); }
-            if ("countWolf".equals(groupName)) { return isCountWolf(); }
-            if ("noCount".equals(groupName)) { return isNoCount(); }
-            if ("someoneSkill".equals(groupName)) { return isSomeoneSkill(); }
-            if ("recognizableEachMason".equals(groupName)) { return isRecognizableEachMason(); }
-            if ("recognizableWolf".equals(groupName)) { return isRecognizableWolf(); }
-            if ("recognizableFox".equals(groupName)) { return isRecognizableFox(); }
-            if ("noDeadByAttack".equals(groupName)) { return isNoDeadByAttack(); }
-            if ("deadByDivine".equals(groupName)) { return isDeadByDivine(); }
-            if ("forceDoubleSuicide".equals(groupName)) { return isForceDoubleSuicide(); }
+            if ("viewableWerewolfSay".equalsIgnoreCase(groupName)) { return isViewableWerewolfSay(); }
+            if ("availableWerewolfSay".equalsIgnoreCase(groupName)) { return isAvailableWerewolfSay(); }
+            if ("notSelectableAttack".equalsIgnoreCase(groupName)) { return isNotSelectableAttack(); }
+            if ("divineResultWolf".equalsIgnoreCase(groupName)) { return isDivineResultWolf(); }
+            if ("psychicResultWolf".equalsIgnoreCase(groupName)) { return isPsychicResultWolf(); }
+            if ("hasAttackAbility".equalsIgnoreCase(groupName)) { return isHasAttackAbility(); }
+            if ("hasDivineAbility".equalsIgnoreCase(groupName)) { return isHasDivineAbility(); }
+            if ("hasGuardAbility".equalsIgnoreCase(groupName)) { return isHasGuardAbility(); }
+            if ("hasPsychicAbility".equalsIgnoreCase(groupName)) { return isHasPsychicAbility(); }
+            if ("countWolf".equalsIgnoreCase(groupName)) { return isCountWolf(); }
+            if ("noCount".equalsIgnoreCase(groupName)) { return isNoCount(); }
+            if ("someoneSkill".equalsIgnoreCase(groupName)) { return isSomeoneSkill(); }
+            if ("recognizableEachMason".equalsIgnoreCase(groupName)) { return isRecognizableEachMason(); }
+            if ("recognizableWolf".equalsIgnoreCase(groupName)) { return isRecognizableWolf(); }
+            if ("recognizableFox".equalsIgnoreCase(groupName)) { return isRecognizableFox(); }
+            if ("noDeadByAttack".equalsIgnoreCase(groupName)) { return isNoDeadByAttack(); }
+            if ("deadByDivine".equalsIgnoreCase(groupName)) { return isDeadByDivine(); }
+            if ("forceDoubleSuicide".equalsIgnoreCase(groupName)) { return isForceDoubleSuicide(); }
             return false;
         }
-
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Skill> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof Skill) { return OptionalThing.of((Skill)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<Skill> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Skill> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<Skill> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static Skill codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof Skill) { return (Skill)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static Skill codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static Skill nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static Skill nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<Skill> listAll() {
-            return new ArrayList<Skill>(Arrays.asList(values()));
-        }
-
+        public static List<Skill> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<Skill> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
@@ -964,19 +708,14 @@ public interface CDef extends Classification {
             if ("forceDoubleSuicide".equalsIgnoreCase(groupName)) { return listOfForceDoubleSuicide(); }
             throw new ClassificationNotFoundException("Unknown classification group: Skill." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<Skill> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<Skill> clsList = new ArrayList<Skill>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<Skill> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 囁きを見られる <br>
@@ -984,9 +723,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfViewableWerewolfSay() {
-            return new ArrayList<Skill>(Arrays.asList(人狼, C国狂人));
+            return new ArrayList<>(Arrays.asList(人狼, C国狂人));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 囁き可能 <br>
@@ -994,9 +732,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfAvailableWerewolfSay() {
-            return new ArrayList<Skill>(Arrays.asList(人狼, C国狂人));
+            return new ArrayList<>(Arrays.asList(人狼, C国狂人));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 襲撃対象に選べない <br>
@@ -1004,9 +741,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfNotSelectableAttack() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<>(Arrays.asList(人狼));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 占い結果が人狼になる <br>
@@ -1014,9 +750,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfDivineResultWolf() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<>(Arrays.asList(人狼));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 霊能結果が人狼になる <br>
@@ -1024,9 +759,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfPsychicResultWolf() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<>(Arrays.asList(人狼));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 襲撃能力を持つ <br>
@@ -1034,9 +768,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfHasAttackAbility() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<>(Arrays.asList(人狼));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 占い能力を持つ <br>
@@ -1044,9 +777,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfHasDivineAbility() {
-            return new ArrayList<Skill>(Arrays.asList(占い師));
+            return new ArrayList<>(Arrays.asList(占い師));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 護衛能力を持つ <br>
@@ -1054,9 +786,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfHasGuardAbility() {
-            return new ArrayList<Skill>(Arrays.asList(狩人));
+            return new ArrayList<>(Arrays.asList(狩人));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 霊能能力を持つ <br>
@@ -1064,9 +795,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfHasPsychicAbility() {
-            return new ArrayList<Skill>(Arrays.asList(霊能者));
+            return new ArrayList<>(Arrays.asList(霊能者));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 勝敗判定時狼にカウントする <br>
@@ -1074,9 +804,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfCountWolf() {
-            return new ArrayList<Skill>(Arrays.asList(人狼));
+            return new ArrayList<>(Arrays.asList(人狼));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 勝敗判定時に人間としてカウントしない <br>
@@ -1084,9 +813,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfNoCount() {
-            return new ArrayList<Skill>(Arrays.asList(妖狐));
+            return new ArrayList<>(Arrays.asList(妖狐));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * おまかせ系 <br>
@@ -1094,9 +822,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfSomeoneSkill() {
-            return new ArrayList<Skill>(Arrays.asList(おまかせ, おまかせ村人陣営, おまかせ人狼陣営));
+            return new ArrayList<>(Arrays.asList(おまかせ, おまかせ村人陣営, おまかせ人狼陣営));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 共有系としてお互いに認知できる <br>
@@ -1104,9 +831,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfRecognizableEachMason() {
-            return new ArrayList<Skill>(Arrays.asList(共有者));
+            return new ArrayList<>(Arrays.asList(共有者));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 人狼を認知できる <br>
@@ -1114,9 +840,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfRecognizableWolf() {
-            return new ArrayList<Skill>(Arrays.asList(狂信者));
+            return new ArrayList<>(Arrays.asList(狂信者));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 妖狐を認知できる <br>
@@ -1124,9 +849,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfRecognizableFox() {
-            return new ArrayList<Skill>(Arrays.asList(妖狐, 背徳者));
+            return new ArrayList<>(Arrays.asList(妖狐, 背徳者));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 襲撃耐性を持つ <br>
@@ -1134,9 +858,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfNoDeadByAttack() {
-            return new ArrayList<Skill>(Arrays.asList(妖狐));
+            return new ArrayList<>(Arrays.asList(妖狐));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 占いにより死亡する <br>
@@ -1144,9 +867,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfDeadByDivine() {
-            return new ArrayList<Skill>(Arrays.asList(妖狐));
+            return new ArrayList<>(Arrays.asList(妖狐));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 死亡時道連れにする <br>
@@ -1154,36 +876,36 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<Skill> listOfForceDoubleSuicide() {
-            return new ArrayList<Skill>(Arrays.asList(猫又));
+            return new ArrayList<>(Arrays.asList(猫又));
         }
-
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
+        @Deprecated
         public static List<Skill> groupOf(String groupName) {
-            if ("viewableWerewolfSay".equals(groupName)) { return listOfViewableWerewolfSay(); }
-            if ("availableWerewolfSay".equals(groupName)) { return listOfAvailableWerewolfSay(); }
-            if ("notSelectableAttack".equals(groupName)) { return listOfNotSelectableAttack(); }
-            if ("divineResultWolf".equals(groupName)) { return listOfDivineResultWolf(); }
-            if ("psychicResultWolf".equals(groupName)) { return listOfPsychicResultWolf(); }
-            if ("hasAttackAbility".equals(groupName)) { return listOfHasAttackAbility(); }
-            if ("hasDivineAbility".equals(groupName)) { return listOfHasDivineAbility(); }
-            if ("hasGuardAbility".equals(groupName)) { return listOfHasGuardAbility(); }
-            if ("hasPsychicAbility".equals(groupName)) { return listOfHasPsychicAbility(); }
-            if ("countWolf".equals(groupName)) { return listOfCountWolf(); }
-            if ("noCount".equals(groupName)) { return listOfNoCount(); }
-            if ("someoneSkill".equals(groupName)) { return listOfSomeoneSkill(); }
-            if ("recognizableEachMason".equals(groupName)) { return listOfRecognizableEachMason(); }
-            if ("recognizableWolf".equals(groupName)) { return listOfRecognizableWolf(); }
-            if ("recognizableFox".equals(groupName)) { return listOfRecognizableFox(); }
-            if ("noDeadByAttack".equals(groupName)) { return listOfNoDeadByAttack(); }
-            if ("deadByDivine".equals(groupName)) { return listOfDeadByDivine(); }
-            if ("forceDoubleSuicide".equals(groupName)) { return listOfForceDoubleSuicide(); }
-            return new ArrayList<Skill>(4);
+            if ("viewableWerewolfSay".equalsIgnoreCase(groupName)) { return listOfViewableWerewolfSay(); }
+            if ("availableWerewolfSay".equalsIgnoreCase(groupName)) { return listOfAvailableWerewolfSay(); }
+            if ("notSelectableAttack".equalsIgnoreCase(groupName)) { return listOfNotSelectableAttack(); }
+            if ("divineResultWolf".equalsIgnoreCase(groupName)) { return listOfDivineResultWolf(); }
+            if ("psychicResultWolf".equalsIgnoreCase(groupName)) { return listOfPsychicResultWolf(); }
+            if ("hasAttackAbility".equalsIgnoreCase(groupName)) { return listOfHasAttackAbility(); }
+            if ("hasDivineAbility".equalsIgnoreCase(groupName)) { return listOfHasDivineAbility(); }
+            if ("hasGuardAbility".equalsIgnoreCase(groupName)) { return listOfHasGuardAbility(); }
+            if ("hasPsychicAbility".equalsIgnoreCase(groupName)) { return listOfHasPsychicAbility(); }
+            if ("countWolf".equalsIgnoreCase(groupName)) { return listOfCountWolf(); }
+            if ("noCount".equalsIgnoreCase(groupName)) { return listOfNoCount(); }
+            if ("someoneSkill".equalsIgnoreCase(groupName)) { return listOfSomeoneSkill(); }
+            if ("recognizableEachMason".equalsIgnoreCase(groupName)) { return listOfRecognizableEachMason(); }
+            if ("recognizableWolf".equalsIgnoreCase(groupName)) { return listOfRecognizableWolf(); }
+            if ("recognizableFox".equalsIgnoreCase(groupName)) { return listOfRecognizableFox(); }
+            if ("noDeadByAttack".equalsIgnoreCase(groupName)) { return listOfNoDeadByAttack(); }
+            if ("deadByDivine".equalsIgnoreCase(groupName)) { return listOfDeadByDivine(); }
+            if ("forceDoubleSuicide".equalsIgnoreCase(groupName)) { return listOfForceDoubleSuicide(); }
+            return new ArrayList<>();
         }
-
         @Override public String toString() { return code(); }
     }
 
@@ -1192,165 +914,104 @@ public interface CDef extends Classification {
      */
     public enum MessageType implements CDef {
         /** 村建て発言 */
-        村建て発言("CREATOR_SAY", "村建て発言", emptyStrings())
-        ,
+        村建て発言("CREATOR_SAY", "村建て発言"),
         /** 死者の呻き */
-        死者の呻き("GRAVE_SAY", "死者の呻き", emptyStrings())
-        ,
+        死者の呻き("GRAVE_SAY", "死者の呻き"),
         /** 共鳴発言 */
-        共鳴発言("MASON_SAY", "共鳴発言", emptyStrings())
-        ,
+        共鳴発言("MASON_SAY", "共鳴発言"),
         /** 独り言 */
-        独り言("MONOLOGUE_SAY", "独り言", emptyStrings())
-        ,
+        独り言("MONOLOGUE_SAY", "独り言"),
         /** 通常発言 */
-        通常発言("NORMAL_SAY", "通常発言", emptyStrings())
-        ,
+        通常発言("NORMAL_SAY", "通常発言"),
         /** 参加者一覧 */
-        参加者一覧("PARTICIPANTS", "参加者一覧", emptyStrings())
-        ,
+        参加者一覧("PARTICIPANTS", "参加者一覧"),
         /** 狂信者人狼確認メッセージ */
-        狂信者人狼確認メッセージ("PRIVATE_FANATIC", "狂信者人狼確認メッセージ", emptyStrings())
-        ,
+        狂信者人狼確認メッセージ("PRIVATE_FANATIC", "狂信者人狼確認メッセージ"),
         /** 妖狐メッセージ */
-        妖狐メッセージ("PRIVATE_FOX", "妖狐メッセージ", emptyStrings())
-        ,
+        妖狐メッセージ("PRIVATE_FOX", "妖狐メッセージ"),
         /** 共有相互確認メッセージ */
-        共有相互確認メッセージ("PRIVATE_MASON", "共有相互確認メッセージ", emptyStrings())
-        ,
+        共有相互確認メッセージ("PRIVATE_MASON", "共有相互確認メッセージ"),
         /** 白黒霊視結果 */
-        白黒霊視結果("PRIVATE_PSYCHIC", "白黒霊視結果", emptyStrings())
-        ,
+        白黒霊視結果("PRIVATE_PSYCHIC", "白黒霊視結果"),
         /** 白黒占い結果 */
-        白黒占い結果("PRIVATE_SEER", "白黒占い結果", emptyStrings())
-        ,
+        白黒占い結果("PRIVATE_SEER", "白黒占い結果"),
         /** 非公開システムメッセージ */
-        非公開システムメッセージ("PRIVATE_SYSTEM", "非公開システムメッセージ", emptyStrings())
-        ,
+        非公開システムメッセージ("PRIVATE_SYSTEM", "非公開システムメッセージ"),
         /** 襲撃結果 */
-        襲撃結果("PRIVATE_WEREWOLF", "襲撃結果", emptyStrings())
-        ,
+        襲撃結果("PRIVATE_WEREWOLF", "襲撃結果"),
         /** 公開システムメッセージ */
-        公開システムメッセージ("PUBLIC_SYSTEM", "公開システムメッセージ", emptyStrings())
-        ,
+        公開システムメッセージ("PUBLIC_SYSTEM", "公開システムメッセージ"),
         /** 秘話 */
-        秘話("SECRET_SAY", "秘話", emptyStrings())
-        ,
+        秘話("SECRET_SAY", "秘話"),
         /** 見学発言 */
-        見学発言("SPECTATE_SAY", "見学発言", emptyStrings())
-        ,
+        見学発言("SPECTATE_SAY", "見学発言"),
         /** 人狼の囁き */
-        人狼の囁き("WEREWOLF_SAY", "人狼の囁き", emptyStrings())
-        ;
-        private static final Map<String, MessageType> _codeClsMap = new HashMap<String, MessageType>();
-        private static final Map<String, MessageType> _nameClsMap = new HashMap<String, MessageType>();
-        static {
-            for (MessageType value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private MessageType(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        人狼の囁き("WEREWOLF_SAY", "人狼の囁き");
+        private static ZzzoneSlimmer<MessageType> _slimmer = new ZzzoneSlimmer<>(MessageType.class, values());
+        private String _code; private String _alias;
+        private MessageType(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.MessageType; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<MessageType> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof MessageType) { return OptionalThing.of((MessageType)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<MessageType> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<MessageType> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<MessageType> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static MessageType codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof MessageType) { return (MessageType)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static MessageType codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static MessageType nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static MessageType nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<MessageType> listAll() {
-            return new ArrayList<MessageType>(Arrays.asList(values()));
-        }
-
+        public static List<MessageType> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<MessageType> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: MessageType." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<MessageType> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<MessageType> clsList = new ArrayList<MessageType>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<MessageType> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<MessageType> groupOf(String groupName) {
-            return new ArrayList<MessageType>(4);
-        }
-
+        @Deprecated
+        public static List<MessageType> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -1359,124 +1020,77 @@ public interface CDef extends Classification {
      */
     public enum DeadReason implements CDef {
         /** 襲撃 */
-        襲撃("ATTACK", "襲撃", emptyStrings())
-        ,
+        襲撃("ATTACK", "襲撃"),
         /** 呪殺 */
-        呪殺("DIVINED", "呪殺", emptyStrings())
-        ,
+        呪殺("DIVINED", "呪殺"),
         /** 処刑 */
-        処刑("EXECUTE", "処刑", emptyStrings())
-        ,
+        処刑("EXECUTE", "処刑"),
         /** 突然 */
-        突然("SUDDEN", "突然", emptyStrings())
-        ,
+        突然("SUDDEN", "突然"),
         /** 後追 */
-        後追("SUICIDE", "後追", emptyStrings())
-        ;
-        private static final Map<String, DeadReason> _codeClsMap = new HashMap<String, DeadReason>();
-        private static final Map<String, DeadReason> _nameClsMap = new HashMap<String, DeadReason>();
-        static {
-            for (DeadReason value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private DeadReason(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        後追("SUICIDE", "後追");
+        private static ZzzoneSlimmer<DeadReason> _slimmer = new ZzzoneSlimmer<>(DeadReason.class, values());
+        private String _code; private String _alias;
+        private DeadReason(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.DeadReason; }
-
         /**
          * Is the classification in the group? <br>
          * 無惨な死 <br>
          * The group elements:[襲撃, 呪殺]
          * @return The determination, true or false.
          */
-        public boolean isMiserableDeath() {
-            return 襲撃.equals(this) || 呪殺.equals(this);
-        }
-
+        public boolean isMiserableDeath() { return 襲撃.equals(this) || 呪殺.equals(this); }
         /**
          * Is the classification in the group? <br>
          * 霊能判定可能な死因 <br>
          * The group elements:[処刑, 突然]
          * @return The determination, true or false.
          */
-        public boolean isPsychicableDeath() {
-            return 処刑.equals(this) || 突然.equals(this);
-        }
-
+        public boolean isPsychicableDeath() { return 処刑.equals(this) || 突然.equals(this); }
         public boolean inGroup(String groupName) {
-            if ("miserableDeath".equals(groupName)) { return isMiserableDeath(); }
-            if ("psychicableDeath".equals(groupName)) { return isPsychicableDeath(); }
+            if ("miserableDeath".equalsIgnoreCase(groupName)) { return isMiserableDeath(); }
+            if ("psychicableDeath".equalsIgnoreCase(groupName)) { return isPsychicableDeath(); }
             return false;
         }
-
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<DeadReason> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof DeadReason) { return OptionalThing.of((DeadReason)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<DeadReason> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<DeadReason> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<DeadReason> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static DeadReason codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof DeadReason) { return (DeadReason)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static DeadReason codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static DeadReason nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static DeadReason nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<DeadReason> listAll() {
-            return new ArrayList<DeadReason>(Arrays.asList(values()));
-        }
-
+        public static List<DeadReason> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<DeadReason> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
@@ -1484,19 +1098,14 @@ public interface CDef extends Classification {
             if ("psychicableDeath".equalsIgnoreCase(groupName)) { return listOfPsychicableDeath(); }
             throw new ClassificationNotFoundException("Unknown classification group: DeadReason." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<DeadReason> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<DeadReason> clsList = new ArrayList<DeadReason>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<DeadReason> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 無惨な死 <br>
@@ -1504,9 +1113,8 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<DeadReason> listOfMiserableDeath() {
-            return new ArrayList<DeadReason>(Arrays.asList(襲撃, 呪殺));
+            return new ArrayList<>(Arrays.asList(襲撃, 呪殺));
         }
-
         /**
          * Get the list of group classification elements. (returns new copied list) <br>
          * 霊能判定可能な死因 <br>
@@ -1514,20 +1122,20 @@ public interface CDef extends Classification {
          * @return The snapshot list of classification elements in the group. (NotNull)
          */
         public static List<DeadReason> listOfPsychicableDeath() {
-            return new ArrayList<DeadReason>(Arrays.asList(処刑, 突然));
+            return new ArrayList<>(Arrays.asList(処刑, 突然));
         }
-
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
+        @Deprecated
         public static List<DeadReason> groupOf(String groupName) {
-            if ("miserableDeath".equals(groupName)) { return listOfMiserableDeath(); }
-            if ("psychicableDeath".equals(groupName)) { return listOfPsychicableDeath(); }
-            return new ArrayList<DeadReason>(4);
+            if ("miserableDeath".equalsIgnoreCase(groupName)) { return listOfMiserableDeath(); }
+            if ("psychicableDeath".equalsIgnoreCase(groupName)) { return listOfPsychicableDeath(); }
+            return new ArrayList<>();
         }
-
         @Override public String toString() { return code(); }
     }
 
@@ -1536,123 +1144,76 @@ public interface CDef extends Classification {
      */
     public enum AbilityType implements CDef {
         /** 襲撃 */
-        襲撃("ATTACK", "襲撃", emptyStrings())
-        ,
+        襲撃("ATTACK", "襲撃"),
         /** 占い */
-        占い("DIVINE", "占い", emptyStrings())
-        ,
+        占い("DIVINE", "占い"),
         /** 護衛 */
-        護衛("GUARD", "護衛", emptyStrings())
-        ;
-        private static final Map<String, AbilityType> _codeClsMap = new HashMap<String, AbilityType>();
-        private static final Map<String, AbilityType> _nameClsMap = new HashMap<String, AbilityType>();
-        static {
-            for (AbilityType value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private AbilityType(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        護衛("GUARD", "護衛");
+        private static ZzzoneSlimmer<AbilityType> _slimmer = new ZzzoneSlimmer<>(AbilityType.class, values());
+        private String _code; private String _alias;
+        private AbilityType(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.AbilityType; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<AbilityType> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof AbilityType) { return OptionalThing.of((AbilityType)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<AbilityType> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<AbilityType> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<AbilityType> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static AbilityType codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof AbilityType) { return (AbilityType)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static AbilityType codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static AbilityType nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static AbilityType nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<AbilityType> listAll() {
-            return new ArrayList<AbilityType>(Arrays.asList(values()));
-        }
-
+        public static List<AbilityType> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<AbilityType> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: AbilityType." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<AbilityType> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<AbilityType> clsList = new ArrayList<AbilityType>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<AbilityType> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<AbilityType> groupOf(String groupName) {
-            return new ArrayList<AbilityType>(4);
-        }
-
+        @Deprecated
+        public static List<AbilityType> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -1661,135 +1222,84 @@ public interface CDef extends Classification {
      */
     public enum FaceType implements CDef {
         /** 墓下 */
-        墓下("GRAVE", "墓下", emptyStrings())
-        ,
+        墓下("GRAVE", "墓下"),
         /** 恋人 */
-        恋人("LOVER", "恋人", emptyStrings())
-        ,
+        恋人("LOVER", "恋人"),
         /** 共鳴 */
-        共鳴("MASON", "共鳴", emptyStrings())
-        ,
+        共鳴("MASON", "共鳴"),
         /** 独り言 */
-        独り言("MONOLOGUE", "独り言", emptyStrings())
-        ,
+        独り言("MONOLOGUE", "独り言"),
         /** 通常 */
-        通常("NORMAL", "通常", emptyStrings())
-        ,
+        通常("NORMAL", "通常"),
         /** 秘話 */
-        秘話("SECRET", "秘話", emptyStrings())
-        ,
+        秘話("SECRET", "秘話"),
         /** 囁き */
-        囁き("WEREWOLF", "囁き", emptyStrings())
-        ;
-        private static final Map<String, FaceType> _codeClsMap = new HashMap<String, FaceType>();
-        private static final Map<String, FaceType> _nameClsMap = new HashMap<String, FaceType>();
-        static {
-            for (FaceType value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private FaceType(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        囁き("WEREWOLF", "囁き");
+        private static ZzzoneSlimmer<FaceType> _slimmer = new ZzzoneSlimmer<>(FaceType.class, values());
+        private String _code; private String _alias;
+        private FaceType(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.FaceType; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<FaceType> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof FaceType) { return OptionalThing.of((FaceType)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<FaceType> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<FaceType> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<FaceType> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static FaceType codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof FaceType) { return (FaceType)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static FaceType codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static FaceType nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static FaceType nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<FaceType> listAll() {
-            return new ArrayList<FaceType>(Arrays.asList(values()));
-        }
-
+        public static List<FaceType> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<FaceType> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: FaceType." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<FaceType> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<FaceType> clsList = new ArrayList<FaceType>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<FaceType> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<FaceType> groupOf(String groupName) {
-            return new ArrayList<FaceType>(4);
-        }
-
+        @Deprecated
+        public static List<FaceType> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -1798,174 +1308,110 @@ public interface CDef extends Classification {
      */
     public enum VillageSettingItem implements CDef {
         /** キャラクターグループID */
-        キャラクターグループid("character_group_id", "キャラクターグループID", emptyStrings())
-        ,
+        キャラクターグループid("character_group_id", "キャラクターグループID"),
         /** 更新間隔秒 */
-        更新間隔秒("day_change_interval_seconds", "更新間隔秒", emptyStrings())
-        ,
+        更新間隔秒("day_change_interval_seconds", "更新間隔秒"),
         /** ダミーキャラID */
-        ダミーキャラid("dummy_chara_id", "ダミーキャラID", emptyStrings())
-        ,
+        ダミーキャラid("dummy_chara_id", "ダミーキャラID"),
         /** 自動生成村か */
-        自動生成村か("is_auto_generated", "自動生成村か", emptyStrings())
-        ,
+        自動生成村か("is_auto_generated", "自動生成村か"),
         /** コミット可能か */
-        コミット可能か("is_available_commit", "コミット可能か", emptyStrings())
-        ,
+        コミット可能か("is_available_commit", "コミット可能か"),
         /** 役欠けありか */
-        役欠けありか("is_available_dummy_skill", "役欠けありか", emptyStrings())
-        ,
+        役欠けありか("is_available_dummy_skill", "役欠けありか"),
         /** 役職希望可能か */
-        役職希望可能か("is_available_skill_request", "役職希望可能か", emptyStrings())
-        ,
+        役職希望可能か("is_available_skill_request", "役職希望可能か"),
         /** 見学可能か */
-        見学可能か("is_available_spectate", "見学可能か", emptyStrings())
-        ,
+        見学可能か("is_available_spectate", "見学可能か"),
         /** 突然死ありか */
-        突然死ありか("is_available_suddenly_death", "突然死ありか", emptyStrings())
-        ,
+        突然死ありか("is_available_suddenly_death", "突然死ありか"),
         /** 初心者村か */
-        初心者村か("is_for_beginner", "初心者村か", emptyStrings())
-        ,
+        初心者村か("is_for_beginner", "初心者村か"),
         /** 墓下役職公開ありか */
-        墓下役職公開ありか("is_open_skill_in_grave", "墓下役職公開ありか", emptyStrings())
-        ,
+        墓下役職公開ありか("is_open_skill_in_grave", "墓下役職公開ありか"),
         /** 記名投票か */
-        記名投票か("is_open_vote", "記名投票か", emptyStrings())
-        ,
+        記名投票か("is_open_vote", "記名投票か"),
         /** 墓下見学発言を生存者が見られるか */
-        墓下見学発言を生存者が見られるか("is_visible_grave_message", "墓下見学発言を生存者が見られるか", emptyStrings())
-        ,
+        墓下見学発言を生存者が見られるか("is_visible_grave_message", "墓下見学発言を生存者が見られるか"),
         /** 入村パスワード */
-        入村パスワード("join_password", "入村パスワード", emptyStrings())
-        ,
+        入村パスワード("join_password", "入村パスワード"),
         /** 構成 */
-        構成("organize", "構成", emptyStrings())
-        ,
+        構成("organize", "構成"),
         /** 最大人数 */
-        最大人数("person_max", "最大人数", emptyStrings())
-        ,
+        最大人数("person_max", "最大人数"),
         /** 最低人数 */
-        最低人数("person_min", "最低人数", emptyStrings())
-        ,
+        最低人数("person_min", "最低人数"),
         /** 沈黙時間 */
-        沈黙時間("silent_hours", "沈黙時間", emptyStrings())
-        ,
+        沈黙時間("silent_hours", "沈黙時間"),
         /** 開始予定日時 */
-        開始予定日時("start_datetime", "開始予定日時", emptyStrings())
-        ,
+        開始予定日時("start_datetime", "開始予定日時"),
         /** 期間形式 */
-        期間形式("term_type", "期間形式", emptyStrings())
-        ;
-        private static final Map<String, VillageSettingItem> _codeClsMap = new HashMap<String, VillageSettingItem>();
-        private static final Map<String, VillageSettingItem> _nameClsMap = new HashMap<String, VillageSettingItem>();
-        static {
-            for (VillageSettingItem value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private VillageSettingItem(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        期間形式("term_type", "期間形式");
+        private static ZzzoneSlimmer<VillageSettingItem> _slimmer = new ZzzoneSlimmer<>(VillageSettingItem.class, values());
+        private String _code; private String _alias;
+        private VillageSettingItem(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.VillageSettingItem; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<VillageSettingItem> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof VillageSettingItem) { return OptionalThing.of((VillageSettingItem)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<VillageSettingItem> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<VillageSettingItem> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<VillageSettingItem> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static VillageSettingItem codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof VillageSettingItem) { return (VillageSettingItem)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static VillageSettingItem codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static VillageSettingItem nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static VillageSettingItem nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<VillageSettingItem> listAll() {
-            return new ArrayList<VillageSettingItem>(Arrays.asList(values()));
-        }
-
+        public static List<VillageSettingItem> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<VillageSettingItem> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: VillageSettingItem." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<VillageSettingItem> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<VillageSettingItem> clsList = new ArrayList<VillageSettingItem>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<VillageSettingItem> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<VillageSettingItem> groupOf(String groupName) {
-            return new ArrayList<VillageSettingItem>(4);
-        }
-
+        @Deprecated
+        public static List<VillageSettingItem> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -1974,120 +1420,74 @@ public interface CDef extends Classification {
      */
     public enum Noonnight implements CDef {
         /** 夜 */
-        夜("NIGHT", "夜", emptyStrings())
-        ,
+        夜("NIGHT", "夜"),
         /** 昼 */
-        昼("NOON", "昼", emptyStrings())
-        ;
-        private static final Map<String, Noonnight> _codeClsMap = new HashMap<String, Noonnight>();
-        private static final Map<String, Noonnight> _nameClsMap = new HashMap<String, Noonnight>();
-        static {
-            for (Noonnight value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private Noonnight(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        昼("NOON", "昼");
+        private static ZzzoneSlimmer<Noonnight> _slimmer = new ZzzoneSlimmer<>(Noonnight.class, values());
+        private String _code; private String _alias;
+        private Noonnight(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.Noonnight; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Noonnight> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof Noonnight) { return OptionalThing.of((Noonnight)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<Noonnight> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Noonnight> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<Noonnight> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static Noonnight codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof Noonnight) { return (Noonnight)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static Noonnight codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static Noonnight nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static Noonnight nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<Noonnight> listAll() {
-            return new ArrayList<Noonnight>(Arrays.asList(values()));
-        }
-
+        public static List<Noonnight> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<Noonnight> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: Noonnight." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<Noonnight> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<Noonnight> clsList = new ArrayList<Noonnight>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<Noonnight> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<Noonnight> groupOf(String groupName) {
-            return new ArrayList<Noonnight>(4);
-        }
-
+        @Deprecated
+        public static List<Noonnight> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
@@ -2096,353 +1496,302 @@ public interface CDef extends Classification {
      */
     public enum Term implements CDef {
         /** 長期: 長期人狼 */
-        長期("LONG", "長期", emptyStrings())
-        ,
+        長期("LONG", "長期"),
         /** 短期: 短期人狼 */
-        短期("SHORT", "短期", emptyStrings())
-        ;
-        private static final Map<String, Term> _codeClsMap = new HashMap<String, Term>();
-        private static final Map<String, Term> _nameClsMap = new HashMap<String, Term>();
-        static {
-            for (Term value : values()) {
-                _codeClsMap.put(value.code().toLowerCase(), value);
-                for (String sister : value.sisterSet()) { _codeClsMap.put(sister.toLowerCase(), value); }
-                _nameClsMap.put(value.name().toLowerCase(), value);
-            }
-        }
-        private String _code; private String _alias; private Set<String> _sisterSet;
-        private Term(String code, String alias, String[] sisters)
-        { _code = code; _alias = alias; _sisterSet = Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters))); }
+        短期("SHORT", "短期");
+        private static ZzzoneSlimmer<Term> _slimmer = new ZzzoneSlimmer<>(Term.class, values());
+        private String _code; private String _alias;
+        private Term(String code, String alias) { _code = code; _alias = alias; }
         public String code() { return _code; } public String alias() { return _alias; }
-        public Set<String> sisterSet() { return _sisterSet; }
+        public Set<String> sisterSet() { return Collections.emptySet(); }
         public Map<String, Object> subItemMap() { return Collections.emptyMap(); }
         public ClassificationMeta meta() { return CDef.DefMeta.Term; }
-
-        public boolean inGroup(String groupName) {
-            return false;
-        }
-
+        public boolean inGroup(String groupName) { return false; }
         /**
          * Get the classification of the code. (CaseInsensitive)
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns empty)
          * @return The optional classification corresponding to the code. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Term> of(Object code) {
-            if (code == null) { return OptionalThing.ofNullable(null, () -> { throw new ClassificationNotFoundException("null code specified"); }); }
-            if (code instanceof Term) { return OptionalThing.of((Term)code); }
-            if (code instanceof OptionalThing<?>) { return of(((OptionalThing<?>)code).orElse(null)); }
-            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification code: " + code);
-            });
-        }
-
+        public static OptionalThing<Term> of(Object code) { return _slimmer.of(code); }
         /**
          * Find the classification by the name. (CaseInsensitive)
          * @param name The string of name, which is case-insensitive. (NotNull)
          * @return The optional classification corresponding to the name. (NotNull, EmptyAllowed: if not found, returns empty)
          */
-        public static OptionalThing<Term> byName(String name) {
-            if (name == null) { throw new IllegalArgumentException("The argument 'name' should not be null."); }
-            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () ->{
-                throw new ClassificationNotFoundException("Unknown classification name: " + name);
-            });
-        }
-
+        public static OptionalThing<Term> byName(String name) { return _slimmer.byName(name); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span> <br>
-         * Get the classification by the code. (CaseInsensitive)
+         * <span style="color: #AD4747; font-size: 120%">Old style so use of(code).</span>
          * @param code The value of code, which is case-insensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the code. (NullAllowed: if not found, returns null)
          */
-        public static Term codeOf(Object code) {
-            if (code == null) { return null; }
-            if (code instanceof Term) { return (Term)code; }
-            return _codeClsMap.get(code.toString().toLowerCase());
-        }
-
+        public static Term codeOf(Object code) { return _slimmer.codeOf(code); }
         /**
-         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span> <br>
-         * Get the classification by the name (also called 'value' in ENUM world).
+         * <span style="color: #AD4747; font-size: 120%">Old style so use byName(name).</span>
          * @param name The string of name, which is case-sensitive. (NullAllowed: if null, returns null)
          * @return The instance of the corresponding classification to the name. (NullAllowed: if not found, returns null)
+         * @deprecated use byName(name) instead.
          */
-        public static Term nameOf(String name) {
-            if (name == null) { return null; }
-            try { return valueOf(name); } catch (RuntimeException ignored) { return null; }
-        }
-
+        @Deprecated
+        public static Term nameOf(String name) { return _slimmer.nameOf(name, nm -> valueOf(nm)); }
         /**
          * Get the list of all classification elements. (returns new copied list)
          * @return The snapshot list of all classification elements. (NotNull)
          */
-        public static List<Term> listAll() {
-            return new ArrayList<Term>(Arrays.asList(values()));
-        }
-
+        public static List<Term> listAll() { return _slimmer.listAll(values()); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * Get the list of classification elements in the specified group. (returns new copied list)
          * @param groupName The string of group name, which is case-insensitive. (NotNull)
-         * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if not found, throws exception)
+         * @return The snapshot list of classification elements in the group. (NotNull)
+         * @throws ClassificationNotFoundException When the group is not found.
          */
         public static List<Term> listByGroup(String groupName) {
             if (groupName == null) { throw new IllegalArgumentException("The argument 'groupName' should not be null."); }
             throw new ClassificationNotFoundException("Unknown classification group: Term." + groupName);
         }
-
         /**
-         * Get the list of classification elements corresponding to the specified codes. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use e.g. Stream API with of().</span>
          * @param codeList The list of plain code, which is case-insensitive. (NotNull)
          * @return The snapshot list of classification elements in the code list. (NotNull, EmptyAllowed: when empty specified)
+         * @deprecated use e.g. Stream API with of() instead.
          */
-        public static List<Term> listOf(Collection<String> codeList) {
-            if (codeList == null) { throw new IllegalArgumentException("The argument 'codeList' should not be null."); }
-            List<Term> clsList = new ArrayList<Term>(codeList.size());
-            for (String code : codeList) { clsList.add(of(code).get()); }
-            return clsList;
-        }
-
+        @Deprecated
+        public static List<Term> listOf(Collection<String> codeList) { return _slimmer.listOf(codeList); }
         /**
-         * Get the list of classification elements in the specified group. (returns new copied list) <br>
+         * <span style="color: #AD4747; font-size: 120%">Old style so use listByGroup(groupName).</span>
          * @param groupName The string of group name, which is case-sensitive. (NullAllowed: if null, returns empty list)
          * @return The snapshot list of classification elements in the group. (NotNull, EmptyAllowed: if the group is not found)
+         * @deprecated use listByGroup(groupName) instead.
          */
-        public static List<Term> groupOf(String groupName) {
-            return new ArrayList<Term>(4);
-        }
-
+        @Deprecated
+        public static List<Term> groupOf(String groupName) { return new ArrayList<>(); }
         @Override public String toString() { return code(); }
     }
 
     public enum DefMeta implements ClassificationMeta {
         /** 権限 */
-        Authority
-        ,
+        Authority(cd -> CDef.Authority.of(cd), nm -> CDef.Authority.byName(nm)
+        , () -> CDef.Authority.listAll(), gp -> CDef.Authority.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 陣営 */
-        Camp
-        ,
+        Camp(cd -> CDef.Camp.of(cd), nm -> CDef.Camp.byName(nm)
+        , () -> CDef.Camp.listAll(), gp -> CDef.Camp.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 村ステータス */
-        VillageStatus
-        ,
+        VillageStatus(cd -> CDef.VillageStatus.of(cd), nm -> CDef.VillageStatus.byName(nm)
+        , () -> CDef.VillageStatus.listAll(), gp -> CDef.VillageStatus.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 役職 */
-        Skill
-        ,
+        Skill(cd -> CDef.Skill.of(cd), nm -> CDef.Skill.byName(nm)
+        , () -> CDef.Skill.listAll(), gp -> CDef.Skill.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** メッセージ種別 */
-        MessageType
-        ,
+        MessageType(cd -> CDef.MessageType.of(cd), nm -> CDef.MessageType.byName(nm)
+        , () -> CDef.MessageType.listAll(), gp -> CDef.MessageType.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 死亡理由 */
-        DeadReason
-        ,
+        DeadReason(cd -> CDef.DeadReason.of(cd), nm -> CDef.DeadReason.byName(nm)
+        , () -> CDef.DeadReason.listAll(), gp -> CDef.DeadReason.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 能力種別 */
-        AbilityType
-        ,
+        AbilityType(cd -> CDef.AbilityType.of(cd), nm -> CDef.AbilityType.byName(nm)
+        , () -> CDef.AbilityType.listAll(), gp -> CDef.AbilityType.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 表情種別 */
-        FaceType
-        ,
+        FaceType(cd -> CDef.FaceType.of(cd), nm -> CDef.FaceType.byName(nm)
+        , () -> CDef.FaceType.listAll(), gp -> CDef.FaceType.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 村設定項目 */
-        VillageSettingItem
-        ,
+        VillageSettingItem(cd -> CDef.VillageSettingItem.of(cd), nm -> CDef.VillageSettingItem.byName(nm)
+        , () -> CDef.VillageSettingItem.listAll(), gp -> CDef.VillageSettingItem.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 昼夜 */
-        Noonnight
-        ,
+        Noonnight(cd -> CDef.Noonnight.of(cd), nm -> CDef.Noonnight.byName(nm)
+        , () -> CDef.Noonnight.listAll(), gp -> CDef.Noonnight.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING),
+
         /** 期間 */
-        Term
-        ;
-        public String classificationName() {
-            return name(); // same as definition name
+        Term(cd -> CDef.Term.of(cd), nm -> CDef.Term.byName(nm)
+        , () -> CDef.Term.listAll(), gp -> CDef.Term.listByGroup(gp)
+        , ClassificationCodeType.String, ClassificationUndefinedHandlingType.LOGGING);
+
+        private static final Map<String, DefMeta> _nameMetaMap = new HashMap<>();
+        static {
+            for (DefMeta value : values()) {
+                _nameMetaMap.put(value.name().toLowerCase(), value);
+            }
+        }
+        private final Function<Object, OptionalThing<? extends Classification>> _ofCall;
+        private final Function<String, OptionalThing<? extends Classification>> _byNameCall;
+        private final Supplier<List<? extends Classification>> _listAllCall;
+        private final Function<String, List<? extends Classification>> _listByGroupCall;
+        private final ClassificationCodeType _codeType;
+        private final ClassificationUndefinedHandlingType _undefinedHandlingType;
+        private DefMeta(Function<Object, OptionalThing<? extends Classification>> ofCall
+                      , Function<String, OptionalThing<? extends Classification>> byNameCall
+                      , Supplier<List<? extends Classification>> listAllCall
+                      , Function<String, List<? extends Classification>> listByGroupCall
+                      , ClassificationCodeType codeType
+                      , ClassificationUndefinedHandlingType undefinedHandlingType
+                ) {
+            _ofCall = ofCall;
+            _byNameCall = byNameCall;
+            _listAllCall = listAllCall;
+            _listByGroupCall = listByGroupCall;
+            _codeType = codeType;
+            _undefinedHandlingType = undefinedHandlingType;
+        }
+        public String classificationName() { return name(); } // same as definition name
+
+        public OptionalThing<? extends Classification> of(Object code) { return _ofCall.apply(code); }
+        public OptionalThing<? extends Classification> byName(String name) { return _byNameCall.apply(name); }
+
+        public Classification codeOf(Object code) // null allowed, old style
+        { return of(code).orElse(null); }
+        public Classification nameOf(String name) { // null allowed, old style
+            if (name == null) { return null; } // for compatible
+            return byName(name).orElse(null); // case insensitive
         }
 
-        public OptionalThing<? extends Classification> of(Object code) {
-            if (Authority.name().equals(name())) { return CDef.Authority.of(code); }
-            if (Camp.name().equals(name())) { return CDef.Camp.of(code); }
-            if (VillageStatus.name().equals(name())) { return CDef.VillageStatus.of(code); }
-            if (Skill.name().equals(name())) { return CDef.Skill.of(code); }
-            if (MessageType.name().equals(name())) { return CDef.MessageType.of(code); }
-            if (DeadReason.name().equals(name())) { return CDef.DeadReason.of(code); }
-            if (AbilityType.name().equals(name())) { return CDef.AbilityType.of(code); }
-            if (FaceType.name().equals(name())) { return CDef.FaceType.of(code); }
-            if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.of(code); }
-            if (Noonnight.name().equals(name())) { return CDef.Noonnight.of(code); }
-            if (Term.name().equals(name())) { return CDef.Term.of(code); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public OptionalThing<? extends Classification> byName(String name) {
-            if (Authority.name().equals(name())) { return CDef.Authority.byName(name); }
-            if (Camp.name().equals(name())) { return CDef.Camp.byName(name); }
-            if (VillageStatus.name().equals(name())) { return CDef.VillageStatus.byName(name); }
-            if (Skill.name().equals(name())) { return CDef.Skill.byName(name); }
-            if (MessageType.name().equals(name())) { return CDef.MessageType.byName(name); }
-            if (DeadReason.name().equals(name())) { return CDef.DeadReason.byName(name); }
-            if (AbilityType.name().equals(name())) { return CDef.AbilityType.byName(name); }
-            if (FaceType.name().equals(name())) { return CDef.FaceType.byName(name); }
-            if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.byName(name); }
-            if (Noonnight.name().equals(name())) { return CDef.Noonnight.byName(name); }
-            if (Term.name().equals(name())) { return CDef.Term.byName(name); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public Classification codeOf(Object code) { // null if not found, old style so use of(code)
-            if (Authority.name().equals(name())) { return CDef.Authority.codeOf(code); }
-            if (Camp.name().equals(name())) { return CDef.Camp.codeOf(code); }
-            if (VillageStatus.name().equals(name())) { return CDef.VillageStatus.codeOf(code); }
-            if (Skill.name().equals(name())) { return CDef.Skill.codeOf(code); }
-            if (MessageType.name().equals(name())) { return CDef.MessageType.codeOf(code); }
-            if (DeadReason.name().equals(name())) { return CDef.DeadReason.codeOf(code); }
-            if (AbilityType.name().equals(name())) { return CDef.AbilityType.codeOf(code); }
-            if (FaceType.name().equals(name())) { return CDef.FaceType.codeOf(code); }
-            if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.codeOf(code); }
-            if (Noonnight.name().equals(name())) { return CDef.Noonnight.codeOf(code); }
-            if (Term.name().equals(name())) { return CDef.Term.codeOf(code); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public Classification nameOf(String name) { // null if not found, old style so use byName(name)
-            if (Authority.name().equals(name())) { return CDef.Authority.valueOf(name); }
-            if (Camp.name().equals(name())) { return CDef.Camp.valueOf(name); }
-            if (VillageStatus.name().equals(name())) { return CDef.VillageStatus.valueOf(name); }
-            if (Skill.name().equals(name())) { return CDef.Skill.valueOf(name); }
-            if (MessageType.name().equals(name())) { return CDef.MessageType.valueOf(name); }
-            if (DeadReason.name().equals(name())) { return CDef.DeadReason.valueOf(name); }
-            if (AbilityType.name().equals(name())) { return CDef.AbilityType.valueOf(name); }
-            if (FaceType.name().equals(name())) { return CDef.FaceType.valueOf(name); }
-            if (VillageSettingItem.name().equals(name())) { return CDef.VillageSettingItem.valueOf(name); }
-            if (Noonnight.name().equals(name())) { return CDef.Noonnight.valueOf(name); }
-            if (Term.name().equals(name())) { return CDef.Term.valueOf(name); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public List<Classification> listAll() {
-            if (Authority.name().equals(name())) { return toClsList(CDef.Authority.listAll()); }
-            if (Camp.name().equals(name())) { return toClsList(CDef.Camp.listAll()); }
-            if (VillageStatus.name().equals(name())) { return toClsList(CDef.VillageStatus.listAll()); }
-            if (Skill.name().equals(name())) { return toClsList(CDef.Skill.listAll()); }
-            if (MessageType.name().equals(name())) { return toClsList(CDef.MessageType.listAll()); }
-            if (DeadReason.name().equals(name())) { return toClsList(CDef.DeadReason.listAll()); }
-            if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.listAll()); }
-            if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.listAll()); }
-            if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.listAll()); }
-            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.listAll()); }
-            if (Term.name().equals(name())) { return toClsList(CDef.Term.listAll()); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public List<Classification> listByGroup(String groupName) { // exception if not found
-            if (Authority.name().equals(name())) { return toClsList(CDef.Authority.listByGroup(groupName)); }
-            if (Camp.name().equals(name())) { return toClsList(CDef.Camp.listByGroup(groupName)); }
-            if (VillageStatus.name().equals(name())) { return toClsList(CDef.VillageStatus.listByGroup(groupName)); }
-            if (Skill.name().equals(name())) { return toClsList(CDef.Skill.listByGroup(groupName)); }
-            if (MessageType.name().equals(name())) { return toClsList(CDef.MessageType.listByGroup(groupName)); }
-            if (DeadReason.name().equals(name())) { return toClsList(CDef.DeadReason.listByGroup(groupName)); }
-            if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.listByGroup(groupName)); }
-            if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.listByGroup(groupName)); }
-            if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.listByGroup(groupName)); }
-            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.listByGroup(groupName)); }
-            if (Term.name().equals(name())) { return toClsList(CDef.Term.listByGroup(groupName)); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public List<Classification> listOf(Collection<String> codeList) {
-            if (Authority.name().equals(name())) { return toClsList(CDef.Authority.listOf(codeList)); }
-            if (Camp.name().equals(name())) { return toClsList(CDef.Camp.listOf(codeList)); }
-            if (VillageStatus.name().equals(name())) { return toClsList(CDef.VillageStatus.listOf(codeList)); }
-            if (Skill.name().equals(name())) { return toClsList(CDef.Skill.listOf(codeList)); }
-            if (MessageType.name().equals(name())) { return toClsList(CDef.MessageType.listOf(codeList)); }
-            if (DeadReason.name().equals(name())) { return toClsList(CDef.DeadReason.listOf(codeList)); }
-            if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.listOf(codeList)); }
-            if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.listOf(codeList)); }
-            if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.listOf(codeList)); }
-            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.listOf(codeList)); }
-            if (Term.name().equals(name())) { return toClsList(CDef.Term.listOf(codeList)); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
-
-        public List<Classification> groupOf(String groupName) { // old style
-            if (Authority.name().equals(name())) { return toClsList(CDef.Authority.groupOf(groupName)); }
-            if (Camp.name().equals(name())) { return toClsList(CDef.Camp.groupOf(groupName)); }
-            if (VillageStatus.name().equals(name())) { return toClsList(CDef.VillageStatus.groupOf(groupName)); }
-            if (Skill.name().equals(name())) { return toClsList(CDef.Skill.groupOf(groupName)); }
-            if (MessageType.name().equals(name())) { return toClsList(CDef.MessageType.groupOf(groupName)); }
-            if (DeadReason.name().equals(name())) { return toClsList(CDef.DeadReason.groupOf(groupName)); }
-            if (AbilityType.name().equals(name())) { return toClsList(CDef.AbilityType.groupOf(groupName)); }
-            if (FaceType.name().equals(name())) { return toClsList(CDef.FaceType.groupOf(groupName)); }
-            if (VillageSettingItem.name().equals(name())) { return toClsList(CDef.VillageSettingItem.groupOf(groupName)); }
-            if (Noonnight.name().equals(name())) { return toClsList(CDef.Noonnight.groupOf(groupName)); }
-            if (Term.name().equals(name())) { return toClsList(CDef.Term.groupOf(groupName)); }
-            throw new IllegalStateException("Unknown definition: " + this); // basically unreachable
-        }
+        public List<Classification> listAll()
+        { return toClsList(_listAllCall.get()); }
+        public List<Classification> listByGroup(String groupName) // exception if not found
+        { return toClsList(_listByGroupCall.apply(groupName)); }
 
         @SuppressWarnings("unchecked")
-        private List<Classification> toClsList(List<?> clsList) {
-            return (List<Classification>)clsList;
+        private List<Classification> toClsList(List<?> clsList) { return (List<Classification>)clsList; }
+
+        public List<Classification> listOf(Collection<String> codeList) { // copied from slimmer, old style
+            if (codeList == null) {
+                throw new IllegalArgumentException("The argument 'codeList' should not be null.");
+            }
+            List<Classification> clsList = new ArrayList<>(codeList.size());
+            for (String code : codeList) {
+                clsList.add(of(code).get());
+            }
+            return clsList;
+        }
+        public List<Classification> groupOf(String groupName) { // empty if not found, old style
+            try {
+                return listByGroup(groupName); // case insensitive
+            } catch (IllegalArgumentException | ClassificationNotFoundException e) {
+                return new ArrayList<>(); // null or not found
+            }
         }
 
-        public ClassificationCodeType codeType() {
-            if (Authority.name().equals(name())) { return ClassificationCodeType.String; }
-            if (Camp.name().equals(name())) { return ClassificationCodeType.String; }
-            if (VillageStatus.name().equals(name())) { return ClassificationCodeType.String; }
-            if (Skill.name().equals(name())) { return ClassificationCodeType.String; }
-            if (MessageType.name().equals(name())) { return ClassificationCodeType.String; }
-            if (DeadReason.name().equals(name())) { return ClassificationCodeType.String; }
-            if (AbilityType.name().equals(name())) { return ClassificationCodeType.String; }
-            if (FaceType.name().equals(name())) { return ClassificationCodeType.String; }
-            if (VillageSettingItem.name().equals(name())) { return ClassificationCodeType.String; }
-            if (Noonnight.name().equals(name())) { return ClassificationCodeType.String; }
-            if (Term.name().equals(name())) { return ClassificationCodeType.String; }
-            return ClassificationCodeType.String; // as default
-        }
-
-        public ClassificationUndefinedHandlingType undefinedHandlingType() {
-            if (Authority.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (Camp.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (VillageStatus.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (Skill.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (MessageType.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (DeadReason.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (AbilityType.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (FaceType.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (VillageSettingItem.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (Noonnight.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            if (Term.name().equals(name())) { return ClassificationUndefinedHandlingType.LOGGING; }
-            return ClassificationUndefinedHandlingType.LOGGING; // as default
-        }
+        public ClassificationCodeType codeType() { return _codeType; }
+        public ClassificationUndefinedHandlingType undefinedHandlingType() { return _undefinedHandlingType; }
 
         public static OptionalThing<CDef.DefMeta> find(String classificationName) { // instead of valueOf()
             if (classificationName == null) { throw new IllegalArgumentException("The argument 'classificationName' should not be null."); }
-            if (Authority.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Authority); }
-            if (Camp.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Camp); }
-            if (VillageStatus.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.VillageStatus); }
-            if (Skill.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Skill); }
-            if (MessageType.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.MessageType); }
-            if (DeadReason.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.DeadReason); }
-            if (AbilityType.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.AbilityType); }
-            if (FaceType.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.FaceType); }
-            if (VillageSettingItem.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.VillageSettingItem); }
-            if (Noonnight.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Noonnight); }
-            if (Term.name().equalsIgnoreCase(classificationName)) { return OptionalThing.of(CDef.DefMeta.Term); }
-            return OptionalThing.ofNullable(null, () -> {
+            return OptionalThing.ofNullable(_nameMetaMap.get(classificationName.toLowerCase()), () -> {
                 throw new ClassificationNotFoundException("Unknown classification: " + classificationName);
             });
         }
-
         public static CDef.DefMeta meta(String classificationName) { // old style so use find(name)
-            if (classificationName == null) { throw new IllegalArgumentException("The argument 'classificationName' should not be null."); }
-            if (Authority.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Authority; }
-            if (Camp.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Camp; }
-            if (VillageStatus.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.VillageStatus; }
-            if (Skill.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Skill; }
-            if (MessageType.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.MessageType; }
-            if (DeadReason.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.DeadReason; }
-            if (AbilityType.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.AbilityType; }
-            if (FaceType.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.FaceType; }
-            if (VillageSettingItem.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.VillageSettingItem; }
-            if (Noonnight.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Noonnight; }
-            if (Term.name().equalsIgnoreCase(classificationName)) { return CDef.DefMeta.Term; }
-            throw new IllegalStateException("Unknown classification: " + classificationName);
+            return find(classificationName).orElseTranslatingThrow(cause -> {
+                return new IllegalStateException("Unknown classification: " + classificationName);
+            });
+        }
+    }
+
+    public static class ZzzoneSlimmer<CLS extends CDef> {
+
+        public static Set<String> toSisterSet(String[] sisters) { // used by initializer so static
+            return Collections.unmodifiableSet(new LinkedHashSet<String>(Arrays.asList(sisters)));
         }
 
-        @SuppressWarnings("unused")
-        private String[] xinternalEmptyString() {
-            return emptyStrings(); // to suppress 'unused' warning of import statement
+        private final Class<CLS> _clsType;
+        private final Map<String, CLS> _codeClsMap = new HashMap<>();
+        private final Map<String, CLS> _nameClsMap = new HashMap<>();
+
+        public ZzzoneSlimmer(Class<CLS> clsType, CLS[] values) {
+            _clsType = clsType;
+            initMap(values);
+        }
+
+        private void initMap(CLS[] values) {
+            for (CLS value : values) {
+                _codeClsMap.put(value.code().toLowerCase(), value);
+                for (String sister : value.sisterSet()) {
+                    _codeClsMap.put(sister.toLowerCase(), value);
+                }
+                _nameClsMap.put(value.name().toLowerCase(), value);
+            }
+        }
+
+        public OptionalThing<CLS> of(Object code) {
+            if (code == null) {
+                return OptionalThing.ofNullable(null, () -> {
+                    throw new ClassificationNotFoundException("null code specified");
+                });
+            }
+            if (_clsType.isAssignableFrom(code.getClass())) {
+                @SuppressWarnings("unchecked")
+                CLS cls = (CLS) code;
+                return OptionalThing.of(cls);
+            }
+            if (code instanceof OptionalThing<?>) {
+                return of(((OptionalThing<?>) code).orElse(null));
+            }
+            return OptionalThing.ofNullable(_codeClsMap.get(code.toString().toLowerCase()), () -> {
+                throw new ClassificationNotFoundException("Unknown classification code: " + code);
+            });
+        }
+
+        public OptionalThing<CLS> byName(String name) {
+            if (name == null) {
+                throw new IllegalArgumentException("The argument 'name' should not be null.");
+            }
+            return OptionalThing.ofNullable(_nameClsMap.get(name.toLowerCase()), () -> {
+                throw new ClassificationNotFoundException("Unknown classification name: " + name);
+            });
+        }
+
+        public CLS codeOf(Object code) {
+            if (code == null) {
+                return null;
+            }
+            if (_clsType.isAssignableFrom(code.getClass())) {
+                @SuppressWarnings("unchecked")
+                CLS cls = (CLS) code;
+                return cls;
+            }
+            return _codeClsMap.get(code.toString().toLowerCase());
+        }
+
+        public CLS nameOf(String name, java.util.function.Function<String, CLS> valueOfCall) {
+            if (name == null) {
+                return null;
+            }
+            try {
+                return valueOfCall.apply(name);
+            } catch (RuntimeException ignored) { // not found
+                return null;
+            }
+        }
+
+        public List<CLS> listAll(CLS[] clss) {
+            return new ArrayList<>(Arrays.asList(clss));
+        }
+
+        public List<CLS> listOf(Collection<String> codeList) {
+            if (codeList == null) {
+                throw new IllegalArgumentException("The argument 'codeList' should not be null.");
+            }
+            List<CLS> clsList = new ArrayList<>(codeList.size());
+            for (String code : codeList) {
+                clsList.add(of(code).get());
+            }
+            return clsList;
         }
     }
 }

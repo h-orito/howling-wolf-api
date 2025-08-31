@@ -15,42 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of COMING_OUT as TABLE. <br>
  * カミングアウト
- * <pre>
- * [primary-key]
- *     VILLAGE_PLAYER_ID, SKILL_CODE
- *
- * [column]
- *     VILLAGE_PLAYER_ID, SKILL_CODE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     SKILL, VILLAGE_PLAYER
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     skill, villagePlayer
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villagePlayerId = entity.getVillagePlayerId();
- * String skillCode = entity.getSkillCode();
- * entity.setVillagePlayerId(villagePlayerId);
- * entity.setSkillCode(skillCode);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsComingOut extends AbstractEntity implements DomainEntity {
@@ -104,7 +68,7 @@ public abstract class BsComingOut extends AbstractEntity implements DomainEntity
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Skill getSkillCodeAsSkill() {
-        return CDef.Skill.codeOf(getSkillCode());
+        return CDef.Skill.of(getSkillCode()).orElse(null);
     }
 
     /**

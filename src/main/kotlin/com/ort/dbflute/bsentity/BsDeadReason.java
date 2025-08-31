@@ -13,42 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of DEAD_REASON as TABLE. <br>
  * 死亡理由
- * <pre>
- * [primary-key]
- *     DEAD_REASON_CODE
- *
- * [column]
- *     DEAD_REASON_CODE, DEAD_REASON_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     VILLAGE_PLAYER
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     villagePlayerList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String deadReasonCode = entity.getDeadReasonCode();
- * String deadReasonName = entity.getDeadReasonName();
- * entity.setDeadReasonCode(deadReasonCode);
- * entity.setDeadReasonName(deadReasonName);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsDeadReason extends AbstractEntity implements DomainEntity {
@@ -101,7 +65,7 @@ public abstract class BsDeadReason extends AbstractEntity implements DomainEntit
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.DeadReason getDeadReasonCodeAsDeadReason() {
-        return CDef.DeadReason.codeOf(getDeadReasonCode());
+        return CDef.DeadReason.of(getDeadReasonCode()).orElse(null);
     }
 
     /**

@@ -12,40 +12,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of APP_VERSION as TABLE. <br>
  * バージョン
- * <pre>
- * [primary-key]
- *     CLIENT_VERSION
- *
- * [column]
- *     CLIENT_VERSION
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer clientVersion = entity.getClientVersion();
- * entity.setClientVersion(clientVersion);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsAppVersion extends AbstractEntity implements DomainEntity {

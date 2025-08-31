@@ -16,58 +16,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of VILLAGE as TABLE. <br>
  * 村
- * <pre>
- * [primary-key]
- *     VILLAGE_ID
- *
- * [column]
- *     VILLAGE_ID, VILLAGE_DISPLAY_NAME, CREATE_PLAYER_ID, VILLAGE_STATUS_CODE, EPILOGUE_DAY, WIN_CAMP_CODE, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     VILLAGE_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     PLAYER, VILLAGE_STATUS, CAMP
- *
- * [referrer table]
- *     MESSAGE_RESTRICTION, VILLAGE_DAY, VILLAGE_PLAYER, VILLAGE_SETTING
- *
- * [foreign property]
- *     player, villageStatus, camp
- *
- * [referrer property]
- *     messageRestrictionList, villageDayList, villagePlayerList, villageSettingList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer villageId = entity.getVillageId();
- * String villageDisplayName = entity.getVillageDisplayName();
- * Integer createPlayerId = entity.getCreatePlayerId();
- * String villageStatusCode = entity.getVillageStatusCode();
- * Integer epilogueDay = entity.getEpilogueDay();
- * String winCampCode = entity.getWinCampCode();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setVillageId(villageId);
- * entity.setVillageDisplayName(villageDisplayName);
- * entity.setCreatePlayerId(createPlayerId);
- * entity.setVillageStatusCode(villageStatusCode);
- * entity.setEpilogueDay(epilogueDay);
- * entity.setWinCampCode(winCampCode);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsVillage extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
@@ -144,7 +92,7 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.VillageStatus getVillageStatusCodeAsVillageStatus() {
-        return CDef.VillageStatus.codeOf(getVillageStatusCode());
+        return CDef.VillageStatus.of(getVillageStatusCode()).orElse(null);
     }
 
     /**
@@ -165,7 +113,7 @@ public abstract class BsVillage extends AbstractEntity implements DomainEntity, 
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.Camp getWinCampCodeAsCamp() {
-        return CDef.Camp.codeOf(getWinCampCode());
+        return CDef.Camp.of(getWinCampCode()).orElse(null);
     }
 
     /**

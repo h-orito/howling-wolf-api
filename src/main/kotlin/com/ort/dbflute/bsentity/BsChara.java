@@ -15,62 +15,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of CHARA as TABLE. <br>
  * キャラクター
- * <pre>
- * [primary-key]
- *     CHARA_ID
- *
- * [column]
- *     CHARA_ID, CHARA_NAME, CHARA_SHORT_NAME, CHARA_GROUP_ID, DEFAULT_JOIN_MESSAGE, DEFAULT_FIRSTDAY_MESSAGE, DISPLAY_WIDTH, DISPLAY_HEIGHT, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     CHARA_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     CHARA_GROUP
- *
- * [referrer table]
- *     CHARA_IMAGE, VILLAGE_PLAYER
- *
- * [foreign property]
- *     charaGroup
- *
- * [referrer property]
- *     charaImageList, villagePlayerList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * Integer charaId = entity.getCharaId();
- * String charaName = entity.getCharaName();
- * String charaShortName = entity.getCharaShortName();
- * Integer charaGroupId = entity.getCharaGroupId();
- * String defaultJoinMessage = entity.getDefaultJoinMessage();
- * String defaultFirstdayMessage = entity.getDefaultFirstdayMessage();
- * Integer displayWidth = entity.getDisplayWidth();
- * Integer displayHeight = entity.getDisplayHeight();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setCharaId(charaId);
- * entity.setCharaName(charaName);
- * entity.setCharaShortName(charaShortName);
- * entity.setCharaGroupId(charaGroupId);
- * entity.setDefaultJoinMessage(defaultJoinMessage);
- * entity.setDefaultFirstdayMessage(defaultFirstdayMessage);
- * entity.setDisplayWidth(displayWidth);
- * entity.setDisplayHeight(displayHeight);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsChara extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {

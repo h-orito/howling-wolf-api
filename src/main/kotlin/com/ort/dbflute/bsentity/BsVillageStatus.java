@@ -13,42 +13,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of VILLAGE_STATUS as TABLE. <br>
  * 村ステータス
- * <pre>
- * [primary-key]
- *     VILLAGE_STATUS_CODE
- *
- * [column]
- *     VILLAGE_STATUS_CODE, VILLAGE_STATUS_NAME
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     
- *
- * [referrer table]
- *     VILLAGE
- *
- * [foreign property]
- *     
- *
- * [referrer property]
- *     villageList
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String villageStatusCode = entity.getVillageStatusCode();
- * String villageStatusName = entity.getVillageStatusName();
- * entity.setVillageStatusCode(villageStatusCode);
- * entity.setVillageStatusName(villageStatusName);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsVillageStatus extends AbstractEntity implements DomainEntity {
@@ -101,7 +65,7 @@ public abstract class BsVillageStatus extends AbstractEntity implements DomainEn
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.VillageStatus getVillageStatusCodeAsVillageStatus() {
-        return CDef.VillageStatus.codeOf(getVillageStatusCode());
+        return CDef.VillageStatus.of(getVillageStatusCode()).orElse(null);
     }
 
     /**

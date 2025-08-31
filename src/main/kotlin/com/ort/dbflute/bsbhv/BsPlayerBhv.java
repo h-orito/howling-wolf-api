@@ -22,35 +22,7 @@ import com.ort.dbflute.bsentity.dbmeta.*;
 import com.ort.dbflute.cbean.*;
 
 /**
- * The behavior of PLAYER as TABLE. <br>
- * <pre>
- * [primary key]
- *     PLAYER_ID
- *
- * [column]
- *     PLAYER_ID, UID, NICKNAME, AUTHORITY_CODE, IS_RESTRICTED_PARTICIPATION, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     PLAYER_ID
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     AUTHORITY, PLAYER_DETAIL(AsOne), TWITTER_USER(AsOne)
- *
- * [referrer table]
- *     BLACKLIST_PLAYER, PLAYER_INTRODUCE, VILLAGE, VILLAGE_PLAYER, PLAYER_DETAIL, TWITTER_USER
- *
- * [foreign property]
- *     authority, playerDetailAsOne, twitterUserAsOne
- *
- * [referrer property]
- *     blacklistPlayerByFromPlayerIdList, blacklistPlayerByToPlayerIdList, playerIntroduceByFromPlayerIdList, playerIntroduceByToPlayerIdList, villageList, villagePlayerList
- * </pre>
+ * The behavior of PLAYER as TABLE.
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, PlayerCB> {
@@ -1030,7 +1002,7 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     /**
      * Delete the several entities by query. (NonExclusiveControl)
      * <pre>
-     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">queryDelete</span>(player, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">playerBhv</span>.<span style="color: #CC4747">queryDelete</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
@@ -1279,19 +1251,22 @@ public abstract class BsPlayerBhv extends AbstractBehaviorWritable<Player, Playe
     //                                                                            Accessor
     //                                                                            ========
     @Override
-    @javax.annotation.Resource(name="behaviorCommandInvoker")
+    @org.springframework.beans.factory.annotation.Autowired
+    @org.springframework.beans.factory.annotation.Qualifier("behaviorCommandInvoker")
     public void setBehaviorCommandInvoker(BehaviorCommandInvoker behaviorCommandInvoker) {
         super.setBehaviorCommandInvoker(behaviorCommandInvoker);
     }
 
     @Override
-    @javax.annotation.Resource(name="behaviorSelector")
+    @org.springframework.beans.factory.annotation.Autowired
+    @org.springframework.beans.factory.annotation.Qualifier("behaviorSelector")
     public void setBehaviorSelector(BehaviorSelector behaviorSelector) {
         super.setBehaviorSelector(behaviorSelector);
     }
 
     @Override
-    @javax.annotation.Resource(name="commonColumnAutoSetupper")
+    @org.springframework.beans.factory.annotation.Autowired
+    @org.springframework.beans.factory.annotation.Qualifier("commonColumnAutoSetupper")
     public void setCommonColumnAutoSetupper(CommonColumnAutoSetupper commonColumnAutoSetupper) {
         super.setCommonColumnAutoSetupper(commonColumnAutoSetupper);
     }

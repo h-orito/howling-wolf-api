@@ -16,54 +16,6 @@ import com.ort.dbflute.exentity.*;
 /**
  * The entity of ABILITY as TABLE. <br>
  * 能力行使
- * <pre>
- * [primary-key]
- *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID
- *
- * [column]
- *     ABILITY_TYPE_CODE, VILLAGE_DAY_ID, VILLAGE_PLAYER_ID, TARGET_VILLAGE_PLAYER_ID, REGISTER_DATETIME, REGISTER_TRACE, UPDATE_DATETIME, UPDATE_TRACE
- *
- * [sequence]
- *     
- *
- * [identity]
- *     
- *
- * [version-no]
- *     
- *
- * [foreign table]
- *     ABILITY_TYPE, VILLAGE_PLAYER, VILLAGE_DAY
- *
- * [referrer table]
- *     
- *
- * [foreign property]
- *     abilityType, villagePlayerByTargetVillagePlayerId, villageDay, villagePlayerByVillagePlayerId
- *
- * [referrer property]
- *     
- *
- * [get/set template]
- * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
- * String abilityTypeCode = entity.getAbilityTypeCode();
- * Integer villageDayId = entity.getVillageDayId();
- * Integer villagePlayerId = entity.getVillagePlayerId();
- * Integer targetVillagePlayerId = entity.getTargetVillagePlayerId();
- * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
- * String registerTrace = entity.getRegisterTrace();
- * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
- * String updateTrace = entity.getUpdateTrace();
- * entity.setAbilityTypeCode(abilityTypeCode);
- * entity.setVillageDayId(villageDayId);
- * entity.setVillagePlayerId(villagePlayerId);
- * entity.setTargetVillagePlayerId(targetVillagePlayerId);
- * entity.setRegisterDatetime(registerDatetime);
- * entity.setRegisterTrace(registerTrace);
- * entity.setUpdateDatetime(updateDatetime);
- * entity.setUpdateTrace(updateTrace);
- * = = = = = = = = = =/
- * </pre>
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsAbility extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
@@ -136,7 +88,7 @@ public abstract class BsAbility extends AbstractEntity implements DomainEntity, 
      * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
      */
     public CDef.AbilityType getAbilityTypeCodeAsAbilityType() {
-        return CDef.AbilityType.codeOf(getAbilityTypeCode());
+        return CDef.AbilityType.of(getAbilityTypeCode()).orElse(null);
     }
 
     /**
