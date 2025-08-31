@@ -26,6 +26,7 @@
 # *The line that starts with '#' means comment-out.
 #
 map:{
+	; isMigrateOldJavaxToJakarta = true
     # /- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # o isAvailableAddingSchemaToTableSqlName: (NotRequired - Default false)
     #   [true]

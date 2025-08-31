@@ -1,0 +1,4 @@
+ext.pathMapper = [:]
+ext.pathMapper.put('E:/idea/lib/external-system-rt.jar', '/mnt/e/idea/lib/external-system-rt.jar')
+ext.pathMapper.put("<<target java executable path>>", '/usr/lib/jvm/java-21-openjdk-amd64/bin/java')
+ext.mapPath = { path -> pathMapper.get(path) ?: path }

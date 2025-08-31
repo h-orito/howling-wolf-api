@@ -17,7 +17,7 @@ data class ReservedVillageView(
         reservedVillage: ReservedVillage
     ) : this(
         startTime = reservedVillage.startTime,
-        organization = reservedVillage.organization,
+        organization = reservedVillage.organization.split("\n").last(),
         silentHours = reservedVillage.silentHours,
         sayableStart = reservedVillage.startTime.plusHours(reservedVillage.silentHours.toLong()),
         sayableEnd = reservedVillage.startTime,

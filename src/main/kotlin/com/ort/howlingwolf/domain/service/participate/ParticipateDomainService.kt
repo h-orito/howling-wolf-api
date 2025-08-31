@@ -51,7 +51,8 @@ class ParticipateDomainService {
         // 参加できない状況ならNG
         if (!isAvailableParticipate(player, village)) throw HowlingWolfBusinessException("参加できません")
         // 誰かに招待されていないとNG
-        if (player!!.introducedPlayerIds.isEmpty()) throw HowlingWolfBusinessException("参加できません")
+        // いったん招待制を廃止
+//        if (player!!.introducedPlayerIds.isEmpty()) throw HowlingWolfBusinessException("参加できません")
         // 既にそのキャラが参加していたりパスワードを間違えていたらNG
         village.assertParticipate(charaId, password)
         // 役職希望無効の場合はおまかせのみ
@@ -75,7 +76,12 @@ class ParticipateDomainService {
         charachipCharaNum: Int,
         password: String?
     ) {
-        if (!isAvailableSpectate(player, village, charachipCharaNum)) throw HowlingWolfBusinessException("見学できません")
+        if (!isAvailableSpectate(
+                player,
+                village,
+                charachipCharaNum
+            )
+        ) throw HowlingWolfBusinessException("見学できません")
         // 誰かに招待されていないとNG
         if (player!!.introducedPlayerIds.isEmpty()) throw HowlingWolfBusinessException("見学できません")
         // 既にそのキャラが参加していたりパスワードを間違えていたらNG

@@ -4,13 +4,12 @@ import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.HowlingWolfUserInfoUtil
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import com.ort.howlingwolf.fw.security.getIpAddress
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.dbflute.hook.AccessContext
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import org.springframework.web.servlet.HandlerInterceptor
 
-
-class HowlingWolfAccessContextInterceptor : HandlerInterceptorAdapter() {
+class HowlingWolfAccessContextInterceptor : HandlerInterceptor {
 
     @Throws(Exception::class)
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {

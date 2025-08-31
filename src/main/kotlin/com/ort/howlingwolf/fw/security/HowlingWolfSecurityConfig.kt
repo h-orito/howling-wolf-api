@@ -1,11 +1,12 @@
 package com.ort.howlingwolf.fw.security
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.context.annotation.Bean
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -15,11 +16,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 /**
  * see https://qiita.com/rubytomato@github/items/6c6318c948398fa62275
  */
-@EnableWebSecurity
 @ConfigurationProperties(prefix = "security")
 class HowlingWolfSecurityConfig(
     private val authenticationProvider: HowlingWolfAuthenticationProvider
-) : WebSecurityConfigurerAdapter() {
+) {
 
     // ===================================================================================
     //                                                                           Attribute
@@ -30,29 +30,32 @@ class HowlingWolfSecurityConfig(
     // ===================================================================================
     //                                                                             Execute
     //                                                                           =========
+    @Bean
     @Throws(Exception::class)
-    override fun configure(http: HttpSecurity) {
-        http
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        return http
             // AUTHORIZE
-            .authorizeRequests()
-            // TODO うまく動作させられていないので調査
-            // LoginFilterあたり？
-//            .antMatchers("/admin/**")
-//            .hasRole("ADMIN")
-            .anyRequest()
-            .permitAll()
-            .and()
+            .authorizeHttpRequests { authz ->
+                authz
+                    // TODO うまく動作させられていないので調査
+                    // LoginFilterあたり？
+                    // .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .anyRequest().permitAll()
+            }
+            .formLogin {
+                it.disable()
+            }
             // EXCEPTION
-            .exceptionHandling()
-            .authenticationEntryPoint(authenticationEntryPoint())
-            .accessDeniedHandler(accessDeniedHandler())
-            .and()
+            .exceptionHandling { exceptions ->
+                exceptions
+                    .authenticationEntryPoint(authenticationEntryPoint())
+                    .accessDeniedHandler(accessDeniedHandler())
+            }
             // CSRF
-            .csrf()
-            .disable()
+            .csrf { csrf -> csrf.disable() }
             // CORS
-            .cors()
-            .configurationSource(getCorsConfigurationSource())
+            .cors { cors -> cors.configurationSource(getCorsConfigurationSource()) }
+            .build()
     }
 
     internal fun authenticationEntryPoint(): AuthenticationEntryPoint {
@@ -63,9 +66,10 @@ class HowlingWolfSecurityConfig(
         return HowlingWolfAccessDeniedHandler()
     }
 
+    @Bean
     @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.authenticationProvider(authenticationProvider)
+    fun authenticationManager(): AuthenticationManager {
+        return ProviderManager(authenticationProvider)
     }
 
     /**
@@ -74,8 +78,8 @@ class HowlingWolfSecurityConfig(
     private fun getCorsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration()
 
-        // CORSを許可するURLの登録(Access-Control-Allow-Origin)
-        this.corsClientUrls.forEach { corsConfiguration.addAllowedOrigin(it) }
+        // CORSを許可するURLの登録(Access-Control-Allow-Origin) - Spring Boot 3対応
+        this.corsClientUrls.forEach { corsConfiguration.addAllowedOriginPattern(it) }
 
         // 許可するHeaderの登録(Access-Control-Allow-Headers)
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL)

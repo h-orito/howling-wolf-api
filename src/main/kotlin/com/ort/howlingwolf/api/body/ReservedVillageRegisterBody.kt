@@ -1,7 +1,7 @@
 package com.ort.howlingwolf.api.body
 
 import java.time.LocalDateTime
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 data class ReservedVillageRegisterBody(
     @field:NotNull(message = "構成は必須")

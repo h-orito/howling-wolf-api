@@ -47,19 +47,19 @@ data class RecruitingVillageView(
         startDatetime = village.setting.time.startDatetime.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm")),
         charachipName = charachips.list.first { it.id == village.setting.charachip.charachipId }.name,
         sayableTime =
-        if (village.setting.time.silentHours == null || village.setting.time.silentHours == 0) "24時間"
-        else village.setting.time.let {
-            val start = it.startDatetime.plusHours(it.silentHours!!.toLong()).toLocalTime()
-            val end = it.startDatetime.toLocalTime()
-            val endPrefix = if (start.isAfter(end)) "翌" else ""
-            "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${
-                end.format(
-                    DateTimeFormatter.ofPattern(
-                        "HH:mm"
+            if (village.setting.time.silentHours == null || village.setting.time.silentHours == 0) "24時間"
+            else village.setting.time.let {
+                val start = it.startDatetime.plusHours(it.silentHours!!.toLong()).toLocalTime()
+                val end = it.startDatetime.toLocalTime()
+                val endPrefix = if (start.isAfter(end)) "翌" else ""
+                "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${
+                    end.format(
+                        DateTimeFormatter.ofPattern(
+                            "HH:mm"
+                        )
                     )
-                )
-            }"
-        },
+                }"
+            },
         url = "https://howling-wolf.com/village?id=${village.id}",
         organization = village.setting.organizations.organization[village.setting.capacity.max] ?: ""
     )
@@ -84,20 +84,20 @@ data class RecruitingReservedVillageView(
         startDatetime = reservedVillage.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
         charachipName = "城下町の酒場",
         sayableTime =
-        if (reservedVillage.silentHours == 0) "24時間"
-        else reservedVillage.let {
-            val start = it.startTime.plusHours(it.silentHours.toLong())
-            val end = it.startTime
-            val endPrefix = if (start.isAfter(end)) "翌" else ""
-            "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${
-                end.format(
-                    DateTimeFormatter.ofPattern(
-                        "HH:mm"
+            if (reservedVillage.silentHours == 0) "24時間"
+            else reservedVillage.let {
+                val start = it.startTime.plusHours(it.silentHours.toLong())
+                val end = it.startTime
+                val endPrefix = if (start.isAfter(end)) "翌" else ""
+                "${start.format(DateTimeFormatter.ofPattern("HH:mm"))} - ${endPrefix}${
+                    end.format(
+                        DateTimeFormatter.ofPattern(
+                            "HH:mm"
+                        )
                     )
-                )
-            }"
-        },
+                }"
+            },
         url = "https://howling-wolf.com",
-        organization = reservedVillage.organization
+        organization = reservedVillage.organization.split("\n").last()
     )
 }

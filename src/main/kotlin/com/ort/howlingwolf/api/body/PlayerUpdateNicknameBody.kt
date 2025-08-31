@@ -1,6 +1,6 @@
 package com.ort.howlingwolf.api.body
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 data class PlayerUpdateNicknameBody(
     @field:NotNull(message = "nicknameは必須")

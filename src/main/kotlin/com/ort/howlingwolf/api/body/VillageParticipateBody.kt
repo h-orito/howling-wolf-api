@@ -1,6 +1,6 @@
 package com.ort.howlingwolf.api.body
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 data class VillageParticipateBody(
     @field:NotNull(message = "charaIdは必須")

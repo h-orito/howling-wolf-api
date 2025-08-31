@@ -1,6 +1,6 @@
 package com.ort.howlingwolf.api.body
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 data class VillageSayBody(
     @field:NotNull(message = "発言内容は必須")

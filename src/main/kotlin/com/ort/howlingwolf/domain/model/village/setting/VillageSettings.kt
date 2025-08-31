@@ -24,11 +24,12 @@ data class VillageSettings(
             forBeginner: Boolean,
             canSkillRequest: Boolean
         ): VillageSettings {
-            val personNum = organization.length
+            val min = organization.split("\n").first().length
+            val max = organization.split("\n").last().length
             return VillageSettings(
                 capacity = PersonCapacity(
-                    min = personNum,
-                    max = personNum
+                    min = min,
+                    max = max
                 ),
                 time = VillageTime(
                     termType = CDef.Term.長期.code(),
@@ -43,7 +44,11 @@ data class VillageSettings(
                     dummyCharaId = 1,
                     charachipId = 1
                 ),
-                organizations = VillageOrganizations(mapOf(personNum to organization)),
+                organizations = VillageOrganizations(
+                    organization = organization.split("\n").map {
+                        it.length to it
+                    }.toMap()
+                ),
                 rules = VillageRules(
                     openVote = false,
                     availableSkillRequest = canSkillRequest,
@@ -59,7 +64,7 @@ data class VillageSettings(
                         restrictList = listOf(
                             VillageMessageRestrict(
                                 type = MessageType(CDef.MessageType.通常発言),
-                                count = 20,
+                                count = 10,
                                 length = 200
                             ),
                             VillageMessageRestrict(
@@ -74,7 +79,7 @@ data class VillageSettings(
                             ),
                             VillageMessageRestrict(
                                 type = MessageType(CDef.MessageType.死者の呻き),
-                                count = 40,
+                                count = 100,
                                 length = 200
                             )
                         )

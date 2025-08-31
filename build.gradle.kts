@@ -2,16 +2,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    id("org.springframework.boot") version "2.3.0.RELEASE"
-    id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    kotlin("jvm") version "1.4.20"
-    kotlin("plugin.spring") version "1.4.20"
-    id("com.google.cloud.tools.jib") version "2.6.0"
+    id("org.springframework.boot") version "3.4.0"
+    id("io.spring.dependency-management") version "1.1.4"
+    kotlin("jvm") version "1.9.25"
+    kotlin("plugin.spring") version "1.9.25"
+    id("com.google.cloud.tools.jib") version "3.3.2"
 }
 
 group = "com.ort"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
@@ -36,19 +36,16 @@ dependencies {
         exclude("com.zaxxer:HikariCP")
     }
     implementation("org.apache.tomcat:tomcat-jdbc:9.0.10")
-    implementation("org.dbflute:dbflute-runtime:1.2.1")
+    implementation("org.dbflute:dbflute-runtime:1.3.0")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     // mysql
     val mysqlConnectorVersion = if (System.getenv("MYSQL_CONNECTOR_VERSION") != null) {
         System.getenv("MYSQL_CONNECTOR_VERSION")
-    } else "8.0.25"
-    implementation("mysql:mysql-connector-java:$mysqlConnectorVersion")
-    // jwt
-    implementation("io.jsonwebtoken:jjwt-api:0.10.7")
-    implementation("io.jsonwebtoken:jjwt-impl:0.10.7")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.10.7")
-    implementation("com.google.firebase:firebase-admin:6.8.1")
+    } else "8.4.0"
+    implementation("com.mysql:mysql-connector-j:$mysqlConnectorVersion")
+    // firebase
+    implementation("com.google.firebase:firebase-admin:9.1.1")
     // twitter
     implementation("io.github.redouane59.twitter:twittered:2.13")
     // slack
@@ -63,16 +60,20 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.withType<ProcessResources> {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 }
 
 jib {
     from {
-        image = "arm64v8/openjdk:8"
+        image = "eclipse-temurin:21"
         platforms {
             platform {
                 architecture = "arm64"

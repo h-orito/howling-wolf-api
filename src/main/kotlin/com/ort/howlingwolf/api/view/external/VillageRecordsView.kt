@@ -45,7 +45,7 @@ data class VillageRecordView(
         id = village.id,
         name = village.name,
         status = village.status.name,
-        organization = village.setting.organizations.organization[village.setting.capacity.max] ?: "",
+        organization = village.setting.organizations.organization[village.participant.count] ?: "",
         startDatetime = if (village.status.isCanceled()) null
         else village.setting.time.startDatetime.format(datetimePattern),
         prologueDatetime = village.setting.time.prologueStartDatetime.format(datetimePattern),
@@ -79,9 +79,9 @@ data class VillageParticipantRecordView(
         players: Players
     ) : this(
         twitterUserId =
-        players.list.first { it.id == participant.playerId }.let {
-            it.twitterUserName ?: it.nickname
-        },
+            players.list.first { it.id == participant.playerId }.let {
+                it.twitterUserName ?: it.nickname
+            },
         otherSiteUserId = players.list.first { it.id == participant.playerId }.otherSiteName,
         characterName = charaList.first { it.id == participant.charaId }.charaName.name,
         skillName = participant.skill?.name,
