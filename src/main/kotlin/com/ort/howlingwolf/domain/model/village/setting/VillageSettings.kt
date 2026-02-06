@@ -45,9 +45,9 @@ data class VillageSettings(
                     charachipId = 1
                 ),
                 organizations = VillageOrganizations(
-                    organization = organization.split("\n").map {
+                    organization = organization.split("\n").associate {
                         it.length to it
-                    }.toMap()
+                    }
                 ),
                 rules = VillageRules(
                     openVote = false,
@@ -64,7 +64,7 @@ data class VillageSettings(
                         restrictList = listOf(
                             VillageMessageRestrict(
                                 type = MessageType(CDef.MessageType.通常発言),
-                                count = 10,
+                                count = if (forBeginner) 10 else 20,
                                 length = 200
                             ),
                             VillageMessageRestrict(
