@@ -25,20 +25,19 @@ class PrologueDomainService(
         todayMessages: Messages,
         charas: Charas
     ): DayChange {
-        // 開始2時間を切っていたら退村させない
-        if (HowlingWolfDateUtil.currentLocalDateTime()
-                .isAfter(dayChange.village.setting.time.startDatetime.minusHours(2L))
-        ) {
+        // 開始72時間前よりも後、かつ開始2時間前よりも前の場合のみ自動で退村させる
+        val now = HowlingWolfDateUtil.currentLocalDateTime()
+        val startDatetime = dayChange.village.setting.time.startDatetime
+        if (now.isBefore(startDatetime.minusHours(72L)) || now.isAfter(startDatetime.minusHours(2L))) {
             return dayChange
         }
-        // 24時間以内の発言
+        // 24時間以内に発言していなかったら退村
         val recentMessageList =
             todayMessages.list.filter {
                 it.time.datetime.isAfter(
                     HowlingWolfDateUtil.currentLocalDateTime().minusDays(1L)
                 )
             }
-        // 24時間以内に発言していなかったら退村
         var village = dayChange.village.copy()
         var messages = dayChange.messages.copy()
         dayChange.village.notDummyParticipant().memberList.forEach { member ->
@@ -59,10 +58,12 @@ class PrologueDomainService(
         if (!shouldForward(dayChange.village)) return dayChange
         // 参加人数が足りている場合は何もしない
         if (!isNotEnoughMemberCount(dayChange.village)) return dayChange
-        // 他に村が建っていたら廃村
-        return if (isExistOtherPrologueVillage) cancelVillage(dayChange).setIsChange(dayChange)
-        // 建っていなかったら延長
-        else extendPrologue(dayChange).setIsChange(dayChange)
+        // 村建てから2週間後開始固定としたため、延長はしないで廃村確定にする
+        return cancelVillage(dayChange).setIsChange(dayChange)
+//        // 他に村が建っていたら廃村
+//        return if (isExistOtherPrologueVillage) cancelVillage(dayChange).setIsChange(dayChange)
+//        // 建っていなかったら延長
+//        else extendPrologue(dayChange).setIsChange(dayChange)
     }
 
     fun addDayIfNeeded(
