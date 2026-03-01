@@ -5,6 +5,7 @@ import com.ort.howlingwolf.domain.model.camp.Camp
 import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.MessageContent
+import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.skill.Skill
 import com.ort.howlingwolf.domain.model.skill.SkillRequest
 import com.ort.howlingwolf.domain.model.skill.Skills
@@ -201,6 +202,7 @@ data class Village(
     //                                                                                read
     //                                                                           =========
     fun dummyChara(): VillageParticipant = participant.memberList.first { it.charaId == setting.charachip.dummyCharaId }
+    fun isCreator(player: Player?): Boolean = player?.id == creatorPlayerId
 
     fun notDummyParticipant(): VillageParticipants {
         val notDummyMembers = participant.memberList.filter { it.charaId != setting.charachip.dummyCharaId }
@@ -331,15 +333,15 @@ data class Village(
     fun isViewableFoxMessage(): Boolean = status.isSolved()
     fun isViewablePsychicMessage(): Boolean = status.isSolved()
     fun isViewableSecretSay(): Boolean = status.isSolved()
+    fun isSayableSecretSay(): Boolean = !status.isFinished()
+    fun isViewablePrivateSystemMessage(): Boolean = status.isSolved()
 
     /**
      * 発言制限チェック
-     * @param messageContent 発言内容
-     * @param latestDayMessageList 本日の発言
      */
-    fun assertMessageRestrict(messageContent: MessageContent, latestDayMessageList: List<Message>) {
+    fun assertMessageRestrict(messageContent: MessageContent, latestDayMessageCountMap: Map<CDef.MessageType, Int>) {
         val restrict = setting.rules.messageRestrict.restrict(messageContent.type.toCdef()) ?: return // 制限なし
-        restrict.assertSay(messageContent, status.toCdef(), latestDayMessageList)
+        restrict.assertSay(messageContent, status.toCdef(), latestDayMessageCountMap)
     }
 
     /** 村として能力を行使できるか */

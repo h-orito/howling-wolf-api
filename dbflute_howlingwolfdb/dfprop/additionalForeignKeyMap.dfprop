@@ -38,5 +38,9 @@ map:{
     #    ; localTableName  = MEMBER             ; foreignTableName  = MEMBER_STATUS
     #    ; localColumnName = MEMBER_STATUS_CODE ; foreignColumnName = MEMBER_STATUS_CODE
     #}
+    ; FK_MESSAGE_SENDTO_MESSAGE = map:{
+        ; localTableName  = MESSAGE_SENDTO     ; foreignTableName  = MESSAGE
+        ; localColumnName = VILLAGE_ID/MESSAGE_TYPE_CODE/MESSAGE_NUMBER ; foreignColumnName = VILLAGE_ID/MESSAGE_TYPE_CODE/MESSAGE_NUMBER
+    }
 }
 # ----------------/

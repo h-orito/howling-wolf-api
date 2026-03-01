@@ -10,7 +10,9 @@ data class VillageSayBody(
     val messageType: String?,
 
     @field:NotNull(message = "表情種別は必須")
-    val faceType: String?
+    val faceType: String?,
+
+    val targetId: Int?
 ) {
-    constructor() : this(null, null, null)
+    constructor() : this(null, null, null, null)
 }

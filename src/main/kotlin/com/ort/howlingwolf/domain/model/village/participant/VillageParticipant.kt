@@ -36,6 +36,7 @@ data class VillageParticipant(
     fun isSayableWerewolfSay(): Boolean = isAdmin() || (isAlive() && skill?.isAvailableWerewolfSay() ?: false)
     fun isViewableGraveSay(): Boolean = isAdmin() || isSpectator || (isDead() && !dead!!.isSuddenly())
     fun isSayableGraveSay(): Boolean = isAdmin() || (!isSpectator && isDead() && !dead!!.isSuddenly())
+    fun isViewableMonologueSay(): Boolean = isAdmin()
     fun isSayableMonologueSay(): Boolean = true
     fun isViewableSpectateSay(): Boolean = isAdmin() || isSpectator || (isDead() && !dead!!.isSuddenly())
     fun isSayableSpectateSay(): Boolean = isAdmin() || isSpectator
@@ -44,7 +45,9 @@ data class VillageParticipant(
     fun isViewableMasonMessage(): Boolean = skill?.canRecognizeEachMason() ?: false
     fun isViewableFoxMessage(): Boolean = skill?.canRecognizeFoxs() ?: false
     fun isViewablePsychicMessage(): Boolean = skill?.hasPsychicAbility() ?: false
-    fun isViewableSecretSay(): Boolean = true // 制約なし
+    fun isViewableSecretSay(): Boolean = isAdmin()
+    fun isSayableSecretSay(): Boolean = isAdmin()
+    fun isViewablePrivateSystemMessage(): Boolean = isAdmin()
 
     // 能力行使可能か
     fun canUseAbility(): Boolean = !isSpectator
@@ -84,7 +87,8 @@ data class VillageParticipant(
     fun attack(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.襲撃, villageDay))
 
     // 呪殺
-    fun divineKill(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.呪殺, villageDay))
+    fun divineKill(villageDay: VillageDay): VillageParticipant =
+        this.copy(dead = Dead(CDef.DeadReason.呪殺, villageDay))
 
     // 後追い
     fun suicide(villageDay: VillageDay): VillageParticipant = this.copy(dead = Dead(CDef.DeadReason.後追, villageDay))

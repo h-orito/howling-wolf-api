@@ -79,9 +79,9 @@ public class MessageDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnMessageNumber = cci("MESSAGE_NUMBER", "MESSAGE_NUMBER", null, null, Integer.class, "messageNumber", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnMessageTypeCode = cci("MESSAGE_TYPE_CODE", "MESSAGE_TYPE_CODE", null, null, String.class, "messageTypeCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnVillageId = cci("VILLAGE_ID", "VILLAGE_ID", null, null, Integer.class, "villageId", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "messageSendtoList", null, false);
+    protected final ColumnInfo _columnMessageNumber = cci("MESSAGE_NUMBER", "MESSAGE_NUMBER", null, null, Integer.class, "messageNumber", null, true, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, "messageSendtoList", null, false);
+    protected final ColumnInfo _columnMessageTypeCode = cci("MESSAGE_TYPE_CODE", "MESSAGE_TYPE_CODE", null, null, String.class, "messageTypeCode", null, true, false, true, "VARCHAR", 20, 0, null, null, false, null, null, null, "messageSendtoList", null, false);
     protected final ColumnInfo _columnMessageUnixtimestampMilli = cci("MESSAGE_UNIXTIMESTAMP_MILLI", "MESSAGE_UNIXTIMESTAMP_MILLI", null, null, Long.class, "messageUnixtimestampMilli", null, false, false, true, "BIGINT UNSIGNED", 20, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnVillageDayId = cci("VILLAGE_DAY_ID", "VILLAGE_DAY_ID", null, null, Integer.class, "villageDayId", null, false, false, true, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnVillagePlayerId = cci("VILLAGE_PLAYER_ID", "VILLAGE_PLAYER_ID", null, null, Integer.class, "villagePlayerId", null, false, false, false, "INT UNSIGNED", 10, 0, null, null, false, null, null, null, null, null, false);
@@ -235,6 +235,17 @@ public class MessageDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
+    /**
+     * MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerMessageSendtoList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMapSized(4);
+        mp.put(columnVillageId(), MessageSendtoDbm.getInstance().columnVillageId());
+        mp.put(columnMessageTypeCode(), MessageSendtoDbm.getInstance().columnMessageTypeCode());
+        mp.put(columnMessageNumber(), MessageSendtoDbm.getInstance().columnMessageNumber());
+        return cri("FK_MESSAGE_SENDTO_MESSAGE", "messageSendtoList", this, MessageSendtoDbm.getInstance(), mp, false, "message");
+    }
 
     // ===================================================================================
     //                                                                        Various Info

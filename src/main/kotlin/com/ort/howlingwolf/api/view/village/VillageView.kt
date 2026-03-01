@@ -6,7 +6,6 @@ import com.ort.howlingwolf.domain.model.charachip.Charas
 import com.ort.howlingwolf.domain.model.player.Player
 import com.ort.howlingwolf.domain.model.player.Players
 import com.ort.howlingwolf.domain.model.village.Village
-import com.ort.howlingwolf.domain.model.village.VillageDays
 import com.ort.howlingwolf.domain.model.village.VillageStatus
 
 data class VillageView(
@@ -41,10 +40,8 @@ data class VillageView(
             shouldHidePlayer = !village.status.isSolved()
         ),
         spectator = VillageParticipantsView(
-            village = village,
-            charas = charas,
-            players = players,
-            shouldHidePlayer = !village.status.isSolved()
+            count = 0,
+            memberList = emptyList(),
         ),
         day = VillageDaysView(village.day, village.setting.time.silentHours),
         silentTime = village.isSilentTime()

@@ -335,6 +335,70 @@ public abstract class BsMessageBhv extends AbstractBehaviorWritable<Message, Mes
         loaderLambda.handle(new LoaderOfMessage().ready(xnewLRAryLs(message), _behaviorSelector));
     }
 
+    /**
+     * Load referrer of messageSendtoList by the set-upper of referrer. <br>
+     * MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'.
+     * <pre>
+     * <span style="color: #0000C0">messageBhv</span>.<span style="color: #CC4747">loadMessageSendto</span>(<span style="color: #553000">messageList</span>, <span style="color: #553000">sendtoCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">sendtoCB</span>.setupSelect...
+     *     <span style="color: #553000">sendtoCB</span>.query().set...
+     *     <span style="color: #553000">sendtoCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Message message : <span style="color: #553000">messageList</span>) {
+     *     ... = message.<span style="color: #CC4747">getMessageSendtoList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().set[ForeignKey]_InScope(pkList);
+     * cb.query().addOrderBy_[ForeignKey]_Asc();
+     * </pre>
+     * @param messageList The entity list of message. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<MessageSendto> loadMessageSendto(List<Message> messageList, ReferrerConditionSetupper<MessageSendtoCB> refCBLambda) {
+        xassLRArg(messageList, refCBLambda);
+        return doLoadMessageSendto(messageList, new LoadReferrerOption<MessageSendtoCB, MessageSendto>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of messageSendtoList by the set-upper of referrer. <br>
+     * MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'.
+     * <pre>
+     * <span style="color: #0000C0">messageBhv</span>.<span style="color: #CC4747">loadMessageSendto</span>(<span style="color: #553000">message</span>, <span style="color: #553000">sendtoCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">sendtoCB</span>.setupSelect...
+     *     <span style="color: #553000">sendtoCB</span>.query().set...
+     *     <span style="color: #553000">sendtoCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">message</span>.<span style="color: #CC4747">getMessageSendtoList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().set[ForeignKey]_InScope(pkList);
+     * cb.query().addOrderBy_[ForeignKey]_Asc();
+     * </pre>
+     * @param message The entity of message. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<MessageSendto> loadMessageSendto(Message message, ReferrerConditionSetupper<MessageSendtoCB> refCBLambda) {
+        xassLRArg(message, refCBLambda);
+        return doLoadMessageSendto(xnewLRLs(message), new LoadReferrerOption<MessageSendtoCB, MessageSendto>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<MessageSendto> doLoadMessageSendto(List<Message> messageList, LoadReferrerOption<MessageSendtoCB, MessageSendto> option) {
+        return helpLoadReferrerInternally(messageList, option, "messageSendtoList");
+    }
+
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================

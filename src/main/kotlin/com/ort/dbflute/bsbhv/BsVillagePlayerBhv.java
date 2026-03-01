@@ -590,6 +590,70 @@ public abstract class BsVillagePlayerBhv extends AbstractBehaviorWritable<Villag
     }
 
     /**
+     * Load referrer of messageSendtoList by the set-upper of referrer. <br>
+     * MESSAGE_SENDTO by VILLAGE_PLAYER_ID, named 'messageSendtoList'.
+     * <pre>
+     * <span style="color: #0000C0">villagePlayerBhv</span>.<span style="color: #CC4747">loadMessageSendto</span>(<span style="color: #553000">villagePlayerList</span>, <span style="color: #553000">sendtoCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">sendtoCB</span>.setupSelect...
+     *     <span style="color: #553000">sendtoCB</span>.query().set...
+     *     <span style="color: #553000">sendtoCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (VillagePlayer villagePlayer : <span style="color: #553000">villagePlayerList</span>) {
+     *     ... = villagePlayer.<span style="color: #CC4747">getMessageSendtoList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillagePlayerId_InScope(pkList);
+     * cb.query().addOrderBy_VillagePlayerId_Asc();
+     * </pre>
+     * @param villagePlayerList The entity list of villagePlayer. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<MessageSendto> loadMessageSendto(List<VillagePlayer> villagePlayerList, ReferrerConditionSetupper<MessageSendtoCB> refCBLambda) {
+        xassLRArg(villagePlayerList, refCBLambda);
+        return doLoadMessageSendto(villagePlayerList, new LoadReferrerOption<MessageSendtoCB, MessageSendto>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of messageSendtoList by the set-upper of referrer. <br>
+     * MESSAGE_SENDTO by VILLAGE_PLAYER_ID, named 'messageSendtoList'.
+     * <pre>
+     * <span style="color: #0000C0">villagePlayerBhv</span>.<span style="color: #CC4747">loadMessageSendto</span>(<span style="color: #553000">villagePlayer</span>, <span style="color: #553000">sendtoCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">sendtoCB</span>.setupSelect...
+     *     <span style="color: #553000">sendtoCB</span>.query().set...
+     *     <span style="color: #553000">sendtoCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">villagePlayer</span>.<span style="color: #CC4747">getMessageSendtoList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setVillagePlayerId_InScope(pkList);
+     * cb.query().addOrderBy_VillagePlayerId_Asc();
+     * </pre>
+     * @param villagePlayer The entity of villagePlayer. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<MessageSendto> loadMessageSendto(VillagePlayer villagePlayer, ReferrerConditionSetupper<MessageSendtoCB> refCBLambda) {
+        xassLRArg(villagePlayer, refCBLambda);
+        return doLoadMessageSendto(xnewLRLs(villagePlayer), new LoadReferrerOption<MessageSendtoCB, MessageSendto>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<MessageSendto> doLoadMessageSendto(List<VillagePlayer> villagePlayerList, LoadReferrerOption<MessageSendtoCB, MessageSendto> option) {
+        return helpLoadReferrerInternally(villagePlayerList, option, "messageSendtoList");
+    }
+
+    /**
      * Load referrer of villagePlayerAccessInfoList by the set-upper of referrer. <br>
      * VILLAGE_PLAYER_ACCESS_INFO by VILLAGE_PLAYER_ID, named 'villagePlayerAccessInfoList'.
      * <pre>

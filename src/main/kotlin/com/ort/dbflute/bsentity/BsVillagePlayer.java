@@ -2013,6 +2013,26 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         _commitList = commitList;
     }
 
+    /** MESSAGE_SENDTO by VILLAGE_PLAYER_ID, named 'messageSendtoList'. */
+    protected List<MessageSendto> _messageSendtoList;
+
+    /**
+     * [get] MESSAGE_SENDTO by VILLAGE_PLAYER_ID, named 'messageSendtoList'.
+     * @return The entity list of referrer property 'messageSendtoList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<MessageSendto> getMessageSendtoList() {
+        if (_messageSendtoList == null) { _messageSendtoList = newReferrerList(); }
+        return _messageSendtoList;
+    }
+
+    /**
+     * [set] MESSAGE_SENDTO by VILLAGE_PLAYER_ID, named 'messageSendtoList'.
+     * @param messageSendtoList The entity list of referrer property 'messageSendtoList'. (NullAllowed)
+     */
+    public void setMessageSendtoList(List<MessageSendto> messageSendtoList) {
+        _messageSendtoList = messageSendtoList;
+    }
+
     /** VILLAGE_PLAYER_ACCESS_INFO by VILLAGE_PLAYER_ID, named 'villagePlayerAccessInfoList'. */
     protected List<VillagePlayerAccessInfo> _villagePlayerAccessInfoList;
 
@@ -2126,6 +2146,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         { if (et != null) { sb.append(li).append(xbRDS(et, "comingOutList")); } } }
         if (_commitList != null) { for (Commit et : _commitList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "commitList")); } } }
+        if (_messageSendtoList != null) { for (MessageSendto et : _messageSendtoList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "messageSendtoList")); } } }
         if (_villagePlayerAccessInfoList != null) { for (VillagePlayerAccessInfo et : _villagePlayerAccessInfoList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "villagePlayerAccessInfoList")); } } }
         if (_voteByTargetVillagePlayerIdList != null) { for (Vote et : _voteByTargetVillagePlayerIdList)
@@ -2191,6 +2213,8 @@ public abstract class BsVillagePlayer extends AbstractEntity implements DomainEn
         { sb.append(dm).append("comingOutList"); }
         if (_commitList != null && !_commitList.isEmpty())
         { sb.append(dm).append("commitList"); }
+        if (_messageSendtoList != null && !_messageSendtoList.isEmpty())
+        { sb.append(dm).append("messageSendtoList"); }
         if (_villagePlayerAccessInfoList != null && !_villagePlayerAccessInfoList.isEmpty())
         { sb.append(dm).append("villagePlayerAccessInfoList"); }
         if (_voteByTargetVillagePlayerIdList != null && !_voteByTargetVillagePlayerIdList.isEmpty())

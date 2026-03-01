@@ -5,6 +5,7 @@ import java.util.Map;
 import org.dbflute.cbean.*;
 import org.dbflute.cbean.chelper.*;
 import org.dbflute.cbean.coption.*;
+import org.dbflute.cbean.scoping.*;
 import org.dbflute.cbean.cvalue.ConditionValue;
 import org.dbflute.cbean.sqlclause.SqlClause;
 import org.dbflute.exception.IllegalConditionBeanOperationException;
@@ -466,6 +467,91 @@ public class BsMessageCQ extends AbstractBsMessageCQ {
     //                                                                     ===============
     public Map<String, MessageCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
     public String keepScalarCondition(MessageCQ sq) { return xkeepSQue("scalarCondition", sq); }
+
+    // ===================================================================================
+    //                                                      ExistsReferrer for Compound PK
+    //                                                      ==============================
+    /**
+     * Set up ExistsReferrer (correlated sub-query by compound key). <br>
+     * {exists (select ... from message_sendto where ...)}
+     * @param subQuery The sub-query of MessageSendtoList for 'exists'. (NotNull)
+     */
+    public void existsMessageSendto(SubQuery<MessageSendtoCB> subQuery) {
+        assertObjectNotNull("subQuery<MessageSendtoCB>", subQuery);
+        MessageSendtoCB cb = new MessageSendtoCB(); cb.xsetupForExistsReferrer(this);
+        try { lock(); subQuery.query(cb); } finally { unlock(); }
+        String pp = keepTwoOrMorePk_ExistsReferrer_MessageSendtoList(cb.query());
+        registerExistsReferrer(cb.query(), "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", pp, "messageSendtoList");
+    }
+    public Map<String, MessageSendtoCQ> xdfgetTwoOrMorePk_ExistsReferrer_MessageSendtoList() { return xgetSQueMap("twoOrMorePk_ExistsReferrer_MessageSendtoList"); }
+    public String keepTwoOrMorePk_ExistsReferrer_MessageSendtoList(MessageSendtoCQ sq) { return xkeepSQue("twoOrMorePk_ExistsReferrer_MessageSendtoList", sq); }
+
+    /**
+     * Set up NotExistsReferrer (correlated sub-query by compound key). <br>
+     * {not exists (select ... from message_sendto where ...)}
+     * @param subQuery The sub-query of MessageSendtoList for 'not exists'. (NotNull)
+     */
+    public void notExistsMessageSendto(SubQuery<MessageSendtoCB> subQuery) {
+        assertObjectNotNull("subQuery<MessageSendtoCB>", subQuery);
+        MessageSendtoCB cb = new MessageSendtoCB(); cb.xsetupForExistsReferrer(this);
+        try { lock(); subQuery.query(cb); } finally { unlock(); }
+        String pp = keepTwoOrMorePk_NotExistsReferrer_MessageSendtoList(cb.query());
+        registerNotExistsReferrer(cb.query(), "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", pp, "messageSendtoList");
+    }
+    public Map<String, MessageSendtoCQ> xdfgetTwoOrMorePk_NotExistsReferrer_MessageSendtoList() { return xgetSQueMap("twoOrMorePk_NotExistsReferrer_MessageSendtoList"); }
+    public String keepTwoOrMorePk_NotExistsReferrer_MessageSendtoList(MessageSendtoCQ sq) { return xkeepSQue("twoOrMorePk_NotExistsReferrer_MessageSendtoList", sq); }
+
+    // ===================================================================================
+    //                                            (Specify)DerivedReferrer for Compound PK
+    //                                            ========================================
+    public void xsderiveMessageSendtoList(String fn, SubQuery<MessageSendtoCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        MessageSendtoCB cb = new MessageSendtoCB(); cb.xsetupForDerivedReferrer(this);
+        try { lock(); sq.query(cb); } finally { unlock(); }
+        String pp = keepTwoOrMorePk_SpecifyDerivedReferrer_MessageSendtoList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", pp, "messageSendtoList", al, op);
+    }
+    public Map<String, MessageSendtoCQ> xdfgetTwoOrMorePk_SpecifyDerivedReferrer_MessageSendtoList() { return xgetSQueMap("twoOrMorePk_SpecifyDerivedReferrer_MessageSendtoList"); }
+    public String keepTwoOrMorePk_SpecifyDerivedReferrer_MessageSendtoList(MessageSendtoCQ sq) { return xkeepSQue("twoOrMorePk_SpecifyDerivedReferrer_MessageSendtoList", sq); }
+
+    // ===================================================================================
+    //                                              (Query)DerivedReferrer for Compound PK
+    //                                              ======================================
+    /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from message_sendto where ...)} <br>
+     * message_sendto by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedMessageSendto()</span>.<span style="color: #CC4747">max</span>(new SubQuery&lt;MessageSendtoCB&gt;() {
+     *     public void query(MessageSendtoCB subCB) {
+     *         subCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *         subCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     *     }
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<MessageSendtoCB> derivedMessageSendto() {
+        return xcreateQDRFunctionMessageSendtoList();
+    }
+    protected HpQDRFunction<MessageSendtoCB> xcreateQDRFunctionMessageSendtoList() {
+        return xcQDRFunc(new HpQDRSetupper<MessageSendtoCB>() {
+            public void setup(String fn, SubQuery<MessageSendtoCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+                xqderiveMessageSendtoList(fn, sq, rd, vl, op);
+            }
+        });
+    }
+    public void xqderiveMessageSendtoList(String fn, SubQuery<MessageSendtoCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        MessageSendtoCB cb = new MessageSendtoCB(); cb.xsetupForDerivedReferrer(this);
+        try { lock(); sq.query(cb); } finally { unlock(); }
+        String sqpp = keepTwoOrMorePk_QueryDerivedReferrer_MessageSendtoList(cb.query()); String prpp = keepTwoOrMorePk_QueryDerivedReferrer_MessageSendtoListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", "VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER", sqpp, "messageSendtoList", rd, vl, prpp, op);
+    }
+    public Map<String, MessageSendtoCQ> xdfgetTwoOrMorePk_QueryDerivedReferrer_MessageSendtoList() { return xgetSQueMap("twoOrMorePk_QueryDerivedReferrer_MessageSendtoList"); }
+    public String keepTwoOrMorePk_QueryDerivedReferrer_MessageSendtoList(MessageSendtoCQ sq) { return xkeepSQue("twoOrMorePk_QueryDerivedReferrer_MessageSendtoList", sq); }
+    public Map<String, Object> xdfgetTwoOrMorePk_QueryDerivedReferrer_MessageSendtoListParameter() { return xgetSQuePmMap("twoOrMorePk_QueryDerivedReferrer_MessageSendtoList"); }
+    public String keepTwoOrMorePk_QueryDerivedReferrer_MessageSendtoListParameter(Object pm) { return xkeepSQuePm("twoOrMorePk_QueryDerivedReferrer_MessageSendtoList", pm); }
 
     // ===================================================================================
     //                                                                       Very Internal

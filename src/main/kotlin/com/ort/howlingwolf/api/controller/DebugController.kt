@@ -162,7 +162,8 @@ class DebugController(
         val village: Village = villageService.findVillage(villageId)
         val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
         val players: Players = playerService.findPlayers(villageId)
-        val createPlayer: com.ort.howlingwolf.domain.model.player.Player = playerService.findPlayer(village.creatorPlayerId)
+        val createPlayer: com.ort.howlingwolf.domain.model.player.Player =
+            playerService.findPlayer(village.creatorPlayerId)
         return DebugVillageView(
             village = village,
             charas = charas,
@@ -198,7 +199,7 @@ class DebugController(
         if ("local" != env) throw HowlingWolfBusinessException("この環境では使用できません")
 
         repeat(100) {
-            villageCoordinator.say(villageId, user, "${it}回目の発言", "NORMAL_SAY", "NORMAL")
+            villageCoordinator.say(villageId, user, "${it}回目の発言", "NORMAL_SAY", "NORMAL", null)
         }
     }
 

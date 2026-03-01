@@ -3,7 +3,9 @@ package com.ort.howlingwolf.infrastructure.datasource.message
 import com.ort.dbflute.allcommon.CDef
 import com.ort.dbflute.cbean.MessageCB
 import com.ort.dbflute.exbhv.MessageBhv
+import com.ort.dbflute.exbhv.MessageSendtoBhv
 import com.ort.dbflute.exentity.Message
+import com.ort.dbflute.exentity.MessageSendto
 import com.ort.howlingwolf.api.controller.VillageController
 import com.ort.howlingwolf.domain.model.message.MessageContent
 import com.ort.howlingwolf.domain.model.message.MessageQuery
@@ -17,16 +19,29 @@ import org.dbflute.cbean.result.PagingResultBean
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import java.time.ZoneOffset
+import java.util.regex.Pattern
 
 @Repository
 class MessageDataSource(
-    val messageBhv: MessageBhv
+    val messageBhv: MessageBhv,
+    private val messageSendtoBhv: MessageSendtoBhv,
 ) {
 
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
     private val logger = LoggerFactory.getLogger(VillageController::class.java)
+
+    companion object {
+        val patternMessageTypeMap = mapOf(
+            Pattern.compile("^(?![\\+=\\?@\\-\\*a_])(\\d{1,5})") to CDef.MessageType.通常発言,
+            Pattern.compile("^\\+(\\d{1,5})") to CDef.MessageType.死者の呻き,
+            Pattern.compile("^=(\\d{1,5})") to CDef.MessageType.共鳴発言,
+            Pattern.compile("^@(\\d{1,5})") to CDef.MessageType.見学発言,
+            Pattern.compile("^-(\\d{1,5})") to CDef.MessageType.独り言,
+            Pattern.compile("^\\*(\\d{1,5})") to CDef.MessageType.人狼の囁き,
+        )
+    }
 
     // ===================================================================================
     //                                                                             Execute
@@ -92,33 +107,20 @@ class MessageDataSource(
      * 最新発言日時取得
      *
      * @param villageId villageId
-     * @param messageTypeList 発言種別
-     * @param participant 参加情報
+     * @param villageDayId 村日付ID
+     * @param query query
      * @return 最新発言日時(unix_datetime_milli)
      */
     fun findLatestMessagesUnixTimeMilli(
         villageId: Int,
-        messageTypeList: List<CDef.MessageType>,
-        participant: VillageParticipant?
+        villageDayId: Int,
+        query: MessageQuery
     ): Long {
-        val query = MessageQuery(
-            from = null,
-            pageSize = null,
-            pageNum = null,
-            keyword = null,
-            participant = participant,
-            messageTypeList = messageTypeList,
-            participantIdList = null,
-            includeMonologue = false,
-            includeSecret = false,
-            includePrivateAbility = false,
-            isLatest = false
-        )
-        return messageBhv.selectEntityWithDeletedCheck() {
-            queryMessage(it, villageId, null, query)
+        return messageBhv.selectEntity {
+            queryMessage(it, villageId, villageDayId, query)
             it.query().addOrderBy_MessageUnixtimestampMilli_Desc()
             it.fetchFirst(1)
-        }.messageUnixtimestampMilli
+        }.map { it.messageUnixtimestampMilli }.orElse(query.from ?: 0L)
     }
 
     /**
@@ -154,13 +156,13 @@ class MessageDataSource(
         villageId: Int,
         villageDayId: Int,
         participant: VillageParticipant
-    ): List<com.ort.howlingwolf.domain.model.message.Message> {
+    ): Map<CDef.MessageType, Int> {
         val messageList = messageBhv.selectList {
             it.query().setVillageId_Equal(villageId)
             it.query().setVillagePlayerId_Equal(participant.id)
             it.query().setVillageDayId_Equal(villageDayId)
         }
-        return messageList.map { convertMessageToMessage(it) }
+        return messageList.groupBy { CDef.MessageType.codeOf(it.messageTypeCode) }.mapValues { it.value.size }
     }
 
     fun registerMessage(villageId: Int, message: com.ort.howlingwolf.domain.model.message.Message) {
@@ -195,6 +197,7 @@ class MessageDataSource(
             try {
                 mes.messageNumber = selectNextMessageNumber(villageId, message.content.type.code)
                 messageBhv.insert(mes)
+                insertMessageSendTo(mes)
                 return
             } catch (e: RuntimeException) {
                 logger.error(e.message, e)
@@ -203,6 +206,44 @@ class MessageDataSource(
         throw HowlingWolfBusinessException("混み合っているため発言に失敗しました。再度発言してください。")
     }
 
+    private fun insertMessageSendTo(m: Message) {
+        val splitted = m.messageContent.split(">>")
+        if (splitted.size <= 1) {
+            return  // >>が含まれていない
+        }
+        splitted.drop(1).forEach { str ->
+            patternMessageTypeMap.forEach { (pattern: Pattern, messageType: CDef.MessageType) ->
+                val matcher = pattern.matcher(str)
+                if (matcher.find()) {
+                    val number = matcher.group(1).toInt()
+                    val optMessage =
+                        messageBhv.selectEntity {
+                            it.query().setVillageId_Equal(m.villageId)
+                            it.query().setMessageTypeCode_Equal(messageType.code())
+                            it.query().setMessageNumber_Equal(number)
+                        }
+                    if (!optMessage.isPresent || optMessage.get().villagePlayerId == null) {
+                        return@forEach
+                    }
+                    val sendTo = MessageSendto()
+                    sendTo.villageId = m.villageId
+                    sendTo.messageTypeCode = m.messageTypeCode
+                    sendTo.messageNumber = m.messageNumber
+                    sendTo.villagePlayerId = optMessage.get().villagePlayerId
+                    val optEntity =
+                        messageSendtoBhv.selectEntity {
+                            it.query().setVillageId_Equal(sendTo.villageId)
+                            it.query().setMessageTypeCode_Equal(sendTo.messageTypeCode)
+                            it.query().setMessageNumber_Equal(sendTo.messageNumber)
+                            it.query().setVillagePlayerId_Equal(sendTo.villagePlayerId)
+                        }
+                    if (!optEntity.isPresent) {
+                        messageSendtoBhv.insert(sendTo)
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * 差分更新
@@ -273,6 +314,25 @@ class MessageDataSource(
     ) {
         cb.query().setVillageId_Equal(villageId)
         if (villageDayId != null) cb.query().setVillageDayId_Equal(villageDayId)
+        // 発言種別
+        queryMessageType(cb, query)
+
+        query.from?.let { cb.query().setMessageUnixtimestampMilli_GreaterEqual(it) }
+        query.keyword?.let {
+            cb.query().setMessageContent_LikeSearch(it) { op -> op.splitByBlank().likeContain().asOrSplit() }
+        }
+        if (!query.fromParticipantIdList.isNullOrEmpty()) {
+            cb.query().setVillagePlayerId_InScope(query.fromParticipantIdList)
+        }
+        if (!query.toParticipantIdList.isNullOrEmpty()) {
+            cb.orScopeQuery { orCB ->
+                orCB.query().existsMessageSendto { sendToCB ->
+                    sendToCB.query().setVillagePlayerId_InScope(query.toParticipantIdList)
+                }
+                orCB.query().setToVillagePlayerId_InScope(query.toParticipantIdList)
+            }
+        }
+
         // 参加していない場合は特に考慮不要
         if (query.participant == null) {
             cb.query().setMessageTypeCode_InScope(query.messageTypeList.map { type -> type.code() })
@@ -338,12 +398,62 @@ class MessageDataSource(
         query.keyword?.let {
             cb.query().setMessageContent_LikeSearch(it) { op -> op.splitByBlank().likeContain().asOrSplit() }
         }
-        if (!query.participantIdList.isNullOrEmpty()) cb.query().setVillagePlayerId_InScope(query.participantIdList)
+        if (!query.fromParticipantIdList.isNullOrEmpty()) cb.query()
+            .setVillagePlayerId_InScope(query.fromParticipantIdList)
+    }
+
+    private fun queryMessageType(
+        cb: MessageCB,
+        query: MessageQuery,
+    ) {
+        if (query.participant == null) {
+            if (query.messageTypeList.isNotEmpty()) {
+                cb.query().setMessageTypeCode_InScope(query.messageTypeList.map { it.code() })
+            }
+            return
+        }
+        if (query.messageTypeList.isNotEmpty()) {
+            if (query.includeMonologue || query.includeSecret || query.includePrivateAbility) {
+                cb.orScopeQuery { orCB ->
+                    orCB.query().setMessageTypeCode_InScope(query.messageTypeList.map { it.code() })
+                    queryMyself(orCB, query, query.participant)
+                }
+            } else {
+                cb.query().setMessageTypeCode_InScope(query.messageTypeList.map { it.code() })
+            }
+        } else {
+            if (query.includeMonologue || query.includeSecret || query.includePrivateAbility) {
+                cb.orScopeQuery { orCB -> queryMyself(orCB, query, query.participant) }
+            }
+        }
+    }
+
+    private fun queryMyself(cb: MessageCB, query: MessageQuery, myself: VillageParticipant) {
+        if (query.includeMonologue) {
+            cb.orScopeQueryAndPart { andCB -> queryMyMonologue(andCB, myself.id) }
+        }
+        if (query.includeSecret) {
+            cb.orScopeQueryAndPart { andCB -> queryMySecret(andCB, myself.id) }
+            cb.orScopeQueryAndPart { andCB -> querySecretToMe(andCB, myself.id) }
+        }
+        if (query.includePrivateAbility) {
+            cb.orScopeQueryAndPart { andCB -> queryMyPrivateAbility(andCB, myself.id) }
+        }
     }
 
     private fun queryMyMonologue(cb: MessageCB, id: Int) {
         cb.query().setVillagePlayerId_Equal(id)
         cb.query().setMessageTypeCode_Equal(CDef.MessageType.独り言.code())
+    }
+
+    private fun queryMySecret(cb: MessageCB, id: Int) {
+        cb.query().setVillagePlayerId_Equal(id)
+        cb.query().setMessageTypeCode_Equal(CDef.MessageType.秘話.code())
+    }
+
+    private fun querySecretToMe(cb: MessageCB, id: Int) {
+        cb.query().setToVillagePlayerId_Equal(id)
+        cb.query().setMessageTypeCode_Equal(CDef.MessageType.秘話.code())
     }
 
     private fun queryMyPrivateAbility(cb: MessageCB, id: Int) {

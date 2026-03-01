@@ -33,8 +33,8 @@ import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
 import com.ort.howlingwolf.domain.service.admin.AdminDomainService
 import com.ort.howlingwolf.domain.service.coming_out.ComingOutDomainService
 import com.ort.howlingwolf.domain.service.commit.CommitDomainService
+import com.ort.howlingwolf.domain.service.message.say.SayDomainService
 import com.ort.howlingwolf.domain.service.participate.ParticipateDomainService
-import com.ort.howlingwolf.domain.service.say.SayDomainService
 import com.ort.howlingwolf.domain.service.skill.SkillRequestDomainService
 import com.ort.howlingwolf.domain.service.vote.VoteDomainService
 import com.ort.howlingwolf.fw.HowlingWolfDateUtil
@@ -346,16 +346,25 @@ class VillageCoordinator(
      * @param messageText 発言内容
      * @param messageType 発言種別
      * @param faceType 表情種別
+     * @param targetId 秘話対象村参加者ID (秘話発言の場合のみ)
      */
     @Transactional(rollbackFor = [Exception::class, HowlingWolfBusinessException::class])
-    fun say(villageId: Int, user: HowlingWolfUser, messageText: String, messageType: String, faceType: String) {
+    fun say(
+        villageId: Int,
+        user: HowlingWolfUser,
+        messageText: String,
+        messageType: String,
+        faceType: String,
+        targetId: Int?
+    ) {
         val messageContent: MessageContent = MessageContent.invoke(messageType, messageText, faceType)
         // 発言できない状況ならエラー
         assertSay(villageId, user, messageContent)
         // 発言
         var village: Village = villageService.findVillage(villageId)
-        val participant: VillageParticipant = findParticipant(village, user)!!
-        val message: Message = Message.createSayMessage(participant, village.day.latestDay().id, messageContent)
+        val myself: VillageParticipant = findParticipant(village, user)!!
+        val toParticipant: VillageParticipant? = targetId?.let { village.participant.member(targetId) }
+        val message: Message = Message.createSayMessage(myself, village.day.latestDay().id, messageContent, toParticipant)
         messageService.registerSayMessage(villageId, message)
         // 特定の文字列が含まれていたら通知
         if (messageText.contains("@国主") || messageText.contains("＠国主")) {
@@ -366,11 +375,11 @@ class VillageCoordinator(
         val ipAddress = user.ipAddress!!
         val clientToken = user.clientToken!!
         val changedVillage: Village =
-            village.addParticipantIpAddress(participant.id, AccessInfo(ipAddress, clientToken))
+            village.addParticipantIpAddress(myself.id, AccessInfo(ipAddress, clientToken))
         village = villageService.updateVillageDifference(village, changedVillage)
         // IPアドレスかクライアントトークンが重複している人がいたら通知
         val isContain = village.notDummyParticipant().memberList
-            .filterNot { it.id == participant.id }
+            .filterNot { it.id == myself.id }
             .flatMap { it.accessInfos }
             .any { a -> a.ipAddress == ipAddress || a.clientToken == clientToken }
         if (isContain) {
@@ -497,7 +506,7 @@ class VillageCoordinator(
         val abilities: VillageAbilities = abilityService.findVillageAbilities(village.id)
         val votes: VillageVotes = voteService.findVillageVotes(village.id)
         val commit: Commit? = commitService.findCommit(village, participant)
-        val latestDayMessageList: List<Message> =
+        val latestDayMessageCountMap =
             messageService.findParticipateDayMessageList(village.id, village.day.latestDay(), participant)
 
         return SituationAsParticipant(
@@ -507,7 +516,7 @@ class VillageCoordinator(
             skillRequest = skillRequestDomainService.convertToSituation(village, participant, skillRequest),
             commit = commitDomainService.convertToSituation(village, participant, commit),
             comingOut = comingOutDomainService.convertToSituation(village, participant),
-            say = sayDomainService.convertToSituation(village, participant, charas, latestDayMessageList),
+            say = sayDomainService.convertToSituation(village, player, participant, charas, latestDayMessageCountMap),
             ability = abilityDomainService.convertToSituationList(village, participant, abilities),
             vote = voteDomainService.convertToSituation(village, participant, votes),
             admin = adminDomainService.convertToSituation(village, participant, players, charas)
@@ -532,10 +541,11 @@ class VillageCoordinator(
 
     private fun assertSay(villageId: Int, user: HowlingWolfUser?, messageContent: MessageContent) {
         val village: Village = villageService.findVillage(villageId)
-        val participant: VillageParticipant? = findParticipant(village, user)
-        val chara: Chara? = if (participant == null) null else charachipService.findChara(participant.charaId)
-        val latestDayMessageList: List<Message> =
+        val player = user?.let { playerService.findPlayer(it) } ?: throw HowlingWolfBusinessException("発言できません")
+        val participant = findParticipant(village, user) ?: throw HowlingWolfBusinessException("発言できません")
+        val chara = charachipService.findChara(participant.charaId)
+        val latestDayMessageCountMap =
             messageService.findParticipateDayMessageList(villageId, village.day.latestDay(), participant)
-        sayDomainService.assertSay(village, participant, chara, latestDayMessageList, messageContent)
+        sayDomainService.assertSay(village, participant, player, chara, latestDayMessageCountMap, messageContent)
     }
 }

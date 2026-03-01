@@ -2,6 +2,7 @@ package com.ort.howlingwolf.application.coordinator
 
 import com.ort.dbflute.allcommon.CDef
 import com.ort.howlingwolf.application.service.MessageService
+import com.ort.howlingwolf.application.service.PlayerService
 import com.ort.howlingwolf.domain.model.message.Message
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.village.Village
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service
 class MessageCoordinator(
     val dayChangeCoordinator: DayChangeCoordinator,
     val villageCoordinator: VillageCoordinator,
+    val playerService: PlayerService,
     val messageService: MessageService,
     val messageDomainService: MessageDomainService
 ) {
@@ -32,12 +34,15 @@ class MessageCoordinator(
         keyword: String?,
         messageTypeList: List<CDef.MessageType>?,
         isLatest: Boolean,
-        participantIdList: List<Int>?
+        fromParticipantIdList: List<Int>?,
+        toParticipantIdList: List<Int>?
     ): Messages {
+        val player = user?.let { playerService.findPlayer(it) }
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
         val query = messageDomainService.createQuery(
             village = village,
             participant = participant,
+            player = player,
             day = day,
             authority = user?.authority,
             messageTypeList = messageTypeList,
@@ -46,7 +51,8 @@ class MessageCoordinator(
             pageNum = pageNum,
             keyword = keyword,
             isLatest = isLatest,
-            participantIdList = participantIdList
+            fromParticipantIdList = fromParticipantIdList,
+            toParticipantIdList = toParticipantIdList,
         )
         val villageDayId: Int = village.day.dayList.first { it.day == day && it.noonnight == noonnight }.id
         val messages: Messages = messageService.findMessages(
@@ -59,18 +65,42 @@ class MessageCoordinator(
     }
 
     fun findMessage(village: Village, messageType: String, messageNumber: Int, user: HowlingWolfUser?): Message? {
+        val player = user?.let { playerService.findPlayer(it) }
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        return if (!messageDomainService.isViewableMessage(village, participant, messageType)) null
+        return if (!messageDomainService.isViewableMessage(
+                village = village,
+                myself = participant,
+                player = player,
+                messageType = CDef.MessageType.codeOf(messageType)
+            )
+        ) null
         else messageService.findMessage(village.id, CDef.MessageType.codeOf(messageType), messageNumber) ?: return null
     }
 
     fun findLatestMessagesUnixTimeMilli(
         village: Village,
-        user: HowlingWolfUser?
+        user: HowlingWolfUser?,
+        from: Long?
     ): Long {
+        val player = user?.let { playerService.findPlayer(it) }
         val participant: VillageParticipant? = villageCoordinator.findParticipant(village, user)
-        val messageTypeList: List<CDef.MessageType> =
-            messageDomainService.viewableMessageTypeList(village, participant, village.day.latestDay().day, user?.authority)
-        return messageService.findLatestMessagesUnixTimeMilli(village.id, messageTypeList, participant)
+        val query = messageDomainService.createQuery(
+            village = village,
+            participant = participant,
+            player = player,
+            day = village.day.latestDay().day,
+            authority = user?.authority,
+            messageTypeList = null,
+            from = from,
+            pageSize = null,
+            pageNum = null,
+            keyword = null,
+            isLatest = false,
+            fromParticipantIdList = null,
+            toParticipantIdList = null,
+        )
+        dayChangeCoordinator.dayChangeIfNeeded(village)
+
+        return messageService.findLatestMessagesUnixTimeMilli(village.id, village.day.latestDay().id, query)
     }
 }

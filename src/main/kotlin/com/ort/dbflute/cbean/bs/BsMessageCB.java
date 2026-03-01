@@ -387,6 +387,23 @@ public class BsMessageCB extends AbstractConditionBean {
         }
         @Override
         protected String getTableDbName() { return "message"; }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from message_sendto where ...) as FOO_MAX} <br>
+         * MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(sendtoCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     sendtoCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     sendtoCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, MessageSendto.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<MessageSendtoCB, MessageCQ> derivedMessageSendto() {
+            assertDerived("messageSendtoList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<MessageSendtoCB> sq, MessageCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveMessageSendtoList(fn, sq, al, op), _dbmetaProvider);
+        }
     }
 
     // ===================================================================================

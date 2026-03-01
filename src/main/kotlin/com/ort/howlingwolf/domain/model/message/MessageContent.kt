@@ -13,7 +13,7 @@ data class MessageContent(
     companion object {
 
         const val defaultLengthMax = 400
-        const val lineMax: Int = 20
+        const val defaultLineMax: Int = 20
 
         operator fun invoke(
             messageType: String,
@@ -42,9 +42,11 @@ data class MessageContent(
         }
     }
 
-    fun assertMessageLength(maxLength: Int) {
+    fun assertMessageLength(maxLength: Int = defaultLengthMax, lineMax: Int = defaultLineMax) {
         // 行数
-        if (text.replace("\r\n", "\n").split("\n").size > lineMax) throw HowlingWolfBadRequestException("行数オーバーです")
+        if (text.replace("\r\n", "\n")
+                .split("\n").size > lineMax
+        ) throw HowlingWolfBadRequestException("行数オーバーです")
         // 文字数
         if (text.isEmpty()) throw HowlingWolfBadRequestException("発言内容がありません")
         // 改行は文字数としてカウントしない

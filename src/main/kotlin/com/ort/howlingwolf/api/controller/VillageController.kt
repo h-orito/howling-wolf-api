@@ -160,7 +160,8 @@ class VillageController(
             keyword = form.keyword,
             messageTypeList = messageTypeList,
             isLatest = form.is_disp_latest ?: false,
-            participantIdList = form.participant_id_list?.filterNotNull() // [null]で来る問題に対応
+            fromParticipantIdList = form.participant_id_list?.filterNotNull(), // [null]で来る問題に対応
+            toParticipantIdList = form.to_participant_id_list?.filterNotNull() // [null]で来る問題に対応
         )
         val players: Players = playerService.findPlayers(villageId)
         val charas: Charas = charachipService.findCharas(village.setting.charachip.charachipId)
@@ -184,15 +185,20 @@ class VillageController(
     @GetMapping("/village/{villageId}/latest")
     fun findLatest(
         @PathVariable("villageId") villageId: Int,
-        @AuthenticationPrincipal user: HowlingWolfUser?
+        @AuthenticationPrincipal user: HowlingWolfUser?,
+        @Validated form: VillageLatestForm,
     ): VillageLatestView {
         val village: Village = villageService.findVillage(villageId, false)
-        val unixTimeMilli = messageCoordinator.findLatestMessagesUnixTimeMilli(village, user)
+        val unixTimeMilli = messageCoordinator.findLatestMessagesUnixTimeMilli(village, user, form.from)
         return VillageLatestView(
             unixTimeMilli = unixTimeMilli,
             villageDayId = village.day.latestDay().id
         )
     }
+
+    data class VillageLatestForm(
+        val from: Long? = null
+    )
 
     /**
      * 自動生成村作成
@@ -375,7 +381,7 @@ class VillageController(
         return MessageView(
             message = Message(
                 fromVillageParticipantId = participant!!.id,
-                toVillageParticipantId = null,
+                toVillageParticipantId = body.targetId,
                 time = MessageTime(
                     villageDayId = village.day.latestDay().id,
                     datetime = LocalDateTime.now(),
@@ -406,7 +412,7 @@ class VillageController(
         @AuthenticationPrincipal user: HowlingWolfUser,
         @RequestBody @Validated body: VillageSayBody
     ) {
-        villageCoordinator.say(villageId, user, body.message!!, body.messageType!!, body.faceType!!)
+        villageCoordinator.say(villageId, user, body.message!!, body.messageType!!, body.faceType!!,  body.targetId)
     }
 
     /**

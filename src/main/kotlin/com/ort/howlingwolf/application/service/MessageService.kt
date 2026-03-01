@@ -10,6 +10,7 @@ import com.ort.howlingwolf.domain.model.message.MessageQuery
 import com.ort.howlingwolf.domain.model.message.Messages
 import com.ort.howlingwolf.domain.model.skill.Skills
 import com.ort.howlingwolf.domain.model.village.Village
+import com.ort.howlingwolf.domain.model.village.VillageDay
 import com.ort.howlingwolf.domain.model.village.participant.VillageParticipant
 import com.ort.howlingwolf.domain.service.ability.AbilityDomainService
 import com.ort.howlingwolf.domain.service.coming_out.ComingOutDomainService
@@ -46,16 +47,16 @@ class MessageService(
      * 最新発言日時取得
      *
      * @param villageId villageId
-     * @param messageTypeList 発言種別
-     * @param participant 参加情報
+     * @param villageDayId villageDayId
+     * @param query query
      * @return 発言
      */
     fun findLatestMessagesUnixTimeMilli(
         villageId: Int,
-        messageTypeList: List<CDef.MessageType>,
-        participant: VillageParticipant? = null
+        villageDayId: Int,
+        query: MessageQuery,
     ): Long {
-        return messageDataSource.findLatestMessagesUnixTimeMilli(villageId, messageTypeList, participant)
+        return messageDataSource.findLatestMessagesUnixTimeMilli(villageId, villageDayId, query)
     }
 
     /**
@@ -70,21 +71,15 @@ class MessageService(
         return messageDataSource.findMessage(villageId, messageType, messageNumber)
     }
 
-
     /**
-     * 参加者のその日の発言を取得
-     *
-     * @param villageId villageId
-     * @param villageDay 村日付
-     * @param participant 参加情報
-     * @return 発言
+     * 参加者のその日の発言数を取得
      */
     fun findParticipateDayMessageList(
         villageId: Int,
-        villageDay: com.ort.howlingwolf.domain.model.village.VillageDay,
+        villageDay: VillageDay,
         participant: VillageParticipant?
-    ): List<Message> {
-        participant ?: return listOf()
+    ): Map<CDef.MessageType, Int> {
+        participant ?: return mapOf()
         return messageDataSource.selectParticipateDayMessageList(villageId, villageDay.id, participant)
     }
 
@@ -100,9 +95,11 @@ class MessageService(
      * 村作成時のシステムメッセージ登録
      * @param village village
      */
-    fun registerInitialMessage(village: Village) = messageDataSource.registerMessage(village.id, village.createVillagePrologueMessage())
+    fun registerInitialMessage(village: Village) =
+        messageDataSource.registerMessage(village.id, village.createVillagePrologueMessage())
 
-    fun registerBeginnerMessage(village: Village) = messageDataSource.registerMessage(village.id, village.createBeginnerVillageMessage())
+    fun registerBeginnerMessage(village: Village) =
+        messageDataSource.registerMessage(village.id, village.createBeginnerVillageMessage())
 
     /**
      * 村に参加する際の発言を登録

@@ -1,0 +1,17 @@
+map:{
+    ; 2026/02/16 23:50:34.141 = map:{
+        ; diffDate = 2026/02/16 23:50:34.141
+        ; tableCount = map:{
+            ; next = 34
+            ; previous = 33
+        }
+        ; diffAuthor = h-orito
+        ; diffGitBranch = master
+        ; tableDiff = map:{
+            ; message_sendto = map:{
+                ; tableName = message_sendto
+                ; diffType = ADD
+            }
+        }
+    }
+}

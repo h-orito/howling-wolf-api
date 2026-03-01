@@ -3,6 +3,7 @@ package com.ort.howlingwolf.api.form
 data class VillageMessageForm(
     val message_type_list: List<String>? = null,
     val participant_id_list: List<Int>? = null,
+    val to_participant_id_list: List<Int>? = null,
     val from: Long? = null,
     val keyword: String? = null,
     val page_size: Int? = null,

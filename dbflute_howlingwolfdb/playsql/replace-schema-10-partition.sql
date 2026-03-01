@@ -7,6 +7,7 @@ alter table MESSAGE drop foreign key FK_message_village_player;
 alter table MESSAGE drop foreign key FK_message_village_player_to;
 alter table MESSAGE drop foreign key FK_message_message_type;
 alter table MESSAGE drop foreign key FK_message_face_type;
+alter table MESSAGE_SENDTO drop foreign key FK_MESSAGE_SENDTO_MESSAGE;
 
 -- partition
 

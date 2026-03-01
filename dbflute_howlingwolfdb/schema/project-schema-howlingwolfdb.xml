@@ -442,6 +442,45 @@
             <index-column name="MESSAGE_TYPE_CODE" position="1"/>
         </index>
     </table>
+    <table comment="メッセージ送信先" name="message_sendto"
+        schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
+        <column autoIncrement="true" comment="メッセージ送信先ID"
+            dbType="INT UNSIGNED" javaType="Integer"
+            name="MESSAGE_SENDTO_ID" pkName="PRIMARY" pkPosition="1"
+            primaryKey="true" required="true" size="10" type="INTEGER"/>
+        <column comment="村ID" dbType="INT UNSIGNED" javaType="Integer"
+            name="VILLAGE_ID" required="true" size="10" type="INTEGER"/>
+        <column comment="メッセージ番号" dbType="INT UNSIGNED"
+            javaType="Integer" name="MESSAGE_NUMBER" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="メッセージ種別コード" dbType="VARCHAR" javaType="String"
+            name="MESSAGE_TYPE_CODE" required="true" size="20" type="VARCHAR"/>
+        <column comment="村参加者ID" dbType="INT UNSIGNED"
+            javaType="Integer" name="VILLAGE_PLAYER_ID" required="true"
+            size="10" type="INTEGER"/>
+        <column comment="登録日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="REGISTER_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="登録トレース" dbType="VARCHAR" javaType="String"
+            name="REGISTER_TRACE" required="true" size="255" type="VARCHAR"/>
+        <column comment="更新日時" dbType="DATETIME"
+            javaType="java.time.LocalDateTime" name="UPDATE_DATETIME"
+            required="true" size="19" type="TIMESTAMP"/>
+        <column comment="更新トレース" dbType="VARCHAR" javaType="String"
+            name="UPDATE_TRACE" required="true" size="255" type="VARCHAR"/>
+        <foreign-key foreignSchema="howlingwolfdb.$$NoNameSchema$$"
+            foreignTable="village_player" name="FK_MESSAGE_SENDTO_VILLAGE_PLAYER">
+            <reference foreign="VILLAGE_PLAYER_ID" local="VILLAGE_PLAYER_ID"/>
+        </foreign-key>
+        <index name="FK_MESSAGE_SENDTO_MESSAGE">
+            <index-column name="VILLAGE_ID" position="1"/>
+            <index-column name="MESSAGE_NUMBER" position="2"/>
+            <index-column name="MESSAGE_TYPE_CODE" position="3"/>
+        </index>
+        <index name="FK_MESSAGE_SENDTO_VILLAGE_PLAYER">
+            <index-column name="VILLAGE_PLAYER_ID" position="1"/>
+        </index>
+    </table>
     <table comment="メッセージ種別" name="message_type"
         schema="howlingwolfdb.$$NoNameSchema$$" type="TABLE">
         <column comment="メッセージ種別コード" dbType="VARCHAR" javaType="String"

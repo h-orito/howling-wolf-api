@@ -107,6 +107,26 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
+    /** MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'. */
+    protected List<MessageSendto> _messageSendtoList;
+
+    /**
+     * [get] MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'.
+     * @return The entity list of referrer property 'messageSendtoList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<MessageSendto> getMessageSendtoList() {
+        if (_messageSendtoList == null) { _messageSendtoList = newReferrerList(); }
+        return _messageSendtoList;
+    }
+
+    /**
+     * [set] MESSAGE_SENDTO by VILLAGE_ID, MESSAGE_TYPE_CODE, MESSAGE_NUMBER, named 'messageSendtoList'.
+     * @param messageSendtoList The entity list of referrer property 'messageSendtoList'. (NullAllowed)
+     */
+    public void setMessageSendtoList(List<MessageSendto> messageSendtoList) {
+        _messageSendtoList = messageSendtoList;
+    }
+
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
         return new ArrayList<ELEMENT>();
     }
@@ -139,7 +159,10 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
 
     @Override
     protected String doBuildStringWithRelation(String li) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (_messageSendtoList != null) { for (MessageSendto et : _messageSendtoList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "messageSendtoList")); } } }
+        return sb.toString();
     }
 
     @Override
@@ -171,7 +194,13 @@ public abstract class BsMessage extends AbstractEntity implements DomainEntity, 
 
     @Override
     protected String doBuildRelationString(String dm) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (_messageSendtoList != null && !_messageSendtoList.isEmpty())
+        { sb.append(dm).append("messageSendtoList"); }
+        if (sb.length() > dm.length()) {
+            sb.delete(0, dm.length()).insert(0, "(").append(")");
+        }
+        return sb.toString();
     }
 
     @Override
