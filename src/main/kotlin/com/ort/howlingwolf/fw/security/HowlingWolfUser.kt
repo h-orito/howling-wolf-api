@@ -10,7 +10,7 @@ data class HowlingWolfUser(
     val uid: String,
     val authority: CDef.Authority,
     var ipAddress: String? = null,
-    var clientToken: String? = null
+    var clientToken: String? = null,
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -46,4 +46,8 @@ fun HttpServletRequest.getIpAddress(): String {
     val xForwardedFor = this.getHeader("CF-Connecting-IP")
     return if (xForwardedFor.isNullOrEmpty()) this.remoteAddr
     else xForwardedFor
+}
+
+fun HttpServletRequest.getUA(): String {
+    return this.getHeader("User-Agent")
 }

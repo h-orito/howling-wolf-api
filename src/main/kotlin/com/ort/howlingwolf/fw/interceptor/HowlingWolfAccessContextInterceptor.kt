@@ -4,6 +4,7 @@ import com.ort.howlingwolf.fw.HowlingWolfDateUtil
 import com.ort.howlingwolf.fw.HowlingWolfUserInfoUtil
 import com.ort.howlingwolf.fw.security.HowlingWolfUser
 import com.ort.howlingwolf.fw.security.getIpAddress
+import com.ort.howlingwolf.fw.security.getUA
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.dbflute.hook.AccessContext
@@ -22,7 +23,7 @@ class HowlingWolfAccessContextInterceptor : HandlerInterceptor {
 
         val context = AccessContext()
         context.accessLocalDateTime = accessLocalDateTime
-        context.accessUser = "$accessUser: ${request.getIpAddress()}"
+        context.accessUser = "$accessUser: ${request.getIpAddress()}: ${request.getUA()}".take(255)
         AccessContext.setAccessContextOnThread(context)
 
         // Handlerメソッドを呼び出す場合はtrueを返却する
